@@ -1,13 +1,12 @@
 ---
-import Breadcrumb from "../components/public-components/Breadcrumb.astro"
-import TableOfContents from "../components/content/TableOfContents.astro"
-import WaveAnimation from "../components/animations/WaveAnimation.astro"
+import Breadcrumb from '../components/public-components/Breadcrumb.astro';
+import TableOfContents from '../components/content/TableOfContents.astro';
+import WaveAnimation from '../components/animations/WaveAnimation.astro';
 
 export interface Props {
-  post: import("astro:content").CollectionEntry<"docs">;
+  post: import('astro:content').CollectionEntry<'docs'>;
   collectionMetadata: {
     displayName: string;
-    icon: string;
     basePath: string;
   };
   headings?: { depth: number; slug: string; text: string }[];
@@ -16,137 +15,165 @@ export interface Props {
   breadcrumbConfig?: {
     currentPath?: string;
     showHome?: boolean;
-    variant?: "compact" | "spacious" | "minimal" | "pill" | "underline";
+    variant?: 'compact' | 'spacious' | 'minimal' | 'pill' | 'underline';
     showIcons?: boolean;
     ariaLabel?: string;
   };
 }
-const { post, collectionMetadata, headings = [], postActions = true, breadcrumbConfig } = Astro.props;
+const {
+  post,
+  collectionMetadata,
+  headings = [],
+  postActions = true,
+  breadcrumbConfig,
+} = Astro.props;
 ---
 
 <!-- Main Content -->
-<main class="content-page items-center justify-center w-full max-w-full flex flex-col" role="main">
-  <div class="content-wrapper" >
-    <div class="content-container">
+<main
+  class='content-page items-center justify-center w-full max-w-full flex flex-col'
+  role='main'
+>
+  <div class='content-wrapper'>
+    <div class='content-container'>
       <!-- Breadcrumb Navigation -->
-      {breadcrumbConfig ? (
-        <Breadcrumb 
-          {post}
-          currentPath={breadcrumbConfig.currentPath}
-          showHome={breadcrumbConfig.showHome}
-          variant={breadcrumbConfig.variant}
-          showIcons={breadcrumbConfig.showIcons}
-          ariaLabel={breadcrumbConfig.ariaLabel}
-        />
-      ) : (
-        <slot name="breadcrumb" />
-      )}
+      {
+        breadcrumbConfig ? (
+          <Breadcrumb
+            {post}
+            currentPath={breadcrumbConfig.currentPath}
+            showHome={breadcrumbConfig.showHome}
+            variant={breadcrumbConfig.variant}
+            showIcons={breadcrumbConfig.showIcons}
+            ariaLabel={breadcrumbConfig.ariaLabel}
+          />
+        ) : (
+          <slot name='breadcrumb' />
+        )
+      }
 
       <!-- Article Header -->
-      <header class="content-header mt-8">
+      <header class='content-header mt-8'>
         <h1>{post.data.title}</h1>
 
-        {(post.data.publishedDate || post.data.author) && (
-          <div class="content-meta" aria-label="Post metadata">
-          <time class="content-date" datetime={post.data.publishedDate}>
-            {new Date(post.data.publishedDate).toLocaleDateString("id-ID", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
-          <span class="content-author">by {post.data.author}</span>
-        </div>
-        )}
+        {
+          (post.data.publishedDate || post.data.author) && (
+            <div class='content-meta' aria-label='Post metadata'>
+              <time class='content-date' datetime={post.data.publishedDate}>
+                {new Date(post.data.publishedDate).toLocaleDateString('id-ID', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              <span class='content-author'>by {post.data.author}</span>
+            </div>
+          )
+        }
 
-        {post.data.difficulty && (
-          <div class="content-tags">
-            <span
-              class={`difficulty-badge difficulty-${post.data.difficulty}`}
-              aria-label={`Difficulty level: ${post.data.difficulty}`}>
-              {post.data.difficulty}
-            </span>
-          </div>
-        )}
-
+        {
+          post.data.difficulty && (
+            <div class='content-tags'>
+              <span
+                class={`difficulty-badge difficulty-${post.data.difficulty}`}
+                aria-label={`Difficulty level: ${post.data.difficulty}`}
+              >
+                {post.data.difficulty}
+              </span>
+            </div>
+          )
+        }
       </header>
 
       <!-- Article Content -->
-      <article class="prose prose-invert max-w-none content-main" id="contentMain" aria-label="Post content">
+      <article
+        class='prose prose-invert max-w-none content-main'
+        id='contentMain'
+        aria-label='Post content'
+      >
         <slot />
       </article>
 
       <!-- Post Actions -->
-      {postActions && (
-        <footer class="content-actions">
-        <div class="action-buttons">
-          <a
-            href={collectionMetadata.basePath}
-            class="back-to-docs"
-            aria-label={`Kembali ke ${collectionMetadata.displayName}`}>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true">
-              <path d="M19 12H5M12 19l-7-7 7-7"></path>
-            </svg>
-            Kembali ke {collectionMetadata.displayName}
-          </a>
-          
-          <div class="share-buttons">
-            <button class="share-btn" onclick="sharePost()" aria-label="Bagikan post ini">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true">
-                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                <polyline points="16,6 12,2 8,6"></polyline>
-                <line x1="12" y1="2" x2="12" y2="15"></line>
-              </svg>
-              Bagikan
-            </button>
-          </div>
-        </div>
-        </footer>
-      )}
+      {
+        postActions && (
+          <footer class='content-actions'>
+            <div class='action-buttons'>
+              <a
+                href={collectionMetadata.basePath}
+                class='back-to-docs'
+                aria-label={`Kembali ke ${collectionMetadata.displayName}`}
+              >
+                <svg
+                  width='16'
+                  height='16'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  aria-hidden='true'
+                >
+                  <path d='M19 12H5M12 19l-7-7 7-7' />
+                </svg>
+                Kembali ke {collectionMetadata.displayName}
+              </a>
+
+              <div class='share-buttons'>
+                <button
+                  class='share-btn'
+                  onclick='sharePost()'
+                  aria-label='Bagikan post ini'
+                >
+                  <svg
+                    width='16'
+                    height='16'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    stroke-width='2'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    aria-hidden='true'
+                  >
+                    <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8' />
+                    <polyline points='16,6 12,2 8,6' />
+                    <line x1='12' y1='2' x2='12' y2='15' />
+                  </svg>
+                  Bagikan
+                </button>
+              </div>
+            </div>
+          </footer>
+        )
+      }
 
       <!-- Optional additional footer content -->
-      <slot name="footer" />
+      <slot name='footer' />
     </div>
 
     <!-- Sidebar Container -->
-    <div class="sidebar-container">
+    <div class='sidebar-container'>
       <!-- Table of Contents Sidebar -->
       <TableOfContents headings={headings} />
-      
+
       <!-- Additional Sidebar Content -->
-      <slot name="additional-sidebar" />
+      <slot name='additional-sidebar' />
     </div>
   </div>
 </main>
 
 <!-- Enhanced Wave Animation Background - Fixed position for scroll following -->
-<WaveAnimation 
-className="wave-canvas" 
-enableStars={true}
-starsCount={10}
-starsOpacity={0.5}
-starsAnimationDuration="3s"
-starsColor="oklch(0.8 0.35 296.9)"
-starsBrightness={1}
-starsSize={1.5}
-starsGlow={false}
-backgroundLayer="darker"
+<WaveAnimation
+  className='wave-canvas'
+  enableStars={true}
+  starsCount={10}
+  starsOpacity={0.5}
+  starsAnimationDuration='3s'
+  starsColor='oklch(0.8 0.35 296.9)'
+  starsBrightness={1}
+  starsSize={1.5}
+  starsGlow={false}
+  backgroundLayer='darker'
 />

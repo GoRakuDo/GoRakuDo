@@ -23,6 +23,16 @@ export async function getStaticPaths() {
 // Get the post from props with explicit type casting
 const { post } = Astro.props as { post: CollectionEntry<'docs'> };
 
+// Check if slug starts with 'page-' and redirect to pagination
+const { slug } = Astro.params;
+if (slug) {
+  const slugStr = String(slug);
+  if (slugStr.startsWith('page-')) {
+    const pageNumber = slugStr.replace('page-', '');
+    return Astro.redirect(`/docs/page-${pageNumber}`, 301);
+  }
+}
+
 // Smart error handling - redirect to docs listing if post not found
 if (!post) {
   return Astro.redirect('/docs?error=post-not-found');

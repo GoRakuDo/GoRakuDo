@@ -10,7 +10,7 @@ import WaveAnimation from '../components/animations/WaveAnimation.astro';
 
 // Global CSS
 import '../styles/global.css';
-import '../styles/ArticleLayout.css';
+import '../styles/layouts/ArticleLayout.css';
 
 export interface Props {
   title: string;
@@ -19,12 +19,6 @@ export interface Props {
   lang?: 'id' | 'ja';
   author?: string;
   tags?: string[];
-  tool?: string;
-  articleCount?: number;
-  toolTitle?: string;
-  toolDescription?: string;
-  iconPath?: string;
-  currentYear?: number;
 }
 
 const {
@@ -34,12 +28,6 @@ const {
   lang = 'id',
   author,
   tags = [],
-  tool,
-  articleCount = 0,
-  toolTitle,
-  toolDescription,
-  iconPath,
-  currentYear,
 } = Astro.props;
 ---
 

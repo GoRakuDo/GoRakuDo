@@ -1,4 +1,5 @@
 /* ========== TOOL-SPECIFIC CSS VARIABLES & DESIGN TOKENS ========== */
+@import 'tailwindcss';
 
 /* Phase 1: Namespace variables to avoid conflicts with global.css */
 :root {

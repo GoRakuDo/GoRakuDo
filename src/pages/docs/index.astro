@@ -1,108 +1,29 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+// ========== DOCS INDEX PAGE (Minimalist) ==========
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import Breadcrumb from '../../components/public-components/Breadcrumb.astro';
 import PostsHeader from '../../components/docs/PostsHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
 import Pagination from '../../components/common/Pagination.astro';
 
+// ========== GET PAGE DATA ==========
+import { getDocsPageData } from '../../utils/docs-config';
+
 // スタイルインポート
-import '../../styles/docs/docs.css';
+import '../../styles/pages/docs/docs-index.css';
 
-// 定数定義
-const POSTS_PER_PAGE = 6;
-const CURRENT_PAGE = 1;
-
-// コンテンツ取得とフィルタリング
-const allPosts = await getCollection(
-  'docs',
-  ({ data }) =>
-    data.status === 'published' &&
-    data.publishedDate &&
-    new Date(data.publishedDate) <= new Date()
-);
-
-// 公開日順でソート
-const sortedPosts = allPosts.sort(
-  (a: CollectionEntry<'docs'>, b: CollectionEntry<'docs'>) =>
-    new Date(b.data.publishedDate).getTime() -
-    new Date(a.data.publishedDate).getTime()
-);
-
-// ページネーション処理
-const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
-const paginatedPosts = sortedPosts.slice(0, POSTS_PER_PAGE);
-
-// クエリパラメータでページ指定の場合はリダイレクト
+// ========== QUERY PARAMETER REDIRECT ==========
 const queryPage = Astro.url.searchParams.get('page');
 if (queryPage && parseInt(queryPage) > 1) {
-  return Astro.redirect(`/docs/page/${queryPage}`, 301);
+  return Astro.redirect(`/docs/page-${queryPage}`, 301);
 }
 
-// 投稿データ変換
-const transformedPosts = paginatedPosts.map(
-  (post: CollectionEntry<'docs'>) => ({
-    slug: post.slug,
-    title: post.data.title,
-    description: post.data.description || '',
-    url: `/docs/${post.slug}`,
-    publishedDate: post.data.publishedDate,
-    emoji: post.data.emoji,
-    tags: post.data.tags || [],
-    category: post.data.category || 'general',
-    isRecommended: false,
-    isBeginner: post.data.category === 'getting-started',
-    isTool: post.data.category === 'tools',
-  })
-);
-
-// SEO設定
-const seoConfig = {
-  title: 'Dokumentasi & Panduan',
-  description:
-    'Panduan lengkap untuk memulai perjalanan immersion bahasa Jepang Anda. Dari langkah pertama hingga tingkat lanjut.',
-  keywords: [
-    'dokumentasi',
-    'panduan',
-    'tutorial',
-    'jepang',
-    'belajar',
-    'immersion',
-  ],
-  author: 'Tim GoRakuDo',
-  canonicalUrl: 'https://gorakudo.org/docs',
-};
-
-// 構造化データ
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: seoConfig.title,
-  description: seoConfig.description,
-  url: seoConfig.canonicalUrl,
-  mainEntity: {
-    '@type': 'ItemList',
-    numberOfItems: sortedPosts.length,
-    itemListElement: paginatedPosts.map((post, index) => ({
-      '@type': 'Article',
-      position: index + 1,
-      name: post.data.title,
-      description: post.data.description || '',
-      url: `https://gorakudo.org/docs/${post.slug}`,
-      datePublished: post.data.publishedDate,
-      author: { '@type': 'Organization', name: seoConfig.author },
-    })),
-  },
-  pagination: {
-    '@type': 'CollectionPage',
-    currentPage: CURRENT_PAGE,
-    totalPages,
-    hasNextPage: CURRENT_PAGE < totalPages,
-    hasPreviousPage: CURRENT_PAGE > 1,
-  },
-};
+// ========== GET PAGE DATA ==========
+const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
+  await getDocsPageData(1);
 ---
 
+<!-- ========== UNIFIED TEMPLATE ========== -->
 <ArticleLayout
   title={seoConfig.title}
   description={seoConfig.description}
@@ -111,12 +32,22 @@ const structuredData = {
   author={seoConfig.author}
   publishedDate={new Date().toISOString()}
 >
+  <!-- 構造化データ（JSON-LD） -->
+  <script
+    is:inline
+    type='application/ld+json'
+    set:html={JSON.stringify(structuredData)}
+    slot='head'
+  />
+
+  <!-- ページヘッダー -->
   <PostsHeader
     slot='articles-header'
     title={seoConfig.title}
     description={seoConfig.description}
   />
 
+  <!-- ブレッドクラム -->
   <Breadcrumb
     slot='breadcrumb'
     currentPath='/docs'
@@ -126,12 +57,14 @@ const structuredData = {
     ariaLabel='Navigasi breadcrumb untuk halaman dokumentasi'
   />
 
+  <!-- 検索セクション（将来の拡張用） -->
   <div slot='search'>
     <!-- Search component can be added here if needed -->
   </div>
 
+  <!-- メインコンテンツ -->
   {
-    sortedPosts.length > 0 ? (
+    totalPosts > 0 ? (
       <PostsGrid posts={transformedPosts} />
     ) : (
       <div class='empty-state'>
@@ -143,11 +76,12 @@ const structuredData = {
     )
   }
 
+  <!-- ページネーション -->
   {
-    totalPages > 1 && sortedPosts.length > 0 && (
+    totalPages > 1 && totalPosts > 0 && (
       <Pagination
         slot='pagination'
-        currentPage={CURRENT_PAGE}
+        currentPage={1}
         totalPages={totalPages}
         baseUrl='/docs'
         showPageInfo={true}

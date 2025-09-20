@@ -58,7 +58,7 @@ function getVisiblePages(
 
 // URL生成
 function getPageUrl(page: number): string {
-  return page === 1 ? baseUrl : `${baseUrl}/page/${page}`;
+  return page === 1 ? baseUrl : `${baseUrl}/page-${page}`;
 }
 
 const visiblePages = getVisiblePages(currentPage, totalPages, 3);
@@ -231,26 +231,22 @@ const structuredData = {
       var(--pagination-primary-lightness) var(--pagination-primary-chroma)
         var(--pagination-primary-hue)
     );
-
     --pagination-primary-hover-lightness: 20%;
     --pagination-primary-hover-chroma: 0.3;
     --pagination-primary-hover-color: oklch(
       var(--pagination-primary-hover-lightness)
         var(--pagination-primary-hover-chroma) var(--pagination-primary-hue)
     );
-
     --pagination-current-lightness: 45%;
     --pagination-current-chroma: 0.5;
     --pagination-current-color: oklch(
       var(--pagination-current-lightness) var(--pagination-current-chroma)
         var(--pagination-primary-hue)
     );
-
     --pagination-disabled-lightness: 55%;
     --pagination-disabled-color: oklch(
       var(--pagination-disabled-lightness) 0 0deg
     );
-
     --pagination-ellipsis-lightness: 50%;
     --pagination-ellipsis-chroma: 0.1;
     --pagination-ellipsis-color: oklch(
@@ -302,26 +298,26 @@ const structuredData = {
   }
 
   .pagination-progress {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     height: 0.375rem;
-    background: oklch(88% 0.08 var(--pagination-primary-hue) / 0.4);
     border-radius: 0.1875rem;
-    overflow: hidden;
-    position: relative;
+    background: oklch(88% 0.08 var(--pagination-primary-hue) / 0.4);
     box-shadow: inset 0 1px 2px oklch(0% 0 0deg / 0.1);
   }
 
   .pagination-progress-bar {
+    position: relative;
     height: 100%;
+    border-radius: 0.1875rem;
     background: linear-gradient(
       90deg,
       oklch(50% 0.4 var(--pagination-primary-hue)) 0%,
       oklch(45% 0.5 300deg) 50%,
       oklch(40% 0.6 320deg) 100%
     );
-    border-radius: 0.1875rem;
     transition: var(--pagination-transition-slow);
-    position: relative;
     box-shadow: 0 1px 3px oklch(0% 0 0deg / 0.2);
   }
 
@@ -342,6 +338,7 @@ const structuredData = {
     0% {
       transform: translateX(-100%);
     }
+
     100% {
       transform: translateX(100%);
     }
@@ -351,8 +348,8 @@ const structuredData = {
   .pagination-controls {
     display: flex;
     flex-direction: column;
-    gap: var(--pagination-spacing-md);
     align-items: center;
+    gap: var(--pagination-spacing-md);
   }
 
   .pagination-numbers {
@@ -373,13 +370,6 @@ const structuredData = {
     width: 100%;
   }
 
-  /* モバイルでのナビゲーションボタンの幅調整 */
-  .pagination-nav-buttons .pagination-btn {
-    flex: 1;
-    min-width: 0;
-    max-width: none;
-  }
-
   /* ===== ボタンとナンバーの共通スタイル ===== */
   .pagination-btn,
   .pagination-number {
@@ -391,17 +381,24 @@ const structuredData = {
     color: var(--pagination-primary-color);
     font-size: var(--pagination-font-size-md);
     font-weight: 700;
+    line-height: 1.2;
     text-decoration: none;
+    letter-spacing: 0.025em;
     cursor: pointer;
     transition: var(--pagination-transition);
-    letter-spacing: 0.025em;
-    line-height: 1.2;
     contain: layout style paint;
   }
 
   .pagination-btn {
     min-width: var(--pagination-size-lg);
     min-height: var(--pagination-size-lg);
+  }
+
+  /* モバイルでのナビゲーションボタンの幅調整 */
+  .pagination-nav-buttons .pagination-btn {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
   }
 
   .pagination-number {
@@ -417,11 +414,6 @@ const structuredData = {
     box-shadow: 0 0.5rem 1.5625rem oklch(0% 0 0deg / 0.15);
   }
 
-  /* ナビゲーションボタンのホバーアニメーションを削除 */
-  .pagination-btn:hover:not(.pagination-disabled) {
-    color: var(--pagination-primary-hover-color);
-  }
-
   .pagination-number:focus {
     outline: none;
     box-shadow: 0 0 0 0.25rem oklch(60% 0 0deg / 0.4);
@@ -433,6 +425,11 @@ const structuredData = {
     box-shadow: 0 0 0 0.25rem oklch(60% 0 0deg / 0.4);
   }
 
+  /* ナビゲーションボタンのホバーアニメーションを削除 */
+  .pagination-btn:hover:not(.pagination-disabled) {
+    color: var(--pagination-primary-hover-color);
+  }
+
   .pagination-number.pagination-current {
     background: linear-gradient(
       135deg,
@@ -441,10 +438,10 @@ const structuredData = {
       oklch(35% 0.7 320deg) 100%
     );
     color: oklch(100% 0 0deg);
-    box-shadow: 0 0.25rem 0.75rem oklch(0% 0 0deg / 0.2);
-    cursor: default;
     font-weight: 800;
+    cursor: default;
     transform: scale(1.05);
+    box-shadow: 0 0.25rem 0.75rem oklch(0% 0 0deg / 0.2);
   }
 
   .pagination-number.pagination-current:hover {
@@ -453,12 +450,12 @@ const structuredData = {
   }
 
   .pagination-btn.pagination-disabled {
+    border: 1px solid oklch(85% 0 0deg / 0.3);
     background: oklch(92% 0 0deg / 0.3);
     color: var(--pagination-disabled-color);
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
-    border: 1px solid oklch(85% 0 0deg / 0.3);
     box-shadow: inset 0 1px 2px oklch(0% 0 0deg / 0.1);
   }
 
@@ -473,16 +470,16 @@ const structuredData = {
   }
 
   .pagination-ellipsis-dots {
-    color: oklch(50% 0.15 var(--pagination-primary-hue));
-    font-weight: 800;
-    font-size: var(--pagination-font-size-xl);
-    padding: 0 var(--pagination-spacing-xs);
     display: flex;
-    align-items: center;
     justify-content: center;
-    letter-spacing: 0.1em;
+    align-items: center;
     min-width: var(--pagination-size-sm);
     min-height: var(--pagination-size-sm);
+    padding: 0 var(--pagination-spacing-xs);
+    color: oklch(50% 0.15 var(--pagination-primary-hue));
+    font-size: var(--pagination-font-size-xl);
+    font-weight: 800;
+    letter-spacing: 0.1em;
   }
 
   /* ===== アイコンとテキスト ===== */
@@ -494,8 +491,8 @@ const structuredData = {
 
   .pagination-btn-text {
     margin: 0 var(--pagination-spacing-xs);
-    font-weight: 700;
     font-size: var(--pagination-font-size-sm);
+    font-weight: 700;
     letter-spacing: 0.025em;
   }
 
@@ -509,17 +506,14 @@ const structuredData = {
       --pagination-spacing-md: 1rem; /* 16px */
       --pagination-spacing-lg: 1.25rem; /* 20px */
       --pagination-spacing-xl: 2rem; /* 32px */
-
       --pagination-font-size-sm: 0.9rem; /* 14.4px */
       --pagination-font-size-md: 0.95rem; /* 15.2px */
       --pagination-font-size-lg: 1rem; /* 16px */
       --pagination-font-size-xl: 1.1rem; /* 17.6px */
-
       --pagination-size-sm: 36px;
       --pagination-size-md: 44px;
       --pagination-size-lg: 52px;
       --pagination-size-touch: 60px;
-
       --pagination-radius-sm: 0.875rem; /* 14px */
       --pagination-radius-md: 1.25rem; /* 20px */
     }
@@ -549,14 +543,15 @@ const structuredData = {
     /* タブレット以上では適切なサイズに調整 */
     .pagination-nav-buttons .pagination-btn {
       flex: none;
-      min-width: var(--pagination-size-lg);
       width: auto;
+      min-width: var(--pagination-size-lg);
       padding: var(--pagination-spacing-sm) var(--pagination-spacing-lg);
     }
 
     .pagination-prev {
       order: 1;
     }
+
     .pagination-next {
       order: 3;
     }
@@ -570,17 +565,14 @@ const structuredData = {
       --pagination-spacing-md: 1.25rem; /* 20px */
       --pagination-spacing-lg: 1.5rem; /* 24px */
       --pagination-spacing-xl: 2.5rem; /* 40px */
-
       --pagination-font-size-sm: 0.95rem; /* 15.2px */
       --pagination-font-size-md: 1rem; /* 16px */
       --pagination-font-size-lg: 1.05rem; /* 16.8px */
       --pagination-font-size-xl: 1.125rem; /* 18px */
-
       --pagination-size-sm: 40px;
       --pagination-size-md: 48px;
       --pagination-size-lg: 56px;
       --pagination-size-touch: 64px;
-
       --pagination-radius-sm: 1rem; /* 16px */
       --pagination-radius-md: 1.5rem; /* 24px */
     }
@@ -602,8 +594,8 @@ const structuredData = {
     /* デスクトップでも適切なサイズに調整 */
     .pagination-nav-buttons .pagination-btn {
       flex: none;
-      min-width: var(--pagination-size-lg);
       width: auto;
+      min-width: var(--pagination-size-lg);
       padding: var(--pagination-spacing-sm) var(--pagination-spacing-lg);
     }
   }
@@ -630,14 +622,14 @@ const structuredData = {
 
   @media (prefers-contrast: high) {
     .pagination-container {
-      background: oklch(100% 0 0deg);
       border: 2px solid oklch(0% 0 0deg);
+      background: oklch(100% 0 0deg);
     }
 
     .pagination-btn,
     .pagination-number {
-      background: oklch(100% 0 0deg);
       border: 2px solid oklch(0% 0 0deg);
+      background: oklch(100% 0 0deg);
       color: oklch(0% 0 0deg);
     }
 
@@ -692,8 +684,8 @@ const structuredData = {
     }
 
     .pagination-btn.pagination-disabled {
-      color: oklch(50% 0 0deg);
       background: oklch(15% 0 0deg / 0.3);
+      color: oklch(50% 0 0deg);
     }
   }
 </style>

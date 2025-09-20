@@ -1,7 +1,5 @@
 /*  Docs Page Styles - Tailwind v4 Conversion */
-
-/* Converted from post-styles.css with accessibility-first approach */
-@import '../global.css';
+@import 'tailwindcss';
 
 /* --- Background Elements --- */
 

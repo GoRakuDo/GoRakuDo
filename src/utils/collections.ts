@@ -8,17 +8,14 @@
 export const COLLECTIONS = {
   docs: {
     displayName: 'Docs',
-    icon: '📚',
     basePath: '/docs',
   },
   pages: {
     displayName: 'Pages',
-    icon: '📄',
     basePath: '',
   },
   'tool-articles': {
     displayName: 'Tools',
-    icon: '🛠️',
     basePath: '/tools',
   },
 } as const;
@@ -28,7 +25,6 @@ export type CollectionName = keyof typeof COLLECTIONS;
 
 export interface CollectionInfo {
   displayName: string;
-  icon: string;
   basePath: string;
 }
 

@@ -1,0 +1,153 @@
+---
+// ========== PAGINATION PAGE (Minimalist) ==========
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import Breadcrumb from '../../components/public-components/Breadcrumb.astro';
+import PostsHeader from '../../components/docs/PostsHeader.astro';
+import PostsGrid from '../../components/docs/PostsGrid.astro';
+import Pagination from '../../components/common/Pagination.astro';
+import { getDocsPageData, POSTS_PER_PAGE } from '../../utils/docs-config';
+import {
+  validatePageNumber,
+  shouldRedirectToFirstPage,
+} from '../../components/common/pagination';
+
+// スタイルインポート
+import '../../styles/pages/docs/docs-index.css';
+
+// ========== STATIC PATH GENERATION ==========
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection(
+    'docs',
+    ({ data }) =>
+      data.status === 'published' &&
+      data.publishedDate &&
+      new Date(data.publishedDate) <= new Date()
+  );
+
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+  return Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: (i + 1).toString() },
+    props: {
+      totalPosts: allPosts.length,
+      totalPages,
+    },
+  }));
+}
+
+// ========== PAGE PARAMETERS & VALIDATION ==========
+const { page } = Astro.params;
+const { totalPosts, totalPages } = Astro.props;
+const currentPage = validatePageNumber(page);
+
+// ページ番号の検証とリダイレクト
+if (currentPage === 1) {
+  return Astro.redirect('/docs', 301);
+}
+
+if (shouldRedirectToFirstPage(currentPage, totalPages)) {
+  return Astro.redirect(`/docs/page-${totalPages}`, 301);
+}
+
+// ========== GET PAGE DATA ==========
+const { transformedPosts, seoConfig, structuredData } =
+  await getDocsPageData(currentPage);
+---
+
+<!-- ========== UNIFIED TEMPLATE (Same as Index) ========== -->
+<ArticleLayout
+  title={seoConfig.title}
+  description={seoConfig.description}
+  tags={seoConfig.keywords}
+  lang='id'
+  author={seoConfig.author}
+  publishedDate={new Date().toISOString()}
+>
+  <!-- 構造化データ（JSON-LD） -->
+  <script
+    is:inline
+    type='application/ld+json'
+    set:html={JSON.stringify(structuredData)}
+    slot='head'
+  />
+
+  <!-- ページネーション用のメタタグ -->
+  {
+    currentPage > 1 && (
+      <meta name='robots' content='noindex, follow' slot='head' />
+    )
+  }
+  {
+    currentPage < totalPages && (
+      <link
+        rel='next'
+        href={`https://gorakudo.org/docs/page-${currentPage + 1}`}
+        slot='head'
+      />
+    )
+  }
+  {
+    currentPage > 1 && (
+      <link
+        rel='prev'
+        href={
+          currentPage === 2
+            ? 'https://gorakudo.org/docs'
+            : `https://gorakudo.org/docs/page-${currentPage - 1}`
+        }
+        slot='head'
+      />
+    )
+  }
+
+  <!-- ページヘッダー -->
+  <PostsHeader
+    slot='articles-header'
+    title={seoConfig.title}
+    description={seoConfig.description}
+  />
+
+  <!-- ブレッドクラム -->
+  <Breadcrumb
+    slot='breadcrumb'
+    currentPath={`/docs/page-${currentPage}`}
+    showHome={true}
+    variant='compact'
+    showIcons={true}
+    ariaLabel='Navigasi breadcrumb untuk halaman dokumentasi'
+  />
+
+  <!-- 検索セクション（将来の拡張用） -->
+  <div slot='search'>
+    <!-- Search component can be added here if needed -->
+  </div>
+
+  <!-- メインコンテンツ -->
+  {
+    totalPosts > 0 ? (
+      <PostsGrid posts={transformedPosts} />
+    ) : (
+      <div class='empty-state'>
+        <h2>記事が見つかりません</h2>
+        <p>
+          現在、公開されている記事がありません。しばらくしてから再度お試しください。
+        </p>
+      </div>
+    )
+  }
+
+  <!-- ページネーション -->
+  {
+    totalPages > 1 && totalPosts > 0 && (
+      <Pagination
+        slot='pagination'
+        currentPage={currentPage}
+        totalPages={totalPages}
+        baseUrl='/docs'
+        showPageInfo={true}
+      />
+    )
+  }
+</ArticleLayout>

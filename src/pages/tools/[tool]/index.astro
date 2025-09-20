@@ -13,7 +13,7 @@ import ToolSearchPopover from '../../../components/tools/Tool-SearchPopover.astr
 import ToolIdHeader from '../../../components/tools/Tool-IdHeader.astro';
 
 // Import tool-specific styles
-import '../../../styles/tools/[tool]/Tool-IdIndex.css';
+import '../../../styles/pages/tools/[tool]/Tool-IdIndex.css';
 
 // ========== OPTIMIZED TOOL DISCOVERY ==========
 // Single function for tool discovery with caching
@@ -193,12 +193,6 @@ const contentGridData = {
   title={`${formattedToolName} - GoRakuDo`}
   description={`All articles and guides for ${tool} tool`}
   lang='id'
-  tool={tool}
-  articleCount={headerData.articleCount}
-  toolTitle={headerData.title}
-  toolDescription={headerData.description}
-  iconPath={headerData.iconPath}
-  currentYear={headerData.currentYear}
 >
   <ToolIdHeader
     slot='articles-header'

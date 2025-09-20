@@ -1,7 +1,5 @@
-/* Import Tailwind CSS v4 */
-@import 'tailwindcss';
-
 /* ===== HOMEPAGE-SPECIFIC STYLES ===== */
+@import 'tailwindcss';
 
 /* Note: Global styles, animations, and accessibility are handled in global.css */
 
@@ -527,7 +525,6 @@ body.modal-open {
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
   }
-
 
   /* Section transitions */
   ::view-transition-old(mission-section),
