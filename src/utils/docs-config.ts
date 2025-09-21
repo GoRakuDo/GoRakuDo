@@ -5,6 +5,7 @@ import {
   generateStructuredData,
   type PaginationConfig,
 } from '../components/common/pagination';
+import { getVisibleDocs } from './content/PostStatus-Filter';
 
 // ========== CONSTANTS ==========
 export const POSTS_PER_PAGE = 6;
@@ -62,16 +63,18 @@ export interface DocsPageData {
 // ========== MAIN FUNCTION ==========
 export async function getDocsPageData(currentPage: number): Promise<DocsPageData> {
   // コンテンツ取得とフィルタリング
-  const allPosts = await getCollection(
-    'docs',
-    ({ data }) =>
-      data.status === 'published' &&
-      data.publishedDate &&
-      new Date(data.publishedDate) <= new Date()
+  const allPosts = await getCollection('docs');
+  const visiblePosts = getVisibleDocs(allPosts);
+
+  // 公開日でフィルタリング（未来の日付は除外）
+  const filteredPosts = visiblePosts.filter(
+    (post) =>
+      post.data.publishedDate &&
+      new Date(post.data.publishedDate) <= new Date()
   );
 
   // 公開日順でソート
-  const sortedPosts = allPosts.sort(
+  const sortedPosts = filteredPosts.sort(
     (a: CollectionEntry<'docs'>, b: CollectionEntry<'docs'>) =>
       new Date(b.data.publishedDate).getTime() -
       new Date(a.data.publishedDate).getTime()

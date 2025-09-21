@@ -38,35 +38,45 @@ const { hasArticles, toolArticles, tool, formattedToolName } = Astro.props;
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
         </div>
-        <h2 class="empty-state-title">Coming Soon: {formattedToolName} Content</h2>
-        <p class="empty-state-description">
-          We're crafting comprehensive guides and tutorials for {formattedToolName}. 
-          Our team is working hard to bring you the best learning resources!
-        </p>
-        <div class="empty-state-actions">
-          <a href="/tools" class="empty-state-btn primary" aria-label="Browse other available tools">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-            </svg>
-            <span>Browse Other Tools</span>
-          </a>
-          <a href="/contact" class="empty-state-btn secondary" aria-label="Request content for this tool">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-            </svg>
-            <span>Request Content</span>
-          </a>
-        </div>
-        <div class="empty-state-suggestions">
-          <h3 class="suggestions-title">What to expect:</h3>
+         <h2 class="empty-state-title">Artikel {formattedToolName} Sedang Disiapkan</h2>
+         <p class="empty-state-description">
+           Artikel tentang {formattedToolName} sedang dalam tahap penyusunan.
+           <br />
+           Akan segera dipublikasikan, mohon tunggu sebentar.
+         </p>
+         <div class="empty-state-actions">
+           <a href="/tools" class="empty-state-btn primary" aria-label="Browse other available tools">
+             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+             </svg>
+             <span>Lihat Alat Lain</span>
+           </a>
+           <a href="/docs" class="empty-state-btn secondary" aria-label="Browse documentation">
+             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+             </svg>
+             <span>Lihat Dokumentasi</span>
+           </a>
+         </div>
+         <div class="empty-state-suggestions">
+           <h3 class="suggestions-title">Alat yang Direkomendasikan</h3>
           <div class="suggestions-list">
-            <span class="suggestion-item">Step-by-step tutorials</span>
-            <span class="suggestion-item">Best practices guide</span>
-            <span class="suggestion-item">Advanced techniques</span>
-            <span class="suggestion-item">Troubleshooting tips</span>
+            <a href="/tools/anki" class="suggestion-tool">
+              <span class="tool-icon">📚</span>
+              <span class="tool-name">Anki</span>
+            </a>
+            <a href="/tools/yomitan" class="suggestion-tool">
+              <span class="tool-icon">🔍</span>
+              <span class="tool-name">Yomitan</span>
+            </a>
+            <a href="/tools/language-reactor" class="suggestion-tool">
+              <span class="tool-icon">🎬</span>
+              <span class="tool-name">Language Reactor</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
   )}
 </div>
+

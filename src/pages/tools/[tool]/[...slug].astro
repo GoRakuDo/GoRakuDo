@@ -1,20 +1,21 @@
 ---
 // Import required dependencies for tool articles
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { statSync } from 'fs';
-import { join } from 'path';
+import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import PostLayout from '../../../layouts/PostLayout.astro';
 import Breadcrumb from '../../../components/public-components/Breadcrumb.astro';
 import TableOfContents from '../../../components/content/TableOfContents.astro';
 import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
+import { getMergedDates } from '../../../utils/content/cc-Auto-FileDates';
 
 // Import PostLayout styles
 import '../../../styles/layouts/PostLayout.css';
 
 // Generate static paths for all tool articles
 export async function getStaticPaths() {
-  const posts = await getCollection('tool-articles');
+  const allPosts = await getCollection('tool-articles');
+  const posts = getVisibleToolArticles(allPosts);
 
   return posts.map((post: CollectionEntry<'tool-articles'>) => {
     // Extract tool name from slug (first part before first slash)
@@ -86,27 +87,12 @@ const tocHeadings = headings.filter(
 const resolvedPath = { path: resolvePath('tool-articles', post.slug) };
 const collectionMetadata = getCollectionInfo('tool-articles');
 
-// Get file dates function for automatic creation/modification date tracking
-function getFileDates(slug: string) {
-  try {
-    const filePath = join(process.cwd(), 'src/content/tool-articles', `${slug}.md`);
-    const stats = statSync(filePath);
-
-    return {
-      createdDate: stats.birthtime.toISOString(),
-      modifiedDate: stats.mtime.toISOString(),
-    };
-  } catch (error) {
-    console.warn(`⚠️ Could not get file dates for ${slug}:`, error);
-    return {
-      createdDate: new Date().toISOString(),
-      modifiedDate: new Date().toISOString(),
-    };
-  }
-}
-
-// Get file dates automatically
-const fileDates = getFileDates(post.slug);
+// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
+const fileDates = getMergedDates(
+  { slug: post.slug, collection: 'tool-articles' },
+  post.data.publishedDate,
+  post.data.updatedDate
+);
 
 // Dynamic SEO data based on tool article content
 const seoData = {
@@ -118,8 +104,8 @@ const seoData = {
   articleType: 'tool-guide',
   learningStage: post.data.difficulty || 'intermediate',
   searchIntent: 'informational',
-  publishedDate: post.data.publishedDate || fileDates.createdDate,
-  modifiedDate: post.data.modifiedDate || fileDates.modifiedDate,
+  publishedDate: fileDates.publishedDate,
+  modifiedDate: fileDates.updatedDate,
   isDraft: post.data.isDraft || false,
 };
 
@@ -297,6 +283,68 @@ const breadcrumbConfig = {
   <!-- Sidebar Slot -->
   <TableOfContents slot="sidebar" headings={tocHeadings} />
 </PostLayout>
+
+<!-- Related Tools Section -->
+{
+  post.data.relatedTools && post.data.relatedTools.length > 0 && (
+    <section
+      class='related-tools-section mt-12 p-6 bg-surface border border-border rounded-lg'
+      role='complementary'
+      aria-labelledby='related-tools-title'
+    >
+      <h2
+        id='related-tools-title'
+        class='text-xl font-semibold text-foreground mb-4'
+      >
+        Tools Terkait
+      </h2>
+      <p class='text-muted-foreground text-sm mb-4'>
+        Tools lain yang memiliki keterkaitan dengan tool yang dibahas dalam
+        artikel ini.
+      </p>
+      <div class='related-tools-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+        {post.data.relatedTools.map((relatedTool: string) => (
+          <a
+            href={`/tools/${relatedTool.toLowerCase()}`}
+            class='related-tool-card group flex items-center gap-3 p-4 bg-primary/5 hover:bg-primary/10 border border-primary/20 hover:border-primary/30 rounded-lg transition-all duration-200 hover:scale-105'
+            aria-label={`Buka halaman detail ${relatedTool}`}
+          >
+            <div class='tool-icon-container flex-shrink-0'>
+              <img
+                src={`/icon/${relatedTool.toLowerCase()}-icon-240.webp`}
+                alt={`Ikon ${relatedTool}`}
+                class='w-8 h-8 object-contain'
+                loading='lazy'
+                decoding='async'
+              />
+            </div>
+            <div class='tool-info flex-1 min-w-0'>
+              <h3 class='font-medium text-foreground group-hover:text-primary transition-colors'>
+                {relatedTool}
+              </h3>
+              <p class='text-sm text-muted-foreground'>Tool Terkait</p>
+            </div>
+            <div class='arrow-icon flex-shrink-0 text-muted-foreground group-hover:text-primary transition-colors'>
+              <svg
+                class='w-4 h-4'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M9 5l7 7-7 7'
+                />
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
 
 <!-- Application Script with Enhanced Tool Article Features -->
 <script is:inline define:vars={{ postData, toolName, articleSlug }}>

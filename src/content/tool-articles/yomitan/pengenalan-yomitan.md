@@ -5,13 +5,10 @@ publishedDate: "2024-09-14T00:00:00.000Z"
 updatedDate: "2024-09-14T00:00:00.000Z"
 author: "GoRakuDo Team"
 toolName: "Yomitan"
-toolCategory: "browser-extension"
-toolVersion: "1.0.0"
-toolWebsite: "https://github.com/FooSoft/yomitan"
-emoji: "🔍"
 tags: ["yomitan", "reading", "browser-extension", "dictionary"]
 difficulty: "beginner"
 isDraft: false
+status: 'published'
 ---
 
 # Pengenalan Yomitan

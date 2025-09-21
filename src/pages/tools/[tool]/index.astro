@@ -6,9 +6,10 @@
 
 // Import required dependencies
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
-import Breadcrumb from '../../../components/public-components/Breadcrumb.astro';
+import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import ToolSearchPopover from '../../../components/tools/Tool-SearchPopover.astro';
 import ToolIdHeader from '../../../components/tools/Tool-IdHeader.astro';
 
@@ -19,7 +20,8 @@ import '../../../styles/pages/tools/[tool]/Tool-IdIndex.css';
 // Single function for tool discovery with caching
 async function getValidToolsFromCollection() {
   try {
-    const articles = await getCollection('tool-articles');
+    const allArticles = await getCollection('tool-articles');
+    const articles = getVisibleToolArticles(allArticles);
     const toolNames = new Set<string>();
 
     articles.forEach((article: CollectionEntry<'tool-articles'>) => {
@@ -37,12 +39,13 @@ async function getValidToolsFromCollection() {
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
-  const getValidToolsFromCollection = async () => {
+  const getAllToolsFromCollection = async () => {
     try {
-      const articles = await getCollection('tool-articles');
+      const allArticles = await getCollection('tool-articles');
       const toolNames = new Set<string>();
 
-      articles.forEach((article: CollectionEntry<'tool-articles'>) => {
+      // すべての記事（公開・非公開問わず）からツール名を取得
+      allArticles.forEach((article: CollectionEntry<'tool-articles'>) => {
         if (article.data.toolName) {
           toolNames.add(article.data.toolName.toLowerCase());
         }
@@ -55,10 +58,10 @@ export async function getStaticPaths() {
     }
   };
 
-  const validTools = await getValidToolsFromCollection();
-  return validTools.length === 0
+  const allTools = await getAllToolsFromCollection();
+  return allTools.length === 0
     ? []
-    : validTools.map(tool => ({
+    : allTools.map(tool => ({
         params: { tool },
         props: { toolName: tool },
       }));
@@ -70,18 +73,66 @@ const { tool } = Astro.params as { tool: string };
 // Early validation and redirect
 if (!tool) return Astro.redirect('/tools', 301);
 
-// Get tools and validate
-const validTools = await getValidToolsFromCollection();
-if (validTools.length === 0 || !validTools.includes(tool.toLowerCase())) {
+// Get all tools and validate
+const getAllToolsFromCollection = async () => {
+  try {
+    const allArticles = await getCollection('tool-articles');
+    const toolNames = new Set<string>();
+
+    allArticles.forEach((article: CollectionEntry<'tool-articles'>) => {
+      if (article.data.toolName) {
+        toolNames.add(article.data.toolName.toLowerCase());
+      }
+    });
+
+    return Array.from(toolNames).sort();
+  } catch (error) {
+    console.error('Failed to load tools from collection:', error);
+    return [];
+  }
+};
+
+const allTools = await getAllToolsFromCollection();
+if (allTools.length === 0 || !allTools.includes(tool.toLowerCase())) {
   return Astro.redirect('/tools', 301);
 }
 
 // Fetch and filter articles
-const articles = await getCollection('tool-articles');
-const toolArticles = articles.filter(
+const allArticles = await getCollection('tool-articles');
+const articles = getVisibleToolArticles(allArticles);
+
+// Filter articles for this tool (direct toolName match)
+const directToolArticles = articles.filter(
   (article: CollectionEntry<'tool-articles'>) =>
     article.data.toolName?.toLowerCase() === tool.toLowerCase()
 );
+
+// Filter articles that mention this tool in relatedTools
+const relatedToolArticles = articles.filter(
+  (article: CollectionEntry<'tool-articles'>) =>
+    article.data.relatedTools?.some(
+      (relatedTool: string) => relatedTool.toLowerCase() === tool.toLowerCase()
+    )
+);
+
+// Combine and deduplicate articles
+const allToolArticles = [...directToolArticles, ...relatedToolArticles];
+const uniqueToolArticles = allToolArticles.filter(
+  (
+    article: CollectionEntry<'tool-articles'>,
+    index: number,
+    self: CollectionEntry<'tool-articles'>[]
+  ) =>
+    index ===
+    self.findIndex(
+      (a: CollectionEntry<'tool-articles'>) => a.slug === article.slug
+    )
+);
+
+const toolArticles = uniqueToolArticles;
+
+// Check if there are any visible articles for this tool
+const hasVisibleArticles = toolArticles.length > 0;
 
 // ========== CENTRALIZED DATA MANAGEMENT ==========
 // All data processing centralized here for maximum efficiency and maintainability
@@ -115,7 +166,8 @@ const toolConfig = toolConfigs[
 
 const formattedToolName = tool.charAt(0).toUpperCase() + tool.slice(1);
 const currentYear = new Date(
-  articles[0]?.data.publishedDate || new Date()
+  (toolArticles[0] as CollectionEntry<'tool-articles'>)?.data.publishedDate ||
+    new Date()
 ).getFullYear();
 
 // ========== PROCESSED ARTICLE DATA ==========
@@ -125,6 +177,13 @@ const processedArticles = toolArticles.map(
     // Article slug processing
     const articleSlug =
       article.slug?.split('/').slice(1).join('/') || article.id;
+
+    // Determine article type (direct tool article or related tool article)
+    const isDirectToolArticle =
+      article.data.toolName?.toLowerCase() === tool.toLowerCase();
+    const isRelatedToolArticle = article.data.relatedTools?.some(
+      (relatedTool: string) => relatedTool.toLowerCase() === tool.toLowerCase()
+    );
 
     // Article title processing
     const articleTitle =
@@ -163,6 +222,10 @@ const processedArticles = toolArticles.map(
       hasImage,
       originalArticle: article,
       index,
+      // Add article type information
+      isDirectToolArticle,
+      isRelatedToolArticle,
+      articleType: isDirectToolArticle ? 'direct' : 'related',
     };
   }
 );

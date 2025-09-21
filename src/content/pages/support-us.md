@@ -3,9 +3,7 @@ title: 'Perjalanan Gorakudo: Rumah untuk 10.000 Mimpi'
 description: 'Dukung pengembangan GoRakuDo dan dapatkan apresiasi untuk kontribusi Anda dalam komunitas open-source ini.'
 publishedDate: '2025-09-09T00:00:00.000Z'
 author: 'Tim GoRakuDo'
-category: 'general'
-tags: ['dukungan', 'kontributor', 'komunitas', 'open-source']
-contentType: 'info'
+status: 'published'
 ---
 ## Titik Balik: Saat Mimpi Nyaris Terkubur
 

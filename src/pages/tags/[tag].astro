@@ -1,26 +1,30 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentCard from '../../components/content/tagCategories-cards.astro';
 
 // 静的パス生成 - 全タグのページを自動生成
 export async function getStaticPaths() {
-  const [docs, toolArticles] = await Promise.all([
+  const [allDocs, toolArticles] = await Promise.all([
     getCollection('docs'),
     getCollection('tool-articles'),
   ]);
+
+  // 表示可能なドキュメントのみを取得
+  const docs = getVisibleDocs(allDocs);
 
   // 全コンテンツからユニークなタグを抽出
   const allTags = new Set<string>();
 
   // docsコレクションからタグを抽出
-  docs.forEach(post => {
+  docs.forEach((post: CollectionEntry<'docs'>) => {
     const tags = post.data.tags || [];
     tags.forEach(tag => allTags.add(tag));
   });
 
   // tool-articlesコレクションからタグを抽出
-  toolArticles.forEach(post => {
+  toolArticles.forEach((post: CollectionEntry<'tool-articles'>) => {
     const tags = post.data.tags || [];
     tags.forEach(tag => allTags.add(tag));
   });
@@ -39,11 +43,12 @@ const { tag } = Astro.params;
 const { originalTag } = Astro.props;
 
 // 現在のタグに該当するコンテンツをフィルタリング
-const [docs, toolArticles] = await Promise.all([
+const [allDocs, toolArticles] = await Promise.all([
   getCollection('docs'),
   getCollection('tool-articles'),
 ]);
 
+const docs = getVisibleDocs(allDocs);
 const allContent = [...docs, ...toolArticles];
 const taggedContent = allContent.filter(post => {
   const tags = post.data.tags || [];

@@ -50,16 +50,12 @@ author: 'Tim GoRakuDo'
 
 # Tool-Specific Metadata
 toolName: 'Takoboto'
-toolVersion: '1.0.0'
-toolWebsite: 'https://takoboto.jp/'
-toolCategory: 'dictionary'
 
 # Difficulty and Setup Information
 difficulty: 'beginner'
 setupTime: '5 minutes'
 
 # Visual Elements
-emoji: '📖'
 icon: '/img/tools/takoboto-icon.png'
 
 # Content Classification

@@ -11,16 +11,12 @@ author: 'Tim GoRakuDo'
 
 # ========== ツール固有のメタデータ ==========
 toolName: '[ツール名]'  # 英語で記入（例: Takoboto, Jisho, etc.）
-toolVersion: '1.0.0'    # 現在のバージョン
-toolWebsite: 'https://example.com'  # 公式サイトURL
-toolCategory: 'dictionary'  # カテゴリ: dictionary, flashcard, browser-extension, etc.
 
 # ========== 難易度とセットアップ情報 ==========
 difficulty: 'beginner'  # beginner, intermediate, advanced
 setupTime: '5 minutes'  # セットアップにかかる時間
 
 # ========== 視覚的要素 ==========
-emoji: '📖'  # ツールを表す絵文字
 icon: '/img/tools/[ツール名]-icon.png'  # アイコンファイルのパス
 
 # ========== コンテンツ分類 ==========

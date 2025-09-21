@@ -112,7 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, type Ref } from "vue";
+import { ref, onMounted, onUnmounted, watch, type Ref } from 'vue';
 
 // ========== TYPE DEFINITIONS - STRICT MODE COMPLIANT ==========
 /**
@@ -152,7 +152,7 @@ const isOpen: Ref<boolean> = ref<boolean>(false);
  */
 function open(): void {
   isOpen.value = true;
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow = 'hidden';
 }
 
 /**
@@ -161,13 +161,13 @@ function open(): void {
  */
 function close(): void {
   isOpen.value = false;
-  document.body.style.overflow = "";
+  document.body.style.overflow = '';
 }
 
 // Expose methods to parent component
 defineExpose({
   open,
-  close
+  close,
 });
 
 // ========== EVENT HANDLERS - TYPE SAFE ==========
@@ -176,7 +176,7 @@ defineExpose({
  * REASONING: Type-safe keyboard event handling
  */
 function handleKeydown(e: CustomKeyboardEvent): void {
-  if (e.key === "Escape" && isOpen.value) {
+  if (e.key === 'Escape' && isOpen.value) {
     close();
   }
 }
@@ -226,20 +226,23 @@ function handleSwipe(): void {
  * REASONING: Type-safe DOM manipulation
  */
 function adjustModalForMobile(): void {
-  const modalOverlay: HTMLElement | null = document.querySelector(".modal-overlay");
-  const invitationContainer: HTMLElement | null = document.querySelector(".invitation-container");
+  const modalOverlay: HTMLElement | null =
+    document.querySelector('.modal-overlay');
+  const invitationContainer: HTMLElement | null = document.querySelector(
+    '.invitation-container'
+  );
 
   if (modalOverlay && invitationContainer) {
     if (window.innerHeight < 700) {
       // Small screen detected - adjust for mobile scrolling
-      modalOverlay.style.alignItems = "flex-start";
-      modalOverlay.style.paddingTop = "10px";
-      modalOverlay.style.paddingBottom = "10px";
+      modalOverlay.style.alignItems = 'flex-start';
+      modalOverlay.style.paddingTop = '10px';
+      modalOverlay.style.paddingBottom = '10px';
     } else {
       // Desktop - center the modal
-      modalOverlay.style.alignItems = "center";
-      modalOverlay.style.paddingTop = "20px";
-      modalOverlay.style.paddingBottom = "20px";
+      modalOverlay.style.alignItems = 'center';
+      modalOverlay.style.paddingTop = '20px';
+      modalOverlay.style.paddingBottom = '20px';
     }
   }
 }
@@ -255,18 +258,25 @@ onMounted(() => {
   (window as Window).closeInvitationModal = close;
 
   // Add keyboard event listener
-  document.addEventListener("keydown", handleKeydown);
+  document.addEventListener('keydown', handleKeydown);
 
   // Add touch event listeners for mobile gesture support
-  const modalOverlay: HTMLElement | null = document.querySelector(".modal-overlay");
+  const modalOverlay: HTMLElement | null =
+    document.querySelector('.modal-overlay');
   if (modalOverlay) {
-    modalOverlay.addEventListener("touchstart", handleTouchStart as unknown as EventListener);
-    modalOverlay.addEventListener("touchend", handleTouchEnd as unknown as EventListener);
+    modalOverlay.addEventListener(
+      'touchstart',
+      handleTouchStart as unknown as EventListener
+    );
+    modalOverlay.addEventListener(
+      'touchend',
+      handleTouchEnd as unknown as EventListener
+    );
   }
 
   // Adjust modal for mobile viewport
   adjustModalForMobile();
-  window.addEventListener("resize", adjustModalForMobile);
+  window.addEventListener('resize', adjustModalForMobile);
 
   // Add content animations when modal opens
   if (isOpen.value) {
@@ -274,18 +284,18 @@ onMounted(() => {
   }
 
   // Global event listener for opening modal from anywhere
-  window.addEventListener("open-invitation-modal", open);
+  window.addEventListener('open-invitation-modal', open);
 
   // Global function for opening modal with strict typing
   (window as Window).openInvitationModal = open;
 
   // Check URL parameter for modal opening
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("openModal") === "true") {
+  if (urlParams.get('openModal') === 'true') {
     open();
     // Clean up URL
     const newUrl = window.location.pathname;
-    window.history.replaceState({}, "", newUrl);
+    window.history.replaceState({}, '', newUrl);
   }
 });
 
@@ -295,17 +305,30 @@ onMounted(() => {
  */
 onUnmounted(() => {
   // Clean up event listeners
-  document.removeEventListener("keydown", handleKeydown as unknown as EventListener);
-  window.removeEventListener("resize", adjustModalForMobile);
+  document.removeEventListener(
+    'keydown',
+    handleKeydown as unknown as EventListener
+  );
+  window.removeEventListener('resize', adjustModalForMobile);
 
-  const modalOverlay: HTMLElement | null = document.querySelector(".modal-overlay");
+  const modalOverlay: HTMLElement | null =
+    document.querySelector('.modal-overlay');
   if (modalOverlay) {
-    modalOverlay.removeEventListener("touchstart", handleTouchStart as unknown as EventListener);
-    modalOverlay.removeEventListener("touchend", handleTouchEnd as unknown as EventListener);
+    modalOverlay.removeEventListener(
+      'touchstart',
+      handleTouchStart as unknown as EventListener
+    );
+    modalOverlay.removeEventListener(
+      'touchend',
+      handleTouchEnd as unknown as EventListener
+    );
   }
 
   // Clean up global listeners with strict typing
-  window.removeEventListener("open-invitation-modal", open as unknown as EventListener);
+  window.removeEventListener(
+    'open-invitation-modal',
+    open as unknown as EventListener
+  );
   delete window.openInvitationModal;
 });
 
@@ -329,19 +352,21 @@ watch(isOpen, (newValue: boolean) => {
  * REASONING: Type-safe DOM manipulation and animation
  */
 function animateContent(): void {
-  const elements: NodeListOf<Element> = document.querySelectorAll(".content p, .member-list li");
+  const elements: NodeListOf<Element> = document.querySelectorAll(
+    '.content p, .member-list li'
+  );
   elements.forEach((el: Element, index: number) => {
     const element: HTMLElement = el as HTMLElement;
-    element.style.opacity = "0";
-    element.style.transform = "translateY(20px)";
-    element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
 
     setTimeout(
       () => {
-        element.style.opacity = "1";
-        element.style.transform = "translateY(0)";
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
       },
-      (index + 1) * 100,
+      (index + 1) * 100
     );
   });
 }
@@ -349,7 +374,7 @@ function animateContent(): void {
 
 <style scoped>
 /* Import fonts to match discord.astro exactly */
-@import url("https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&display=swap');
 
 /* Modal overlay with responsive scrolling - FIXED for mobile overflow */
 .modal-overlay {
@@ -364,11 +389,15 @@ function animateContent(): void {
 
   /* Enable smooth scrolling on mobile */
 
- /* Enable vertical scrolling */
+  /* Enable vertical scrolling */
   width: 100%;
   height: 100%;
   padding: 20px;
-  background: linear-gradient(135deg, oklch(4% 0 0deg) 0%, oklch(10% 0 0deg) 100%);
+  background: linear-gradient(
+    135deg,
+    oklch(4% 0 0deg) 0%,
+    oklch(10% 0 0deg) 100%
+  );
   color: oklch(25% 0 0deg);
   -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
   scroll-behavior: smooth; /* Modern browsers */
@@ -656,8 +685,8 @@ function animateContent(): void {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizelegibility;
     font-feature-settings:
-      "liga" 1,
-      "kern" 1;
+      'liga' 1,
+      'kern' 1;
     text-shadow: 0 1px 2px oklch(0% 0 0deg / 0.05); /* Subtle shadow */
   }
 
@@ -727,7 +756,7 @@ function animateContent(): void {
     background: oklch(65% 0.25 280deg / 0.3);
     opacity: 0.6;
     transform: translateX(-50%);
-    content: "";
+    content: '';
   }
 
   .invitation-container::before {
@@ -975,7 +1004,8 @@ function animateContent(): void {
 
 /* Android Chrome specific adjustments */
 @media screen and (max-width: 768px) and (min-resolution: 1dppx) {
-  .invitation-container { /* Force hardware acceleration */
+  .invitation-container {
+    /* Force hardware acceleration */
     transform: translateZ(0);
   }
 
@@ -1008,7 +1038,7 @@ function animateContent(): void {
 
     /* Ensure proper overflow handling */
 
- /* Enable scrolling if content exceeds max-height */
+    /* Enable scrolling if content exceeds max-height */
     width: 600px; /* Fixed width on desktop */
     min-width: 600px;
     max-width: 600px;
@@ -1102,7 +1132,6 @@ function animateContent(): void {
     font-size: 0.85rem;
   }
 
-
   .content p {
     margin-bottom: 1em;
   }
@@ -1128,13 +1157,11 @@ function animateContent(): void {
     font-size: 1.1rem;
   }
 
-
   .signature-name {
     font-size: 1.8rem; /* Slightly smaller */
   }
 
   /* Ensure perfect centering on desktop */
-
 
   /* Maintain consistent visual hierarchy on desktop */
 

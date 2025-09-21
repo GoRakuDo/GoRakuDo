@@ -4,10 +4,6 @@ description: 'Setup dan penggunaan Anki dengan Spaced Repetition System (SRS) un
 publishedDate: '2025-09-16T00:00:00.000Z'
 author: 'Tim GoRakuDo'
 toolName: 'Anki'
-toolVersion: '2.1.66'
-toolWebsite: 'https://apps.ankiweb.net/'
-toolCategory: 'flashcard'
-emoji: '📚'
 icon: '/img/tools/anki-icon.png'
 tags: ['anki', 'srs', 'flashcard', 'vocabulary', 'kanji', 'memorization']
 categories: ['tools', 'tools/flashcard', 'tools/anki']
@@ -24,6 +20,7 @@ relatedTools:
   - 'yomichan'
   - 'migaku'
   - 'language-reactor'
+status: 'published'
 ---
 
 # Panduan Lengkap Anki untuk Pembelajaran Bahasa Jepang

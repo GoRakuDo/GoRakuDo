@@ -3,6 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolsHeader from '../../components/tools/Tools-Header.astro';
 import ToolsGridSection from '../../components/tools/Tools-GridSection.astro';
 
+// Import CSS
+import '../../styles/pages/tools/tools-index.css';
+
 // ========== INLINE TYPE DEFINITIONS ==========
 interface Tool {
   readonly id: string;
@@ -17,9 +20,6 @@ interface Tool {
     animationType?: 'scale' | 'slide' | 'fade';
   };
 }
-
-// Import CSS
-import '../../styles/pages/tools/tools-index.css';
 
 // Tools data - 中央集権化されたデータ管理
 const tools: Tool[] = [

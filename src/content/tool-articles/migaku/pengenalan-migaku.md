@@ -5,13 +5,10 @@ publishedDate: "2024-09-14T00:00:00.000Z"
 updatedDate: "2024-09-14T00:00:00.000Z"
 author: "GoRakuDo Team"
 toolName: "Migaku"
-toolCategory: "suite"
-toolVersion: "1.0.0"
-toolWebsite: "https://migaku.io"
-emoji: "🎯"
 tags: ["migaku", "immersion", "suite", "anki-integration"]
 difficulty: "intermediate"
 isDraft: false
+status: 'draft'
 ---
 
 # Pengenalan Migaku
@@ -25,6 +22,9 @@ Migaku adalah suite tools yang komprehensif untuk immersion learning bahasa Jepa
 - **Sentence Mining**: Ambil kalimat dari konten web untuk Anki
 - **Audio Extraction**: Ambil audio dari video untuk kartu flashcard
 - **Screenshot Mining**: Buat kartu dari screenshot dengan konteks visual
+
+![Migaku Browser Extension](/img/tools/migaku-extension.png)
+*Migaku Browser Extension interface*
 
 ### 2. Migaku Dictionary
 - Kamus bahasa Jepang yang terintegrasi

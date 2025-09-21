@@ -3,17 +3,14 @@ title: 'Panduan Lengkap Anki untuk Pembelajaran Bahasa Jepang'
 description: 'Setup dan penggunaan Anki dengan Spaced Repetition System (SRS) untuk menghafal kosakata dan kanji bahasa Jepang secara efektif.'
 publishedDate: '2025-01-25T00:00:00.000Z'
 author: 'Tim GoRakuDo'
+status: 'published'
 
 # Tool-Specific Metadata
 toolName: 'Anki'
-toolVersion: '2.1.66'
-toolWebsite: 'https://apps.ankiweb.net/'
-toolCategory: 'flashcard'
 
 # Difficulty and Setup Information
 
 # Visual Elements
-emoji: '📚'
 icon: '/img/tools/anki-icon.png'
 
 # Content Classification
@@ -67,11 +64,17 @@ SRS adalah teknik pembelajaran yang menampilkan kartu pada interval waktu yang o
 2. Download versi untuk sistem operasi Anda
 3. Install aplikasi dengan pengaturan default
 
+![Anki Download Page](/img/tools/anki-download.png)
+*Halaman download Anki dari website resmi*
+
 ### 2. Setup Awal
 
 1. Buka Anki dan buat akun AnkiWeb
 2. Login ke akun Anda
 3. Aktifkan sinkronisasi untuk backup otomatis
+
+![Anki Setup Interface](/img/tools/anki-setup.png)
+*Interface setup awal Anki*
 
 ### 3. Install Add-ons Penting
 

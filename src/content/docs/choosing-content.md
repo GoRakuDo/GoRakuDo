@@ -6,6 +6,7 @@ author: 'Tim GoRakuDo'
 emoji: '📺'
 categories: ['methodology', 'methodology/content-selection']
 tags: ['content-selection', 'anime', 'manga', 'i+1', 'comprehensible-input']
+status: 'published'
 ---
 
 # SAMPLE POST ASAL: Memilih Konten yang Tepat
