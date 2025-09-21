@@ -84,10 +84,7 @@
 .dot {
   border: none; /* Remove white border */
   background-color: rgb(
-    139
-    93
-    255 /
-    0.4
+    139 93 255 / 0.4
   ); /* Semi-transparent purple for inactive dots */
 
   opacity: 1; /* Ensure dots are always visible */
@@ -98,10 +95,7 @@
 /* Active dot styles - matches the 'active-dot' class from Astro */
 .dot.active-dot {
   border: none; /* Remove white border */
-  background-color: var(
-    --clr-accent
-  ); /* Active dot uses bright purple */
-
+  background-color: var(--clr-accent); /* Active dot uses bright purple */
   transform: scale(1.1); /* Active dot is larger */
   box-shadow: 0 4px 12px var(--clr-accent-shadow);
 }
@@ -110,6 +104,14 @@
 .long-press-indicator {
   z-index: 10;
   backdrop-filter: blur(2px);
+}
+
+/* Android optimization - reduce backdrop-filter on mobile */
+@media screen and (max-width: 768px) {
+  .long-press-indicator {
+    backdrop-filter: none;
+    background: rgb(0 0 0 / 0.2);
+  }
 }
 
 .long-press-indicator > div {
@@ -154,27 +156,21 @@
 
     /* Larger touch target for dots */
     padding: 0.25rem;
-    opacity: 1 ;
+    opacity: 1;
   }
 }
 
 /* Hover effects - only on desktop */
 @media (hover: hover) {
   .dot:hover {
-    background-color: var(
-      --clr-accent
-    ) ; /* Hover shows bright purple */
-
+    background-color: var(--clr-accent); /* Hover shows bright purple */
     box-shadow: 0 4px 12px rgb(0 0 0 / 0.6);
     transform: scale(1.15);
   }
 
   /* Active dot hover effect */
   .dot.active-dot:hover {
-    background-color: var(
-      --clr-accent
-    ) ; /* Active dot stays bright purple */
-
+    background-color: var(--clr-accent); /* Active dot stays bright purple */
     box-shadow: 0 6px 16px var(--clr-accent-shadow);
     transform: scale(1.1); /* Slightly larger on hover */
   }
@@ -188,7 +184,7 @@
   }
 
   .dot.active-dot:hover {
-    background-color: var(--clr-accent) ;
+    background-color: var(--clr-accent);
     box-shadow: 0 6px 16px var(--clr-accent-shadow);
     transform: scale(1.1);
   }
@@ -199,7 +195,7 @@
   .dot {
     min-width: 0.75rem;
     min-height: 0.75rem;
-    opacity: 1 ;
+    opacity: 1;
   }
 }
 

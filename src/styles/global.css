@@ -1125,7 +1125,17 @@
     border-radius: var(--radius-xl);
     background: oklch(12% 0.008 270deg / var(--opacity-8));
     box-shadow: var(--shadow-xl);
-    backdrop-filter: blur(16px);
+
+    /* Reduced backdrop-filter for better Android performance */
+    backdrop-filter: blur(6px);
+  }
+
+  /* Android optimization - remove heavy backdrop-filter */
+  @media screen and (max-width: 768px) {
+    .glass-panel {
+      backdrop-filter: none;
+      background: oklch(12% 0.008 270deg / var(--opacity-12));
+    }
   }
 
   /* ===== RESPONSIVE OVERRIDES - LEGACY COMPATIBILITY ===== */
@@ -1289,6 +1299,14 @@
     backdrop-filter: blur(var(--backdrop-blur-xl));
   }
 
+  /* Android optimization - disable heavy backdrop-filters on mobile */
+  @media screen and (max-width: 768px) {
+    .backdrop-blur-lg,
+    .backdrop-blur-xl {
+      backdrop-filter: blur(4px); /* Reduced blur for Android performance */
+    }
+  }
+
   /* ===== GLASSMORPHISM UTILITIES - REUSABLE COMPONENTS ===== */
   .glassmorphism {
     position: relative;
@@ -1307,9 +1325,29 @@
       0 4px 16px var(--clr-black-05),
       inset 0 1px 0 var(--clr-white-2),
       inset 0 -1px 0 var(--clr-white-1);
-    backdrop-filter: blur(4px) saturate(110%) brightness(105%);
-    will-change:
-      transform, background, border-color, box-shadow, backdrop-filter;
+
+    /* Reduced backdrop-filter for better Android performance */
+    backdrop-filter: blur(3px) saturate(110%) brightness(105%);
+    will-change: auto; /* Default to auto for better performance */
+  }
+
+  /* Enable will-change only during interactions */
+  .glassmorphism:hover,
+  .glassmorphism:focus {
+    will-change: transform, background, border-color, box-shadow;
+  }
+
+  /* Android optimization - simplified backdrop-filter */
+  @media screen and (max-width: 768px) {
+    .glassmorphism {
+      backdrop-filter: none;
+      background: linear-gradient(
+        135deg,
+        var(--clr-white-12) 0%,
+        var(--clr-white-08) 50%,
+        var(--clr-white-10) 100%
+      );
+    }
   }
 
   .glassmorphism::before {

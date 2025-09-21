@@ -106,24 +106,68 @@
 .glass-effect {
   border: 1px solid var(--tool-color-border);
   background: var(--tool-color-bg-card);
-  backdrop-filter: blur(20px);
+
+  /* Reduced blur for better Android performance */
+  backdrop-filter: blur(4px);
+}
+
+/* Android-specific optimization - disable heavy backdrop-filter */
+@media screen and (max-width: 768px) {
+  .glass-effect {
+    backdrop-filter: none;
+    background: var(--tool-color-bg-card-solid, var(--tool-color-bg-card));
+  }
 }
 
 .hover-lift {
   transition: transform var(--tool-transition-normal);
-  will-change: transform;
+  will-change: auto; /* Default to auto for better Android performance */
 }
 
 .hover-lift:hover {
   transform: translateY(-4px);
+  will-change: transform; /* Enable only during hover */
 }
 
 /* ========== PERFORMANCE OPTIMIZATIONS ========== */
 
-/* GPU acceleration for smooth animations */
+.suggestion-item {
+  position: relative;
+  overflow: hidden;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--tool-color-border);
+  border-radius: var(--radius-lg);
+  background: var(--tool-color-bg-card);
+  color: var(--tool-color-text-muted);
+  font-size: var(--tool-font-size-sm);
+  font-weight: 500;
+  transition: all var(--tool-transition-fast);
+}
+
+.empty-state-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--tool-transition-fast);
+}
+
+/* GPU acceleration for smooth animations - optimized for Android */
 .suggestion-item,
 .empty-state-btn {
   transform: translateZ(0);
+  will-change: auto; /* Default to auto for better performance */
+}
+
+/* Enable will-change only during interactions for better Android performance */
+.suggestion-item:hover,
+.suggestion-item:focus,
+.empty-state-btn:hover,
+.empty-state-btn:focus {
   will-change: transform;
 }
 
@@ -398,18 +442,6 @@
   margin-bottom: var(--spacing-2xl);
 }
 
-.empty-state-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-lg) var(--spacing-lg);
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  text-decoration: none;
-  transition: all var(--tool-transition-fast);
-}
-
 .empty-state-btn.primary {
   background: var(--tool-color-primary);
   color: white;
@@ -455,19 +487,6 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--spacing-sm);
-}
-
-.suggestion-item {
-  position: relative;
-  overflow: hidden;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--tool-color-border);
-  border-radius: var(--radius-lg);
-  background: var(--tool-color-bg-card);
-  color: var(--tool-color-text-muted);
-  font-size: var(--tool-font-size-sm);
-  font-weight: 500;
-  transition: all var(--tool-transition-fast);
 }
 
 .suggestion-item::before {
@@ -732,7 +751,21 @@
     oklch(from var(--clr-gold-dark) l c h / 0.08) 100%
   );
   animation: float 6s ease-in-out infinite;
-  backdrop-filter: blur(10px);
+
+  /* Reduced backdrop-filter for better Android performance */
+  backdrop-filter: blur(3px);
+}
+
+/* Mobile optimization - remove backdrop-filter for better performance */
+@media screen and (max-width: 768px) {
+  .floating-card {
+    backdrop-filter: none;
+    background: linear-gradient(
+      135deg,
+      oklch(from var(--clr-primary) l c h / 0.15) 0%,
+      oklch(from var(--clr-gold-dark) l c h / 0.12) 100%
+    );
+  }
 }
 
 .card-1 {

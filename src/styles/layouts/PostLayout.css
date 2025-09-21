@@ -29,6 +29,13 @@
   @apply max-sm:pt-12 max-sm:pb-4;
 }
 
+/* Android optimization - remove backdrop-filter on mobile for better performance */
+@media screen and (max-width: 768px) {
+  .content-page {
+    @apply backdrop-blur-none;
+  }
+}
+
 .content-container {
   @apply max-w-4xl pt-8 px-0 pb-0 box-border;
   @apply md:pt-6;
@@ -397,6 +404,40 @@
 code {
   padding: 0;
   background: none;
+}
+
+/* ========== ANDROID PERFORMANCE OPTIMIZATIONS ========== */
+
+/* Reduce expensive CSS effects on Android devices for better performance */
+@media screen and (max-width: 768px) {
+  /* Disable complex animations on Android */
+  .content-page *,
+  .content-container *,
+  .back-to-content,
+  .back-to-docs,
+  .back-to-tools,
+  .share-btn {
+    animation-duration: 0.2s; /* Faster animations for mobile */
+  }
+
+  /* Simplify transforms for better Android performance */
+  .back-to-content:hover,
+  .back-to-docs:hover,
+  .back-to-tools:hover,
+  .share-btn:hover {
+    transform: none; /* Remove transform on Android hover (touch devices) */
+  }
+
+  /* Optimize content rendering on Android */
+  .content-main {
+    contain: layout style; /* Remove paint containment for better Android compatibility */
+    will-change: auto;
+  }
+
+  /* Reduce box-shadow complexity on Android */
+  .content-actions {
+    box-shadow: none;
+  }
 }
 
 pre {

@@ -155,7 +155,12 @@
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* AC 2 & 7: Performance Optimization */
+  /* AC 2 & 7: Performance Optimization - optimized for Android */
+  will-change: auto;
+}
+
+.tool-card:hover,
+.tool-card:focus {
   will-change: transform, border-color, box-shadow;
 }
 
@@ -503,6 +508,11 @@
 }
 
 /* ========== アイコン ========== */
+.tool-icon:hover,
+.tool-icon:focus {
+  will-change: transform;
+}
+
 .tools-grid .tool-grid-item .tool-icon {
   position: relative;
   display: flex;
@@ -519,7 +529,7 @@
   contain: layout style;
   box-shadow: none;
   filter: drop-shadow(var(--shadow-icon));
-  will-change: transform;
+  will-change: auto; /* Optimized for Android performance */
 }
 
 .tool-icon-image:not([src]),

@@ -180,34 +180,4 @@ const breadcrumbConfig = {
   }
 
   window.sharePost = sharePost;
-
-  function addReadingProgress() {
-    const progressBar = document.createElement('div');
-    progressBar.className = 'reading-progress';
-    progressBar.setAttribute('role', 'progressbar');
-    progressBar.setAttribute('aria-label', 'Reading progress');
-    progressBar.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, #8b5dff, #7b4def);
-      z-index: 1000;
-      transition: width 0.1s ease;
-    `;
-    document.body.appendChild(progressBar);
-
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      progressBar.style.width = scrollPercent + '%';
-      progressBar.setAttribute('aria-valuenow', Math.round(scrollPercent));
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    addReadingProgress();
-  });
 </script>
