@@ -1,8 +1,16 @@
 ---
 // Import required dependencies for tool articles
 import { getCollection, type CollectionEntry } from 'astro:content';
-
+import { statSync } from 'fs';
+import { join } from 'path';
+import PostLayout from '../../../layouts/PostLayout.astro';
+import Breadcrumb from '../../../components/public-components/Breadcrumb.astro';
+import TableOfContents from '../../../components/content/TableOfContents.astro';
+import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
+
+// Import PostLayout styles
+import '../../../styles/layouts/PostLayout.css';
 
 // Generate static paths for all tool articles
 export async function getStaticPaths() {
@@ -67,87 +75,271 @@ if (!post) {
 }
 
 // Render the content
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 
-// Tag validation and error handling
-const hasValidTags =
-  post.data.tags && Array.isArray(post.data.tags) && post.data.tags.length > 0;
-const tagValidationStatus = hasValidTags ? 'valid' : 'invalid';
+// Filter headings for TOC (h2-h3 levels work best for navigation)
+const tocHeadings = headings.filter(
+  (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
+);
 
-// Log successful route access with validation status
-console.log('✅ Tool article accessed:', {
-  tool: toolName,
-  slug: articleSlug,
+// Dynamic content path resolution for SEO
+const resolvedPath = { path: resolvePath('tool-articles', post.slug) };
+const collectionMetadata = getCollectionInfo('tool-articles');
+
+// Get file dates function for automatic creation/modification date tracking
+function getFileDates(slug: string) {
+  try {
+    const filePath = join(process.cwd(), 'src/content/tool-articles', `${slug}.md`);
+    const stats = statSync(filePath);
+
+    return {
+      createdDate: stats.birthtime.toISOString(),
+      modifiedDate: stats.mtime.toISOString(),
+    };
+  } catch (error) {
+    console.warn(`⚠️ Could not get file dates for ${slug}:`, error);
+    return {
+      createdDate: new Date().toISOString(),
+      modifiedDate: new Date().toISOString(),
+    };
+  }
+}
+
+// Get file dates automatically
+const fileDates = getFileDates(post.slug);
+
+// Dynamic SEO data based on tool article content
+const seoData = {
+  title: post.data.title || `Tool Article - ${toolName}`,
+  description:
+    post.data.description ||
+    `Learn about ${toolName} with GoRakuDo tools and guides`,
+  keywords: post.data.tags || ['tools', toolName, 'guide'],
+  articleType: 'tool-guide',
+  learningStage: post.data.difficulty || 'intermediate',
+  searchIntent: 'informational',
+  publishedDate: post.data.publishedDate || fileDates.createdDate,
+  modifiedDate: post.data.modifiedDate || fileDates.modifiedDate,
+  isDraft: post.data.isDraft || false,
+};
+
+// Prepare data for client-side scripts
+const postData = {
   title: post.data.title,
-  tagValidationStatus: tagValidationStatus,
-  timestamp: new Date().toISOString(),
-});
+  description: post.data.description,
+  resolvedPath: resolvedPath.path,
+  toolName: toolName,
+};
+
+// Breadcrumb configuration for tools
+const breadcrumbConfig = {
+  currentPath: resolvedPath.path,
+  showHome: true,
+  variant: 'compact' as const,
+  showIcons: true,
+  ariaLabel: `Tool article navigation breadcrumb for ${toolName}`,
+};
+
 ---
 
-<!-- Article Header -->
-<header class='mb-8' role='banner'>
-  <h1 class='text-3xl font-bold text-foreground mb-4 sm:text-4xl lg:text-5xl'>
-    {post.data.title}
-  </h1>
-  <p class='text-muted-foreground text-lg mb-4'>
-    {post.data.description}
-  </p>
-  <div
-    class='flex items-center gap-4 text-muted-foreground text-sm'
-    role='contentinfo'
-  >
-    <time datetime={post.data.publishedDate}>
-      Published: {new Date(post.data.publishedDate).toLocaleDateString('id-ID')}
-    </time>
-    {
-      hasValidTags ? (
-        <nav class='flex gap-2 flex-wrap' aria-label='Article tags'>
-          {post.data.tags.map(tag => (
-            <span class='bg-primary/20 text-primary px-2 py-1 rounded text-xs border border-primary/30'>
-              {tag}
-            </span>
-          ))}
-        </nav>
-      ) : (
-        <span class='tag-warning' role='alert'>
+<PostLayout
+  title={seoData.title}
+  description={seoData.description}
+  publishedDate={seoData.publishedDate}
+  lang="id"
+  author={post.data.author || 'GoRakuDo Team'}
+  tags={seoData.keywords}
+  post={post}
+  collectionMetadata={collectionMetadata}
+  headings={tocHeadings}
+  postActions={true}
+  breadcrumbConfig={breadcrumbConfig}
+>
+  <!-- Breadcrumb Slot -->
+  <Breadcrumb 
+    slot="breadcrumb"
+    {post}
+    currentPath={breadcrumbConfig.currentPath}
+    showHome={breadcrumbConfig.showHome}
+    variant={breadcrumbConfig.variant}
+    showIcons={breadcrumbConfig.showIcons}
+    ariaLabel={breadcrumbConfig.ariaLabel}
+  />
+
+  <!-- Header Slot -->
+  <header slot="header" class='content-header mt-8'>
+    <h1>{post.data.title}</h1>
+    <p class='text-muted-foreground text-lg mb-4'>
+      {post.data.description}
+    </p>
+
+    <div class='content-meta' aria-label='Tool article metadata'>
+      <time class='content-date' datetime={seoData.publishedDate}>
+        {new Date(seoData.publishedDate).toLocaleDateString('id-ID', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </time>
+      <span class='content-author'>by {post.data.author || 'GoRakuDo Team'}</span>
+      <span class='tool-indicator'>Tool: {toolName}</span>
+    </div>
+
+    {post.data.tags && post.data.tags.length > 0 ? (
+      <nav class='flex gap-2 flex-wrap mt-4' aria-label='Article tags'>
+        {post.data.tags.map(tag => (
+          <span class='bg-primary/20 text-primary px-2 py-1 rounded text-xs border border-primary/30'>
+            {tag}
+          </span>
+        ))}
+      </nav>
+    ) : (
+      <div class='tag-warning mt-4' role='alert'>
+        <span class='text-warning text-sm'>
           No tags assigned - article may not appear in tool indexes
         </span>
-      )
-    }
-  </div>
-</header>
+      </div>
+    )}
+  </header>
 
-<!-- Article Content with Error Handling -->
-<main class='article-content' id='main-content' role='main'>
-  {
-    hasValidTags ? (
-      <article>
-        <Content />
-      </article>
+  <!-- Content Slot -->
+  <article 
+    slot="content"
+    class='prose prose-invert max-w-none content-main'
+    id='main-content'
+    aria-label='Tool article content'
+  >
+    {post.data.tags && post.data.tags.length > 0 ? (
+      <Content />
     ) : (
       <div class='fallback-content' role='alert'>
         <p class='text-warning mb-4'>
           This article is missing proper tag categorization. Content may not
           appear in tool indexes.
         </p>
-        <article>
-          <Content />
-        </article>
+        <Content />
       </div>
-    )
-  }
-</main>
+    )}
+  </article>
 
-<script>
+  <!-- Actions Slot -->
+  <footer slot="actions" class='content-actions'>
+    <div class='action-buttons'>
+      <a
+        href={`/tools/${toolName}`}
+        class='back-to-tools'
+        aria-label={`Back to ${toolName} tools`}
+      >
+        <svg
+          width='16'
+          height='16'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M19 12H5M12 19l-7-7 7-7' />
+        </svg>
+        Back to {toolName} tools
+      </a>
+
+      <a
+        href='/tools'
+        class='back-to-content'
+        aria-label='Back to all tools'
+      >
+        <svg
+          width='16'
+          height='16'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' />
+        </svg>
+        All Tools
+      </a>
+
+      <div class='share-buttons'>
+        <button
+          class='share-btn'
+          onclick='sharePost()'
+          aria-label='Share this tool article'
+        >
+          <svg
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8' />
+            <polyline points='16,6 12,2 8,6' />
+            <line x1='12' y1='2' x2='12' y2='15' />
+          </svg>
+          Share
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sidebar Slot -->
+  <TableOfContents slot="sidebar" headings={tocHeadings} />
+</PostLayout>
+
+<!-- Application Script with Enhanced Tool Article Features -->
+<script is:inline define:vars={{ postData, toolName, articleSlug }}>
+  // Share functionality with dynamic path support
+  function sharePost() {
+    const shareUrl = postData?.resolvedPath
+      ? `${window.location.origin}${postData.resolvedPath}`
+      : window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: postData?.title || `${toolName} Tool Guide`,
+        text: postData?.description || `Check out this ${toolName} guide from GoRakuDo`,
+        url: shareUrl,
+      });
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('Link berhasil disalin ke clipboard!');
+      });
+    }
+  }
+
+  // Make sharePost globally accessible for onclick handlers
+  window.sharePost = sharePost;
+
+  // Log successful tool article access
+  console.log('✅ Tool article accessed:', {
+    tool: toolName,
+    slug: articleSlug,
+    title: postData?.title,
+    timestamp: new Date().toISOString(),
+  });
+
+  // Performance monitoring
   document.addEventListener('DOMContentLoaded', () => {
-    // Performance monitoring
-    console.log('📊 Article Page Performance:');
+    console.log('📊 Tool Article Performance:');
     console.log('  🎯 Article loaded successfully');
-    console.log('  🏷️ Tag validation status:', '{tagValidationStatus}');
-    console.log('  📄 Title:', '{post.data.title}');
+    console.log('  🔧 Tool:', toolName);
+    console.log('  📄 Title:', postData?.title);
 
     // Accessibility enhancements
-    const articleContent = document.querySelector('.article-content');
+    const articleContent = document.querySelector('.content-main');
     if (articleContent) {
       // Add skip link for screen readers
       const skipLink = document.createElement('a');
@@ -157,18 +349,14 @@ console.log('✅ Tool article accessed:', {
       skipLink.textContent = 'Skip to main content';
       document.body.insertBefore(skipLink, document.body.firstChild);
 
-      // Add proper ARIA labels for images
-      const images = articleContent.querySelectorAll(
-        'img:not([alt])'
-      ) as NodeListOf<HTMLImageElement>;
+      // Add proper ARIA labels for images without alt text
+      const images = articleContent.querySelectorAll('img:not([alt])');
       images.forEach(img => {
-        img.alt = 'Article illustration';
+        img.alt = `${toolName} tool illustration`;
       });
 
       // Validate heading hierarchy
-      const headings = articleContent.querySelectorAll(
-        'h1, h2, h3, h4, h5, h6'
-      );
+      const headings = articleContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
       let lastLevel = 0;
       headings.forEach(heading => {
         const level = parseInt(heading.tagName.charAt(1));
@@ -178,21 +366,6 @@ console.log('✅ Tool article accessed:', {
           );
         }
         lastLevel = level;
-      });
-
-      // Basic contrast validation
-      const textElements = articleContent.querySelectorAll('p, span, div');
-      textElements.forEach(element => {
-        const computedStyle = window.getComputedStyle(element);
-        const color = computedStyle.color;
-        const backgroundColor = computedStyle.backgroundColor;
-
-        if (
-          color === 'rgb(255, 255, 255)' &&
-          backgroundColor === 'rgba(0, 0, 0, 0)'
-        ) {
-          console.log('✅ Accessibility: Good contrast detected on element');
-        }
       });
     }
   });
