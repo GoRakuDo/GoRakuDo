@@ -171,7 +171,7 @@ const formatToolName = (tool: string): string =>
 
   .card-date {
     color: var(--clr-text-muted);
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
     font-weight: 500;
   }
 
@@ -217,7 +217,7 @@ const formatToolName = (tool: string): string =>
     overflow: hidden;
     margin: 0 0 var(--spacing-sm) 0;
     color: var(--clr-text-primary);
-    font-size: clamp(var(--font-size-md), 2vw, var(--font-size-2xl));
+    font-size: clamp(var(--font-size-md), 2vw, var(--font-size-xl));
     font-weight: 600;
     line-height: 1.4;
     -webkit-line-clamp: 2;
@@ -244,7 +244,7 @@ const formatToolName = (tool: string): string =>
   .card-tags {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     gap: var(--spacing-sm);
     overflow-x: auto;

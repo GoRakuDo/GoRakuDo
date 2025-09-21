@@ -28,9 +28,9 @@ import { defineCollection, z } from 'astro:content';
 // 文字数制限設定
 const LIMITS = {
   TITLE_MIN: 1, // タイトルの最小文字数
-  TITLE_MAX: 100, // タイトルの最大文字数
+  TITLE_MAX: 180, // タイトルの最大文字数
   DESCRIPTION_MIN: 10, // 説明の最小文字数
-  DESCRIPTION_MAX: 200, // 説明の最大文字数
+  DESCRIPTION_MAX: 280, // 説明の最大文字数
   AUTHOR_MAX: 50, // 作者名の最大文字数
   CATEGORY_MAX: 30, // カテゴリ名の最大文字数
   TAG_MAX: 20, // タグ名の最大文字数

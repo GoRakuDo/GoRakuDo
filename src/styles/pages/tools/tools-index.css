@@ -18,19 +18,70 @@
   /* Borders & Shadows - ツールページ専用 */
 
   /* ボーダーラディウス変数はglobal.cssから継承 */
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg-accent: 0 10px 30px rgb(139 92 246 / 0.2);
+  --shadow-md:
+    0 4px 6px -1px oklch(0% 0 0deg / 0.1), 0 2px 4px -2px oklch(0% 0 0deg / 0.1);
+  --shadow-lg-accent: 0 10px 30px oklch(65% 0.15 280deg / 0.2);
 
   /* Transitions - ツールページ専用 */
 
   /* アニメーション変数はglobal.cssから継承 */
 
-  /* Safe color palette - predefined values only */
-  --clr-safe-accent: #8b5cf6;
-  --clr-safe-accent-dark: #7b4def;
-  --clr-safe-accent-glow-faint: rgb(139 92 246 / 0.05);
-  --clr-safe-accent-glow-medium: rgb(139 92 246 / 0.35);
-  --clr-safe-accent-glow-strong: rgb(139 92 246 / 0.7);
+  /* Safe color palette - OKLCH converted */
+  --clr-safe-accent: oklch(65% 0.15 280deg);
+  --clr-safe-accent-dark: oklch(60% 0.15 280deg);
+  --clr-safe-accent-glow-faint: oklch(65% 0.15 280deg / 0.05);
+  --clr-safe-accent-glow-medium: oklch(65% 0.15 280deg / 0.35);
+  --clr-safe-accent-glow-strong: oklch(65% 0.15 280deg / 0.7);
+
+  /* Base Colors */
+  --clr-white: oklch(100% 0 0deg);
+  --clr-black: oklch(0% 0 0deg);
+
+  /* Opacity Values */
+  --opacity-15: 0.15;
+  --opacity-20: 0.2;
+  --opacity-25: 0.25;
+  --opacity-30: 0.3;
+  --opacity-40: 0.4;
+
+  /* White Color Variations */
+  --clr-white-98: oklch(98% 0 0deg);
+  --clr-white-95: oklch(95% 0 0deg);
+  --clr-white-90: oklch(90% 0 0deg);
+  --clr-white-88: oklch(88% 0 0deg);
+  --clr-white-85: oklch(85% 0 0deg);
+  --clr-white-80: oklch(80% 0 0deg);
+  --clr-white-75: oklch(75% 0 0deg);
+  --clr-white-70: oklch(70% 0 0deg);
+
+  /* White Color with Opacity */
+  --clr-white-20: oklch(100% 0 0deg / var(--opacity-20));
+  --clr-white-30: oklch(100% 0 0deg / var(--opacity-30));
+
+  /* Black Color with Opacity */
+  --clr-black-15: oklch(0% 0 0deg / var(--opacity-15));
+  --clr-black-30: oklch(0% 0 0deg / var(--opacity-30));
+  --clr-black-40: oklch(0% 0 0deg / var(--opacity-40));
+
+  /* Gray Color Variations */
+  --clr-gray-30: oklch(30% 0 0deg);
+  --clr-gray-20: oklch(20% 0 0deg);
+
+  /* Purple Color Variations */
+  --clr-purple-70: oklch(70% 0.2 280deg);
+  --clr-purple-75: oklch(75% 0.25 280deg);
+  --clr-purple-80: oklch(80% 0.25 280deg);
+  --clr-purple-85: oklch(85% 0.2 280deg);
+  --clr-purple-75-22: oklch(75% 0.22 280deg);
+
+  /* Purple Color with Opacity */
+  --clr-purple-70-30: oklch(70% 0.2 280deg / var(--opacity-30));
+
+  /* Shadow Values */
+  --shadow-card-hover:
+    0 20px 40px -10px var(--clr-black-30), 0 8px 16px -4px var(--clr-black-15);
+  --shadow-icon: 0 4px 8px var(--clr-black-30);
+  --shadow-icon-hover: 0 6px 12px var(--clr-black-40);
 
   /* Tools Grid Section Component Variables */
   --tool-icon-scale: 1.05;
@@ -44,7 +95,7 @@
 /* body要素のスタイルは削除 - global.cssに委譲 */
 .container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1200px;
   margin-inline: auto;
   padding-inline: var(--spacing-lg);
 }
@@ -61,7 +112,7 @@
 .tools-title {
   margin-bottom: var(--spacing-md);
   font-size: var(--fs-h1);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .tools-description {
@@ -144,13 +195,13 @@
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--border-radius-pill);
   font-size: var(--fs-xs);
-  font-weight: 500;
+  font-weight: 450;
   text-transform: capitalize;
 }
 
 .tool-category {
-  border: 1px solid #4a4a50;
-  background-color: #2a2a2e;
+  border: 1px solid var(--clr-gray-30);
+  background-color: var(--clr-gray-20);
   color: var(--clr-text-secondary);
 }
 
@@ -162,7 +213,7 @@
   margin-bottom: var(--spacing-sm);
   color: var(--clr-text-primary);
   font-size: var(--fs-h3);
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .tool-description-card {
@@ -178,7 +229,7 @@
   margin-top: auto; /* フッターを下部に固定 */
   color: var(--clr-text-muted);
   font-size: var(--fs-sm);
-  font-weight: 500;
+  font-weight: 450;
   transition: color var(--transition-speed) var(--transition-ease);
 }
 
@@ -190,9 +241,7 @@
 .tool-card:hover {
   transform: translateY(-6px);
   border-color: var(--clr-accent-glow-strong);
-  box-shadow:
-    0 20px 40px -10px oklch(0% 0 0deg / 0.3),
-    0 8px 16px -4px oklch(0% 0 0deg / 0.15);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .tool-card:hover .tool-card-footer {
@@ -200,15 +249,15 @@
 }
 
 .tool-card:hover .tool-arrow {
-  color: oklch(100% 0 0deg);
+  color: var(--clr-white);
   transform: translateX(var(--tool-arrow-translate));
 }
 
 /* AC 10: Clear Focus Indicator */
 .tool-card:focus-visible {
-  outline: 3px solid oklch(70% 0.2 280deg);
+  outline: 3px solid var(--clr-purple-70);
   outline-offset: 2px;
-  box-shadow: 0 0 0 1px oklch(70% 0.2 280deg / 0.3);
+  box-shadow: 0 0 0 1px var(--clr-purple-70-30);
   transform: translateY(-1px);
   border-color: var(--clr-accent-glow-strong);
 }
@@ -469,7 +518,7 @@
   flex-shrink: 0;
   contain: layout style;
   box-shadow: none;
-  filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
+  filter: drop-shadow(var(--shadow-icon));
   will-change: transform;
 }
 
@@ -512,9 +561,9 @@
 .tools-grid .tool-grid-item .tool-name {
   flex: 1;
   margin: 0;
-  color: oklch(98% 0 0deg);
+  color: var(--clr-white-98);
   font-size: 1.685rem; /* ルート要素に相対 - REM単位 */
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.3;
   letter-spacing: -0.025em;
 }
@@ -551,9 +600,9 @@
   display: -webkit-box;
   overflow: hidden;
   margin: 0;
-  color: oklch(88% 0 0deg);
+  color: var(--clr-white-88);
   font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.5;
   flex-grow: 1;
   flex-shrink: 1;
@@ -576,7 +625,7 @@
   width: 100%;
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid oklch(100% 0 0deg / 0.2);
+  border-top: 1px solid var(--clr-white-20);
   flex-shrink: 0;
 }
 
@@ -590,13 +639,13 @@
   background: linear-gradient(
     90deg,
     transparent,
-    oklch(100% 0 0deg / 0.2),
+    var(--clr-white-20),
     transparent
   );
 }
 
 .tools-grid .tool-grid-item .tool-cta-text {
-  color: oklch(75% 0.25 280deg);
+  color: var(--clr-purple-75);
   font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
   font-weight: 600;
   letter-spacing: 0.025em;
@@ -605,7 +654,7 @@
 .tools-grid .tool-grid-item .tool-arrow {
   width: 18px; /* 固定サイズ - PX単位 */
   height: 18px; /* 固定サイズ - PX単位 */
-  color: oklch(85% 0.2 280deg);
+  color: var(--clr-purple-85);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -643,7 +692,7 @@
 .tool-card:hover .tool-icon {
   background: transparent;
   box-shadow: none;
-  filter: drop-shadow(0 6px 12px oklch(0% 0 0deg / 0.4));
+  filter: drop-shadow(var(--shadow-icon-hover));
   transform: scale(1.05);
 }
 
@@ -654,37 +703,37 @@
 }
 
 .tool-card:hover .tool-name {
-  color: oklch(100% 0 0deg);
+  color: var(--clr-white);
 }
 
 .tool-card:hover .tool-description-card {
-  color: oklch(90% 0 0deg);
+  color: var(--clr-white-90);
 }
 
 .tool-card:hover .tool-cta-text {
-  color: oklch(75% 0.22 280deg);
+  color: var(--clr-purple-75-22);
 }
 
 @media (prefers-contrast: high) {
   .tools-grid .tool-grid-item .tool-name {
-    color: oklch(100% 0 0deg);
+    color: var(--clr-white);
   }
 
   .tools-grid .tool-grid-item .tool-description-card {
-    color: oklch(95% 0 0deg);
+    color: var(--clr-white-95);
   }
 
   .tools-grid .tool-grid-item .tool-cta-text {
-    color: oklch(80% 0.25 280deg);
+    color: var(--clr-purple-80);
   }
 
   .tools-grid .tool-grid-item .tool-arrow {
-    color: oklch(100% 0 0deg);
+    color: var(--clr-white);
   }
 
   .tools-grid .tool-grid-item .tool-title-container {
     padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid oklch(100% 0 0deg / 0.3);
+    border-bottom: 1px solid var(--clr-white-30);
   }
 }
 
