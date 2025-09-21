@@ -2,9 +2,9 @@
 import { getEntry } from 'astro:content';
 import { statSync } from 'fs';
 import { join } from 'path';
-import UnifiedSEO from '../../components/UnifiedSEO.astro';
-import Navbar from '../../components/public-components/Navbar.astro';
 import PostLayout from '../../layouts/PostLayout.astro';
+import Breadcrumb from '../../components/public-components/Breadcrumb.astro';
+import TableOfContents from '../../components/content/TableOfContents.astro';
 import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 
@@ -69,108 +69,145 @@ const postData = {
   description: post.data.description,
   resolvedPath: resolvedPath.path,
 };
+
+// Breadcrumb configuration
+const breadcrumbConfig = {
+  currentPath: resolvedPath.path,
+  showHome: true,
+  variant: 'compact' as const,
+  showIcons: true,
+  ariaLabel: 'Support us page navigation breadcrumb',
+};
 ---
 
-<html lang='id'>
-  <head>
-    <UnifiedSEO
-      title={seoData.title}
-      description={seoData.description}
-      keywords={seoData.keywords}
-      pageType='article'
-      author={post.data.author || 'Tim GoRakuDo'}
-      publishedDate={seoData.publishedDate}
-      modifiedDate={seoData.modifiedDate}
-      noindex={seoData.isDraft}
-    />
+<PostLayout
+  title={seoData.title}
+  description={seoData.description}
+  publishedDate={seoData.publishedDate}
+  lang="id"
+  author={post.data.author || 'Tim GoRakuDo'}
+  tags={seoData.keywords}
+  post={post}
+  collectionMetadata={collectionMetadata}
+  headings={tocHeadings}
+  postActions={false}
+  breadcrumbConfig={breadcrumbConfig}
+>
+  <!-- Breadcrumb Slot -->
+  <Breadcrumb 
+    slot="breadcrumb"
+    {post}
+    currentPath={breadcrumbConfig.currentPath}
+    showHome={breadcrumbConfig.showHome}
+    variant={breadcrumbConfig.variant}
+    showIcons={breadcrumbConfig.showIcons}
+    ariaLabel={breadcrumbConfig.ariaLabel}
+  />
 
-    <link
-      href='https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&display=swap'
-      rel='stylesheet'
-    />
-  </head>
+  <!-- Header Slot -->
+  <header slot="header" class='content-header mt-8'>
+    <h1>{post.data.title}</h1>
 
-  <body>
-    <Navbar />
-
-    <PostLayout
-      post={post}
-      collectionMetadata={collectionMetadata}
-      postActions={false}
-      headings={tocHeadings}
-      breadcrumbConfig={{
-        variant: 'compact',
-        showIcons: true,
-        ariaLabel: 'Support us page navigation breadcrumb',
-      }}
-    >
-      <div class='support-content'>
-        <!-- Trakteer Widget in Sidebar -->
-        <TrakteerWidget
-          src='https://stream.trakteer.id/milestone/index.html?ms_font=Work+Sans&ms_icon=https%3A%2F%2Fedge-cdn.trakteer.id%2Fimages%2Fmix%2Fegis-in-bottle.png%3Fv%3D14-05-2025&ms_title=Project+Web+GoRakuDo&ms_1_clr1=rgba%28250%2C+250%2C+250%2C+0%29&ms_1_clr2=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr4=rgba%280%2C+0%2C+0%2C+1%29&ms_1_clr7=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr9=rgba%28190%2C+30%2C+45%2C+1%29&ms_sincedate=12-09-2025&ms_only_show_complete=true&ms_is_show_limit_milestone=false&ms_collapse_future_milestone=true&ms_show_total_limit_milestone=3&ms_collapse_complete_milestone=true&key=trstream-9QWbcPd1n8JhpZo9E1BV&mod=3&hash=b9073almo9r5ekzg&timestamp=1757688304'
-          title='Project Web GoRakuDo'
-          width='100%'
-          maxWidth='312px'
-          maxHeight='400px'
-          className='mt-4'
-          slot='additional-sidebar'
-        />
-        <Content />
+    {(post.data.publishedDate || post.data.author) && (
+      <div class='content-meta' aria-label='Post metadata'>
+        <time class='content-date' datetime={seoData.publishedDate}>
+          {new Date(seoData.publishedDate).toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+        <span class='content-author'>by {post.data.author || 'Tim GoRakuDo'}</span>
       </div>
-    </PostLayout>
+    )}
 
-    <script is:inline define:vars={{ postData }}>
-      function sharePost() {
-        const shareUrl = postData?.resolvedPath
-          ? `${window.location.origin}${postData.resolvedPath}`
-          : window.location.href;
+    {post.data.difficulty && (
+      <div class='content-tags'>
+        <span
+          class={`difficulty-badge difficulty-${post.data.difficulty}`}
+          aria-label={`Difficulty level: ${post.data.difficulty}`}
+        >
+          {post.data.difficulty}
+        </span>
+      </div>
+    )}
+  </header>
 
-        if (navigator.share) {
-          navigator.share({
-            title: postData?.title || 'Dukung Kami - GoRakuDo',
-            text:
-              postData?.description ||
-              'Dukung pengembangan GoRakuDo dan komunitas open-source ini',
-            url: shareUrl,
-          });
-        } else {
-          navigator.clipboard.writeText(shareUrl).then(() => {
-            alert('Link berhasil disalin ke clipboard!');
-          });
-        }
-      }
+  <!-- Content Slot -->
+  <article 
+    slot="content"
+    class='prose prose-invert max-w-none content-main'
+    id='contentMain'
+    aria-label='Post content'
+  >
+    <div class='support-content'>
+      <TrakteerWidget
+        slot="additional-sidebar"
+        src='https://stream.trakteer.id/milestone/index.html?ms_font=Work+Sans&ms_icon=https%3A%2F%2Fedge-cdn.trakteer.id%2Fimages%2Fmix%2Fegis-in-bottle.png%3Fv%3D14-05-2025&ms_title=Project+Web+GoRakuDo&ms_1_clr1=rgba%28250%2C+250%2C+250%2C+0%29&ms_1_clr2=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr4=rgba%280%2C+0%2C+0%2C+1%29&ms_1_clr7=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr9=rgba%28190%2C+30%2C+45%2C+1%29&ms_sincedate=12-09-2025&ms_only_show_complete=true&ms_is_show_limit_milestone=false&ms_collapse_future_milestone=true&ms_show_total_limit_milestone=3&ms_collapse_complete_milestone=true&key=trstream-9QWbcPd1n8JhpZo9E1BV&mod=3&hash=b9073almo9r5ekzg&timestamp=1757688304'
+        title='Project Web GoRakuDo'
+        width='100%'
+        maxWidth='312px'
+        maxHeight='400px'
+        className='mt-4'
+      />
+      <Content />
+    </div>
+  </article>
 
-      window.sharePost = sharePost;
+  <!-- Sidebar Slot -->
+  <TableOfContents slot="sidebar" headings={tocHeadings} />
+</PostLayout>
 
-      function addReadingProgress() {
-        const progressBar = document.createElement('div');
-        progressBar.className = 'reading-progress';
-        progressBar.setAttribute('role', 'progressbar');
-        progressBar.setAttribute('aria-label', 'Reading progress');
-        progressBar.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 0%;
-          height: 3px;
-          background: linear-gradient(90deg, #8b5dff, #7b4def);
-          z-index: 1000;
-          transition: width 0.1s ease;
-        `;
-        document.body.appendChild(progressBar);
+<script is:inline define:vars={{ postData }}>
+  function sharePost() {
+    const shareUrl = postData?.resolvedPath
+      ? `${window.location.origin}${postData.resolvedPath}`
+      : window.location.href;
 
-        window.addEventListener('scroll', () => {
-          const scrollTop = window.pageYOffset;
-          const docHeight = document.body.scrollHeight - window.innerHeight;
-          const scrollPercent = (scrollTop / docHeight) * 100;
-          progressBar.style.width = scrollPercent + '%';
-          progressBar.setAttribute('aria-valuenow', Math.round(scrollPercent));
-        });
-      }
-
-      document.addEventListener('DOMContentLoaded', function () {
-        addReadingProgress();
+    if (navigator.share) {
+      navigator.share({
+        title: postData?.title || 'Dukung Kami - GoRakuDo',
+        text:
+          postData?.description ||
+          'Dukung pengembangan GoRakuDo dan komunitas open-source ini',
+        url: shareUrl,
       });
-    </script>
-  </body>
-</html>
+    } else {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('Link berhasil disalin ke clipboard!');
+      });
+    }
+  }
+
+  window.sharePost = sharePost;
+
+  function addReadingProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'reading-progress';
+    progressBar.setAttribute('role', 'progressbar');
+    progressBar.setAttribute('aria-label', 'Reading progress');
+    progressBar.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, #8b5dff, #7b4def);
+      z-index: 1000;
+      transition: width 0.1s ease;
+    `;
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+      progressBar.setAttribute('aria-valuenow', Math.round(scrollPercent));
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    addReadingProgress();
+  });
+</script>

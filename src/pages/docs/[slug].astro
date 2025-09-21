@@ -2,9 +2,9 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { statSync } from 'fs';
 import { join } from 'path';
-import UnifiedSEO from '../../components/UnifiedSEO.astro';
-import Navbar from '../../components/public-components/Navbar.astro';
 import PostLayout from '../../layouts/PostLayout.astro';
+import Breadcrumb from '../../components/public-components/Breadcrumb.astro';
+import TableOfContents from '../../components/content/TableOfContents.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 
 // Import content page styles with Tailwind v4 optimization
@@ -94,72 +94,157 @@ const postData = {
   description: post.data.description,
   resolvedPath: resolvedPath.path,
 };
+
+// Breadcrumb configuration
+const breadcrumbConfig = {
+  currentPath: resolvedPath.path,
+  showHome: true,
+  variant: 'compact' as const,
+  showIcons: true,
+  ariaLabel: 'Documentation navigation breadcrumb',
+};
 ---
 
-<html lang='ja'>
-  <head>
-    <!-- UnifiedSEO - シンプルなAstroネイティブ実装 -->
-    <UnifiedSEO
-      title={seoData.title}
-      description={seoData.description}
-      keywords={seoData.keywords}
-      pageType='article'
-      author={post.data.author || 'GoRakuDo Team'}
-      publishedDate={seoData.publishedDate}
-      modifiedDate={seoData.modifiedDate}
-      noindex={seoData.isDraft}
-    />
+<PostLayout
+  title={seoData.title}
+  description={seoData.description}
+  publishedDate={seoData.publishedDate}
+  lang="ja"
+  author={post.data.author || 'GoRakuDo Team'}
+  tags={seoData.keywords}
+  post={post}
+  collectionMetadata={collectionMetadata}
+  headings={tocHeadings}
+  postActions={true}
+  breadcrumbConfig={breadcrumbConfig}
+>
+  <!-- Breadcrumb Slot -->
+  <Breadcrumb 
+    slot="breadcrumb"
+    {post}
+    currentPath={breadcrumbConfig.currentPath}
+    showHome={breadcrumbConfig.showHome}
+    variant={breadcrumbConfig.variant}
+    showIcons={breadcrumbConfig.showIcons}
+    ariaLabel={breadcrumbConfig.ariaLabel}
+  />
 
-    <!-- Fonts with display=swap for better performance -->
-    <link
-      href='https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&display=swap'
-      rel='stylesheet'
-    />
-  </head>
+  <!-- Header Slot -->
+  <header slot="header" class='content-header mt-8'>
+    <h1>{post.data.title}</h1>
 
-  <body>
-    <!-- Navigation -->
-    <Navbar />
+    {(post.data.publishedDate || post.data.author) && (
+      <div class='content-meta' aria-label='Post metadata'>
+        <time class='content-date' datetime={seoData.publishedDate}>
+          {new Date(seoData.publishedDate).toLocaleDateString('ja-JP', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+        <span class='content-author'>by {post.data.author || 'GoRakuDo Team'}</span>
+      </div>
+    )}
 
-    <!-- Use the new PostLayout component -->
-    <PostLayout
-      {post}
-      {collectionMetadata}
-      headings={tocHeadings}
-      breadcrumbConfig={{
-        variant: 'compact',
-        showIcons: true,
-        ariaLabel: 'Documentation navigation breadcrumb',
-      }}
-    >
-      <!-- Render the markdown content in the default slot -->
-      <Content />
-    </PostLayout>
+    {post.data.difficulty && (
+      <div class='content-tags'>
+        <span
+          class={`difficulty-badge difficulty-${post.data.difficulty}`}
+          aria-label={`Difficulty level: ${post.data.difficulty}`}
+        >
+          {post.data.difficulty}
+        </span>
+      </div>
+    )}
+  </header>
 
-    <!-- Main Application Script -->
-    <script is:inline define:vars={{ postData }}>
-      // Share functionality with dynamic path support
-      function sharePost() {
-        const shareUrl = postData?.resolvedPath
-          ? `${window.location.origin}${postData.resolvedPath}`
-          : window.location.href;
+  <!-- Content Slot -->
+  <article 
+    slot="content"
+    class='prose prose-invert max-w-none content-main'
+    id='contentMain'
+    aria-label='Post content'
+  >
+    <Content />
+  </article>
 
-        if (navigator.share) {
-          navigator.share({
-            title: postData?.title || 'GoRakuDo Post',
-            text: postData?.description || 'Check out this post from GoRakuDo',
-            url: shareUrl,
-          });
-        } else {
-          // Fallback: copy to clipboard
-          navigator.clipboard.writeText(shareUrl).then(() => {
-            alert('Link berhasil disalin ke clipboard!');
-          });
-        }
-      }
+  <!-- Actions Slot -->
+  <footer slot="actions" class='content-actions'>
+    <div class='action-buttons'>
+      <a
+        href={collectionMetadata.basePath}
+        class='back-to-docs'
+        aria-label={`Back to ${collectionMetadata.displayName}`}
+      >
+        <svg
+          width='16'
+          height='16'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M19 12H5M12 19l-7-7 7-7' />
+        </svg>
+        Back to {collectionMetadata.displayName}
+      </a>
 
-      // Make sharePost globally accessible for onclick handlers
-      window.sharePost = sharePost;
-    </script>
-  </body>
-</html>
+      <div class='share-buttons'>
+        <button
+          class='share-btn'
+          onclick='sharePost()'
+          aria-label='Share this post'
+        >
+          <svg
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8' />
+            <polyline points='16,6 12,2 8,6' />
+            <line x1='12' y1='2' x2='12' y2='15' />
+          </svg>
+          Share
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sidebar Slot -->
+  <TableOfContents slot="sidebar" headings={tocHeadings} />
+</PostLayout>
+
+<!-- Main Application Script -->
+<script is:inline define:vars={{ postData }}>
+  // Share functionality with dynamic path support
+  function sharePost() {
+    const shareUrl = postData?.resolvedPath
+      ? `${window.location.origin}${postData.resolvedPath}`
+      : window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: postData?.title || 'GoRakuDo Post',
+        text: postData?.description || 'Check out this post from GoRakuDo',
+        url: shareUrl,
+      });
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('Link berhasil disalin ke clipboard!');
+      });
+    }
+  }
+
+  // Make sharePost globally accessible for onclick handlers
+  window.sharePost = sharePost;
+</script>
