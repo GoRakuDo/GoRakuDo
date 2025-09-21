@@ -1,12 +1,12 @@
 ---
 import { getEntry } from 'astro:content';
-import { statSync } from 'fs';
-import { join } from 'path';
+import { getVisiblePages } from '../../utils/content/PostStatus-Filter';
 import UnifiedSEO from '../../components/UnifiedSEO.astro';
-import Navbar from '../../components/public-components/Navbar.astro';
+import Navbar from '../../components/common/Navbar.astro';
 import PostLayout from '../../layouts/PostLayout.astro';
 import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
+import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
 
 import '../../styles/layouts/PostLayout.css';
 
@@ -14,6 +14,11 @@ const post = await getEntry('pages', 'support-us');
 
 if (!post) {
   return Astro.redirect('/pages?error=post-not-found');
+}
+
+// ページのステータスをチェック（非公開の場合は404を返す）
+if (post.data.status !== 'published') {
+  return Astro.redirect('/404');
 }
 
 const { Content, headings } = await post.render();
@@ -25,43 +30,25 @@ const tocHeadings = headings.filter(
 const resolvedPath = { path: resolvePath('pages', post.slug) };
 const collectionMetadata = getCollectionInfo('pages');
 
-function getFileDates(slug: string) {
-  try {
-    const filePath = join(process.cwd(), 'src/content/pages', `${slug}.md`);
-    const stats = statSync(filePath);
-
-    return {
-      createdDate: stats.birthtime.toISOString(),
-      modifiedDate: stats.mtime.toISOString(),
-    };
-  } catch (error) {
-    console.warn(`⚠️ Could not get file dates for ${slug}:`, error);
-    return {
-      createdDate: new Date().toISOString(),
-      modifiedDate: new Date().toISOString(),
-    };
-  }
-}
-
-const fileDates = getFileDates(post.slug);
+// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
+const fileDates = getMergedDates(
+  { slug: post.slug, collection: 'pages' },
+  post.data.publishedDate,
+  post.data.updatedDate
+);
 
 const seoData = {
   title: post.data.title || `Dukung Kami - GoRakuDo`,
   description:
     post.data.description ||
     `Dukung pengembangan GoRakuDo dan dapatkan apresiasi untuk kontribusi Anda dalam komunitas open-source ini.`,
-  keywords: post.data.tags || [
-    'dukungan',
-    'kontributor',
-    'komunitas',
-    'open-source',
-  ],
+  keywords: ['dukungan', 'kontributor', 'komunitas', 'open-source'],
   articleType: 'guide',
-  learningStage: post.data.difficulty || 'beginner',
+  learningStage: 'beginner',
   searchIntent: 'informational',
-  publishedDate: post.data.publishedDate || fileDates.createdDate,
-  modifiedDate: post.data.modifiedDate || fileDates.modifiedDate,
-  isDraft: post.data.isDraft || false,
+  publishedDate: fileDates.publishedDate,
+  modifiedDate: fileDates.updatedDate,
+  isDraft: false,
 };
 
 const postData = {

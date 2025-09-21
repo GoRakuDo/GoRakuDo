@@ -4,6 +4,7 @@
 // File: src/pages/tools/ToolsSearch.json.ts
 
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { getVisibleToolArticles } from '../../utils/content/PostStatus-Filter';
 import { resolvePath } from '../../utils/collections';
 import { logger } from '../../utils/logging/console-logger';
 
@@ -14,7 +15,6 @@ interface ToolsSearchItem {
   title: string;
   description: string;
   pubDate: string;
-  emoji?: string;
   content: string;
   fullContent: string;
   tags: string[];
@@ -85,10 +85,12 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
     logger.log('Generating tools-only search data JSON endpoint...', 'info');
 
     // ========== COLLECT TOOL ARTICLES CONTENT COLLECTION ==========
-    const toolArticles: CollectionEntry<'tool-articles'>[] =
+    const allToolArticles: CollectionEntry<'tool-articles'>[] =
       await getCollection('tool-articles');
+    const toolArticles: CollectionEntry<'tool-articles'>[] =
+      getVisibleToolArticles(allToolArticles);
 
-    logger.log(`Found ${toolArticles.length} tool articles`, 'success');
+    logger.log(`Found ${toolArticles.length} visible tool articles (${allToolArticles.length} total)`, 'success');
 
     // ========== DYNAMIC TOOL NAME DISCOVERY ==========
     const availableToolNames: string[] =
@@ -122,7 +124,6 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
           title: article.data.title,
           description: article.data.description,
           pubDate: article.data.publishedDate,
-          emoji: article.data.emoji,
 
           // Content
           content: cleanedContent,

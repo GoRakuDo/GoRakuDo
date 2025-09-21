@@ -4,6 +4,7 @@
 // File: src/pages/docs/DocsSearch.json.ts
 
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { resolvePath } from '../../utils/collections';
 import { logger } from '../../utils/logging/console-logger';
 
@@ -50,9 +51,10 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
     logger.log('Generating docs-only search data JSON endpoint...', 'info');
 
     // ========== COLLECT DOCS CONTENT COLLECTION ==========
-    const docsPosts: CollectionEntry<'docs'>[] = await getCollection('docs');
+    const allDocsPosts: CollectionEntry<'docs'>[] = await getCollection('docs');
+    const docsPosts: CollectionEntry<'docs'>[] = getVisibleDocs(allDocsPosts);
 
-    logger.log(`Found ${docsPosts.length} docs posts`, 'success');
+    logger.log(`Found ${docsPosts.length} visible docs posts (${allDocsPosts.length} total)`, 'success');
 
     // ========== PROCESS DOCS POSTS ==========
     const docsSearchData: DocsSearchItem[] = docsPosts.map(

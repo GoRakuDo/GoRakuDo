@@ -172,19 +172,11 @@ graph TD
 ```mermaid
 graph TD
     A[pages] --> B[基本情報]
-    A --> C[分類・タグ]
-    A --> D[ページタイプ設定]
     
-    B --> B1[title: 1-100文字]
-    B --> B2[description: 10-200文字]
+    B --> B1[title: 1-180文字]
+    B --> B2[description: 10-280文字]
     B --> B3[publishedDate: ISO形式]
     B --> B4[author: デフォルト値あり]
-    
-    C --> C1[category: 1-30文字]
-    C --> C2[tags: 最大10個]
-    C --> C3[featured: おすすめフラグ]
-    
-    D --> D1[contentType: 3種類から選択]
 ```
 
 ### 🛠️ tool-articles コレクション
@@ -211,12 +203,8 @@ graph TD
     B --> B5[author: デフォルト値あり]
     
     C --> C1[toolName: 1-50文字]
-    C --> C2[toolVersion: バージョン形式]
-    C --> C3[toolWebsite: URL形式]
-    C --> C4[toolCategory: 任意のカテゴリ名を設定可能]
     
-    E --> E1[emoji: 絵文字のみ]
-    E --> E2[icon: ファイルパス形式]
+    E --> E1[icon: ファイルパス形式]
     
     F --> F1[categories: 1-3個]
     F --> F2[tags: 最大10個]

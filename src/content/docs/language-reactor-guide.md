@@ -7,6 +7,7 @@ tags: ["language-reactor", "immersion", "video-learning", "subtitle"]
 difficulty: "intermediate"
 author: "GoRakuDo Team"
 isDraft: false
+status: 'published'
 ---
 
 # Language Reactor Guide

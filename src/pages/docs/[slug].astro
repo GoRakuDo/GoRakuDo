@@ -1,20 +1,24 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { statSync } from 'fs';
-import { join } from 'path';
 import UnifiedSEO from '../../components/UnifiedSEO.astro';
-import Navbar from '../../components/public-components/Navbar.astro';
+import Navbar from '../../components/common/Navbar.astro';
 import PostLayout from '../../layouts/PostLayout.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
+import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
+import {
+  getVisibleDocs,
+  getDocStatus,
+} from '../../utils/content/PostStatus-Filter';
 
 // Import content page styles with Tailwind v4 optimization
 import '../../styles/layouts/PostLayout.css';
 
 // Generate static paths for all docs posts
 export async function getStaticPaths() {
-  const posts = await getCollection('docs');
+  const allPosts = await getCollection('docs');
+  const visiblePosts = getVisibleDocs(allPosts);
 
-  return posts.map((post: CollectionEntry<'docs'>) => ({
+  return visiblePosts.map((post: CollectionEntry<'docs'>) => ({
     params: { slug: post.slug },
     props: { post },
   }));
@@ -50,27 +54,12 @@ const tocHeadings = headings.filter(
 const resolvedPath = { path: resolvePath('docs', post.slug) };
 const collectionMetadata = getCollectionInfo('docs');
 
-// ファイルシステムから自動的に作成日・更新日を取得
-function getFileDates(slug: string) {
-  try {
-    const filePath = join(process.cwd(), 'src/content/docs', `${slug}.md`);
-    const stats = statSync(filePath);
-
-    return {
-      createdDate: stats.birthtime.toISOString(),
-      modifiedDate: stats.mtime.toISOString(),
-    };
-  } catch (error) {
-    console.warn(`⚠️ Could not get file dates for ${slug}:`, error);
-    return {
-      createdDate: new Date().toISOString(),
-      modifiedDate: new Date().toISOString(),
-    };
-  }
-}
-
-// ファイルの作成日・更新日を自動取得
-const fileDates = getFileDates(post.slug);
+// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
+const fileDates = getMergedDates(
+  { slug: post.slug, collection: 'docs' },
+  post.data.publishedDate,
+  post.data.updatedDate
+);
 
 // Dynamic SEO data based on document content (フロントマター完全対応 + 自動日付)
 const seoData = {
@@ -83,8 +72,8 @@ const seoData = {
   learningStage: post.data.difficulty || 'intermediate', // ✅ difficultyフィールドを使用
   searchIntent: 'informational',
   // フロントマターの日付があれば使用、なければファイルシステムの日付を使用
-  publishedDate: post.data.publishedDate || fileDates.createdDate,
-  modifiedDate: post.data.modifiedDate || fileDates.modifiedDate,
+  publishedDate: fileDates.publishedDate,
+  modifiedDate: fileDates.updatedDate,
   isDraft: post.data.isDraft || false,
 };
 

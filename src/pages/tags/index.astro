@@ -1,13 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TagCloud from '../../components/navigation/TagCloud.astro';
 
 // 全タグの統計情報を取得
-const [docs, toolArticles] = await Promise.all([
+const [allDocs, toolArticles] = await Promise.all([
   getCollection('docs'),
   getCollection('tool-articles'),
 ]);
+
+const docs = getVisibleDocs(allDocs);
 
 const allContent = [...docs, ...toolArticles];
 
@@ -26,31 +29,35 @@ const sortedTagStats = Array.from(tagStats.entries())
 
 const seoData = {
   title: 'All Tags - GoRakuDo',
-  description: 'Browse all tags used in GoRakuDo content. Find articles and guides by topic.',
+  description:
+    'Browse all tags used in GoRakuDo content. Find articles and guides by topic.',
   keywords: ['tags', 'japanese learning', 'immersion', 'topics'],
 };
 ---
 
-<BaseLayout 
-  title={seoData.title} 
+<BaseLayout
+  title={seoData.title}
   description={seoData.description}
   keywords={seoData.keywords}
-  pageType="website"
-  lang="id"
+  pageType='website'
+  lang='id'
 >
-  <main class="container mx-auto px-4 py-8 max-w-4xl">
+  <main class='container mx-auto px-4 py-8 max-w-4xl'>
     <!-- ページヘッダー -->
-    <header class="mb-8 text-center">
-      <h1 class="text-3xl font-bold mb-4">All Tags</h1>
-      <p class="text-gray-600 mb-6">
+    <header class='mb-8 text-center'>
+      <h1 class='text-3xl font-bold mb-4'>All Tags</h1>
+      <p class='text-gray-600 mb-6'>
         Browse content by tags. Click on any tag to see all related posts.
       </p>
-      
+
       <!-- 統計情報 -->
-      <div class="bg-gray-50 rounded-lg p-4 mb-8 dark:bg-gray-800">
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <strong>{sortedTagStats.length}</strong> tags • <strong>{allContent.length}</strong> posts • 
-          Most used: <strong>{sortedTagStats[0]?.tag}</strong> ({sortedTagStats[0]?.count} posts)
+      <div class='bg-gray-50 rounded-lg p-4 mb-8 dark:bg-gray-800'>
+        <p class='text-sm text-gray-600 dark:text-gray-400'>
+          <strong>{sortedTagStats.length}</strong> tags • <strong
+            >{allContent.length}</strong
+          > posts • Most used: <strong>{sortedTagStats[0]?.tag}</strong> ({
+            sortedTagStats[0]?.count
+          } posts)
         </p>
       </div>
     </header>
@@ -59,36 +66,53 @@ const seoData = {
     <TagCloud tags={sortedTagStats} />
 
     <!-- 人気タグ -->
-    {sortedTagStats.length > 0 && (
-      <div class="mt-8">
-        <h2 class="text-xl font-semibold mb-4 text-center">Popular Tags</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sortedTagStats.slice(0, 6).map(({ tag, count }, index) => {
-            const slug = tag.toLowerCase().replace(/ /g, '-');
-            return (
-              <a
-                href={`/tags/${slug}`}
-                class="p-4 border rounded-lg hover:shadow-md transition-all duration-200 hover:scale-105 dark:border-gray-700 dark:hover:bg-gray-800"
-              >
-                <div class="flex items-center justify-between mb-2">
-                  <span class="font-medium">#{tag}</span>
-                  <span class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">#{index + 1}</span>
-                </div>
-                <div class="text-sm text-gray-600 dark:text-gray-400">
-                  {count} post{count !== 1 ? 's' : ''}
-                </div>
-              </a>
-            );
-          })}
+    {
+      sortedTagStats.length > 0 && (
+        <div class='mt-8'>
+          <h2 class='text-xl font-semibold mb-4 text-center'>Popular Tags</h2>
+          <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            {sortedTagStats.slice(0, 6).map(({ tag, count }, index) => {
+              const slug = tag.toLowerCase().replace(/ /g, '-');
+              return (
+                <a
+                  href={`/tags/${slug}`}
+                  class='p-4 border rounded-lg hover:shadow-md transition-all duration-200 hover:scale-105 dark:border-gray-700 dark:hover:bg-gray-800'
+                >
+                  <div class='flex items-center justify-between mb-2'>
+                    <span class='font-medium'>#{tag}</span>
+                    <span class='text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full'>
+                      #{index + 1}
+                    </span>
+                  </div>
+                  <div class='text-sm text-gray-600 dark:text-gray-400'>
+                    {count} post{count !== 1 ? 's' : ''}
+                  </div>
+                </a>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
 
     <!-- ナビゲーション -->
-    <nav class="mt-8 text-center">
-      <a href="/categories" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors dark:text-blue-400 dark:hover:text-blue-300">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+    <nav class='mt-8 text-center'>
+      <a
+        href='/categories'
+        class='inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors dark:text-blue-400 dark:hover:text-blue-300'
+      >
+        <svg
+          class='w-4 h-4'
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
+        >
+          <path
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            stroke-width='2'
+            d='M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10'
+          ></path>
         </svg>
         Browse by Categories →
       </a>

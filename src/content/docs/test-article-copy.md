@@ -5,6 +5,7 @@ publishedDate: "2024-12-31T00:00:00.000Z"
 author: "Tim GoRakuDo"
 categories: ["testing", "testing/seo", "testing/mdx"]
 tags: ["test", "mdx", "seo", "unified"]
+status: 'published'
 ---
 
 # テスト記事: MD/MDX対応の検証

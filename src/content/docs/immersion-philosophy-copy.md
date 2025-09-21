@@ -16,6 +16,7 @@ tags:
     'input-hypothesis',
     'natural-approach',
   ]
+status: 'published'
 ---
 
 # SAMPLE POST ASAL: Filosofi Immersion: Landasan Metodologi Pembelajaran Bahasa Jepang

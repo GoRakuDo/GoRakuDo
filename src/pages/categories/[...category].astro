@@ -1,26 +1,30 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentCard from '../../components/content/tagCategories-cards.astro';
 
 // 静的パス生成 - 全カテゴリのページを自動生成
 export async function getStaticPaths() {
-  const [docs, toolArticles] = await Promise.all([
+  const [allDocs, toolArticles] = await Promise.all([
     getCollection('docs'),
     getCollection('tool-articles'),
   ]);
+
+  // 表示可能なドキュメントのみを取得
+  const docs = getVisibleDocs(allDocs);
 
   // 全コンテンツからユニークなカテゴリパスを抽出
   const allCategoryPaths = new Set<string>();
 
   // docsコレクションからカテゴリを抽出
-  docs.forEach(post => {
+  docs.forEach((post: CollectionEntry<'docs'>) => {
     const categories = post.data.categories || [];
     categories.forEach(category => allCategoryPaths.add(category));
   });
 
   // tool-articlesコレクションからカテゴリを抽出
-  toolArticles.forEach(post => {
+  toolArticles.forEach((post: CollectionEntry<'tool-articles'>) => {
     const categories = post.data.categories || [];
     categories.forEach(category => allCategoryPaths.add(category));
   });
@@ -39,11 +43,12 @@ const { category } = Astro.params;
 const { originalCategory } = Astro.props;
 
 // 現在のカテゴリに該当するコンテンツをフィルタリング
-const [docs, toolArticles] = await Promise.all([
+const [allDocs, toolArticles] = await Promise.all([
   getCollection('docs'),
   getCollection('tool-articles'),
 ]);
 
+const docs = getVisibleDocs(allDocs);
 const allContent = [...docs, ...toolArticles];
 const categoryContent = allContent.filter(post => {
   const categories = post.data.categories || [];

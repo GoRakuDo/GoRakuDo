@@ -1,12 +1,15 @@
 ---
 // Import required dependencies for tool articles
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 
 import { logger } from '../../../utils/logging/console-logger';
+import { getMergedDates } from '../../../utils/content/cc-Auto-FileDates';
 
 // Generate static paths for all tool articles
 export async function getStaticPaths() {
-  const posts = await getCollection('tool-articles');
+  const allPosts = await getCollection('tool-articles');
+  const posts = getVisibleToolArticles(allPosts);
 
   return posts.map((post: CollectionEntry<'tool-articles'>) => {
     // Extract tool name from slug (first part before first slash)
@@ -69,19 +72,17 @@ if (!post) {
 // Render the content
 const { Content } = await post.render();
 
+// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
+const fileDates = getMergedDates(
+  { slug: post.slug, collection: 'tool-articles' },
+  post.data.publishedDate,
+  post.data.updatedDate
+);
+
 // Tag validation and error handling
 const hasValidTags =
   post.data.tags && Array.isArray(post.data.tags) && post.data.tags.length > 0;
 const tagValidationStatus = hasValidTags ? 'valid' : 'invalid';
-
-// Log successful route access with validation status
-console.log('✅ Tool article accessed:', {
-  tool: toolName,
-  slug: articleSlug,
-  title: post.data.title,
-  tagValidationStatus: tagValidationStatus,
-  timestamp: new Date().toISOString(),
-});
 ---
 
 <!-- Article Header -->
@@ -96,8 +97,8 @@ console.log('✅ Tool article accessed:', {
     class='flex items-center gap-4 text-muted-foreground text-sm'
     role='contentinfo'
   >
-    <time datetime={post.data.publishedDate}>
-      Published: {new Date(post.data.publishedDate).toLocaleDateString('id-ID')}
+    <time datetime={fileDates.publishedDate}>
+      Published: {new Date(fileDates.publishedDate).toLocaleDateString('id-ID')}
     </time>
     {
       hasValidTags ? (
@@ -137,6 +138,68 @@ console.log('✅ Tool article accessed:', {
     )
   }
 </main>
+
+<!-- Related Tools Section -->
+{
+  post.data.relatedTools && post.data.relatedTools.length > 0 && (
+    <section
+      class='related-tools-section mt-12 p-6 bg-surface border border-border rounded-lg'
+      role='complementary'
+      aria-labelledby='related-tools-title'
+    >
+      <h2
+        id='related-tools-title'
+        class='text-xl font-semibold text-foreground mb-4'
+      >
+        Tools Terkait
+      </h2>
+      <p class='text-muted-foreground text-sm mb-4'>
+        Tools lain yang memiliki keterkaitan dengan tool yang dibahas dalam
+        artikel ini.
+      </p>
+      <div class='related-tools-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+        {post.data.relatedTools.map((relatedTool: string) => (
+          <a
+            href={`/tools/${relatedTool.toLowerCase()}`}
+            class='related-tool-card group flex items-center gap-3 p-4 bg-primary/5 hover:bg-primary/10 border border-primary/20 hover:border-primary/30 rounded-lg transition-all duration-200 hover:scale-105'
+            aria-label={`Buka halaman detail ${relatedTool}`}
+          >
+            <div class='tool-icon-container flex-shrink-0'>
+              <img
+                src={`/icon/${relatedTool.toLowerCase()}-icon-240.webp`}
+                alt={`Ikon ${relatedTool}`}
+                class='w-8 h-8 object-contain'
+                loading='lazy'
+                decoding='async'
+              />
+            </div>
+            <div class='tool-info flex-1 min-w-0'>
+              <h3 class='font-medium text-foreground group-hover:text-primary transition-colors'>
+                {relatedTool}
+              </h3>
+              <p class='text-sm text-muted-foreground'>Tool Terkait</p>
+            </div>
+            <div class='arrow-icon flex-shrink-0 text-muted-foreground group-hover:text-primary transition-colors'>
+              <svg
+                class='w-4 h-4'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M9 5l7 7-7 7'
+                />
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

@@ -6,6 +6,7 @@ author: 'Tim GoRakuDo'
 emoji: '🚀'
 categories: ['getting-started', 'getting-started/basics']
 tags: ['immersion', 'beginner', 'hiragana', 'katakana', 'kanji']
+status: 'published'
 ---
 
 # SAMPLE POST ASAL: Memulai Perjalanan Immersion
