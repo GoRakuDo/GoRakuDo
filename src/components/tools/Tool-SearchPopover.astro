@@ -17,11 +17,11 @@ export interface Props {
 
 // ========== PROPS DESTRUCTURING WITH VALIDATION ==========
 const {
-  placeholder = 'Search...',
+  placeholder = 'Cari...',
   searchAction = '/search',
   className = '',
-  ariaLabel = 'Open search interface',
-  tooltip = 'Search',
+  ariaLabel = 'Buka antarmuka pencarian',
+  tooltip = 'Cari',
   toolFilter = '', // ツール固有フィルター（デフォルトは空文字列）
   buttonStyle = 'circular', // デフォルトは丸いボタン
 } = Astro.props;
@@ -30,7 +30,7 @@ const {
 const sanitizedSearchAction = searchAction.startsWith('/')
   ? searchAction
   : '/search';
-const sanitizedPlaceholder = placeholder.trim() || 'Search...';
+const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 ---
 
 <!-- ========== OPTIMIZED SEARCH COMPONENT ========== -->
@@ -91,7 +91,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
             d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
           />
         </svg>
-        <span class='search-text'>Search</span>
+        <span class='search-text'>Cari</span>
         <span class='sr-only'>{ariaLabel}</span>
       </button>
     )
@@ -103,7 +103,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     class='search-popover glassmorphism glassmorphism-card'
     popover='auto'
     role='search'
-    aria-label='Search interface'
+    aria-label='Antarmuka pencarian'
     aria-modal='true'
   >
     <!-- ========== SEARCH FORM ========== -->
@@ -114,7 +114,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
       novalidate
     >
       <div class='search-input-wrapper'>
-        <label for='search-query' class='sr-only'>Search query</label>
+        <label for='search-query' class='sr-only'>Kueri pencarian</label>
         <input
           id='search-query'
           type='search'
@@ -122,7 +122,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
           class='search-input'
           placeholder={sanitizedPlaceholder}
           autocomplete='off'
-          aria-label='Search query'
+          aria-label='Kueri pencarian'
           aria-describedby='search-help'
           required
           minlength='1'
@@ -131,8 +131,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
         <button
           type='submit'
           class='search-submit-btn'
-          aria-label='Submit search query'
-          title='Submit search'
+          aria-label='Kirim kueri pencarian'
+          title='Kirim pencarian'
         >
           <svg
             fill='none'
@@ -147,11 +147,11 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
               stroke-width='2'
               d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
           </svg>
-          <span class='sr-only'>Submit search</span>
+          <span class='sr-only'>Kirim pencarian</span>
         </button>
       </div>
       <div id='search-help' class='sr-only'>
-        Enter your search terms and press Enter or click the search button
+        Masukkan kata kunci pencarian dan tekan Enter atau klik tombol cari
       </div>
     </form>
 
@@ -160,14 +160,14 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
       id='search-results'
       class='search-results'
       aria-live='polite'
-      aria-label='Search results'
+      aria-label='Hasil pencarian'
     >
       <div class='search-results-header'>
-        <h3 class='search-results-title'>Search Results</h3>
+        <h3 class='search-results-title'>Hasil Pencarian</h3>
         <button
           id='clear-search'
           class='clear-search-btn'
-          aria-label='Clear search results'
+          aria-label='Hapus hasil pencarian'
         >
           <svg
             fill='none'
@@ -188,7 +188,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
       </div>
       <div id='search-loading' class='search-loading' style='display: none;'>
         <div class='loading-spinner'></div>
-        <span>Searching...</span>
+        <span>Mencari...</span>
       </div>
       <div
         id='search-no-results'
@@ -209,14 +209,64 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
               d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
           </svg>
         </div>
-        <h4>No results found</h4>
-        <p>Try different keywords or check your spelling</p>
+        <h4>Tidak ada hasil ditemukan</h4>
+        <p>Coba kata kunci yang berbeda atau periksa ejaan Anda</p>
       </div>
     </div>
   </div>
 </div>
 
 <style>
+  /* ========== DESIGN TOKENS ========== */
+  :root {
+    /* Base Colors */
+    --color-white: oklch(1 0 0);
+    --color-black: oklch(0 0 0);
+
+    /* Accent Colors */
+    --color-accent-primary: oklch(0.6 0.15 296.9);
+    --color-accent-secondary: oklch(0.55 0.15 296.9);
+    --color-accent-tertiary: oklch(0.5 0.15 296.9);
+    --color-accent-quaternary: oklch(0.45 0.15 296.9);
+    --color-success: oklch(0.6 0.15 160);
+
+    /* Opacity Variants */
+    --color-white-05: oklch(1 0 0 / 0.05);
+    --color-white-08: oklch(1 0 0 / 0.08);
+    --color-white-1: oklch(1 0 0 / 0.1);
+    --color-white-12: oklch(1 0 0 / 0.12);
+    --color-white-15: oklch(1 0 0 / 0.15);
+    --color-white-18: oklch(1 0 0 / 0.18);
+    --color-white-2: oklch(1 0 0 / 0.2);
+    --color-white-25: oklch(1 0 0 / 0.25);
+    --color-white-3: oklch(1 0 0 / 0.3);
+    --color-white-4: oklch(1 0 0 / 0.4);
+    --color-white-5: oklch(1 0 0 / 0.5);
+    --color-white-6: oklch(1 0 0 / 0.6);
+    --color-white-7: oklch(1 0 0 / 0.7);
+    --color-white-8: oklch(1 0 0 / 0.8);
+    --color-white-9: oklch(1 0 0 / 0.9);
+    --color-white-95: oklch(1 0 0 / 0.95);
+
+    --color-black-05: oklch(0 0 0 / 0.05);
+    --color-black-1: oklch(0 0 0 / 0.1);
+    --color-black-15: oklch(0 0 0 / 0.15);
+    --color-black-2: oklch(0 0 0 / 0.2);
+    --color-black-5: oklch(0 0 0 / 0.5);
+    --color-black-8: oklch(0 0 0 / 0.8);
+
+    /* Accent Color Variants */
+    --color-accent-1: oklch(0.6 0.15 296.9 / 0.1);
+    --color-accent-15: oklch(0.6 0.15 296.9 / 0.15);
+    --color-accent-2: oklch(0.6 0.15 296.9 / 0.2);
+    --color-accent-25: oklch(0.6 0.15 296.9 / 0.25);
+    --color-accent-3: oklch(0.6 0.15 296.9 / 0.3);
+    --color-accent-4: oklch(0.6 0.15 296.9 / 0.4);
+
+    /* Success Color Variants */
+    --color-success-2: oklch(0.6 0.15 160 / 0.2);
+  }
+
   /* ========== OPTIMIZED CSS WITH CLAMP() AND CSS VARIABLES ========== */
 
   /* Screen Reader Only */
@@ -245,20 +295,20 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    border: 1px solid rgb(255 255 255 / 0.25);
+    border: 1px solid var(--color-white-25);
     background: linear-gradient(
       135deg,
-      rgb(255 255 255 / 0.12) 0%,
-      rgb(255 255 255 / 0.08) 50%,
-      rgb(255 255 255 / 0.1) 100%
+      var(--color-white-12) 0%,
+      var(--color-white-08) 50%,
+      var(--color-white-1) 100%
     );
-    color: rgb(255 255 255 / 0.95);
+    color: var(--color-white-95);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow:
-      0 4px 16px rgb(0 0 0 / 0.1),
-      0 2px 8px rgb(0 0 0 / 0.05),
-      inset 0 1px 0 rgb(255 255 255 / 0.2);
+      0 4px 16px var(--color-black-1),
+      0 2px 8px var(--color-black-05),
+      inset 0 1px 0 var(--color-white-2);
     backdrop-filter: blur(15px) saturate(180%);
   }
 
@@ -284,9 +334,9 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     content: '';
     background: linear-gradient(
       135deg,
-      rgb(139 93 255 / 0.1) 0%,
-      rgb(59 130 246 / 0.1) 50%,
-      rgb(16 185 129 / 0.1) 100%
+      var(--color-accent-1) 0%,
+      oklch(0.6 0.15 240 / 0.1) 50%,
+      oklch(0.6 0.15 160 / 0.1) 100%
     );
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -303,15 +353,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   .search-toggle-btn:hover {
     background: linear-gradient(
       135deg,
-      rgb(255 255 255 / 0.18) 0%,
-      rgb(255 255 255 / 0.12) 50%,
-      rgb(255 255 255 / 0.15) 100%
+      var(--color-white-18) 0%,
+      var(--color-white-12) 50%,
+      var(--color-white-15) 100%
     );
-    border-color: rgb(255 255 255 / 0.4);
+    border-color: var(--color-white-4);
     box-shadow:
-      0 8px 24px rgb(0 0 0 / 0.15),
-      0 4px 12px rgb(0 0 0 / 0.1),
-      inset 0 1px 0 rgb(255 255 255 / 0.3);
+      0 8px 24px var(--color-black-15),
+      0 4px 12px var(--color-black-1),
+      inset 0 1px 0 var(--color-white-3);
     transform: translateY(-2px) scale(1.05);
   }
 
@@ -335,15 +385,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   .search-toggle-btn[aria-expanded='true'] {
     background: linear-gradient(
       135deg,
-      rgb(139 93 255 / 0.25) 0%,
-      rgb(139 93 255 / 0.15) 50%,
-      rgb(139 93 255 / 0.2) 100%
+      var(--color-accent-25) 0%,
+      var(--color-accent-15) 50%,
+      var(--color-accent-2) 100%
     );
-    border-color: var(--clr-accent, #8b5dff);
+    border-color: var(--clr-accent, var(--color-accent-primary));
     box-shadow:
-      0 6px 20px rgb(139 93 255 / 0.3),
-      0 2px 8px rgb(139 93 255 / 0.2),
-      inset 0 1px 0 rgb(255 255 255 / 0.3);
+      0 6px 20px var(--color-accent-3),
+      0 2px 8px var(--color-accent-2),
+      inset 0 1px 0 var(--color-white-3);
   }
 
   .search-icon {
@@ -391,7 +441,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   .search-popover::backdrop {
-    background: rgb(0 0 0 / 0.5);
+    background: var(--color-black-5);
     backdrop-filter: blur(8px);
     animation: backdropFadeIn 0.3s ease;
   }
@@ -423,7 +473,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     position: relative;
     flex: 1;
     padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2.5vw, 1.25rem);
-    border: 1px solid rgb(255 255 255 / 0.2);
+    border: 1px solid var(--color-white-2);
     border-radius: clamp(1rem, 2.5vw, 1.5rem);
     background: linear-gradient(
       135deg,
@@ -442,7 +492,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   .search-input::placeholder {
-    color: rgb(255 255 255 / 0.6);
+    color: var(--color-white-6);
     font-weight: 300;
     transition: color 0.3s ease;
   }
@@ -451,20 +501,20 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     outline: none;
     background: linear-gradient(
       135deg,
-      rgb(255 255 255 / 0.12) 0%,
-      rgb(255 255 255 / 0.18) 50%,
-      rgb(255 255 255 / 0.12) 100%
+      var(--color-white-12) 0%,
+      var(--color-white-18) 50%,
+      var(--color-white-12) 100%
     );
-    border-color: var(--clr-accent, #8b5dff);
+    border-color: var(--clr-accent, var(--color-accent-primary));
     box-shadow:
-      0 0 0 3px rgb(139 93 255 / 0.15),
-      0 4px 12px rgb(139 93 255 / 0.1),
-      inset 0 1px 0 rgb(255 255 255 / 0.2);
+      0 0 0 3px var(--color-accent-15),
+      0 4px 12px var(--color-accent-1),
+      inset 0 1px 0 var(--color-white-2);
     transform: translateY(-1px);
   }
 
   .search-input:focus::placeholder {
-    color: rgb(255 255 255 / 0.4);
+    color: var(--color-white-4);
   }
 
   .search-submit-btn {
@@ -479,18 +529,18 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     border-radius: clamp(1rem, 2.5vw, 1.5rem);
     background: linear-gradient(
       135deg,
-      var(--clr-accent, #8b5dff) 0%,
-      #7c3aed 50%,
-      #6d28d9 100%
+      var(--clr-accent, var(--color-accent-primary)) 0%,
+      var(--color-accent-secondary) 50%,
+      var(--color-accent-tertiary) 100%
     );
     color: #fff;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
     box-shadow:
-      0 4px 12px rgb(139 93 255 / 0.3),
-      0 2px 6px rgb(139 93 255 / 0.2),
-      inset 0 1px 0 rgb(255 255 255 / 0.2);
+      0 4px 12px var(--color-accent-3),
+      0 2px 6px var(--color-accent-2),
+      inset 0 1px 0 var(--color-white-2);
   }
 
   .search-submit-btn::before {
@@ -509,11 +559,16 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   .search-submit-btn:hover {
-    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%);
+    background: linear-gradient(
+      135deg,
+      oklch(0.55 0.15 296.9) 0%,
+      oklch(0.5 0.15 296.9) 50%,
+      oklch(0.45 0.15 296.9) 100%
+    );
     box-shadow:
-      0 8px 20px rgb(139 93 255 / 0.4),
-      0 4px 10px rgb(139 93 255 / 0.3),
-      inset 0 1px 0 rgb(255 255 255 / 0.3);
+      0 8px 20px var(--color-accent-4),
+      0 4px 10px var(--color-accent-3),
+      inset 0 1px 0 var(--color-white-3);
     transform: translateY(-2px) scale(1.05);
   }
 
@@ -699,7 +754,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   @media (prefers-contrast: high) {
     .search-toggle-btn {
       border: 2px solid #fff;
-      background: rgb(0 0 0 / 0.8);
+      background: var(--color-black-8);
     }
 
     .search-popover {
@@ -708,7 +763,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
 
     .search-input {
       border: 2px solid #fff;
-      background: rgb(0 0 0 / 0.8);
+      background: var(--color-black-8);
     }
   }
 
@@ -738,13 +793,13 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   /* Light Mode Support */
   @media (prefers-color-scheme: light) {
     .search-input {
-      background: rgb(0 0 0 / 0.1);
-      color: #000;
-      border-color: rgb(0 0 0 / 0.2);
+      background: var(--color-black-1);
+      color: var(--color-black);
+      border-color: var(--color-black-2);
     }
 
     .search-input::placeholder {
-      color: rgb(0 0 0 / 0.5);
+      color: var(--color-black-5);
     }
   }
 
@@ -755,7 +810,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     max-height: clamp(300px, 50vh, 500px);
     margin-top: clamp(1rem, 2.5vw, 1.5rem);
     padding-top: clamp(1rem, 2.5vw, 1.5rem);
-    border-top: 1px solid rgb(255 255 255 / 0.1);
+    border-top: 1px solid var(--color-white-1);
   }
 
   .search-results-header {
@@ -767,7 +822,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
 
   .search-results-title {
     margin: 0;
-    color: rgb(255 255 255 / 0.9);
+    color: var(--color-white-9);
     font-size: clamp(0.875rem, 2vw, 1rem);
     font-weight: 600;
   }
@@ -778,18 +833,18 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     align-items: center;
     width: clamp(1.5rem, 3vw, 2rem);
     height: clamp(1.5rem, 3vw, 2rem);
-    border: 1px solid rgb(255 255 255 / 0.2);
+    border: 1px solid var(--color-white-2);
     border-radius: 50%;
-    background: rgb(255 255 255 / 0.1);
-    color: rgb(255 255 255 / 0.7);
+    background: var(--color-white-1);
+    color: var(--color-white-7);
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
   .clear-search-btn:hover {
-    background: rgb(255 255 255 / 0.15);
-    color: rgb(255 255 255 / 0.9);
-    border-color: rgb(255 255 255 / 0.3);
+    background: var(--color-white-15);
+    color: var(--color-white-9);
+    border-color: var(--color-white-3);
   }
 
   .clear-search-btn svg {
@@ -811,9 +866,9 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     border-radius: clamp(0.5rem, 1.5vw, 0.75rem);
     background: linear-gradient(
       135deg,
-      rgb(255 255 255 / 0.05) 0%,
-      rgb(255 255 255 / 0.08) 50%,
-      rgb(255 255 255 / 0.05) 100%
+      var(--color-white-05) 0%,
+      var(--color-white-08) 50%,
+      var(--color-white-05) 100%
     );
     color: inherit;
     text-decoration: none;
@@ -824,11 +879,11 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   .search-result-item:hover {
     background: linear-gradient(
       135deg,
-      rgb(255 255 255 / 0.08) 0%,
-      rgb(255 255 255 / 0.12) 50%,
-      rgb(255 255 255 / 0.08) 100%
+      var(--color-white-08) 0%,
+      var(--color-white-12) 50%,
+      var(--color-white-08) 100%
     );
-    border-color: rgb(255 255 255 / 0.2);
+    border-color: var(--color-white-2);
     transform: translateY(-1px);
   }
 
@@ -839,7 +894,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
 
   .search-result-title {
     margin: 0 0 clamp(0.25rem, 0.8vw, 0.5rem);
-    color: rgb(255 255 255 / 0.95);
+    color: var(--color-white-95);
     font-size: clamp(0.875rem, 2vw, 1rem);
     font-weight: 600;
     line-height: 1.4;
@@ -849,7 +904,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     display: -webkit-box;
     overflow: hidden;
     margin: 0 0 clamp(0.5rem, 1.2vw, 0.75rem);
-    color: rgb(255 255 255 / 0.7);
+    color: var(--color-white-7);
     font-size: clamp(0.75rem, 1.8vw, 0.875rem);
     line-height: 1.5;
     -webkit-line-clamp: 2;
@@ -860,15 +915,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     display: flex;
     align-items: center;
     gap: clamp(0.5rem, 1.2vw, 0.75rem);
-    color: rgb(255 255 255 / 0.5);
+    color: var(--color-white-5);
     font-size: clamp(0.625rem, 1.5vw, 0.75rem);
   }
 
   .search-result-type {
     padding: clamp(0.125rem, 0.4vw, 0.25rem) clamp(0.375rem, 1vw, 0.5rem);
     border-radius: clamp(0.25rem, 0.8vw, 0.375rem);
-    background: rgb(139 93 255 / 0.2);
-    color: var(--clr-accent, #8b5dff);
+    background: var(--color-accent-2);
+    color: var(--clr-accent, var(--color-accent-primary));
     font-weight: 500;
     text-transform: capitalize;
   }
@@ -876,8 +931,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   .search-result-tool {
     padding: clamp(0.125rem, 0.4vw, 0.25rem) clamp(0.375rem, 1vw, 0.5rem);
     border-radius: clamp(0.25rem, 0.8vw, 0.375rem);
-    background: rgb(16 185 129 / 0.2);
-    color: #10b981;
+    background: var(--color-success-2);
+    color: var(--color-success);
     font-weight: 500;
     text-transform: capitalize;
   }
@@ -888,15 +943,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     justify-content: center;
     align-items: center;
     padding: clamp(2rem, 5vw, 3rem);
-    color: rgb(255 255 255 / 0.7);
+    color: var(--color-white-7);
   }
 
   .loading-spinner {
     width: clamp(2rem, 4vw, 2.5rem);
     height: clamp(2rem, 4vw, 2.5rem);
     margin-bottom: clamp(0.75rem, 2vw, 1rem);
-    border: 2px solid rgb(255 255 255 / 0.2);
-    border-top: 2px solid var(--clr-accent, #8b5dff);
+    border: 2px solid var(--color-white-2);
+    border-top: 2px solid var(--clr-accent, var(--color-accent-primary));
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -917,7 +972,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     justify-content: center;
     align-items: center;
     padding: clamp(2rem, 5vw, 3rem);
-    color: rgb(255 255 255 / 0.7);
+    color: var(--color-white-7);
     text-align: center;
   }
 
@@ -935,14 +990,14 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
 
   .search-no-results h4 {
     margin: 0 0 clamp(0.5rem, 1.2vw, 0.75rem);
-    color: rgb(255 255 255 / 0.8);
+    color: var(--color-white-8);
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     font-weight: 600;
   }
 
   .search-no-results p {
     margin: 0;
-    color: rgb(255 255 255 / 0.6);
+    color: var(--color-white-6);
     font-size: clamp(0.875rem, 2vw, 1rem);
   }
 
@@ -1106,7 +1161,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
         const resultItem = document.createElement('a');
         resultItem.href = result.url;
         resultItem.className = 'search-result-item';
-        resultItem.setAttribute('aria-label', `Go to ${result.title}`);
+        resultItem.setAttribute('aria-label', `Pergi ke ${result.title}`);
 
         const typeClass =
           result.type === 'tool-article'
@@ -1227,7 +1282,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
 
       // For now, prevent default form submission and handle search client-side
       event.preventDefault();
-      console.log('SearchPopover: Search query submitted:', query);
+      console.log('SearchPopover: Kueri pencarian dikirim:', query);
     };
 
     const handleClearSearch = (): void => {
@@ -1243,7 +1298,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
       if (isValid) {
         input.setCustomValidity('');
       } else {
-        input.setCustomValidity('Please enter at least 1 character');
+        input.setCustomValidity('Silakan masukkan minimal 1 karakter');
       }
     };
 

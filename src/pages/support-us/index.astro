@@ -1,11 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
-import { getVisiblePages } from '../../utils/content/PostStatus-Filter';
-import UnifiedSEO from '../../components/UnifiedSEO.astro';
-import Navbar from '../../components/common/Navbar.astro';
 import PostLayout from '../../layouts/PostLayout.astro';
-import Breadcrumb from '../../components/public-components/Breadcrumb.astro';
-import TableOfContents from '../../components/content/TableOfContents.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
@@ -26,7 +22,7 @@ if (post.data.status !== 'published') {
 const { Content, headings } = await post.render();
 
 const tocHeadings = headings.filter(
-  heading => heading.depth >= 2 && heading.depth <= 3
+  (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
 
 const resolvedPath = { path: resolvePath('pages', post.slug) };
@@ -73,7 +69,7 @@ const breadcrumbConfig = {
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
-  lang="id"
+  lang='id'
   author={post.data.author || 'Tim GoRakuDo'}
   tags={seoData.keywords}
   post={post}
@@ -83,8 +79,8 @@ const breadcrumbConfig = {
   breadcrumbConfig={breadcrumbConfig}
 >
   <!-- Breadcrumb Slot -->
-  <Breadcrumb 
-    slot="breadcrumb"
+  <Breadcrumb
+    slot='breadcrumb'
     {post}
     currentPath={breadcrumbConfig.currentPath}
     showHome={breadcrumbConfig.showHome}
@@ -94,44 +90,49 @@ const breadcrumbConfig = {
   />
 
   <!-- Header Slot -->
-  <header slot="header" class='content-header mt-8'>
+  <header slot='header' class='content-header mt-8'>
     <h1>{post.data.title}</h1>
 
-    {(post.data.publishedDate || post.data.author) && (
-      <div class='content-meta' aria-label='Post metadata'>
-        <time class='content-date' datetime={seoData.publishedDate}>
-          {new Date(seoData.publishedDate).toLocaleDateString('id-ID', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </time>
-        <span class='content-author'>by {post.data.author || 'Tim GoRakuDo'}</span>
-      </div>
-    )}
+    {
+      (post.data.publishedDate || post.data.author) && (
+        <div class='content-meta' aria-label='Post metadata'>
+          <time class='content-date' datetime={seoData.publishedDate}>
+            {new Date(seoData.publishedDate).toLocaleDateString('id-ID', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+          <span class='content-author'>
+            by {post.data.author || 'Tim GoRakuDo'}
+          </span>
+        </div>
+      )
+    }
 
-    {post.data.difficulty && (
-      <div class='content-tags'>
-        <span
-          class={`difficulty-badge difficulty-${post.data.difficulty}`}
-          aria-label={`Difficulty level: ${post.data.difficulty}`}
-        >
-          {post.data.difficulty}
-        </span>
-      </div>
-    )}
+    {
+      post.data.difficulty && (
+        <div class='content-tags'>
+          <span
+            class={`difficulty-badge difficulty-${post.data.difficulty}`}
+            aria-label={`Difficulty level: ${post.data.difficulty}`}
+          >
+            {post.data.difficulty}
+          </span>
+        </div>
+      )
+    }
   </header>
 
   <!-- Content Slot -->
-  <article 
-    slot="content"
+  <article
+    slot='content'
     class='prose prose-invert max-w-none content-main'
     id='contentMain'
     aria-label='Post content'
   >
     <div class='support-content'>
       <TrakteerWidget
-        slot="additional-sidebar"
         src='https://stream.trakteer.id/milestone/index.html?ms_font=Work+Sans&ms_icon=https%3A%2F%2Fedge-cdn.trakteer.id%2Fimages%2Fmix%2Fegis-in-bottle.png%3Fv%3D14-05-2025&ms_title=Project+Web+GoRakuDo&ms_1_clr1=rgba%28250%2C+250%2C+250%2C+0%29&ms_1_clr2=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr4=rgba%280%2C+0%2C+0%2C+1%29&ms_1_clr7=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr9=rgba%28190%2C+30%2C+45%2C+1%29&ms_sincedate=12-09-2025&ms_only_show_complete=true&ms_is_show_limit_milestone=false&ms_collapse_future_milestone=true&ms_show_total_limit_milestone=3&ms_collapse_complete_milestone=true&key=trstream-9QWbcPd1n8JhpZo9E1BV&mod=3&hash=b9073almo9r5ekzg&timestamp=1757688304'
         title='Project Web GoRakuDo'
         width='100%'
@@ -142,9 +143,6 @@ const breadcrumbConfig = {
       <Content />
     </div>
   </article>
-
-  <!-- Sidebar Slot -->
-  <TableOfContents slot="sidebar" headings={tocHeadings} />
 </PostLayout>
 
 <script is:inline define:vars={{ postData }}>

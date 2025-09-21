@@ -1,6 +1,10 @@
 /**
  * コンテンツコレクションのステータスフィルタリングユーティリティ
  * 全コレクション（docs, pages, tool-articles）のstatusフィールドに基づいてフィルタリング
+ * 
+ * @version 1.0.0
+ * @author GoRakuDo Team
+ * @description コンテンツ管理システムの統一されたステータス管理を提供
  */
 
 import type { CollectionEntry } from 'astro:content';
@@ -189,4 +193,13 @@ export function isVisibleStatus(status: PostStatus): boolean {
  */
 export function isHiddenStatus(status: PostStatus): boolean {
   return status === 'draft' || status === 'archived';
+}
+
+/**
+ * 単一エントリのステータスをチェックして表示可能かどうかを判定します。
+ * @param entry コレクションエントリ
+ * @returns 表示可能かどうか
+ */
+export function isEntryVisible(entry: CollectionEntry<'docs' | 'pages' | 'tool-articles'>): boolean {
+  return entry.data.status === 'published';
 }

@@ -1,19 +1,14 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
-import UnifiedSEO from '../../components/UnifiedSEO.astro';
-import Navbar from '../../components/common/Navbar.astro';
 import PostLayout from '../../layouts/PostLayout.astro';
-import Breadcrumb from '../../components/public-components/Breadcrumb.astro';
-import TableOfContents from '../../components/content/TableOfContents.astro';
-import { resolvePath, getCollectionInfo } from '../../utils/collections';
-import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
-import {
-  getVisibleDocs,
-  getDocStatus,
-} from '../../utils/content/PostStatus-Filter';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
 
 // Import content page styles with Tailwind v4 optimization
 import '../../styles/layouts/PostLayout.css';
+
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { resolvePath, getCollectionInfo } from '../../utils/collections';
+import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 
 // Generate static paths for all docs posts
 export async function getStaticPaths() {
@@ -100,7 +95,7 @@ const breadcrumbConfig = {
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
-  lang="ja"
+  lang='ja'
   author={post.data.author || 'GoRakuDo Team'}
   tags={seoData.keywords}
   post={post}
@@ -110,8 +105,8 @@ const breadcrumbConfig = {
   breadcrumbConfig={breadcrumbConfig}
 >
   <!-- Breadcrumb Slot -->
-  <Breadcrumb 
-    slot="breadcrumb"
+  <Breadcrumb
+    slot='breadcrumb'
     {post}
     currentPath={breadcrumbConfig.currentPath}
     showHome={breadcrumbConfig.showHome}
@@ -121,37 +116,43 @@ const breadcrumbConfig = {
   />
 
   <!-- Header Slot -->
-  <header slot="header" class='content-header mt-8'>
+  <header slot='header' class='content-header mt-8'>
     <h1>{post.data.title}</h1>
 
-    {(post.data.publishedDate || post.data.author) && (
-      <div class='content-meta' aria-label='Post metadata'>
-        <time class='content-date' datetime={seoData.publishedDate}>
-          {new Date(seoData.publishedDate).toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </time>
-        <span class='content-author'>by {post.data.author || 'GoRakuDo Team'}</span>
-      </div>
-    )}
+    {
+      (post.data.publishedDate || post.data.author) && (
+        <div class='content-meta' aria-label='Post metadata'>
+          <time class='content-date' datetime={seoData.publishedDate}>
+            {new Date(seoData.publishedDate).toLocaleDateString('ja-JP', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+          <span class='content-author'>
+            by {post.data.author || 'GoRakuDo Team'}
+          </span>
+        </div>
+      )
+    }
 
-    {post.data.difficulty && (
-      <div class='content-tags'>
-        <span
-          class={`difficulty-badge difficulty-${post.data.difficulty}`}
-          aria-label={`Difficulty level: ${post.data.difficulty}`}
-        >
-          {post.data.difficulty}
-        </span>
-      </div>
-    )}
+    {
+      post.data.difficulty && (
+        <div class='content-tags'>
+          <span
+            class={`difficulty-badge difficulty-${post.data.difficulty}`}
+            aria-label={`Difficulty level: ${post.data.difficulty}`}
+          >
+            {post.data.difficulty}
+          </span>
+        </div>
+      )
+    }
   </header>
 
   <!-- Content Slot -->
-  <article 
-    slot="content"
+  <article
+    slot='content'
     class='prose prose-invert max-w-none content-main'
     id='contentMain'
     aria-label='Post content'
@@ -160,7 +161,7 @@ const breadcrumbConfig = {
   </article>
 
   <!-- Actions Slot -->
-  <footer slot="actions" class='content-actions'>
+  <footer slot='actions' class='content-actions'>
     <div class='action-buttons'>
       <a
         href={collectionMetadata.basePath}
@@ -178,7 +179,7 @@ const breadcrumbConfig = {
           stroke-linejoin='round'
           aria-hidden='true'
         >
-          <path d='M19 12H5M12 19l-7-7 7-7' />
+          <path d='M19 12H5M12 19l-7-7 7-7'></path>
         </svg>
         Back to {collectionMetadata.displayName}
       </a>
@@ -200,18 +201,15 @@ const breadcrumbConfig = {
             stroke-linejoin='round'
             aria-hidden='true'
           >
-            <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8' />
-            <polyline points='16,6 12,2 8,6' />
-            <line x1='12' y1='2' x2='12' y2='15' />
+            <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8'></path>
+            <polyline points='16,6 12,2 8,6'></polyline>
+            <line x1='12' y1='2' x2='12' y2='15'></line>
           </svg>
           Share
         </button>
       </div>
     </div>
   </footer>
-
-  <!-- Sidebar Slot -->
-  <TableOfContents slot="sidebar" headings={tocHeadings} />
 </PostLayout>
 
 <!-- Main Application Script -->
