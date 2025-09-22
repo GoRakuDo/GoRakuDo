@@ -89,6 +89,24 @@
   --clr-gold-light: oklch(95% 0.08 85deg);
   --clr-gold-dark: var(--clr-gold);
 
+  /* ===== GLOBAL TEXT COLOR DESIGN TOKENS ===== */
+
+  /* グローバルレベルでデフォルトのテキストカラーを白色に設定 */
+  --global-text-color: var(--clr-white);
+  --global-text-color-primary: var(--clr-white);
+  --global-text-color-secondary: oklch(88% 0 0deg);
+  --global-text-color-muted: oklch(70% 0 0deg);
+  --global-text-color-accent: var(--clr-white);
+
+  /* ===== SEARCH RESULTS GLOBAL OVERRIDE ===== */
+
+  /* 検索結果のテキストカラーをグローバルレベルで強制的に白色に設定 */
+  --search-result-text-color: var(--global-text-color);
+  --search-result-title-color: var(--global-text-color-primary);
+  --search-result-description-color: var(--global-text-color-secondary);
+  --search-result-meta-color: var(--global-text-color-muted);
+  --search-result-badge-color: var(--global-text-color-accent);
+
   /* Fallback colors for immediate rendering - OKLCH converted */
   --clr-background-fallback: oklch(4% 0.005 270deg);
   --clr-text-primary-fallback: var(--clr-text-primary);
@@ -1586,6 +1604,67 @@
   /* ===== LEGACY PERFORMANCE UTILITIES - PRESERVED ===== */
   .load-critical {
     @apply bg-[var(--clr-background)] text-[var(--clr-text-primary)];
+  }
+
+  /* ===== GLOBAL TEXT COLOR OVERRIDE ===== */
+
+  /* グローバルレベルでデフォルトのテキストカラーを白色に設定 */
+  * {
+    color: var(--global-text-color);
+  }
+
+  /* 特定の要素のテキストカラーを個別に設定 */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--global-text-color-primary);
+  }
+
+  p,
+  span,
+  div,
+  a,
+  li,
+  td,
+  th {
+    color: var(--global-text-color);
+  }
+
+  small,
+  .text-muted,
+  .meta {
+    color: var(--global-text-color-muted);
+  }
+
+  /* ===== SEARCH RESULTS GLOBAL OVERRIDE ===== */
+
+  /* 検索結果のテキストカラーをグローバルレベルで強制的に白色に設定 */
+  .search-result-item,
+  .search-result-item *,
+  .search-result-title,
+  .search-result-description,
+  .search-result-meta {
+    color: var(--search-result-text-color);
+  }
+
+  .search-result-title {
+    color: var(--search-result-title-color);
+  }
+
+  .search-result-description {
+    color: var(--search-result-description-color);
+  }
+
+  .search-result-meta {
+    color: var(--search-result-meta-color);
+  }
+
+  .search-result-type,
+  .search-result-tool {
+    color: var(--search-result-badge-color);
   }
 
   .optimized-button {

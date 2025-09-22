@@ -5,6 +5,7 @@ import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import PostsHeader from '../../components/docs/PostsHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
 import Pagination from '../../components/common/Pagination.astro';
+import SearchPopover from '../../components/common/SearchPopover.astro';
 
 // ========== GET PAGE DATA ==========
 import { getDocsPageData } from '../../utils/docs-config';
@@ -57,10 +58,15 @@ const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
     ariaLabel='Navigasi breadcrumb untuk halaman dokumentasi'
   />
 
-  <!-- 検索セクション（将来の拡張用） -->
-  <div slot='search'>
-    <!-- Search component can be added here if needed -->
-  </div>
+  <!-- 検索セクション -->
+  <SearchPopover
+    slot='search'
+    buttonStyle='rounded'
+    placeholder='Search documentation...'
+    searchAction='/search'
+    className='docs-search-popover'
+    searchCollections='docs'
+  />
 
   <!-- メインコンテンツ -->
   {

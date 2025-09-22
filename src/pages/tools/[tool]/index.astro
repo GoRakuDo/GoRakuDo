@@ -10,7 +10,7 @@ import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
-import ToolSearchPopover from '../../../components/tools/Tool-SearchPopover.astro';
+import SearchPopover from '../../../components/common/SearchPopover.astro';
 import ToolIdHeader from '../../../components/tools/Tool-IdHeader.astro';
 
 // Import tool-specific styles
@@ -278,13 +278,14 @@ const contentGridData = {
     ariaLabel='Tool navigation breadcrumb'
   />
 
-  <ToolSearchPopover
+  <SearchPopover
     slot='search'
     buttonStyle='rounded'
     placeholder={`Search ${formattedToolName} articles...`}
     searchAction={`/search?tool=${tool}`}
     className='tool-search-popover'
     toolFilter={tool}
+    searchCollections='tools'
   />
 
   <ToolIdContentGrid

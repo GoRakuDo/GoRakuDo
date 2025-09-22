@@ -1,0 +1,1504 @@
+---
+// Optimized Search Popover Component
+export interface Props {
+  placeholder?: string;
+  searchAction?: string;
+  className?: string;
+  ariaLabel?: string;
+  toolFilter?: string;
+  buttonStyle?: 'circular' | 'rounded';
+  searchCollections?: 'tools' | 'docs';
+}
+
+const {
+  placeholder = 'Cari...',
+  searchAction = '/search',
+  className = '',
+  ariaLabel = 'Buka antarmuka pencarian',
+  toolFilter = '',
+  buttonStyle = 'circular',
+  searchCollections = 'tools',
+} = Astro.props;
+
+const sanitizedSearchAction = searchAction.startsWith('/')
+  ? searchAction
+  : '/search';
+const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
+---
+
+<div class={`search-popover-container ${className}`}>
+  <button
+    class={`search-toggle-btn search-toggle-btn--${buttonStyle}`}
+    popovertarget='search-popover'
+    popovertargetaction='toggle'
+    aria-label={ariaLabel}
+    type='button'
+    aria-expanded='false'
+    aria-controls='search-popover'
+  >
+    <svg
+      class='search-icon'
+      fill='none'
+      stroke='currentColor'
+      viewBox='0 0 24 24'
+      aria-hidden='true'
+    >
+      <path
+        stroke-linecap='round'
+        stroke-linejoin='round'
+        stroke-width='2'
+        d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+    </svg>
+    {buttonStyle === 'rounded' && <span class='search-text'>Cari</span>}
+    <span class='sr-only'>{ariaLabel}</span>
+  </button>
+
+  <div
+    id='search-popover'
+    class='search-popover glassmorphism glassmorphism-card'
+    popover='auto'
+    role='search'
+    aria-label='Antarmuka pencarian'
+    data-search-collections={searchCollections}
+    data-tool-filter={toolFilter}
+  >
+    <form
+      class='search-form'
+      action={sanitizedSearchAction}
+      method='get'
+      novalidate
+    >
+      <div class='search-input-wrapper'>
+        <label for='search-query' class='sr-only'>Kueri pencarian</label>
+        <input
+          id='search-query'
+          type='search'
+          name='q'
+          class='search-input'
+          placeholder={sanitizedPlaceholder}
+          autocomplete='off'
+          aria-label='Kueri pencarian'
+          required
+          minlength='1'
+          maxlength='100'
+        />
+        <button
+          type='submit'
+          class='search-submit-btn'
+          aria-label='Kirim kueri pencarian'
+        >
+          <svg
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+          </svg>
+          <span class='sr-only'>Kirim pencarian</span>
+        </button>
+      </div>
+    </form>
+
+    <div id='search-results' aria-live='polite' aria-label='Hasil pencarian'>
+      <!-- 検索結果コンテナ（モバイルファースト） -->
+      <div id='search-results-container' class='search-results-container'>
+        <!-- 結果はJavaScriptで動的に生成 -->
+      </div>
+
+      <!-- ローディング状態 -->
+      <div id='search-loading' class='search-loading' style='display: none;'>
+        <div class='loading-spinner'></div>
+        <span>Mencari...</span>
+      </div>
+
+      <!-- 結果なし状態 -->
+      <div
+        id='search-no-results'
+        class='search-no-results'
+        style='display: none;'
+      >
+        <div class='no-results-icon'>
+          <svg
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+          </svg>
+        </div>
+        <h4>Tidak ada hasil ditemukan</h4>
+        <p>Coba kata kunci yang berbeda atau periksa ejaan Anda</p>
+      </div>
+    </div>
+
+    <!-- Close button positioned at the bottom of the search popover -->
+    <button
+      id='search-close-btn'
+      class='search-close-btn'
+      popovertarget='search-popover'
+      popovertargetaction='hide'
+      aria-label='Tutup pencarian'
+      type='button'
+    >
+      <svg
+        class='close-icon'
+        fill='none'
+        stroke='currentColor'
+        viewBox='0 0 24 24'
+        aria-hidden='true'
+      >
+        <path
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          stroke-width='2'
+          d='M6 18L18 6M6 6l12 12'></path>
+      </svg>
+      <span class='sr-only'>Tutup pencarian</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  /* ========== OPTIMIZED DESIGN TOKENS ========== */
+  .search-popover-container {
+    /* ========== COLOR SYSTEM ========== */
+
+    /* Base Colors */
+    --sp-white: oklch(100% 0 0deg);
+    --sp-black: oklch(0% 0 0deg);
+    --sp-accent: oklch(60% 0.15 296.9deg);
+    --sp-success: oklch(60% 0.15 160deg);
+
+    /* White Opacity Scale */
+    --sp-white-1: oklch(100% 0 0deg / 0.1);
+    --sp-white-2: oklch(100% 0 0deg / 0.2);
+    --sp-white-3: oklch(100% 0 0deg / 0.3);
+    --sp-white-4: oklch(100% 0 0deg / 0.4);
+    --sp-white-5: oklch(100% 0 0deg / 0.5);
+    --sp-white-7: oklch(100% 0 0deg / 0.7);
+    --sp-white-8: oklch(100% 0 0deg / 0.8);
+    --sp-white-9: oklch(100% 0 0deg / 0.9);
+
+    /* Black Opacity Scale */
+    --sp-black-1: oklch(0% 0 0deg / 0.1);
+    --sp-black-2: oklch(0% 0 0deg / 0.2);
+    --sp-black-5: oklch(0% 0 0deg / 0.5);
+
+    /* Accent Color Variants */
+    --sp-accent-1: oklch(60% 0.15 296.9deg / 0.1);
+    --sp-accent-2: oklch(60% 0.15 296.9deg / 0.2);
+    --sp-accent-3: oklch(60% 0.15 296.9deg / 0.3);
+    --sp-success-2: oklch(60% 0.15 160deg / 0.2);
+
+    /* ========== SPACING SYSTEM ========== */
+
+    /* Unified Spacing Scale (Mobile-First) */
+    --sp-space-xs: clamp(0.25rem, 1vw, 0.375rem); /* 4px-6px */
+    --sp-space-sm: clamp(0.5rem, 2vw, 0.75rem); /* 8px-12px */
+    --sp-space-md: clamp(0.75rem, 3vw, 1rem); /* 12px-16px */
+    --sp-space-lg: clamp(1rem, 4vw, 1.25rem); /* 16px-20px */
+    --sp-space-xl: clamp(1.25rem, 5vw, 1.5rem); /* 20px-24px */
+    --sp-space-2xl: clamp(1.5rem, 6vw, 1.75rem); /* 24px-28px */
+    --sp-space-3xl: clamp(2rem, 7vw, 2.5rem); /* 32px-40px */
+    --sp-space-4xl: clamp(2.5rem, 8vw, 3rem); /* 40px-48px */
+    --sp-space-5xl: clamp(3rem, 9vw, 3.5rem); /* 48px-56px */
+    --sp-space-6xl: clamp(3.25rem, 10vw, 3.75rem); /* 52px-60px */
+
+    /* Semantic Spacing Aliases */
+    --sp-gap: var(--sp-space-lg);
+    --sp-gap-sm: var(--sp-space-sm);
+    --sp-gap-lg: var(--sp-space-xl);
+    --sp-gap-xs: var(--sp-space-xs);
+    --sp-gap-md: var(--sp-space-md);
+    --sp-gap-xl: var(--sp-space-2xl);
+
+    /* ========== TYPOGRAPHY SYSTEM ========== */
+    --sp-text-xs: clamp(0.625rem, 2.5vw, 0.75rem); /* 10px-12px */
+    --sp-text-sm: clamp(0.75rem, 3vw, 0.875rem); /* 12px-14px */
+    --sp-text-base: clamp(0.875rem, 2vw, 1rem); /* 14px-16px */
+    --sp-text-lg: clamp(1rem, 2.5vw, 1.125rem); /* 16px-18px */
+    --sp-text-xl: clamp(1rem, 2.8vw, 1.125rem); /* 16px-18px */
+    --sp-text-2xl: clamp(1rem, 2.5vw, 1.25rem); /* 16px-20px */
+
+    /* ========== COMPONENT SIZES ========== */
+
+    /* Interactive Element Sizes */
+    --sp-size-xs: var(--sp-space-xs);
+    --sp-size-sm: var(--sp-space-sm);
+    --sp-size-md: var(--sp-space-md);
+    --sp-size-lg: var(--sp-space-lg);
+    --sp-size-xl: var(--sp-space-xl);
+    --sp-size-2xl: var(--sp-space-2xl);
+    --sp-size-3xl: var(--sp-space-3xl);
+    --sp-size-4xl: var(--sp-space-4xl);
+    --sp-size-5xl: var(--sp-space-5xl);
+    --sp-size-6xl: var(--sp-space-6xl);
+
+    /* ========== BORDER RADIUS SYSTEM ========== */
+    --sp-radius-sm: var(--sp-space-xs);
+    --sp-radius-md: var(--sp-space-md);
+    --sp-radius-lg: var(--sp-space-lg);
+    --sp-radius-xl: var(--sp-space-xl);
+    --sp-radius-2xl: clamp(0.875rem, 2vw, 1.125rem);
+
+    /* ========== PADDING SYSTEM ========== */
+    --sp-padding-xs: clamp(0.125rem, 0.5vw, 0.25rem);
+    --sp-padding-sm: var(--sp-space-sm);
+    --sp-padding-md: var(--sp-space-lg);
+    --sp-padding-lg: var(--sp-space-xl);
+    --sp-padding-xl: var(--sp-space-2xl);
+    --sp-padding-2xl: var(--sp-space-3xl);
+
+    /* ========== MARGIN SYSTEM ========== */
+    --sp-margin-xs: var(--sp-space-xs);
+    --sp-margin-sm: var(--sp-space-sm);
+    --sp-margin-md: var(--sp-space-md);
+    --sp-margin-lg: var(--sp-space-lg);
+    --sp-margin-xl: var(--sp-space-xl);
+  }
+
+  /* ========== OPTIMIZED CSS WITH CLAMP() AND CSS VARIABLES ========== */
+
+  /* Screen Reader Only */
+  .sr-only {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+  }
+
+  /* Search Popover Container - 既に上記でCSS変数を定義済み */
+
+  /* Search Toggle Button - Optimized */
+  .search-toggle-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid var(--sp-white-2);
+    background: linear-gradient(
+      135deg,
+      var(--sp-white-1) 0%,
+      var(--sp-white-2) 100%
+    );
+    color: var(--sp-white-9);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      0 4px 16px var(--sp-black-1),
+      inset 0 1px 0 var(--sp-white-2);
+    backdrop-filter: blur(15px);
+  }
+
+  .search-toggle-btn--circular {
+    width: var(--sp-size-4xl);
+    height: var(--sp-size-4xl);
+    border-radius: 50%;
+  }
+
+  .search-toggle-btn--rounded {
+    gap: var(--sp-gap-sm);
+    width: auto;
+    height: var(--sp-size-4xl);
+    padding: 0 var(--sp-gap);
+    border-radius: var(--sp-radius-lg);
+  }
+
+  .search-toggle-btn::before {
+    position: absolute;
+    border-radius: inherit;
+    background: var(--sp-accent-1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    inset: 0;
+    content: '';
+  }
+
+  .search-toggle-btn:hover {
+    background: linear-gradient(
+      135deg,
+      var(--sp-white-2) 0%,
+      var(--sp-white-3) 100%
+    );
+    border-color: var(--sp-white-3);
+    box-shadow:
+      0 8px 24px var(--sp-black-2),
+      inset 0 1px 0 var(--sp-white-3);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .search-toggle-btn:hover::before {
+    opacity: 1;
+  }
+
+  .search-toggle-btn:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
+  }
+
+  .search-toggle-btn:focus-visible {
+    outline: 2px solid var(--clr-accent, #8b5dff);
+    outline-offset: 3px;
+    box-shadow:
+      0 0 0 4px var(--sp-accent-1),
+      0 4px 16px var(--sp-black-1);
+  }
+
+  .search-toggle-btn[aria-expanded='true'] {
+    background: linear-gradient(
+      135deg,
+      var(--sp-accent-2) 0%,
+      var(--sp-accent-3) 100%
+    );
+    border-color: var(--clr-accent, var(--sp-accent));
+    box-shadow:
+      0 6px 20px var(--sp-accent-3),
+      inset 0 1px 0 var(--sp-white-3);
+  }
+
+  .search-icon {
+    flex-shrink: 0;
+    width: var(--sp-size-lg);
+    height: var(--sp-size-lg);
+  }
+
+  .search-text {
+    color: inherit;
+    font-size: var(--sp-text-base);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* Search Close Button - Positioned at bottom of popover */
+  .search-close-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--sp-size-4xl);
+    height: var(--sp-size-4xl);
+    margin: var(--sp-gap-lg) auto 0 auto;
+    border: 1px solid var(--sp-white-2);
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      var(--sp-white-1) 0%,
+      var(--sp-white-2) 100%
+    );
+    color: var(--sp-white-9);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      0 4px 16px var(--sp-black-1),
+      inset 0 1px 0 var(--sp-white-2);
+    backdrop-filter: blur(15px);
+  }
+
+  .search-close-btn::before {
+    position: absolute;
+    border-radius: inherit;
+    background: var(--sp-accent-1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    inset: 0;
+    content: '';
+  }
+
+  .search-close-btn:hover {
+    background: linear-gradient(
+      135deg,
+      var(--sp-white-2) 0%,
+      var(--sp-white-3) 100%
+    );
+    border-color: var(--sp-white-3);
+    box-shadow:
+      0 8px 24px var(--sp-black-2),
+      inset 0 1px 0 var(--sp-white-3);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .search-close-btn:hover::before {
+    opacity: 1;
+  }
+
+  .search-close-btn:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
+  }
+
+  .search-close-btn:focus-visible {
+    outline: 2px solid var(--clr-accent, #8b5dff);
+    outline-offset: 3px;
+    box-shadow:
+      0 0 0 4px var(--sp-accent-1),
+      0 4px 16px var(--sp-black-1);
+  }
+
+  .close-icon {
+    flex-shrink: 0;
+    width: var(--sp-size-lg);
+    height: var(--sp-size-lg);
+  }
+
+  /* Search Popover - Optimized */
+  .search-popover {
+    position: relative;
+    top: calc(5% + var(--sp-gap));
+    left: 50%;
+    z-index: 1000;
+    overflow: hidden;
+    min-width: clamp(320px, 55vw, 450px);
+    max-width: 90vw;
+    padding: var(--sp-gap);
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .search-popover::backdrop {
+    background: var(--sp-black-5);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-10px) scale(1);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Search Form */
+  .search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-gap-xs);
+  }
+
+  .search-input {
+    position: relative;
+    flex: 1;
+    padding: var(--sp-gap-sm) var(--sp-gap);
+    border: 1px solid var(--sp-white-2);
+    border-radius: var(--sp-radius-lg);
+    background: linear-gradient(
+      135deg,
+      var(--sp-white-1) 0%,
+      var(--sp-white-2) 100%
+    );
+    color: #fff;
+    font-size: var(--sp-text-base);
+    font-weight: 400;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      inset 0 1px 0 var(--sp-white-1),
+      0 1px 3px var(--sp-black-1);
+    backdrop-filter: blur(10px);
+  }
+
+  .search-input::placeholder {
+    color: var(--sp-white-5);
+    font-weight: 300;
+    transition: color 0.3s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    background: linear-gradient(
+      135deg,
+      var(--sp-white-2) 0%,
+      var(--sp-white-3) 100%
+    );
+    border-color: var(--clr-accent, var(--sp-accent));
+    box-shadow:
+      0 0 0 3px var(--sp-accent-1),
+      0 4px 12px var(--sp-accent-1),
+      inset 0 1px 0 var(--sp-white-2);
+    transform: translateY(-1px);
+  }
+
+  .search-input:focus::placeholder {
+    color: var(--sp-white-3);
+  }
+
+  .search-submit-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: var(--sp-size-4xl);
+    height: var(--sp-size-4xl);
+    border: none;
+    border-radius: var(--sp-radius-lg);
+    background: linear-gradient(
+      135deg,
+      var(--clr-accent, var(--sp-accent)) 0%,
+      var(--sp-accent-2) 100%
+    );
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    box-shadow:
+      0 4px 12px var(--sp-accent-3),
+      inset 0 1px 0 var(--sp-white-2);
+  }
+
+  .search-submit-btn::before {
+    position: absolute;
+    border-radius: inherit;
+    background: var(--sp-white-2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    inset: 0;
+    content: '';
+  }
+
+  .search-submit-btn:hover {
+    background: linear-gradient(
+      135deg,
+      var(--sp-accent-2) 0%,
+      var(--sp-accent-3) 100%
+    );
+    box-shadow:
+      0 8px 20px var(--sp-accent-3),
+      inset 0 1px 0 var(--sp-white-3);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .search-submit-btn:hover::before {
+    opacity: 1;
+  }
+
+  .search-submit-btn:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
+  }
+
+  .search-submit-btn:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+    box-shadow:
+      0 0 0 4px var(--sp-white-2),
+      0 4px 12px var(--sp-accent-3);
+  }
+
+  .search-submit-btn svg {
+    width: var(--sp-size-lg);
+    height: var(--sp-size-lg);
+  }
+
+  /* ========== RESPONSIVE DESIGN - OPTIMIZED ========== */
+
+  /* Mobile - 320px+ */
+  @media (max-width: 768px) {
+    .search-popover {
+      top: calc(5% + var(--sp-gap));
+      min-width: clamp(320px, 98vw, 380px);
+      max-width: 98vw;
+    }
+
+    .search-input-wrapper {
+      flex-direction: column;
+      gap: var(--sp-gap);
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: var(--sp-size-6xl);
+      padding: var(--sp-gap) var(--sp-gap-lg);
+      border-radius: var(--sp-radius-xl);
+      font-size: var(--sp-text-xl);
+    }
+
+    .search-submit-btn {
+      width: 100%;
+      height: var(--sp-size-6xl);
+      border-radius: var(--sp-radius-xl);
+    }
+
+    .search-toggle-btn--circular {
+      width: var(--sp-size-5xl);
+      height: var(--sp-size-5xl);
+    }
+
+    .search-toggle-btn--rounded {
+      height: var(--sp-size-5xl);
+      padding: 0 var(--sp-gap-lg);
+    }
+
+    .search-close-btn {
+      width: var(--sp-size-5xl);
+      height: var(--sp-size-5xl);
+      margin: var(--sp-gap-xl) auto 0 auto;
+    }
+  }
+
+  /* Desktop - 768px+ */
+  @media (min-width: 768px) {
+    .search-input-wrapper {
+      flex-direction: row;
+      gap: var(--sp-gap);
+    }
+
+    .search-input {
+      flex: 1;
+      min-height: var(--sp-size-4xl);
+    }
+
+    .search-submit-btn {
+      width: var(--sp-size-4xl);
+      height: var(--sp-size-4xl);
+    }
+  }
+
+  /* ========== OPTIMIZED ANIMATIONS ========== */
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-10px) scale(1);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes resultSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ========== MOBILE-FIRST SEARCH RESULTS ========== */
+
+  /* 検索結果コンテナ - モバイルファースト */
+  .search-results-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-gap-md);
+    overflow-y: auto;
+    max-height: 60vh; /* 5件以上でスクロール（モバイルでも安全な高さ） */
+    margin-top: var(--sp-margin-xl);
+    padding: 0;
+    overscroll-behavior: contain;
+  }
+
+  /* 検索結果カード - モバイル最適化（グローバルスタイル） */
+  :global(.search-result-card) {
+    display: block;
+    min-height: 44px; /* タッチフレンドリー */
+    margin: var(--sp-margin-sm) 0;
+    padding: var(--sp-padding-md);
+    border: 1px solid var(--sp-white-2);
+    border-radius: var(--sp-radius-md);
+    background: linear-gradient(
+      135deg,
+      oklch(from var(--clr-background) l c h / 0.6) 0%,
+      oklch(from var(--clr-background) l c h / 0.4) 100%
+    );
+    color: var(--sp-white-9);
+    text-decoration: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+    box-shadow:
+      0 2px 8px var(--sp-black-1),
+      inset 0 1px 0 var(--sp-white-1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* カードの微細なグラデーション効果 */
+  :global(.search-result-card::before) {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--sp-white-2) 50%,
+      transparent 100%
+    );
+    opacity: 0.6;
+  }
+
+  :global(.search-result-card:hover) {
+    background: linear-gradient(
+      135deg,
+      oklch(from var(--clr-accent-dark) l c h / 0.45) 0%,
+      oklch(from var(--clr-accent-dark) l c h / 0.3) 100%
+    );
+    border-color: var(--sp-accent-2);
+    box-shadow:
+      0 6px 20px var(--sp-accent-1),
+      0 2px 8px var(--sp-black-2),
+      inset 0 1px 0 var(--sp-white-2);
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  :global(.search-result-card:hover::before) {
+    opacity: 1;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--sp-accent-2) 50%,
+      transparent 100%
+    );
+  }
+
+  :global(.search-result-card:active) {
+    transform: translateY(0) scale(0.98);
+    transition: all 0.1s ease;
+  }
+
+  :global(.search-result-card:focus-visible) {
+    outline: 2px solid var(--sp-accent);
+    outline-offset: 2px;
+    box-shadow:
+      0 0 0 4px var(--sp-accent-1),
+      0 6px 20px var(--sp-accent-1),
+      0 2px 8px var(--sp-black-2),
+      inset 0 1px 0 var(--sp-white-2);
+  }
+
+  /* カードコンテンツ（グローバルスタイル） */
+  :global(.search-result-content) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-gap-xs);
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  :global(.search-result-title) {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-gap-xs);
+    margin: 0 0 var(--sp-margin-xs) 0;
+    color: var(--sp-white-9);
+    font-size: var(--sp-text-base);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    text-shadow: 0 1px 2px var(--sp-black-1);
+  }
+
+  :global(.content-match-indicator) {
+    font-size: var(--sp-text-sm);
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    filter: drop-shadow(0 1px 1px var(--sp-black-1));
+  }
+
+  :global(.search-result-card:hover .content-match-indicator) {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 1px 2px var(--sp-black-2));
+  }
+
+  :global(.search-result-description) {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0 0 var(--sp-margin-sm) 0;
+    color: var(--sp-white-8);
+    font-size: var(--sp-text-sm);
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 1px var(--sp-black-1);
+  }
+
+  :global(.search-result-meta) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-gap-sm);
+    margin-top: auto;
+    padding-top: var(--sp-padding-xs);
+    border-top: 1px solid var(--sp-white-1);
+  }
+
+  /* モバイル向けの上パディングを4倍に */
+  @media (max-width: 767px) {
+    :global(.search-result-meta) {
+      padding-top: calc(var(--sp-padding-xs) * 4);
+    }
+  }
+
+  :global(.search-result-badge) {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--sp-padding-xs) var(--sp-padding-sm);
+    border-radius: var(--sp-radius-sm);
+    font-size: var(--sp-text-xs);
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 2px var(--sp-black-1);
+    transition: all 0.2s ease;
+  }
+
+  :global(.search-result-badge--tool) {
+    background: linear-gradient(
+      135deg,
+      var(--sp-accent-2) 0%,
+      var(--sp-accent-3) 100%
+    );
+    color: var(--sp-accent);
+    border: 1px solid var(--sp-accent-1);
+  }
+
+  :global(.search-result-badge--doc) {
+    background: linear-gradient(
+      135deg,
+      var(--sp-success-2) 0%,
+      var(--sp-success-2) 100%
+    );
+    color: var(--sp-success);
+    border: 1px solid var(--sp-success-1);
+  }
+
+  :global(.search-result-card:hover .search-result-badge) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px var(--sp-black-2);
+  }
+
+  :global(.search-result-path) {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--sp-white-6);
+    font-family:
+      SF Mono,
+      Monaco,
+      Inconsolata,
+      Roboto Mono,
+      monospace;
+    font-size: var(--sp-text-xs);
+    font-weight: 500;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+  }
+
+  :global(.search-result-card:hover .search-result-path) {
+    opacity: 1;
+    color: var(--sp-white-7);
+  }
+
+  :global(.search-result-path-separator) {
+    color: var(--sp-white-4);
+  }
+
+  .search-loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--sp-padding-2xl);
+    color: var(--sp-white-8);
+  }
+
+  .loading-spinner {
+    width: var(--sp-size-3xl);
+    height: var(--sp-size-3xl);
+    margin-bottom: var(--sp-gap);
+    border: 2px solid var(--sp-white-2);
+    border-top: 2px solid var(--clr-accent, var(--sp-accent));
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .search-no-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--sp-padding-2xl);
+    color: var(--sp-white-8);
+    text-align: center;
+  }
+
+  .no-results-icon {
+    width: var(--sp-size-5xl);
+    height: var(--sp-size-5xl);
+    margin-bottom: var(--sp-gap-lg);
+    opacity: 0.5;
+  }
+
+  .search-no-results h4 {
+    margin: 0 0 var(--sp-gap-sm);
+    color: var(--sp-white-9);
+    font-size: var(--sp-text-2xl);
+    font-weight: 600;
+  }
+
+  .search-no-results p {
+    margin: 0;
+    color: var(--sp-white-5);
+    font-size: var(--sp-text-base);
+  }
+
+  /* ========== RESPONSIVE SEARCH RESULTS - OPTIMIZED ========== */
+
+  /* ========== RESPONSIVE ENHANCEMENTS ========== */
+
+  /* タブレット・デスクトップ向け最適化 */
+  @media (min-width: 768px) {
+    .search-results-container {
+      gap: var(--sp-gap-lg);
+    }
+
+    :global(.search-result-card) {
+      margin: var(--sp-margin-md) 0;
+      padding: var(--sp-padding-lg);
+      border-radius: var(--sp-radius-2xl);
+      min-height: 60px;
+    }
+
+    :global(.search-result-title) {
+      font-size: var(--sp-text-lg);
+      margin-bottom: var(--sp-margin-sm);
+    }
+
+    :global(.search-result-description) {
+      font-size: var(--sp-text-base);
+      -webkit-line-clamp: 3;
+      margin-bottom: var(--sp-margin-md);
+    }
+
+    :global(.search-result-meta) {
+      padding-top: var(--sp-padding-sm);
+      border-top: 1px solid var(--sp-white-2);
+    }
+  }
+
+  /* 大画面向け最適化 */
+  @media (min-width: 1024px) {
+    .search-results-container {
+      display: grid;
+      gap: var(--sp-gap-xl);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    :global(.search-result-card) {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 140px;
+      margin: var(--sp-margin-lg) 0;
+      padding: var(--sp-padding-xl);
+      border-radius: var(--sp-radius-2xl);
+    }
+
+    :global(.search-result-title) {
+      font-size: var(--sp-text-xl);
+      margin-bottom: var(--sp-margin-md);
+    }
+
+    :global(.search-result-description) {
+      font-size: var(--sp-text-lg);
+      -webkit-line-clamp: 4;
+      margin-bottom: var(--sp-margin-lg);
+    }
+
+    :global(.search-result-meta) {
+      padding-top: var(--sp-padding-md);
+      border-top: 1px solid var(--sp-white-3);
+    }
+  }
+
+  /* ========== ENHANCED ANIMATIONS ========== */
+
+  @keyframes resultSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes sectionSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes iconPulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  /* Card animation delays moved to SearchResultCard component */
+
+  /* ========== ACCESSIBILITY ENHANCEMENTS ========== */
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.search-result-card) {
+      transition: none;
+      animation: none;
+    }
+
+    :global(.search-result-card:hover) {
+      transform: none;
+    }
+
+    :global(.search-result-card:active) {
+      transform: none;
+    }
+
+    :global(.search-result-badge) {
+      transition: none;
+    }
+
+    :global(.search-result-card:hover .search-result-badge) {
+      transform: none;
+    }
+
+    :global(.content-match-indicator) {
+      transition: none;
+    }
+
+    :global(.search-result-card:hover .content-match-indicator) {
+      transform: none;
+    }
+  }
+
+  /* 高コントラストモード対応 */
+  @media (prefers-contrast: high) {
+    :global(.search-result-card) {
+      border: 2px solid var(--sp-white-8);
+      background: var(--sp-black-2);
+    }
+
+    :global(.search-result-card:hover) {
+      border-color: var(--sp-accent);
+      background: var(--sp-white-1);
+    }
+
+    :global(.search-result-title) {
+      color: var(--sp-white-9);
+      text-shadow: none;
+    }
+
+    :global(.search-result-description) {
+      color: var(--sp-white-8);
+      text-shadow: none;
+    }
+  }
+</style>
+
+<script>
+  // ========== LOW-LATENCY SEARCH WITH NPM PACKAGES ==========
+  // Architect Optimization: Minimal latency with bundled NPM packages
+  // Purpose: Maximum performance with zero external dependencies
+
+  import Fuse from 'fuse.js';
+  import DOMPurify from 'dompurify';
+
+  (() => {
+    'use strict';
+
+    // ========== ELEMENT SELECTION ==========
+    const elements = {
+      popover: document.getElementById('search-popover'),
+      input: document.querySelector('.search-input') as HTMLInputElement,
+      form: document.querySelector('.search-form') as HTMLFormElement,
+      toggle: document.querySelector('.search-toggle-btn') as HTMLButtonElement,
+      closeBtn: document.getElementById(
+        'search-close-btn'
+      ) as HTMLButtonElement,
+      loading: document.getElementById('search-loading'),
+      noResults: document.getElementById('search-no-results'),
+    };
+
+    if (
+      !elements.popover ||
+      !elements.input ||
+      !elements.form ||
+      !elements.toggle ||
+      !elements.closeBtn
+    )
+      return;
+
+    // ========== LOW-LATENCY STATE MANAGEMENT ==========
+    let state = {
+      isOpen: false,
+      data: [] as any[],
+      loaded: false,
+      timeout: null as number | null,
+      fuse: null as any,
+      // 低遅延最適化
+      cache: new Map<string, any[]>(),
+      lastQuery: '',
+      isSearching: false,
+      debounceMs: 150, // 低遅延のため短縮
+    };
+
+    // Astroプロパティはdata属性から取得（SSR→CSRでの確実性向上）
+    const toolFilterValue =
+      (elements.popover as HTMLElement).getAttribute('data-tool-filter') || '';
+    const searchCollectionsValue =
+      (elements.popover as HTMLElement).getAttribute(
+        'data-search-collections'
+      ) || 'tools';
+
+    // デバッグ用：変数の値を確認
+    console.log(
+      'Initial values - toolFilter:',
+      toolFilterValue,
+      'searchCollections:',
+      searchCollectionsValue,
+      'Type of searchCollections:',
+      typeof searchCollectionsValue
+    );
+
+    // ========== FUZZY SEARCH CONFIGURATION ==========
+    const fuseOptions = {
+      keys: [
+        { name: 'searchableText', weight: 0.5 }, // 事前結合テキスト（docs/ツール両方で想定）
+        { name: 'title', weight: 0.35 }, // タイトル
+        { name: 'description', weight: 0.25 }, // 説明文
+        { name: 'content', weight: 0.2 }, // 本文
+        { name: 'tags', weight: 0.15 }, // タグ
+        { name: 'categories', weight: 0.1 }, // カテゴリ（docs）
+        { name: 'slug', weight: 0.1 }, // スラッグ（docs）
+      ],
+      threshold: 0.4, // 0.0 = perfect match, 1.0 = match anything
+      distance: 100, // Maximum distance for a match
+      includeScore: true,
+      includeMatches: true,
+      minMatchCharLength: 2,
+      shouldSort: true,
+      // 記事内容の検索精度向上
+      findAllMatches: true,
+      useExtendedSearch: true,
+      ignoreLocation: true, // 文字列内の位置を無視
+    };
+
+    // ========== OPTIMIZED CORE FUNCTIONS ==========
+    const loadData = async () => {
+      if (state.loaded) return;
+
+      // 検索コレクションに基づいてエンドポイントを選択
+      let url: string;
+      console.log(
+        'SearchCollections value:',
+        searchCollectionsValue,
+        'Type:',
+        typeof searchCollectionsValue,
+        'Comparison result:',
+        (searchCollectionsValue as string) === 'docs'
+      );
+
+      // 検索コレクションに基づいてエンドポイントを選択
+      if ((searchCollectionsValue as string) === 'docs') {
+        url = '/docs/DocsSearch.json';
+        console.log('Using docs endpoint:', url);
+      } else {
+        // tools がデフォルト
+        url = toolFilterValue
+          ? `/tools/ToolsSearch.json?tool=${encodeURIComponent(toolFilterValue)}`
+          : '/tools/ToolsSearch.json';
+        console.log('Using tools endpoint:', url);
+      }
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const jsonData = await response.json();
+        console.log(
+          'Loaded data type:',
+          jsonData.metadata?.type,
+          'Items count:',
+          jsonData.data?.length
+        );
+        state.data = jsonData.data || [];
+        state.fuse = new Fuse(state.data, fuseOptions);
+        state.loaded = true;
+      } catch (error) {
+        console.error('Failed to load search data:', error);
+        state.data = [];
+        state.loaded = true; // エラー時もloadedをtrueにして無限リトライを防止
+      }
+    };
+
+    const search = (query: string) => {
+      const term = query.trim();
+      if (!term || !state.loaded || !state.fuse) return [];
+
+      const key = term.toLowerCase();
+      const hit = state.cache.get(key);
+      if (hit) return hit;
+
+      const results = state.fuse.search(term, { limit: 12 });
+      const sorted = results
+        .map(r => ({ ...r.item, searchScore: r.score }))
+        .sort((a, b) => (a.searchScore || 1) - (b.searchScore || 1));
+
+      if (state.cache.size >= 50)
+        state.cache.delete(state.cache.keys().next().value);
+      state.cache.set(key, sorted);
+      return sorted;
+    };
+
+    // 最適化：テンプレート関数を事前定義
+    const createResultCard = (item: any, index: number) => {
+      // 検索コレクションに基づいてバッジを決定
+      let badgeClass: string;
+      let badgeText: string;
+
+      console.log(
+        'Creating result card for item type:',
+        item.type,
+        'searchCollections:',
+        searchCollectionsValue
+      );
+
+      // 検索コレクションに基づいてバッジを決定
+      if ((searchCollectionsValue as string) === 'docs') {
+        badgeClass = 'search-result-badge--doc';
+        badgeText = 'Documentation';
+      } else {
+        // tools がデフォルト
+        badgeClass =
+          item.type === 'tool-article'
+            ? 'search-result-badge--tool'
+            : 'search-result-badge--doc';
+        badgeText =
+          item.type === 'tool-article'
+            ? item.toolName || 'Tool'
+            : 'Documentation';
+      }
+
+      const contentMatchIndicator = item.hasContentMatch
+        ? '<span class="content-match-indicator" title="記事内容にマッチ">📄</span>'
+        : '';
+
+      // 最適化：パス処理を簡素化
+      const pathHtml = item.path
+        ? `<span class="search-result-path">${item.path
+            .split('/')
+            .map(part => `<span>${DOMPurify.sanitize(part)}</span>`)
+            .join(
+              '<span class="search-result-path-separator">/</span>'
+            )}</span>`
+        : '';
+
+      return `<a href="${DOMPurify.sanitize(item.url || '#')}" class="search-result-card" style="animation-delay: ${index * 50}ms">
+        <div class="search-result-content">
+          <h3 class="search-result-title">${DOMPurify.sanitize(item.title || 'Untitled')}${contentMatchIndicator}</h3>
+          <p class="search-result-description">${DOMPurify.sanitize(item.description || '')}</p>
+          <div class="search-result-meta">
+            <span class="search-result-badge ${badgeClass}">${DOMPurify.sanitize(badgeText)}</span>
+            ${pathHtml}
+          </div>
+        </div>
+      </a>`;
+    };
+
+    const renderResults = (results: any[]) => {
+      const resultsContainer = document.getElementById(
+        'search-results-container'
+      );
+      if (!resultsContainer) return;
+
+      if (results.length === 0) {
+        resultsContainer.innerHTML = '';
+        resultsContainer.style.display = 'none';
+        if (elements.noResults) elements.noResults.style.display = 'flex';
+        return;
+      }
+
+      // 最適化：最大件数は12件（スクロール前提）
+      const html = results.slice(0, 12).map(createResultCard).join('');
+
+      // 最適化：一度のinnerHTML操作
+      resultsContainer.innerHTML = html;
+      resultsContainer.style.display = 'block';
+      if (elements.noResults) elements.noResults.style.display = 'none';
+    };
+
+    const showLoading = () => {
+      if (elements.loading) elements.loading.style.display = 'flex';
+      const resultsContainer = document.getElementById(
+        'search-results-container'
+      );
+      if (resultsContainer) resultsContainer.style.display = 'none';
+    };
+
+    const hideLoading = () => {
+      if (elements.loading) elements.loading.style.display = 'none';
+    };
+
+    const clearResults = () => {
+      const resultsContainer = document.getElementById(
+        'search-results-container'
+      );
+      if (resultsContainer) {
+        resultsContainer.innerHTML = '';
+        resultsContainer.style.display = 'none';
+      }
+      if (elements.noResults) elements.noResults.style.display = 'none';
+      if (elements.loading) elements.loading.style.display = 'none';
+    };
+
+    // ========== OPTIMIZED EVENT HANDLERS ==========
+    const handleInput = async (e: Event) => {
+      const query = (e.target as HTMLInputElement).value.trim();
+      if (state.timeout) clearTimeout(state.timeout);
+      if (!query) return clearResults();
+
+      // 最適化：同じクエリの場合はスキップ
+      if (query === state.lastQuery && state.isSearching) return;
+      state.lastQuery = query;
+      state.isSearching = true;
+
+      showLoading();
+      await loadData();
+
+      // 最適化：非同期処理でUIブロックを防止
+      state.timeout = window.setTimeout(() => {
+        requestAnimationFrame(() => {
+          renderResults(search(query));
+          hideLoading();
+          state.isSearching = false;
+        });
+      }, state.debounceMs);
+    };
+
+    const handleToggle = (e: Event) => {
+      const isOpen = (e as any).newState === 'open';
+      state.isOpen = isOpen;
+      elements.toggle.setAttribute('aria-expanded', isOpen.toString());
+
+      if (isOpen) {
+        loadData();
+        setTimeout(() => elements.input.focus(), 100);
+      } else {
+        clearResults();
+        elements.input.value = '';
+      }
+    };
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && state.isOpen) {
+        e.preventDefault();
+        (elements.popover as any).hidePopover();
+      }
+    };
+
+    const handleSubmit = (e: Event) => {
+      e.preventDefault();
+      const query = elements.input.value.trim();
+      if (query) console.log('Search query:', query);
+    };
+
+    // ========== EVENT LISTENERS ==========
+    elements.popover.addEventListener('beforetoggle', handleToggle);
+    document.addEventListener('keydown', handleEscape);
+    elements.form.addEventListener('submit', handleSubmit);
+    elements.input.addEventListener('input', handleInput);
+
+    // ========== CLEANUP ==========
+    (window as any).searchPopoverCleanup = () => {
+      if (state.timeout) clearTimeout(state.timeout);
+      if (elements.popover)
+        elements.popover.removeEventListener('beforetoggle', handleToggle);
+      document.removeEventListener('keydown', handleEscape);
+      elements.form.removeEventListener('submit', handleSubmit);
+      elements.input.removeEventListener('input', handleInput);
+    };
+  })();
+</script>

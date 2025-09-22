@@ -1,33 +1,57 @@
 ---
 // Import required dependencies for tool articles
-import { getCollection, type CollectionEntry } from 'astro:content';
-import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import PostLayout from '../../../layouts/PostLayout.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
-import TableOfContents from '../../../components/content/TableOfContents.astro';
-import { resolvePath, getCollectionInfo } from '../../../utils/collections';
-import { logger } from '../../../utils/logging/console-logger';
-import { getMergedDates } from '../../../utils/content/cc-Auto-FileDates';
 
 // Import PostLayout styles
 import '../../../styles/layouts/PostLayout.css';
 
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
+import { resolvePath, getCollectionInfo } from '../../../utils/collections';
+import { logger } from '../../../utils/logging/console-logger';
+import { getMergedDates } from '../../../utils/content/cc-Auto-FileDates';
+
+// Get visible tool articles from Content Collections (shared utility)
+export async function getVisibleToolArticlesData() {
+  const allPosts = await getCollection('tool-articles');
+  return getVisibleToolArticles(allPosts);
+}
+
+// Extract tool name from post slug
+export function extractToolNameFromSlug(slug: string): string {
+  return slug.split('/')[0];
+}
+
 // Generate static paths for all tool articles
 export async function getStaticPaths() {
-  const allPosts = await getCollection('tool-articles');
-  const posts = getVisibleToolArticles(allPosts);
+  const posts = await getVisibleToolArticlesData();
 
   return posts.map((post: CollectionEntry<'tool-articles'>) => {
-    // Extract tool name from slug (first part before first slash)
-    const slugParts = post.slug.split('/');
-    const toolName = slugParts[0]; // e.g., "anki" from "anki/apa-itu-anki"
-    const articleSlug = slugParts.slice(1).join('/'); // remaining path
+    const toolName = extractToolNameFromSlug(post.slug);
+    const articleSlug = post.slug.split('/').slice(1).join('/');
 
     return {
       params: { tool: toolName, slug: articleSlug },
       props: { post },
     };
   });
+}
+
+// Get valid tools from Content Collections dynamically
+async function getValidTools(): Promise<string[]> {
+  const posts = await getVisibleToolArticlesData();
+
+  // Extract unique tool names from posts
+  const toolNames = new Set<string>();
+  posts.forEach((post: CollectionEntry<'tool-articles'>) => {
+    const toolName = extractToolNameFromSlug(post.slug);
+    if (toolName) {
+      toolNames.add(toolName);
+    }
+  });
+
+  return Array.from(toolNames).sort();
 }
 
 // Get the post from props with type safety
@@ -52,8 +76,8 @@ if (
   return Astro.redirect('/404', 301);
 }
 
-// Validate tool name against whitelist (defense in depth)
-const validTools = ['anki', 'migaku', 'yomitan'];
+// Validate tool name against Content Collections (defense in depth)
+const validTools = await getValidTools();
 if (!validTools.includes(toolName)) {
   logger.log(`Security: Invalid tool name requested: ${toolName}`, 'warning');
   return Astro.redirect('/tools', 301);
@@ -177,7 +201,7 @@ const breadcrumbConfig = {
     {
       post.data.tags && post.data.tags.length > 0 ? (
         <nav class='flex gap-2 flex-wrap mt-4' aria-label='Article tags'>
-          {post.data.tags.map(tag => (
+          {post.data.tags.map((tag: string) => (
             <span class='bg-primary/20 text-primary px-2 py-1 rounded text-xs border border-primary/30'>
               {tag}
             </span>
@@ -282,9 +306,6 @@ const breadcrumbConfig = {
       </div>
     </div>
   </footer>
-
-  <!-- Sidebar Slot -->
-  <TableOfContents slot='sidebar' headings={tocHeadings} />
 </PostLayout>
 
 <!-- Related Tools Section -->
