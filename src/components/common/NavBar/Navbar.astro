@@ -7,13 +7,11 @@
 // ========== ASTRO-NATIVE PROPS INTERFACE ==========
 export interface Props {
   // KISS Principle: Essential props only
-  variant?: 'default' | 'minimal' | 'glass';
-  theme?: 'dark' | 'light' | 'auto';
   className?: string;
 }
 
 // ========== ASTRO-NATIVE DEFAULT PROPS ==========
-const { variant = 'default', theme = 'auto', className = '' } = Astro.props;
+const { className = '' } = Astro.props;
 
 // ========== NAVIGATION CONFIGURATION ==========
 // REASONING: Centralized route management following DRY principle
@@ -158,7 +156,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
  * - Optimized viewport units prevent scrollbar layout shifts
  * 
  * FUTURE EXTENSIBILITY:
- * - CSS custom properties allow easy theme switching
+ * - CSS custom properties enable dynamic styling
  * - Container queries enable component-level responsive design
  * - Safe area insets support modern mobile devices
  * - Progressive enhancement with fallbacks for older browsers

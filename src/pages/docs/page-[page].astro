@@ -4,12 +4,12 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import PostsHeader from '../../components/docs/PostsHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
-import Pagination from '../../components/common/Pagination.astro';
+import Pagination from '../../components/common/Pagination/Pagination.astro';
 import { getDocsPageData, POSTS_PER_PAGE } from '../../utils/docs-config';
 import {
   validatePageNumber,
   shouldRedirectToFirstPage,
-} from '../../components/common/pagination';
+} from '../../components/common/Pagination/pagination';
 
 // スタイルインポート
 import '../../styles/pages/docs/docs-index.css';

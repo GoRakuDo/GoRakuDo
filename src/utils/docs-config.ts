@@ -4,7 +4,7 @@ import {
   transformPostData,
   generateStructuredData,
   type PaginationConfig,
-} from '../components/common/pagination';
+} from '../components/common/Pagination/pagination';
 import { getVisibleDocs } from './content/PostStatus-Filter';
 
 // ========== CONSTANTS ==========
@@ -12,7 +12,7 @@ export const POSTS_PER_PAGE = 6;
 
 // ========== TYPES ==========
 // Use the existing PostData type from pagination.ts
-import type { PostData } from '../components/common/pagination';
+import type { PostData } from '../components/common/Pagination/pagination';
 
 export interface StructuredData {
   '@context': string;

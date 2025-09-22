@@ -95,7 +95,7 @@ body.modal-open {
 
 /* ===== HOMEPAGE-SPECIFIC ANIMATIONS ===== */
 
-/* Note: Core animations (fadeIn, slideFromRight, slideFromBottom, butteryWaveFloat, twinkle) are defined in global.css */
+/* Note: Core animations (fadeIn, slideFromRight, slideFromBottom, twinkle) are defined in global.css */
 
 @keyframes float {
   0%,

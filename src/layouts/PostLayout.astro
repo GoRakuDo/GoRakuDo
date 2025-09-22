@@ -2,7 +2,8 @@
 // ========== POST LAYOUT COMPONENT ==========
 // Centralized layout management following ArticleLayout pattern
 // All content sections are provided through named slots
-import Navbar from '../components/common/Navbar.astro';
+import Navbar from '../components/common/NavBar/Navbar.astro';
+import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
 import UnifiedSEO from '../components/UnifiedSEO.astro';
 import Breadcrumb from '../components/common/Breadcrumb.astro';
 import TableOfContents from '../components/content/TableOfContents.astro';
@@ -62,6 +63,10 @@ const {
     />
   </head>
   <body>
+    <!-- Navigation Bar -->
+    <Navbar />
+    <BottomNavBar />
+
     <!-- Background Wave Animation -->
     <WaveAnimation
       className='wave-canvas'
@@ -75,9 +80,6 @@ const {
       starsGlow={false}
       backgroundLayer='darker'
     />
-
-    <!-- Navigation Bar -->
-    <Navbar variant='default' theme='auto' />
 
     <!-- Main Content -->
     <main
