@@ -3,7 +3,7 @@
 
 /* ===== DESIGN TOKENS & CSS VARIABLES ===== */
 :root {
-  /* Opacity Values */
+  /* Opacity Scale */
   --opacity-02: 0.02;
   --opacity-04: 0.04;
   --opacity-05: 0.05;
@@ -12,34 +12,60 @@
   --opacity-25: 0.25;
   --opacity-3: 0.3;
 
-  /* Black Color with Opacity */
+  /* Color Palette with Opacity */
   --clr-black-05: oklch(4% 0 0deg / var(--opacity-05));
   --clr-black-1: oklch(4% 0 0deg / var(--opacity-1));
   --clr-black-15: oklch(4% 0 0deg / var(--opacity-15));
   --clr-black-25: oklch(4% 0 0deg / var(--opacity-25));
   --clr-black-3: oklch(4% 0 0deg / var(--opacity-3));
-
-  /* Purple Color with Opacity */
   --clr-purple-02: oklch(65% 0.25 280deg / var(--opacity-02));
   --clr-purple-04: oklch(65% 0.25 280deg / var(--opacity-04));
   --clr-purple-08: oklch(65% 0.25 280deg / 0.08);
-
-  /* Gray Color */
   --clr-gray-67: oklch(67% 0 0deg);
 
-  /* Spacing Values */
+  /* Responsive Spacing Scale */
   --spacing-section-sm: 3rem 1rem;
   --spacing-section-md: 4rem 1.5rem;
   --spacing-section-lg: 5rem 2rem;
   --spacing-section-xl: 6rem 3rem;
   --spacing-section-2xl: 8rem 4rem;
 
-  /* Typography Values */
+  /* Typography Scale */
   --font-size-title-sm: 2.25rem;
   --font-size-title-md: 3rem;
   --font-size-title-lg: 3.75rem;
   --font-size-icon-sm: 3rem;
   --font-size-icon-md: 3.75rem;
+
+  /* Responsive Breakpoints - Note: CSS variables cannot be used in media queries */
+
+  /* Use direct values: 320px, 640px, 768px, 1024px, 1280px */
+
+  /* Background gradients */
+  --mission-background:
+    linear-gradient(
+      180deg,
+      var(--clr-black-05) 0%,
+      var(--clr-black-15) 50%,
+      var(--clr-black-25) 100%
+    ),
+    radial-gradient(
+      ellipse at 50% 80%,
+      var(--clr-purple-02) 0%,
+      transparent 60%
+    );
+  --features-background: radial-gradient(
+    ellipse at 50% 100%,
+    var(--clr-purple-08) 0%,
+    var(--clr-purple-04) 40%,
+    transparent 70%
+  );
+  --docs-background: linear-gradient(
+    180deg,
+    var(--clr-black-3) 0%,
+    var(--clr-black-1) 50%,
+    var(--clr-black-05) 100%
+  );
 }
 
 /* Note: Global styles, animations, and accessibility are handled in global.css */
@@ -116,11 +142,14 @@ body.modal-open {
   }
 }
 
-/* ===== HOMEPAGE SECTION STYLES ===== */
+/* ===== RESPONSIVE UTILITY CLASSES ===== */
+
+/* Base section padding utility */
 .section-base {
   padding: var(--spacing-section-sm);
 }
 
+/* Responsive padding mixin equivalent */
 @media (min-width: 640px) {
   .section-base {
     padding: var(--spacing-section-md);
@@ -145,12 +174,15 @@ body.modal-open {
   }
 }
 
+/* ===== SECTION LAYOUT COMPONENTS ===== */
+
 .section-container {
   max-width: 72rem;
   margin: 0 auto;
   text-align: center;
 }
 
+/* Responsive title component */
 .section-title {
   margin-bottom: 4rem;
   font-size: var(--font-size-title-sm);
@@ -169,6 +201,7 @@ body.modal-open {
   }
 }
 
+/* Section text component */
 .section-text {
   margin-bottom: 4rem;
   text-align: justify;
@@ -189,21 +222,11 @@ body.modal-open {
 /* ===== MISSION SECTION ===== */
 .mission-section {
   padding: var(--spacing-section-sm);
-  background:
-    linear-gradient(
-      180deg,
-      var(--clr-black-05) 0%,
-      var(--clr-black-15) 50%,
-      var(--clr-black-25) 100%
-    ),
-    radial-gradient(
-      ellipse at 50% 80%,
-      var(--clr-purple-02) 0%,
-      transparent 60%
-    );
+  background: var(--mission-background);
   transition: background 0.6s ease-out;
 }
 
+/* Responsive padding for mission section */
 @media (min-width: 640px) {
   .mission-section {
     padding: var(--spacing-section-md);
@@ -228,6 +251,7 @@ body.modal-open {
   }
 }
 
+/* Mission section components */
 .mission-container {
   max-width: 72rem;
   margin: 0 auto;
@@ -276,15 +300,11 @@ body.modal-open {
 /* ===== FEATURES SECTION ===== */
 .features-section {
   padding: var(--spacing-section-sm);
-  background: radial-gradient(
-    ellipse at 50% 100%,
-    var(--clr-purple-08) 0%,
-    var(--clr-purple-04) 40%,
-    transparent 70%
-  );
+  background: var(--features-background);
   transition: background 0.6s ease-out;
 }
 
+/* Responsive padding for features section */
 @media (min-width: 640px) {
   .features-section {
     padding: var(--spacing-section-md);
@@ -309,6 +329,7 @@ body.modal-open {
   }
 }
 
+/* Features section components */
 .features-container {
   max-width: 72rem;
   margin: 0 auto;
@@ -333,6 +354,7 @@ body.modal-open {
   }
 }
 
+/* Responsive grid layout */
 .features-grid {
   display: grid;
   gap: 2.5rem;
@@ -351,6 +373,7 @@ body.modal-open {
   }
 }
 
+/* Feature card component */
 .feature-card {
   padding: 2rem;
   border: 1px solid var(--clr-accent-glow-medium);
@@ -398,15 +421,11 @@ body.modal-open {
 /* ===== DOCS PREVIEW SECTION ===== */
 .docs-preview-section {
   padding: var(--spacing-section-sm);
-  background: linear-gradient(
-    180deg,
-    var(--clr-black-3) 0%,
-    var(--clr-black-1) 50%,
-    var(--clr-black-05) 100%
-  );
+  background: var(--docs-background);
   transition: background 0.6s ease-out;
 }
 
+/* Responsive padding for docs section */
 @media (min-width: 640px) {
   .docs-preview-section {
     padding: var(--spacing-section-md);
@@ -431,6 +450,7 @@ body.modal-open {
   }
 }
 
+/* Docs section components */
 .docs-container {
   max-width: 56rem;
   margin: 0 auto;
@@ -468,7 +488,9 @@ body.modal-open {
   text-align: center;
 }
 
-/* ===== BUTTONS & CTA ===== */
+/* ===== BUTTON COMPONENTS ===== */
+
+/* Base button styles */
 .cta-button,
 .docs-button {
   display: inline-flex;
@@ -485,6 +507,7 @@ body.modal-open {
   transition: all 0.3s;
 }
 
+/* Primary CTA button */
 .cta-button {
   background: linear-gradient(
     135deg,
@@ -494,11 +517,11 @@ body.modal-open {
   color: var(--clr-text-primary);
 }
 
-/* Homepage-specific button overrides */
 .cta-button:hover {
   box-shadow: 0 15px 40px var(--clr-accent-shadow);
 }
 
+/* Secondary docs button */
 .docs-button {
   border: 2px solid var(--clr-accent-glow-strong);
   background: transparent;
@@ -522,39 +545,20 @@ body.modal-open {
   background: transparent;
 }
 
-/* タブレット以上で背景エフェクトを有効化 */
+/* ===== RESPONSIVE BACKGROUND EFFECTS ===== */
+
+/* Enable background effects on tablet and above */
 @media (min-width: 768px) {
   .mission-section {
-    background:
-      linear-gradient(
-        180deg,
-        var(--clr-black-05) 0%,
-        var(--clr-black-15) 50%,
-        var(--clr-black-25) 100%
-      ),
-      radial-gradient(
-        ellipse at 50% 80%,
-        var(--clr-purple-02) 0%,
-        transparent 60%
-      );
+    background: var(--mission-background);
   }
 
   .features-section {
-    background: radial-gradient(
-      ellipse at 50% 100%,
-      var(--clr-purple-08) 0%,
-      var(--clr-purple-04) 40%,
-      transparent 70%
-    );
+    background: var(--features-background);
   }
 
   .docs-preview-section {
-    background: linear-gradient(
-      180deg,
-      var(--clr-black-3) 0%,
-      var(--clr-black-1) 50%,
-      var(--clr-black-05) 100%
-    );
+    background: var(--docs-background);
   }
 }
 
@@ -624,18 +628,18 @@ body.modal-open {
   }
 }
 
-/* ===== HOMEPAGE RESPONSIVE BREAKPOINTS ===== */
+/* ===== RESPONSIVE BREAKPOINT UTILITIES ===== */
 
-/* Mobile First - Base styles (320px+) */
+/* Mobile-first responsive design (320px+) */
 
-/* Responsive font size for modal japanese title */
+/* Modal title responsive sizing */
 @media (max-width: 768px) {
   .modal-japanese-title {
     font-size: 1.875rem;
   }
 }
 
-/* Homepage-specific button overrides */
+/* Homepage button overrides */
 .primary-button,
 .secondary-button {
   justify-content: center;
@@ -643,7 +647,7 @@ body.modal-open {
   font-size: 0.875rem;
 }
 
-/* Homepage section padding */
+/* Section padding utilities */
 .mission-section,
 .features-section,
 .docs-preview-section,
@@ -653,7 +657,7 @@ body.modal-open {
   padding-left: 1rem;
 }
 
-/* Small Mobile (640px+) */
+/* Small mobile breakpoint (640px+) */
 @media (min-width: 640px) {
   .primary-button,
   .secondary-button {
@@ -707,7 +711,7 @@ body.modal-open {
   }
 }
 
-/* Tablet (768px+) */
+/* Tablet breakpoint (768px+) */
 @media (min-width: 768px) {
   .primary-button,
   .secondary-button {
@@ -732,7 +736,7 @@ body.modal-open {
   }
 }
 
-/* Desktop (1024px+) */
+/* Desktop breakpoint (1024px+) */
 @media (min-width: 1024px) {
   .mission-section,
   .features-section,
@@ -749,7 +753,7 @@ body.modal-open {
   }
 }
 
-/* Large Desktop (1280px+) */
+/* Large desktop breakpoint (1280px+) */
 @media (min-width: 1280px) {
   .mission-section,
   .features-section,
@@ -761,16 +765,487 @@ body.modal-open {
   }
 }
 
-/* ===== HOMEPAGE FALLBACK ANIMATIONS ===== */
+/* ===== HERO SECTION COMPONENTS ===== */
 
-/* Note: Core animations (fadeIn, slideFromBottom, slideFromRight) are defined in global.css */
+/* Hero section layout */
+.hero-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 15px;
+}
+
+/* Accessibility utilities */
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  z-index: 1000;
+  padding: 8px;
+  border-radius: 4px;
+  background: var(--clr-accent);
+  color: var(--clr-text-primary);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Hero buttons container */
+section .hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 2rem;
+
+  /* Mobile layout (320px+) */
+  @media (min-width: 320px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    max-width: 28rem;
+    padding: 0 2rem;
+  }
+
+  /* Tablet layout (768px+) */
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 40rem;
+    padding: 0 2rem;
+  }
+
+  /* Desktop layout (1280px+) */
+  @media (min-width: 1280px) {
+    gap: 2rem;
+    max-width: 50rem;
+    padding: 0 3rem;
+  }
+}
+
+/* WCAG 2.1 compliant button styling */
+section .primary-button,
+section .secondary-button {
+  position: relative;
+  overflow: hidden;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Button text styling */
+  .button-text {
+    display: inline-block;
+    color: var(--clr-text-primary);
+    font-weight: inherit;
+  }
+
+  .secondary-text {
+    color: var(--clr-gold-dark);
+  }
+
+  .secondary-icon {
+    color: var(--clr-gold-dark);
+  }
+
+  /* Mobile sizing (320px+) */
+  @media (min-width: 320px) {
+    justify-content: center;
+    min-height: 3rem;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Tablet sizing (768px+) */
+  @media (min-width: 768px) {
+    min-height: 3.25rem;
+    padding: 1.125rem 2.5rem;
+    border-radius: 0.875rem;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  /* Desktop sizing (1280px+) */
+  @media (min-width: 1280px) {
+    min-height: 3.5rem;
+    padding: 1.25rem 3rem;
+    border-radius: 1rem;
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+}
+
+/* Primary button component */
+section .primary-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: var(--border-radius-pill);
+  background-image: linear-gradient(
+    135deg,
+    var(--clr-accent) 0%,
+    var(--clr-accent-dark) 100%
+  );
+  color: var(--clr-text-primary);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transform: translateZ(0);
+  transition:
+    background-image var(--transition-bg),
+    box-shadow var(--transition-shadow),
+    transform var(--transition-transform),
+    opacity var(--transition-opacity);
+  touch-action: manipulation;
+  box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
+  will-change: transform, background-color, box-shadow;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Primary button icon sizing */
+section .primary-button svg {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Secondary button component */
+section .secondary-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  border: 0.1875rem solid var(--clr-gold-dark-transparent);
+  border-radius: var(--border-radius-pill);
+  background: transparent;
+  color: var(--clr-gold-dark);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transform: translateZ(0);
+  transition:
+    background-color var(--transition-bg),
+    border-color var(--transition-border),
+    box-shadow var(--transition-shadow),
+    transform var(--transition-transform),
+    opacity var(--transition-opacity);
+  touch-action: manipulation;
+  box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
+  will-change: transform, background-color, box-shadow;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Enhanced focus states for accessibility */
+section .primary-button:focus-visible,
+section .secondary-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--clr-accent-glow-medium),
+    0 0 0 5px oklch(100% 0 0deg / 0.3),
+    0 12px 35px var(--clr-accent-shadow);
+  transform: translateY(-1px);
+}
+
+/* Keyboard navigation support */
+section .primary-button:focus,
+section .secondary-button:focus {
+  outline: 2px solid var(--clr-accent);
+  outline-offset: 2px;
+}
+
+.hero-buttons .primary-button:hover {
+  background-image: linear-gradient(
+    135deg,
+    var(--clr-accent-dark) 0%,
+    var(--clr-primary-dark) 100%
+  );
+  box-shadow: var(--shadow-hover);
+  transform: var(--hover-lift-enhanced);
+
+  /* Individual hover transitions for smooth animation */
+  transition:
+    background-image var(--transition-bg),
+    box-shadow var(--transition-shadow),
+    transform var(--transition-transform);
+}
+
+.hero-buttons .primary-button:active {
+  opacity: 0.95;
+  transform: translateZ(0) translateY(0);
+  box-shadow: 0 1px 4px oklch(0% 0 0deg / 0.2);
+
+  /* Smooth active state transition */
+  transition:
+    opacity var(--transition-opacity),
+    transform var(--transition-transform),
+    box-shadow var(--transition-shadow);
+}
+
+/* Icon styling for secondary button */
+.secondary-button .btn-icon {
+  flex-shrink: 0;
+  width: 1rem; /* 1rem for consistent icon size */
+  height: 1rem; /* 1rem for consistent icon size */
+  transition: color var(--transition-fast) ease;
+}
+
+.hero-buttons .secondary-button:hover {
+  background: var(--clr-accent-glow-medium);
+  border-color: var(--clr-gold-dark);
+  color: var(--clr-gold-dark); /* ホバー時もゴールド色を維持 */
+  box-shadow: var(--shadow-hover);
+  transform: var(--hover-lift-enhanced);
+
+  /* Individual hover transitions for smooth animation */
+  transition:
+    background-color var(--transition-bg),
+    border-color var(--transition-border),
+    color var(--transition-fast),
+    box-shadow var(--transition-shadow),
+    transform var(--transition-transform);
+}
+
+.hero-buttons .secondary-button:active {
+  opacity: 0.95;
+  transform: translateZ(0) translateY(0);
+  box-shadow: 0 1px 4px oklch(0% 0 0deg / 0.2);
+
+  /* Smooth active state transition */
+  transition:
+    opacity var(--transition-opacity),
+    transform var(--transition-transform),
+    box-shadow var(--transition-shadow);
+}
+
+/* Touch device hover disable */
+@media (hover: none) and (pointer: coarse) {
+  section .primary-button:hover,
+  section .secondary-button:hover {
+    transform: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  section .primary-button,
+  section .secondary-button {
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+
+  section .primary-button:hover,
+  section .secondary-button:hover {
+    transform: none;
+    box-shadow: 0 4px 12px var(--clr-accent-shadow);
+  }
+
+  section .primary-button::before,
+  section .secondary-button::after {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  section .primary-button {
+    border: 3px solid var(--clr-text-primary);
+    background: var(--clr-text-primary);
+    color: var(--clr-background);
+  }
+
+  section .secondary-button {
+    border-width: 3px;
+    background: var(--clr-text-primary);
+    color: var(--clr-background);
+    border-color: var(--clr-text-primary);
+  }
+}
+
+/* Enhanced color contrast */
+@media (prefers-contrast: more) {
+  section .primary-button {
+    border: 2px solid oklch(100% 0 0deg);
+    background: oklch(0% 0 0deg);
+    color: oklch(100% 0 0deg);
+  }
+
+  section .secondary-button {
+    border: 2px solid oklch(0% 0 0deg);
+    background: oklch(100% 0 0deg);
+    color: oklch(0% 0 0deg);
+  }
+}
+
+/* Focus trap support */
+section .hero-buttons:focus-within {
+  outline: 2px solid var(--clr-accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Responsive typography scale */
+section .hero-kicker {
+  @media (min-width: 320px) {
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 1.125rem;
+  }
+}
+
+section .hero-title {
+  @media (min-width: 320px) {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.875rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 2.625rem;
+  }
+}
+
+section .hero-marker {
+  @media (min-width: 320px) {
+    font-size: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 3rem;
+  }
+}
+
+section .hero-description {
+  @media (min-width: 320px) {
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.125rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 1.25rem;
+  }
+}
+
+/* Responsive section padding utilities */
+.mission-section,
+.features-section,
+.docs-preview-section {
+  @media (min-width: 320px) {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+/* Gold marker utility component */
+.gold-marker {
+  display: block;
+  margin-bottom: 0.5rem;
+  background-image: linear-gradient(
+    135deg,
+    var(--clr-gold-light) 0%,
+    var(--clr-gold-dark) 70%
+  );
+  color: var(--clr-gold-dark);
+  text-shadow: 0.0625rem 0.0625rem 0.3125rem oklch(0% 0 0deg / 0.1);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@supports (background-clip: text) {
+  .gold-marker {
+    color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Hero section transitions */
+::view-transition-old(hero-section),
+::view-transition-new(hero-section),
+::view-transition-old(hero-content),
+::view-transition-new(hero-content) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(hero-title),
+::view-transition-new(hero-title) {
+  animation-duration: 0.35s;
+  animation-timing-function: ease-out;
+}
+
+::view-transition-old(hero-buttons),
+::view-transition-new(hero-buttons) {
+  animation-duration: 0.3s;
+  animation-delay: 0.1s;
+}
+
+/* Hero content animations */
+.hero-content {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Hero button animations */
+
+/* Note: .hero-buttons animation is already defined above at line 806 */
+
+/* ===== FALLBACK ANIMATIONS ===== */
+
+/* Fallback animations for browsers without View Transitions API */
 @supports not (view-transition-name: none) {
-  /* Main content animations */
   .main-content {
     animation: fadeIn 0.6s ease-out;
   }
 
-  /* Feature card staggered animations */
   .feature-card {
     animation: slideFromBottom 0.6s ease-out;
   }
@@ -791,13 +1266,11 @@ body.modal-open {
     animation-delay: 0.3s;
   }
 
-  /* Button animations */
   .cta-button,
   .docs-button {
     animation: slideFromRight 0.5s ease-out;
   }
 
-  /* Section loading animations */
   .mission-section.loaded,
   .features-section.loaded,
   .docs-preview-section.loaded {

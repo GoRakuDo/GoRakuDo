@@ -752,7 +752,9 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 
   /* 検索結果カード - モバイル最適化（グローバルスタイル） */
   :global(.search-result-card) {
+    position: relative;
     display: block;
+    overflow: hidden;
     min-height: 44px; /* タッチフレンドリー */
     margin: var(--sp-margin-sm) 0;
     padding: var(--sp-padding-md);
@@ -765,25 +767,22 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     );
     color: var(--sp-white-9);
     text-decoration: none;
-    text-rendering: optimizeLegibility;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-rendering: optimizelegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(8px);
     box-shadow:
       0 2px 8px var(--sp-black-1),
       inset 0 1px 0 var(--sp-white-1);
-    position: relative;
-    overflow: hidden;
   }
 
   /* カードの微細なグラデーション効果 */
   :global(.search-result-card::before) {
-    content: '';
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
+    left: 0;
     height: 1px;
     background: linear-gradient(
       90deg,
@@ -792,6 +791,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       transparent 100%
     );
     opacity: 0.6;
+    content: '';
   }
 
   :global(.search-result-card:hover) {
@@ -809,13 +809,13 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   :global(.search-result-card:hover::before) {
-    opacity: 1;
     background: linear-gradient(
       90deg,
       transparent 0%,
       var(--sp-accent-2) 50%,
       transparent 100%
     );
+    opacity: 1;
   }
 
   :global(.search-result-card:active) {
@@ -835,12 +835,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 
   /* カードコンテンツ（グローバルスタイル） */
   :global(.search-result-content) {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     gap: var(--sp-gap-xs);
     height: 100%;
-    position: relative;
-    z-index: 1;
   }
 
   :global(.search-result-title) {
@@ -884,8 +884,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 
   :global(.search-result-meta) {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     gap: var(--sp-gap-sm);
     margin-top: auto;
     padding-top: var(--sp-padding-xs);
@@ -914,23 +914,23 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   :global(.search-result-badge--tool) {
+    border: 1px solid var(--sp-accent-1);
     background: linear-gradient(
       135deg,
       var(--sp-accent-2) 0%,
       var(--sp-accent-3) 100%
     );
     color: var(--sp-accent);
-    border: 1px solid var(--sp-accent-1);
   }
 
   :global(.search-result-badge--doc) {
+    border: 1px solid var(--sp-success-1);
     background: linear-gradient(
       135deg,
       var(--sp-success-2) 0%,
       var(--sp-success-2) 100%
     );
     color: var(--sp-success);
-    border: 1px solid var(--sp-success-1);
   }
 
   :global(.search-result-card:hover .search-result-badge) {
@@ -956,8 +956,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   :global(.search-result-card:hover .search-result-path) {
-    opacity: 1;
     color: var(--sp-white-7);
+    opacity: 1;
   }
 
   :global(.search-result-path-separator) {
@@ -1024,21 +1024,21 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     }
 
     :global(.search-result-card) {
+      min-height: 60px;
       margin: var(--sp-margin-md) 0;
       padding: var(--sp-padding-lg);
       border-radius: var(--sp-radius-2xl);
-      min-height: 60px;
     }
 
     :global(.search-result-title) {
-      font-size: var(--sp-text-lg);
       margin-bottom: var(--sp-margin-sm);
+      font-size: var(--sp-text-lg);
     }
 
     :global(.search-result-description) {
+      margin-bottom: var(--sp-margin-md);
       font-size: var(--sp-text-base);
       -webkit-line-clamp: 3;
-      margin-bottom: var(--sp-margin-md);
     }
 
     :global(.search-result-meta) {
@@ -1066,14 +1066,14 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     }
 
     :global(.search-result-title) {
-      font-size: var(--sp-text-xl);
       margin-bottom: var(--sp-margin-md);
+      font-size: var(--sp-text-xl);
     }
 
     :global(.search-result-description) {
+      margin-bottom: var(--sp-margin-lg);
       font-size: var(--sp-text-lg);
       -webkit-line-clamp: 4;
-      margin-bottom: var(--sp-margin-lg);
     }
 
     :global(.search-result-meta) {

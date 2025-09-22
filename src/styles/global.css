@@ -1609,7 +1609,25 @@
   /* ===== GLOBAL TEXT COLOR OVERRIDE ===== */
 
   /* グローバルレベルでデフォルトのテキストカラーを白色に設定 */
-  * {
+  body,
+  p,
+  div,
+  span,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  a,
+  li,
+  td,
+  th,
+  small,
+  label,
+  input,
+  textarea,
+  select {
     color: var(--global-text-color);
   }
 

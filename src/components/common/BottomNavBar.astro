@@ -1,0 +1,378 @@
+---
+export interface Props {
+  className?: string;
+}
+
+const { className = '' } = Astro.props;
+
+// Navigation items with icons and labels
+const navItems = [
+  {
+    href: '/tools',
+    label: 'Tutorial',
+    icon: 'tutorial',
+    ariaLabel: 'Tutorial - 学習ガイド',
+  },
+  {
+    href: '/docs',
+    label: 'Dokumentasi',
+    icon: 'documentation',
+    ariaLabel: 'Dokumentasi - ドキュメント',
+  },
+  {
+    href: '/',
+    label: 'Home',
+    icon: 'home',
+    ariaLabel: 'Home - ホーム',
+  },
+];
+---
+
+<nav
+  class={`bottom-nav glassmorphism ${className}`}
+  aria-label='Bottom navigation'
+>
+  {
+    navItems.map(item => (
+      <a
+        href={item.href}
+        class='nav-btn'
+        aria-label={item.ariaLabel}
+        data-icon={item.icon}
+      >
+        <div class='nav-icon'>
+          {item.icon === 'tutorial' && (
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
+            >
+              <path
+                d='M12 2L2 7L12 12L22 7L12 2Z'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M2 17L12 22L22 17'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M2 12L12 17L22 12'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+            </svg>
+          )}
+          {item.icon === 'documentation' && (
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
+            >
+              <path
+                d='M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M14 2V8H20'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M16 13H8'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M16 17H8'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M10 9H8'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+            </svg>
+          )}
+          {item.icon === 'home' && (
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
+            >
+              <path
+                d='M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M9 22V12H15V22'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+            </svg>
+          )}
+        </div>
+        <span class='nav-label'>{item.label}</span>
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  /* ===== DESIGN TOKENS - FREQUENTLY USED VALUES ===== */
+  .bottom-nav {
+    /* Layout properties */
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1200;
+
+    /* デフォルトは表示（モバイル） */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--bottom-nav-gap);
+
+    /* 下と左右を少し離す（端にくっつかない） */
+    margin: var(--bottom-nav-margin);
+    margin-bottom: calc(var(--bottom-nav-margin) + var(--safe-area-bottom));
+    padding: var(--bottom-nav-padding);
+    border: 1px solid var(--bottom-nav-white-15);
+
+    /* 角丸と内側余白 */
+    border-radius: var(--bottom-nav-radius-xl);
+
+    /* GlassMorphism背景効果 */
+    background: linear-gradient(
+      135deg,
+      var(--bottom-nav-white-10) 0%,
+      var(--bottom-nav-white-05) 50%,
+      var(--bottom-nav-white-08) 100%
+    );
+    backdrop-filter: var(--bottom-nav-blur-base);
+    box-shadow:
+      0 8px 32px var(--bottom-nav-black-15),
+      0 4px 16px var(--bottom-nav-black-10),
+      inset 0 1px 0 var(--bottom-nav-white-20),
+      inset 0 -1px 0 var(--bottom-nav-white-10);
+
+    /* デスクトップでは非表示 */
+    @media (min-width: 1024px) {
+      display: none;
+    }
+
+    /* 小さな画面での調整 */
+    @media (max-width: 360px) {
+      gap: var(--bottom-nav-gap-small);
+      margin: var(--bottom-nav-margin-small);
+      margin-bottom: calc(
+        var(--bottom-nav-margin-small) + var(--safe-area-bottom)
+      );
+      padding: var(--bottom-nav-padding-small);
+    }
+
+    /* Color Tokens - OKLCH format for consistency */
+    --bottom-nav-white: oklch(100% 0 0deg);
+    --bottom-nav-white-15: oklch(100% 0 0deg / 0.15);
+    --bottom-nav-white-20: oklch(100% 0 0deg / 0.2);
+    --bottom-nav-white-25: oklch(100% 0 0deg / 0.25);
+    --bottom-nav-white-10: oklch(100% 0 0deg / 0.1);
+    --bottom-nav-white-08: oklch(100% 0 0deg / 0.08);
+    --bottom-nav-white-05: oklch(100% 0 0deg / 0.05);
+    --bottom-nav-primary: oklch(65% 0.25 280deg);
+    --bottom-nav-primary-25: oklch(65% 0.25 280deg / 0.25);
+    --bottom-nav-primary-30: oklch(65% 0.25 280deg / 0.3);
+    --bottom-nav-black: oklch(0% 0 0deg);
+    --bottom-nav-black-15: oklch(0% 0 0deg / 0.15);
+    --bottom-nav-black-10: oklch(0% 0 0deg / 0.1);
+    --bottom-nav-black-05: oklch(0% 0 0deg / 0.05);
+
+    /* Spacing Tokens */
+    --bottom-nav-margin: 0.75rem;
+    --bottom-nav-margin-small: 0.5rem;
+    --bottom-nav-padding: 0.5rem;
+    --bottom-nav-padding-small: 0.375rem;
+    --bottom-nav-gap: 0.25rem;
+    --bottom-nav-gap-small: 0.125rem;
+
+    /* Border Radius Tokens */
+    --bottom-nav-radius: var(--border-radius-md, 0.5rem);
+    --bottom-nav-radius-xl: var(--radius-xl, 1rem);
+
+    /* Backdrop Filter Tokens */
+    --bottom-nav-blur-base: blur(8px) saturate(120%);
+    --bottom-nav-blur-hover: blur(12px) saturate(140%);
+    --bottom-nav-blur-active: blur(6px) saturate(130%);
+    --bottom-nav-blur-current: blur(10px) saturate(150%);
+    --bottom-nav-blur-overlay: blur(4px) saturate(110%);
+    --bottom-nav-blur-touch: blur(8px) saturate(130%);
+  }
+
+  /* モバイル専用の固定ボトムナビ。デスクトップでは非表示 */
+
+  /* Note: .bottom-nav styles are already defined above at line 156 */
+
+  .nav-btn {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    min-height: var(--touch-target-min, 44px);
+    padding: var(--bottom-nav-padding) 0.25rem;
+    border-radius: var(--bottom-nav-radius);
+    background: var(--bottom-nav-white-15);
+    color: var(--bottom-nav-white);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition:
+      background-color var(--transition-bg, 0.2s ease),
+      transform var(--transition-transform, 0.2s ease),
+      box-shadow var(--transition-shadow, 0.2s ease),
+      color var(--transition-bg, 0.2s ease),
+      backdrop-filter var(--transition-bg, 0.2s ease);
+    backdrop-filter: var(--bottom-nav-blur-base);
+
+    /* 小さな画面での調整 */
+    @media (max-width: 360px) {
+      padding: var(--bottom-nav-padding-small) 0.125rem;
+    }
+  }
+
+  .nav-btn::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      var(--bottom-nav-white-20) 0%,
+      var(--bottom-nav-white-10) 100%
+    );
+    opacity: 0;
+    transition: opacity var(--transition-bg, 0.2s ease);
+    content: '';
+    backdrop-filter: var(--bottom-nav-blur-overlay);
+  }
+
+  .nav-btn:hover {
+    background: var(--bottom-nav-white-20);
+    color: var(--bottom-nav-primary);
+    transform: translateY(-2px);
+    backdrop-filter: var(--bottom-nav-blur-hover);
+    box-shadow:
+      0 4px 12px var(--bottom-nav-black-15),
+      0 2px 4px var(--bottom-nav-black-10);
+  }
+
+  .nav-btn:hover::before {
+    opacity: 1;
+  }
+
+  .nav-btn:active {
+    background: var(--bottom-nav-white-25);
+    backdrop-filter: var(--bottom-nav-blur-active);
+    transform: translateY(-1px);
+    box-shadow:
+      0 2px 6px var(--bottom-nav-black-10),
+      0 1px 2px var(--bottom-nav-black-05);
+  }
+
+  .nav-btn:focus {
+    outline: 2px solid var(--bottom-nav-primary);
+    outline-offset: 2px;
+  }
+
+  .nav-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.25rem;
+    transition: transform var(--transition-transform, 0.2s ease);
+  }
+
+  .nav-btn:hover .nav-icon {
+    transform: scale(1.1);
+  }
+
+  .nav-btn:active .nav-icon {
+    transform: scale(0.95);
+  }
+
+  .nav-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    transition: color var(--transition-bg, 0.2s ease);
+
+    /* 小さな画面での調整 */
+    @media (max-width: 360px) {
+      font-size: 0.625rem;
+    }
+  }
+
+  /* アクティブ状態のスタイリング */
+  .nav-btn[aria-current='page'] {
+    background: var(--bottom-nav-primary-25);
+    backdrop-filter: var(--bottom-nav-blur-current);
+    color: var(--bottom-nav-primary);
+    box-shadow:
+      0 2px 8px var(--bottom-nav-primary-30),
+      inset 0 1px 0 var(--bottom-nav-white-10);
+  }
+
+  .nav-btn[aria-current='page'] .nav-icon {
+    transform: scale(1.05);
+  }
+
+  /* タッチデバイス向けの最適化 */
+  @media (hover: none) and (pointer: coarse) {
+    .nav-btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .nav-btn:active {
+      background: var(--bottom-nav-white-25);
+      transform: scale(0.95);
+      backdrop-filter: var(--bottom-nav-blur-touch);
+    }
+  }
+</style>
