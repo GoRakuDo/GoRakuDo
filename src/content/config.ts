@@ -17,7 +17,7 @@ const DEFAULTS = {
   STATUS: 'draft' as const,
 } as const;
 
-// ドキュメントコレクション
+// ドキュメントコレクション（MDX対応）
 const docsCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -48,7 +48,7 @@ const docsCollection = defineCollection({
   })),
 });
 
-// ページコレクション
+// ページコレクション（MDX対応）
 const pagesCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -60,7 +60,7 @@ const pagesCollection = defineCollection({
   }),
 });
 
-// ツール記事コレクション
+// ツール記事コレクション（MDX対応）
 const toolArticlesCollection = defineCollection({
   type: 'content',
   schema: z.object({

@@ -3,6 +3,8 @@ import vue from '@astrojs/vue';
 import tailwindcss from '@tailwindcss/vite';
 import mcp from 'astro-mcp';
 
+import mdx from '@astrojs/mdx';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://gorakudo.org',
@@ -95,17 +97,14 @@ export default defineConfig({
     },
   },
 
-  integrations: [
-    vue({
-      // Vue configuration for Islands Architecture
-      include: ['**/*.vue'],
-      experimentalReactivityTransform: false,
-      template: {
-        compilerOptions: {
-          isCustomElement: tag => tag.startsWith('ion-'),
-        },
+  integrations: [vue({
+    // Vue configuration for Islands Architecture
+    include: ['**/*.vue'],
+    experimentalReactivityTransform: false,
+    template: {
+      compilerOptions: {
+        isCustomElement: tag => tag.startsWith('ion-'),
       },
-    }),
-    mcp(),
-  ],
+    },
+  }), mcp(), mdx()],
 });

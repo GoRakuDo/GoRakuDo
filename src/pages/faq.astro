@@ -1,0 +1,241 @@
+---
+import PostLayout from '../layouts/PostLayout.astro';
+import Breadcrumb from '../components/common/Breadcrumb.astro';
+
+// Import content page styles with Tailwind v4 optimization
+import '../styles/layouts/PostLayout.css';
+
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { resolvePath, getCollectionInfo } from '../utils/collections';
+import { getMergedDates } from '../utils/content/cc-Auto-FileDates';
+import { getVisibleDocs } from '../utils/content/PostStatus-Filter';
+
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
+// FAQ Schema
+import { generateFAQSchema, defaultFAQData } from '../utils/content/faq-schema';
+
+// Get FAQ page from pages collection
+const allPages = await getCollection('pages');
+const faqPage = allPages.find(
+  (page: CollectionEntry<'pages'>) => page.slug === 'faq'
+);
+
+// Check if FAQ page exists
+if (!faqPage) {
+  return Astro.redirect('/404');
+}
+
+// Render the FAQ page content
+const { Content, headings } = await faqPage.render();
+
+// Filter headings for TOC (h2-h3 levels work best for navigation)
+const tocHeadings = headings.filter(
+  (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
+);
+
+// Dynamic content path resolution for SEO
+const resolvedPath = { path: resolvePath('pages', faqPage.slug) };
+const collectionMetadata = getCollectionInfo('pages');
+
+// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
+const fileDates = getMergedDates(
+  { slug: faqPage.slug, collection: 'pages' },
+  faqPage.data.publishedDate,
+  faqPage.data.updatedDate
+);
+
+// Dynamic SEO data based on document content (フロントマター完全対応 + 自動日付)
+const seoData = {
+  title: faqPage.data.title || 'よくある質問 - GoRakuDo',
+  description:
+    faqPage.data.description ||
+    'GoRakuDo日本語学習プラットフォームに関するよくある質問と回答をご覧ください。使い方、料金、機能について詳しく説明しています。',
+  keywords: [
+    'FAQ',
+    'よくある質問',
+    'GoRakuDo',
+    '日本語学習',
+    'サポート',
+    'ヘルプ',
+  ],
+  articleType: 'faq',
+  learningStage: 'all',
+  searchIntent: 'informational',
+  // フロントマターの日付があれば使用、なければファイルシステムの日付を使用
+  publishedDate: fileDates.publishedDate,
+  modifiedDate: fileDates.updatedDate,
+  isDraft: faqPage.data.status === 'draft',
+};
+
+// Prepare minimal data for client-side scripts
+const pageData = {
+  title: faqPage.data.title,
+  description: faqPage.data.description,
+  resolvedPath: resolvedPath.path,
+};
+
+// Breadcrumb configuration
+const breadcrumbConfig = {
+  currentPath: resolvedPath.path,
+  showHome: true,
+  showIcons: true,
+  ariaLabel: 'FAQ page navigation breadcrumb',
+};
+
+// ========== BREADCRUMB SCHEMA ==========
+// FAQ page用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'よくある質問', url: resolvedPath.path, isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
+
+// ========== FAQ SCHEMA ==========
+// FAQ Schema生成（MDXファイルの実際のFAQデータから自動生成）
+// 現在はデフォルトデータを使用、将来的にMDXから動的抽出も可能
+const faqSchema = generateFAQSchema(defaultFAQData);
+
+// 構造化データはPostLayout.astroで処理されるため、ここでは不要
+---
+
+<PostLayout
+  title={seoData.title}
+  description={seoData.description}
+  publishedDate={seoData.publishedDate}
+  lang='ja'
+  author={faqPage.data.author || 'GoRakuDo Team'}
+  tags={seoData.keywords}
+  post={faqPage}
+  collectionMetadata={collectionMetadata}
+  headings={tocHeadings}
+  postActions={true}
+  breadcrumbConfig={breadcrumbConfig}
+  breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema || undefined}
+>
+  <!-- Breadcrumb Slot -->
+  <Breadcrumb
+    slot='breadcrumb'
+    post={faqPage}
+    currentPath={breadcrumbConfig.currentPath}
+    showHome={breadcrumbConfig.showHome}
+    showIcons={breadcrumbConfig.showIcons}
+    ariaLabel={breadcrumbConfig.ariaLabel}
+  />
+
+  <!-- Header Slot -->
+  <header slot='header' class='content-header mt-8'>
+    <h1>{faqPage.data.title}</h1>
+
+    {
+      (faqPage.data.publishedDate || faqPage.data.author) && (
+        <div class='content-meta' aria-label='Page metadata'>
+          <time class='content-date' datetime={seoData.publishedDate}>
+            {new Date(seoData.publishedDate).toLocaleDateString('ja-JP', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+          <span class='content-author'>
+            by {faqPage.data.author || 'GoRakuDo Team'}
+          </span>
+        </div>
+      )
+    }
+
+    <div class='content-tags'>
+      <span class='difficulty-badge difficulty-faq' aria-label='Page type: FAQ'>
+        FAQ
+      </span>
+    </div>
+  </header>
+
+  <!-- Content Slot -->
+  <article
+    slot='content'
+    class='prose prose-invert max-w-none content-main'
+    id='contentMain'
+    aria-label='FAQ content'
+  >
+    <Content />
+  </article>
+
+  <!-- Actions Slot -->
+  <footer slot='actions' class='content-actions'>
+    <div class='action-buttons'>
+      <a href='/' class='back-to-docs' aria-label='Back to Home'>
+        <svg
+          width='16'
+          height='16'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M19 12H5M12 19l-7-7 7-7'></path>
+        </svg>
+        Back to Home
+      </a>
+
+      <div class='share-buttons'>
+        <button
+          class='share-btn'
+          onclick='sharePage()'
+          aria-label='Share this FAQ page'
+        >
+          <svg
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            aria-hidden='true'
+          >
+            <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8'></path>
+            <polyline points='16,6 12,2 8,6'></polyline>
+            <line x1='12' y1='2' x2='12' y2='15'></line>
+          </svg>
+          Share
+        </button>
+      </div>
+    </div>
+  </footer>
+</PostLayout>
+
+<!-- FAQ Schema JSON-LD (UnifiedSEO.astroで処理されるため削除) -->
+
+<!-- Main Application Script -->
+<script is:inline define:vars={{ pageData }}>
+  // Share functionality with dynamic path support
+  function sharePage() {
+    const shareUrl = pageData?.resolvedPath
+      ? `${window.location.origin}${pageData.resolvedPath}`
+      : window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: pageData?.title || 'GoRakuDo FAQ',
+        text: pageData?.description || 'Check out the GoRakuDo FAQ',
+        url: shareUrl,
+      });
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('リンクをクリップボードにコピーしました！');
+      });
+    }
+  }
+
+  // Make sharePage globally accessible for onclick handlers
+  window.sharePage = sharePage;
+</script>

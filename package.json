@@ -16,7 +16,7 @@
     "format": "prettier --write src/**/*.{ts,tsx,js,jsx,json,css,md}",
     "format:check": "prettier --check src/**/*.{ts,tsx,js,jsx,json,css,md}",
     "quality": "npm run lint && npm run format:check && npm run type-check",
-    "stylelint": "stylelint \"src/**/*.{css,scss,vue,astro}\"",
+    "stylelint": "stylelint \"src/**/*.{css,scss,vue,astro}\" --fix",
     "stylelint:fix": "stylelint \"**/*.{css,scss,vue,astro}\" --fix",
     "stylelint:file": "stylelint",
     "stylelint:all": "stylelint \"src/**/*.{css,scss,vue,astro,ts,tsx,js,jsx}\" ",
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.3.6",
     "@astrojs/vue": "^5.1.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.13",

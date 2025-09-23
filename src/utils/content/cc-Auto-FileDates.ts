@@ -22,8 +22,17 @@ export interface FileDates {
  */
 export function getFileDates(collection: string, slug: string): FileDates {
  try {
-  const filePath = join(process.cwd(), 'src/content', collection, `${slug}.md`);
-  const stats = statSync(filePath);
+  // MDXファイルを優先的に探し、見つからない場合はMDファイルを探す
+  let filePath = join(process.cwd(), 'src/content', collection, `${slug}.mdx`);
+  let stats;
+
+  try {
+   stats = statSync(filePath);
+  } catch {
+   // MDXファイルが見つからない場合はMDファイルを試す
+   filePath = join(process.cwd(), 'src/content', collection, `${slug}.md`);
+   stats = statSync(filePath);
+  }
 
   return {
    createdDate: stats.birthtime.toISOString(),

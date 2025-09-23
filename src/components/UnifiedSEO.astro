@@ -68,6 +68,19 @@ export interface Props {
       item: string;
     }>;
   };
+  // FAQ Schema統合
+  faqSchema?: {
+    '@context': 'https://schema.org';
+    '@type': 'FAQPage';
+    mainEntity: Array<{
+      '@type': 'Question';
+      name: string;
+      acceptedAnswer: {
+        '@type': 'Answer';
+        text: string;
+      };
+    }>;
+  } | null;
   // Resource Hints拡張
   dnsPrefetch?: string[];
   prefetch?: string[];
@@ -94,6 +107,8 @@ const {
   gtag = 'G-R4V6TV2BM3', // デフォルトGoogle Analytics ID
   // Breadcrumb Schema統合
   breadcrumbSchema,
+  // FAQ Schema統合
+  faqSchema,
   // Resource Hints - デフォルト値設定
   dnsPrefetch = [],
   prefetch = [],
@@ -216,10 +231,13 @@ const jsonLD = {
   })
 };
 
-// 構造化データの統合（Breadcrumb Schemaを含む）
+// 構造化データの統合（Breadcrumb Schema + FAQ Schemaを含む）
 const structuredDataSchemas: any[] = [jsonLD];
 if (breadcrumbSchema) {
   structuredDataSchemas.push(breadcrumbSchema);
+}
+if (faqSchema) {
+  structuredDataSchemas.push(faqSchema);
 }
 ---
 
