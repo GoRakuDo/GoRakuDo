@@ -33,14 +33,14 @@
   --tool-radius-2xl: var(--radius-2xl);
 
   /* Layout */
-  --tool-container-max-width: 1280px;
+  --tool-container-max-width: 1200px;
   --tool-grid-gap: var(--spacing-xl);
 }
 
 /* ========== LAYOUT CONTAINER ========== */
 .article-layout-container {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   background: transparent;
 }
 
@@ -514,49 +514,4 @@
 .nav-action-btn svg {
   width: var(--tool-spacing-md);
   height: var(--tool-spacing-md);
-}
-
-/* ========== PRINT STYLES ========== */
-
-@media print {
-  .article-progress,
-  .navbar {
-    display: none;
-  }
-
-  .article-content-wrapper {
-    background: white;
-  }
-
-  .article-content,
-  .article-content-enhanced {
-    color: #000;
-    font-size: 11pt;
-    line-height: 1.4;
-  }
-
-  .article-content a,
-  .article-content-enhanced a {
-    color: #000;
-    text-decoration: underline;
-  }
-
-  .article-content a::after,
-  .article-content-enhanced a::after {
-    color: #666;
-    font-size: 9pt;
-    content: ' (' attr(href) ')';
-  }
-
-  .article-content img,
-  .article-content-enhanced img {
-    max-width: 100%;
-    break-inside: avoid;
-  }
-
-  .article-content-enhanced h1,
-  .article-content-enhanced h2,
-  .article-content-enhanced h3 {
-    color: black;
-  }
 }

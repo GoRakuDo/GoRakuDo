@@ -2,8 +2,10 @@
 // ========== ARTICLE LAYOUT COMPONENT ==========
 // Centralized data management - this component only handles layout structure
 // All data processing is done in the parent index.astro
-import Navbar from '../components/common/NavBar/Navbar.astro';
 import UnifiedSEO from '../components/UnifiedSEO.astro';
+
+import Navbar from '../components/common/NavBar/Navbar.astro';
+import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
 
 // Animation
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
@@ -46,6 +48,10 @@ const {
     />
   </head>
   <body>
+    <!-- Navigation - 共通コンポーネント -->
+    <Navbar />
+    <BottomNavBar />
+
     <!-- Background Wave Animation -->
     <WaveAnimation
       backgroundLayer='normal'
@@ -58,9 +64,6 @@ const {
       starsSize={1.1}
       starsGlow={true}
     />
-
-    <!-- Navigation Bar -->
-    <Navbar />
 
     <!-- Enhanced Article Container with Modern Design -->
     <div class='article-layout-container'>

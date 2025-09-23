@@ -2,6 +2,7 @@
 
 :root {
   /* ===== DESIGN TOKENS & CSS VARIABLES ===== */
+  color-scheme: dark !important;
 
   /* ===== CORE COLOR TOKENS - FREQUENTLY USED VALUES ===== */
 
@@ -112,6 +113,7 @@
   --clr-paper-90: oklch(90% 0.01 60deg);
 
   /* ===== PRIMARY COLOR SYSTEM ===== */
+
   --clr-background: var(--token-bg-dark);
   --clr-text-primary: var(--clr-white);
   --clr-text-secondary: var(--token-text-secondary);
@@ -239,7 +241,319 @@
   --z-content-modal: 100;
 }
 
-/* ========== FONT AND EMOJI UTILITIES ========== */
+/* ========== BASE LAYER - FOUNDATIONAL STYLES ========== */
+@layer base {
+  /* 
+   * REASONING: Enhanced base styles while preserving legacy component compatibility
+   * CHANGE: Added modern features while maintaining legacy layout patterns
+   * CRITICAL: Critical styles moved from @layer critical for Tailwind compatibility
+   */
+
+  /* Critical styles - moved from @layer critical */
+  html {
+    scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
+
+    /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
+    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
+    font-display: swap; /* Prevent layout shift during font loading */
+    scroll-behavior: smooth !important;
+    text-rendering: optimizespeed !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  body {
+    flex-direction: column;
+    background-color: var(--clr-background, var(--clr-background-fallback));
+    color: var(--clr-text-primary, var(--clr-text-primary-fallback));
+
+    /* REASONING: Optimized font stack with Inter as primary to prevent layout shift */
+    font-family: var(--font-primary);
+    font-size: 1rem; /* 16px base - matches legacy */
+    font-weight: 400;
+    line-height: 1.5; /* Preserved from legacy */
+    letter-spacing: -0.01em; /* Slightly tighter for modern feel */
+  }
+
+  /* REASONING: Preserving legacy layout structure */
+  .root,
+  .app,
+  main {
+    display: flex;
+    flex-direction: column; /* Modern viewport units for mobile */
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+
+  /* Main content structure - preserved from legacy */
+  .main-content {
+    position: relative;
+    z-index: 1;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+
+  /* --- Reusable Components & Transitions --- */
+  .primary-button,
+  .secondary-button,
+  .cta-button,
+  .docs-button,
+  .get-started-btn,
+  .nav-item,
+  .feature-card,
+  .discord-link {
+    transition:
+      transform var(--transition-speed) ease,
+      background-color var(--transition-speed) ease,
+      border-color var(--transition-speed) ease,
+      box-shadow var(--transition-speed) ease,
+      color var(--transition-speed) ease;
+  }
+
+  .primary-button:hover,
+  .secondary-button:hover,
+  .docs-button:hover,
+  .get-started-btn:hover,
+  .discord-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .feature-card:hover {
+    border-color: var(--clr-accent-glow-strong);
+    box-shadow: 0 10px 30px var(--clr-accent-glow-medium);
+    transform: translateY(-5px);
+  }
+
+  /* Legacy button base styles - preserved exactly */
+  .cta-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 35px;
+    background: linear-gradient(
+      135deg,
+      var(--clr-accent) 0%,
+      oklch(60% 0.25 280deg) 100%
+    );
+    color: var(--clr-text-primary);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Loading states - optimized to prevent layout shift */
+  .loading {
+    /* Prevent layout shift by maintaining minimum height */
+    min-height: 400px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+  }
+
+  /* Loaded state - smooth reveal */
+  .loading.loaded {
+    min-height: auto;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Section-specific loading states with proper height allocation */
+  .mission-section.loading {
+    min-height: 500px;
+  }
+
+  .features-section.loading {
+    min-height: 600px;
+  }
+
+  .docs-preview-section.loading {
+    min-height: 400px;
+  }
+
+  .loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Firefox scrollbar styling */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--clr-accent) transparent; /* thumb: accent, track: transparent */
+  }
+
+  /* Scrollbar styling */
+  *::-webkit-scrollbar {
+    width: 8px;
+    background: transparent !important; /* スクロールバー全体の背景を透明に */
+  }
+
+  *::-webkit-scrollbar-track {
+    border: transparent !important;
+    background: transparent !important; /* トラック背景を透明に */
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: var(--radius-md);
+    background: var(--clr-accent); /* clr accentに設定 */
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--clr-accent-dark); /* ホバー時は少し暗く */
+  }
+
+  /* スクロールバーの角を透明に */
+  *::-webkit-scrollbar-corner {
+    background: transparent !important;
+  }
+
+  /* Focus management for accessibility */
+  *:focus {
+    outline: none;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--clr-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Selection fix for gradient text (background-clip: text) */
+  .white-gradient-text::selection,
+  .gold-marker::selection,
+  .posts-header h1::selection,
+  .tools-title-main::selection,
+  .tools-title-accent::selection,
+  .error-title::selection {
+    background-color: var(--clr-primary);
+    color: var(--clr-text-primary);
+    -webkit-text-fill-color: var(
+      --clr-text-primary
+    ); /* force white while selected */
+  }
+
+  /* Firefox supports ::selection; vendor-prefixed rule removed to satisfy linter */
+
+  /* Android WebView text color fix - prevent black text on tap */
+  p {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  .article-content p,
+  .prose p {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  /* Ensure text color stays white on Android WebView tap */
+  p:active {
+    color: var(--clr-text-primary) !important;
+    -webkit-text-fill-color: var(--clr-text-primary) !important;
+  }
+
+  .article-content p:active,
+  .prose p:active {
+    color: var(--clr-text-primary) !important;
+    -webkit-text-fill-color: var(--clr-text-primary) !important;
+  }
+
+  /* Smooth transitions for theme switching - but not affecting buttons */
+  :not(
+    button,
+    .btn-primary,
+    .btn-secondary,
+    .primary-button,
+    .secondary-button
+  ) {
+    transition:
+      background-color var(--duration-normal) ease,
+      border-color var(--duration-normal) ease,
+      color var(--duration-normal) ease;
+  }
+
+  /* Base typography hierarchy */
+  :where(:not([class*='text-'])) {
+    h1 {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-semibold);
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+    }
+
+    h3 {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.4;
+    }
+
+    h4 {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    small {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+
+  /* Improved form elements */
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  button {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  a {
+    color: var(--clr-primary);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease;
+  }
+
+  a:hover {
+    color: var(--clr-primary-dark);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ========== TEXT FORMATTING CLASSES ========== */
 
 /* Enhanced font support for Japanese and emoji */
 .emoji {
@@ -261,8 +575,6 @@
     Meiryo,
     sans-serif;
 }
-
-/* ========== ACCESSIBILITY UTILITIES ========== */
 
 /* Screen reader only content */
 .sr-only {
@@ -286,27 +598,6 @@
   padding: initial;
   white-space: normal;
   clip-path: none;
-}
-
-/* Focus indicators for keyboard navigation - moved after base selectors */
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .article-content {
-    --clr-foreground: var(--clr-black);
-    --clr-background: var(--clr-text-primary);
-  }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .article-content *,
-  .article-content *::before,
-  .article-content *::after {
-    transition-duration: 0.01ms;
-    animation-duration: 0.01ms;
-    animation-iteration-count: 1;
-  }
 }
 
 /* ========== ARTICLE TYPOGRAPHY STYLES - PERFORMANCE OPTIMIZED ========== */
@@ -500,120 +791,6 @@
   font-style: italic;
 }
 
-/* ========== RESPONSIVE BREAKPOINT ADJUSTMENTS ========== */
-
-/* Using existing Tailwind breakpoints to avoid custom compilation overhead */
-
-/* Small breakpoint (640px+) */
-@media (min-width: 640px) {
-  .article-content {
-    font-size: 1rem; /* Slightly larger base font */
-  }
-
-  .article-content h1 {
-    font-size: 1.875rem;
-  }
-
-  .article-content h2 {
-    font-size: 1.5rem;
-  }
-
-  .article-content h3 {
-    font-size: 1.25rem;
-  }
-
-  .article-content p {
-    margin-bottom: 1.25rem;
-  }
-}
-
-/* Medium breakpoint (768px+) */
-@media (min-width: 768px) {
-  .article-content {
-    font-size: 1.125rem; /* Larger base font for tablets */
-  }
-
-  .article-content h1 {
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
-  }
-
-  .article-content h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.875rem;
-  }
-
-  .article-content h3 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  .article-content h4 {
-    font-size: 1.25rem;
-  }
-
-  .article-content p {
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-  }
-
-  .article-content blockquote {
-    padding-left: 1.5rem;
-  }
-
-  .article-content ul,
-  .article-content ol {
-    padding-left: 2rem;
-  }
-}
-
-/* Large breakpoint (1024px+) */
-@media (min-width: 1024px) {
-  .article-content {
-    font-size: 1.1875rem; /* Optimal reading size */
-  }
-
-  .article-content h1 {
-    font-size: 3rem;
-    line-height: 1.2;
-  }
-
-  .article-content h2 {
-    font-size: 2.25rem;
-  }
-
-  .article-content h3 {
-    font-size: 1.875rem;
-  }
-
-  .article-content pre {
-    padding: 1.5rem;
-  }
-}
-
-/* Extra large breakpoint (1280px+) */
-@media (min-width: 1280px) {
-  .article-content {
-    font-size: 1.25rem; /* Maximum readability */
-  }
-
-  .article-content h1 {
-    font-size: 3.5rem;
-  }
-
-  .article-content h2 {
-    font-size: 3rem;
-  }
-
-  .article-content h3 {
-    font-size: 2.25rem;
-  }
-
-  .article-content h4 {
-    font-size: 1.5rem;
-  }
-}
-
 /* ========== TAILWIND V4.1 THEME TOKENS - PURE OKLCH IMPLEMENTATION ========== */
 @theme {
   /* ===== SEMANTIC COLOR PALETTE - PURE OKLCH IMPLEMENTATION ===== */
@@ -731,337 +908,6 @@
   --animate-twinkle: twinkle 3s infinite;
 }
 
-/* ========== LAYER STRUCTURE ========== */
-
-/* 
- * Layer order (from lowest to highest priority):
- * 1. base: Reset styles, base typography, fundamental styles
- * 2. components: Reusable component styles
- * 3. utilities: Utility classes and overrides
- */
-
-/* ========== BASE LAYER - FOUNDATIONAL STYLES ========== */
-@layer base {
-  /* 
-   * REASONING: Enhanced base styles while preserving legacy component compatibility
-   * CHANGE: Added modern features while maintaining legacy layout patterns
-   * CRITICAL: Critical styles moved from @layer critical for Tailwind compatibility
-   */
-
-  /* Critical styles - moved from @layer critical */
-  html {
-    scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
-
-    /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
-    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
-    font-display: swap; /* Prevent layout shift during font loading */
-    scroll-behavior: smooth !important;
-    text-rendering: optimizespeed !important;
-    -webkit-font-smoothing: antialiased !important;
-    -moz-osx-font-smoothing: grayscale !important;
-  }
-
-  body {
-    flex-direction: column;
-    background-color: var(--clr-background, var(--clr-background-fallback));
-    color: var(--clr-text-primary, var(--clr-text-primary-fallback));
-
-    /* REASONING: Optimized font stack with Inter as primary to prevent layout shift */
-    font-family: var(--font-primary);
-    font-size: 1rem; /* 16px base - matches legacy */
-    font-weight: 400;
-    line-height: 1.5; /* Preserved from legacy */
-    letter-spacing: -0.01em; /* Slightly tighter for modern feel */
-  }
-
-  /* REASONING: Preserving legacy layout structure */
-  .root,
-  .app,
-  main {
-    display: flex;
-    flex-direction: column; /* Modern viewport units for mobile */
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
-  }
-
-  /* Main content structure - preserved from legacy */
-  .main-content {
-    position: relative;
-    z-index: 1;
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
-  }
-
-  /* --- Reusable Components & Transitions --- */
-  .primary-button,
-  .secondary-button,
-  .cta-button,
-  .docs-button,
-  .get-started-btn,
-  .nav-item,
-  .feature-card,
-  .discord-link {
-    transition:
-      transform var(--transition-speed) ease,
-      background-color var(--transition-speed) ease,
-      border-color var(--transition-speed) ease,
-      box-shadow var(--transition-speed) ease,
-      color var(--transition-speed) ease;
-  }
-
-  .primary-button:hover,
-  .secondary-button:hover,
-  .docs-button:hover,
-  .get-started-btn:hover,
-  .discord-link:hover {
-    transform: translateY(-3px);
-  }
-
-  .feature-card:hover {
-    border-color: var(--clr-accent-glow-strong);
-    box-shadow: 0 10px 30px var(--clr-accent-glow-medium);
-    transform: translateY(-5px);
-  }
-
-  /* Legacy button base styles - preserved exactly */
-  .cta-button {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 35px;
-    background: linear-gradient(
-      135deg,
-      var(--clr-accent) 0%,
-      oklch(60% 0.25 280deg) 100%
-    );
-    color: var(--clr-text-primary);
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .cta-button:hover {
-    transform: translateY(-3px);
-  }
-
-  /* Loading states - optimized to prevent layout shift */
-  .loading {
-    /* Prevent layout shift by maintaining minimum height */
-    min-height: 400px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
-  }
-
-  /* Loaded state - smooth reveal */
-  .loading.loaded {
-    min-height: auto;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Section-specific loading states with proper height allocation */
-  .mission-section.loading {
-    min-height: 500px;
-  }
-
-  .features-section.loading {
-    min-height: 600px;
-  }
-
-  .docs-preview-section.loading {
-    min-height: 400px;
-  }
-
-  .loaded {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Firefox scrollbar styling */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--clr-accent) transparent; /* thumb: accent, track: transparent */
-  }
-
-  /* Scrollbar styling */
-  *::-webkit-scrollbar {
-    width: 8px;
-    background: transparent !important; /* スクロールバー全体の背景を透明に */
-  }
-
-  *::-webkit-scrollbar-track {
-    border: transparent !important;
-    background: transparent !important; /* トラック背景を透明に */
-  }
-
-  *::-webkit-scrollbar-thumb {
-    border-radius: var(--radius-md);
-    background: var(--clr-accent); /* clr accentに設定 */
-  }
-
-  *::-webkit-scrollbar-thumb:hover {
-    background: var(--clr-accent-dark); /* ホバー時は少し暗く */
-  }
-
-  /* スクロールバーの角を透明に */
-  *::-webkit-scrollbar-corner {
-    background: transparent !important;
-  }
-
-  /* Focus management for accessibility */
-  *:focus {
-    outline: none;
-  }
-
-  *:focus-visible {
-    outline: 2px solid var(--clr-accent);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
-  }
-
-  /* Improved text selection */
-  ::selection {
-    background-color: var(--clr-primary);
-    color: var(--clr-text-primary);
-  }
-
-  /* Smooth transitions for theme switching - but not affecting buttons */
-  :not(
-    button,
-    .btn-primary,
-    .btn-secondary,
-    .primary-button,
-    .secondary-button
-  ) {
-    transition:
-      background-color var(--duration-normal) ease,
-      border-color var(--duration-normal) ease,
-      color var(--duration-normal) ease;
-  }
-
-  /* Base typography hierarchy */
-  :where(:not([class*='text-'])) {
-    h1 {
-      font-size: var(--font-size-3xl);
-      font-weight: var(--font-weight-bold);
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-
-    h2 {
-      font-size: var(--font-size-2xl);
-      font-weight: var(--font-weight-semibold);
-      line-height: 1.3;
-      letter-spacing: -0.015em;
-    }
-
-    h3 {
-      font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.4;
-    }
-
-    h4 {
-      font-size: var(--font-size-lg);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    p {
-      font-size: var(--font-size-base);
-      font-weight: var(--font-weight-normal);
-      line-height: 1.6;
-    }
-
-    small {
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
-  }
-
-  /* Improved form elements */
-  button,
-  input,
-  textarea,
-  select {
-    font-family: inherit;
-    font-size: inherit;
-  }
-
-  button {
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  a {
-    color: var(--clr-primary);
-    text-decoration: none;
-    transition: color var(--duration-fast) ease;
-  }
-
-  a:hover {
-    color: var(--clr-primary-dark);
-  }
-
-  img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* Responsive styles - mobile (768px and below) */
-  @media (max-width: 768px) {
-    /* Button responsive styles */
-    .cta-button,
-    .docs-button {
-      padding: 14px 28px;
-      font-size: 15px;
-    }
-
-    /* Article content responsive styles */
-    .article-content ul,
-    .article-content ol {
-      margin: 0.75rem 0; /* Smaller margins on mobile */
-    }
-
-    .article-content ul li,
-    .article-content ol li {
-      margin-bottom: 0.375rem; /* Smaller spacing on mobile */
-      padding-left: 0.75rem; /* Reduced padding on mobile */
-      font-size: 0.875rem; /* Slightly smaller font on mobile */
-    }
-
-    .article-content ul li::before {
-      font-size: 0.875rem; /* Smaller bullet on mobile */
-    }
-
-    .article-content .nested-list li::before {
-      font-size: 0.75rem; /* Even smaller nested bullet on mobile */
-    }
-
-    .article-content ul ul,
-    .article-content ol ol,
-    .article-content ul ol,
-    .article-content ol ul {
-      padding-left: 0.75rem; /* Less indentation on mobile */
-    }
-  }
-}
-
 /* ========== COMPONENT LAYER - LEGACY AND MODERN BUTTON SYSTEMS ========== */
 @layer components {
   /*
@@ -1137,32 +983,6 @@
     /* Reduced backdrop-filter for better Android performance */
     backdrop-filter: blur(6px);
   }
-
-  /* Android optimization - remove heavy backdrop-filter */
-  @media screen and (max-width: 768px) {
-    .glass-panel {
-      backdrop-filter: none;
-      background: oklch(12% 0.008 270deg / var(--opacity-12));
-    }
-  }
-
-  /* ===== RESPONSIVE OVERRIDES - LEGACY COMPATIBILITY ===== */
-  @media (max-width: 480px) {
-    .primary-button {
-      @apply px-[24px] py-[12px] text-sm;
-    }
-
-    .secondary-button {
-      @apply px-[24px] py-[10px] text-sm;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      gap: calc(var(--spacing-sm) * 0.75);
-      padding: calc(var(--spacing-sm) * 0.75) var(--spacing-md);
-      font-size: var(--font-size-xs);
-    }
-  }
 }
 
 /* ========== UTILITY LAYER - LEGACY AND MODERN UTILITIES ========== */
@@ -1219,19 +1039,6 @@
   .glassmorphism:hover,
   .glassmorphism:focus {
     will-change: transform, background, border-color, box-shadow;
-  }
-
-  /* Android optimization - simplified backdrop-filter */
-  @media screen and (max-width: 768px) {
-    .glassmorphism {
-      backdrop-filter: none;
-      background: linear-gradient(
-        135deg,
-        var(--clr-white-12) 0%,
-        var(--clr-white-08) 50%,
-        var(--clr-white-10) 100%
-      );
-    }
   }
 
   .glassmorphism::before {
@@ -1338,31 +1145,6 @@
 
   /* GlassMorphism performance optimizations - merged above */
 
-  /* GlassMorphism accessibility */
-  @media (prefers-contrast: high) {
-    .glassmorphism {
-      border: 2px solid var(--clr-text-primary);
-      background: var(--clr-black-85);
-      backdrop-filter: blur(25px) saturate(150%) brightness(90%);
-    }
-
-    .glassmorphism:hover {
-      background: var(--clr-black-95);
-      border-color: var(--clr-accent);
-      backdrop-filter: blur(18px) saturate(150%) brightness(100%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .glassmorphism {
-      transition: none;
-    }
-
-    .glassmorphism:hover {
-      transform: none;
-    }
-  }
-
   /* ===== LEGACY GRID UTILITIES - PRESERVED ===== */
   .grid-auto-fit {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1415,7 +1197,7 @@
   input,
   textarea,
   select {
-    color: var(--global-text-color);
+    color: var(--clr-text-primary);
   }
 
   /* 特定の要素のテキストカラーを個別に設定 */
@@ -1425,7 +1207,7 @@
   h4,
   h5,
   h6 {
-    color: var(--global-text-color-primary);
+    color: var(--clr-text-primary);
   }
 
   p,
@@ -1435,13 +1217,13 @@
   li,
   td,
   th {
-    color: var(--global-text-color);
+    color: var(--clr-text-primary);
   }
 
   small,
   .text-muted,
   .meta {
-    color: var(--global-text-color-muted);
+    color: var(--clr-text-primary);
   }
 
   /* ===== SEARCH RESULTS GLOBAL OVERRIDE ===== */
@@ -1601,4 +1383,586 @@
 
 .hover-lift {
   transform: var(--hover-lift);
+}
+
+/* ===== MOBILE HOVER DISABLE ===== */
+
+/* スマートフォンでのホバー効果を無効化 */
+@media (hover: none) and (pointer: coarse) {
+  /* すべてのホバー効果を無効化 */
+  *:hover {
+    background-color: inherit !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    filter: none !important;
+    opacity: inherit !important;
+    transform: none !important;
+  }
+
+  /* 特定の要素のホバー効果を無効化 */
+  button:hover,
+  .button:hover,
+  a:hover,
+  .card:hover,
+  .tool-card:hover,
+  .article-card:hover {
+    background-color: inherit !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    transform: none !important;
+  }
+
+  /* アニメーション要素のホバー効果を無効化 */
+  .animation-slide:hover,
+  .animation-fade:hover {
+    opacity: inherit !important;
+    transform: none !important;
+  }
+
+  /* アイコンのホバー効果を無効化 */
+  .icon:hover,
+  .tool-icon:hover {
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  /* ナビゲーション要素のホバー効果を無効化 */
+  nav a:hover,
+  .nav-link:hover,
+  .navbar-item:hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+  }
+
+  /* フォーム要素のホバー効果を無効化 */
+  input:hover,
+  textarea:hover,
+  select:hover {
+    border-color: inherit !important;
+    box-shadow: none !important;
+  }
+
+  /* カスタムコンポーネントのホバー効果を無効化 */
+  .hero-button:hover,
+  .primary-button:hover,
+  .secondary-button:hover {
+    background-color: inherit !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  /* フォーカスモード（focus-visible）でのホバー効果を無効化 */
+  *:focus-visible:hover {
+    background-color: inherit !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    filter: none !important;
+    opacity: inherit !important;
+    transform: none !important;
+  }
+
+  /* 特定の要素のフォーカスモードホバー効果を無効化 */
+  button:focus-visible:hover,
+  .button:focus-visible:hover,
+  a:focus-visible:hover,
+  .card:focus-visible:hover,
+  .tool-card:focus-visible:hover,
+  .article-card:focus-visible:hover {
+    background-color: inherit !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    transform: none !important;
+  }
+
+  /* ナビゲーション要素のフォーカスモードホバー効果を無効化 */
+  nav a:focus-visible:hover,
+  .nav-link:focus-visible:hover,
+  .navbar-item:focus-visible:hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+  }
+
+  /* フォーム要素のフォーカスモードホバー効果を無効化 */
+  input:focus-visible:hover,
+  textarea:focus-visible:hover,
+  select:focus-visible:hover {
+    border-color: inherit !important;
+    box-shadow: none !important;
+  }
+
+  /* カスタムコンポーネントのフォーカスモードホバー効果を無効化 */
+  .hero-button:focus-visible:hover,
+  .primary-button:focus-visible:hover,
+  .secondary-button:focus-visible:hover {
+    background-color: inherit !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  /* アイコンのフォーカスモードホバー効果を無効化 */
+  .icon:focus-visible:hover,
+  .tool-icon:focus-visible:hover {
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  /* アニメーション要素のフォーカスモードホバー効果を無効化 */
+  .animation-slide:focus-visible:hover,
+  .animation-fade:focus-visible:hover {
+    opacity: inherit !important;
+    transform: none !important;
+  }
+}
+
+/* ===== UNIVERSAL TEXT COLOR FIX ===== */
+
+/* 全デバイス（モバイル、タブレット、デスクトップ）での文字色を確実に白に保つ */
+
+/* 記事コンテンツの段落の文字色を強制的に白に設定 */
+.article-content p,
+.prose p,
+.content-main p,
+.prose-invert p,
+.mission-text p,
+.feature-description p,
+.docs-description p {
+  color: var(--clr-text-primary) !important;
+  -webkit-text-fill-color: var(--clr-text-primary) !important;
+}
+
+/* 記事コンテンツの見出しの文字色を強制的に白に設定 */
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6,
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6,
+.prose-invert h1,
+.prose-invert h2,
+.prose-invert h3,
+.prose-invert h4,
+.prose-invert h5,
+.prose-invert h6,
+.mission-title,
+.feature-title,
+.docs-title {
+  color: var(--clr-text-primary) !important;
+  -webkit-text-fill-color: var(--clr-text-primary) !important;
+}
+
+/* 記事コンテンツのリストアイテムの文字色を強制的に白に設定 */
+.article-content ul > li,
+.article-content ol > li,
+.prose ul > li,
+.prose ol > li,
+.prose-invert ul > li,
+.prose-invert ol > li {
+  color: var(--clr-text-primary) !important;
+  -webkit-text-fill-color: var(--clr-text-primary) !important;
+}
+
+/* 記事コンテンツのテキスト要素の文字色を強制的に白に設定 */
+.article-content,
+.prose,
+.prose-invert,
+.mission-section,
+.features-section,
+.docs-preview-section {
+  color: var(--clr-text-primary);
+}
+
+/* アニメーション要素が読み込まれた後も文字色を維持 */
+.loaded p,
+.loaded h1,
+.loaded h2,
+.loaded h3,
+.loaded h4,
+.loaded h5,
+.loaded h6,
+.loaded ul > li,
+.loaded ol > li,
+.loaded span,
+.loaded div {
+  color: var(--clr-text-primary) !important;
+  -webkit-text-fill-color: var(--clr-text-primary) !important;
+}
+
+/* ホームページのセクション要素の文字色を強制的に白に設定 */
+.mission-section,
+.features-section,
+.docs-preview-section,
+.hero-section {
+  color: var(--clr-text-primary);
+}
+
+.mission-section *,
+.features-section *,
+.docs-preview-section *,
+.hero-section * {
+  color: inherit;
+}
+
+/* ツールページの要素の文字色を強制的に白に設定 */
+.tools-grid,
+.tool-card,
+.tool-name,
+.tool-description-card,
+.tool-cta-text {
+  color: var(--clr-text-primary);
+}
+
+.tools-grid *,
+.tool-card * {
+  color: inherit;
+}
+
+/* ナビゲーション要素の文字色を強制的に白に設定 */
+.navbar,
+.nav-link,
+.navbar-item,
+.navbar-menu {
+  color: var(--clr-text-primary);
+}
+
+.navbar *,
+.nav-link *,
+.navbar-item *,
+.navbar-menu * {
+  color: inherit;
+}
+
+/* フッター要素の文字色を強制的に白に設定 */
+.footer,
+.footer-content,
+.footer-link {
+  color: var(--clr-text-primary);
+}
+
+.footer *,
+.footer-content *,
+.footer-link * {
+  color: inherit;
+}
+
+/* フォーム要素の文字色を強制的に白に設定 */
+.form-input,
+.form-textarea,
+.form-select,
+.form-label {
+  color: var(--clr-text-primary);
+}
+
+.form-input *,
+.form-textarea *,
+.form-select *,
+.form-label * {
+  color: inherit;
+}
+
+/* ボタン要素の文字色を強制的に白に設定 */
+.button,
+.btn,
+.primary-button,
+.secondary-button,
+.hero-button,
+.cta-button {
+  color: var(--clr-text-primary);
+}
+
+.button *,
+.btn *,
+.primary-button *,
+.secondary-button *,
+.hero-button *,
+.cta-button * {
+  color: inherit;
+}
+
+/* カード要素の文字色を強制的に白に設定 */
+.card,
+.card-content,
+.card-title,
+.card-description {
+  color: var(--clr-text-primary);
+}
+
+.card *,
+.card-content *,
+.card-title *,
+.card-description * {
+  color: inherit;
+}
+
+/* 検索結果の文字色を強制的に白に設定 */
+.search-result,
+.search-result-item,
+.search-result-title,
+.search-result-description {
+  color: var(--clr-text-primary);
+}
+
+.search-result *,
+.search-result-item *,
+.search-result-title *,
+.search-result-description * {
+  color: inherit;
+}
+
+/* モーダル要素の文字色を強制的に白に設定 */
+.modal,
+.modal-content,
+.modal-title,
+.modal-description {
+  color: var(--clr-text-primary);
+}
+
+.modal *,
+.modal-content *,
+.modal-title *,
+.modal-description * {
+  color: inherit;
+}
+
+/* ========== MEDIA QUERIES - RESPONSIVE DESIGN ========== */
+
+/* ===== RESPONSIVE BREAKPOINT ADJUSTMENTS ===== */
+
+/* Small breakpoint (640px+) */
+@media (min-width: 640px) {
+  .article-content {
+    font-size: 1rem; /* Slightly larger base font */
+  }
+
+  .article-content h1 {
+    font-size: 1.875rem;
+  }
+
+  .article-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .article-content h3 {
+    font-size: 1.25rem;
+  }
+
+  .article-content p {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Medium breakpoint (768px+) */
+@media (min-width: 768px) {
+  .article-content {
+    font-size: 1.125rem; /* Larger base font for tablets */
+  }
+
+  .article-content h1 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+  }
+
+  .article-content h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.875rem;
+  }
+
+  .article-content h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .article-content h4 {
+    font-size: 1.25rem;
+  }
+
+  .article-content p {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .article-content blockquote {
+    padding-left: 1.5rem;
+  }
+
+  .article-content ul,
+  .article-content ol {
+    padding-left: 2rem;
+  }
+}
+
+/* Large breakpoint (1024px+) */
+@media (min-width: 1024px) {
+  .article-content {
+    font-size: 1.1875rem; /* Optimal reading size */
+  }
+
+  .article-content h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+  }
+
+  .article-content h2 {
+    font-size: 2.25rem;
+  }
+
+  .article-content h3 {
+    font-size: 1.875rem;
+  }
+
+  .article-content pre {
+    padding: 1.5rem;
+  }
+}
+
+/* Extra large breakpoint (1280px+) */
+@media (min-width: 1280px) {
+  .article-content {
+    font-size: 1.25rem; /* Maximum readability */
+  }
+
+  .article-content h1 {
+    font-size: 3.5rem;
+  }
+
+  .article-content h2 {
+    font-size: 3rem;
+  }
+
+  .article-content h3 {
+    font-size: 2.25rem;
+  }
+
+  .article-content h4 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===== MOBILE RESPONSIVE STYLES ===== */
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  /* Button responsive styles */
+  .cta-button,
+  .docs-button {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+
+  /* Article content responsive styles */
+  .article-content ul,
+  .article-content ol {
+    margin: 0.75rem 0; /* Smaller margins on mobile */
+  }
+
+  .article-content ul li,
+  .article-content ol li {
+    margin-bottom: 0.375rem; /* Smaller spacing on mobile */
+    padding-left: 0.75rem; /* Reduced padding on mobile */
+    font-size: 0.875rem; /* Slightly smaller font on mobile */
+  }
+
+  .article-content ul li::before {
+    font-size: 0.875rem; /* Smaller bullet on mobile */
+  }
+
+  .article-content .nested-list li::before {
+    font-size: 0.75rem; /* Even smaller nested bullet on mobile */
+  }
+
+  .article-content ul ul,
+  .article-content ol ol,
+  .article-content ul ol,
+  .article-content ol ul {
+    padding-left: 0.75rem; /* Less indentation on mobile */
+  }
+
+  /* Glass panel optimization for mobile */
+  .glass-panel {
+    backdrop-filter: none;
+    background: oklch(12% 0.008 270deg / var(--opacity-12));
+  }
+
+  /* Glassmorphism optimization for mobile */
+  .glassmorphism {
+    backdrop-filter: none;
+    background: linear-gradient(
+      135deg,
+      var(--clr-white-12) 0%,
+      var(--clr-white-08) 50%,
+      var(--clr-white-10) 100%
+    );
+  }
+}
+
+/* Small mobile (480px and below) */
+@media (max-width: 480px) {
+  .primary-button {
+    @apply px-[24px] py-[12px] text-sm;
+  }
+
+  .secondary-button {
+    @apply px-[24px] py-[10px] text-sm;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    gap: calc(var(--spacing-sm) * 0.75);
+    padding: calc(var(--spacing-sm) * 0.75) var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* ===== ACCESSIBILITY MEDIA QUERIES ===== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .article-content {
+    --clr-foreground: var(--clr-black);
+    --clr-background: var(--clr-text-primary);
+  }
+
+  .glassmorphism {
+    border: 2px solid var(--clr-text-primary);
+    background: var(--clr-black-85);
+    backdrop-filter: blur(25px) saturate(150%) brightness(90%);
+  }
+
+  .glassmorphism:hover {
+    background: var(--clr-black-95);
+    border-color: var(--clr-accent);
+    backdrop-filter: blur(18px) saturate(150%) brightness(100%);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .article-content *,
+  .article-content *::before,
+  .article-content *::after {
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  .glassmorphism {
+    transition: none;
+  }
+
+  .glassmorphism:hover {
+    transform: none;
+  }
 }

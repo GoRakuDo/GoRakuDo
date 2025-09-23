@@ -106,12 +106,7 @@
     "declaration-block-no-duplicate-properties": true,
     "declaration-block-no-shorthand-property-overrides": true,
     "selector-max-type": 2,
-    "declaration-no-important": [
-      true,
-      {
-        "ignore": ["background"]
-      }
-    ],
+    "declaration-no-important": true,
     "selector-class-pattern": "^[a-z][a-zA-Z0-9-]*$",
     "selector-pseudo-class-no-unknown": [
       true,

@@ -2,11 +2,14 @@
 // ========== POST LAYOUT COMPONENT ==========
 // Centralized layout management following ArticleLayout pattern
 // All content sections are provided through named slots
-import Navbar from '../components/common/NavBar/Navbar.astro';
-import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
 import UnifiedSEO from '../components/UnifiedSEO.astro';
 import Breadcrumb from '../components/common/Breadcrumb.astro';
 import TableOfContents from '../components/content/TableOfContents.astro';
+
+import Navbar from '../components/common/NavBar/Navbar.astro';
+import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
+
+// Animation
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
 
 // Global CSS
@@ -63,7 +66,7 @@ const {
     />
   </head>
   <body>
-    <!-- Navigation Bar -->
+    <!-- Navigation - 共通コンポーネント -->
     <Navbar />
     <BottomNavBar />
 
