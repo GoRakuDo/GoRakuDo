@@ -10,6 +10,9 @@ import SearchPopover from '../../components/common/SearchPopover.astro';
 // ========== GET PAGE DATA ==========
 import { getDocsPageData } from '../../utils/docs-config';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+
 // スタイルインポート
 import '../../styles/pages/docs/docs-index.css';
 
@@ -22,6 +25,16 @@ if (queryPage && parseInt(queryPage) > 1) {
 // ========== GET PAGE DATA ==========
 const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
   await getDocsPageData(1);
+
+// ========== BREADCRUMB SCHEMA ==========
+// Docs page用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Documentation', url: '/docs', isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <!-- ========== UNIFIED TEMPLATE ========== -->
@@ -32,6 +45,7 @@ const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
   lang='id'
   author={seoConfig.author}
   publishedDate={new Date().toISOString()}
+  breadcrumbSchema={breadcrumbSchema}
 >
   <!-- 構造化データ（JSON-LD） -->
   <script
@@ -53,7 +67,6 @@ const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
     slot='breadcrumb'
     currentPath='/docs'
     showHome={true}
-    variant='compact'
     showIcons={true}
     ariaLabel='Navigasi breadcrumb untuk halaman dokumentasi'
   />

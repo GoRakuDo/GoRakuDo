@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 import UnifiedSEO from '../../components/UnifiedSEO.astro';
 
 // SEO data - Astroネイティブアプローチ（設定ファイル不要）
@@ -32,11 +31,6 @@ const seoData = {
       keywords={seoData.keywords}
       pageType={seoData.pageType}
       lang='id'
-      gtag={import.meta.env.PUBLIC_GA_ID}
-    />
-    <link
-      href='https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&display=swap'
-      rel='stylesheet'
     />
     <style>
       * {

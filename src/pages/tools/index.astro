@@ -3,6 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolsHeader from '../../components/tools/Tools-Header.astro';
 import ToolsGridSection from '../../components/tools/Tools-GridSection.astro';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+
 // Import CSS
 import '../../styles/pages/tools/tools-index.css';
 
@@ -86,6 +89,15 @@ const seoData = {
   ],
   pageType: 'website' as const,
 };
+
+// Tools page用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Tools', url: '/tools', isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <BaseLayout
@@ -94,6 +106,7 @@ const seoData = {
   keywords={seoData.keywords}
   pageType={seoData.pageType}
   lang='id'
+  breadcrumbSchema={breadcrumbSchema}
 >
   <!-- Astro Native Resource Preloading (0 JavaScript) -->
   <link rel='prefetch' href='/tools/anki' fetchpriority='low' />

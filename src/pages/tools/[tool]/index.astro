@@ -13,6 +13,9 @@ import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import SearchPopover from '../../../components/common/SearchPopover.astro';
 import ToolIdHeader from '../../../components/tools/Tool-IdHeader.astro';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
+
 // Import tool-specific styles
 import '../../../styles/pages/tools/[tool]/Tool-IdIndex.css';
 
@@ -250,12 +253,24 @@ const contentGridData = {
   tool,
   formattedToolName,
 };
+
+// ========== BREADCRUMB SCHEMA ==========
+// Tool page用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Tools', url: '/tools', isActive: false },
+    { title: formattedToolName, url: `/tools/${tool}`, isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <ArticleLayout
   title={`${formattedToolName} - GoRakuDo`}
   description={`All articles and guides for ${tool} tool`}
   lang='id'
+  breadcrumbSchema={breadcrumbSchema}
 >
   <ToolIdHeader
     slot='articles-header'
@@ -272,7 +287,6 @@ const contentGridData = {
     slot='breadcrumb'
     currentPath={`/tools/${tool}`}
     showHome={true}
-    variant='compact'
     orientation='horizontal'
     showIcons={true}
     ariaLabel='Tool navigation breadcrumb'

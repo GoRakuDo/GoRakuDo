@@ -11,6 +11,9 @@ import {
   shouldRedirectToFirstPage,
 } from '../../components/common/Pagination/pagination';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+
 // スタイルインポート
 import '../../styles/pages/docs/docs-index.css';
 
@@ -54,6 +57,21 @@ if (shouldRedirectToFirstPage(currentPage, totalPages)) {
 // ========== GET PAGE DATA ==========
 const { transformedPosts, seoConfig, structuredData } =
   await getDocsPageData(currentPage);
+
+// ========== BREADCRUMB SCHEMA ==========
+// Docs pagination page用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Documentation', url: '/docs', isActive: false },
+    {
+      title: `Page ${currentPage}`,
+      url: `/docs/page-${currentPage}`,
+      isActive: true,
+    },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <!-- ========== UNIFIED TEMPLATE (Same as Index) ========== -->
@@ -64,6 +82,7 @@ const { transformedPosts, seoConfig, structuredData } =
   lang='id'
   author={seoConfig.author}
   publishedDate={new Date().toISOString()}
+  breadcrumbSchema={breadcrumbSchema}
 >
   <!-- 構造化データ（JSON-LD） -->
   <script
@@ -114,7 +133,6 @@ const { transformedPosts, seoConfig, structuredData } =
     slot='breadcrumb'
     currentPath={`/docs/page-${currentPage}`}
     showHome={true}
-    variant='compact'
     showIcons={true}
     ariaLabel='Navigasi breadcrumb untuk halaman dokumentasi'
   />

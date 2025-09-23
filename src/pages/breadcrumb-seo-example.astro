@@ -1,0 +1,106 @@
+---
+/**
+ * Breadcrumb SEO Integration Example
+ *
+ * UnifiedSEO.astroでBreadcrumbの構造化データを統合する実例
+ */
+
+import UnifiedSEO from '../components/UnifiedSEO.astro';
+import Breadcrumb from '../components/common/Breadcrumb.astro';
+import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
+
+// サンプルのBreadcrumbデータ
+const sampleBreadcrumbItems = [
+  { title: 'ホーム', url: '/', isActive: false },
+  { title: 'ブログ', url: '/blog', isActive: false },
+  { title: 'カテゴリ', url: '/blog/category', isActive: false },
+  { title: '記事タイトル', url: '/blog/category/article', isActive: true },
+];
+
+// Breadcrumbの構造化データを生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: sampleBreadcrumbItems,
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
+
+// ページのメタデータ
+const pageTitle = 'Breadcrumb SEO統合の例';
+const pageDescription =
+  'UnifiedSEO.astroでBreadcrumbの構造化データを統合する方法を示すサンプルページです。';
+---
+
+<!doctype html>
+<html lang='ja'>
+  <head>
+    <UnifiedSEO
+      title={pageTitle}
+      description={pageDescription}
+      keywords={['breadcrumb', 'seo', 'structured data', 'schema.org']}
+      pageType='article'
+      author='GoRakuDo Team'
+      publishedDate='2024-01-01'
+      breadcrumbSchema={breadcrumbSchema}
+    />
+  </head>
+  <body>
+    <main class='container mx-auto px-4 py-8'>
+      <h1 class='text-3xl font-bold mb-6'>{pageTitle}</h1>
+
+      <!-- Breadcrumbコンポーネントを表示 -->
+      <div class='mb-8'>
+        <Breadcrumb
+          currentPath='/blog/category/article'
+          showHome={true}
+          showIcons={true}
+          orientation='horizontal'
+        />
+      </div>
+
+      <div class='prose max-w-none'>
+        <h2>生成されたBreadcrumb構造化データ</h2>
+        <p>以下のJSON-LDが生成され、検索エンジンに送信されます：</p>
+
+        <pre
+          class='bg-gray-100 p-4 rounded-lg overflow-x-auto'>
+        <code>{JSON.stringify(breadcrumbSchema, null, 2)}</code>
+      </pre>
+
+        <h2>統合方法</h2>
+        <p>
+          UnifiedSEO.astroでBreadcrumbの構造化データを使用するには、以下の手順に従ってください：
+        </p>
+
+        <ol>
+          <li>Breadcrumbコンポーネントから構造化データを取得</li>
+          <li>UnifiedSEO.astroに渡す</li>
+          <li>自動的にJSON-LDとして出力される</li>
+        </ol>
+
+        <h3>コード例</h3>
+        <pre
+          class='bg-gray-100 p-4 rounded-lg overflow-x-auto'>
+         <code>{`---
+import UnifiedSEO from '../components/UnifiedSEO.astro';
+import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
+
+// Breadcrumbの構造化データを生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'ホーム', url: '/', isActive: false },
+    { title: 'ブログ', url: '/blog', isActive: false },
+    { title: '記事タイトル', url: '/blog/article', isActive: true }
+  ],
+  siteUrl: String(Astro.site)
+});
+---
+
+<UnifiedSEO
+  title="ページタイトル"
+  description="ページの説明"
+  breadcrumbSchema={breadcrumbSchema}
+/>`}</code>
+       </pre>
+      </div>
+    </main>
+  </body>
+</html>

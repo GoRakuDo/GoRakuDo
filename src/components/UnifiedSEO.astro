@@ -7,6 +7,40 @@
  * - Astro Native: Astroの標準パターンに従う
  * - Performance First: 高速な静的生成を重視
  * - Zero Config: デフォルト設定で動作
+ * 
+ * Resource Hints拡張:
+ * - dnsPrefetch: 外部ドメインのDNS解決を事前に行う
+ * - prefetch: 次のページ遷移で使用される可能性の高いリソースを事前取得
+ * - preload: 現在のページで重要なリソースを優先的に読み込み
+ * 
+ * 使用例:
+ * ```astro
+ * ---
+ * import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
+ * 
+ * const breadcrumbSchema = generateBreadcrumbSchema({
+ *   items: [
+ *     { title: 'ホーム', url: '/', isActive: false },
+ *     { title: 'ブログ', url: '/blog', isActive: false },
+ *     { title: '記事タイトル', url: '/blog/article', isActive: true }
+ *   ],
+ *   siteUrl: String(Astro.site)
+ * });
+ * ---
+ * 
+ * <UnifiedSEO
+ *   title="ページタイトル"
+ *   description="ページの説明"
+ *   breadcrumbSchema={breadcrumbSchema}
+ *   dnsPrefetch={['https://api.example.com', 'https://cdn.example.com']}
+ *   prefetch={['/next-page', '/important-asset.js']}
+ *   preload={[
+ *     { href: '/critical.css', as: 'style' },
+ *     { href: '/hero-image.webp', as: 'image' },
+ *     { href: '/font.woff2', as: 'font', crossorigin: true, type: 'font/woff2' }
+ *   ]}
+ * />
+ * ```
  */
 
 // シンプルなProps定義（型ファイル不要）
@@ -23,6 +57,26 @@ export interface Props {
   modifiedDate?: string;
   noindex?: boolean;
   gtag?: string;
+  // Breadcrumb Schema統合
+  breadcrumbSchema?: {
+    '@context': 'https://schema.org';
+    '@type': 'BreadcrumbList';
+    itemListElement: Array<{
+      '@type': 'ListItem';
+      position: number;
+      name: string;
+      item: string;
+    }>;
+  };
+  // Resource Hints拡張
+  dnsPrefetch?: string[];
+  prefetch?: string[];
+  preload?: Array<{
+    href: string;
+    as: 'script' | 'style' | 'image' | 'font' | 'fetch' | 'document';
+    crossorigin?: boolean;
+    type?: string;
+  }>;
 }
 
 const {
@@ -37,7 +91,18 @@ const {
   publishedDate,
   modifiedDate,
   noindex = false,
-  gtag
+  gtag = 'G-R4V6TV2BM3', // デフォルトGoogle Analytics ID
+  // Breadcrumb Schema統合
+  breadcrumbSchema,
+  // Resource Hints - デフォルト値設定
+  dnsPrefetch = [],
+  prefetch = [],
+  preload = [
+    // デフォルトフォントpreload - パフォーマンス最適化
+    { href: 'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2', as: 'font', crossorigin: true, type: 'font/woff2' },
+    { href: 'https://fonts.gstatic.com/s/yujisyuku/v1/7cHrv4oG0xtp02os4X3y1JXyQJ8.woff2', as: 'font', crossorigin: true, type: 'font/woff2' },
+    { href: 'https://fonts.gstatic.com/s/notoemoji/v47/bMrnmSyK7YY-MEu6b_7wM4FqN1sQrcFmow.woff2', as: 'font', crossorigin: true, type: 'font/woff2' }
+  ]
 } = Astro.props;
 
 // URL正規化関数（ダブルパスを防ぐ）
@@ -73,6 +138,62 @@ const defaultConfig = {
   favicon: '/favicon.svg'
 };
 
+// Resource Hints生成ロジック
+// DNS Prefetch: 外部ドメインのDNS解決を事前に行う
+const generateDnsPrefetch = (urls: string[]): string[] => {
+  return urls.map(url => {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.origin;
+    } catch {
+      // 相対URLの場合は現在のドメインを使用
+      return String(Astro.site || 'https://gorakudo.org');
+    }
+  });
+};
+
+// Prefetch: 次のページ遷移で使用される可能性の高いリソースを事前取得
+const generatePrefetch = (urls: string[]): string[] => {
+  return urls.map(url => {
+    // 相対URLの場合は完全なURLに変換
+    if (url.startsWith('/')) {
+      return normalizeUrl(String(Astro.site || 'https://gorakudo.org'), url);
+    }
+    return url;
+  });
+};
+
+// Preload: 現在のページで重要なリソースを優先的に読み込み
+const generatePreload = (resources: Array<{
+  href: string;
+  as: 'script' | 'style' | 'image' | 'font' | 'fetch' | 'document';
+  crossorigin?: boolean;
+  type?: string;
+}>): Array<{
+  href: string;
+  as: string;
+  crossorigin?: string;
+  type?: string;
+}> => {
+  return resources.map(resource => {
+    const href = resource.href.startsWith('/') 
+      ? normalizeUrl(String(Astro.site || 'https://gorakudo.org'), resource.href)
+      : resource.href;
+    
+    return {
+      href,
+      as: resource.as,
+      crossorigin: resource.crossorigin ? 'anonymous' : undefined,
+      type: resource.type
+    };
+  });
+};
+
+// 生成されたResource Hints
+const dnsPrefetchUrls = generateDnsPrefetch(dnsPrefetch);
+const prefetchUrls = generatePrefetch(prefetch);
+const preloadResources = generatePreload(preload);
+
 // シンプルなJSON-LD生成
 const jsonLD = {
   '@context': 'https://schema.org',
@@ -94,17 +215,35 @@ const jsonLD = {
     keywords: keywords.join(', ')
   })
 };
+
+// 構造化データの統合（Breadcrumb Schemaを含む）
+const structuredDataSchemas: any[] = [jsonLD];
+if (breadcrumbSchema) {
+  structuredDataSchemas.push(breadcrumbSchema);
+}
 ---
 
 <!-- SEO Meta Tags - Astroネイティブ実装 -->
+<!-- 文字エンコーディング設定 -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Explicit dark theme declaration for UA and Android selection behavior -->
+<meta name="color-scheme" content="dark" />
+
+<!-- 言語設定 -->
+<meta name="language" content={lang} />
+
+<!-- GitHub Pages SEO最適化 -->
+<meta name="generator" content="Astro" />
+<meta name="googlebot" content="index, follow" />
+<meta name="bingbot" content="index, follow" />
+
 <!-- 基本メタタグ -->
 <title>{title}</title>
 <meta name="description" content={description} />
 {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
 {author && <meta name="author" content={author} />}
-
-<!-- ロボット設定 -->
-<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
 
 <!-- Open Graph -->
 <meta property="og:title" content={title} />
@@ -112,8 +251,8 @@ const jsonLD = {
 <meta property="og:type" content={pageType} />
 <meta property="og:url" content={normalizedCanonical} />
 <meta property="og:image" content={fullImageUrl} />
-<meta property="og:image:width" content="180" />
-<meta property="og:image:height" content="180" />
+<meta property="og:image:width" content="320" />
+<meta property="og:image:height" content="320" />
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:alt" content={title} />
 <meta property="og:site_name" content={defaultConfig.siteName} />
@@ -131,41 +270,50 @@ const jsonLD = {
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href={defaultConfig.favicon} />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-<!-- Font Preload - 日本語フォントと絵文字の完全対応 (Layout Shift Prevention) -->
+<!-- Resource Hints - パフォーマンス最適化の戦略的配置 -->
+<!-- DNS Prefetch: 外部ドメインのDNS解決を事前に行う -->
+{dnsPrefetchUrls.map(url => (
+  <link rel="dns-prefetch" href={url} />
+))}
+
+<!-- Preconnect: 重要な外部リソースへの接続を事前確立 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<!-- Prefetch: 次のページ遷移で使用される可能性の高いリソースを事前取得 -->
+{prefetchUrls.map(url => (
+  <link rel="prefetch" href={url} />
+))}
+
+<!-- Preload: 現在のページで重要なリソースを優先的に読み込み -->
+{preloadResources.map(resource => (
+  <link 
+    rel="preload" 
+    href={resource.href} 
+    as={resource.as}
+    crossorigin={resource.crossorigin}
+    type={resource.type}
+  />
+))}
+
+<!-- Font Loading - 日本語フォントと絵文字の完全対応 (Layout Shift Prevention) -->
 <!-- Critical font loading - synchronous to prevent layout shift -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&family=Gochi+Hand&family=Noto+Emoji:wght@300;400;500;600;700&display=swap" />
-<!-- Preload critical font files for faster loading -->
-<link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="https://fonts.gstatic.com/s/yujisyuku/v1/7cHrv4oG0xtp02os4X3y1JXyQJ8.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="https://fonts.gstatic.com/s/notoemoji/v47/bMrnmSyK7YY-MEu6b_7wM4FqN1sQrcFmow.woff2" as="font" type="font/woff2" crossorigin />
 
-<!-- 文字エンコーディング設定 -->
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- Explicit dark theme declaration for UA and Android selection behavior -->
-<meta name="color-scheme" content="dark" />
-
-<!-- 言語設定 -->
-<meta name="language" content={lang} />
-
-<!-- GitHub Pages SEO最適化 -->
-<meta name="generator" content="Astro" />
-<meta name="googlebot" content="index, follow" />
-<meta name="bingbot" content="index, follow" />
+<!-- ロボット設定 -->
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
 
 <!-- JSON-LD Structured Data -->
-<script type="application/ld+json" set:html={JSON.stringify(jsonLD)} />
+{structuredDataSchemas.map(schema => (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
 
 <!-- Google Analytics -->
 {gtag && (
   <>
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gtag}`}></script>
-    <script define:vars={{ gtagId: gtag }}>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gtag}`}></script>
+    <script is:inline define:vars={{ gtagId: gtag }}>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());

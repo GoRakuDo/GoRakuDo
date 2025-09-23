@@ -6,6 +6,9 @@ import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+
 import '../../styles/layouts/PostLayout.css';
 
 const post = await getEntry('pages', 'support-us');
@@ -59,10 +62,19 @@ const postData = {
 const breadcrumbConfig = {
   currentPath: resolvedPath.path,
   showHome: true,
-  variant: 'compact' as const,
   showIcons: true,
   ariaLabel: 'Support us page navigation breadcrumb',
 };
+
+// ========== BREADCRUMB SCHEMA ==========
+// Support us page用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Support Us', url: '/support-us', isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <PostLayout
@@ -77,6 +89,7 @@ const breadcrumbConfig = {
   headings={tocHeadings}
   postActions={false}
   breadcrumbConfig={breadcrumbConfig}
+  breadcrumbSchema={breadcrumbSchema}
 >
   <!-- Breadcrumb Slot -->
   <Breadcrumb
@@ -84,7 +97,6 @@ const breadcrumbConfig = {
     {post}
     currentPath={breadcrumbConfig.currentPath}
     showHome={breadcrumbConfig.showHome}
-    variant={breadcrumbConfig.variant}
     showIcons={breadcrumbConfig.showIcons}
     ariaLabel={breadcrumbConfig.ariaLabel}
   />

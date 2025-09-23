@@ -10,6 +10,9 @@ import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+
 // Generate static paths for all docs posts
 export async function getStaticPaths() {
   const allPosts = await getCollection('docs');
@@ -85,10 +88,20 @@ const postData = {
 const breadcrumbConfig = {
   currentPath: resolvedPath.path,
   showHome: true,
-  variant: 'compact' as const,
   showIcons: true,
   ariaLabel: 'Documentation navigation breadcrumb',
 };
+
+// ========== BREADCRUMB SCHEMA ==========
+// Docs article page用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Documentation', url: '/docs', isActive: false },
+    { title: post.data.title, url: resolvedPath.path, isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <PostLayout
@@ -103,6 +116,7 @@ const breadcrumbConfig = {
   headings={tocHeadings}
   postActions={true}
   breadcrumbConfig={breadcrumbConfig}
+  breadcrumbSchema={breadcrumbSchema}
 >
   <!-- Breadcrumb Slot -->
   <Breadcrumb
@@ -110,7 +124,6 @@ const breadcrumbConfig = {
     {post}
     currentPath={breadcrumbConfig.currentPath}
     showHome={breadcrumbConfig.showHome}
-    variant={breadcrumbConfig.variant}
     showIcons={breadcrumbConfig.showIcons}
     ariaLabel={breadcrumbConfig.ariaLabel}
   />

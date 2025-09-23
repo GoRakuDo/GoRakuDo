@@ -38,6 +38,17 @@ export interface Props {
     showIcons?: boolean;
     ariaLabel?: string;
   };
+  // Breadcrumb Schema統合
+  breadcrumbSchema?: {
+    '@context': 'https://schema.org';
+    '@type': 'BreadcrumbList';
+    itemListElement: Array<{
+      '@type': 'ListItem';
+      position: number;
+      name: string;
+      item: string;
+    }>;
+  };
 }
 
 const {
@@ -48,6 +59,7 @@ const {
   author,
   tags = [],
   headings,
+  breadcrumbSchema,
 } = Astro.props;
 ---
 
@@ -63,6 +75,7 @@ const {
       author={author}
       publishedDate={publishedDate}
       modifiedDate={publishedDate}
+      breadcrumbSchema={breadcrumbSchema}
     />
   </head>
   <body>

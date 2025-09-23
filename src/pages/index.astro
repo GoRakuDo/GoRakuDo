@@ -8,6 +8,9 @@ import InvitationModal from '../components/common/InvitationModal.vue';
 import FeaturesSection from '../components/homepage/FeaturesSection.astro';
 import DocumentationPreviewSection from '../components/homepage/DocumentationPreviewSection.astro';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
+
 // CSSをインポート
 import '../styles/pages/homepage.css';
 
@@ -37,6 +40,12 @@ const seoData: SEOData = {
   author: 'GoRakuDo Team',
   lang: 'id', // インドネシア語を明示的に指定（デフォルトは'id'だが、明示的に設定）
 };
+
+// Homepage用のBreadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [{ title: 'Home', url: '/', isActive: true }],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <BaseLayout
@@ -45,6 +54,7 @@ const seoData: SEOData = {
   keywords={seoData.keywords}
   pageType={seoData.pageType}
   lang={seoData.lang}
+  breadcrumbSchema={breadcrumbSchema}
 >
   <!-- Main Content -->
   <main

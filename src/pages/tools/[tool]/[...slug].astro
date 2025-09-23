@@ -12,6 +12,9 @@ import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
 import { getMergedDates } from '../../../utils/content/cc-Auto-FileDates';
 
+// Breadcrumb Schema
+import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
+
 // Get visible tool articles from Content Collections (shared utility)
 export async function getVisibleToolArticlesData() {
   const allPosts = await getCollection('tool-articles');
@@ -145,10 +148,22 @@ const postData = {
 const breadcrumbConfig = {
   currentPath: resolvedPath.path,
   showHome: true,
-  variant: 'compact' as const,
   showIcons: true,
   ariaLabel: `Tool article navigation breadcrumb for ${toolName}`,
 };
+
+// ========== BREADCRUMB SCHEMA ==========
+// Tool article page用のBreadcrumb Schema生成
+const formattedToolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Tools', url: '/tools', isActive: false },
+    { title: formattedToolName, url: `/tools/${toolName}`, isActive: false },
+    { title: post.data.title, url: resolvedPath.path, isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <PostLayout
@@ -163,6 +178,7 @@ const breadcrumbConfig = {
   headings={tocHeadings}
   postActions={true}
   breadcrumbConfig={breadcrumbConfig}
+  breadcrumbSchema={breadcrumbSchema}
 >
   <!-- Breadcrumb Slot -->
   <Breadcrumb
@@ -170,7 +186,6 @@ const breadcrumbConfig = {
     {post}
     currentPath={breadcrumbConfig.currentPath}
     showHome={breadcrumbConfig.showHome}
-    variant={breadcrumbConfig.variant}
     showIcons={breadcrumbConfig.showIcons}
     ariaLabel={breadcrumbConfig.ariaLabel}
   />

@@ -9,23 +9,25 @@ import WaveAnimation from '../components/animations/WaveAnimation.astro';
 // CSSをインポート
 import '../styles/global.css';
 
-// デフォルトOG画像のパス（publicフォルダ内のファイル）
-const defaultOgImage = '/img/FullDC Logo.webp';
-
+// Propsインターフェース定義
 export interface Props {
-  // このレイアウトが受け取るプロパティを定義
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   ogImage?: string;
   pageType?: 'website' | 'article';
   publishedDate?: string;
-  // langプロパティを追加
-  lang?: 'id' | 'ja';
+  lang?: string;
   keywords?: string[];
-  seoProperties?: {
-    articleType?: string;
-    learningStage?: string;
-    searchIntent?: string;
+  // Breadcrumb Schema統合
+  breadcrumbSchema?: {
+    '@context': 'https://schema.org';
+    '@type': 'BreadcrumbList';
+    itemListElement: Array<{
+      '@type': 'ListItem';
+      position: number;
+      name: string;
+      item: string;
+    }>;
   };
 }
 
@@ -38,7 +40,7 @@ const {
   publishedDate,
   lang,
   keywords,
-  seoProperties,
+  breadcrumbSchema,
 } = Astro.props;
 ---
 
@@ -46,18 +48,16 @@ const {
 <!-- <html>タグのlang属性も動的に設定 -->
 <html lang={lang || 'id'}>
   <head>
-    <!-- UnifiedSEO - 統合SEOコンポーネント (DRY原則適用) -->
+    <!-- UnifiedSEO - 統合SEOコンポーネント -->
     <UnifiedSEO
       title={title}
       description={description}
       keywords={keywords}
-      canonical={new URL(Astro.request.url).toString()}
-      lang={lang || 'id'}
-      pageType={pageType || 'website'}
-      image={ogImage || defaultOgImage}
-      author='GoRakuDo Team'
+      pageType={pageType}
+      image={ogImage}
       publishedDate={publishedDate}
-      gtag={import.meta.env.PUBLIC_GA_ID || undefined}
+      lang={lang}
+      breadcrumbSchema={breadcrumbSchema}
     />
 
     <!-- スタイルシートの<link>タグは不要です。上のimport文がその役割を果たします。 -->
