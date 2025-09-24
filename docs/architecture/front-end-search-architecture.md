@@ -426,7 +426,7 @@ const seoData = {
   </main>
 </BaseLayout>
 
-<style>
+<style is:global>
   .search-page {
     min-height: 100vh;
     padding: 1rem;
@@ -478,7 +478,7 @@ const { initialCategory = '', initialQuery = '' } = Astro.props;
   </div>
 </section>
 
-<style>
+<style is:global>
   .category-section {
     padding: 1.5rem 0;
   }
@@ -615,7 +615,7 @@ const { initialTag = '', initialQuery = '' } = Astro.props;
   </div>
 </section>
 
-<style>
+<style is:global>
   .tag-section {
     padding: 1.5rem 0;
   }
@@ -757,7 +757,7 @@ const { initialQuery = '', initialCategory = '', initialTag = '' } = Astro.props
   </div>
 </section>
 
-<style>
+<style is:global>
   .search-section {
     padding: 1.5rem 0;
   }

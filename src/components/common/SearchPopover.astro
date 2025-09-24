@@ -1,4 +1,6 @@
 ---
+import SearchForm from '../ui/SearchForm.astro';
+
 // Optimized Search Popover Component
 export interface Props {
   placeholder?: string;
@@ -62,47 +64,16 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     data-search-collections={searchCollections}
     data-tool-filter={toolFilter}
   >
-    <form
-      class='search-form'
-      action={sanitizedSearchAction}
-      method='get'
-      novalidate
-    >
-      <div class='search-input-wrapper'>
-        <label for='search-query' class='sr-only'>Kueri pencarian</label>
-        <input
-          id='search-query'
-          type='search'
-          name='q'
-          class='search-input'
-          placeholder={sanitizedPlaceholder}
-          autocomplete='off'
-          aria-label='Kueri pencarian'
-          required
-          minlength='1'
-          maxlength='100'
-        />
-        <button
-          type='submit'
-          class='search-submit-btn'
-          aria-label='Kirim kueri pencarian'
-        >
-          <svg
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-            aria-hidden='true'
-          >
-            <path
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              stroke-width='2'
-              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
-          </svg>
-          <span class='sr-only'>Kirim pencarian</span>
-        </button>
-      </div>
-    </form>
+    <SearchForm
+      placeholder={sanitizedPlaceholder}
+      searchAction={sanitizedSearchAction}
+      inputId='search-query'
+      formId='search-popover-form'
+      size='md'
+      variant='glassmorphism'
+      ariaLabel='Kueri pencarian'
+      submitButtonText='Kirim kueri pencarian'
+    />
 
     <div id='search-results' aria-live='polite' aria-label='Hasil pencarian'>
       <!-- 検索結果コンテナ（モバイルファースト） -->
@@ -168,7 +139,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   </div>
 </div>
 
-<style>
+<style is:global>
   /* ========== OPTIMIZED DESIGN TOKENS ========== */
   .search-popover-container {
     /* ========== COLOR SYSTEM ========== */
@@ -751,7 +722,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   /* 検索結果カード - モバイル最適化（グローバルスタイル） */
-  :global(.search-result-card) {
+  .search-result-card {
     position: relative;
     display: block;
     overflow: hidden;
@@ -778,7 +749,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   /* カードの微細なグラデーション効果 */
-  :global(.search-result-card::before) {
+  .search-result-card::before {
     position: absolute;
     top: 0;
     right: 0;
@@ -794,7 +765,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     content: '';
   }
 
-  :global(.search-result-card:hover) {
+  .search-result-card:hover {
     background: linear-gradient(
       135deg,
       oklch(from var(--clr-accent-dark) l c h / 0.45) 0%,
@@ -808,7 +779,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     transform: translateY(-2px) scale(1.01);
   }
 
-  :global(.search-result-card:hover::before) {
+  .search-result-card:hover::before {
     background: linear-gradient(
       90deg,
       transparent 0%,
@@ -818,12 +789,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     opacity: 1;
   }
 
-  :global(.search-result-card:active) {
+  .search-result-card:active {
     transform: translateY(0) scale(0.98);
     transition: all 0.1s ease;
   }
 
-  :global(.search-result-card:focus-visible) {
+  .search-result-card:focus-visible {
     outline: 2px solid var(--sp-accent);
     outline-offset: 2px;
     box-shadow:
@@ -834,7 +805,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   /* カードコンテンツ（グローバルスタイル） */
-  :global(.search-result-content) {
+  .search-result-content {
     position: relative;
     z-index: 1;
     display: flex;
@@ -843,7 +814,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     height: 100%;
   }
 
-  :global(.search-result-title) {
+  .search-resu {
     display: flex;
     align-items: center;
     gap: var(--sp-gap-xs);
@@ -856,20 +827,20 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     text-shadow: 0 1px 2px var(--sp-black-1);
   }
 
-  :global(.content-match-indicator) {
+  .content-match-indicator {
     font-size: var(--sp-text-sm);
     opacity: 0.7;
     transition: all 0.2s ease;
     filter: drop-shadow(0 1px 1px var(--sp-black-1));
   }
 
-  :global(.search-result-card:hover .content-match-indicator) {
+  .search-result-card:hover .content-match-indicator {
     opacity: 1;
     transform: scale(1.1);
     filter: drop-shadow(0 1px 2px var(--sp-black-2));
   }
 
-  :global(.search-result-description) {
+  .search-result-description {
     display: -webkit-box;
     overflow: hidden;
     margin: 0 0 var(--sp-margin-sm) 0;
@@ -882,7 +853,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     text-shadow: 0 1px 1px var(--sp-black-1);
   }
 
-  :global(.search-result-meta) {
+  .search-result-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -894,12 +865,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 
   /* モバイル向けの上パディングを4倍に */
   @media (max-width: 767px) {
-    :global(.search-result-meta) {
+    .search-result-meta {
       padding-top: calc(var(--sp-padding-xs) * 4);
     }
   }
 
-  :global(.search-result-badge) {
+  .search-result-badge {
     display: inline-flex;
     align-items: center;
     padding: var(--sp-padding-xs) var(--sp-padding-sm);
@@ -913,7 +884,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     transition: all 0.2s ease;
   }
 
-  :global(.search-result-badge--tool) {
+  .search-result-badge--tool {
     border: 1px solid var(--sp-accent-1);
     background: linear-gradient(
       135deg,
@@ -923,7 +894,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     color: var(--sp-accent);
   }
 
-  :global(.search-result-badge--doc) {
+  .search-result-badge--doc {
     border: 1px solid var(--sp-success-1);
     background: linear-gradient(
       135deg,
@@ -933,12 +904,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     color: var(--sp-success);
   }
 
-  :global(.search-result-card:hover .search-result-badge) {
+  .search-result-card:hover .search-result-badge {
     transform: translateY(-1px);
     box-shadow: 0 2px 4px var(--sp-black-2);
   }
 
-  :global(.search-result-path) {
+  .search-result-path {
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -955,12 +926,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     transition: opacity 0.2s ease;
   }
 
-  :global(.search-result-card:hover .search-result-path) {
+  .search-result-card:hover .search-result-path {
     color: var(--sp-white-7);
     opacity: 1;
   }
 
-  :global(.search-result-path-separator) {
+  .search-result-path-separator {
     color: var(--sp-white-4);
   }
 
@@ -1023,25 +994,25 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       gap: var(--sp-gap-lg);
     }
 
-    :global(.search-result-card) {
+    .search-result-card {
       min-height: 60px;
       margin: var(--sp-margin-md) 0;
       padding: var(--sp-padding-lg);
       border-radius: var(--sp-radius-2xl);
     }
 
-    :global(.search-result-title) {
+    .search-result-title {
       margin-bottom: var(--sp-margin-sm);
       font-size: var(--sp-text-lg);
     }
 
-    :global(.search-result-description) {
+    .search-result-description {
       margin-bottom: var(--sp-margin-md);
       font-size: var(--sp-text-base);
       -webkit-line-clamp: 3;
     }
 
-    :global(.search-result-meta) {
+    .search-result-meta {
       padding-top: var(--sp-padding-sm);
       border-top: 1px solid var(--sp-white-2);
     }
@@ -1055,7 +1026,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
-    :global(.search-result-card) {
+    .search-result-card {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -1065,18 +1036,18 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       border-radius: var(--sp-radius-2xl);
     }
 
-    :global(.search-result-title) {
+    .search-result-title {
       margin-bottom: var(--sp-margin-md);
       font-size: var(--sp-text-xl);
     }
 
-    :global(.search-result-description) {
+    .search-result-description {
       margin-bottom: var(--sp-margin-lg);
       font-size: var(--sp-text-lg);
       -webkit-line-clamp: 4;
     }
 
-    :global(.search-result-meta) {
+    .search-result-meta {
       padding-top: var(--sp-padding-md);
       border-top: 1px solid var(--sp-white-3);
     }
@@ -1124,54 +1095,54 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   /* ========== ACCESSIBILITY ENHANCEMENTS ========== */
 
   @media (prefers-reduced-motion: reduce) {
-    :global(.search-result-card) {
+    .search-result-card {
       transition: none;
       animation: none;
     }
 
-    :global(.search-result-card:hover) {
+    .search-result-card:hover {
       transform: none;
     }
 
-    :global(.search-result-card:active) {
+    .search-result-card:active {
       transform: none;
     }
 
-    :global(.search-result-badge) {
+    .search-result-badge {
       transition: none;
     }
 
-    :global(.search-result-card:hover .search-result-badge) {
+    .search-result-card:hover .search-result-badge {
       transform: none;
     }
 
-    :global(.content-match-indicator) {
+    .content-match-indicator {
       transition: none;
     }
 
-    :global(.search-result-card:hover .content-match-indicator) {
+    .search-result-card:hover .content-match-indicator {
       transform: none;
     }
   }
 
   /* 高コントラストモード対応 */
   @media (prefers-contrast: high) {
-    :global(.search-result-card) {
+    .search-result-card {
       border: 2px solid var(--sp-white-8);
       background: var(--sp-black-2);
     }
 
-    :global(.search-result-card:hover) {
+    .search-result-card:hover {
       border-color: var(--sp-accent);
       background: var(--sp-white-1);
     }
 
-    :global(.search-result-title) {
+    .search-result-title {
       color: var(--sp-white-9);
       text-shadow: none;
     }
 
-    :global(.search-result-description) {
+    .search-result-description {
       color: var(--sp-white-8);
       text-shadow: none;
     }
@@ -1192,8 +1163,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     // ========== ELEMENT SELECTION ==========
     const elements = {
       popover: document.getElementById('search-popover'),
-      input: document.querySelector('.search-input') as HTMLInputElement,
-      form: document.querySelector('.search-form') as HTMLFormElement,
+      input: document.getElementById('search-query') as HTMLInputElement,
+      form: document.getElementById('search-popover-form') as HTMLFormElement,
       toggle: document.querySelector('.search-toggle-btn') as HTMLButtonElement,
       closeBtn: document.getElementById(
         'search-close-btn'

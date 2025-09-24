@@ -33,7 +33,7 @@ export interface Props {
   </nav>
 </div>
 
-<style>
+<style is:global>
   /* 既存のCSSをそのまま移植 */
 </style>
 ```

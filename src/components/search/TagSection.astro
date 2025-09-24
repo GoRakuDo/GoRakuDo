@@ -9,72 +9,14 @@ const { initialTag = '', initialQuery = '' } = Astro.props;
 
 <section class='tag-section'>
   <header class='section-header'>
-    <h2 class='section-title'>Browse by Tags</h2>
-    <p class='section-description'>Click on a tag to filter content</p>
+    <h2 class='section-title'>Jelajahi berdasarkan Tag</h2>
+    <p class='section-description'>Klik pada tag untuk memfilter konten</p>
   </header>
 
   <div class='tag-cloud' id='tag-cloud'>
-    <div class='loading-indicator'>Loading tags...</div>
+    <div class='loading-indicator'>Memuat tag...</div>
   </div>
 </section>
-
-<style>
-  .tag-section {
-    padding: 1.5rem 0;
-  }
-
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .tag-item {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--clr-border);
-    border-radius: 1.5rem;
-    background: var(--clr-background-secondary);
-    color: var(--clr-text-primary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .tag-item:hover {
-    background: var(--clr-accent);
-    color: white;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-  }
-
-  .tag-item.active {
-    background: var(--clr-accent);
-    color: white;
-  }
-
-  .loading-indicator {
-    width: 100%;
-    padding: 2rem;
-    color: var(--clr-text-secondary);
-    text-align: center;
-  }
-
-  @media (max-width: 768px) {
-    .tag-cloud {
-      gap: 0.25rem;
-    }
-
-    .tag-item {
-      padding: 0.375rem 0.75rem;
-      font-size: 0.8rem;
-    }
-  }
-</style>
 
 <script is:inline define:vars={{ initialTag, initialQuery }}>
   async function loadTags() {
@@ -125,8 +67,7 @@ const { initialTag = '', initialQuery = '' } = Astro.props;
       console.error('Failed to load tags:', error);
       const el = document.getElementById('tag-cloud');
       if (el)
-        el.innerHTML =
-          '<div class="loading-indicator">Failed to load tags</div>';
+        el.innerHTML = '<div class="loading-indicator">Gagal memuat tag</div>';
     }
   }
   document.addEventListener('DOMContentLoaded', loadTags);

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategorySection from '../../components/search/CategorySection.astro';
 import TagSection from '../../components/search/TagSection.astro';
 import SearchSection from '../../components/search/SearchSection.astro';
+import '../../styles/pages/search/search-index.css';
 
 // URLパラメータの取得
 const { searchParams } = Astro.url;
@@ -11,9 +12,9 @@ const initialCategory = searchParams.get('category') || '';
 const initialTag = searchParams.get('tag') || '';
 
 const seoData = {
-  title: 'Search - GoRakuDo',
-  description: 'GoRakuDo全体（Docs/Tools/Pages）を横断検索します。',
-  keywords: ['search', 'japanese learning', 'immersion', 'tools', 'docs'],
+  title: 'Cari - GoRakuDo',
+  description: 'Cari melalui semua konten GoRakuDo (Docs/Tools/Pages).',
+  keywords: ['cari', 'pembelajaran jepang', 'immersion', 'alat', 'dokumentasi'],
 };
 ---
 
@@ -22,7 +23,7 @@ const seoData = {
   description={seoData.description}
   keywords={seoData.keywords}
   pageType='website'
-  lang='ja'
+  lang='id'
 >
   <main class='search-page'>
     <!-- 上層: カテゴリ閲覧 -->
@@ -48,29 +49,3 @@ const seoData = {
     </section>
   </main>
 </BaseLayout>
-
-<style>
-  .search-page {
-    min-height: 100vh;
-    padding: 1rem;
-  }
-
-  .category-section,
-  .tag-section,
-  .search-section {
-    margin-bottom: 2rem;
-  }
-
-  /* モバイルファースト */
-  @media (max-width: 768px) {
-    .search-page {
-      padding: 0.5rem;
-    }
-
-    .category-section,
-    .tag-section,
-    .search-section {
-      margin-bottom: 1.5rem;
-    }
-  }
-</style>

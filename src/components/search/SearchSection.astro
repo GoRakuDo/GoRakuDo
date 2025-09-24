@@ -1,4 +1,6 @@
 ---
+import SearchForm from '../ui/SearchForm.astro';
+
 export interface Props {
   initialQuery?: string;
   initialCategory?: string;
@@ -14,39 +16,23 @@ const {
 
 <section class='search-section'>
   <header class='section-header'>
-    <h2 class='section-title'>Search Content</h2>
-    <p class='section-description'>Search through all GoRakuDo content</p>
+    <h2 class='section-title'>Cari Konten</h2>
+    <p class='section-description'>Cari melalui semua konten GoRakuDo</p>
   </header>
 
   <!-- 検索バー -->
   <div class='search-bar-container'>
-    <form class='search-form' id='search-form'>
-      <div class='search-input-wrapper'>
-        <input
-          type='search'
-          id='search-input'
-          name='q'
-          placeholder='Search documentation and tools...'
-          value={initialQuery}
-          class='search-input'
-          autocomplete='off'
-        />
-        <button type='submit' class='search-button' aria-label='Search'>
-          <svg
-            class='search-icon'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-          >
-            <path
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              stroke-width='2'
-              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
-          </svg>
-        </button>
-      </div>
-    </form>
+    <SearchForm
+      placeholder='Cari dokumentasi dan tutorial...'
+      searchAction='/search'
+      inputId='search-input'
+      formId='search-form'
+      size='lg'
+      variant='glassmorphism'
+      ariaLabel='Cari dokumentasi dan tutorial'
+      submitButtonText='Cari'
+      initialValue={initialQuery}
+    />
   </div>
 
   <!-- 検索結果 -->
@@ -58,7 +44,7 @@ const {
             class='filter-chip'
             data-type='q'
             data-value={initialQuery}
-            aria-label={`Remove query: ${initialQuery}`}
+            aria-label={`Hapus kueri: ${initialQuery}`}
           >
             q: {initialQuery}
             <span class='chip-close' aria-hidden='true'>
@@ -73,7 +59,7 @@ const {
             class='filter-chip'
             data-type='category'
             data-value={initialCategory}
-            aria-label={`Remove category: ${initialCategory}`}
+            aria-label={`Hapus kategori: ${initialCategory}`}
           >
             category: {initialCategory}
             <span class='chip-close' aria-hidden='true'>
@@ -88,7 +74,7 @@ const {
             class='filter-chip'
             data-type='tag'
             data-value={initialTag}
-            aria-label={`Remove tag: ${initialTag}`}
+            aria-label={`Hapus tag: ${initialTag}`}
           >
             tag: {initialTag}
             <span class='chip-close' aria-hidden='true'>
@@ -102,9 +88,9 @@ const {
           <button
             class='filter-clear'
             id='filter-clear-all'
-            aria-label='Clear all filters'
+            aria-label='Hapus semua filter'
           >
-            Clear all
+            Hapus Semua
           </button>
         )
       }
@@ -120,261 +106,6 @@ const {
     }
   </div>
 </section>
-
-<style>
-  .search-section {
-    padding: 1.5rem 0;
-  }
-
-  .search-bar-container {
-    max-width: 600px;
-    margin: 0 auto 2rem;
-  }
-
-  .search-form {
-    width: 100%;
-  }
-
-  .search-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 1rem 3rem 1rem 1rem;
-    border: 2px solid var(--clr-border);
-    border-radius: 0.5rem;
-    background: var(--clr-background);
-    color: var(--clr-text-primary);
-    font-size: 1rem;
-    transition: border-color 0.2s ease;
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: var(--clr-accent);
-    box-shadow: 0 0 0 3px rgb(139 93 255 / 0.1);
-  }
-
-  .search-button {
-    position: absolute;
-    right: 0.5rem;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 0.375rem;
-    background: var(--clr-accent);
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  .search-button:hover {
-    background: var(--clr-accent-dark);
-  }
-
-  .search-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
-  .search-results {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .search-active-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 0 0 0.75rem;
-  }
-
-  .filter-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--clr-border);
-    border-radius: 9999px;
-    background: oklch(20% 0.02 270deg / 0.5);
-    color: var(--clr-text-primary);
-    font-size: 0.8rem;
-  }
-
-  .filter-chip .chip-close {
-    margin-left: 0.25rem;
-    opacity: 0.7;
-  }
-
-  .filter-chip:hover .chip-close {
-    opacity: 1;
-  }
-
-  .filter-clear {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--clr-border);
-    border-radius: 0.375rem;
-    background: transparent;
-    color: var(--clr-text-primary);
-    font-size: 0.8rem;
-  }
-
-  .search-results-container {
-    display: grid;
-    gap: 1rem;
-    content-visibility: auto;
-    contain-intrinsic-size: 300px 600px;
-  }
-
-  .search-result-item {
-    padding: 1rem;
-    border: 1px solid var(--clr-border);
-    border-radius: 0.5rem;
-    background: var(--clr-background);
-    transition: all 0.2s ease;
-  }
-
-  .search-result-item.is-active {
-    outline: 2px solid var(--clr-accent);
-  }
-
-  .search-result-item:hover {
-    border-color: var(--clr-accent);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-  }
-
-  .result-title {
-    margin-bottom: 0.5rem;
-    color: var(--clr-text-primary);
-    font-size: 1.125rem;
-    font-weight: 600;
-  }
-
-  .result-description {
-    margin-bottom: 0.75rem;
-    color: var(--clr-text-secondary);
-  }
-
-  .result-snippet {
-    margin: 0 0 0.75rem;
-    color: var(--clr-text-secondary);
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .result-snippet mark {
-    padding: 0 0.125rem;
-    border-radius: 0.125rem;
-    background: var(--search-highlight-bg, oklch(65% 0.18 280deg / 0.35));
-    color: var(--clr-text-primary);
-  }
-
-  .result-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--clr-text-secondary);
-    font-size: 0.875rem;
-  }
-
-  .result-type {
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-  }
-
-  .result-badge--docs {
-    background: var(--clr-success);
-    color: white;
-  }
-
-  .result-badge--tool {
-    background: var(--clr-accent);
-    color: white;
-  }
-
-  .result-badge--page {
-    background: var(--clr-warning);
-    color: white;
-  }
-
-  .result-path {
-    color: var(--clr-text-secondary);
-    font-family: monospace;
-    font-size: 0.75rem;
-  }
-
-  .result-date {
-    color: var(--clr-text-secondary);
-    font-size: 0.75rem;
-  }
-
-  .loading-indicator {
-    padding: 2rem;
-    color: var(--clr-text-secondary);
-    text-align: center;
-  }
-
-  .search-results-header {
-    margin: 0 0 0.5rem;
-    color: var(--clr-text-secondary);
-    font-size: 0.875rem;
-  }
-
-  /* Skeletons for CLS reduction */
-  .skeleton-card {
-    height: 88px;
-    border: 1px solid var(--clr-border);
-    border-radius: 0.5rem;
-    background: linear-gradient(
-      90deg,
-      oklch(20% 0.02 270deg / 0.3) 25%,
-      oklch(35% 0.03 270deg / 0.35) 37%,
-      oklch(20% 0.02 270deg / 0.3) 63%
-    );
-    background-size: 400% 100%;
-    animation: shimmer 1.2s infinite;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: 100% 0;
-    }
-
-    100% {
-      background-position: 0 0;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .search-input {
-      padding: 0.875rem 2.5rem 0.875rem 0.875rem;
-      font-size: 0.9rem;
-    }
-
-    .search-button {
-      right: 0.375rem;
-      padding: 0.375rem;
-    }
-
-    .search-icon {
-      width: 1rem;
-      height: 1rem;
-    }
-
-    .search-results-container {
-      gap: 0.75rem;
-    }
-
-    .search-result-item {
-      padding: 0.75rem;
-    }
-  }
-</style>
 
 <script>
   import Fuse from 'fuse.js';
@@ -498,6 +229,13 @@ const {
         list[this.activeIndex].click();
       }
     }
+    clearActive() {
+      const list = document.querySelectorAll<HTMLAnchorElement>(
+        '.search-result-item'
+      );
+      list.forEach(el => el.classList.remove('is-active'));
+      this.activeIndex = -1;
+    }
     displayResults(
       results: Array<{ item: SearchItem; score?: number; matches?: any[] }>
     ) {
@@ -506,7 +244,7 @@ const {
       if (results.length === 0) {
         resultsContainer.innerHTML = `
           <div class='search-results-container'>
-            <div class='loading-indicator'>No results found</div>
+            <div class='loading-indicator'>Tidak ada hasil ditemukan</div>
           </div>`;
         return;
       }
@@ -590,9 +328,24 @@ const {
         <div class='search-results-container' role='list' aria-busy='false'>${resultsHTML}</div>
       `;
       // Make items focusable for keyboard navigation
-      document.querySelectorAll('.search-result-item').forEach(el => {
+      document.querySelectorAll('.search-result-item').forEach((el, index) => {
         (el as HTMLElement).setAttribute('role', 'listitem');
-        (el as HTMLElement).setAttribute('tabindex', '-1');
+        (el as HTMLElement).setAttribute('tabindex', '0');
+
+        // Add keyboard event listeners to each result item
+        el.addEventListener('keydown', (e: Event) => {
+          const keyEvent = e as KeyboardEvent;
+          if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+            keyEvent.preventDefault();
+            (el as HTMLAnchorElement).click();
+          } else if (keyEvent.key === 'ArrowDown') {
+            keyEvent.preventDefault();
+            searchManager.moveActive(1);
+          } else if (keyEvent.key === 'ArrowUp') {
+            keyEvent.preventDefault();
+            searchManager.moveActive(-1);
+          }
+        });
       });
     }
     clearResults() {
@@ -600,6 +353,7 @@ const {
       if (resultsContainer) {
         resultsContainer.innerHTML = '';
       }
+      this.clearActive();
     }
   }
   const searchManager = new SearchManager();
@@ -612,7 +366,7 @@ const {
     window.history.pushState({}, '', url);
     searchManager.performSearch(query);
   });
-  let searchTimeout;
+  let searchTimeout: ReturnType<typeof setTimeout> | undefined;
   document
     .getElementById('search-input')
     ?.addEventListener('input', (e: any) => {
@@ -636,16 +390,17 @@ const {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         searchManager.moveActive(1);
-      }
-      if (e.key === 'ArrowUp') {
+      } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         searchManager.moveActive(-1);
-      }
-      if (e.key === 'Enter') {
+      } else if (e.key === 'Enter') {
         if (document.querySelector('.search-result-item.is-active')) {
           e.preventDefault();
           searchManager.openActive();
         }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        searchManager.clearActive();
       }
     });
     inputEl.addEventListener('input', () => {

@@ -88,7 +88,7 @@ import Counter from '../components/Counter.jsx'; // A React component
 
 ### Principle: Scoped by Default, Global When Necessary
 
-**Directive:** All component-specific styles MUST be placed within a `<style>` tag inside the `.astro` component file. This ensures styles are scoped and do not leak globally. Global styles (e.g., fonts, CSS variables, resets) are ONLY permitted in a central file, `src/styles/global.css`, which is imported into the main layout.
+**Directive:** All component-specific styles MUST be placed within a `<style is:global>` tag inside the `.astro` component file. This ensures styles are scoped and do not leak globally. Global styles (e.g., fonts, CSS variables, resets) are ONLY permitted in a central file, `src/styles/global.css`, which is imported into the main layout.
 
 **Rationale:** Scoped styles prevent CSS conflicts and make components truly modular and portable.
 

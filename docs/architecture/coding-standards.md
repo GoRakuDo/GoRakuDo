@@ -421,7 +421,7 @@ const posts = await Astro.glob('../content/posts/*.md');
   </main>
 </Layout>
 
-<style>
+<style is:global>
   /* 6. Scoped styles */
   main {
     padding: 2rem;

@@ -234,7 +234,7 @@ const maxCount = Math.max(...tags.map(t => t.count));
   })}
 </div>
 
-<style>
+<style is:global>
   .tag-cloud {
     display: flex;
     flex-wrap: wrap;
@@ -315,7 +315,7 @@ const { categories } = Astro.props;
   })}
 </div>
 
-<style>
+<style is:global>
   .category-tree {
     max-width: 100%;
   }

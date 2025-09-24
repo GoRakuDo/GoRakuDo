@@ -144,6 +144,12 @@
   --clr-text-primary-fallback: var(--clr-text-primary);
   --clr-accent-fallback: var(--clr-accent);
 
+  /* ===== GLASSMORPHISM DESIGN TOKENS ===== */
+  --clr-glass-border: oklch(50% 0.02 270deg / 0.2);
+  --clr-glass-background: oklch(20% 0.01 270deg / 0.1);
+  --clr-glass-border-hover: oklch(50% 0.02 270deg / 0.3);
+  --clr-glass-background-hover: oklch(20% 0.01 270deg / 0.15);
+
   /* ===== ANIMATION SYSTEM ===== */
   --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
