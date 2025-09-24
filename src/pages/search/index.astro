@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CategorySection from '../../components/search/CategorySection.astro';
+import TagSection from '../../components/search/TagSection.astro';
+import SearchSection from '../../components/search/SearchSection.astro';
+
+// URLパラメータの取得
+const { searchParams } = Astro.url;
+const initialQuery = searchParams.get('q') || '';
+const initialCategory = searchParams.get('category') || '';
+const initialTag = searchParams.get('tag') || '';
+
+const seoData = {
+  title: 'Search - GoRakuDo',
+  description: 'GoRakuDo全体（Docs/Tools/Pages）を横断検索します。',
+  keywords: ['search', 'japanese learning', 'immersion', 'tools', 'docs'],
+};
+---
+
+<BaseLayout
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+  pageType='website'
+  lang='ja'
+>
+  <main class='search-page'>
+    <!-- 上層: カテゴリ閲覧 -->
+    <section class='category-section' id='category-section'>
+      <CategorySection
+        initialCategory={initialCategory}
+        initialQuery={initialQuery}
+      />
+    </section>
+
+    <!-- 中層: タグ表示 -->
+    <section class='tag-section' id='tag-section'>
+      <TagSection initialTag={initialTag} initialQuery={initialQuery} />
+    </section>
+
+    <!-- 下層: 検索バー + 結果表示 -->
+    <section class='search-section' id='search-section'>
+      <SearchSection
+        initialQuery={initialQuery}
+        initialCategory={initialCategory}
+        initialTag={initialTag}
+      />
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .search-page {
+    min-height: 100vh;
+    padding: 1rem;
+  }
+
+  .category-section,
+  .tag-section,
+  .search-section {
+    margin-bottom: 2rem;
+  }
+
+  /* モバイルファースト */
+  @media (max-width: 768px) {
+    .search-page {
+      padding: 0.5rem;
+    }
+
+    .category-section,
+    .tag-section,
+    .search-section {
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>

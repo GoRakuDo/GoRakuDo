@@ -1,0 +1,725 @@
+---
+export interface Props {
+  initialQuery?: string;
+  initialCategory?: string;
+  initialTag?: string;
+}
+
+const {
+  initialQuery = '',
+  initialCategory = '',
+  initialTag = '',
+} = Astro.props;
+---
+
+<section class='search-section'>
+  <header class='section-header'>
+    <h2 class='section-title'>Search Content</h2>
+    <p class='section-description'>Search through all GoRakuDo content</p>
+  </header>
+
+  <!-- 検索バー -->
+  <div class='search-bar-container'>
+    <form class='search-form' id='search-form'>
+      <div class='search-input-wrapper'>
+        <input
+          type='search'
+          id='search-input'
+          name='q'
+          placeholder='Search documentation and tools...'
+          value={initialQuery}
+          class='search-input'
+          autocomplete='off'
+        />
+        <button type='submit' class='search-button' aria-label='Search'>
+          <svg
+            class='search-icon'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 検索結果 -->
+  <div class='search-results' id='search-results'>
+    <div id='search-filters' class='search-active-filters'>
+      {
+        initialQuery && (
+          <button
+            class='filter-chip'
+            data-type='q'
+            data-value={initialQuery}
+            aria-label={`Remove query: ${initialQuery}`}
+          >
+            q: {initialQuery}
+            <span class='chip-close' aria-hidden='true'>
+              ×
+            </span>
+          </button>
+        )
+      }
+      {
+        initialCategory && (
+          <button
+            class='filter-chip'
+            data-type='category'
+            data-value={initialCategory}
+            aria-label={`Remove category: ${initialCategory}`}
+          >
+            category: {initialCategory}
+            <span class='chip-close' aria-hidden='true'>
+              ×
+            </span>
+          </button>
+        )
+      }
+      {
+        initialTag && (
+          <button
+            class='filter-chip'
+            data-type='tag'
+            data-value={initialTag}
+            aria-label={`Remove tag: ${initialTag}`}
+          >
+            tag: {initialTag}
+            <span class='chip-close' aria-hidden='true'>
+              ×
+            </span>
+          </button>
+        )
+      }
+      {
+        (initialQuery || initialCategory || initialTag) && (
+          <button
+            class='filter-clear'
+            id='filter-clear-all'
+            aria-label='Clear all filters'
+          >
+            Clear all
+          </button>
+        )
+      }
+    </div>
+    {
+      initialQuery && (
+        <div class='search-results-container' role='list' aria-busy='true'>
+          <div class='skeleton-card' aria-hidden='true' />
+          <div class='skeleton-card' aria-hidden='true' />
+          <div class='skeleton-card' aria-hidden='true' />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .search-section {
+    padding: 1.5rem 0;
+  }
+
+  .search-bar-container {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  .search-form {
+    width: 100%;
+  }
+
+  .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1rem;
+    border: 2px solid var(--clr-border);
+    border-radius: 0.5rem;
+    background: var(--clr-background);
+    color: var(--clr-text-primary);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--clr-accent);
+    box-shadow: 0 0 0 3px rgb(139 93 255 / 0.1);
+  }
+
+  .search-button {
+    position: absolute;
+    right: 0.5rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    background: var(--clr-accent);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .search-button:hover {
+    background: var(--clr-accent-dark);
+  }
+
+  .search-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .search-results {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .search-active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 9999px;
+    background: oklch(20% 0.02 270deg / 0.5);
+    color: var(--clr-text-primary);
+    font-size: 0.8rem;
+  }
+
+  .filter-chip .chip-close {
+    margin-left: 0.25rem;
+    opacity: 0.7;
+  }
+
+  .filter-chip:hover .chip-close {
+    opacity: 1;
+  }
+
+  .filter-clear {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.375rem;
+    background: transparent;
+    color: var(--clr-text-primary);
+    font-size: 0.8rem;
+  }
+
+  .search-results-container {
+    display: grid;
+    gap: 1rem;
+    content-visibility: auto;
+    contain-intrinsic-size: 300px 600px;
+  }
+
+  .search-result-item {
+    padding: 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    background: var(--clr-background);
+    transition: all 0.2s ease;
+  }
+
+  .search-result-item.is-active {
+    outline: 2px solid var(--clr-accent);
+  }
+
+  .search-result-item:hover {
+    border-color: var(--clr-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  }
+
+  .result-title {
+    margin-bottom: 0.5rem;
+    color: var(--clr-text-primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .result-description {
+    margin-bottom: 0.75rem;
+    color: var(--clr-text-secondary);
+  }
+
+  .result-snippet {
+    margin: 0 0 0.75rem;
+    color: var(--clr-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .result-snippet mark {
+    padding: 0 0.125rem;
+    border-radius: 0.125rem;
+    background: var(--search-highlight-bg, oklch(65% 0.18 280deg / 0.35));
+    color: var(--clr-text-primary);
+  }
+
+  .result-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--clr-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .result-type {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .result-badge--docs {
+    background: var(--clr-success);
+    color: white;
+  }
+
+  .result-badge--tool {
+    background: var(--clr-accent);
+    color: white;
+  }
+
+  .result-badge--page {
+    background: var(--clr-warning);
+    color: white;
+  }
+
+  .result-path {
+    color: var(--clr-text-secondary);
+    font-family: monospace;
+    font-size: 0.75rem;
+  }
+
+  .result-date {
+    color: var(--clr-text-secondary);
+    font-size: 0.75rem;
+  }
+
+  .loading-indicator {
+    padding: 2rem;
+    color: var(--clr-text-secondary);
+    text-align: center;
+  }
+
+  .search-results-header {
+    margin: 0 0 0.5rem;
+    color: var(--clr-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  /* Skeletons for CLS reduction */
+  .skeleton-card {
+    height: 88px;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    background: linear-gradient(
+      90deg,
+      oklch(20% 0.02 270deg / 0.3) 25%,
+      oklch(35% 0.03 270deg / 0.35) 37%,
+      oklch(20% 0.02 270deg / 0.3) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 100% 0;
+    }
+
+    100% {
+      background-position: 0 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .search-input {
+      padding: 0.875rem 2.5rem 0.875rem 0.875rem;
+      font-size: 0.9rem;
+    }
+
+    .search-button {
+      right: 0.375rem;
+      padding: 0.375rem;
+    }
+
+    .search-icon {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .search-results-container {
+      gap: 0.75rem;
+    }
+
+    .search-result-item {
+      padding: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  import Fuse from 'fuse.js';
+  import DOMPurify from 'dompurify';
+
+  type SearchItem = {
+    title: string;
+    description: string;
+    content: string;
+    tags: string[];
+    categories: string[];
+    toolName?: string;
+    type: 'docs' | 'tool-article' | 'page';
+    url: string;
+    path: string;
+    pubDate: string;
+  };
+
+  class SearchManager {
+    private data: SearchItem[] = [];
+    private fuse: any = null;
+    private activeIndex: number = -1;
+    constructor() {
+      this.initializeSearch();
+    }
+    async initializeSearch() {
+      try {
+        const response = await fetch('/search/Search.json');
+        const searchData = await response.json();
+        this.data = (searchData?.data || []) as SearchItem[];
+        this.fuse = new Fuse(this.data, {
+          keys: [
+            { name: 'title', weight: 0.4 },
+            { name: 'description', weight: 0.3 },
+            { name: 'content', weight: 0.2 },
+            { name: 'tags', weight: 0.1 },
+            { name: 'categories', weight: 0.05 },
+            { name: 'toolName', weight: 0.05 },
+          ],
+          threshold: 0.4,
+          includeScore: true,
+          includeMatches: true,
+          minMatchCharLength: 2,
+          shouldSort: true,
+          findAllMatches: true,
+          useExtendedSearch: true,
+          ignoreLocation: true,
+        });
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialQuery = urlParams.get('q');
+        const initialCategory = urlParams.get('category');
+        const initialTag = urlParams.get('tag');
+        if (initialQuery) {
+          this.performSearch(initialQuery);
+        } else if (initialCategory || initialTag) {
+          this.performFilter({
+            category: initialCategory || undefined,
+            tag: initialTag || undefined,
+          });
+        }
+      } catch (error) {
+        console.error('Failed to initialize comprehensive search:', error);
+      }
+    }
+    performSearch(query: string) {
+      if (!this.fuse || !query.trim()) {
+        this.clearResults();
+        return;
+      }
+      const results = this.fuse.search(query) as Array<{
+        item: SearchItem;
+        score?: number;
+      }>;
+      this.displayResults(results);
+      this.activeIndex = results.length > 0 ? 0 : -1;
+      this.applyActiveItem();
+    }
+    performFilter(filter: { category?: string; tag?: string }) {
+      if (!this.data || this.data.length === 0) return;
+      let filtered = this.data;
+      if (filter.category) {
+        filtered = filtered.filter(i =>
+          (i.categories || []).includes(filter.category as string)
+        );
+      }
+      if (filter.tag) {
+        filtered = filtered.filter(i =>
+          (i.tags || []).includes(filter.tag as string)
+        );
+      }
+      const results = filtered.map(item => ({ item }));
+      this.displayResults(results);
+      this.activeIndex = results.length > 0 ? 0 : -1;
+      this.applyActiveItem();
+    }
+    moveActive(delta: number) {
+      const list = document.querySelectorAll<HTMLAnchorElement>(
+        '.search-result-item'
+      );
+      if (list.length === 0) return;
+      this.activeIndex = (this.activeIndex + delta + list.length) % list.length;
+      this.applyActiveItem();
+    }
+    applyActiveItem() {
+      const list = document.querySelectorAll<HTMLAnchorElement>(
+        '.search-result-item'
+      );
+      list.forEach(el => el.classList.remove('is-active'));
+      if (this.activeIndex >= 0 && this.activeIndex < list.length) {
+        const el = list[this.activeIndex];
+        el.classList.add('is-active');
+        el.focus({ preventScroll: true });
+        el.scrollIntoView({ block: 'nearest' });
+      }
+    }
+    openActive() {
+      const list = document.querySelectorAll<HTMLAnchorElement>(
+        '.search-result-item'
+      );
+      if (this.activeIndex >= 0 && this.activeIndex < list.length) {
+        list[this.activeIndex].click();
+      }
+    }
+    displayResults(
+      results: Array<{ item: SearchItem; score?: number; matches?: any[] }>
+    ) {
+      const resultsContainer = document.getElementById('search-results');
+      if (!resultsContainer) return;
+      if (results.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class='search-results-container'>
+            <div class='loading-indicator'>No results found</div>
+          </div>`;
+        return;
+      }
+      const escapeHtml = (str: string) => DOMPurify.sanitize(String(str || ''));
+      const highlight = (
+        text: string,
+        indices: Array<[number, number]> | undefined
+      ) => {
+        if (!indices || indices.length === 0) return escapeHtml(text);
+        let out = '';
+        let last = 0;
+        for (const [start, end] of indices) {
+          out += escapeHtml(text.slice(last, start));
+          out += `<mark>${escapeHtml(text.slice(start, end + 1))}</mark>`;
+          last = end + 1;
+        }
+        out += escapeHtml(text.slice(last));
+        return out;
+      };
+      const buildSnippet = (
+        content: string,
+        indices: Array<[number, number]> | undefined
+      ) => {
+        if (!indices || indices.length === 0 || !content) return '';
+        const [start, end] = indices[0];
+        const pad = 50;
+        const s = Math.max(0, start - pad);
+        const e = Math.min(content.length, end + 1 + pad);
+        const prefix = s > 0 ? '…' : '';
+        const suffix = e < content.length ? '…' : '';
+        const segment = content.slice(s, e);
+        const relIndices: Array<[number, number]> = [[start - s, end - s]];
+        return `${prefix}${highlight(segment, relIndices)}${suffix}`;
+      };
+
+      const resultsHTML = results
+        .map((result, index) => {
+          const item = result.item;
+          const matches = (result as any).matches as any[] | undefined;
+          const titleMatch = matches?.find(m => m.key === 'title');
+          const descMatch = matches?.find(m => m.key === 'description');
+          const contentMatch = matches?.find(m => m.key === 'content');
+
+          const titleHtml = titleMatch
+            ? highlight(item.title || '', titleMatch.indices)
+            : escapeHtml(item.title || '');
+          const descHtml = descMatch
+            ? highlight(item.description || '', descMatch.indices)
+            : escapeHtml(item.description || '');
+          const snippetHtml = contentMatch
+            ? buildSnippet(item.content || '', contentMatch.indices)
+            : '';
+
+          const badgeClass =
+            item.type === 'docs'
+              ? 'result-badge--docs'
+              : item.type === 'tool-article'
+                ? 'result-badge--tool'
+                : 'result-badge--page';
+          const badgeText =
+            item.type === 'docs'
+              ? 'Documentation'
+              : item.type === 'tool-article'
+                ? item.toolName || 'Tool'
+                : 'Page';
+          return `
+          <a href="${escapeHtml(item.url)}" class='search-result-item' style="animation-delay: ${index * 50}ms">
+            <div class='result-title'>${titleHtml}</div>
+            <div class='result-description'>${descHtml}</div>
+            ${snippetHtml ? `<div class='result-snippet'>${snippetHtml}</div>` : ''}
+            <div class='result-meta'>
+              <span class='result-type ${badgeClass}'>${escapeHtml(badgeText)}</span>
+              <span class='result-path'>${escapeHtml(item.path)}</span>
+              <span class='result-date'>${escapeHtml(new Date(item.pubDate).toLocaleDateString())}</span>
+            </div>
+          </a>`;
+        })
+        .join('');
+      resultsContainer.innerHTML = `
+        <div class='search-results-header' aria-live='polite'>${results.length} results</div>
+        <div class='search-results-container' role='list' aria-busy='false'>${resultsHTML}</div>
+      `;
+      // Make items focusable for keyboard navigation
+      document.querySelectorAll('.search-result-item').forEach(el => {
+        (el as HTMLElement).setAttribute('role', 'listitem');
+        (el as HTMLElement).setAttribute('tabindex', '-1');
+      });
+    }
+    clearResults() {
+      const resultsContainer = document.getElementById('search-results');
+      if (resultsContainer) {
+        resultsContainer.innerHTML = '';
+      }
+    }
+  }
+  const searchManager = new SearchManager();
+  document.getElementById('search-form')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const query = (document.getElementById('search-input') as HTMLInputElement)
+      .value;
+    const url = new URL(window.location as any);
+    url.searchParams.set('q', query);
+    window.history.pushState({}, '', url);
+    searchManager.performSearch(query);
+  });
+  let searchTimeout;
+  document
+    .getElementById('search-input')
+    ?.addEventListener('input', (e: any) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const query = (e.target as HTMLInputElement).value;
+        if (query.length >= 2) {
+          searchManager.performSearch(query);
+        } else {
+          searchManager.clearResults();
+        }
+      }, 300);
+    });
+
+  // Keyboard navigation and dynamic highlight color
+  const inputEl = document.getElementById(
+    'search-input'
+  ) as HTMLInputElement | null;
+  if (inputEl) {
+    inputEl.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        searchManager.moveActive(1);
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        searchManager.moveActive(-1);
+      }
+      if (e.key === 'Enter') {
+        if (document.querySelector('.search-result-item.is-active')) {
+          e.preventDefault();
+          searchManager.openActive();
+        }
+      }
+    });
+    inputEl.addEventListener('input', () => {
+      const q = inputEl.value.trim();
+      if (!q) {
+        document.documentElement.style.removeProperty('--search-highlight-bg');
+        return;
+      }
+      const seed = q.split('').reduce((s, c) => s + c.charCodeAt(0), 0);
+      const hue = seed % 360;
+      const bg = `oklch(65% 0.18 ${hue}deg / 0.35)`;
+      document.documentElement.style.setProperty('--search-highlight-bg', bg);
+    });
+  }
+
+  // Clear chips and URL sync
+  const filtersEl = document.getElementById('search-filters');
+  const clearBtn = document.getElementById('filter-clear-all');
+  function updateUrl(params: Record<string, string | null>) {
+    const url = new URL(window.location.href);
+    Object.entries(params).forEach(([k, v]) => {
+      if (v === null) url.searchParams.delete(k);
+      else url.searchParams.set(k, v);
+    });
+    window.history.pushState({}, '', url);
+  }
+  function reapplyFromUrl() {
+    const url = new URL(window.location.href);
+    const q = url.searchParams.get('q') || '';
+    const category = url.searchParams.get('category') || '';
+    const tag = url.searchParams.get('tag') || '';
+    if (inputEl) inputEl.value = q;
+    if (q) searchManager.performSearch(q);
+    else
+      searchManager.performFilter({
+        category: category || undefined,
+        tag: tag || undefined,
+      });
+  }
+  if (filtersEl) {
+    filtersEl.addEventListener('click', e => {
+      const target = e.target as HTMLElement;
+      const chip = target.closest('.filter-chip') as HTMLElement | null;
+      if (chip) {
+        const type = chip.getAttribute('data-type');
+        if (type === 'q') {
+          updateUrl({ q: null });
+        }
+        if (type === 'category') {
+          updateUrl({ category: null });
+        }
+        if (type === 'tag') {
+          updateUrl({ tag: null });
+        }
+        reapplyFromUrl();
+        return;
+      }
+    });
+  }
+  if (clearBtn) {
+    clearBtn.addEventListener('click', e => {
+      e.preventDefault();
+      updateUrl({ q: null, category: null, tag: null });
+      reapplyFromUrl();
+    });
+  }
+
+  // Cross-section filter events
+  document.addEventListener('search:category-selected', (e: any) => {
+    const category = e?.detail?.category || '';
+    searchManager.performFilter({ category });
+  });
+  document.addEventListener('search:tag-selected', (e: any) => {
+    const tag = e?.detail?.tag || '';
+    searchManager.performFilter({ tag });
+  });
+</script>

@@ -1,6 +1,6 @@
 ---
 // SEO data - Astroネイティブアプローチ（設定ファイル不要）
-import UnifiedSEO from '../components/UnifiedSEO.astro';
+import UnifiedSEO from '../../components/UnifiedSEO.astro';
 
 const seoData = {
   title: '404 Error - Halaman Tidak Ditemukan | GoRakuDo',
@@ -22,7 +22,7 @@ const seoData = {
 };
 
 // Redirect mapping for old URLs with dynamic path support
-import { getCollectionInfo } from '../utils/collections';
+import { getCollectionInfo } from '../../utils/collections';
 
 const collectionMetadata = getCollectionInfo('docs');
 const defaultPath = collectionMetadata.basePath;

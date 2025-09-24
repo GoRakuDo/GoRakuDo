@@ -1,0 +1,161 @@
+---
+export interface Props {
+  initialCategory?: string;
+  initialQuery?: string;
+}
+
+const { initialCategory = '', initialQuery = '' } = Astro.props;
+---
+
+<section class='category-section'>
+  <header class='section-header'>
+    <h2 class='section-title'>Browse by Category</h2>
+    <p class='section-description'>Click on a category to filter content</p>
+  </header>
+
+  <div class='category-grid' id='category-grid'>
+    <div class='loading-indicator'>Loading categories...</div>
+  </div>
+</section>
+
+<style>
+  .category-section {
+    padding: 1.5rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .section-title {
+    margin-bottom: 0.5rem;
+    color: var(--clr-text-primary);
+    font-size: 1.875rem;
+    font-weight: 700;
+  }
+
+  .section-description {
+    color: var(--clr-text-secondary);
+    font-size: 1rem;
+  }
+
+  .category-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .category-item {
+    padding: 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    background: var(--clr-background);
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .category-item:hover {
+    border-color: var(--clr-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  }
+
+  .category-name {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  .category-count {
+    color: var(--clr-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .loading-indicator {
+    padding: 2rem;
+    color: var(--clr-text-secondary);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .category-grid {
+      gap: 0.75rem;
+      grid-template-columns: 1fr;
+    }
+
+    .category-item {
+      padding: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ initialQuery, initialCategory }}>
+  async function loadCategories() {
+    try {
+      const response = await fetch('/search/Search.json');
+      const data = await response.json();
+      const categoryGrid = document.getElementById('category-grid');
+      if (!categoryGrid) return;
+      const categories = data.metadata?.availableCategories || [];
+      categoryGrid.innerHTML = categories
+        .map(
+          category => `
+         <a href="/search?category=${encodeURIComponent(category)}${initialQuery ? `&q=${encodeURIComponent(initialQuery)}` : ''}"
+            class="category-item${initialCategory === category ? ' active' : ''}" data-category="${category}" ${initialCategory === category ? 'aria-current="page"' : ''}>
+           <div class="category-name">${category}</div>
+           <div class="category-count">Browse content</div>
+         </a>
+       `
+        )
+        .join('');
+
+      // クリック時にURLを維持しつつ動的検索イベントを発火
+      const links = categoryGrid.querySelectorAll('.category-item');
+      links.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const target = e.currentTarget;
+          if (!(target instanceof HTMLAnchorElement)) return;
+
+          // アクティブ表示を更新
+          links.forEach(l => l.classList.remove('active'));
+          target.classList.add('active');
+          target.setAttribute('aria-current', 'page');
+
+          // URLを更新
+          const url = new URL(window.location.href);
+          const category = target.getAttribute('data-category') || '';
+          if (category) {
+            url.searchParams.set('category', category);
+          } else {
+            url.searchParams.delete('category');
+          }
+          if (initialQuery) url.searchParams.set('q', initialQuery);
+          window.history.pushState({}, '', url);
+
+          // 検索セクションへイベント通知
+          document.dispatchEvent(
+            new CustomEvent('search:category-selected', {
+              detail: { category },
+            })
+          );
+        });
+      });
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+      const el = document.getElementById('category-grid');
+      if (el)
+        el.innerHTML =
+          '<div class="loading-indicator">Failed to load categories</div>';
+    }
+  }
+  document.addEventListener('DOMContentLoaded', loadCategories);
+</script>

@@ -1,19 +1,22 @@
 ---
-import PostLayout from '../layouts/PostLayout.astro';
-import Breadcrumb from '../components/common/Breadcrumb.astro';
+import PostLayout from '../../layouts/PostLayout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
 
 // Import content page styles with Tailwind v4 optimization
-import '../styles/layouts/PostLayout.css';
+import '../../styles/layouts/PostLayout.css';
 
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { resolvePath, getCollectionInfo } from '../utils/collections';
-import { getMergedDates } from '../utils/content/cc-Auto-FileDates';
-import { getVisibleDocs } from '../utils/content/PostStatus-Filter';
+import { resolvePath, getCollectionInfo } from '../../utils/collections';
+import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 
 // Breadcrumb Schema
-import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 // FAQ Schema
-import { generateFAQSchema, defaultFAQData } from '../utils/content/faq-schema';
+import {
+  generateFAQSchema,
+  defaultFAQData,
+} from '../../utils/content/faq-schema';
 
 // Get FAQ page from pages collection
 const allPages = await getCollection('pages');
