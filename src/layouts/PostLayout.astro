@@ -23,13 +23,17 @@ export interface Props {
   author?: string;
   tags?: string[];
   // Post-specific props
-  post?: import('astro:content').CollectionEntry<'docs'>;
+  post?:
+    | import('astro:content').CollectionEntry<'docs'>
+    | import('astro:content').CollectionEntry<'tool-articles'>;
   collectionMetadata?: {
     displayName: string;
     basePath: string;
   };
   headings?: { depth: number; slug: string; text: string }[];
   postActions?: boolean;
+  // Featured image from ContentCollection
+  featuredImage?: string;
   // Breadcrumb configuration
   breadcrumbConfig?: {
     currentPath?: string;
@@ -74,6 +78,7 @@ const {
   headings,
   breadcrumbSchema,
   faqSchema,
+  featuredImage,
 } = Astro.props;
 ---
 
@@ -89,6 +94,7 @@ const {
       author={author}
       publishedDate={publishedDate}
       modifiedDate={publishedDate}
+      image={featuredImage}
       breadcrumbSchema={breadcrumbSchema}
       faqSchema={faqSchema}
     />

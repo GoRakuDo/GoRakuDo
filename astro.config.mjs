@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import vue from '@astrojs/vue';
 import tailwindcss from '@tailwindcss/vite';
 import mcp from 'astro-mcp';
+import sitemap from '@astrojs/sitemap';
 
 import mdx from '@astrojs/mdx';
 
@@ -38,6 +39,12 @@ export default defineConfig({
   // Vite optimization - Astro Native Best Practice
   vite: {
     plugins: [tailwindcss()],
+    // MIME type configuration for XSL files
+    server: {
+      fs: {
+        strict: false,
+      },
+    },
     build: {
       rollupOptions: {
         output: {
@@ -97,14 +104,19 @@ export default defineConfig({
     },
   },
 
-  integrations: [vue({
-    // Vue configuration for Islands Architecture
-    include: ['**/*.vue'],
-    experimentalReactivityTransform: false,
-    template: {
-      compilerOptions: {
-        isCustomElement: tag => tag.startsWith('ion-'),
+  integrations: [
+    vue({
+      // Vue configuration for Islands Architecture
+      include: ['**/*.vue'],
+      experimentalReactivityTransform: false,
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => tag.startsWith('ion-'),
+        },
       },
-    },
-  }), mcp(), mdx()],
+    }),
+    mcp(),
+    mdx(),
+    sitemap(),
+  ],
 });
