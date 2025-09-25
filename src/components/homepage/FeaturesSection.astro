@@ -45,7 +45,6 @@ const {
 
 <section
   class='features-section loading'
-  aria-labelledby='features-title'
   transition:name='features-section'
   data-lazy
 >
@@ -57,7 +56,7 @@ const {
     >
       {title}
     </h2>
-    <div class='features-grid' role='list'>
+    <div class='features-grid'>
       {
         features.map((feature, index) => (
           <FeatureCard

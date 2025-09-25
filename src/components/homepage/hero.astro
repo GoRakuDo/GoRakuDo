@@ -19,7 +19,6 @@ const {
   class='relative flex flex-col items-center justify-center text-center min-h-screen
          bg-gradient-to-b from-indigo-950 via-indigo-900 to-indigo-800'
   style='background: transparent;'
-  aria-labelledby='hero-title'
   data-mission-id={missionId}
   data-invitation-modal-id={invitationModalId}
   data-navbar-selector={navbarSelector}
@@ -67,18 +66,11 @@ const {
       {description}
     </p>
 
-    <div
-      class='hero-buttons'
-      role='group'
-      aria-label='メインアクションボタン'
-      transition:name='hero-buttons'
-    >
+    <div class='hero-buttons' transition:name='hero-buttons'>
       <button
         type='button'
         class='primary-button'
         data-action='scroll-to-mission'
-        aria-label='学習の旅を始める - メインアクション'
-        aria-describedby='primary-button-description'
         transition:name='hero-primary-button'
       >
         <span class='button-text'>{ctaPrimary}</span>
@@ -92,32 +84,24 @@ const {
           stroke-linecap='round'
           stroke-linejoin='round'
           aria-hidden='true'
-          focusable='false'
           style='width: 16px; height: 16px;'
         >
           <path d='M5 12h14M12 5l7 7-7 7'></path>
         </svg>
       </button>
-      <div id='primary-button-description' class='sr-only'>
-        日本語学習の旅を始めるためのメインボタンです。クリックすると学習セクションに移動します。
-      </div>
 
       <button
         type='button'
         class='secondary-button'
         data-action='open-invitation'
-        aria-label='Discordコミュニティに参加する'
-        aria-describedby='secondary-button-description'
         transition:name='hero-secondary-button'
       >
         <span class='button-text secondary-text'>{ctaSecondary}</span>
         <svg
           class='btn-icon secondary-icon'
-          role='img'
           viewBox='0 0 24 24'
           xmlns='http://www.w3.org/2000/svg'
-          aria-label='Discordアイコン'
-          focusable='false'
+          aria-hidden='true'
           style='width: 16px; height: 16px;'
         >
           <path
@@ -125,9 +109,6 @@ const {
             fill='currentColor'></path>
         </svg>
       </button>
-      <div id='secondary-button-description' class='sr-only'>
-        Discordコミュニティに参加して、他の学習者と交流できます。
-      </div>
     </div>
   </div>
 </section>
@@ -215,16 +196,14 @@ const {
       const action = btn.dataset.action;
       if (action === 'open-invitation') openInvitationModal();
       else if (action === 'scroll-to-mission') scrollToMission();
+      else if (action === 'go-to-posts') window.location.href = '/docs';
     });
 
     // Register listener
     window.addEventListener('open-invitation-modal', openInvitationModal);
     window.addEventListener('close-invitation-modal', closeInvitationModal);
 
-    // Expose global API to support legacy inline onclicks:
-    window.openInvitationModal = openInvitationModal;
-    window.closeInvitationModal = closeInvitationModal;
-    window.scrollToMission = scrollToMission;
+    // Global API removed - following Astro's static-first philosophy
 
     // Init animation when DOM ready
     if (document.readyState === 'loading') {

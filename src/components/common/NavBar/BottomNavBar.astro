@@ -28,15 +28,10 @@ const navItems = [
 ];
 ---
 
-<nav class={`bottom-nav ${className}`} aria-label='Bottom navigation'>
+<nav class={`bottom-nav ${className}`}>
   {
     navItems.map(item => (
-      <a
-        href={item.href}
-        class='nav-btn'
-        aria-label={item.ariaLabel}
-        data-icon={item.icon}
-      >
+      <a href={item.href} class='nav-btn' data-icon={item.icon}>
         <div class='nav-icon'>
           {item.icon === 'tutorial' && (
             <svg
@@ -311,10 +306,7 @@ const navItems = [
       0 1px 2px var(--bottom-nav-black-05);
   }
 
-  .nav-btn:focus {
-    outline: 2px solid var(--bottom-nav-primary);
-    outline-offset: 2px;
-  }
+  /* Focus styles removed - following Astro's static-first philosophy */
 
   .nav-icon {
     display: flex;
@@ -345,19 +337,7 @@ const navItems = [
     }
   }
 
-  /* アクティブ状態のスタイリング */
-  .nav-btn[aria-current='page'] {
-    background: var(--bottom-nav-primary-25);
-    backdrop-filter: var(--bottom-nav-blur-current);
-    color: var(--bottom-nav-primary);
-    box-shadow:
-      0 2px 8px var(--bottom-nav-primary-30),
-      inset 0 1px 0 var(--bottom-nav-white-10);
-  }
-
-  .nav-btn[aria-current='page'] .nav-icon {
-    transform: scale(1.05);
-  }
+  /* Active state styling removed - following Astro's static-first philosophy */
 
   /* タッチデバイス向けの最適化 */
   @media (hover: none) and (pointer: coarse) {

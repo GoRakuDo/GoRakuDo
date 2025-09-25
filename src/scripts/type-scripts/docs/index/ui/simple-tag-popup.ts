@@ -58,7 +58,7 @@ export class SimpleTagPopup {
    */
   private setupTagPopups(): void {
     const tagContainers = document.querySelectorAll('.post-tags');
-    
+
     tagContainers.forEach((container) => {
       this.setupContainer(container as HTMLElement);
     });
@@ -205,7 +205,7 @@ export class SimpleTagPopup {
     button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-haspopup', 'true');
     button.setAttribute('tabindex', '0');
-    
+
     const hiddenTags = this.getTagsFromContainer(button.parentElement as HTMLElement);
     const remainingCount = hiddenTags.length - this.config.maxVisibleTags;
     button.setAttribute('aria-label', `Tampilkan ${remainingCount} tag lainnya`);
@@ -238,7 +238,7 @@ declare global {
 }
 
 // グローバル関数の設定
-window.initializeTagPopups = function(): void {
+window.initializeTagPopups = function (): void {
   if (!window.simpleTagPopup) {
     window.simpleTagPopup = new SimpleTagPopup();
   }

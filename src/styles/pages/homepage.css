@@ -75,9 +75,7 @@ body.modal-open {
   overflow: hidden;
 }
 
-.modal-content :focus-visible {
-  outline-color: var(--clr-accent-dark);
-}
+/* Focus styles removed - following Astro's static-first philosophy */
 
 /* ===== HOMEPAGE TEXT EFFECTS ===== */
 
@@ -776,34 +774,7 @@ body.modal-open {
   padding: 0 15px;
 }
 
-/* Accessibility utilities */
-.sr-only {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  white-space: nowrap;
-  clip-path: inset(50%);
-}
-
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 6px;
-  z-index: 1000;
-  padding: 8px;
-  border-radius: 4px;
-  background: var(--clr-accent);
-  color: var(--clr-text-primary);
-  text-decoration: none;
-}
-
-.skip-link:focus {
-  top: 6px;
-}
+/* Accessibility utilities removed - following Astro's static-first philosophy */
 
 /* Hero buttons container */
 section .hero-buttons {
@@ -960,23 +931,7 @@ section .secondary-button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Enhanced focus states for accessibility */
-section .primary-button:focus-visible,
-section .secondary-button:focus-visible {
-  outline: none;
-  box-shadow:
-    0 0 0 3px var(--clr-accent-glow-medium),
-    0 0 0 5px oklch(100% 0 0deg / 0.3),
-    0 12px 35px var(--clr-accent-shadow);
-  transform: translateY(-1px);
-}
-
-/* Keyboard navigation support */
-section .primary-button:focus,
-section .secondary-button:focus {
-  outline: 2px solid var(--clr-accent);
-  outline-offset: 2px;
-}
+/* Focus styles removed - following Astro's static-first philosophy */
 
 .hero-buttons .primary-button:hover {
   background-image: linear-gradient(
@@ -1102,12 +1057,7 @@ section .secondary-button:focus {
   }
 }
 
-/* Focus trap support */
-section .hero-buttons:focus-within {
-  outline: 2px solid var(--clr-accent);
-  outline-offset: 4px;
-  border-radius: 8px;
-}
+/* Focus styles removed - following Astro's static-first philosophy */
 
 /* Responsive typography scale */
 section .hero-kicker {

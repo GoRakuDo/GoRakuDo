@@ -9,11 +9,7 @@ interface Props {
 const { icon, title, description, index = 1 } = Astro.props;
 ---
 
-<article
-  class='feature-card'
-  role='listitem'
-  transition:name={`feature-card-${index}`}
->
+<article class='feature-card' transition:name={`feature-card-${index}`}>
   <div class='feature-icon' aria-hidden='true'>
     {icon}
   </div>

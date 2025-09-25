@@ -29,44 +29,34 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 ---
 
 <div class={`navbar-wrapper ${className}`}>
-  <nav class='navbar' role='navigation' aria-label='Main navigation'>
+  <nav class='navbar'>
     <div class='nav-container'>
       <!-- Left Navigation - Desktop Only -->
       <div class='nav-left'>
         {
           navItems.map(item => (
-            <span
+            <a
+              href={item.path}
               class='nav-item'
-              role='button'
-              tabindex='0'
               data-route={item.key}
               data-path={item.path}
             >
               {item.label}
-            </span>
+            </a>
           ))
         }
       </div>
 
       <!-- Center Logo -->
       <div class='nav-center'>
-        <a
-          href='/'
-          class='logo-japanese'
-          aria-label='GoRakuDo - Kembali ke beranda'
-          title='GoRakuDo - Kembali ke beranda'
-        >
+        <a href='/' class='logo-japanese' title='GoRakuDo - Kembali ke beranda'>
           語楽道
         </a>
       </div>
 
       <!-- Right Actions - Desktop Only -->
       <div class='nav-right'>
-        <button
-          class='get-started-btn'
-          data-action='metodologi'
-          aria-label='Lihat metodologi pembelajaran'
-        >
+        <button class='get-started-btn' data-action='metodologi'>
           <svg
             class='nav-svg-icon'
             width='16'
@@ -84,11 +74,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           </svg>
           Metodologi
         </button>
-        <button
-          class='get-started-btn'
-          data-action='get-started'
-          aria-label='Mulai perjalanan belajar bahasa Jepang'
-        >
+        <button class='get-started-btn' data-action='get-started'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='16'
@@ -112,11 +98,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       </div>
 
       <!-- Mobile Menu Button -->
-      <button
-        class='mobile-menu-btn'
-        data-action='discord'
-        aria-label='Gabung komunitas Discord'
-      >
+      <button class='mobile-menu-btn' data-action='discord'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='16'
@@ -420,11 +402,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     transform: translateZ(0) scale(0.95);
   }
 
-  .nav-svg-icon:focus {
-    outline: 2px solid var(--clr-accent);
-    outline-offset: 2px;
-    border-radius: 0.125rem;
-  }
+  /* Focus styles removed - following Astro's static-first philosophy */
 
   /* ---------- Navigation Sections - Mobile First ---------- */
   .nav-left,
@@ -481,11 +459,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     transform: translateZ(0) translateY(-1px);
   }
 
-  .nav-item:focus {
-    outline: 2px solid var(--navbar-primary);
-    outline-offset: 2px;
-    background-color: var(--navbar-interactive-focus);
-  }
+  /* Focus styles removed - following Astro's static-first philosophy */
 
   .nav-item:active {
     background-color: var(--navbar-interactive-active);
@@ -822,15 +796,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     }
   }
 
-  /**
-   * Keyboard navigation support
-   */
-  function handleNavbarKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleNavbarClick(event);
-    }
-  }
+  // Keyboard navigation removed - following Astro's static-first philosophy
 
   /**
    * Initialize navbar functionality
@@ -838,7 +804,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
   function initNavbar() {
     // Event delegation for efficient event handling
     document.addEventListener('click', handleNavbarClick);
-    document.addEventListener('keydown', handleNavbarKeydown);
   }
 
   // Initialize when DOM is ready

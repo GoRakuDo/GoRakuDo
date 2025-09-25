@@ -14,7 +14,6 @@ const {
 
 <section
   class='docs-preview-section loading'
-  aria-labelledby='docs-title'
   transition:name='docs-section'
   data-lazy
 >
@@ -28,8 +27,7 @@ const {
     <div class='docs-cta'>
       <button
         class='docs-button'
-        onclick='goToPosts()'
-        aria-label='Lihat semua dokumentasi dan panduan'
+        data-action='go-to-posts'
         transition:name='docs-button'
       >
         {buttonText}

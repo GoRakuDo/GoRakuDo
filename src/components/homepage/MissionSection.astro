@@ -19,7 +19,6 @@ const {
 <section
   id='mission'
   class='mission-section smooth-edge-bottom loading'
-  aria-labelledby='mission-title'
   transition:name='mission-section'
   data-lazy
 >
@@ -39,8 +38,7 @@ const {
     <div class='mission-cta'>
       <button
         class='cta-button'
-        onclick='openInvitationModal()'
-        aria-label='Bergabung dengan komunitas GoRakuDo'
+        data-action='open-invitation'
         transition:name='cta-button'
       >
         {textCta}
