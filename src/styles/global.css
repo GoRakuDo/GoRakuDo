@@ -197,6 +197,11 @@
   --font-cursive: 'Cedarville Cursive', cursive;
   --font-family-base: var(--font-primary);
 
+  /* ===== ORPHAN PREVENTION SYSTEM ===== */
+  --orphan-min-words: 3; /* 最小単語数でOrphanを防ぐ */
+  --orphan-line-height: 1.6; /* 行間調整でOrphanを防ぐ */
+  --orphan-word-spacing: 0.05em; /* 単語間隔調整 */
+
   /* ===== SPACING & BORDERS ===== */
   --section-padding-y: clamp(80px, 10vw, 120px);
   --border-radius-pill: 35px;
@@ -277,8 +282,10 @@
     font-family: var(--font-primary);
     font-size: 1rem; /* 16px base - matches legacy */
     font-weight: 400;
-    line-height: 1.5; /* Preserved from legacy */
+    text-wrap: pretty !important;
+    line-height: var(--orphan-line-height); /* Orphan prevention */
     letter-spacing: -0.01em; /* Slightly tighter for modern feel */
+    word-spacing: var(--orphan-word-spacing); /* Orphan prevention */
   }
 
   /* REASONING: Preserving legacy layout structure */
@@ -421,17 +428,6 @@
     background: transparent !important;
   }
 
-  /* Focus management for accessibility */
-  *:focus {
-    outline: none;
-  }
-
-  *:focus-visible {
-    outline: 2px solid var(--clr-accent);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
-  }
-
   /* Selection fix for gradient text (background-clip: text) */
   .white-gradient-text::selection,
   .gold-marker::selection,
@@ -452,12 +448,30 @@
   p {
     -webkit-tap-highlight-color: transparent !important;
     -webkit-touch-callout: none !important;
+
+    /* Orphan Prevention - Based on UX Movement guidelines */
+    orphans: 3; /* Minimum 3 lines at bottom of page */
+    widows: 3; /* Minimum 3 lines at top of page */
+    text-wrap: pretty; /* Modern CSS for better line breaks */
+    line-height: var(--orphan-line-height);
+    word-spacing: var(--orphan-word-spacing);
   }
 
   .article-content p,
   .prose p {
     -webkit-tap-highlight-color: transparent !important;
     -webkit-touch-callout: none !important;
+
+    /* Enhanced Orphan Prevention for Article Content */
+    orphans: 3;
+    widows: 3;
+    text-wrap: pretty;
+    line-height: var(--orphan-line-height);
+    word-spacing: var(--orphan-word-spacing);
+
+    /* Prevent single words on last line */
+    hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
   }
 
   /* Ensure text color stays white on Android WebView tap */
@@ -612,7 +626,19 @@
 .article-content {
   /* Base text styling using existing color system */
   color: var(--clr-text-primary);
-  line-height: 1.7; /* Enhanced readability */
+  line-height: var(--orphan-line-height); /* Orphan prevention */
+
+  /* Advanced Orphan Prevention for Article Content */
+  orphans: 3;
+  widows: 3;
+  text-wrap: pretty;
+  word-spacing: var(--orphan-word-spacing);
+
+  /* Prevent awkward line breaks */
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
 }
 
 /* Headings - Mobile optimized */
@@ -921,48 +947,6 @@
    * CHANGE: Maintaining exact legacy behavior while providing enhanced modern versions
    */
 
-  /* ===== LEGACY BACKGROUND ELEMENTS - PRESERVED EXACTLY ===== */
-  .wave-canvas {
-    @apply pointer-events-none fixed inset-0 z-0;
-
-    /* Background removed to allow canvas animation to work properly */
-
-    /* CRITICAL FIX: Ensure canvas is truly transparent and doesn't create layer effect */
-    background: transparent;
-    mix-blend-mode: normal;
-    opacity: 1; /* Always visible - restored */
-
-    /* CRITICAL: Remove transition to prevent resize delay issues */
-  }
-
-  .stars {
-    @apply pointer-events-none fixed inset-0 z-10;
-
-    /* Smooth fade-in to prevent popup effect */
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-  }
-
-  .stars.loaded {
-    opacity: 1;
-  }
-
-  .star {
-    @apply absolute h-0.5 w-0.5 rounded-full bg-[var(--clr-accent)] opacity-60;
-
-    /* Enhanced visibility with glow effect */
-    box-shadow:
-      0 0 4px var(--clr-purple-6),
-      0 0 8px var(--clr-purple-4),
-      0 0 12px var(--clr-purple-2);
-
-    /* Balanced visibility */
-    opacity: 0.6;
-    animation:
-      twinkle 4s infinite,
-      float 8s ease-in-out infinite;
-  }
-
   /* ===== CARD COMPONENTS ===== */
   .card {
     padding: var(--spacing-lg);
@@ -1133,20 +1117,8 @@
   }
 
   /* GlassMorphism variants */
-  .glassmorphism-sm {
-    backdrop-filter: blur(20px) saturate(150%) brightness(105%);
-  }
-
-  .glassmorphism-lg {
-    backdrop-filter: blur(50px) saturate(250%) brightness(120%);
-  }
-
   .glassmorphism-card {
     border-radius: var(--border-radius-card);
-  }
-
-  .glassmorphism-pill {
-    border-radius: var(--border-radius-pill);
   }
 
   /* GlassMorphism performance optimizations - merged above */
@@ -1164,23 +1136,6 @@
     grid-template-columns: repeat(auto-fill, minmax(18.5rem, 1fr));
     grid-auto-rows: 0;
     grid-auto-flow: dense;
-  }
-
-  /* ===== LEGACY TYPOGRAPHY UTILITIES - PRESERVED ===== */
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .text-pretty {
-    text-wrap: pretty;
-  }
-
-  .text-optimize-legibility {
-    text-rendering: optimizelegibility;
-  }
-
-  .text-optimize-speed {
-    text-rendering: optimizespeed;
   }
 
   /* グローバルレベルでデフォルトのテキストカラーを白色に設定 */
@@ -1767,6 +1722,11 @@
 
   .article-content p {
     margin-bottom: 1.25rem;
+
+    /* Responsive Orphan Prevention */
+    orphans: 2; /* Reduced for mobile */
+    widows: 2;
+    text-wrap: pretty;
   }
 }
 
@@ -1774,6 +1734,12 @@
 @media (min-width: 768px) {
   .article-content {
     font-size: 1.125rem; /* Larger base font for tablets */
+
+    /* Enhanced Orphan Prevention for Desktop */
+    orphans: 3;
+    widows: 3;
+    text-wrap: pretty;
+    word-spacing: var(--orphan-word-spacing);
   }
 
   .article-content h1 {
@@ -1814,6 +1780,13 @@
 @media (min-width: 1024px) {
   .article-content {
     font-size: 1.1875rem; /* Optimal reading size */
+
+    /* Maximum Orphan Prevention for Large Screens */
+    orphans: 4;
+    widows: 4;
+    text-wrap: pretty;
+    line-height: var(--orphan-line-height);
+    word-spacing: var(--orphan-word-spacing);
   }
 
   .article-content h1 {
@@ -1838,6 +1811,17 @@
 @media (min-width: 1280px) {
   .article-content {
     font-size: 1.25rem; /* Maximum readability */
+
+    /* Premium Orphan Prevention for Extra Large Screens */
+    orphans: 4;
+    widows: 4;
+    text-wrap: pretty;
+    line-height: var(--orphan-line-height);
+    word-spacing: var(--orphan-word-spacing);
+
+    /* Advanced typography for large screens */
+    text-justify: inter-word;
+    text-align-last: left;
   }
 
   .article-content h1 {

@@ -4,28 +4,12 @@ export interface Props {
   className?: string;
   style?: string;
   backgroundLayer?: 'normal' | 'darker';
-  enableStars?: boolean;
-  starsCount?: number;
-  starsOpacity?: number;
-  starsAnimationDuration?: string;
-  starsColor?: string;
-  starsBrightness?: number;
-  starsSize?: number;
-  starsGlow?: boolean;
 }
 
 const config = {
   className: '',
   style: '',
   backgroundLayer: 'normal',
-  enableStars: true,
-  starsCount: 6, // パフォーマンス向上のため削減
-  starsOpacity: 0.7,
-  starsAnimationDuration: '4s', // より滑らかなアニメーション
-  starsColor: 'oklch(0.7 0.3 296.9)',
-  starsBrightness: 1.3,
-  starsSize: 1.0,
-  starsGlow: true,
   ...Astro.props,
 };
 ---
@@ -34,16 +18,6 @@ const config = {
   class={`wave-animation-container ${config.className}`}
   style={config.style}
   data-background-layer={config.backgroundLayer}
-  data-stars-config={JSON.stringify({
-    enabled: config.enableStars,
-    count: config.starsCount,
-    opacity: config.starsOpacity,
-    duration: config.starsAnimationDuration,
-    color: config.starsColor,
-    brightness: config.starsBrightness,
-    size: config.starsSize,
-    glow: config.starsGlow,
-  })}
 >
   <canvas id='waveCanvas' class='wave-canvas' aria-hidden='true'></canvas>
 
@@ -98,257 +72,7 @@ const config = {
 </style>
 
 <script>
-  // 型定義
-  interface Star {
-    element: HTMLElement;
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    size: number;
-  }
-
-  interface StarsConfig {
-    enabled: boolean;
-    count: number;
-    opacity: number;
-    animationDuration: string;
-    color: string;
-    brightness: number;
-    size: number;
-    glow: boolean;
-  }
-
-  // 最適化された星アニメーションクラス
-  class StarsAnimation {
-    private container: HTMLElement | null = null;
-    private stars: Star[] = [];
-    private animationId: number | null = null;
-    private config: StarsConfig;
-    private dimensions = { width: 0, height: 0 };
-
-    constructor(config: Partial<StarsConfig> = {}) {
-      this.config = this.mergeConfig(config);
-    }
-
-    private mergeConfig(config: Partial<StarsConfig>): StarsConfig {
-      return {
-        enabled: true,
-        count: 6,
-        opacity: 0.7,
-        animationDuration: '4s',
-        color: 'oklch(0.7 0.3 296.9)',
-        brightness: 1.3,
-        size: 1.0,
-        glow: true,
-        ...config,
-      };
-    }
-
-    init() {
-      if (!this.config.enabled) return;
-
-      this.createContainer();
-      this.updateDimensions();
-      this.injectStyles();
-      this.createStars();
-      this.startAnimation();
-      this.setupResizeHandler();
-    }
-
-    private setupResizeHandler() {
-      const handleResize = () => this.updateDimensions();
-
-      handleResize(); // 初期実行
-      this.addResizeListeners(handleResize);
-    }
-
-    private addResizeListeners(handler: () => void) {
-      const viewport = window.visualViewport || window;
-      viewport.addEventListener('resize', handler);
-      window.addEventListener('orientationchange', handler);
-    }
-
-    private createContainer() {
-      this.container = document.createElement('div');
-      this.container.id = 'stars-container';
-      this.container.className = 'stars-container';
-      this.container.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(this.container);
-    }
-
-    private updateDimensions() {
-      if (this.container) {
-        this.dimensions.width = this.container.clientWidth;
-        this.dimensions.height = this.container.clientHeight;
-      } else {
-        this.dimensions.width = window.innerWidth;
-        this.dimensions.height = window.innerHeight;
-      }
-    }
-
-    private injectStyles() {
-      if (document.getElementById('stars-animation-styles')) return;
-
-      const style = document.createElement('style');
-      style.id = 'stars-animation-styles';
-      style.textContent = this.generateStyles();
-      document.head.appendChild(style);
-    }
-
-    private generateStyles(): string {
-      const glowStyles = this.config.glow
-        ? `box-shadow: 0 0 6px ${this.config.color}, 0 0 12px ${this.config.color};
-           filter: brightness(${this.config.brightness}) drop-shadow(0 0 3px ${this.config.color});`
-        : '';
-
-      return `
-        .stars-container {
-          position: fixed;
-          inset: 0;
-          width: 100lvw;
-          height: 100lvh;
-          overflow: hidden; 
-          pointer-events: none;
-          background: transparent;
-          z-index: -45;
-        }
-        
-        .star {
-          position: absolute;
-          width: 3px;
-          height: 3px;
-          background: ${this.config.color};
-          border-radius: 50%;
-          opacity: ${this.config.opacity};
-          animation: twinkle ${this.config.animationDuration} infinite;
-          ${glowStyles}
-        }
-        
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          25% { opacity: 0.6; transform: scale(1.1); }
-          50% { opacity: 0.9; transform: scale(1.3); }
-          75% { opacity: 0.5; transform: scale(1.05); }
-        }
-      `;
-    }
-
-    private createStars() {
-      if (!this.container) return;
-
-      this.clearStars();
-      this.generateStars();
-    }
-
-    private clearStars() {
-      this.stars = [];
-      this.container!.innerHTML = '';
-    }
-
-    private generateStars() {
-      for (let i = 0; i < this.config.count; i++) {
-        const star = this.createStar();
-        this.stars.push(star);
-        this.container!.appendChild(star.element);
-      }
-    }
-
-    private createStar(): Star {
-      const element = document.createElement('div');
-      element.className = 'star';
-
-      const star = {
-        element,
-        x: Math.random() * this.dimensions.width,
-        y: Math.random() * this.dimensions.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: (Math.random() * 1.5 + 0.5) * this.config.size,
-      };
-
-      this.configureStarElement(star);
-      return star;
-    }
-
-    private configureStarElement(star: Star) {
-      const { element, x, y, size } = star;
-
-      element.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        opacity: ${this.config.opacity * this.config.brightness};
-        animation-delay: ${Math.random() * 4}s;
-      `;
-    }
-
-    private startAnimation() {
-      const animate = () => {
-        this.updateStars();
-        this.animationId = requestAnimationFrame(animate);
-      };
-      this.animationId = requestAnimationFrame(animate);
-    }
-
-    private updateStars() {
-      this.stars.forEach(star => {
-        this.updateStarPosition(star);
-        this.wrapStarPosition(star);
-        this.updateStarElement(star);
-      });
-    }
-
-    private updateStarPosition(star: Star) {
-      star.x += star.vx;
-      star.y += star.vy;
-    }
-
-    private wrapStarPosition(star: Star) {
-      const { width, height } = this.dimensions;
-      if (star.x < -star.size) star.x = width + star.size;
-      if (star.x > width + star.size) star.x = -star.size;
-      if (star.y < -star.size) star.y = height + star.size;
-      if (star.y > height + star.size) star.y = -star.size;
-    }
-
-    private updateStarElement(star: Star) {
-      star.element.style.left = `${star.x}px`;
-      star.element.style.top = `${star.y}px`;
-    }
-
-    destroy() {
-      this.stopAnimation();
-      this.cleanupStars();
-      this.removeContainer();
-      this.removeStyles();
-    }
-
-    private stopAnimation() {
-      if (this.animationId) {
-        cancelAnimationFrame(this.animationId);
-        this.animationId = null;
-      }
-    }
-
-    private cleanupStars() {
-      this.stars.forEach(star => star.element.remove());
-      this.stars = [];
-    }
-
-    private removeContainer() {
-      this.container?.remove();
-      this.container = null;
-    }
-
-    private removeStyles() {
-      document.getElementById('stars-animation-styles')?.remove();
-    }
-  }
-
-  // 型定義
+  // --- 型定義 ---
   interface Wave {
     amplitude: number;
     frequency: number;
@@ -357,100 +81,140 @@ const config = {
     yOffset: number;
   }
 
-  interface Particle {
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    size: number;
-    life: number;
-    maxLife: number;
+  // --- ユーティリティ関数 ---
+  function debounce(func: Function, wait: number) {
+    let timeout: NodeJS.Timeout;
+    return function executedFunction(...args: any[]) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 
+  // --- メインアニメーションクラス ---
   class WaveAnimation {
     private canvas: HTMLCanvasElement | null;
     private ctx: CanvasRenderingContext2D | null;
-    private animationId: number | null;
-    private time: number;
+    private animationId: number | null = null;
+    private time: number = 0;
     private dimensions = { width: 0, height: 0 };
-    private waves: Wave[];
-    private particles: Particle[] = [];
-    private starsAnimation: StarsAnimation | null = null;
 
-    constructor(starsConfig: Partial<StarsConfig> = {}) {
+    // アニメーションコンポーネント
+    private waves: Wave[] = [];
+
+    // パフォーマンス制限
+    private lastFrameTime: number = 0;
+    private frameInterval: number; // FPS制限用（例：1000 / 40 = 40 FPS）
+
+    // 波の描画最適化
+    private readonly waveStepSize: number = 25; // 20pxから25pxに変更（約20%の計算削減）
+
+    // --- 波の深さに応じたViolet（紫）のグラデーション ---
+    private readonly waveColors: string[] = [
+      'oklch(0.65 0.35 280 / 0.8)', // 前面の波: 明るいViolet
+      'oklch(0.60 0.32 285 / 0.7)', // 2番目の波
+      'oklch(0.55 0.29 290 / 0.6)', // 中間の波
+      'oklch(0.50 0.26 295 / 0.5)', // 4番目の波
+      'oklch(0.45 0.23 300 / 0.4)', // 背面の波: 深いViolet
+    ];
+
+    // --- 最適化: GC圧力軽減のための事前割り当て配列 ---
+    private wavePoints: Array<Array<{ x: number; y: number }>> = [];
+
+    constructor() {
       this.canvas = document.getElementById('waveCanvas') as HTMLCanvasElement;
-      if (!this.canvas) return;
+      if (!this.canvas) {
+        this.ctx = null;
+        this.animationId = null;
+        this.frameInterval = 1000 / 60;
+        return;
+      }
 
       this.ctx = this.canvas.getContext('2d');
-      this.animationId = null;
-      this.time = 0;
-      this.waves = this.createWaves();
 
-      this.init(starsConfig);
+      // 画面サイズに応じたFPS制限
+      this.frameInterval = this.getOptimalFrameInterval();
+
+      this.init();
+    }
+
+    private getOptimalFrameInterval(): number {
+      // 画面幅に応じたFPS制限
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 768) {
+        return 1000 / 16; // モバイル: 16 FPS
+      } else {
+        return 1000 / 40; // デスクトップ: 40 FPS
+      }
     }
 
     private createWaves(): Wave[] {
-      return [
+      // 小さな画面では、パフォーマンス向上のため波の数を減らす
+      const isMobile = this.dimensions.width < 768;
+      const waveCount = isMobile ? 3 : 5;
+      const speedMultiplier = 1.618; // 波の速度を黄金比（1.618）に設定
+      const allWaves = [
         {
           amplitude: 60,
           frequency: 0.008,
           phase: 0,
-          speed: 0.01,
+          speed: 0.01 * speedMultiplier, // 0.01618
           yOffset: 0.7,
         },
         {
           amplitude: 40,
           frequency: 0.012,
           phase: Math.PI / 3,
-          speed: 0.0075,
+          speed: 0.0075 * speedMultiplier, // 0.012135
           yOffset: 0.75,
         },
         {
           amplitude: 80,
           frequency: 0.006,
           phase: Math.PI / 2,
-          speed: 0.0125,
+          speed: 0.0125 * speedMultiplier, // 0.020225
           yOffset: 0.65,
         },
         {
           amplitude: 35,
           frequency: 0.015,
           phase: Math.PI,
-          speed: 0.009,
+          speed: 0.009 * speedMultiplier, // 0.014562
           yOffset: 0.8,
         },
         {
           amplitude: 100,
           frequency: 0.004,
           phase: Math.PI * 1.5,
-          speed: 0.015,
+          speed: 0.015 * speedMultiplier, // 0.02427
           yOffset: 0.6,
         },
       ];
+      // yOffsetでソートして色割り当てのための適切なレイヤリングを確保
+      allWaves.sort((a, b) => b.yOffset - a.yOffset);
+      return allWaves.slice(0, waveCount);
     }
 
-    init(starsConfig: Partial<StarsConfig> = {}) {
-      this.setupResizeHandler();
-      this.initStarsAnimation(starsConfig);
+    private createStars() {
+      // 星を削除（波のみ残す）
+      return;
+    }
+
+    init() {
+      this.setupResizeHandler(); // これがupdateDimensionsを呼び出す
       this.startAnimation();
     }
 
     private setupResizeHandler() {
-      const handleResize = () => this.updateDimensions();
-
-      handleResize(); // 初期実行
-      this.addResizeListeners(handleResize);
-    }
-
-    private addResizeListeners(handler: () => void) {
-      const viewport = window.visualViewport || window;
-      viewport.addEventListener('resize', handler);
-      window.addEventListener('orientationchange', handler);
-    }
-
-    private initStarsAnimation(config: Partial<StarsConfig>) {
-      this.starsAnimation = new StarsAnimation(config);
-      this.starsAnimation.init();
+      // --- 最適化: リサイズハンドラーをデバウンスして急激な再計算を回避 ---
+      const handleResize = debounce(() => this.updateDimensions(), 250);
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('orientationchange', () =>
+        this.updateDimensions()
+      );
     }
 
     private updateDimensions() {
@@ -464,268 +228,161 @@ const config = {
         this.dimensions.height !== newHeight
       ) {
         this.dimensions = { width: newWidth, height: newHeight };
-        this.updateCanvasResolution();
+
+        // --- パフォーマンス最適化: ピクセル比制御 ---
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // DPRを1.5に制限
+        this.canvas.width = this.dimensions.width * dpr;
+        this.canvas.height = this.dimensions.height * dpr;
+        this.ctx?.scale(dpr, dpr);
+
+        // 寸法に依存するアニメーションコンポーネントを再初期化
+        this.waves = this.createWaves();
+
+        // 画面サイズ変更時にFPSを再計算
+        this.frameInterval = this.getOptimalFrameInterval();
+
+        // --- 最適化: 波の点配列を事前割り当てしてGC圧力を軽減 ---
+        this.wavePoints = this.waves.map(() => {
+          const points: Array<{ x: number; y: number }> = [];
+          for (
+            let x = -10;
+            x <= this.dimensions.width + 10;
+            x += this.waveStepSize
+          ) {
+            points.push({ x: x, y: 0 }); // Yは各フレームで更新される
+          }
+          return points;
+        });
       }
     }
 
-    private updateCanvasResolution() {
-      if (!this.canvas) return;
-      this.canvas.width = this.dimensions.width;
-      this.canvas.height = this.dimensions.height;
-    }
-
-    private createParticle(x: number, y: number) {
-      this.particles.push({
-        x,
-        y,
-        vx: (Math.random() - 0.5) * 2,
-        vy: -Math.random() * 1.5 - 0.5,
-        size: Math.random() * 4 + 1,
-        life: 1,
-        maxLife: Math.random() * 60 + 30,
-      });
-    }
-
     private startAnimation() {
-      const animate = () => {
-        this.updateAnimation();
+      if (this.animationId) return; // 既に実行中
+      this.updateDimensions(); // 初期セットアップ
+
+      const animate = (timestamp: number) => {
+        // --- パフォーマンス最適化: FPS制限 ---
+        const elapsed = timestamp - this.lastFrameTime;
+        if (elapsed > this.frameInterval) {
+          this.lastFrameTime = timestamp - (elapsed % this.frameInterval);
+          this.updateFrame();
+        }
         this.animationId = requestAnimationFrame(animate);
       };
       this.animationId = requestAnimationFrame(animate);
     }
 
-    private updateAnimation() {
+    private updateFrame() {
       if (!this.ctx || !this.canvas) return;
 
       this.time += 1;
-      this.clearCanvas();
+
+      // キャンバスクリア
+      this.ctx.fillStyle = 'oklch(0 0 0)';
+      this.ctx.fillRect(0, 0, this.dimensions.width, this.dimensions.height);
+
+      // 波を描画
       this.drawWaves();
-      this.updateParticles();
-      this.drawWaveCrests();
     }
 
-    private clearCanvas() {
-      if (!this.ctx || !this.canvas) return;
-      this.ctx.fillStyle = 'oklch(0 0 0)';
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    private drawStars() {
+      // 星を削除（波のみ残す）
+      return;
     }
 
     private drawWaves() {
-      this.waves.forEach((wave, index) => {
-        this.drawWave(wave, index);
-        this.generateFoamParticles(wave, index);
-      });
-    }
-
-    private drawWave(wave: Wave, index: number) {
-      if (!this.ctx || !this.canvas) return;
-
-      const points = this.calculateWavePoints(wave);
-      this.drawWavePath(points);
-      this.fillWave(wave, index);
-    }
-
-    private calculateWavePoints(wave: Wave): Array<{ x: number; y: number }> {
-      const points: Array<{ x: number; y: number }> = [];
-
-      for (let x = 0; x <= this.canvas!.width + 20; x += 10) {
-        const y =
-          this.canvas!.height * wave.yOffset +
-          wave.amplitude *
-            Math.sin(x * wave.frequency + wave.phase + this.time * wave.speed) +
-          Math.sin(x * 0.003 + this.time * 0.01) * 20 +
-          Math.cos(x * 0.002 + this.time * 0.008) * 15;
-        points.push({ x, y });
-      }
-
-      return points;
-    }
-
-    private drawWavePath(points: Array<{ x: number; y: number }>) {
-      if (!this.ctx || !this.canvas) return;
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(points[0].x, points[0].y);
-
-      for (let i = 1; i < points.length - 2; i++) {
-        const xc = (points[i].x + points[i + 1].x) / 2;
-        const yc = (points[i].y + points[i + 1].y) / 2;
-        this.ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
-      }
-
-      this.ctx.lineTo(this.canvas.width, this.canvas.height);
-      this.ctx.lineTo(0, this.canvas.height);
-      this.ctx.closePath();
-    }
-
-    private fillWave(wave: Wave, index: number) {
       if (!this.ctx) return;
 
-      const alpha = 0.8 - index * 0.15;
-      this.ctx.fillStyle = `oklch(0.6 0.25 290 / ${alpha.toFixed(3)})`;
-      this.ctx.fill();
+      // 波の描画用の共通設定を事前に準備（Canvas操作の最適化）
+      const canvasWidth = this.dimensions.width;
+      const canvasHeight = this.dimensions.height;
+
+      // forEachからfor文に変更してパフォーマンス向上
+      for (let index = 0; index < this.waves.length; index++) {
+        const wave = this.waves[index];
+        const points = this.wavePoints[index]; // 事前割り当て配列を使用
+
+        // 既存の点配列のY値を更新（GC圧力軽減）
+        for (let j = 0; j < points.length; j++) {
+          const point = points[j];
+          point.y =
+            canvasHeight * wave.yOffset +
+            wave.amplitude *
+              Math.sin(
+                point.x * wave.frequency + wave.phase + this.time * wave.speed
+              );
+        }
+
+        // 波のパスを描画（最小限のCanvas操作）
+        this.ctx.beginPath();
+        this.ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length - 1; i++) {
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          this.ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        }
+        this.ctx.lineTo(canvasWidth, canvasHeight);
+        this.ctx.lineTo(0, canvasHeight);
+        this.ctx.closePath();
+
+        // --- 修正: 事前定義された色パレットを使用 ---
+        // 波のインデックスに基づいて配列から色文字列を直接選択
+        this.ctx.fillStyle =
+          this.waveColors[index] || this.waveColors[this.waveColors.length - 1];
+        this.ctx.fill();
+      }
     }
 
-    private generateFoamParticles(wave: Wave, index: number) {
-      if (index !== 0 || Math.random() >= 0.3) return;
+    private generateFoamParticles(wave: Wave) {
+      // パーティクルを削除（波のみ残す）
+      return;
+    }
 
-      for (let x = 0; x < this.canvas!.width; x += 50) {
-        const y =
-          this.canvas!.height * wave.yOffset +
-          wave.amplitude *
-            Math.sin(x * wave.frequency + wave.phase + this.time * wave.speed);
-
-        if (Math.sin(x * wave.frequency + this.time * wave.speed) > 0.7) {
-          this.createParticle(x + Math.random() * 30 - 15, y);
-        }
-      }
+    private createParticle(x: number, y: number) {
+      // パーティクルを削除（波のみ残す）
+      return;
     }
 
     private updateParticles() {
-      for (let i = this.particles.length - 1; i >= 0; i--) {
-        const particle = this.particles[i];
-
-        this.updateParticlePhysics(particle);
-
-        if (particle.life <= 0) {
-          this.particles.splice(i, 1);
-          continue;
-        }
-
-        this.drawParticle(particle);
-      }
-    }
-
-    private updateParticlePhysics(particle: Particle) {
-      particle.x += particle.vx;
-      particle.y += particle.vy;
-      particle.vy += 0.1; // gravity
-      particle.life--;
-    }
-
-    private drawParticle(particle: Particle) {
-      if (!this.ctx) return;
-
-      const alpha = particle.life / particle.maxLife;
-      this.ctx.fillStyle = `oklch(0.627 0.274 296.9 / ${alpha * 0.8})`;
-      this.ctx.beginPath();
-      this.ctx.arc(
-        particle.x,
-        particle.y,
-        particle.size * alpha,
-        0,
-        Math.PI * 2
-      );
-      this.ctx.fill();
-    }
-
-    private drawWaveCrests() {
-      if (!this.ctx || !this.canvas) return;
-
-      const mainWave = this.waves[2];
-      this.ctx.beginPath();
-
-      for (let x = 0; x <= this.canvas.width; x += 5) {
-        const baseY =
-          this.canvas.height * mainWave.yOffset +
-          mainWave.amplitude *
-            Math.sin(
-              x * mainWave.frequency +
-                mainWave.phase +
-                this.time * mainWave.speed
-            );
-
-        const crestHeight = Math.max(
-          0,
-          Math.sin(x * 0.003 + this.time * 0.02) * 40
-        );
-        const y = baseY - crestHeight;
-
-        if (x === 0) {
-          this.ctx.moveTo(x, y);
-        } else {
-          this.ctx.lineTo(x, y);
-        }
-
-        if (crestHeight > 20 && Math.random() < 0.1) {
-          this.createSprayParticles(x, y);
-        }
-      }
-    }
-
-    private createSprayParticles(x: number, y: number) {
-      for (let j = 0; j < 3; j++) {
-        this.createParticle(
-          x + Math.random() * 20 - 10,
-          y - Math.random() * 20
-        );
-      }
+      // パーティクルを削除（波のみ残す）
+      return;
     }
 
     destroy() {
-      this.stopAnimation();
-      this.cleanupStarsAnimation();
-    }
-
-    private stopAnimation() {
       if (this.animationId) {
         cancelAnimationFrame(this.animationId);
         this.animationId = null;
       }
     }
-
-    private cleanupStarsAnimation() {
-      this.starsAnimation?.destroy();
-      this.starsAnimation = null;
-    }
   }
 
-  // 最適化された初期化スクリプト
+  // --- 初期化スクリプト ---
   document.addEventListener('DOMContentLoaded', () => {
+    let waveAnimationInstance;
+
     const initAnimation = () => {
+      if (waveAnimationInstance) waveAnimationInstance.destroy();
+
       const container = document.querySelector('.wave-animation-container');
       if (!container) return;
 
-      const starsConfig = parseStarsConfig(container);
-      const waveAnimation = new WaveAnimation(starsConfig);
-
-      setupVisibilityHandlers(waveAnimation, starsConfig);
-      setupCleanupHandlers(waveAnimation);
+      waveAnimationInstance = new WaveAnimation();
     };
 
-    scheduleInitialization(initAnimation);
-  });
-
-  function parseStarsConfig(container: Element): Partial<StarsConfig> {
-    try {
-      return JSON.parse(container.getAttribute('data-stars-config') || '{}');
-    } catch {
-      return {};
+    // 非クリティカルな初期レンダリングにrequestIdleCallbackを使用
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(initAnimation);
+    } else {
+      setTimeout(initAnimation, 0);
     }
-  }
 
-  function setupVisibilityHandlers(
-    waveAnimation: WaveAnimation,
-    starsConfig: Partial<StarsConfig>
-  ) {
+    // タブが非アクティブの時に電力を節約するため可視性を処理
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        waveAnimation.destroy();
+        waveAnimationInstance?.destroy();
       } else {
-        waveAnimation.init(starsConfig);
+        initAnimation();
       }
     });
-  }
-
-  function setupCleanupHandlers(waveAnimation: WaveAnimation) {
-    window.addEventListener('beforeunload', () => waveAnimation.destroy());
-  }
-
-  function scheduleInitialization(initFn: () => void) {
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(initFn);
-    } else {
-      setTimeout(initFn, 0);
-    }
-  }
+  });
 </script>

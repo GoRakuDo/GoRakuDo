@@ -145,7 +145,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   /* 再デザイン: 高可視性の検索入力フィールド */
-  .search-input {
+  .search-form-container .search-input {
     position: relative;
     flex: 1;
     overflow: hidden;
@@ -191,7 +191,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   /* 再デザイン: プレースホルダー */
-  .search-input::placeholder {
+  .search-form-container .search-input::placeholder {
     color: var(--clr-text-secondary);
     font-weight: 400;
     opacity: 0.8;
@@ -201,7 +201,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   /* 再デザイン: 超高可視性フォーカス状態 */
   .search-input:focus {
     outline: none;
-    border-color: var(--clr-accent);
+    border: 3px solid var(--clr-accent);
     background: linear-gradient(
       135deg,
       oklch(from var(--clr-background) l c h / 1) 0%,
@@ -215,7 +215,26 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
       0 0 96px oklch(from var(--clr-accent) l c h / 0.3),
       inset 0 3px 6px oklch(from var(--clr-background) l c h / 0.5),
       inset 0 -2px 4px oklch(from var(--clr-background) l c h / 0.2);
-    transform: translateY(-4px) scale(1.03);
+
+    /* transform: translateY(-4px) scale(1.03); - 位置ずれを防ぐため無効化 */
+  }
+
+  /* 最適化: バリアントスタイル */
+  .search-form-container[data-variant='default'] .search-input {
+    border: 2px solid oklch(from var(--clr-border) l c h / 0.8);
+    background: oklch(from var(--clr-background) l c h / 0.95);
+    box-shadow:
+      0 4px 16px oklch(from var(--clr-background) l c h / 0.2),
+      0 0 0 1px oklch(from var(--clr-border) l c h / 0.6);
+  }
+
+  .search-form-container[data-variant='glassmorphism'] .search-input {
+    border: 2px solid oklch(from var(--clr-glass-border) l c h / 0.8);
+    background: oklch(from var(--clr-glass-background) l c h / 0.9);
+    backdrop-filter: blur(12px) saturate(150%);
+    box-shadow:
+      0 4px 16px oklch(from var(--clr-background) l c h / 0.2),
+      0 0 0 1px oklch(from var(--clr-glass-border) l c h / 0.6);
   }
 
   .search-input:focus::before {
@@ -232,7 +251,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
 
   .search-input:focus::placeholder {
     opacity: 0.4;
-    transform: translateX(8px);
+
+    /* transform: translateX(8px); - 位置ずれを防ぐため無効化 */
   }
 
   /* 最適化: 検索ボタン */
@@ -256,11 +276,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   .search-submit-btn:hover,
   .search-submit-btn:focus-visible {
     background: var(--clr-accent-dark);
-    transform: scale(1.05);
+
+    /* transform: scale(1.05); - 位置ずれを防ぐため無効化 */
   }
 
   .search-submit-btn:active {
-    transform: scale(0.95);
+    /* transform: scale(0.95); - 位置ずれを防ぐため無効化 */
   }
 
   .search-submit-btn:focus-visible {
@@ -292,29 +313,11 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   .search-form-container[data-size='lg'] {
-    --input-height: 52px;
+    --input-height: 44px;
     --input-padding: var(--sf-space-sm) var(--sf-space-lg);
     --input-font: var(--sf-text-base);
-    --btn-size: 52px;
+    --btn-size: 44px;
     --icon-size: var(--sf-space-lg);
-  }
-
-  /* 最適化: バリアントスタイル */
-  .search-form-container[data-variant='default'] .search-input {
-    border: 2px solid oklch(from var(--clr-border) l c h / 0.8);
-    background: oklch(from var(--clr-background) l c h / 0.95);
-    box-shadow:
-      0 4px 16px oklch(from var(--clr-background) l c h / 0.2),
-      0 0 0 1px oklch(from var(--clr-border) l c h / 0.6);
-  }
-
-  .search-form-container[data-variant='glassmorphism'] .search-input {
-    border: 2px solid oklch(from var(--clr-glass-border) l c h / 0.8);
-    background: oklch(from var(--clr-glass-background) l c h / 0.9);
-    backdrop-filter: blur(12px) saturate(150%);
-    box-shadow:
-      0 4px 16px oklch(from var(--clr-background) l c h / 0.2),
-      0 0 0 1px oklch(from var(--clr-glass-border) l c h / 0.6);
   }
 
   /* 最適化: レスポンシブデザイン */
@@ -329,7 +332,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
       gap: var(--sf-space-md);
     }
 
-    .search-input {
+    .search-form-container .search-input {
       width: 100%;
       min-height: var(--sf-space-2xl);
       padding: var(--sf-space-lg) var(--sf-space-xl);
@@ -365,12 +368,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   @media (prefers-contrast: high) {
-    .search-input {
+    .search-form-container .search-input {
       border: 2px solid var(--clr-text-primary);
       background: var(--clr-background);
     }
 
-    .search-input:focus {
+    .search-form-container .search-input:focus {
       border-color: var(--clr-accent);
       box-shadow: 0 0 0 4px oklch(from var(--clr-accent) l c h / 0.2);
     }

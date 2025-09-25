@@ -253,16 +253,8 @@ const {
         text: string,
         indices: Array<[number, number]> | undefined
       ) => {
-        if (!indices || indices.length === 0) return escapeHtml(text);
-        let out = '';
-        let last = 0;
-        for (const [start, end] of indices) {
-          out += escapeHtml(text.slice(last, start));
-          out += `<mark>${escapeHtml(text.slice(start, end + 1))}</mark>`;
-          last = end + 1;
-        }
-        out += escapeHtml(text.slice(last));
-        return out;
+        // ハイライト機能を無効化 - 常にプレーンテキストを返す
+        return escapeHtml(text);
       };
       const buildSnippet = (
         content: string,
@@ -276,8 +268,8 @@ const {
         const prefix = s > 0 ? '…' : '';
         const suffix = e < content.length ? '…' : '';
         const segment = content.slice(s, e);
-        const relIndices: Array<[number, number]> = [[start - s, end - s]];
-        return `${prefix}${highlight(segment, relIndices)}${suffix}`;
+        // ハイライトなしでプレーンテキストを返す
+        return `${prefix}${escapeHtml(segment)}${suffix}`;
       };
 
       const resultsHTML = results
@@ -403,17 +395,18 @@ const {
         searchManager.clearActive();
       }
     });
-    inputEl.addEventListener('input', () => {
-      const q = inputEl.value.trim();
-      if (!q) {
-        document.documentElement.style.removeProperty('--search-highlight-bg');
-        return;
-      }
-      const seed = q.split('').reduce((s, c) => s + c.charCodeAt(0), 0);
-      const hue = seed % 360;
-      const bg = `oklch(65% 0.18 ${hue}deg / 0.35)`;
-      document.documentElement.style.setProperty('--search-highlight-bg', bg);
-    });
+    // 動的ハイライト色の設定を無効化
+    // inputEl.addEventListener('input', () => {
+    //   const q = inputEl.value.trim();
+    //   if (!q) {
+    //     document.documentElement.style.removeProperty('--search-highlight-bg');
+    //     return;
+    //   }
+    //   const seed = q.split('').reduce((s, c) => s + c.charCodeAt(0), 0);
+    //   const hue = seed % 360;
+    //   const bg = `oklch(65% 0.18 ${hue}deg / 0.35)`;
+    //   document.documentElement.style.setProperty('--search-highlight-bg', bg);
+    // });
   }
 
   // Clear chips and URL sync

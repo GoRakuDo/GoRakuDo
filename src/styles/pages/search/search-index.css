@@ -1,11 +1,99 @@
 /* ===== SEARCH PAGE STYLES ===== */
 
+/* ===== DESIGN TOKENS ===== */
+:root {
+  /* Spacing Tokens */
+  --spacing-xs: min(0.25rem, 0.5vw);
+  --spacing-sm: min(0.5rem, 1vw);
+  --spacing-md: min(0.75rem, 1.5vw);
+  --spacing-lg: min(1rem, 2vw);
+  --spacing-xl: min(1.5rem, 3vw);
+  --spacing-2xl: min(2rem, 4vw);
+  --spacing-3xl: min(2.5rem, 5vw);
+
+  /* Border Radius Tokens */
+  --radius-sm: min(0.25rem, 0.5vw);
+  --radius-md: min(1rem, 2vw);
+  --radius-lg: min(1.5rem, 3vw);
+
+  /* Size Tokens */
+  --size-xs: min(0.5rem, 1vw);
+  --size-sm: min(0.75rem, 1.5vw);
+  --size-md: min(1rem, 2vw);
+  --size-lg: min(1.5rem, 3vw);
+  --size-xl: min(2rem, 4vw);
+
+  /* Width Tokens */
+  --width-sm: min(80px, 15vw);
+  --width-md: min(100px, 20vw);
+  --width-lg: min(120px, 25vw);
+
+  /* Height Tokens */
+  --height-sm: min(58px, 7vw);
+  --height-md: min(62px, 7.5vw);
+  --height-lg: min(66px, 8vw);
+  --height-xl: min(72px, 9vw);
+  --height-2xl: min(85px, 8vw);
+  --height-3xl: min(90px, 10vw);
+  --height-4xl: min(100px, 12vw);
+  --height-5xl: min(120px, 15vw);
+
+  /* Padding Tokens */
+  --padding-xs: min(0.25rem, 0.5vw);
+  --padding-sm: min(0.5rem, 1vw);
+  --padding-md: min(0.75rem, 1.5vw);
+  --padding-lg: min(1rem, 2vw);
+  --padding-xl: min(1.25rem, 2.5vw);
+  --padding-2xl: min(1.5rem, 3vw);
+  --padding-3xl: min(2rem, 4vw);
+  --padding-4xl: min(2.5rem, 5vw);
+
+  /* Gap Tokens */
+  --gap-xs: min(0.25rem, 0.5vw);
+  --gap-sm: min(0.5rem, 1vw);
+  --gap-md: min(0.75rem, 1.5vw);
+  --gap-lg: min(1rem, 2vw);
+  --gap-xl: min(1.25rem, 2.5vw);
+  --gap-2xl: min(1.5rem, 3vw);
+
+  /* Margin Tokens */
+  --margin-xs: min(0.5rem, 1vw);
+  --margin-sm: min(0.75rem, 1.5vw);
+  --margin-md: min(1rem, 2vw);
+  --margin-lg: min(1.5rem, 3vw);
+  --margin-xl: min(2rem, 4vw);
+  --margin-2xl: min(2.5rem, 5vw);
+  --margin-3xl: min(3rem, 6vw);
+  --margin-4xl: min(3.5rem, 7vw);
+  --margin-5xl: min(4rem, 8vw);
+
+  /* Max Width Tokens */
+  --max-width-sm: min(600px, 90vw);
+  --max-width-md: min(700px, 85vw);
+
+  /* Min Width Tokens */
+  --min-width-sm: min(140px, 15vw);
+  --min-width-md: min(150px, 18vw);
+  --min-width-lg: min(160px, 20vw);
+  --min-width-xl: min(180px, 25vw);
+
+  /* Min Height Tokens */
+  --min-height-sm: min(58px, 7vw);
+  --min-height-md: min(62px, 7.5vw);
+  --min-height-lg: min(66px, 8vw);
+  --min-height-xl: min(72px, 9vw);
+  --min-height-2xl: min(85px, 8vw);
+  --min-height-3xl: min(90px, 10vw);
+  --min-height-4xl: min(100px, 12vw);
+  --min-height-5xl: min(120px, 15vw);
+}
+
 /* ===== SEARCH PAGE LAYOUT ===== */
 .search-page {
   min-height: 100vh;
-  padding: min(0.75rem, 1.5vw);
-  padding-top: max(min(0.75rem, 1.5vw), env(safe-area-inset-top, 0px));
-  padding-bottom: max(min(0.75rem, 1.5vw), env(safe-area-inset-bottom, 0px));
+  padding: var(--spacing-md);
+  padding-top: max(var(--spacing-md), env(safe-area-inset-top, 0px));
+  padding-bottom: max(var(--spacing-md), env(safe-area-inset-bottom, 0px));
   background: transparent;
   color: var(--clr-text-primary);
 }
@@ -14,16 +102,16 @@
 .tag-section,
 .search-section {
   position: relative;
-  margin-bottom: min(1.5rem, 3vw);
+  margin-bottom: var(--spacing-xl);
 }
 
 /* セクション間の視覚的分離 */
 .category-section::after,
 .tag-section::after {
   position: absolute;
-  bottom: min(-0.75rem, -1.5vw);
+  bottom: calc(-1 * var(--spacing-md));
   left: 50%;
-  width: min(80px, 15vw);
+  width: var(--width-sm);
   height: 1px;
   background: linear-gradient(
     90deg,
@@ -37,17 +125,20 @@
 
 /* ===== CATEGORY SECTION STYLES ===== */
 .category-section {
-  padding: min(2rem, 5vw) 0;
-  padding-top: max(min(2rem, 5vw), calc(env(safe-area-inset-top, 0px) + 1rem));
+  padding: var(--spacing-3xl) 0;
+  padding-top: max(
+    var(--spacing-3xl),
+    calc(env(safe-area-inset-top, 0px) + 1rem)
+  );
 }
 
 .category-grid {
   display: grid;
-  gap: min(0.75rem, 1.5vw);
+  gap: var(--spacing-md);
   grid-template-columns: repeat(2, 1fr);
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 min(1rem, 2vw);
+  padding: 0 var(--spacing-lg);
   justify-items: center;
 }
 
@@ -59,11 +150,11 @@
   align-items: center;
   overflow: hidden;
   width: 100%;
-  height: min(120px, 15vw);
-  min-height: min(120px, 15vw);
-  padding: min(1rem, 2vw);
+  height: var(--height-5xl);
+  min-height: var(--height-5xl);
+  padding: var(--spacing-lg);
   border: 1px solid var(--clr-glass-border);
-  border-radius: min(1rem, 2vw);
+  border-radius: var(--radius-md);
   background: oklch(from var(--clr-glass-background) l c h / 0.5);
   color: inherit;
   text-align: center;
@@ -130,7 +221,7 @@
 .category-name {
   overflow: hidden;
   max-width: 100%;
-  margin-bottom: min(0.25rem, 0.5vw);
+  margin-bottom: var(--spacing-xs);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   font-weight: 700;
   line-height: 1.2;
@@ -152,9 +243,9 @@
 
 /* ===== TAG SECTION STYLES ===== */
 .tag-section {
-  padding: min(1.5rem, 3vw) 0;
+  padding: var(--spacing-xl) 0;
   padding-top: max(
-    min(1.5rem, 3vw),
+    var(--spacing-xl),
     calc(env(safe-area-inset-top, 0px) + 0.5rem)
   );
 }
@@ -164,12 +255,12 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: min(1rem, 2vw);
+  gap: var(--spacing-lg);
   max-width: 1200px;
   margin: 0 auto;
-  padding: min(1.5rem, 3vw) min(1rem, 2vw);
+  padding: var(--spacing-xl) var(--spacing-lg);
   border: 1px solid var(--clr-glass-border);
-  border-radius: min(1.5rem, 3vw);
+  border-radius: var(--radius-lg);
   background: oklch(from var(--clr-glass-background) l c h / 0.5);
   backdrop-filter: blur(8px);
   box-shadow:
@@ -183,11 +274,11 @@
   justify-content: center;
   align-items: center;
   overflow: visible;
-  min-width: min(180px, 25vw);
-  min-height: min(72px, 9vw);
-  padding: min(1.5rem, 3vw) min(2rem, 4vw);
+  min-width: var(--min-width-xl);
+  min-height: var(--min-height-xl);
+  padding: var(--spacing-xl) var(--spacing-2xl);
   border: 1px solid var(--clr-glass-border);
-  border-radius: min(1.5rem, 3vw);
+  border-radius: var(--radius-lg);
   background: oklch(from var(--clr-glass-background) l c h / 0.5);
   color: var(--clr-text-primary);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
@@ -261,17 +352,17 @@
 
 /* ===== SEARCH SECTION STYLES ===== */
 .search-section {
-  padding: min(1.5rem, 3vw) 0;
+  padding: var(--spacing-xl) 0;
   padding-top: max(
-    min(1.5rem, 3vw),
+    var(--spacing-xl),
     calc(env(safe-area-inset-top, 0px) + 0.5rem)
   );
 }
 
 .search-bar-container {
-  max-width: min(600px, 90vw);
-  margin: 0 auto min(2rem, 4vw);
-  padding: 0 min(1rem, 2vw);
+  max-width: var(--max-width-sm);
+  margin: 0 auto var(--spacing-2xl);
+  padding: 0 var(--spacing-lg);
 }
 
 .search-form {
@@ -286,11 +377,13 @@
 
 .search-input {
   width: 100%;
-  min-height: 56px;
-  padding: min(1.25rem, 3vw) min(3.5rem, 7vw) min(1.25rem, 3vw)
-    min(1.25rem, 3vw);
-  border: 1px solid var(--clr-glass-border);
-  border-radius: min(1rem, 2vw);
+
+  /* min-height: 56px; - SearchFormコンポーネントのCSS変数を使用 */
+  padding: var(--padding-xl) min(3.5rem, 7vw) var(--padding-xl)
+    var(--padding-xl);
+
+  /* border: 1px solid var(--clr-glass-border); - SearchFormコンポーネントのボーダーを使用 */
+  border-radius: var(--radius-md);
   background: oklch(from var(--clr-glass-background) l c h / 0.5);
   color: var(--clr-text-primary);
   font-size: clamp(1rem, 0.875rem + 0.5vw, 1.125rem);
@@ -320,13 +413,13 @@
 
 .search-button {
   position: absolute;
-  right: min(0.75rem, 1.5vw);
+  right: var(--spacing-md);
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 44px;
   min-height: 44px;
-  padding: min(0.75rem, 1.5vw);
+  padding: var(--spacing-md);
   border: none;
   border-radius: 0.5rem;
   background: var(--clr-accent);
@@ -354,22 +447,22 @@
 .search-results {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 min(2rem, 4vw);
+  padding: 0 var(--spacing-2xl);
 }
 
 .search-active-filters {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: min(0.5rem, 1vw);
-  margin: 0 0 min(0.75rem, 1.5vw);
+  gap: var(--spacing-sm);
+  margin: 0 0 var(--spacing-md);
 }
 
 .filter-chip {
   display: inline-flex;
   align-items: center;
-  gap: min(0.25rem, 0.5vw);
-  padding: min(0.25rem, 0.5vw) min(0.5rem, 1vw);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
   border: 1px solid var(--clr-border);
   border-radius: 9999px;
   background: oklch(20% 0.02 270deg / 0.5);
@@ -386,7 +479,7 @@
 }
 
 .filter-chip .chip-close {
-  margin-left: min(0.25rem, 0.5vw);
+  margin-left: var(--spacing-xs);
   font-weight: bold;
   opacity: 0.7;
   transition: opacity 0.2s ease;
@@ -397,7 +490,7 @@
 }
 
 .filter-clear {
-  padding: min(0.25rem, 0.5vw) min(0.5rem, 1vw);
+  padding: var(--spacing-xs) var(--spacing-sm);
   border: 1px solid var(--clr-border);
   border-radius: 0.375rem;
   background: transparent;
@@ -414,10 +507,10 @@
 
 .search-results-container {
   display: grid;
-  gap: min(1rem, 2vw);
+  gap: var(--spacing-lg);
   content-visibility: auto;
   contain-intrinsic-size: 300px 600px;
-  padding: 0 min(1rem, 2vw);
+  padding: 0 var(--spacing-lg);
   contain: layout style paint;
 }
 
@@ -429,10 +522,10 @@
   overflow: hidden;
   width: 100%;
   min-height: 120px;
-  margin: min(0.75rem, 1.5vw) 0;
-  padding: min(1.5rem, 3vw);
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-xl);
   border: 1px solid oklch(from var(--clr-background) l c h / 0.15);
-  border-radius: min(1rem, 2vw);
+  border-radius: var(--radius-md);
   background: linear-gradient(
     135deg,
     oklch(from var(--clr-background) l c h / 0.8) 0%,
@@ -512,8 +605,8 @@
 .result-title {
   display: flex;
   align-items: center;
-  gap: min(0.5rem, 1vw);
-  margin: 0 0 min(0.75rem, 1.5vw);
+  gap: var(--spacing-sm);
+  margin: 0 0 var(--spacing-md);
   color: var(--clr-text-primary);
   font-size: clamp(1rem, 0.875rem + 0.5vw, 1.125rem);
   font-weight: 700;
@@ -525,7 +618,7 @@
 .result-description {
   display: -webkit-box;
   overflow: hidden;
-  margin: 0 0 min(1rem, 2vw);
+  margin: 0 0 var(--spacing-lg);
   color: var(--clr-text-secondary);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   line-height: 1.6;
@@ -537,35 +630,29 @@
 }
 
 .result-snippet {
-  margin: 0 0 min(0.75rem, 1.5vw);
+  margin: 0 0 var(--spacing-md);
   color: var(--clr-text-secondary);
   font-size: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
   line-height: 1.6;
 }
 
-.result-snippet mark {
-  padding: 0 min(0.125rem, 0.25vw);
-  border-radius: 0.125rem;
-  background: var(--search-highlight-bg, oklch(65% 0.18 280deg / 0.35));
-  color: var(--clr-text-primary);
-  font-weight: 500;
-}
+/* ハイライト機能を無効化 - mark要素のスタイルを削除 */
 
 .result-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: min(0.75rem, 1.5vw);
+  gap: var(--spacing-md);
   margin-top: auto;
-  padding-top: min(0.75rem, 1.5vw);
+  padding-top: var(--spacing-md);
   border-top: 1px solid oklch(from var(--clr-background) l c h / 0.15);
 }
 
 .result-type {
   display: inline-flex;
   align-items: center;
-  padding: min(0.125rem, 0.25vw) min(0.5rem, 1vw);
-  border-radius: min(0.25rem, 0.5vw);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
   font-size: clamp(0.625rem, 0.5rem + 0.5vw, 0.75rem);
   font-weight: 600;
   line-height: 1;
@@ -632,14 +719,14 @@
 /* ===== SECTION HEADERS ===== */
 .section-header {
   position: relative;
-  margin-bottom: min(2.5rem, 5vw);
-  padding: min(2rem, 4vw) min(1rem, 2vw);
+  margin-bottom: var(--margin-2xl);
+  padding: var(--spacing-2xl) var(--spacing-lg);
   text-align: center;
 }
 
 .section-title {
   position: relative;
-  margin-bottom: min(0.75rem, 1.5vw);
+  margin-bottom: var(--spacing-md);
   color: var(--clr-text-primary);
   font-size: clamp(1.75rem, 1.25rem + 2.5vw, 2.25rem);
   font-weight: 800;
@@ -661,14 +748,14 @@
 /* ===== LOADING INDICATORS ===== */
 .loading-indicator {
   width: 100%;
-  padding: min(2rem, 4vw);
+  padding: var(--spacing-2xl);
   color: var(--clr-text-secondary);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   text-align: center;
 }
 
 .search-results-header {
-  margin: 0 0 min(0.5rem, 1vw);
+  margin: 0 0 var(--spacing-sm);
   color: var(--clr-text-secondary);
   font-size: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
   font-weight: 500;
@@ -704,69 +791,70 @@
 /* タブレット対応 */
 @media (min-width: 768px) {
   .search-page {
-    padding: min(1rem, 2vw);
+    padding: var(--spacing-lg);
   }
 
   .category-section,
   .tag-section,
   .search-section {
-    margin-bottom: min(2rem, 4vw);
+    margin-bottom: var(--spacing-2xl);
   }
 
   .category-section::after,
   .tag-section::after {
-    bottom: min(-1rem, -2vw);
-    width: min(100px, 20vw);
+    bottom: calc(-1 * var(--spacing-lg));
+    width: var(--width-md);
   }
 
   .section-header {
-    margin-bottom: min(3rem, 6vw);
-    padding: min(2.5rem, 5vw) min(1.5rem, 3vw);
+    margin-bottom: var(--margin-3xl);
+    padding: var(--spacing-3xl) var(--spacing-xl);
   }
 
   .category-grid {
-    gap: min(1rem, 2vw);
+    gap: var(--spacing-lg);
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
   .category-item {
-    height: min(100px, 12vw);
-    min-height: min(100px, 12vw);
-    padding: min(0.875rem, 1.75vw);
+    height: var(--height-4xl);
+    min-height: var(--height-4xl);
+    padding: var(--padding-lg);
   }
 
   .tag-cloud {
-    gap: min(0.75rem, 1.5vw);
-    padding: min(1.25rem, 2.5vw) min(1rem, 2vw);
+    gap: var(--spacing-md);
+    padding: var(--padding-xl) var(--spacing-lg);
   }
 
   .tag-item {
-    min-width: min(160px, 20vw);
-    min-height: min(66px, 8vw);
-    padding: min(1.25rem, 2.5vw) min(1.75rem, 3.5vw);
+    min-width: var(--min-width-lg);
+    min-height: var(--min-height-lg);
+    padding: var(--padding-xl) var(--padding-lg);
     font-size: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
   }
 
   .search-bar-container {
-    max-width: min(600px, 90vw);
-    margin: 0 auto min(2rem, 4vw);
+    max-width: var(--max-width-sm);
+    margin: 0 auto var(--spacing-2xl);
   }
 
   .search-results {
-    padding: 0 min(1.5rem, 3vw);
+    padding: 0 var(--spacing-xl);
   }
 
   .search-input {
-    min-height: 48px;
-    padding: min(1rem, 2vw) min(3rem, 6vw) min(1rem, 2vw) min(1rem, 2vw);
+    /* min-height: 48px; - SearchFormコンポーネントのCSS変数を使用 */
+    padding: var(--spacing-lg) min(3rem, 6vw) var(--spacing-lg)
+      var(--spacing-lg);
     font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   }
 
   .search-button {
-    right: min(0.5rem, 1vw);
+    right: var(--spacing-sm);
     min-width: 40px;
     min-height: 40px;
-    padding: min(0.5rem, 1vw);
+    padding: var(--spacing-sm);
   }
 
   .search-icon {
@@ -775,82 +863,82 @@
   }
 
   .search-results-container {
-    gap: min(1.25rem, 2.5vw);
+    gap: var(--gap-xl);
   }
 
   .search-result-item {
     min-height: 100px;
-    padding: min(1rem, 2vw);
+    padding: var(--spacing-lg);
   }
 }
 
 /* デスクトップ対応 */
 @media (min-width: 1024px) {
   .search-page {
-    padding: min(1.5rem, 2.5vw);
+    padding: var(--spacing-xl);
   }
 
   .category-section,
   .tag-section,
   .search-section {
-    margin-bottom: min(2.5rem, 4.5vw);
+    margin-bottom: var(--margin-2xl);
   }
 
   .category-section::after,
   .tag-section::after {
-    bottom: min(-1.25rem, -2.5vw);
-    width: min(110px, 22vw);
+    bottom: calc(-1 * var(--padding-xl));
+    width: var(--width-md);
   }
 
   .section-header {
-    margin-bottom: min(3.5rem, 7vw);
-    padding: min(3rem, 6vw) min(2rem, 4vw);
+    margin-bottom: var(--margin-4xl);
+    padding: var(--margin-3xl) var(--spacing-2xl);
   }
 
   .category-grid {
-    gap: min(1.125rem, 2.25vw);
+    gap: var(--gap-lg);
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .category-item {
-    height: min(90px, 10vw);
-    min-height: min(90px, 10vw);
-    padding: min(0.75rem, 1.5vw);
+    height: var(--height-3xl);
+    min-height: var(--height-3xl);
+    padding: var(--spacing-md);
   }
 
   .tag-cloud {
-    gap: min(0.875rem, 1.75vw);
-    padding: min(1.5rem, 3vw) min(1.25rem, 2.5vw);
+    gap: var(--gap-md);
+    padding: var(--spacing-xl) var(--padding-xl);
   }
 
   .tag-item {
-    min-width: min(150px, 18vw);
-    min-height: min(62px, 7.5vw);
-    padding: min(1.375rem, 2.75vw) min(2rem, 4vw);
+    min-width: var(--min-width-md);
+    min-height: var(--min-height-md);
+    padding: var(--padding-xl) var(--spacing-2xl);
     font-size: clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem);
   }
 
   .search-bar-container {
-    max-width: min(700px, 85vw);
-    margin: 0 auto min(2.25rem, 4.5vw);
+    max-width: var(--max-width-md);
+    margin: 0 auto var(--spacing-2xl);
   }
 
   .search-results {
-    padding: 0 min(2rem, 4vw);
+    padding: 0 var(--spacing-2xl);
   }
 
   .search-input {
-    min-height: 52px;
-    padding: min(1.125rem, 2.25vw) min(3.25rem, 6.5vw) min(1.125rem, 2.25vw)
-      min(1.125rem, 2.25vw);
+    /* min-height: 52px; - SearchFormコンポーネントのCSS変数を使用 */
+    padding: var(--padding-xl) min(3.25rem, 6.5vw) var(--padding-xl)
+      var(--padding-xl);
     font-size: clamp(0.9rem, 0.8rem + 0.4vw, 1.05rem);
   }
 
   .search-button {
-    right: min(0.625rem, 1.25vw);
+    right: var(--spacing-sm);
     min-width: 42px;
     min-height: 42px;
-    padding: min(0.625rem, 1.25vw);
+    padding: var(--spacing-sm);
   }
 
   .search-icon {
@@ -859,62 +947,62 @@
   }
 
   .search-results-container {
-    gap: min(1.375rem, 2.75vw);
+    gap: var(--gap-xl);
   }
 
   .search-result-item {
     min-height: 105px;
-    padding: min(1.125rem, 2.25vw);
+    padding: var(--padding-xl);
   }
 }
 
 /* 大画面での最適化 */
 @media (min-width: 1280px) {
   .search-page {
-    padding: min(2rem, 3vw);
+    padding: var(--spacing-2xl);
   }
 
   .category-section,
   .tag-section,
   .search-section {
-    margin-bottom: min(3rem, 5vw);
+    margin-bottom: var(--margin-3xl);
   }
 
   .category-section::after,
   .tag-section::after {
-    bottom: min(-1.5rem, -3vw);
-    width: min(120px, 25vw);
+    bottom: calc(-1 * var(--spacing-xl));
+    width: var(--width-lg);
   }
 
   .section-header {
-    margin-bottom: min(4rem, 8vw);
-    padding: min(3.5rem, 7vw) min(2.5rem, 5vw);
+    margin-bottom: var(--margin-5xl);
+    padding: var(--margin-4xl) var(--spacing-3xl);
   }
 
   .category-grid {
-    gap: min(1.25rem, 2.5vw);
+    gap: var(--gap-2xl);
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 
   .category-item {
-    height: min(85px, 8vw);
-    min-height: min(85px, 8vw);
-    padding: min(0.625rem, 1.25vw);
+    height: var(--height-2xl);
+    min-height: var(--height-2xl);
+    padding: var(--spacing-sm);
   }
 
   .tag-cloud {
-    gap: min(1rem, 2vw);
-    padding: min(1.75rem, 3.5vw) min(1.5rem, 3vw);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-xl) var(--spacing-xl);
   }
 
   .tag-item {
-    min-width: min(140px, 15vw);
-    min-height: min(58px, 7vw);
-    padding: min(1.5rem, 3vw) min(2.25rem, 4.5vw);
+    min-width: var(--min-width-sm);
+    min-height: var(--min-height-sm);
+    padding: var(--spacing-xl) var(--spacing-2xl);
   }
 
   .search-results-container {
-    gap: min(1.5rem, 3vw);
+    gap: var(--spacing-xl);
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   }
 
@@ -963,7 +1051,7 @@
 /* タッチデバイス最適化 */
 @media (hover: none) and (pointer: coarse) {
   .search-page {
-    padding: min(1rem, 2vw);
+    padding: var(--spacing-lg);
   }
 
   .search-button:hover {
@@ -1014,36 +1102,36 @@
 @media (max-width: 767px) {
   .search-page {
     padding-top: max(
-      min(0.75rem, 1.5vw),
+      var(--spacing-md),
       calc(env(safe-area-inset-top, 0px) + 1rem)
     );
     padding-bottom: max(
-      min(0.75rem, 1.5vw),
+      var(--spacing-md),
       calc(env(safe-area-inset-bottom, 0px) + 1rem)
     );
   }
 
   .tag-section {
     padding-top: max(
-      min(1.5rem, 3vw),
+      var(--spacing-xl),
       calc(env(safe-area-inset-top, 0px) + 1.5rem)
     );
   }
 
   .search-section {
     padding-top: max(
-      min(1.5rem, 3vw),
+      var(--spacing-xl),
       calc(env(safe-area-inset-top, 0px) + 1.5rem)
     );
   }
 
   .section-header {
     padding-top: max(
-      min(0.75rem, 1.5vw),
+      var(--spacing-md),
       calc(env(safe-area-inset-top, 0px) + 0.75rem)
     );
     padding-bottom: max(
-      min(0.75rem, 1.5vw),
+      var(--spacing-md),
       calc(env(safe-area-inset-bottom, 0px) + 0.75rem)
     );
   }
