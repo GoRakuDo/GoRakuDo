@@ -159,10 +159,7 @@
   will-change: auto;
 }
 
-.tool-card:hover,
-.tool-card:focus {
-  will-change: transform, border-color, box-shadow;
-}
+/* Performance optimization for hover states */
 
 .tool-card article {
   display: flex;
@@ -256,15 +253,6 @@
 .tool-card:hover .tool-arrow {
   color: var(--clr-white);
   transform: translateX(var(--tool-arrow-translate));
-}
-
-/* AC 10: Clear Focus Indicator */
-.tool-card:focus-visible {
-  outline: 3px solid var(--clr-purple-70);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 1px var(--clr-purple-70-30);
-  transform: translateY(-1px);
-  border-color: var(--clr-accent-glow-strong);
 }
 
 /* ========== RESPONSIVE DESIGN (AC 6: Mobile-First with all Breakpoints) ========== */
@@ -371,8 +359,7 @@
     animation: none;
   }
 
-  .tool-card:hover,
-  .tool-card:focus-visible {
+  .tool-card:hover {
     transform: none;
   }
 }
@@ -398,17 +385,7 @@
   transform: scale(0.98);
 }
 
-/* Enhanced focus states for better accessibility */
-.focus-enhanced {
-  transition:
-    box-shadow 0.15s ease-out,
-    transform 0.15s ease-out;
-}
-
-.focus-enhanced:focus-visible {
-  box-shadow: 0 0 0 3px var(--clr-accent-glow-strong);
-  transform: scale(1.01);
-}
+/* Focus management removed - simplified styling for better performance */
 
 .loading-spinner {
   animation: loading-spinner 1s linear infinite;
@@ -417,8 +394,7 @@
 /* Progressive enhancement for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .stagger-animation,
-  .micro-interaction-scale,
-  .focus-enhanced {
+  .micro-interaction-scale {
     opacity: 1;
     transform: none;
     transition: none;
@@ -508,8 +484,7 @@
 }
 
 /* ========== アイコン ========== */
-.tool-icon:hover,
-.tool-icon:focus {
+.tool-icon:hover {
   will-change: transform;
 }
 
@@ -708,8 +683,9 @@
 
 /* ========== アクセシビリティ ========== */
 
-.tools-grid .tool-grid-item .tool-card {
-  outline: none;
+.tool-card:focus-visible {
+  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+  outline-offset: 2px;
 }
 
 .tool-card:hover .tool-name {

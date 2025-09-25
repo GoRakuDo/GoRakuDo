@@ -566,13 +566,7 @@
   content: '';
 }
 
-.search-result-item.is-active {
-  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.25);
-  outline-offset: 2px;
-}
-
-.search-result-item:hover,
-.search-result-item:focus-visible {
+.search-result-item:hover {
   background: linear-gradient(
     135deg,
     oklch(from var(--clr-accent) l c h / 0.15) 0%,
@@ -588,8 +582,7 @@
   transform: translateY(-4px) scale(1.02);
 }
 
-.search-result-item:hover::before,
-.search-result-item:focus-visible::before {
+.search-result-item:hover::before {
   opacity: 1;
 }
 
@@ -1094,7 +1087,7 @@
 .filter-clear:focus-visible,
 .category-item:focus-visible,
 .tag-item:focus-visible {
-  outline: 2px solid var(--clr-accent);
+  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
   outline-offset: 2px;
 }
 

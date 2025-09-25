@@ -127,7 +127,6 @@ const {
   class SearchManager {
     private data: SearchItem[] = [];
     private fuse: any = null;
-    private activeIndex: number = -1;
     constructor() {
       this.initializeSearch();
     }
@@ -180,8 +179,6 @@ const {
         score?: number;
       }>;
       this.displayResults(results);
-      this.activeIndex = results.length > 0 ? 0 : -1;
-      this.applyActiveItem();
     }
     performFilter(filter: { category?: string; tag?: string }) {
       if (!this.data || this.data.length === 0) return;
@@ -198,43 +195,6 @@ const {
       }
       const results = filtered.map(item => ({ item }));
       this.displayResults(results);
-      this.activeIndex = results.length > 0 ? 0 : -1;
-      this.applyActiveItem();
-    }
-    moveActive(delta: number) {
-      const list = document.querySelectorAll<HTMLAnchorElement>(
-        '.search-result-item'
-      );
-      if (list.length === 0) return;
-      this.activeIndex = (this.activeIndex + delta + list.length) % list.length;
-      this.applyActiveItem();
-    }
-    applyActiveItem() {
-      const list = document.querySelectorAll<HTMLAnchorElement>(
-        '.search-result-item'
-      );
-      list.forEach(el => el.classList.remove('is-active'));
-      if (this.activeIndex >= 0 && this.activeIndex < list.length) {
-        const el = list[this.activeIndex];
-        el.classList.add('is-active');
-        el.focus({ preventScroll: true });
-        el.scrollIntoView({ block: 'nearest' });
-      }
-    }
-    openActive() {
-      const list = document.querySelectorAll<HTMLAnchorElement>(
-        '.search-result-item'
-      );
-      if (this.activeIndex >= 0 && this.activeIndex < list.length) {
-        list[this.activeIndex].click();
-      }
-    }
-    clearActive() {
-      const list = document.querySelectorAll<HTMLAnchorElement>(
-        '.search-result-item'
-      );
-      list.forEach(el => el.classList.remove('is-active'));
-      this.activeIndex = -1;
     }
     displayResults(
       results: Array<{ item: SearchItem; score?: number; matches?: any[] }>
@@ -319,25 +279,9 @@ const {
         <div class='search-results-header' aria-live='polite'>${results.length} results</div>
         <div class='search-results-container' role='list' aria-busy='false'>${resultsHTML}</div>
       `;
-      // Make items focusable for keyboard navigation
+      // Set role for accessibility
       document.querySelectorAll('.search-result-item').forEach((el, index) => {
         (el as HTMLElement).setAttribute('role', 'listitem');
-        (el as HTMLElement).setAttribute('tabindex', '0');
-
-        // Add keyboard event listeners to each result item
-        el.addEventListener('keydown', (e: Event) => {
-          const keyEvent = e as KeyboardEvent;
-          if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
-            keyEvent.preventDefault();
-            (el as HTMLAnchorElement).click();
-          } else if (keyEvent.key === 'ArrowDown') {
-            keyEvent.preventDefault();
-            searchManager.moveActive(1);
-          } else if (keyEvent.key === 'ArrowUp') {
-            keyEvent.preventDefault();
-            searchManager.moveActive(-1);
-          }
-        });
       });
     }
     clearResults() {
@@ -345,7 +289,6 @@ const {
       if (resultsContainer) {
         resultsContainer.innerHTML = '';
       }
-      this.clearActive();
     }
   }
   const searchManager = new SearchManager();
@@ -373,41 +316,10 @@ const {
       }, 300);
     });
 
-  // Keyboard navigation and dynamic highlight color
+  // Get input element for URL sync
   const inputEl = document.getElementById(
     'search-input'
   ) as HTMLInputElement | null;
-  if (inputEl) {
-    inputEl.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        searchManager.moveActive(1);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        searchManager.moveActive(-1);
-      } else if (e.key === 'Enter') {
-        if (document.querySelector('.search-result-item.is-active')) {
-          e.preventDefault();
-          searchManager.openActive();
-        }
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        searchManager.clearActive();
-      }
-    });
-    // 動的ハイライト色の設定を無効化
-    // inputEl.addEventListener('input', () => {
-    //   const q = inputEl.value.trim();
-    //   if (!q) {
-    //     document.documentElement.style.removeProperty('--search-highlight-bg');
-    //     return;
-    //   }
-    //   const seed = q.split('').reduce((s, c) => s + c.charCodeAt(0), 0);
-    //   const hue = seed % 360;
-    //   const bg = `oklch(65% 0.18 ${hue}deg / 0.35)`;
-    //   document.documentElement.style.setProperty('--search-highlight-bg', bg);
-    // });
-  }
 
   // Clear chips and URL sync
   const filtersEl = document.getElementById('search-filters');

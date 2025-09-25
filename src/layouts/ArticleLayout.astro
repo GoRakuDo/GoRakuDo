@@ -1,5 +1,5 @@
 ---
-// ========== ARTICLE LAYOUT COMPONENT ==========
+// ========== OPTIMIZED ARTICLE LAYOUT COMPONENT ==========
 // Centralized data management - this component only handles layout structure
 // All data processing is done in the parent index.astro
 import UnifiedSEO from '../components/UnifiedSEO.astro';
@@ -43,6 +43,12 @@ const {
   tags = [],
   breadcrumbSchema,
 } = Astro.props;
+
+// Optimized constants for better performance
+const LAYOUT_CONFIG = {
+  navbarSpacing: '5rem',
+  containerMaxWidth: '1200px',
+} as const;
 ---
 
 <!doctype html>
@@ -68,16 +74,25 @@ const {
     <!-- Background Wave Animation - Optimized Performance -->
     <WaveAnimation backgroundLayer='normal' />
 
-    <!-- Enhanced Article Container with Modern Design -->
+    <!-- Optimized Article Container with Modern Design -->
     <div class='article-layout-container'>
-      <!-- Enhanced Main Content Area with Navbar Spacing -->
-      <main class='article-main-content' style='padding-top: 5rem;'>
+      <!-- Optimized Main Content Area with Navbar Spacing -->
+      <main
+        class='article-main-content'
+        style={`padding-top: ${LAYOUT_CONFIG.navbarSpacing};`}
+        role='main'
+        aria-label='Main content'
+      >
         <div class='article-content-wrapper'>
           <!-- Tool ID Header -->
           <slot name='articles-header' />
 
           <!-- Optimized Navigation with Enhanced Spacing -->
-          <div class='tool-navigation-wrapper'>
+          <nav
+            class='tool-navigation-wrapper'
+            role='navigation'
+            aria-label='Tool navigation'
+          >
             <div class='breadcrumb-section glassmorphism'>
               <slot name='breadcrumb' />
             </div>
@@ -86,15 +101,19 @@ const {
               <!-- Search Popover Component -->
               <slot name='search' />
             </div>
-          </div>
+          </nav>
 
           <!-- Page Content Slot -->
-          <div class='page-content'>
+          <div class='page-content' role='region' aria-label='Page content'>
             <slot />
           </div>
 
           <!-- Pagination Slot -->
-          <div class='pagination-wrapper'>
+          <div
+            class='pagination-wrapper'
+            role='navigation'
+            aria-label='Pagination'
+          >
             <slot name='pagination' />
           </div>
         </div>

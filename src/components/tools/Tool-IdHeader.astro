@@ -1,5 +1,5 @@
 ---
-// ========== SIMPLIFIED HEADER COMPONENT ==========
+// ========== OPTIMIZED HEADER COMPONENT ==========
 // Centralized data management - this component only handles display logic
 // All data processing is done in the parent index.astro
 
@@ -23,11 +23,11 @@ const {
   currentYear,
 } = Astro.props;
 
-// Constants for display
+// Optimized constants for display
 const ICON_DIMENSIONS = { width: 175, height: 175 };
 const iconAlt = `${formattedToolName} tool icon`;
 
-// Meta items for display
+// Optimized meta items with better performance and accessibility
 const META_ITEMS = [
   {
     icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
@@ -37,10 +37,12 @@ const META_ITEMS = [
         : articleCount === 1
           ? '1 Article'
           : `${articleCount} Articles`,
+    ariaLabel: `This tool has ${articleCount} articles available`,
   },
   {
     icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
     label: 'Free Resources',
+    ariaLabel: 'All resources are free to use',
   },
 ] as const;
 ---
@@ -82,8 +84,12 @@ const META_ITEMS = [
         </p>
         <div class='header-meta' role='list' aria-label='Tool statistics'>
           {
-            META_ITEMS.map((item, index) => (
-              <span class='meta-item' role='listitem'>
+            META_ITEMS.map(item => (
+              <span
+                class='meta-item'
+                role='listitem'
+                aria-label={item.ariaLabel}
+              >
                 <svg
                   class='meta-icon'
                   fill='none'
@@ -109,7 +115,7 @@ const META_ITEMS = [
 </header>
 
 <style is:global>
-  /* ========== ENHANCED ICON STYLES ========== */
+  /* ========== OPTIMIZED ICON STYLES ========== */
   .tool-icon-large {
     width: clamp(100px, 12.5vw, 170px);
     height: clamp(100px, 12.5vw, 170px);
@@ -117,32 +123,23 @@ const META_ITEMS = [
     border: none;
     border-radius: 16px;
     background: transparent;
-    transition:
-      transform var(--transition-normal),
-      box-shadow var(--transition-normal);
     object-fit: contain;
     filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
+    will-change: transform;
+    transition: transform 0.2s ease-in-out;
   }
 
-  .tool-icon-large:hover {
-    border: none;
-    background: transparent;
-    filter: drop-shadow(0 6px 12px oklch(0% 0 0deg / 0.4));
-    transform: scale(1.05) translateY(-2px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* 画像読み込み最適化 */
+  /* Optimized image loading */
   .tool-icon-large[loading='eager'] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .tool-icon-large[loading='eager'].loaded {
     opacity: 1;
   }
 
-  /* ========== ENHANCED RESPONSIVE DESIGN ========== */
+  /* Hover effect for better interactivity */
+  .tool-icon-container:hover .tool-icon-large {
+    transform: scale(1.05);
+  }
+
+  /* ========== OPTIMIZED RESPONSIVE DESIGN ========== */
 
   /* Mobile First - Base Styles (320px+) */
   .header-content-section {
@@ -167,41 +164,14 @@ const META_ITEMS = [
     background: transparent;
     text-align: center;
     flex-shrink: 0;
-    cursor: pointer;
     filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .tool-icon-container:hover {
-    transform: scale(1.02) translateY(-1px);
-    filter: drop-shadow(0 6px 12px oklch(0% 0 0deg / 0.4));
-  }
-
-  /* より詳細度の高いセレクターで確実に適用 */
-  .component-header .header-content-section .tool-icon-container {
-    width: clamp(100px, 12.5vw, 170px);
-    height: clamp(100px, 12.5vw, 170px);
-    border: none;
-    border-radius: 16px;
-    background: transparent;
-    cursor: pointer;
-    filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* デスクトップ用の詳細度の高いセレクター */
+  /* Desktop optimized selector */
   @media (min-width: 768px) {
-    .tool-icon-container:hover {
-      transform: scale(1.02) translateY(-1px);
-      filter: drop-shadow(0 6px 12px oklch(0% 0 0deg / 0.4));
-    }
-
     .component-header .header-content-section .tool-icon-container {
       width: clamp(85px, 8.5vw, 145px);
       height: clamp(85px, 8.5vw, 145px);
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
@@ -318,75 +288,5 @@ const META_ITEMS = [
     position: absolute;
     inset: 0;
     z-index: -1;
-
-    /* GlassMorphism効果はグローバルクラスで適用 */
-  }
-
-  /* Content Section Positioning - styles moved to main selector above */
-
-  /* ========== ACCESSIBILITY ENHANCEMENTS ========== */
-  @media (prefers-reduced-motion: reduce) {
-    .tool-icon-large {
-      transition: none;
-    }
-
-    .tool-icon-large:hover {
-      transform: none;
-    }
-  }
-
-  @media (prefers-contrast: high) {
-    .tool-icon-large {
-      border-width: 2px;
-    }
-
-    .header-title {
-      color: var(--clr-text-primary);
-    }
-
-    .header-description {
-      color: var(--clr-text-secondary);
-    }
-  }
-
-  /* Focus management */
-  .tool-icon-large:focus-visible {
-    outline: 2px solid var(--clr-primary);
-    outline-offset: 2px;
-  }
-
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    .header-bg {
-      display: none;
-    }
   }
 </style>
-
-<!-- ========== CLIENT-SIDE OPTIMIZATION ========== -->
-<script>
-  // アイコン読み込み最適化
-  function optimizeIconLoading() {
-    const icons = document.querySelectorAll(
-      '.tool-icon-large[loading="eager"]'
-    );
-
-    icons.forEach(icon => {
-      icon.addEventListener('load', () => {
-        icon.classList.add('loaded');
-      });
-
-      // 既に読み込まれている場合の処理
-      if ((icon as HTMLImageElement).complete) {
-        icon.classList.add('loaded');
-      }
-    });
-  }
-
-  // DOM読み込み完了後に実行
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', optimizeIconLoading);
-  } else {
-    optimizeIconLoading();
-  }
-</script>

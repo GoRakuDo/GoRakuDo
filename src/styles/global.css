@@ -757,9 +757,11 @@
   transition: all 0.2s ease;
 }
 
+a:focus-visible,
+button:focus-visible,
 .article-content a:focus,
 .article-content button:focus {
-  outline: 2px solid var(--clr-accent);
+  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
   outline-offset: 2px;
 }
 
@@ -1651,6 +1653,18 @@
 .hero-button *,
 .cta-button * {
   color: inherit;
+}
+
+/* フォーカス状態のスタイル - 50%透明 */
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.hero-button:focus-visible,
+.cta-button:focus-visible,
+.docs-button:focus-visible,
+.get-started-btn:focus-visible,
+.discord-link:focus-visible {
+  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+  outline-offset: 2px;
 }
 
 /* カード要素の文字色を強制的に白に設定 */

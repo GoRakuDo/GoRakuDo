@@ -1,5 +1,5 @@
 ---
-// ========== SIMPLIFIED ARTICLE COMPONENT ==========
+// ========== OPTIMIZED ARTICLE COMPONENT ==========
 // Centralized data management - this component only handles display logic
 // All data processing is done in the parent index.astro
 
@@ -20,29 +20,80 @@ interface Props {
   };
   tool: string;
   index: number;
+  role?:
+    | 'gridcell'
+    | 'listitem'
+    | 'article'
+    | 'button'
+    | 'link'
+    | 'tab'
+    | 'tabpanel'
+    | 'menuitem'
+    | 'option'
+    | 'treeitem'
+    | 'grid'
+    | 'listbox'
+    | 'menu'
+    | 'menubar'
+    | 'tablist'
+    | 'tree'
+    | 'treegrid'
+    | 'application'
+    | 'banner'
+    | 'complementary'
+    | 'contentinfo'
+    | 'form'
+    | 'main'
+    | 'navigation'
+    | 'region'
+    | 'search'
+    | 'alert'
+    | 'alertdialog'
+    | 'dialog'
+    | 'log'
+    | 'marquee'
+    | 'status'
+    | 'timer'
+    | 'tooltip'
+    | 'presentation'
+    | 'none';
+  'aria-label'?: string;
 }
 
-const { article, tool, index } = Astro.props;
+const { article, tool, index, role, 'aria-label': ariaLabel } = Astro.props;
 
-// Constants for display
+// Optimized constants for display
 const IMAGE_DIMENSIONS = { width: 280, height: 160 };
 const formatToolName = (tool: string): string =>
   tool.charAt(0).toUpperCase() + tool.slice(1);
+
+// Optimized accessibility constants
+const CARD_ACCESSIBILITY = {
+  articleTypeLabels: {
+    related: 'Artikel tool terkait',
+  },
+  actionLabels: {
+    readArticle: (title: string) => `Read article: ${title}`,
+  },
+} as const;
 ---
 
-<!-- ========== ENHANCED ARTICLE CARD MARKUP ========== -->
+<!-- ========== OPTIMIZED ARTICLE CARD MARKUP ========== -->
 <article
   class='article-card-optimized glassmorphism glassmorphism-card'
   data-index={index}
   data-tool={tool}
+  role={role}
+  aria-label={ariaLabel}
   itemscope
   itemtype='https://schema.org/Article'
 >
   <a
     href={`/tools/${tool}/${article.slug}`}
     class='card-link'
-    aria-label={`Read article: ${article.title}`}
+    aria-label={CARD_ACCESSIBILITY.actionLabels.readArticle(article.title)}
     itemprop='url'
+    tabindex='0'
   >
     <!-- カードヘッダー -->
     <header class='card-header'>
@@ -61,7 +112,8 @@ const formatToolName = (tool: string): string =>
           article.articleType === 'related' && (
             <span
               class='article-type-badge related-article-badge'
-              title='Artikel tool terkait'
+              title={CARD_ACCESSIBILITY.articleTypeLabels.related}
+              aria-label={CARD_ACCESSIBILITY.articleTypeLabels.related}
             >
               <svg class='w-3 h-3' fill='currentColor' viewBox='0 0 20 20'>
                 <path
@@ -137,19 +189,16 @@ const formatToolName = (tool: string): string =>
 </article>
 
 <style is:global>
-  /* ========== ENHANCED ARTICLE CARD STYLES ========== */
+  /* ========== OPTIMIZED ARTICLE CARD STYLES ========== */
   .article-card-optimized {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     height: fit-content;
     margin: 0 clamp(var(--spacing-xs), 2vw, var(--spacing-md));
     padding: var(--spacing-sm);
     border-radius: var(--radius-xl);
     background: oklch(from var(--clr-background) l c h / 0.25);
     box-shadow: var(--shadow-md);
-    transition:
-      transform var(--transition-normal),
-      box-shadow var(--transition-normal);
     contain: layout style paint;
     will-change: transform;
   }
@@ -157,13 +206,6 @@ const formatToolName = (tool: string): string =>
   /* Reduce layout thrashing */
   .article-card-optimized .card-meta {
     contain: layout;
-  }
-
-  .article-card-optimized:hover {
-    border-color: var(--clr-accent-glow-medium);
-    box-shadow: var(--shadow-hover);
-    transform: var(--hover-lift-enhanced);
-    transition: all var(--transition-smooth);
   }
 
   .card-link {
@@ -181,6 +223,26 @@ const formatToolName = (tool: string): string =>
     inset: 0;
     z-index: -1;
     content: '';
+  }
+
+  /* Optimized focus management - 50% transparent outline */
+  .card-link:focus-visible {
+    position: relative;
+    z-index: 1000;
+    outline: none;
+    border: 4px solid oklch(from var(--clr-accent) l c h / 0.5);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 0 6px oklch(from var(--clr-accent) l c h / 0.2);
+    will-change: border, box-shadow;
+    transition:
+      border-color 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
+  }
+
+  /* Enhanced hover state for better interactivity */
+  .card-link:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease-in-out;
   }
 
   /* ========== カードヘッダー ========== */
@@ -214,24 +276,13 @@ const formatToolName = (tool: string): string =>
     height: clamp(100px, 15vh, 160px);
     border-radius: var(--radius-md);
     background: var(--clr-background);
-    transition: transform var(--transition-normal);
     object-fit: cover;
     object-position: center;
     image-rendering: crisp-edges;
-    will-change: transform;
-  }
-
-  .article-card-optimized:hover .card-image {
-    transform: scale(1.02);
   }
 
   /* 画像読み込み最適化 */
   .card-image[loading='lazy'] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .card-image[loading='lazy'].loaded {
     opacity: 1;
   }
 
@@ -296,15 +347,6 @@ const formatToolName = (tool: string): string =>
     font-size: clamp(var(--font-size-xs), 0.75vw, var(--font-size-sm));
     font-weight: 300;
     white-space: nowrap;
-    cursor: pointer;
-    user-select: none;
-    transition: all var(--transition-fast);
-  }
-
-  .card-tag:hover {
-    background: oklch(from var(--clr-primary) l c h / 0.2);
-    border-color: oklch(from var(--clr-primary) l c h / 0.4);
-    box-shadow: 0 2px 8px oklch(from var(--clr-primary) l c h / 0.2);
   }
 
   /* ========== アクションインジケーター ========== */
@@ -317,7 +359,6 @@ const formatToolName = (tool: string): string =>
     border-radius: 50%;
     background: oklch(from var(--clr-primary) l c h / 0.1);
     opacity: 1;
-    transition: all var(--transition-normal);
     flex-shrink: 0;
   }
 
@@ -331,10 +372,6 @@ const formatToolName = (tool: string): string =>
   @media (min-width: 768px) {
     .card-action-indicator {
       opacity: 0;
-    }
-
-    .article-card-optimized:hover .card-action-indicator {
-      opacity: 1;
     }
   }
 
@@ -360,105 +397,4 @@ const formatToolName = (tool: string): string =>
         clamp(var(--spacing-md), 4vw, var(--spacing-lg)) var(--spacing-md);
     }
   }
-
-  /* card-image styles moved to main selector above */
-
-  /* card-tag styles moved to main selector above */
-
-  /* ========== アクセシビリティ ========== */
-  @media (prefers-contrast: high) {
-    .card-title {
-      color: var(--clr-text-primary);
-    }
-
-    .card-description {
-      color: var(--clr-text-secondary);
-    }
-
-    .card-tag {
-      background: oklch(from var(--clr-primary) l c h / 0.3);
-      color: var(--clr-text-primary);
-      font-weight: 700;
-      border-width: 2px;
-    }
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    .card-action-indicator {
-      opacity: 1;
-    }
-  }
-
-  .article-card-optimized:focus-visible {
-    outline: 2px solid var(--clr-primary);
-    outline-offset: 2px;
-  }
-
-  /* キーボードナビゲーション対応 */
-  .card-link:focus-visible {
-    outline: 2px solid var(--clr-primary);
-    outline-offset: 2px;
-  }
-
-  /* スクリーンリーダー対応 */
-  .card-link[aria-label] {
-    position: relative;
-  }
-
-  /* アニメーション軽減対応 */
-  @media (prefers-reduced-motion: reduce) {
-    .article-card-optimized,
-    .card-image,
-    .card-action-indicator {
-      transition: none;
-    }
-
-    .article-card-optimized:hover {
-      transform: none;
-    }
-  }
 </style>
-
-<!-- ========== CLIENT-SIDE OPTIMIZATION ========== -->
-<script>
-  // 画像読み込み最適化
-  function optimizeImageLoading() {
-    const images = document.querySelectorAll('.card-image[loading="lazy"]');
-
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target as HTMLImageElement;
-              img.addEventListener('load', () => {
-                img.classList.add('loaded');
-              });
-              imageObserver.unobserve(img);
-            }
-          });
-        },
-        {
-          rootMargin: '50px 0px',
-          threshold: 0.1,
-        }
-      );
-
-      images.forEach(img => imageObserver.observe(img));
-    } else {
-      // フォールバック: 即座に読み込み
-      images.forEach(img => {
-        img.addEventListener('load', () => {
-          img.classList.add('loaded');
-        });
-      });
-    }
-  }
-
-  // DOM読み込み完了後に実行
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', optimizeImageLoading);
-  } else {
-    optimizeImageLoading();
-  }
-</script>

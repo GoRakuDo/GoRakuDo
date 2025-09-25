@@ -450,14 +450,11 @@ const validTools: Tool[] = tools.filter(validateTool);
   }
 
   /* ========== アクセシビリチE�� ========== */
-  .tool-card:focus-visible {
-    outline: 3px solid oklch(70% 0.2 280deg);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 1px oklch(70% 0.2 280deg / 0.3);
-  }
 
-  .tools-grid .tool-grid-item .tool-card {
-    outline: none;
+  /* Focus management - 50% transparent outline */
+  .tool-card:focus-visible {
+    outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+    outline-offset: 2px;
   }
 
   .tool-card:hover .tool-name {

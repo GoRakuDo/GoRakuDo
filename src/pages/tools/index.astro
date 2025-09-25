@@ -163,58 +163,10 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       .main-content button:not(.get-started-btn):not(.mobile-menu-btn)
     `);
     toolsPageElements.forEach(element => {
-      element.classList.add('micro-interaction-scale', 'focus-enhanced');
+      element.classList.add('micro-interaction-scale');
     });
 
-    // WCAG 2.1 Keyboard Navigation Enhancement
-    const toolCards = document.querySelectorAll('.tool-card');
-
-    toolCards.forEach((card, index) => {
-      // Add keyboard navigation support
-      card.addEventListener('keydown', function (e) {
-        const cards = Array.from(toolCards) as HTMLElement[];
-        const currentIndex = cards.indexOf(card as HTMLElement);
-
-        const keyboardEvent = e as KeyboardEvent;
-        switch (keyboardEvent.key) {
-          case 'ArrowRight':
-          case 'ArrowDown':
-            e.preventDefault();
-            const nextIndex = (currentIndex + 1) % cards.length;
-            cards[nextIndex].focus();
-            break;
-          case 'ArrowLeft':
-          case 'ArrowUp':
-            e.preventDefault();
-            const prevIndex =
-              currentIndex === 0 ? cards.length - 1 : currentIndex - 1;
-            cards[prevIndex].focus();
-            break;
-          case 'Home':
-            e.preventDefault();
-            cards[0].focus();
-            break;
-          case 'End':
-            e.preventDefault();
-            cards[cards.length - 1].focus();
-            break;
-          case 'Enter':
-          case ' ':
-            e.preventDefault();
-            (card as HTMLElement).click();
-            break;
-        }
-      });
-
-      // Add focus management
-      card.addEventListener('focus', function () {
-        (card as HTMLElement).scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-          inline: 'nearest',
-        });
-      });
-    });
+    // Tool card interactions simplified (keyboard navigation removed)
 
     console.log(
       '✅ Astro native micro-interactions and scroll reveals initialized'
@@ -240,16 +192,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         }, 150);
       });
 
-      // Keyboard navigation support
-      card.addEventListener('keydown', e => {
-        if (
-          (e as KeyboardEvent).key === ' ' ||
-          (e as KeyboardEvent).key === 'Enter'
-        ) {
-          e.preventDefault();
-          (card as HTMLAnchorElement).click();
-        }
-      });
+      // Click interaction only (keyboard navigation removed)
     });
   });
 </script>
