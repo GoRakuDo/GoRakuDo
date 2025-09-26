@@ -985,6 +985,7 @@ button:focus-visible,
     position: relative;
     overflow: hidden;
     border: 1px solid var(--clr-white-15);
+    border-radius: var(--border-radius-card);
     background: linear-gradient(
       135deg,
       var(--clr-white-08) 0%,
@@ -1204,7 +1205,10 @@ button:focus-visible,
  */
 
 /* ===== GLOBAL LISTS - W3SCHOOLS STANDARD WITH CUSTOM BULLETS ===== */
-.article-content ul {
+.article-content ul,
+.content-description-content ul {
+  width: 100%; /* Full width for better text flow */
+  max-width: 100%; /* Ensure full width utilization */
   margin: 1rem 0; /* Standard top/bottom margin */
   padding-left: 0; /* Remove default padding for custom positioning */
 
@@ -1212,46 +1216,100 @@ button:focus-visible,
   list-style: none; /* Remove default bullets for custom styling */
 }
 
-.article-content ul li {
+.article-content ul li,
+.content-description-content ul li {
   /* REASONING: Custom bullet with responsive positioning */
   position: relative;
-  margin-bottom: 0.5rem; /* Standard spacing between items */
-  padding-left: 1rem; /* Space for custom bullet - shorter */
-  line-height: 1.6; /* Standard line height for readability */
+  width: 100%; /* Full width for better text flow */
+  max-width: 100%; /* Ensure full width utilization */
+  margin-bottom: 0.75rem; /* Increased spacing for better readability */
+  padding-right: 0.5rem; /* Right padding for text balance */
+  padding-left: 1.5rem; /* More space for custom bullet */
+  line-height: 1.7; /* Improved line height for readability */
+  overflow-wrap: break-word; /* Handle long text gracefully */
+  hyphens: auto; /* Better text wrapping */
 }
 
-.article-content ul li::before {
+.article-content ul li::before,
+.content-description-content ul li::before {
   position: absolute;
-  top: 0;
+  top: 50%; /* Center vertically */
   left: 0;
   color: var(--clr-primary); /* Primary purple color */
-  font-size: 1rem; /* Standard font size */
+  font-size: 1.1rem; /* Slightly larger for better visibility */
   font-weight: 900; /* Bold weight for visibility */
+  line-height: 1; /* Prevent line height issues */
+  transform: translateY(-50%); /* Perfect vertical centering */
 
   /* REASONING: Custom bullet "〆" with primary purple color */
   content: '〆';
 }
 
 /* ===== GLOBAL ORDERED LISTS - W3SCHOOLS STANDARD ===== */
-.article-content ol {
+.article-content ol,
+.content-description-content ol {
+  width: 100%; /* Full width for better text flow */
+  max-width: 100%; /* Ensure full width utilization */
   margin: 1rem 0; /* Standard top/bottom margin */
-  padding-left: 1rem; /* Standard left padding for numbers - shorter */
+  padding-left: 1.5rem; /* Increased left padding for better number spacing */
 
   /* REASONING: W3Schools standard ordered list styling */
   list-style: decimal; /* Standard decimal numbers */
 }
 
-.article-content ol li {
+.article-content ol li,
+.content-description-content ol li {
   /* REASONING: W3Schools standard list item styling */
-  margin-bottom: 0.5rem; /* Standard spacing between items */
-  line-height: 1.6; /* Standard line height for readability */
+  width: 100%; /* Full width for better text flow */
+  max-width: 100%; /* Ensure full width utilization */
+  margin-bottom: 0.75rem; /* Increased spacing for better readability */
+  padding-right: 0.5rem; /* Right padding for text balance */
+  line-height: 1.7; /* Improved line height for readability */
+  overflow-wrap: break-word; /* Handle long text gracefully */
+  hyphens: auto; /* Better text wrapping */
 }
 
 /* ===== MARKER PSEUDO-ELEMENT STYLING ===== */
-.article-content ol li::marker {
+.article-content ol li::marker,
+.content-description-content ol li::marker {
   /* REASONING: Style the ::marker pseudo-element to fix browser console issues */
   color: var(--clr-primary); /* Primary purple color for numbers */
+  font-size: 1.1rem; /* Slightly larger for better visibility */
   font-weight: 700; /* Bold weight for visibility */
+}
+
+/* ===== RESPONSIVE LIST OPTIMIZATION ===== */
+@media (max-width: 768px) {
+  .article-content ul li,
+  .content-description-content ul li,
+  .article-content ol li,
+  .content-description-content ol li {
+    margin-bottom: 0.5rem; /* Tighter spacing on mobile */
+    padding-right: 0.25rem; /* Reduced right padding on mobile */
+    padding-left: 1.25rem; /* Slightly reduced padding on mobile */
+    line-height: 1.6; /* Slightly tighter line height on mobile */
+  }
+
+  .article-content ul li::before,
+  .content-description-content ul li::before {
+    font-size: 1rem; /* Standard size on mobile */
+  }
+
+  .article-content ol li::marker,
+  .content-description-content ol li::marker {
+    font-size: 1rem; /* Standard size on mobile */
+  }
+}
+
+@media (min-width: 1024px) {
+  .article-content ul li,
+  .content-description-content ul li,
+  .article-content ol li,
+  .content-description-content ol li {
+    margin-bottom: 0.875rem; /* More generous spacing on desktop */
+    padding-right: 0.75rem; /* More generous right padding on desktop */
+    padding-left: 1.75rem; /* More generous padding on desktop */
+  }
 }
 
 /* ===== GLOBAL NESTED LISTS - W3SCHOOLS STANDARD ===== */

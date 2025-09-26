@@ -1,0 +1,114 @@
+---
+// LanguageLearningProblems Component - 言語学習の問題点セクション
+import { Image } from 'astro:assets';
+import '../../styles/pages/pl-otodidak-bahasa-jepang/pl-otodidak-bahasa-jepang-index.css';
+
+export interface Props {
+  title: string;
+  subtitle: string;
+  problem1Title: string;
+  problem1Description: string;
+  problem1ImageSrc: any;
+  problem1ImageAlt: string;
+  problem2Title: string;
+  problem2Description: string;
+  problem2ImageSrc: any;
+  problem2ImageAlt: string;
+  problem3Title: string;
+  problem3Description: string;
+  problem3ImageSrc: any;
+  problem3ImageAlt: string;
+}
+
+const {
+  title,
+  subtitle,
+  problem1Title,
+  problem1Description,
+  problem1ImageSrc,
+  problem1ImageAlt,
+  problem2Title,
+  problem2Description,
+  problem2ImageSrc,
+  problem2ImageAlt,
+  problem3Title,
+  problem3Description,
+  problem3ImageSrc,
+  problem3ImageAlt,
+} = Astro.props;
+---
+
+<section class='language-learning-problems' aria-labelledby='problems-title'>
+  <div class='problems-container glassmorphism glassmorphism-card'>
+    <h2 class='problems-title' id='problems-title'>{title}</h2>
+
+    <div class='problems-subtitle'>
+      <p class='problems-subtitle-text'>{subtitle}</p>
+    </div>
+
+    <!-- Problem 1 -->
+    <ol class='problems-list'>
+      <li class='problem-item'>
+        <div class='problem-image-container'>
+          <Image
+            src={problem1ImageSrc}
+            alt={problem1ImageAlt}
+            width={134}
+            height={134}
+            loading='lazy'
+            decoding='async'
+            class='problem-image'
+            format='webp'
+            quality={85}
+          />
+        </div>
+        <p class='problem-text'>
+          {problem1Title}
+          <u>{problem1Description}</u>
+        </p>
+      </li>
+
+      <!-- Problem 2 -->
+      <li class='problem-item'>
+        <div class='problem-image-container'>
+          <Image
+            src={problem2ImageSrc}
+            alt={problem2ImageAlt}
+            width={134}
+            height={134}
+            loading='lazy'
+            decoding='async'
+            class='problem-image'
+            format='webp'
+            quality={85}
+          />
+        </div>
+        <p class='problem-text'>
+          {problem2Title}
+          <u>{problem2Description}</u>
+        </p>
+      </li>
+
+      <!-- Problem 3 -->
+      <li class='problem-item'>
+        <div class='problem-image-container'>
+          <Image
+            src={problem3ImageSrc}
+            alt={problem3ImageAlt}
+            width={134}
+            height={134}
+            loading='lazy'
+            decoding='async'
+            class='problem-image'
+            format='webp'
+            quality={85}
+          />
+        </div>
+        <p class='problem-text'>
+          {problem3Title}
+          <u>{problem3Description}</u>
+        </p>
+      </li>
+    </ol>
+  </div>
+</section>

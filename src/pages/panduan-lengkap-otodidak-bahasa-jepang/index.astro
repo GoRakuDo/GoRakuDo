@@ -1,0 +1,37 @@
+---
+// Japanese Learning Guide Page - 最適化されたページ
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const entry = await getEntry('pages', 'panduan-lengkap-otodidak-bahasa-jepang');
+const { Content } = await entry.render();
+
+const pageTitle = entry.data.title;
+const pageDescription = entry.data.description;
+const pageKeywords = [
+  'pembelajaran bahasa jepang',
+  'otodidak',
+  'panduan',
+  'N5',
+  'N4',
+  'N3',
+  'N2',
+  'N1',
+  'JLPT',
+  'ujian kemampuan bahasa jepang',
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  lang='id'
+  pageType='article'
+>
+  <main class='pl-guide-page' role='main'>
+    <div class='container'>
+      <Content />
+    </div>
+  </main>
+</BaseLayout>

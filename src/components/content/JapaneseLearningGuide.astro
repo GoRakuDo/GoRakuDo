@@ -1,0 +1,118 @@
+---
+// JapaneseLearningGuide Component - 最適化された日本語学習ガイド
+import { Image } from 'astro:assets';
+import '../../styles/pages/pl-otodidak-bahasa-jepang/pl-otodidak-bahasa-jepang-index.css';
+
+export interface Props {
+  contentTitle: string;
+  contentDescription: string;
+  priceOriginal: string;
+  priceCurrent: string;
+  priceDiscount: string;
+  imageSrc: any;
+  imageAlt: string;
+}
+
+const {
+  contentTitle,
+  contentDescription,
+  priceOriginal,
+  priceCurrent,
+  priceDiscount,
+  imageSrc,
+  imageAlt,
+} = Astro.props;
+const priceData = {
+  original: priceOriginal,
+  current: priceCurrent,
+  discount: priceDiscount,
+};
+---
+
+<!-- ヘッダーセクション -->
+<header class='title-section'>
+  <h1 class='page-title-main'>{contentTitle}</h1>
+</header>
+
+<!-- メインコンテンツ -->
+<div class='content-frame'>
+  <!-- コンテンツセクション -->
+  <div class='content-left'>
+    <section class='description-section' aria-labelledby='content-description'>
+      <div class='content-description-content' set:html={contentDescription} />
+    </section>
+
+    <section class='price-section' aria-labelledby='price-info'>
+      <div class='price-container'>
+        <!-- Price Display Row -->
+        <div class='price-row'>
+          <!-- Current Price with Bonus Badge -->
+          <div class='price-current-container'>
+            <div class='price-current-badge'>
+              <div class='discount-icon'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='16'
+                  height='16'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  class='lucide lucide-ticket-icon lucide-ticket'
+                >
+                  <path
+                    d='M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z'
+                  ></path>
+                  <path d='M13 5v2'></path>
+                  <path d='M13 17v2'></path>
+                  <path d='M13 11v2'></path>
+                </svg>
+              </div>
+              <span class='price-current-value'>{priceData.current}</span>
+            </div>
+          </div>
+
+          <!-- Original Price (Strikethrough) -->
+          {
+            priceData.original !== priceData.current && (
+              <div class='price-original-container'>
+                <span class='price-original-value'>{priceData.original}</span>
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Discount Message -->
+        {
+          priceData.discount && (
+            <div class='price-discount-message'>
+              <span class='discount-text'>
+                Hemat s.d {priceData.discount} Pakai Bonus
+              </span>
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </div>
+
+  <!-- 画像セクション -->
+  <aside class='content-right'>
+    <div class='image-container'>
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        width={400}
+        height={400}
+        loading='eager'
+        decoding='async'
+        class='hero-image'
+        format='webp'
+        quality={85}
+        sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px'
+      />
+    </div>
+  </aside>
+</div>
