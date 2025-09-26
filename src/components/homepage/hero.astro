@@ -10,7 +10,6 @@ const {
   ctaPrimary = 'Mulai Perjalananmu',
   ctaSecondary = 'Gabung Komunitas',
   missionId = 'mission',
-  invitationModalId = 'invitationModal',
   navbarSelector = '.navbar',
 } = Astro.props;
 ---
@@ -20,7 +19,6 @@ const {
          bg-gradient-to-b from-indigo-950 via-indigo-900 to-indigo-800'
   style='background: transparent;'
   data-mission-id={missionId}
-  data-invitation-modal-id={invitationModalId}
   data-navbar-selector={navbarSelector}
   transition:name='hero-section'
 >
@@ -93,7 +91,7 @@ const {
       <button
         type='button'
         class='secondary-button'
-        data-action='open-invitation'
+        data-action='open-discord'
         transition:name='hero-secondary-button'
       >
         <span class='button-text secondary-text'>{ctaSecondary}</span>
@@ -119,8 +117,6 @@ const {
     // Read server-provided values via data-* attributes (no ${...} inside script)
     const heroSection = document.querySelector('section[data-mission-id]');
     const MISSION_ID = heroSection?.dataset?.missionId || 'mission';
-    const INVITATION_MODAL_ID =
-      heroSection?.dataset?.invitationModalId || 'invitationModal';
     const NAVBAR_SELECTOR = heroSection?.dataset?.navbarSelector || '.navbar';
 
     // Reveal animation
@@ -135,32 +131,6 @@ const {
           'blur-md'
         );
       }, 300);
-    }
-
-    // Open modal
-    function openInvitationModal() {
-      try {
-        if (typeof window.openInvitationModal === 'function') {
-          window.openInvitationModal();
-        }
-      } catch (err) {
-        console.error('openInvitationModal error:', err);
-      }
-    }
-
-    // Close modal
-    function closeInvitationModal() {
-      try {
-        const modal = document.getElementById(INVITATION_MODAL_ID);
-        if (!modal) return;
-        modal.style.opacity = '0';
-        setTimeout(() => {
-          modal.style.display = 'none';
-          document.body.style.overflow = '';
-        }, 200);
-      } catch (err) {
-        console.error('closeInvitationModal error:', err);
-      }
     }
 
     // Scroll to mission
@@ -181,9 +151,9 @@ const {
           missionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           return;
         }
-        console.warn('Mission section not found.');
+        // Mission section not found
       } catch (err) {
-        console.error('scrollToMission error:', err);
+        // Scroll to mission error
       }
     }
 
@@ -194,14 +164,11 @@ const {
       const btn = el.closest('[data-action]');
       if (!btn) return;
       const action = btn.dataset.action;
-      if (action === 'open-invitation') openInvitationModal();
-      else if (action === 'scroll-to-mission') scrollToMission();
+      if (action === 'scroll-to-mission') scrollToMission();
+      else if (action === 'open-discord')
+        window.open('https://discord.gg/j8qmYPAGQh', '_blank');
       else if (action === 'go-to-posts') window.location.href = '/docs';
     });
-
-    // Register listener
-    window.addEventListener('open-invitation-modal', openInvitationModal);
-    window.addEventListener('close-invitation-modal', closeInvitationModal);
 
     // Global API removed - following Astro's static-first philosophy
 

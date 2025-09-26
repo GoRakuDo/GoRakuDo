@@ -1,12 +1,5 @@
 // Global TypeScript declarations for GoRakuDo
-
-// Vue Composition API globals for better integration
 declare global {
-  const defineProps: typeof import('vue')['defineProps'];
-  const defineEmits: typeof import('vue')['defineEmits'];
-  const ref: typeof import('vue')['ref'];
-  const computed: typeof import('vue')['computed'];
-  const onMounted: typeof import('vue')['onMounted'];
 
   interface Window {
     clientLogger: {
@@ -37,25 +30,9 @@ declare global {
     Fuse?: {
       search: (query: string) => unknown[];
     };
-    // ========== NAVBAR MODAL FUNCTIONS - TYPE SAFE ==========
-    /**
-     * Global function for opening invitation modal
-     * REASONING: Type-safe global function exposure for legacy compatibility
-     */
-    openInvitationModal?: () => void;
-    /**
-     * Global function for closing invitation modal
-     * REASONING: Type-safe global function exposure for legacy compatibility
-     */
-    closeInvitationModal?: () => void;
   }
 }
 
-// Vue module declaration for better TypeScript support
-declare module '*.vue' {
-  import type { DefineComponent } from 'vue';
-  const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, Record<string, unknown>>;
-  export default component;
-}
+// Vue module declaration removed - no Vue components in use
 
-export {};
+export { };

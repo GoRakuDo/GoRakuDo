@@ -291,10 +291,6 @@ body.modal-open {
   }
 }
 
-.mission-cta {
-  text-align: center;
-}
-
 /* ===== FEATURES SECTION ===== */
 .features-section {
   padding: var(--spacing-section-sm);
@@ -534,7 +530,7 @@ body.modal-open {
 
 /* ===== MODAL COMPONENT ===== */
 
-/* Note: Modal styles are now defined in InvitationModal.vue component */
+/* Note: Modal functionality has been removed */
 
 /* ===== HOMEPAGE SECTION BACKGROUNDS ===== */
 

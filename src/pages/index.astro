@@ -4,7 +4,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // Homepage specific components
 import Hero from '../components/homepage/hero.astro';
 import MissionSection from '../components/homepage/MissionSection.astro';
-import InvitationModal from '../components/common/InvitationModal.vue';
 import FeaturesSection from '../components/homepage/FeaturesSection.astro';
 import DocumentationPreviewSection from '../components/homepage/DocumentationPreviewSection.astro';
 
@@ -65,7 +64,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     <!-- Hero Section -->
     <Hero
       missionId='mission'
-      invitationModalId='invitationModal'
       titleLine1='Belajar Secara Alami,'
       titleLine2='Kuasai Layaknya Penutur Asli.'
     />
@@ -79,9 +77,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     <!-- Documentation Preview Section -->
     <DocumentationPreviewSection />
   </main>
-
-  <!-- Invitation Modal - Load only when needed -->
-  <InvitationModal client:idle />
 
   <!-- Enhanced wave animation is now handled by WaveAnimation component -->
   <!-- <script fetchpriority="auto" is:inline src="/core/hompage-script.js"></script> -->

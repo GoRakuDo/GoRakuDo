@@ -71,7 +71,9 @@ const {
     <WaveAnimation className='wave-canvas' backgroundLayer='normal' />
 
     <!-- この<slot />に、各ページのユニークなコンテンツが挿入されます -->
-    <slot />
+    <div class='layout-content'>
+      <slot />
+    </div>
 
     <!-- 共通のスクリプトなどがあればここに配置 -->
   </body>

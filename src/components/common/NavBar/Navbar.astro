@@ -16,9 +16,8 @@ const { className = '' } = Astro.props;
 // ========== NAVIGATION CONFIGURATION ==========
 // REASONING: Centralized route management following DRY principle
 const NAV_ROUTES = {
-  resources: { path: '/docs', label: 'Resources' },
-  posts: { path: '/docs', label: 'Posts' },
-  tools: { path: '/tools', label: 'Tools' },
+  Tutorial: { path: '/tools', label: 'Tutorial' },
+  Dokumentasi: { path: '/docs', label: 'Dokumentasi' },
 } as const;
 
 // ========== ASTRO-NATIVE NAVIGATION ITEMS ==========
@@ -721,16 +720,14 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
    * Navigation configuration - matches Astro component data
    */
   const NAV_ROUTES = {
-    resources: { path: '/docs', label: 'Resources' },
-    posts: { path: '/docs', label: 'Posts' },
-    tools: { path: '/tools', label: 'Tools' },
-    panduan: { path: '/docs', label: 'Panduan' },
+    Tutorial: { path: '/tools', label: 'Tutorial' },
+    Dokumentasi: { path: '/docs', label: 'Dokumentasi' },
   };
 
   /**
    * Open Discord invitation - 3-line function following KISS principle
    */
-  function openInvitationModal() {
+  function openDiscordLink() {
     window.open('https://discord.gg/j8qmYPAGQh', '_blank');
   }
 
@@ -788,9 +785,9 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     if (route) {
       navigateTo(route);
     } else if (action === 'discord') {
-      openInvitationModal();
+      openDiscordLink();
     } else if (action === 'metodologi') {
-      navigateTo('posts');
+      navigateTo('Dokumentasi');
     } else if (action === 'get-started') {
       handleGetStartedAction();
     }

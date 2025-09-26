@@ -1,0 +1,172 @@
+---
+interface Props {
+  text: string;
+  action?: string;
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  href?: string;
+  target?: string;
+  class?: string;
+}
+
+const {
+  text,
+  action,
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  href,
+  target,
+  class: className = '',
+} = Astro.props;
+
+const baseClasses = 'cta-button';
+const variantClasses = {
+  primary: 'cta-button--primary',
+  secondary: 'cta-button--secondary',
+};
+const sizeClasses = {
+  sm: 'cta-button--sm',
+  md: 'cta-button--md',
+  lg: 'cta-button--lg',
+};
+
+const buttonClasses = [
+  baseClasses,
+  variantClasses[variant],
+  sizeClasses[size],
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+const Tag = href ? 'a' : 'button';
+const tagProps = href ? { href, target } : { disabled };
+---
+
+<Tag class={buttonClasses} data-action={action} {...tagProps}>
+  {text}
+  <svg
+    width='20'
+    height='20'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    stroke-width='2'
+    stroke-linecap='round'
+    stroke-linejoin='round'
+    aria-hidden='true'
+  >
+    <path d='M5 12h14M12 5l7 7-7 7'></path>
+  </svg>
+</Tag>
+
+<style>
+  .cta-button {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 35px;
+    background: linear-gradient(
+      135deg,
+      var(--clr-accent) 0%,
+      oklch(60% 0.25 280deg) 100%
+    );
+    color: var(--clr-text-primary);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-3px);
+  }
+
+  .cta-button:focus-visible {
+    outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+    outline-offset: 2px;
+  }
+
+  .cta-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .cta-button:disabled:hover {
+    transform: none;
+  }
+
+  /* Variants */
+  .cta-button--primary {
+    background: linear-gradient(
+      135deg,
+      var(--clr-accent) 0%,
+      oklch(60% 0.25 280deg) 100%
+    );
+  }
+
+  .cta-button--secondary {
+    border: 1px solid var(--clr-border);
+    background: linear-gradient(
+      135deg,
+      var(--clr-bg-secondary) 0%,
+      var(--clr-bg-tertiary) 100%
+    );
+    color: var(--clr-text-secondary);
+  }
+
+  /* Sizes */
+  .cta-button--sm {
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 14px;
+  }
+
+  .cta-button--md {
+    padding: 16px 32px;
+    border-radius: 35px;
+    font-size: 16px;
+  }
+
+  .cta-button--lg {
+    padding: 20px 40px;
+    border-radius: 45px;
+    font-size: 18px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .cta-button--md {
+      padding: 14px 28px;
+      font-size: 15px;
+    }
+
+    .cta-button--lg {
+      padding: 16px 32px;
+      font-size: 16px;
+    }
+  }
+
+  /* Icon styling */
+  .cta-button svg {
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+  }
+
+  .cta-button:hover svg {
+    transform: translateX(2px);
+  }
+
+  .cta-button:disabled svg {
+    transform: none;
+  }
+</style>

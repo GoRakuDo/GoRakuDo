@@ -8,7 +8,7 @@ class WaveAnimation {
   constructor() {
     this.canvas = document.getElementById('waveCanvas');
     if (!this.canvas) {
-      console.warn('Wave canvas not found');
+      // Wave canvas not found
       return;
     }
 
@@ -85,7 +85,7 @@ class WaveAnimation {
     this.resizeCanvas();
     window.addEventListener('resize', () => this.resizeCanvas());
     this.animate();
-    console.log('🌊 Wave animation initialized');
+    // Wave animation initialized
   }
 
   resizeCanvas() {
@@ -173,7 +173,7 @@ class WaveAnimation {
 
 // Navigation and interaction functions - Make them globally accessible
 window.scrollToMission = function () {
-  console.log('📍 Calculating custom scroll to mission section...');
+  // Calculating custom scroll to mission section
   const missionSection = document.getElementById('mission');
   const navbar = document.querySelector('.navbar');
 
@@ -199,7 +199,7 @@ window.scrollToMission = function () {
     });
   } else {
     // Fallback in case something isn't found
-    console.warn('Mission section or navbar not found for custom scroll.');
+    // Mission section or navbar not found for custom scroll
     if (missionSection) {
       missionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -207,61 +207,13 @@ window.scrollToMission = function () {
 };
 
 window.goToPosts = function () {
-  console.log('📚 Navigating to posts...');
+  // Navigating to posts
   window.location.href = '/docs';
 };
 
-// Modal functions for invitation - Make them globally accessible
-window.openInvitationModal = function () {
-  console.log('🎯 Opening invitation modal...');
-  const modal = document.getElementById('invitationModal');
-  if (modal) {
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+// Modal functions removed - InvitationModal.vue has been deleted
 
-    // Add modal opening animation
-    setTimeout(() => {
-      modal.style.opacity = '1';
-      const modalContent = modal.querySelector('.modal-content');
-      if (modalContent) {
-        modalContent.style.transform = 'scale(1)';
-      }
-    }, 10);
-  } else {
-    console.warn('Invitation modal not found');
-  }
-};
-
-window.closeInvitationModal = function () {
-  console.log('❌ Closing invitation modal...');
-  const modal = document.getElementById('invitationModal');
-  if (modal) {
-    modal.style.opacity = '0';
-    const modalContent = modal.querySelector('.modal-content');
-    if (modalContent) {
-      modalContent.style.transform = 'scale(0.95)';
-    }
-
-    setTimeout(() => {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }, 200);
-  }
-};
-
-// Enhanced close modal functionality
-document.addEventListener('click', function (e) {
-  const modal = document.getElementById('invitationModal');
-  if (modal && e.target === modal) {
-    closeInvitationModal();
-  }
-});
-
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') {
-    closeInvitationModal();
-  }
-});
+// Modal event listeners removed - InvitationModal.vue has been deleted
 
 // Navbar scroll effect
 function handleNavbarScroll() {
@@ -356,7 +308,8 @@ function setupKeyboardNavigation() {
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && e.target.classList.contains('nav-item')) {
       if (e.target.textContent === 'Gabung Discord') {
-        openInvitationModal();
+        // Modal functionality removed - InvitationModal.vue has been deleted
+        // Discord button activated via keyboard
       }
     }
   });
@@ -367,7 +320,8 @@ function setupNavigationHandlers() {
   const navItems = document.querySelectorAll('.nav-item');
   navItems.forEach(item => {
     if (item.textContent === 'Gabung Discord') {
-      item.addEventListener('click', openInvitationModal);
+      // Modal functionality removed - InvitationModal.vue has been deleted
+      // Discord button clicked
     }
   });
 }
@@ -444,23 +398,22 @@ function setupLogoEffects() {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('🌊 GoRakuDo Homepage Loading...');
+  // GoRakuDo Homepage Loading
 
   // Check if all required elements exist
   const requiredElements = {
     waveCanvas: document.getElementById('waveCanvas'),
-    invitationModal: document.getElementById('invitationModal'),
     missionSection: document.getElementById('mission'),
     heroContent: document.querySelector('.hero-content'),
   };
-  console.log('🔍 Element check:', requiredElements);
+  // Element check completed
 
   // Initialize wave animation
   try {
     waveAnimation = new WaveAnimation();
-    console.log('✅ Wave animation initialized');
+    // Wave animation initialized successfully
   } catch (error) {
-    console.error('❌ Wave animation failed:', error);
+    // Wave animation failed
   }
 
   // Setup all event listeners and animations
@@ -471,12 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
   setupButtonEffects();
   setupLogoEffects();
 
-  // Test functions are accessible
-  console.log('🧪 Function availability check:');
-  console.log('scrollToMission:', typeof window.scrollToMission);
-  console.log('openInvitationModal:', typeof window.openInvitationModal);
-  console.log('closeInvitationModal:', typeof window.closeInvitationModal);
-  console.log('goToPosts:', typeof window.goToPosts);
+  // Function availability check completed
 
   // Window scroll events with throttling
   let scrollTimeout = null;
@@ -497,19 +445,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Add modal transition styles
-  const modal = document.getElementById('invitationModal');
-  if (modal) {
-    modal.style.opacity = '0';
-    modal.style.transition = 'opacity 0.3s ease';
-    const modalContent = modal.querySelector('.modal-content');
-    if (modalContent) {
-      modalContent.style.transform = 'scale(0.95)';
-      modalContent.style.transition = 'transform 0.3s ease';
-    }
-  }
+  // Modal styles removed - InvitationModal.vue has been deleted
 
-  console.log('✨ Homepage Loaded Successfully!');
+  // Homepage loaded successfully
 });
 
 // Utility function for smooth scrolling to any element

@@ -7,8 +7,8 @@
   /* ===== CORE COLOR TOKENS - FREQUENTLY USED VALUES ===== */
 
   /* Base color values - used 3+ times */
-  --token-white-base: oklch(100% 0 0deg);
-  --token-black-base: oklch(0% 0 0deg);
+  --token-white-base: oklch(95% 0.005 285deg);
+  --token-black-base: oklch(20% 0.005 285deg);
   --token-purple-base: oklch(65% 0.25 280deg);
   --token-gold-base: oklch(75% 0.12 85deg);
   --token-secondary-gold-base: oklch(75% 0.12 65deg);
@@ -307,7 +307,6 @@
   /* --- Reusable Components & Transitions --- */
   .primary-button,
   .secondary-button,
-  .cta-button,
   .docs-button,
   .get-started-btn,
   .nav-item,
@@ -336,30 +335,8 @@
   }
 
   /* Legacy button base styles - preserved exactly */
-  .cta-button {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 35px;
-    background: linear-gradient(
-      135deg,
-      var(--clr-accent) 0%,
-      oklch(60% 0.25 280deg) 100%
-    );
-    color: var(--clr-text-primary);
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
 
-  .cta-button:hover {
-    transform: translateY(-3px);
-  }
+  /* CTA button styles moved to CtaButton.astro component */
 
   /* Loading states - optimized to prevent layout shift */
   .loading {
@@ -1641,8 +1618,7 @@ button:focus-visible,
 .btn,
 .primary-button,
 .secondary-button,
-.hero-button,
-.cta-button {
+.hero-button {
   color: var(--clr-text-primary);
 }
 
@@ -1650,8 +1626,7 @@ button:focus-visible,
 .btn *,
 .primary-button *,
 .secondary-button *,
-.hero-button *,
-.cta-button * {
+.hero-button * {
   color: inherit;
 }
 
@@ -1659,7 +1634,6 @@ button:focus-visible,
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
 .hero-button:focus-visible,
-.cta-button:focus-visible,
 .docs-button:focus-visible,
 .get-started-btn:focus-visible,
 .discord-link:focus-visible {
@@ -1860,7 +1834,6 @@ button:focus-visible,
 /* Mobile (768px and below) */
 @media (max-width: 768px) {
   /* Button responsive styles */
-  .cta-button,
   .docs-button {
     padding: 14px 28px;
     font-size: 15px;
@@ -1968,5 +1941,50 @@ button:focus-visible,
 
   .glassmorphism:hover {
     transform: none;
+  }
+}
+
+/* ===== BOTTOM NAVIGATION BAR SPACING ===== */
+
+/* Add bottom margin for mobile devices to account for fixed BottomNavBar */
+
+/* Mobile-first approach: Add bottom spacing for screens below 1024px */
+@media (max-width: 1024px) {
+  /* Base layout content spacing */
+  .layout-content {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /* Article layout specific spacing */
+  .article-layout-container {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /* Post layout specific spacing */
+  .content-page {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /* Main content areas */
+  main {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /* Content wrappers */
+  .content-wrapper,
+  .article-content-wrapper {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Small screen adjustments (360px and below) */
+@media (max-width: 360px) {
+  .layout-content,
+  .article-layout-container,
+  .content-page,
+  main,
+  .content-wrapper,
+  .article-content-wrapper {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }
