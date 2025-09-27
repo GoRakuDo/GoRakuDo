@@ -1092,7 +1092,7 @@
 }
 
 /* モバイルデバイスでのSafe Area対応 */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .search-page {
     padding-top: max(
       var(--spacing-md),

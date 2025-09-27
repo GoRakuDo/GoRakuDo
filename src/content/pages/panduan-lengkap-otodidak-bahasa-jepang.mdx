@@ -8,14 +8,21 @@ status: 'published'
 
 import JapaneseLearningGuide from '../../components/content/JapaneseLearningGuide.astro';
 import LanguageLearningProblems from '../../components/content/LanguageLearningProblems.astro';
-import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.webp';
+import { Image } from 'astro:assets';
+
+import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.png';
+import ledgerPencil from '../../assets/images/pages/pl-obj/ledger-pencil.png';
+import heartOnFire from '../../assets/images/pages/pl-obj/heart-on-fire.png';
+import pageMedal from '../../assets/images/pages/pl-obj/page-medal.png';
+
+import tiredStudy from '../../assets/images/pages/pl-obj/gemini-tired-study.png';
 
 <JapaneseLearningGuide 
   contentTitle="Panduan Lengkap Belajar Bahasa Jepang Otodidak"
   contentDescription={`
     <p>Tertarik atau sedang belajar Bahasa Jepang? Banyak di internet, lembaga khursus, dan LPK yang menawakan tips-trik solusi untuk menguasai Bahasa Jepang, tetapi kenyataannya banyak yang stuck kesulitan dalam menjalankan proses pembelajarannya.</p>
 
-    <p>Dan kami 語楽道 ( GoRakuDo ) menawarkan solusi jitu yang berdasarakn "Linguistik Modern" yaitu <strong>Metode IMMERSION</strong>.</p>
+    <p>Dan kami 語楽道 ( GoRakuDo ) menawarkan solusi jitu yang berdasarkan "Linguistik Modern" yaitu <strong>Metode IMMERSION</strong>.</p>
 
 `}
 priceOriginal="¥ 40,980"
@@ -27,17 +34,44 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
 
 <LanguageLearningProblems
   title='Masalah dengan Pembelajaran Bahasa'
-  subtitle='Ada 3 masalah utama dalam pembelajaran bahasa (dan terutama aplikasi pembelajaran bahasa):'
-  problem1Title='Metode tradisional'
-  problem1Description='tidak berhasil'
-  problem1ImageSrc={flaticonJapanTorii}
+  subtitle='Ada 3 masalah utama dalam pembelajaran bahasa:'
+  problem1Title='Metode Tradisional'
+  problem1Description='tidak efektif, sehingga banyak yang gagal'
+  problem1ImageSrc={ledgerPencil}
   problem1ImageAlt='Metode pembelajaran bahasa tradisional'
   problem2Title='Motivasi'
-  problem2Description='tidak akan membawa Anda ke kefasihan'
-  problem2ImageSrc={flaticonJapanTorii}
+  problem2Description='tidak membuat kalian fasih'
+  problem2ImageSrc={heartOnFire}
   problem2ImageAlt='Motivasi untuk belajar bahasa baru'
   problem3Title='Sertifikasi'
-  problem3Description='tidak akan membawa Anda ke kefasihan'
-  problem3ImageSrc={flaticonJapanTorii}
+  problem3Description='tidak menjamin kefasihan'
+  problem3ImageSrc={pageMedal}
   problem3ImageAlt='Sertifikasi untuk belajar bahasa baru'
 />
+
+<div class="traditional-method-section">
+  <div class="traditional-method-container">
+    <h2 class="traditional-method-title">Kenapa Banyak yang Gagal, dengan Metode Tradisional?</h2>
+    
+    <div class="traditional-method-image">
+      <Image src={tiredStudy} alt='Tired study' width={400} height={400} />
+    </div>
+    
+    <div class="traditional-method-content">
+      <p>Metode Tradisional (Latihan, Menghafal Pola-kalimat dan Mempelajari Buku) seakan bisa membantu kalian memahami Bahasa Jepang, tetapi itu bukan cara yang manusiawi dalam belajar Bahasa Jepang. Alasannya akan kita bahas dalam bagian "Second Language Acquisition".</p>
+
+      <p>Jika tujuan kalian ingin bisa Bahasa Jepang secara fasih "Tanpa Loading diKepala", maka kalian harus belajar dengan cara yang alami layaknya kalian ketika mempelajari Bahasa Ibu (Bahasa Indonesia).</p>
+
+      <p>Konsep utama dalam Metodologi Immersion kita adalah "Comprehensible Input". Kita akan mempelajari Bahasa Jepang melalui konten yang mudah dipahami, seperti (YouTube / TV Jepang, Buku, Podcast, dll). Meskipun ada beberapa kata atau Pola-kalimat yang tidak kita mengerti, melalui media Native yang interaktif, kita akan mulai meresap dan membentuk Intuisi Bahasa Jepang.</p>
+    </div>
+
+  </div>
+</div>
+
+# Motivasi bagaikan angin yang bertiup
+
+Ayo jujur banyak dari kalian yang belajar Bahasa Jepang, tetapi "angin-anginan" doang, yap itulah Motivasi terkadang muncul entah kapan kita sendiri tidak tahu.
+
+Oleh karena itu, Belajar Bahasa Jepang dengan Metode Immersion kita tidak lagi mengandalkan motivasi, tetapi membentuk Atomic Habbits dan Mindset untuk menyerap Bahasa Jepang secara efektif.
+
+Dengan paparan Comprehensible Input secara konstan, dialam bawah sadar kita terus membentuk Intuisi Bahasa Jepang secara intuitif tanpa kita sadari. Layaknya kita semasa kecil belajar Bahasa Ibu (Bahasa Indonesia) tanpa kita sadari kita kemampuan berbahasa itu akan terbentuk secara alami dengan sendirinya.

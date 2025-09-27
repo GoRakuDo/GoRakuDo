@@ -263,29 +263,28 @@
   /* Critical styles - moved from @layer critical */
   html {
     scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
+    font-family: var(--font-primary);
 
     /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
-    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
     font-display: swap; /* Prevent layout shift during font loading */
     scroll-behavior: smooth !important;
     text-rendering: optimizespeed !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
-  }
-
-  body {
-    flex-direction: column;
-    background-color: var(--clr-background, var(--clr-background-fallback));
-    color: var(--clr-text-primary, var(--clr-text-primary-fallback));
 
     /* REASONING: Optimized font stack with Inter as primary to prevent layout shift */
-    font-family: var(--font-primary);
-    font-size: 1rem; /* 16px base - matches legacy */
+    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
     font-weight: 400;
     text-wrap: pretty !important;
     line-height: var(--orphan-line-height); /* Orphan prevention */
     letter-spacing: -0.01em; /* Slightly tighter for modern feel */
     word-spacing: var(--orphan-word-spacing); /* Orphan prevention */
+  }
+
+  body {
+    flex-direction: column;
+    background-color: var(--token-black-base);
+    color: var(--token-white-base);
   }
 
   /* REASONING: Preserving legacy layout structure */
@@ -512,6 +511,30 @@
     }
   }
 
+  /* Active state text-fill fix for WebKit (keep color on tap/click) */
+  :where(
+    p,
+    span,
+    div,
+    li,
+    a,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    small,
+    strong,
+    em,
+    code,
+    pre,
+    td,
+    th
+  ):active {
+    -webkit-text-fill-color: currentcolor !important;
+  }
+
   /* Improved form elements */
   button,
   input,
@@ -541,6 +564,10 @@
 
   a:hover {
     color: var(--clr-primary-dark);
+  }
+
+  a:active {
+    -webkit-text-fill-color: currentcolor !important;
   }
 
   img {
@@ -971,7 +998,6 @@ button:focus-visible,
       var(--clr-gold-dark) 70%
     );
     background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 
   @supports (background-clip: text) {
@@ -1387,16 +1413,7 @@ button:focus-visible,
 
 /* スマートフォンでのホバー効果を無効化 */
 @media (hover: none) and (pointer: coarse) {
-  /* すべてのホバー効果を無効化 */
-  *:hover {
-    background-color: inherit !important;
-    border-color: inherit !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    filter: none !important;
-    opacity: inherit !important;
-    transform: none !important;
-  }
+  /* 特定の要素のホバー効果のみ無効化（*:hover は削除） */
 
   /* 特定の要素のホバー効果を無効化 */
   button:hover,
@@ -1520,173 +1537,11 @@ button:focus-visible,
   }
 }
 
-/* ===== UNIVERSAL TEXT COLOR FIX ===== */
-
-/* 全デバイス（モバイル、タブレット、デスクトップ）での文字色を確実に白に保つ */
-
-/* 記事コンテンツの段落の文字色を強制的に白に設定 */
-.article-content p,
-.prose p,
-.content-main p,
-.prose-invert p,
-.mission-text p,
-.feature-description p,
-.docs-description p {
-  color: var(--clr-text-primary) !important;
-  -webkit-text-fill-color: var(--clr-text-primary) !important;
-}
-
-/* 記事コンテンツの見出しの文字色を強制的に白に設定 */
-.article-content h1,
-.article-content h2,
-.article-content h3,
-.article-content h4,
-.article-content h5,
-.article-content h6,
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6,
-.prose-invert h1,
-.prose-invert h2,
-.prose-invert h3,
-.prose-invert h4,
-.prose-invert h5,
-.prose-invert h6,
-.mission-title,
-.feature-title,
-.docs-title {
-  color: var(--clr-text-primary) !important;
-  -webkit-text-fill-color: var(--clr-text-primary) !important;
-}
-
-/* 記事コンテンツのリストアイテムの文字色を強制的に白に設定 */
-.article-content ul > li,
-.article-content ol > li,
-.prose ul > li,
-.prose ol > li,
-.prose-invert ul > li,
-.prose-invert ol > li {
-  color: var(--clr-text-primary) !important;
-  -webkit-text-fill-color: var(--clr-text-primary) !important;
-}
-
-/* 記事コンテンツのテキスト要素の文字色を強制的に白に設定 */
-.article-content,
-.prose,
-.prose-invert,
-.mission-section,
-.features-section,
-.docs-preview-section {
-  color: var(--clr-text-primary);
-}
-
-/* アニメーション要素が読み込まれた後も文字色を維持 */
-.loaded p,
-.loaded h1,
-.loaded h2,
-.loaded h3,
-.loaded h4,
-.loaded h5,
-.loaded h6,
-.loaded ul > li,
-.loaded ol > li,
-.loaded span,
-.loaded div {
-  color: var(--clr-text-primary) !important;
-  -webkit-text-fill-color: var(--clr-text-primary) !important;
-}
-
-/* ホームページのセクション要素の文字色を強制的に白に設定 */
-.mission-section,
-.features-section,
-.docs-preview-section,
-.hero-section {
-  color: var(--clr-text-primary);
-}
-
-.mission-section *,
-.features-section *,
-.docs-preview-section *,
-.hero-section * {
-  color: inherit;
-}
-
-/* ツールページの要素の文字色を強制的に白に設定 */
-.tools-grid,
-.tool-card,
-.tool-name,
-.tool-description-card,
-.tool-cta-text {
-  color: var(--clr-text-primary);
-}
-
-.tools-grid *,
-.tool-card * {
-  color: inherit;
-}
-
-/* ナビゲーション要素の文字色を強制的に白に設定 */
-.navbar,
-.nav-link,
-.navbar-item,
-.navbar-menu {
-  color: var(--clr-text-primary);
-}
-
-.navbar *,
-.nav-link *,
-.navbar-item *,
-.navbar-menu * {
-  color: inherit;
-}
-
-/* フッター要素の文字色を強制的に白に設定 */
-.footer,
-.footer-content,
-.footer-link {
-  color: var(--clr-text-primary);
-}
-
-.footer *,
-.footer-content *,
-.footer-link * {
-  color: inherit;
-}
-
-/* フォーム要素の文字色を強制的に白に設定 */
-.form-input,
-.form-textarea,
-.form-select,
-.form-label {
-  color: var(--clr-text-primary);
-}
-
-.form-input *,
-.form-textarea *,
-.form-select *,
-.form-label * {
-  color: inherit;
-}
-
-/* ボタン要素の文字色を強制的に白に設定 */
-.button,
-.btn,
-.primary-button,
-.secondary-button,
-.hero-button {
-  color: var(--clr-text-primary);
-}
-
-.button *,
-.btn *,
-.primary-button *,
-.secondary-button *,
-.hero-button * {
-  color: inherit;
-}
+/* ===== REMOVED: UNIVERSAL TEXT COLOR FIX =====
+   * グローバルな強制上書きは削除。
+   * 文字色は各コンポーネント・セクションで自然継承させ、
+   * :active の text-fill フィックスのみをグローバル維持。
+   */
 
 /* フォーカス状態のスタイル - 50%透明 */
 .primary-button:focus-visible,

@@ -116,7 +116,11 @@ export default defineConfig({
       },
     }),
     mcp(),
-    mdx(),
+    mdx({
+      extendMarkdownConfig: true,
+      gfm: true,
+      smartypants: true,
+    }),
     sitemap(),
   ],
 });

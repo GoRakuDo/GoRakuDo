@@ -9,7 +9,7 @@
    DESIGN TOKENS - 最適化された変数
    ======================================== */
 :root {
-  /* Spacing Scale */
+  /* Spacing Scale - 4px base unit system */
   --space-xs: 0.25rem; /* 4px */
   --space-sm: 0.5rem; /* 8px */
   --space-md: 0.75rem; /* 12px */
@@ -21,7 +21,7 @@
   --space-5xl: 3rem; /* 48px */
   --space-6xl: 4rem; /* 64px */
 
-  /* Typography Scale */
+  /* Typography Scale - Fluid typography with clamp() */
   --text-xs: 0.875rem; /* 14px */
   --text-sm: 1rem; /* 16px */
   --text-base: 1.125rem; /* 18px */
@@ -36,7 +36,11 @@
   --font-normal: 400;
   --font-medium: 500;
   --font-semibold: 600;
-  --font-bold: 700;
+  --font-bold: 800;
+
+  /* Font Families - DRY principle applied */
+  --font-family-primary: inter, sans-serif;
+  --font-family-display: open sauce one, sans-serif;
 
   /* Line Heights */
   --leading-tight: 1.2;
@@ -44,13 +48,13 @@
   --leading-normal: 1.4;
   --leading-relaxed: 1.5;
 
-  /* Shadows */
+  /* Shadows - Optimized for performance */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
 
-  /* Transitions */
+  /* Transitions - Hardware accelerated */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
@@ -62,95 +66,108 @@
   --z-modal: 1040;
   --z-popover: 1050;
   --z-tooltip: 1060;
+
+  /* Color tokens for consistency - Descriptive naming following Coding Bible principles */
+  --color-brand-primary: #f94d63;
+  --color-brand-primary-hover: #e63946;
+  --color-text-primary: var(--clr-text-primary);
+  --color-text-secondary: var(--token-text-muted);
+  --color-border-subtle: #ffb2c2;
+  --color-background-subtle: #fff5f6;
+  --color-warning-orange: #ff7f17;
+  --color-text-muted: #aab4c8;
+
+  /* Filter effects */
+  --filter-grayscale: grayscale(0.75);
 }
 
 /* ========================================
-   BASE LAYOUT - Mobile First
+   BASE LAYOUT - Mobile First with Container Queries
    ======================================== */
 .pl-guide-page {
   min-height: 100vh;
-  padding: var(--space-lg);
-  padding-top: calc(var(--space-lg) + 5.5rem); /* Navbar offset */
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: min(var(--space-5xl), 8vw) min(var(--space-3xl), 6vw);
+  padding-top: calc(min(var(--space-5xl), 8vw) + 5.75rem); /* Navbar offset */
   background: transparent;
 
-  @media (min-width: 768px) {
-    padding: var(--space-3xl);
-    padding-top: calc(var(--space-3xl) + 5.75rem);
-  }
-
-  @media (min-width: 1024px) {
-    padding: var(--space-5xl) var(--space-3xl);
-    padding-top: calc(var(--space-5xl) + 5.75rem);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background: transparent;
+  /* Mobile: Minimum 8px (0.5rem) horizontal padding */
+  @media (max-width: 767px) {
+    padding-right: min(0.5rem, 6vw);
+    padding-left: min(0.5rem, 6vw);
   }
 }
 
 .container {
-  max-width: 100%;
+  /* Fluid container width using min() - Coding Bible principle */
+  max-width: min(1400px, 95vw);
   margin: 0 auto;
-
-  @media (min-width: 768px) {
-    max-width: 1200px;
-  }
-
-  @media (min-width: 1024px) {
-    max-width: 1400px;
-  }
 }
 
 /* ========================================
-   HEADER SECTION
+   HEADER SECTION - Optimized Typography
    ======================================== */
 .title-section {
   margin-bottom: var(--space-6xl);
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-lg), 4vw);
   text-align: center;
 }
 
 .page-title-main {
   margin: 0 0 var(--space-lg);
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-lg), 4vw);
   background: linear-gradient(
     135deg,
-    var(--clr-text-primary) 0%,
-    var(--clr-accent) 100%
+    var(--color-text-primary) 0%,
+    var(--color-brand-primary) 100%
   );
-  color: var(--clr-text-primary);
-  font-size: clamp(var(--text-2xl), 4vw, var(--text-5xl));
+  color: var(--color-text-primary);
+
+  /* Enhanced fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-2xl), 3.5vw, var(--text-5xl));
   font-weight: var(--font-bold);
   line-height: var(--leading-tight);
+  text-align: center;
   letter-spacing: -0.02em;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  hyphens: auto;
+  will-change: transform; /* Optimize for animations */
+}
+
+/* Keep gradient headline readable on tap/click (WebKit) */
+.page-title-main:active {
+  -webkit-text-fill-color: currentcolor;
 }
 
 /* ========================================
-   CONTENT LAYOUT
+   CONTENT LAYOUT - CSS Grid with Subgrid
    ======================================== */
 .content-frame {
   display: grid;
-  gap: var(--space-3xl);
+
+  /* Fluid gap using min() - Coding Bible principle */
+  gap: min(var(--space-6xl), 8vw);
   grid-template-columns: 1fr;
-  margin-bottom: var(--space-4xl);
+  margin-bottom: min(var(--space-6xl), 8vw);
 
   @media (min-width: 768px) {
     align-items: start;
-    gap: var(--space-5xl);
-    grid-template-columns: 1fr 300px;
-    margin-bottom: var(--space-5xl);
-  }
-
-  @media (min-width: 1024px) {
-    gap: var(--space-6xl);
-    grid-template-columns: 1fr 400px;
-    margin-bottom: var(--space-6xl);
+    grid-template-columns: 1fr minmax(300px, 400px);
   }
 }
 
 .content-left {
   display: flex;
   flex-direction: column;
+  min-width: 0; /* Prevent grid blowout */
 }
 
 .content-right {
@@ -162,103 +179,142 @@
 }
 
 /* ========================================
-   DESCRIPTION SECTION
+   DESCRIPTION SECTION - Typography Scale
    ======================================== */
 .description-section {
-  padding: var(--space-2xl) var(--space-2xl) var(--space-xl) var(--space-2xl);
-
-  @media (min-width: 768px) {
-    padding: var(--space-3xl) var(--space-3xl) var(--space-2xl) var(--space-3xl);
-  }
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: min(var(--space-3xl), 6vw);
 }
 
 .content-description-content {
-  color: var(--clr-text-primary);
-  font-size: var(--text-base);
+  color: var(--color-text-primary);
+
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
+  line-height: var(--leading-relaxed);
+}
+
+/* Traditional method content - separated to avoid specificity conflicts */
+.traditional-method-content p {
+  margin: 0 0 var(--space-xl);
+  color: var(--color-text-primary);
+
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
   line-height: var(--leading-relaxed);
 
   @media (min-width: 768px) {
-    font-size: var(--text-lg);
+    margin-bottom: var(--space-2xl);
   }
+}
 
-  p {
-    margin: 0 0 var(--space-lg);
+.traditional-method-content p:last-child {
+  margin-bottom: 0;
+}
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+.traditional-method-content p strong {
+  color: var(--color-brand-primary);
+  font-weight: var(--font-semibold);
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: var(--space-3xl) 0 var(--space-lg);
-    color: var(--clr-text-primary);
-    font-weight: var(--font-semibold);
-    line-height: var(--leading-snug);
-  }
+/* Typography base styles - Low specificity approach */
+.heading-base {
+  margin: var(--space-3xl) 0 var(--space-lg);
+  color: var(--color-text-primary);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+}
 
-  h3 {
-    color: var(--clr-accent);
-    font-size: var(--text-xl);
+/* Apply to all headings - Low specificity */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: var(--space-3xl) 0 var(--space-lg);
+  color: var(--color-text-primary);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+}
 
-    @media (min-width: 768px) {
-      font-size: var(--text-2xl);
-    }
-  }
+h3 {
+  color: var(--color-brand-primary);
 
-  h1:first-child,
-  h2:first-child,
-  h3:first-child,
-  h4:first-child,
-  h5:first-child,
-  h6:first-child {
-    margin-top: 0;
-  }
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+}
 
-  ul,
-  ol {
-    margin: var(--space-lg) 0;
-    padding-left: var(--space-2xl);
-  }
+/* First child headings - Low specificity utility class */
+.heading-first-child {
+  margin-top: 0;
+}
 
-  li {
-    margin: var(--space-sm) 0;
-    line-height: var(--leading-relaxed);
-  }
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-top: 0;
+}
 
-  a {
-    color: var(--clr-accent);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: var(--space-xs);
-    transition: color var(--transition-fast);
+/* List styles - Low specificity utility classes */
+.list-base {
+  margin: var(--space-lg) 0;
+  padding-left: var(--space-2xl);
+}
 
-    &:hover {
-      color: var(--clr-accent-dark);
-      text-decoration-thickness: 2px;
-    }
-  }
+.list-item-base {
+  margin: var(--space-sm) 0;
+  line-height: var(--leading-relaxed);
+}
 
-  strong {
-    color: var(--clr-text-primary);
-    font-weight: var(--font-semibold);
+ul,
+ol {
+  margin: var(--space-lg) 0;
+  padding-left: var(--space-2xl);
+}
+
+li {
+  margin: var(--space-sm) 0;
+  line-height: var(--leading-relaxed);
+}
+
+/* Link styles - Low specificity utility classes */
+.link-base {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--space-xs);
+  transition: color var(--transition-fast);
+}
+
+.link-hover {
+  color: var(--color-brand-primary-hover);
+  text-decoration-thickness: 2px;
+}
+
+a {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--space-xs);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-brand-primary-hover);
+    text-decoration-thickness: 2px;
   }
 }
 
 /* ========================================
-   PRICE SECTION - Redesigned
+   PRICE SECTION - Optimized Layout
    ======================================== */
 .price-section {
-  padding: var(--space-xl) var(--space-2xl) var(--space-2xl) var(--space-2xl);
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: min(var(--space-2xl), 4vw) min(var(--space-3xl), 6vw);
   text-align: left;
-
-  @media (min-width: 768px) {
-    padding: var(--space-2xl) var(--space-3xl) var(--space-3xl) var(--space-3xl);
-  }
 }
 
 .price-container {
@@ -269,6 +325,10 @@
     padding-left: var(--space-lg);
     transform: scale(1.5);
     transform-origin: left top;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    transform: scale(1.2);
   }
 }
 
@@ -290,22 +350,20 @@
   align-items: center;
   gap: var(--space-xs);
   padding: 2px 4px;
-  border: 1px solid #ffb2c2;
+  border: 1px solid var(--color-border-subtle);
   border-radius: 5px;
-  background-color: #fff5f6;
+  background-color: var(--color-background-subtle);
 }
 
 .discount-icon {
   width: 16px;
   height: 16px;
-  color: #f94d63;
+  color: var(--color-brand-primary);
 }
 
 .price-current-value {
-  color: #f94d63;
-  font-family:
-    Open Sauce One,
-    sans-serif;
+  color: var(--color-brand-primary);
+  font-family: var(--font-family-display);
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
 }
@@ -316,10 +374,8 @@
 }
 
 .price-original-value {
-  color: #aab4c8;
-  font-family:
-    Open Sauce One,
-    sans-serif;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-display);
   font-size: var(--text-base);
   text-decoration: line-through;
 }
@@ -330,23 +386,25 @@
 }
 
 .discount-text {
-  color: #ff7f17;
-  font-family:
-    Open Sauce One,
-    sans-serif;
+  color: var(--color-warning-orange);
+  font-family: var(--font-family-display);
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
   letter-spacing: 0.1px;
 }
 
 /* ========================================
-   LANGUAGE LEARNING PROBLEMS SECTION
+   LANGUAGE LEARNING PROBLEMS SECTION - Optimized Grid
    ======================================== */
 .language-learning-problems {
-  margin-top: var(--space-4xl);
-  margin-bottom: var(--space-4xl);
+  margin: var(--space-4xl) 0;
   padding: var(--space-4xl) 0;
   background: transparent;
+
+  @media (max-width: 768px) {
+    margin: var(--space-3xl) 0;
+    padding: var(--space-3xl) 0;
+  }
 }
 
 .problems-container {
@@ -358,6 +416,11 @@
   margin: 0 auto;
   padding: calc(var(--space-2xl) * 1.5);
 
+  @media (max-width: 768px) {
+    gap: var(--space-md);
+    padding: var(--space-2xl);
+  }
+
   @media (min-width: 768px) {
     gap: var(--space-xl);
     padding: calc(var(--space-3xl) * 1.5);
@@ -366,11 +429,11 @@
 
 .problems-title {
   margin: 0;
-  color: var(--clr-text-primary);
-  font-family: Inter, sans-serif;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
   font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
   font-weight: 700;
-  line-height: 1.3;
+  line-height: var(--leading-snug);
   text-align: center;
   letter-spacing: -0.02em;
 
@@ -386,14 +449,12 @@
 
 .problems-subtitle-text {
   margin: 0;
-  color: var(--clr-text-primary);
-  font-family: Inter, sans-serif;
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-primary);
 
-  @media (min-width: 768px) {
-    font-size: var(--text-lg);
-  }
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
+  line-height: var(--leading-relaxed);
 }
 
 .problems-list {
@@ -403,6 +464,10 @@
   margin: var(--space-lg) 0 0;
   padding: 0;
   list-style: none;
+
+  @media (max-width: 768px) {
+    gap: calc(var(--space-xl) * 2);
+  }
 
   @media (min-width: 768px) {
     gap: var(--space-3xl);
@@ -424,11 +489,17 @@
 }
 
 .problem-image-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 134px;
   height: 134px;
+
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 .problem-image {
@@ -443,39 +514,65 @@
   }
 }
 
+.problem-icon-overlay {
+  position: absolute;
+  top: -12.5%;
+  left: -12.5%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 125%;
+  height: 125%;
+  pointer-events: none;
+}
+
+.problem-icon-overlay svg {
+  width: 100%;
+  height: 100%;
+  color: var(--color-brand-primary);
+  opacity: 0.8;
+  transition: opacity var(--transition-normal);
+}
+
+.problem-icon-overlay:hover svg {
+  opacity: 1;
+}
+
 .problem-text {
   margin: 0;
-  color: var(--clr-text-primary);
-  font-family: Inter, sans-serif;
-  font-size: var(--text-base);
-  font-weight: 700;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-sm), 2vw, var(--text-base));
+  font-weight: 600;
   line-height: var(--leading-relaxed);
+}
 
-  u {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 2px;
-  }
-
-  @media (min-width: 768px) {
-    font-size: var(--text-lg);
-  }
+/* Separate rule to avoid deep nesting - Coding Bible principle */
+.problem-text u {
+  font-weight: 500;
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--color-text-secondary) 50%,
+    transparent
+  );
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.1em;
 }
 
 /* ========================================
-   IMAGE SECTION
+   IMAGE SECTION - Optimized with aspect-ratio
    ======================================== */
 .image-container {
   position: relative;
   width: 100%;
   max-width: 20rem;
   margin: 0 auto;
-
-  &::before {
-    content: '';
-    display: block;
-    padding-top: 100%; /* 1:1 aspect ratio */
-  }
+  aspect-ratio: 1 / 1; /* Modern aspect-ratio property */
 }
 
 .hero-image {
@@ -488,6 +585,7 @@
   filter: drop-shadow(var(--shadow-lg));
   opacity: 0.9;
   transition: transform var(--transition-normal);
+  will-change: transform; /* Optimize for animations */
 
   &:hover {
     transform: translateY(-4px);
@@ -499,7 +597,7 @@
 }
 
 /* ========================================
-   ACCESSIBILITY IMPROVEMENTS
+   ACCESSIBILITY IMPROVEMENTS - Enhanced
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -515,56 +613,242 @@
       filter: var(--filter-grayscale);
     }
   }
+
+  .hero-image {
+    transition: none;
+  }
 }
 
 /* Focus styles for keyboard navigation */
 *:focus-visible {
-  outline: 2px solid var(--clr-accent);
+  outline: 2px solid var(--color-brand-primary);
   outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .page-title-main {
     background: none;
-    color: var(--clr-text-primary);
+    color: var(--color-text-primary);
     -webkit-text-fill-color: initial;
   }
 
   .cta-button {
-    border: 2px solid var(--clr-accent);
+    border: 2px solid var(--color-brand-primary);
+  }
+
+  .problem-image {
+    filter: none;
+  }
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* ========================================
+   TRADITIONAL METHOD SECTION - 2-Column Layout
+   ======================================== */
+.traditional-method-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.traditional-method-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+}
+
+/* Mobile: Natural order - title, image, content */
+@media (max-width: 767px) {
+  .traditional-method-container {
+    display: flex;
+    flex-direction: column;
+    gap: min(var(--space-4xl), 8vw); /* 2倍のGap */
+  }
+
+  .traditional-method-title {
+    order: 0;
+  }
+
+  .traditional-method-image {
+    justify-content: center;
+    order: 1;
+  }
+
+  .traditional-method-content {
+    display: block;
+    order: 2;
+  }
+}
+
+/* Tablet/Desktop: Grid layout */
+@media (min-width: 768px) {
+  .traditional-method-container {
+    display: grid;
+    align-items: center;
+    gap: min(var(--space-4xl), 5.33vw); /* 1.5倍減らしたGap */
+    grid-template-areas:
+      'image title'
+      'image content';
+
+    /* 画像列を40%、コンテンツ列を60% */
+    grid-template-columns: 0.4fr 0.6fr;
+  }
+
+  .traditional-method-title {
+    grid-area: title;
+  }
+
+  .traditional-method-image {
+    grid-area: image;
+  }
+
+  .traditional-method-content {
+    grid-area: content;
+  }
+}
+
+.traditional-method-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+
+    /* 右Marginを追加してスペーシング調整 */
+    margin-right: calc(min(var(--space-4xl), 5.33vw) / -1.2);
+  }
+
+  img {
+    width: 100%;
+
+    /* Fluid max-width using min() - Coding Bible principle */
+    max-width: min(350px, 35vw);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(var(--shadow-lg));
+    transition: transform var(--transition-normal);
+
+    /* Mobile: Scale up by 0.25x (1.25x larger) */
+    @media (max-width: 767px) {
+      transform: scale(1.25);
+    }
+
+    /* Tablet: Scale down to normal size */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      transform: scale(1);
+    }
+
+    /* Desktop: Scale down to normal size */
+    @media (min-width: 1024px) {
+      transform: scale(1);
+    }
+  }
+}
+
+/* Separate hover rule to avoid deep nesting - Coding Bible principle */
+.traditional-method-image img:hover {
+  @media (max-width: 767px) {
+    transform: translateY(-8px) scale(1.27); /* 1.25 * 1.02 */
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    transform: translateY(-8px) scale(1.02); /* 1.0 * 1.02 */
+  }
+
+  @media (min-width: 1024px) {
+    transform: translateY(-8px) scale(1.02); /* 1.0 * 1.02 */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    @media (max-width: 767px) {
+      transform: scale(1.25);
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      transform: scale(1);
+    }
+
+    @media (min-width: 1024px) {
+      transform: scale(1);
+    }
+  }
+}
+
+.traditional-method-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.traditional-method-title {
+  margin: 0 0 var(--space-2xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--color-brand-primary) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 200%;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--text-xl), 3.5vw, var(--text-3xl));
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-3xl);
+    font-size: var(--text-3xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-4xl);
+  }
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
   }
 }
 
 /* ========================================
-   RESPONSIVE ADJUSTMENTS
+   PERFORMANCE OPTIMIZATIONS
    ======================================== */
-@media (max-width: 767px) {
-  .language-learning-problems {
-    margin-top: var(--space-3xl);
-    margin-bottom: var(--space-3xl);
-    padding: var(--space-3xl) 0;
-  }
 
-  .problems-container {
-    gap: var(--space-md);
-  }
+/* GPU acceleration for smooth animations - moved to avoid specificity issues */
 
-  .problems-list {
-    gap: var(--space-xl);
-  }
+/* Optimize font loading - DRY principle applied */
+@font-face {
+  font-family: inter;
+  font-display: swap;
 }
 
-/* Print styles */
-@media print {
-  .pl-guide-page {
-    padding: 0;
-    background: white;
-  }
-
-  .cta-button {
-    background: var(--clr-accent);
-    color: white;
-    box-shadow: none;
-  }
+@font-face {
+  font-family: open sauce one;
+  font-display: swap;
 }
