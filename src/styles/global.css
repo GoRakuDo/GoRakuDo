@@ -1010,116 +1010,13 @@ button:focus-visible,
   .glassmorphism {
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--clr-white-15);
-    border-radius: var(--border-radius-card);
-    background: linear-gradient(
-      135deg,
-      var(--clr-white-08) 0%,
-      var(--clr-white-04) 50%,
-      var(--clr-white-06) 100%
-    );
-    transform: translateZ(0);
-    contain: layout style paint;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 16px;
+    background: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(20px);
     box-shadow:
-      0 8px 32px var(--clr-black-1),
-      0 4px 16px var(--clr-black-05),
-      inset 0 1px 0 var(--clr-white-2),
-      inset 0 -1px 0 var(--clr-white-1);
-
-    /* Reduced backdrop-filter for better Android performance */
-    backdrop-filter: blur(3px) saturate(110%) brightness(105%);
-    will-change: auto; /* Default to auto for better performance */
-  }
-
-  /* Enable will-change only during interactions */
-  .glassmorphism:hover,
-  .glassmorphism:focus {
-    will-change: transform, background, border-color, box-shadow;
-  }
-
-  .glassmorphism::before {
-    position: absolute;
-    z-index: 1;
-    background:
-      radial-gradient(
-        ellipse 200px 150px at 20% 30%,
-        var(--clr-white-02) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        ellipse 180px 120px at 80% 70%,
-        oklch(100% 0 0deg / 0.015) 0%,
-        transparent 45%
-      ),
-      radial-gradient(
-        ellipse 150px 200px at 60% 20%,
-        oklch(100% 0 0deg / 0.018) 0%,
-        transparent 40%
-      ),
-      radial-gradient(
-        ellipse 220px 100px at 10% 80%,
-        oklch(100% 0 0deg / 0.012) 0%,
-        transparent 35%
-      ),
-      radial-gradient(
-        ellipse 100px 180px at 90% 20%,
-        oklch(100% 0 0deg / 0.016) 0%,
-        transparent 38%
-      ),
-      radial-gradient(
-        ellipse 160px 140px at 40% 60%,
-        oklch(100% 0 0deg / 0.014) 0%,
-        transparent 42%
-      ),
-      radial-gradient(
-        ellipse 120px 160px at 70% 80%,
-        oklch(100% 0 0deg / 0.013) 0%,
-        transparent 36%
-      ),
-      radial-gradient(
-        ellipse 140px 110px at 30% 10%,
-        oklch(100% 0 0deg / 0.017) 0%,
-        transparent 44%
-      );
-    opacity: 0.8;
-    pointer-events: none;
-    inset: 0;
-    content: '';
-  }
-
-  .glassmorphism::after {
-    position: absolute;
-    z-index: 2;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-    opacity: 0.4;
-    pointer-events: none;
-    inset: 0;
-    content: '';
-  }
-
-  .glassmorphism:hover {
-    background: linear-gradient(
-      135deg,
-      var(--clr-white-12) 0%,
-      var(--clr-white-08) 50%,
-      var(--clr-white-1) 100%
-    );
-    border-color: var(--clr-white-25);
-    box-shadow:
-      0 16px 48px var(--clr-black-15),
-      0 8px 24px var(--clr-purple-1),
-      inset 0 1px 0 var(--clr-white-3),
-      inset 0 -1px 0 var(--clr-white-15);
-    backdrop-filter: blur(6px) saturate(120%) brightness(102%);
-    transform: translateY(-4px);
-  }
-
-  .glassmorphism:hover::before {
-    opacity: 0.8;
-  }
-
-  .glassmorphism:hover::after {
-    opacity: 1;
+      0 8px 32px rgb(0 0 0 / 0.1),
+      inset 0 1px 0 rgb(255 255 255 / 0.2);
   }
 
   /* GlassMorphism variants */
@@ -1127,7 +1024,135 @@ button:focus-visible,
     border-radius: var(--border-radius-card);
   }
 
-  /* GlassMorphism performance optimizations - merged above */
+  /* ========================================
+   IMAGE POPUP OVERLAY - Global Styles
+   ======================================== */
+
+  .image-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgb(0 0 0 / 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--transition-smooth),
+      visibility var(--transition-smooth);
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .image-popup-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+
+  .image-popup-close {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border: 2px solid oklch(95% 0.005 285deg / 0.3);
+    border-radius: 50%;
+    background: oklch(20% 0.01 270deg / 0.8);
+    color: oklch(95% 0.005 285deg);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transform: translateX(-50%);
+    backdrop-filter: blur(12px);
+    box-shadow:
+      0 4px 16px oklch(0% 0 0deg / 0.3),
+      0 2px 8px oklch(0% 0 0deg / 0.2),
+      inset 0 1px 0 oklch(95% 0.005 285deg / 0.1);
+    transition:
+      all var(--transition-smooth),
+      transform var(--transition-fast);
+
+    /* アクセシビリティ向上のためのフォーカス状態 */
+    &:focus-visible {
+      outline: 2px solid var(--clr-accent);
+      outline-offset: 2px;
+    }
+
+    /* ホバー効果の改善 */
+    &:hover {
+      background: oklch(25% 0.01 270deg / 0.9);
+      border-color: oklch(95% 0.005 285deg / 0.5);
+      color: oklch(98% 0.002 270deg);
+      transform: translateX(-50%) scale(1.05);
+      box-shadow:
+        0 6px 20px oklch(0% 0 0deg / 0.4),
+        0 3px 12px oklch(0% 0 0deg / 0.3),
+        inset 0 1px 0 oklch(95% 0.005 285deg / 0.2);
+    }
+
+    /* アクティブ状態 */
+    &:active {
+      background: oklch(15% 0.01 270deg / 0.95);
+      transform: translateX(-50%) scale(0.95);
+    }
+
+    /* モバイルでのタッチターゲット最適化（中央配置） */
+    @media (max-width: 768px) {
+      top: -55px;
+      left: 50%;
+      width: 39px;
+      height: 39px;
+      font-size: 1.2rem;
+      transform: translateX(-50%);
+    }
+
+    /* 高コントラストモード対応 */
+    @media (prefers-contrast: high) {
+      border-color: oklch(95% 0.005 285deg);
+      background: oklch(10% 0.01 270deg);
+      color: oklch(98% 0.002 270deg);
+    }
+
+    /* アニメーション軽減設定対応 */
+    @media (prefers-reduced-motion: reduce) {
+      transform: translateX(-50%);
+      transition: none;
+    }
+  }
+
+  .popup-image {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 8px;
+    object-fit: contain;
+    box-shadow: 0 8px 32px rgb(0 0 0 / 0.5);
+  }
+
+  .popup-caption {
+    margin: 0;
+    color: white;
+    font-size: var(--font-size-sm);
+    font-style: italic;
+    text-align: center;
+    opacity: 0.8;
+  }
 
   /* ===== LEGACY GRID UTILITIES - PRESERVED ===== */
   .grid-auto-fit {
@@ -1788,13 +1813,8 @@ button:focus-visible,
 
   /* Glassmorphism optimization for mobile */
   .glassmorphism {
-    backdrop-filter: none;
-    background: linear-gradient(
-      135deg,
-      var(--clr-white-12) 0%,
-      var(--clr-white-08) 50%,
-      var(--clr-white-10) 100%
-    );
+    backdrop-filter: blur(15px);
+    background: rgb(255 255 255 / 0.08);
   }
 }
 

@@ -60,12 +60,12 @@
   --transition-slow: 350ms ease-in-out;
 
   /* Z-Index Scale */
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal: 1040;
-  --z-popover: 1050;
-  --z-tooltip: 1060;
+  --z-dropdown: 500;
+  --z-sticky: 520;
+  --z-fixed: 530;
+  --z-modal: 540;
+  --z-popover: 550;
+  --z-tooltip: 560;
 
   /* Color tokens for consistency - Descriptive naming following Coding Bible principles */
   --color-brand-primary: #f94d63;
@@ -139,7 +139,6 @@
   overflow-wrap: break-word;
   word-break: break-all;
   hyphens: auto;
-  will-change: transform; /* Optimize for animations */
 }
 
 /* Keep gradient headline readable on tap/click (WebKit) */
@@ -194,12 +193,17 @@
   line-height: var(--leading-relaxed);
 }
 
-/* Traditional method content - separated to avoid specificity conflicts */
-.traditional-method-content p {
+/* ========================================
+   CONTENT PARAGRAPH STYLES - DRY Principle Applied
+   ======================================== */
+
+/* Apply to all content sections - Coding Bible Law 2: Avoid Duplication */
+.traditional-method-content p,
+.motivation-content p,
+.certificate-content p,
+.kaiwa-practice-content p {
   margin: 0 0 var(--space-xl);
   color: var(--color-text-primary);
-
-  /* Fluid typography with clamp() - Coding Bible principle */
   font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
   line-height: var(--leading-relaxed);
 
@@ -208,12 +212,70 @@
   }
 }
 
-.traditional-method-content p:last-child {
+/* Learning method content styles */
+.learning-method-content p {
+  margin: 0;
+  color: var(--color-text-primary);
+
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+  font-weight: var(--font-medium);
+  line-height: var(--leading-relaxed);
+}
+
+/* SLA content styles */
+.sla-content p {
+  margin: 0 0 var(--space-2xl);
+  color: var(--color-text-primary);
+
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
+  line-height: 1.6;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-3xl);
+  }
+}
+
+.krashen-quote p {
+  margin: 0 0 var(--space-lg);
+  color: rgb(255 255 255 / 0.95);
+  font-size: clamp(var(--text-lg), 2.5vw, var(--text-xl));
+  font-weight: var(--font-semibold);
+  font-style: italic;
+  line-height: 1.6;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+}
+
+.krashen-quote strong {
+  color: rgb(255 255 255 / 1);
+  font-weight: var(--font-bold);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+}
+
+.sla-content p:last-child {
   margin-bottom: 0;
 }
 
-.traditional-method-content p strong {
+/* Last child paragraph styles - DRY Principle */
+.traditional-method-content p:last-child,
+.motivation-content p:last-child,
+.certificate-content p:last-child,
+.kaiwa-practice-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Strong element styles - DRY Principle */
+.traditional-method-content p strong,
+.motivation-content p strong,
+.certificate-content p strong {
   color: var(--color-brand-primary);
+  font-weight: var(--font-semibold);
+}
+
+.kaiwa-practice-content p strong,
+.sla-content p strong {
+  color: var(--token-purple-base);
   font-weight: var(--font-semibold);
 }
 
@@ -585,7 +647,6 @@ a {
   filter: drop-shadow(var(--shadow-lg));
   opacity: 0.9;
   transition: transform var(--transition-normal);
-  will-change: transform; /* Optimize for animations */
 
   &:hover {
     transform: translateY(-4px);
@@ -671,16 +732,30 @@ a {
 
   /* Fluid padding using min() - Coding Bible principle */
   padding: 0 min(var(--space-xl), 4vw);
-}
 
-/* Mobile: Natural order - title, image, content */
-@media (max-width: 767px) {
-  .traditional-method-container {
+  /* Mobile: Natural order - title, image, content */
+  @media (max-width: 767px) {
     display: flex;
     flex-direction: column;
     gap: min(var(--space-4xl), 8vw); /* 2倍のGap */
   }
 
+  /* Tablet/Desktop: Grid layout */
+  @media (min-width: 768px) {
+    display: grid;
+    align-items: center;
+    gap: min(var(--space-4xl), 5.33vw); /* 1.5倍減らしたGap */
+    grid-template-areas:
+      'image title'
+      'image content';
+
+    /* 画像列を40%、コンテンツ列を60% */
+    grid-template-columns: 0.4fr 0.6fr;
+  }
+}
+
+/* Mobile: Natural order - title, image, content */
+@media (max-width: 767px) {
   .traditional-method-title {
     order: 0;
   }
@@ -698,18 +773,6 @@ a {
 
 /* Tablet/Desktop: Grid layout */
 @media (min-width: 768px) {
-  .traditional-method-container {
-    display: grid;
-    align-items: center;
-    gap: min(var(--space-4xl), 5.33vw); /* 1.5倍減らしたGap */
-    grid-template-areas:
-      'image title'
-      'image content';
-
-    /* 画像列を40%、コンテンツ列を60% */
-    grid-template-columns: 0.4fr 0.6fr;
-  }
-
   .traditional-method-title {
     grid-area: title;
   }
@@ -734,36 +797,84 @@ a {
     /* 右Marginを追加してスペーシング調整 */
     margin-right: calc(min(var(--space-4xl), 5.33vw) / -1.2);
   }
+}
 
-  img {
-    width: 100%;
+/* ========================================
+   SECTION IMAGE STYLES - DRY Principle Applied
+   ======================================== */
 
-    /* Fluid max-width using min() - Coding Bible principle */
-    max-width: min(350px, 35vw);
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(var(--shadow-lg));
-    transition: transform var(--transition-normal);
+/* Unified image styles for all sections - Coding Bible Law 2: Avoid Duplication */
+.traditional-method-image img,
+.motivation-image img,
+.certificate-image img {
+  width: 100%;
+  max-width: min(350px, 35vw);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(var(--shadow-lg));
+  transition: transform var(--transition-normal);
 
-    /* Mobile: Scale up by 0.25x (1.25x larger) */
-    @media (max-width: 767px) {
-      transform: scale(1.25);
-    }
+  /* Mobile: Scale up by 0.25x (1.25x larger) */
+  @media (max-width: 767px) {
+    transform: scale(1.25);
+  }
 
-    /* Tablet: Scale down to normal size */
-    @media (min-width: 768px) and (max-width: 1023px) {
-      transform: scale(1);
-    }
+  /* Tablet: Scale down to normal size */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    transform: scale(1);
+  }
 
-    /* Desktop: Scale down to normal size */
-    @media (min-width: 1024px) {
-      transform: scale(1);
-    }
+  /* Desktop: Scale down to normal size */
+  @media (min-width: 1024px) {
+    transform: scale(1);
   }
 }
 
-/* Separate hover rule to avoid deep nesting - Coding Bible principle */
-.traditional-method-image img:hover {
+.krashen-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
+
+  /* Mobile: Smaller image size */
+  @media (max-width: 767px) {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* Tablet and Desktop: Match image height to text height */
+  @media (min-width: 768px) {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* ========================================
+   IMAGE HOVER EFFECTS - DRY Principle Applied
+   ======================================== */
+
+/* Unified image styles for all sections - Coding Bible Law 2: Avoid Duplication */
+.traditional-method-image img,
+.motivation-image img,
+.certificate-image img,
+.kaiwa-practice-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.2);
+  transition: transform var(--transition-smooth);
+
+  @media (min-width: 768px) {
+    max-width: 550px;
+  }
+}
+
+/* Unified hover effects for all section images - Coding Bible Law 2: Avoid Duplication */
+.traditional-method-image img:hover,
+.motivation-image img:hover,
+.certificate-image img:hover,
+.kaiwa-practice-image img:hover {
   @media (max-width: 767px) {
     transform: translateY(-8px) scale(1.27); /* 1.25 * 1.02 */
   }
@@ -791,12 +902,27 @@ a {
   }
 }
 
-.traditional-method-content {
+/* ========================================
+   SECTION CONTENT STYLES - DRY Principle Applied
+   ======================================== */
+
+/* Unified content styles for all sections - Coding Bible Law 2: Avoid Duplication */
+.traditional-method-content,
+.motivation-content,
+.certificate-content,
+.kaiwa-practice-content {
   display: flex;
   flex-direction: column;
 }
 
-.traditional-method-title {
+/* ========================================
+   SECTION TITLES - DRY Principle Applied
+   ======================================== */
+
+/* Unified section title styles - Coding Bible Law 2: Avoid Duplication */
+.traditional-method-title,
+.motivation-title,
+.certificate-title {
   margin: 0 0 var(--space-2xl);
   background: linear-gradient(
     135deg,
@@ -825,6 +951,36 @@ a {
   }
 }
 
+/* Kaiwa Practice Title - Special styling to match learning-method-title */
+.kaiwa-practice-title {
+  margin: 0 0 var(--space-3xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--token-purple-base) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 200%;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--text-xl), 3.5vw, var(--text-3xl));
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-4xl);
+    font-size: var(--text-3xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-4xl);
+  }
+}
+
 @keyframes gradientShift {
   0%,
   100% {
@@ -833,6 +989,357 @@ a {
 
   50% {
     background-position: 100% 50%;
+  }
+}
+
+/* ========================================
+   MOTIVATION SECTION - 2-Column Layout
+   ======================================== */
+.motivation-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.motivation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+
+  /* Mobile: Natural order - title, image, content */
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    gap: min(var(--space-4xl), 8vw); /* 2倍のGap */
+  }
+
+  /* Tablet/Desktop: Grid layout */
+  @media (min-width: 768px) {
+    display: grid;
+    align-items: center;
+    gap: min(var(--space-4xl), 5.33vw); /* 1.5倍減らしたGap */
+    grid-template-areas:
+      'title image'
+      'content image';
+
+    /* 画像列を40%、コンテンツ列を60% */
+    grid-template-columns: 0.6fr 0.4fr;
+  }
+}
+
+/* Mobile: Natural order - title, image, content */
+@media (max-width: 767px) {
+  .motivation-title {
+    order: 0;
+  }
+
+  .motivation-image {
+    justify-content: center;
+    order: 1;
+  }
+
+  .motivation-content {
+    display: block;
+    order: 2;
+  }
+}
+
+/* Tablet/Desktop: Grid layout */
+@media (min-width: 768px) {
+  .motivation-title {
+    grid-area: title;
+  }
+
+  .motivation-image {
+    grid-area: image;
+  }
+
+  .motivation-content {
+    grid-area: content;
+  }
+}
+
+.motivation-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-end;
+
+    /* 左Marginを追加してスペーシング調整 */
+    margin-left: calc(min(var(--space-4xl), 5.33vw) / -1.2);
+  }
+}
+
+/* ========================================
+   CERTIFICATE SECTION - 2-Column Layout
+   ======================================== */
+.certificate-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.certificate-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+
+  /* Mobile: Natural order - title, image, content */
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: min(var(--space-4xl), 8vw); /* 2倍のGap */
+  }
+
+  /* Tablet/Desktop: Grid layout */
+  @media (min-width: 768px) {
+    display: grid;
+    align-items: center;
+    gap: min(var(--space-4xl), 5.33vw); /* 1.5倍減らしたGap */
+    grid-template-areas:
+      'image title'
+      'image content';
+
+    /* 画像列を40%、コンテンツ列を60% */
+    grid-template-columns: 0.4fr 0.6fr;
+  }
+}
+
+/* Mobile: Natural order - title, image, content */
+@media (max-width: 767px) {
+  .certificate-title {
+    order: 0;
+  }
+
+  .certificate-image {
+    justify-content: center;
+    order: 1;
+  }
+
+  .certificate-content {
+    display: block;
+    order: 2;
+  }
+}
+
+/* Tablet/Desktop: Grid layout */
+@media (min-width: 768px) {
+  .certificate-title {
+    grid-area: title;
+  }
+
+  .certificate-image {
+    grid-area: image;
+  }
+
+  .certificate-content {
+    grid-area: content;
+  }
+}
+
+.certificate-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+
+    /* 右Marginを追加してスペーシング調整 */
+    margin-right: calc(min(var(--space-4xl), 5.33vw) / -1.2);
+  }
+}
+
+/* ========================================
+   LEARNING METHOD SECTION - Centered Layout
+   ======================================== */
+.learning-method-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.learning-method-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: min(var(--space-3xl), 6vw) min(var(--space-xl), 4vw);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.2);
+  text-align: center;
+
+  @media (max-width: 768px) {
+    backdrop-filter: blur(15px);
+    background: rgb(255 255 255 / 0.08);
+  }
+}
+
+.learning-method-title {
+  margin: 0 0 var(--space-3xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--token-purple-base) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 200%;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--text-xl), 3.5vw, var(--text-3xl));
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-4xl);
+    font-size: var(--text-3xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-4xl);
+  }
+}
+
+.learning-method-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   SLA SECTION - Academic Style Layout
+   ======================================== */
+.sla-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.sla-container {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+}
+
+.sla-title {
+  margin: 0 0 var(--space-4xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--token-purple-base) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 200%;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--text-xl), 3.5vw, var(--text-3xl));
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  text-align: center;
+  letter-spacing: -0.02em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-5xl);
+    font-size: var(--text-3xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-4xl);
+  }
+}
+
+.sla-content {
+  margin-bottom: var(--space-5xl);
+}
+
+/* Krashen Quote Styles */
+.krashen-quote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  margin: var(--space-5xl) 0 0;
+  padding: var(--space-3xl);
+
+  /* Responsive adjustments for krashen-quote */
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+  }
+}
+
+.krashen-image {
+  flex-shrink: 0;
+  margin-top: var(--space-xs);
+
+  @media (min-width: 768px) {
+    padding-left: var(--space-lg);
+  }
+
+  /* Responsive adjustments for krashen-image */
+  @media (max-width: 767px) {
+    margin-top: 0;
+  }
+}
+
+.krashen-quote blockquote {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.krashen-quote cite {
+  display: block;
+  color: rgb(255 255 255 / 0.8);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  font-style: normal;
+  text-align: right;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+}
+
+/* Quote decoration */
+.krashen-quote::before {
+  content: '"';
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  color: rgb(255 255 255 / 0.2);
+  font-family: serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1;
+  text-shadow: 0 2px 4px rgb(0 0 0 / 0.3);
+
+  @media (min-width: 768px) {
+    top: var(--space-md);
+    left: var(--space-xl);
+  }
+
+  @media (min-width: 1024px) {
+    top: var(--space-sm);
+    left: var(--space-2xl);
   }
 }
 
@@ -851,4 +1358,93 @@ a {
 @font-face {
   font-family: open sauce one;
   font-display: swap;
+}
+
+/* ========================================
+   KAIWA PRACTICE SECTION - Chart Integration
+   ======================================== */
+.kaiwa-practice-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.kaiwa-practice-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+
+  /* Mobile: Natural order - title, image, content */
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: min(var(--space-4xl), 8vw); /* 2倍のGap */
+  }
+
+  /* Tablet/Desktop: Grid layout */
+  @media (min-width: 768px) {
+    display: grid;
+    align-items: center;
+    gap: min(var(--space-4xl), 5.33vw); /* 1.5倍減らしたGap */
+    grid-template-areas:
+      'image title'
+      'image content';
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.kaiwa-practice-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    justify-content: center;
+    align-items: center;
+    grid-area: image;
+    max-width: 600px; /* 画像コンテナの最大幅を拡大 */
+
+    /* 右Paddingを追加してスペーシング調整 */
+    padding-right: var(--space-lg);
+  }
+}
+
+.kaiwa-practice-caption {
+  margin: var(--space-sm) 0 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  line-height: 1.4;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    margin: var(--space-sm) 0 0 0;
+    text-align: center;
+  }
+}
+
+.kaiwa-practice-content {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    grid-area: content;
+  }
+}
+
+/* ========================================
+   KAIWA PRACTICE IMAGE CLICKABLE STYLES
+   ======================================== */
+.kaiwa-practice-image-clickable {
+  cursor: pointer;
+  transition: transform var(--transition-smooth);
+
+  @media (min-width: 768px) {
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
 }
