@@ -225,7 +225,10 @@
 }
 
 /* SLA content styles */
-.sla-content p {
+.sla-content p,
+.immersion-duration-content p,
+.methodology-summary-content p,
+.phase1-content p {
   margin: 0 0 var(--space-2xl);
   color: var(--color-text-primary);
 
@@ -252,6 +255,14 @@
   color: rgb(255 255 255 / 1);
   font-weight: var(--font-bold);
   text-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+}
+
+.phase1-goal p {
+  margin: 0;
+  color: var(--token-purple-base);
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-relaxed);
 }
 
 .sla-content p:last-child {
@@ -808,7 +819,8 @@ a {
 .traditional-method-image img,
 .motivation-image img,
 .certificate-image img,
-.comprehensible-input-image img {
+.comprehensible-input-image img,
+.phase1-image img {
   width: 100%;
   max-width: min(350px, 35vw);
   height: auto;
@@ -875,7 +887,8 @@ a {
 .motivation-image img:hover,
 .certificate-image img:hover,
 .kaiwa-practice-image img:hover,
-.comprehensible-input-image img:hover {
+.comprehensible-input-image img:hover,
+.phase1-image img:hover {
   @media (max-width: 767px) {
     transform: scale(1.27); /* 1.25 * 1.02 */
   }
@@ -1621,4 +1634,403 @@ a {
 
 .comprehensible-input-content h4:first-child {
   margin-top: 0;
+}
+
+/* ========================================
+   IMMERSION DURATION SECTION - Academic Style Layout
+   ======================================== */
+.immersion-duration-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.immersion-duration-container {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+}
+
+.immersion-duration-title {
+  margin: 0 0 var(--space-4xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--token-purple-base) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 200%;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--text-xl), 3.5vw, var(--text-3xl));
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  text-align: center;
+  letter-spacing: -0.02em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-5xl);
+    font-size: var(--text-3xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-4xl);
+  }
+}
+
+.immersion-duration-content {
+  margin-bottom: var(--space-5xl);
+}
+
+.immersion-duration-content p:last-child {
+  margin-bottom: 0;
+}
+
+.immersion-duration-content p strong {
+  color: var(--token-purple-base);
+  font-weight: var(--font-semibold);
+}
+
+/* Highlight underline styles for specific text */
+.immersion-duration-content .highlight-underline {
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--token-purple-base) 50%,
+    transparent
+  );
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.1em;
+  transition: text-decoration-color var(--transition-normal);
+
+  &:hover {
+    text-decoration-color: var(--token-purple-base);
+  }
+}
+
+/* ========================================
+   METHODOLOGY SUMMARY SECTION - Academic Style Layout
+   ======================================== */
+.methodology-summary-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.methodology-summary-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: min(var(--space-3xl), 6vw) min(var(--space-xl), 4vw);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.2);
+
+  @media (max-width: 768px) {
+    backdrop-filter: blur(15px);
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  @media (min-width: 768px) {
+    padding: min(var(--space-3xl), 6vw) min(calc(var(--space-xl) * 2), 6vw);
+  }
+}
+
+.methodology-summary-title {
+  margin: 0 0 var(--space-4xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--token-purple-base) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 200%;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--text-xl), 3.5vw, var(--text-3xl));
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  text-align: center;
+  letter-spacing: -0.02em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-5xl);
+    font-size: var(--text-3xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-4xl);
+  }
+}
+
+.methodology-summary-content {
+  margin-bottom: var(--space-5xl);
+}
+
+.methodology-summary-content p strong {
+  color: var(--token-purple-base);
+  font-weight: var(--font-semibold);
+}
+
+/* Methodology phases list styling */
+.methodology-phases-list {
+  margin: var(--space-2xl) 0 0;
+  padding-left: var(--space-2xl);
+  color: var(--color-text-primary);
+  list-style-type: decimal;
+  list-style-position: outside;
+
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
+  line-height: 1.6;
+
+  @media (min-width: 768px) {
+    margin-top: var(--space-3xl);
+    padding-left: var(--space-3xl);
+  }
+}
+
+.methodology-phases-list li {
+  margin: var(--space-lg) 0;
+  padding-left: var(--space-sm);
+}
+
+.methodology-phases-list li::marker {
+  color: var(--token-purple-base);
+  font-weight: var(--font-semibold);
+}
+
+.methodology-phases-list li strong {
+  color: var(--token-purple-base);
+  font-weight: var(--font-semibold);
+}
+
+/* ========================================
+   PHASE 1 SECTION - 2-Column Layout
+   ======================================== */
+.phase1-section {
+  margin: var(--space-6xl) 0;
+  padding: var(--space-4xl) 0;
+  background: transparent;
+}
+
+.phase1-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+
+  /* Mobile: Natural order - title, goal, image, content */
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    gap: min(var(--space-4xl), 8vw);
+  }
+
+  /* Tablet/Desktop: Grid layout */
+  @media (min-width: 768px) {
+    display: grid;
+    align-items: center;
+    gap: min(var(--space-4xl), 5.33vw);
+    grid-template-areas:
+      'title image'
+      'goal image'
+      'content image';
+
+    /* 画像列を40%、コンテンツ列を60% */
+    grid-template-columns: 0.6fr 0.4fr;
+  }
+}
+
+/* Mobile: Natural order - title, goal, image, content */
+@media (max-width: 767px) {
+  .phase1-title {
+    order: 0;
+  }
+
+  .phase1-goal {
+    order: 1;
+  }
+
+  .phase1-image {
+    justify-content: center;
+    order: 2;
+  }
+
+  .phase1-content {
+    display: block;
+    order: 3;
+  }
+}
+
+/* Tablet/Desktop: Grid layout */
+@media (min-width: 768px) {
+  .phase1-title {
+    grid-area: title;
+  }
+
+  .phase1-goal {
+    grid-area: goal;
+  }
+
+  .phase1-image {
+    grid-area: image;
+  }
+
+  .phase1-content {
+    grid-area: content;
+  }
+}
+
+.phase1-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-end;
+
+    /* 左Marginを追加してスペーシング調整 */
+    margin-left: calc(min(var(--space-4xl), 5.33vw) / 2);
+  }
+}
+
+/* ========================================
+   PHASE 1 TITLE - Purple Gradient
+   ======================================== */
+.phase1-title {
+  margin: 0 0 var(--space-2xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--token-purple-base) 50%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 200% 200%;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--text-xl), 3.5vw, var(--text-3xl));
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-3xl);
+    font-size: var(--text-3xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-4xl);
+  }
+}
+
+/* ========================================
+   PHASE 1 GOAL BLOCKQUOTE
+   ======================================== */
+.phase1-goal {
+  margin: 0 0 var(--space-2xl);
+  padding: var(--space-lg);
+  border-left: 4px solid var(--token-purple-base);
+  border-radius: 0 8px 8px 0;
+  background: rgb(255 255 255 / 0.05);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-3xl);
+    padding: var(--space-xl);
+  }
+}
+
+/* ========================================
+   PHASE 1 CONTENT STYLES
+   ======================================== */
+.phase1-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.phase1-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ========================================
+   PHASE 1 STEPS LIST STYLING
+   ======================================== */
+.phase1-steps-list {
+  margin: var(--space-2xl) 0 0;
+  padding-left: var(--space-2xl);
+  color: var(--color-text-primary);
+  list-style-type: decimal;
+  list-style-position: outside;
+
+  /* Fluid typography with clamp() - Coding Bible principle */
+  font-size: clamp(var(--text-base), 2.5vw, var(--text-lg));
+  line-height: 1.6;
+
+  @media (min-width: 768px) {
+    margin-top: var(--space-3xl);
+    padding-left: var(--space-3xl);
+  }
+}
+
+.phase1-steps-list li {
+  margin: var(--space-xl) 0;
+  padding-left: var(--space-sm);
+}
+
+.phase1-steps-list li strong {
+  color: var(--token-purple-base);
+  font-weight: var(--font-semibold);
+}
+
+/* Phase 1 Substeps (Nested Lists) */
+.phase1-substeps {
+  margin: var(--space-md) 0 0;
+  padding-left: var(--space-xl);
+  list-style-type: disc;
+  list-style-position: outside;
+}
+
+.phase1-substeps li {
+  margin: var(--space-sm) 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(var(--text-sm), 2.2vw, var(--text-base));
+  line-height: 1.5;
+}
+
+.phase1-substeps li strong {
+  color: var(--color-brand-primary);
+  font-weight: var(--font-semibold);
+}
+
+/* Phase 1 Links */
+.phase1-steps-list a,
+.phase1-substeps a {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--space-xs);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-brand-primary-hover);
+    text-decoration-thickness: 2px;
+  }
 }
