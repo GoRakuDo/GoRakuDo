@@ -92,7 +92,7 @@ const { headings = [] } = Astro.props
   .toc-container {
     position: sticky;
     top: 100px;
-    z-index: 10;
+    z-index: var(-z-TableOfContents-toc-container);
     overflow-x: hidden;
     width: 18rem;
     height: fit-content;
@@ -177,7 +177,7 @@ const { headings = [] } = Astro.props
     position: absolute;
     bottom: -35px;
     left: 50%;
-    z-index: 1000;
+    z-index: var(--z-TableOfContents-toc-toggle-after);
     padding: 4px 8px;
     border-radius: 4px;
     background: rgb(0 0 0 / 0.9);

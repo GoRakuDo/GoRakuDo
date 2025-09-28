@@ -136,7 +136,7 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
 
   .faq-item::before {
     position: absolute;
-    z-index: 1;
+    z-index: var(--z-FAQ-faq-item-before);
     background:
       radial-gradient(
         ellipse 200px 150px at 20% 30%,
@@ -177,7 +177,7 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
 
   .faq-button {
     position: relative;
-    z-index: 2;
+    z-index: var(--z-FAQ-faq-button);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -248,7 +248,7 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
 
   .faq-answer {
     position: relative;
-    z-index: 2;
+    z-index: var(--z-FAQ-faq-answer);
     padding: 0 1.5rem 1.5rem;
   }
 

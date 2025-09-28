@@ -250,6 +250,57 @@
   --z-content-main: 1;
   --z-content-progress: 50;
   --z-content-modal: 100;
+
+  /* Z-index scale - preserving legacy values */
+  --z-base: 0;
+  --z-docked: 10;
+  --z-dropdown: 1000; /* Legacy --z-dropdown */
+  --z-sticky: 1020; /* Legacy --z-sticky */
+  --z-fixed: 1030; /* Legacy --z-fixed */
+  --z-banner: 1200;
+  --z-modal-backdrop: 1040; /* Legacy --z-modal-backdrop */
+  --z-modal: 1050; /* Legacy --z-modal */
+  --z-overlay: 1300;
+  --z-popover: 1060; /* Legacy --z-popover */
+  --z-toast: 1500;
+  --z-tooltip: 1070; /* Legacy --z-tooltip */
+  --z-WaveAnimation-transparent-layer: -50;
+  --z-WaveAnimation-wave-animation-container: -75;
+  --z-WaveAnimation-wave-canvas: -60;
+  --z-SearchPopover-search-popover: 1000;
+  --z-SearchPopover-search-result-card-Hover: 10;
+  --z-SearchPopover-search-result-card-focus-visible: 10;
+  --z-SearchPopover-search-result-content: 1;
+  --z-BottomNavBar-bottom-nav: 1200;
+  --z-Navbar-navbar: 1000;
+  --z-FAQ-faq-item-before: 1;
+  --z-FAQ-faq-button: 2;
+  --z-FAQ-faq-answer: 2;
+  --z-TableOfContents-toc-container: 10;
+  --z-TableOfContents-toc-toggle-after: 1000;
+  --z-Tool-IdArticle-card-link: 1;
+  --z-card-link-before: -1;
+  --z-Tool-IdArticle-card-link-focus-visible: 1000;
+  --z-Tool-IdHeader-header-content-section: 1;
+  --z-Tool-IdHeader-header-bg: -1;
+  --z-Tools-Header-tools-header-bg: -1;
+  --z-Tools-Header-tools-header-content: 1;
+  --z-index-error-content: 2;
+  --z-index-floating-particle: -1;
+  --z-ImageSlideshow-long-press-indicator: 10;
+  --z-homepage-main-content-section: 20;
+  --z-docs-index-post-card-hover: 10;
+  --z-docs-index-post-emoji: 15;
+  --z-docs-index-post-title: 5;
+  --z-docs-index-post-meta: 5;
+  --z-docs-index-post-description: 5;
+  --z-docs-index-post-tags: 5;
+  --z-docs-index-read-more-btn: 5;
+  --z-search-index-category-item-before: -1;
+  --z-search-index-tag-item-before: -1;
+  --z-Tool-IdIndex-tool-main-content: 1;
+  --z-Tool-IdIndex-tool-main-content-before: -1;
+  --z-Tool-IdIndex-tarticle-progress: 1000;
 }
 
 /* ========== BASE LAYER - FOUNDATIONAL STYLES ========== */
@@ -919,20 +970,6 @@ button:focus-visible,
   /* Special shadows with color - preserving legacy values */
   --shadow-primary: 0 8px 24px oklch(65% 0.18 280deg / var(--opacity-3));
   --shadow-secondary: 0 4px 16px var(--clr-secondary-gold-25);
-
-  /* Z-index scale - preserving legacy values */
-  --z-base: 0;
-  --z-docked: 10;
-  --z-dropdown: 1000; /* Legacy --z-dropdown */
-  --z-sticky: 1020; /* Legacy --z-sticky */
-  --z-fixed: 1030; /* Legacy --z-fixed */
-  --z-banner: 1200;
-  --z-modal-backdrop: 1040; /* Legacy --z-modal-backdrop */
-  --z-modal: 1050; /* Legacy --z-modal */
-  --z-overlay: 1300;
-  --z-popover: 1060; /* Legacy --z-popover */
-  --z-toast: 1500;
-  --z-tooltip: 1070; /* Legacy --z-tooltip */
 
   /* Container breakpoints - preserving legacy */
   --container-xs: 320px; /* Legacy --container-xs */

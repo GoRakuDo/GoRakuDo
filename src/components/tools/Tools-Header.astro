@@ -209,7 +209,7 @@ const statsData = getStatsData(toolsCount);
   .tools-header-bg {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--z-Tools-Header-tools-header-bg);
 
     /* GlassMorphism効果はグローバルクラスで適用 */
   }
@@ -250,7 +250,7 @@ const statsData = getStatsData(toolsCount);
   /* ========== MAIN CONTENT ========== */
   .tools-header-content {
     position: relative;
-    z-index: 1;
+    z-index: var(--z-Tools-Header-tools-header-content);
     padding: var(--header-content-padding);
     text-align: center;
   }
