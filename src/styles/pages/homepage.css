@@ -535,7 +535,7 @@ body.modal-open {
 /* ===== HOMEPAGE SECTION BACKGROUNDS ===== */
 
 .main-content > section {
-  z-index: 20;
+  z-index: var(--z-homepage-main-content-section);
   background: transparent;
 }
 

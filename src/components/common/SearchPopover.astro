@@ -451,7 +451,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     position: relative;
     top: calc(5% + var(--sp-gap));
     left: 50%;
-    z-index: 1000;
+    z-index: var(--z-SearchPopover-search-popover);
     overflow: visible; /* ホバー時のクリッピングを防ぐ */
     min-width: clamp(320px, 55vw, 450px);
     max-width: 90vw;
@@ -827,7 +827,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 
   .search-result-card:hover {
     /* ホバー時のクリッピングを防ぐため、z-indexを上げる */
-    z-index: 10;
+    z-index: var(--z-SearchPopover-search-result-card-Hover);
     margin-right: -4px;
 
     /* ホバー時のマージンを調整してクリッピングを防ぐ */
@@ -862,7 +862,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 
   .search-result-card:focus-visible {
     /* フォーカス時のクリッピングを防ぐため、z-indexを上げる */
-    z-index: 10;
+    z-index: var(--z-SearchPopover-search-result-card-focus-visible);
     margin-right: -4px;
 
     /* フォーカス時のマージンを調整してクリッピングを防ぐ */
@@ -879,7 +879,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   /* カードコンテンツ（グローバルスタイル） */
   .search-result-content {
     position: relative;
-    z-index: 1;
+    z-index: var(--z-SearchPopover-search-result-content);
     display: flex;
     flex-direction: column;
     gap: var(--sp-gap-xs);

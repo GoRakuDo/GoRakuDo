@@ -144,7 +144,7 @@ const META_ITEMS = [
   /* Mobile First - Base Styles (320px+) */
   .header-content-section {
     position: relative;
-    z-index: 1;
+    z-index: var(--z-Tool-IdHeader-header-content-section);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -287,6 +287,6 @@ const META_ITEMS = [
   .header-bg {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: var(--z-Tool-IdHeader-header-bg);
   }
 </style>

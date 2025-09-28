@@ -312,7 +312,7 @@
 
 /* Card Hover Effects */
 .post-card:hover {
-  z-index: 10;
+  z-index: var(--z-docs-index-post-card-hover);
   background: linear-gradient(
     135deg,
     var(--clr-white-98) 0%,
@@ -333,7 +333,7 @@
   position: absolute;
   top: -0.5rem;
   right: -0.5rem;
-  z-index: 15;
+  z-index: var(--z-docs-index-post-emoji);
   overflow: visible;
   min-width: var(--emoji-size);
   max-width: none;
@@ -417,7 +417,7 @@
 /* Post Title */
 .post-title {
   position: relative;
-  z-index: 5;
+  z-index: var(--z-docs-index-post-title);
   min-height: 4rem;
   margin-bottom: 0.75rem;
   padding-right: 5rem;
@@ -489,7 +489,7 @@
 /* Post Meta */
 .post-meta {
   position: relative;
-  z-index: 5;
+  z-index: var(--z-docs-index-post-meta);
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -507,7 +507,7 @@
 /* Post Description */
 .post-description {
   position: relative;
-  z-index: 5;
+  z-index: var(--z-docs-index-post-description);
   display: -webkit-box;
   overflow: hidden;
   height: 4.2rem;
@@ -549,7 +549,7 @@
 /* Tags Container */
 .post-tags {
   position: relative;
-  z-index: 5;
+  z-index: var(--z-docs-index-post-tags);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -656,7 +656,7 @@
 /* Read More Button */
 .read-more-btn {
   position: relative;
-  z-index: 5;
+  z-index: var(--z-docs-index-read-more-btn);
   display: inline-flex;
   justify-content: center;
   align-items: center;

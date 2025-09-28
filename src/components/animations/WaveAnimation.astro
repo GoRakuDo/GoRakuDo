@@ -39,7 +39,7 @@ const config = {
     );
 
     position: fixed;
-    z-index: -50;
+    z-index: var(--z-WaveAnimation-transparent-layer);
     width: 100lvw;
     height: 100lvh;
     background: var(--bg-normal);
@@ -54,7 +54,7 @@ const config = {
 
   .wave-animation-container {
     position: fixed;
-    z-index: -75;
+    z-index: var(--z-WaveAnimation-wave-animation-container);
     width: 100lvw;
     height: 100lvh;
     pointer-events: none;
@@ -63,7 +63,7 @@ const config = {
 
   .wave-canvas {
     position: fixed;
-    z-index: -60;
+    z-index: var(--z-WaveAnimation-wave-canvas);
     width: 100lvw;
     height: 100lvh;
     pointer-events: none;

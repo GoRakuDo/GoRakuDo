@@ -78,7 +78,7 @@ if (redirectTarget) {
       .error-background {
         position: absolute;
         inset: 0;
-        z-index: 1;
+        z-index: var(--z-index-error-background);
         background:
           radial-gradient(
             circle at 20% 80%,
@@ -99,7 +99,7 @@ if (redirectTarget) {
 
       .error-content {
         position: relative;
-        z-index: 2;
+        z-index: var(--z-index-error-content);
         max-width: 600px;
         padding: 60px 40px;
         border: 1px solid rgb(139 93 255 / 0.1);

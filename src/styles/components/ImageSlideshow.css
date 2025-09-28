@@ -102,7 +102,7 @@
 
 /* Long-press indicator styles */
 .long-press-indicator {
-  z-index: 10;
+  z-index: var(--z-ImageSlideshow-long-press-indicator);
   backdrop-filter: blur(2px);
 }
 
