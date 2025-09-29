@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import vue from '@astrojs/vue';
 import tailwindcss from '@tailwindcss/vite';
 import mcp from 'astro-mcp';
 import sitemap from '@astrojs/sitemap';
@@ -36,6 +35,9 @@ export default defineConfig({
     placeholder: 'blur',
   },
 
+  // MDX support
+  integrations: [mdx()],
+
   // Vite optimization - Astro Native Best Practice
   vite: {
     plugins: [tailwindcss()],
@@ -53,9 +55,6 @@ export default defineConfig({
           assetFileNames: 'assets/[name]-[hash].[ext]',
           // Islands Architecture optimized chunking
           manualChunks: {
-            'vue-core': ['vue'],
-            'vue-runtime': ['vue/dist/runtime-dom.esm-bundler.js'],
-            'vue-components': ['@astrojs/vue'],
             'scripts-ui': ['./src/scripts/ui/docs-pagination.js'],
             'utils-core': [
               './src/utils/ai-content/content-analysis.js',
@@ -78,18 +77,7 @@ export default defineConfig({
       alias: {
         '@': './src',
       },
-      dedupe: ['vue', 'astro'],
-    },
-    optimizeDeps: {
-      include: ['vue'],
-      exclude: [],
-      force: false,
-      esbuildOptions: {
-        target: 'es2020',
-        supported: {
-          'top-level-await': true,
-        },
-      },
+      dedupe: ['astro'],
     },
     server: {
       hmr: {
@@ -103,24 +91,4 @@ export default defineConfig({
       __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
     },
   },
-
-  integrations: [
-    vue({
-      // Vue configuration for Islands Architecture
-      include: ['**/*.vue'],
-      experimentalReactivityTransform: false,
-      template: {
-        compilerOptions: {
-          isCustomElement: tag => tag.startsWith('ion-'),
-        },
-      },
-    }),
-    mcp(),
-    mdx({
-      extendMarkdownConfig: true,
-      gfm: true,
-      smartypants: true,
-    }),
-    sitemap(),
-  ],
 });

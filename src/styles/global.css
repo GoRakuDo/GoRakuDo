@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@plugin '@tailwindcss/typography';
+
 :root {
   /* ===== DESIGN TOKENS & CSS VARIABLES ===== */
   color-scheme: dark !important;
@@ -197,10 +199,16 @@
   --font-cursive: 'Cedarville Cursive', cursive;
   --font-family-base: var(--font-primary);
 
-  /* ===== ORPHAN PREVENTION SYSTEM ===== */
+  /* ===== ORPHAN PREVENTION SYSTEM - TAILWIND TYPOGRAPHY INTEGRATED ===== */
   --orphan-min-words: 3; /* 最小単語数でOrphanを防ぐ */
   --orphan-line-height: 1.6; /* 行間調整でOrphanを防ぐ */
   --orphan-word-spacing: 0.05em; /* 単語間隔調整 */
+
+  /* Responsive Orphan Prevention Variables */
+  --orphan-mobile-min-words: 2; /* モバイル用最小単語数 */
+  --orphan-desktop-min-words: 4; /* デスクトップ用最小単語数 */
+  --orphan-mobile-line-height: 1.6; /* モバイル用行間 */
+  --orphan-desktop-line-height: 1.7; /* デスクトップ用行間 */
 
   /* ===== SPACING & BORDERS ===== */
   --section-padding-y: clamp(80px, 10vw, 120px);
@@ -489,9 +497,9 @@
     -webkit-tap-highlight-color: transparent !important;
     -webkit-touch-callout: none !important;
 
-    /* Enhanced Orphan Prevention for Article Content */
-    orphans: 3;
-    widows: 3;
+    /* Enhanced Orphan Prevention for Article Content - Tailwind Typography Integrated */
+    orphans: var(--orphan-min-words);
+    widows: var(--orphan-min-words);
     text-wrap: pretty;
     line-height: var(--orphan-line-height);
     word-spacing: var(--orphan-word-spacing);
@@ -675,7 +683,7 @@
   clip-path: none;
 }
 
-/* ========== ARTICLE TYPOGRAPHY STYLES - PERFORMANCE OPTIMIZED ========== */
+/* ========== ARTICLE TYPOGRAPHY STYLES - TAILWIND TYPOGRAPHY INTEGRATED ========== */
 
 /* Custom typography for tool articles - mobile-first responsive design */
 .article-content {
@@ -683,9 +691,9 @@
   color: var(--clr-text-primary);
   line-height: var(--orphan-line-height); /* Orphan prevention */
 
-  /* Advanced Orphan Prevention for Article Content */
-  orphans: 3;
-  widows: 3;
+  /* Advanced Orphan Prevention for Article Content - Tailwind Typography Compatible */
+  orphans: var(--orphan-min-words);
+  widows: var(--orphan-min-words);
   text-wrap: pretty;
   word-spacing: var(--orphan-word-spacing);
 
@@ -694,6 +702,35 @@
   hyphenate-limit-chars: 6 3 3;
   hyphenate-limit-lines: 2;
   hyphenate-limit-last: always;
+}
+
+/* ===== TAILWIND TYPOGRAPHY ORPHAN PREVENTION INTEGRATION ===== */
+
+/* Enhanced prose classes with Orphan Prevention */
+.prose {
+  /* Ensure Orphan Prevention is applied to all prose elements */
+  orphans: var(--orphan-min-words);
+  widows: var(--orphan-min-words);
+  text-wrap: pretty;
+  line-height: var(--orphan-line-height);
+  word-spacing: var(--orphan-word-spacing);
+}
+
+/* Prose variants with specific Orphan Prevention settings */
+.prose-content {
+  orphans: var(--orphan-min-words);
+  widows: var(--orphan-min-words);
+  text-wrap: pretty;
+  line-height: var(--orphan-line-height);
+  word-spacing: var(--orphan-word-spacing);
+}
+
+.prose-go {
+  orphans: var(--orphan-min-words);
+  widows: var(--orphan-min-words);
+  text-wrap: pretty;
+  line-height: var(--orphan-line-height);
+  word-spacing: var(--orphan-word-spacing);
 }
 
 /* Headings - Mobile optimized */
@@ -1061,136 +1098,6 @@ button:focus-visible,
     border-radius: var(--border-radius-card);
   }
 
-  /* ========================================
-   IMAGE POPUP OVERLAY - Global Styles
-   ======================================== */
-
-  .image-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: rgb(0 0 0 / 0.9);
-    opacity: 0;
-    visibility: hidden;
-    transition:
-      opacity var(--transition-smooth),
-      visibility var(--transition-smooth);
-
-    &.active {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-  .image-popup-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
-    max-width: 90vw;
-    max-height: 90vh;
-  }
-
-  .image-popup-close {
-    position: absolute;
-    top: -50px;
-    left: 50%;
-    z-index: 10000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 36px;
-    height: 36px;
-    border: 2px solid oklch(95% 0.005 285deg / 0.3);
-    border-radius: 50%;
-    background: oklch(20% 0.01 270deg / 0.8);
-    color: oklch(95% 0.005 285deg);
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 1;
-    cursor: pointer;
-    transform: translateX(-50%);
-    backdrop-filter: blur(12px);
-    box-shadow:
-      0 4px 16px oklch(0% 0 0deg / 0.3),
-      0 2px 8px oklch(0% 0 0deg / 0.2),
-      inset 0 1px 0 oklch(95% 0.005 285deg / 0.1);
-    transition:
-      all var(--transition-smooth),
-      transform var(--transition-fast);
-
-    /* アクセシビリティ向上のためのフォーカス状態 */
-    &:focus-visible {
-      outline: 2px solid var(--clr-accent);
-      outline-offset: 2px;
-    }
-
-    /* ホバー効果の改善 */
-    &:hover {
-      background: oklch(25% 0.01 270deg / 0.9);
-      border-color: oklch(95% 0.005 285deg / 0.5);
-      color: oklch(98% 0.002 270deg);
-      transform: translateX(-50%) scale(1.05);
-      box-shadow:
-        0 6px 20px oklch(0% 0 0deg / 0.4),
-        0 3px 12px oklch(0% 0 0deg / 0.3),
-        inset 0 1px 0 oklch(95% 0.005 285deg / 0.2);
-    }
-
-    /* アクティブ状態 */
-    &:active {
-      background: oklch(15% 0.01 270deg / 0.95);
-      transform: translateX(-50%) scale(0.95);
-    }
-
-    /* モバイルでのタッチターゲット最適化（中央配置） */
-    @media (max-width: 768px) {
-      top: -55px;
-      left: 50%;
-      width: 39px;
-      height: 39px;
-      font-size: 1.2rem;
-      transform: translateX(-50%);
-    }
-
-    /* 高コントラストモード対応 */
-    @media (prefers-contrast: high) {
-      border-color: oklch(95% 0.005 285deg);
-      background: oklch(10% 0.01 270deg);
-      color: oklch(98% 0.002 270deg);
-    }
-
-    /* アニメーション軽減設定対応 */
-    @media (prefers-reduced-motion: reduce) {
-      transform: translateX(-50%);
-      transition: none;
-    }
-  }
-
-  .popup-image {
-    max-width: 100%;
-    max-height: 80vh;
-    border-radius: 8px;
-    object-fit: contain;
-    box-shadow: 0 8px 32px rgb(0 0 0 / 0.5);
-  }
-
-  .popup-caption {
-    margin: 0;
-    color: white;
-    font-size: var(--font-size-sm);
-    font-style: italic;
-    text-align: center;
-    opacity: 0.8;
-  }
-
   /* ===== LEGACY GRID UTILITIES - PRESERVED ===== */
   .grid-auto-fit {
     grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
@@ -1366,8 +1273,20 @@ button:focus-visible,
   font-weight: 700; /* Bold weight for visibility */
 }
 
-/* ===== RESPONSIVE LIST OPTIMIZATION ===== */
+/* ===== RESPONSIVE ORPHAN PREVENTION SYSTEM ===== */
+
+/* Mobile Orphan Prevention (768px and below) */
 @media (max-width: 768px) {
+  /* Mobile Orphan Prevention for all prose elements */
+  .prose p,
+  .prose li,
+  .article-content p,
+  .article-content li {
+    orphans: var(--orphan-mobile-min-words);
+    widows: var(--orphan-mobile-min-words);
+    line-height: var(--orphan-mobile-line-height);
+  }
+
   .article-content ul li,
   .content-description-content ul li,
   .article-content ol li,
@@ -1375,7 +1294,9 @@ button:focus-visible,
     margin-bottom: 0.5rem; /* Tighter spacing on mobile */
     padding-right: 0.25rem; /* Reduced right padding on mobile */
     padding-left: 1.25rem; /* Slightly reduced padding on mobile */
-    line-height: 1.6; /* Slightly tighter line height on mobile */
+    line-height: var(
+      --orphan-mobile-line-height
+    ); /* Mobile orphan prevention line height */
   }
 
   .article-content ul li::before,
@@ -1389,7 +1310,18 @@ button:focus-visible,
   }
 }
 
+/* Desktop Orphan Prevention (1024px and above) */
 @media (min-width: 1024px) {
+  /* Desktop Orphan Prevention for all prose elements */
+  .prose p,
+  .prose li,
+  .article-content p,
+  .article-content li {
+    orphans: var(--orphan-desktop-min-words);
+    widows: var(--orphan-desktop-min-words);
+    line-height: var(--orphan-desktop-line-height);
+  }
+
   .article-content ul li,
   .content-description-content ul li,
   .article-content ol li,
@@ -1397,6 +1329,9 @@ button:focus-visible,
     margin-bottom: 0.875rem; /* More generous spacing on desktop */
     padding-right: 0.75rem; /* More generous right padding on desktop */
     padding-left: 1.75rem; /* More generous padding on desktop */
+    line-height: var(
+      --orphan-desktop-line-height
+    ); /* Desktop orphan prevention line height */
   }
 }
 
@@ -1686,9 +1621,9 @@ button:focus-visible,
   .article-content p {
     margin-bottom: 1.25rem;
 
-    /* Responsive Orphan Prevention */
-    orphans: 2; /* Reduced for mobile */
-    widows: 2;
+    /* Responsive Orphan Prevention - Tailwind Typography Integrated */
+    orphans: var(--orphan-mobile-min-words); /* Dynamic mobile orphans */
+    widows: var(--orphan-mobile-min-words);
     text-wrap: pretty;
   }
 }
@@ -1698,9 +1633,9 @@ button:focus-visible,
   .article-content {
     font-size: 1.125rem; /* Larger base font for tablets */
 
-    /* Enhanced Orphan Prevention for Desktop */
-    orphans: 3;
-    widows: 3;
+    /* Enhanced Orphan Prevention for Desktop - Tailwind Typography Integrated */
+    orphans: var(--orphan-min-words);
+    widows: var(--orphan-min-words);
     text-wrap: pretty;
     word-spacing: var(--orphan-word-spacing);
   }
@@ -1744,11 +1679,11 @@ button:focus-visible,
   .article-content {
     font-size: 1.1875rem; /* Optimal reading size */
 
-    /* Maximum Orphan Prevention for Large Screens */
-    orphans: 4;
-    widows: 4;
+    /* Maximum Orphan Prevention for Large Screens - Tailwind Typography Integrated */
+    orphans: var(--orphan-desktop-min-words);
+    widows: var(--orphan-desktop-min-words);
     text-wrap: pretty;
-    line-height: var(--orphan-line-height);
+    line-height: var(--orphan-desktop-line-height);
     word-spacing: var(--orphan-word-spacing);
   }
 
@@ -1775,11 +1710,11 @@ button:focus-visible,
   .article-content {
     font-size: 1.25rem; /* Maximum readability */
 
-    /* Premium Orphan Prevention for Extra Large Screens */
-    orphans: 4;
-    widows: 4;
+    /* Premium Orphan Prevention for Extra Large Screens - Tailwind Typography Integrated */
+    orphans: var(--orphan-desktop-min-words);
+    widows: var(--orphan-desktop-min-words);
     text-wrap: pretty;
-    line-height: var(--orphan-line-height);
+    line-height: var(--orphan-desktop-line-height);
     word-spacing: var(--orphan-word-spacing);
 
     /* Advanced typography for large screens */

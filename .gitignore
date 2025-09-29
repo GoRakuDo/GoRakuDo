@@ -43,3 +43,6 @@ bmad-docs/
 secrets/
 secrets.json
 config/secrets.json
+
+# Moat task system
+.moat/

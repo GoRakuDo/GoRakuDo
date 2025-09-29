@@ -28,7 +28,6 @@
     "@astrojs/mdx": "^4.3.6",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/vue": "^5.1.0",
-    "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.0",
     "astro-mcp": "^0.4.1",
@@ -41,6 +40,7 @@
     "vue": "^3.5.18"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "@testing-library/jest-dom": "^6.8.0",
     "@types/dompurify": "^3.0.5",
     "@types/jest": "^30.0.0",

@@ -124,7 +124,8 @@
           "responsive",
           "screen",
           "layer",
-          "theme"
+          "theme",
+          "plugin"
         ]
       }
     ],

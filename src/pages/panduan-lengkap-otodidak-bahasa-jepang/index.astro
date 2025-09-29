@@ -1,9 +1,22 @@
 ---
 // Japanese Learning Guide Page - 最適化されたページ
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getEntry } from 'astro:content';
+import Prose from '../../components/Prose.astro';
+import { getCollection } from 'astro:content';
 
-const entry = await getEntry('pages', 'panduan-lengkap-otodidak-bahasa-jepang');
+// Get the specific page from the pages collection
+const pages = await getCollection('pages');
+const entry = pages.find(
+  page => page.slug === 'panduan-lengkap-otodidak-bahasa-jepang'
+);
+
+// Error handling if page not found
+if (!entry) {
+  throw new Error(
+    'Page "panduan-lengkap-otodidak-bahasa-jepang" not found in pages collection'
+  );
+}
+
 const { Content } = await entry.render();
 
 const pageTitle = entry.data.title;
@@ -29,14 +42,11 @@ const pageKeywords = [
   lang='id'
   pageType='article'
 >
-  <main class='pl-guide-page' role='main'>
-    <div class='container'>
-      <Content />
-    </div>
-  </main>
-
-  <script>
-    import { autoInitImagePopup } from '../../utils/image-popup';
-    autoInitImagePopup();
-  </script>
+  <Prose>
+    <main class='pl-guide-page' role='main'>
+      <div class='container'>
+        <Content />
+      </div>
+    </main>
+  </Prose>
 </BaseLayout>

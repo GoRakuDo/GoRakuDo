@@ -8,6 +8,7 @@ status: 'published'
 
 import JapaneseLearningGuide from '../../components/content/JapaneseLearningGuide.astro';
 import LanguageLearningProblems from '../../components/content/LanguageLearningProblems.astro';
+import KrashenQuote from '../../components/content/KrashenQuote.astro';
 import { Image } from 'astro:assets';
 
 import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.png';
@@ -24,7 +25,6 @@ import japaneseNativeVocabulary from '../../assets/images/pages/pl-obj/data/japa
 import membentukPondasiIntuisi from '../../assets/images/pages/pl-obj/gemini-membentuk-pondasi-intuisi.png';
 
 import rumusIntuisi from '../../assets/images/pages/pl-obj/data/rumus-intuisi.png';
-import krashenImage from '../../assets/images/krashen.webp';
 
 <JapaneseLearningGuide 
   contentTitle="Panduan Lengkap Belajar Bahasa Jepang Otodidak"
@@ -49,7 +49,7 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
   problem1ImageSrc={ledgerPencil}
   problem1ImageAlt='Metode pembelajaran bahasa tradisional'
   problem2Title='Motivasi'
-  problem2Description='tidak membuat kalian fasih'
+  problem2Description='tidak akan membuat kalian fasih'
   problem2ImageSrc={heartOnFire}
   problem2ImageAlt='Motivasi untuk belajar bahasa baru'
   problem3Title='Sertifikasi'
@@ -58,58 +58,58 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
   problem3ImageAlt='Sertifikasi untuk belajar bahasa baru'
 />
 
-<div class="traditional-method-section">
-  <div class="traditional-method-container">
-    <h2 class="traditional-method-title">Kenapa Banyak yang Gagal, dengan Metode Tradisional?</h2>
+<div class="content-section content-section--primary">
+  <div class="pl-objContainer pl-objContainer--image-left">
+    <h2 class="pl-objTitle pl-objTitle--primary">Kenapa Banyak yang Gagal, dengan Metode Tradisional?</h2>
     
-    <div class="traditional-method-image">
-      <Image src={tiredStudy} alt='Tired study' width={400} height={400} />
+    <div class="pl-objImages">
+      <Image src={tiredStudy} alt='Tired study' width={400} height={400} class="section-image" />
     </div>
     
-    <div class="traditional-method-content">
-      <p>Metode Tradisional (Latihan, Menghafal Pola-kalimat dan Mempelajari Buku) seakan bisa membantu kalian memahami Bahasa Jepang, tetapi itu bukan cara yang manusiawi dalam belajar Bahasa Jepang. Alasannya akan kita bahas dalam bagian "Second Language Acquisition".</p>
+    <div class="unified-content">
+      <p class="unified-content">Metode Tradisional (Latihan, Menghafal Pola-kalimat dan Mempelajari Buku) seakan bisa membantu kalian memahami Bahasa Jepang, tetapi itu bukan cara yang manusiawi dalam belajar Bahasa Jepang. Alasannya akan kita bahas dalam bagian "Second Language Acquisition".</p>
 
-      <p>Jika tujuan kalian ingin bisa Bahasa Jepang secara fasih "Tanpa Loading diKepala", maka kalian harus belajar dengan cara yang alami layaknya kalian ketika mempelajari Bahasa Ibu (Bahasa Indonesia).</p>
+      <p class="unified-content">Jika tujuan kalian ingin bisa Bahasa Jepang secara fasih "Tanpa Loading diKepala", maka kalian harus belajar dengan cara yang alami layaknya kalian ketika mempelajari Bahasa Ibu (Bahasa Indonesia).</p>
 
-      <p>Konsep utama dalam Metodologi Immersion kita adalah "Comprehensible Input". Kita akan mempelajari Bahasa Jepang melalui konten yang mudah dipahami, seperti (YouTube / TV Jepang, Buku, Podcast, dll). Meskipun ada beberapa kata atau Pola-kalimat yang tidak kita mengerti, melalui media Native yang interaktif, kita akan mulai meresap dan membentuk Intuisi Bahasa Jepang.</p>
-    </div>
-
-  </div>
-</div>
-
-<div class="motivation-section">
-  <div class="motivation-container">
-    <h2 class="motivation-title">Motivasi Bagaikan angin yang Bertiup</h2>
-    
-    <div class="motivation-image">
-      <Image src={motivationWind} alt='Motivasi Belajar Bahasa Jepang' width={400} height={400} />
-    </div>
-    
-    <div class="motivation-content">
-      <p>Ayo jujur banyak dari kalian yang belajar Bahasa Jepang, tetapi "angin-anginan" doang, yap itulah Motivasi terkadang muncul entah kapan kita sendiri tidak tahu.</p>
-
-      <p>Oleh karena itu, Belajar Bahasa Jepang dengan Metode Immersion kita tidak bisa mengandalkan motivasi, tetapi membentuk <strong>Atomic Habbits</strong> dan <strong>Mindset</strong> untuk menyerap Bahasa Jepang secara efektif.</p>
-
-      <p>Dengan paparan <strong>Comprehensible Input</strong> secara konstan, dialam bawah sadar kita terus membentuk Intuisi Bahasa Jepang secara intuitif tanpa kita sadari. Layaknya kita semasa kecil belajar Bahasa Ibu (Bahasa Indonesia) tanpa kita sadari kita kemampuan berbahasa itu akan terbentuk secara alami dengan sendirinya.</p>
+      <p class="unified-content">Konsep utama dalam Metodologi Immersion kita adalah "Comprehensible Input". Kita akan mempelajari Bahasa Jepang melalui konten yang mudah dipahami, seperti (YouTube / TV Jepang, Buku, Podcast, dll). Meskipun ada beberapa kata atau Pola-kalimat yang tidak kita mengerti, melalui media Native yang interaktif, kita akan mulai meresap dan membentuk Intuisi Bahasa Jepang.</p>
     </div>
 
   </div>
 </div>
 
-<div class="certificate-section">
-  <div class="certificate-container">
-    <h2 class="certificate-title">Selembar Sertifikat tidak Menjamin skill Bahasa Jepang-mu</h2>
+<div class="content-section content-section--primary">
+  <div class="pl-objContainer pl-objContainer--image-right">
+    <h2 class="pl-objTitle pl-objTitle--primary">Motivasi Bagaikan angin yang Bertiup</h2>
     
-    <div class="certificate-image">
-      <Image src={certificatedNervous} alt='Lolos Kaiwa JLPT N1' width={400} height={400} />
+    <div class="pl-objImages--right">
+      <Image src={motivationWind} alt='Motivasi Belajar Bahasa Jepang' width={400} height={400} class="section-image" />
     </div>
     
-    <div class="certificate-content">
-      <p>Kalian bisa punya seritifkat JLPT/JFT, tetapi sering kali yang "sudah" memiliki sertifikat JLPT N1 sekalipun masih ada yang kesulitan berbicara dengan native orang Jepang. Ini adalah masalah yang sering terjadi, <strong>banyak yang mengira dengan mereka bisa lolos ujian JLPT/JFT maka secara otomatis bisa langsung lancar Berbahasa Jepang?</strong> Ya, mungkin itu hanya didalam mimpi.</p>
+    <div class="unified-content">
+      <p class="unified-content">Ayo jujur banyak dari kalian yang belajar Bahasa Jepang, tetapi "angin-anginan" doang, yap itulah Motivasi terkadang muncul entah kapan kita sendiri tidak tahu.</p>
 
-      <p>Bagaimana sebaliknya seorang native penutur asli Bahasa Jepang, mereka tidak perlu memiliki sertifikat JLPT/JFT, tetapi bisa berbicara dengan baik dan lancar dalam Bahasa Jepang. Itulah yang menjadi target dalam Metodologi kita yang dinamakan <strong>"Nativeness"</strong>.</p>
+      <p class="unified-content">Oleh karena itu, Belajar Bahasa Jepang dengan Metode Immersion kita tidak bisa mengandalkan motivasi, tetapi membentuk <strong>Atomic Habbits</strong> dan <strong>Mindset</strong> untuk menyerap Bahasa Jepang secara efektif.</p>
 
-      <p>Dan kami 語楽道 ( GoRakuDo ) akan membantu kalian mencapai <strong>"Nativeness"</strong> ini.</p>
+      <p class="unified-content">Dengan paparan <strong>Comprehensible Input</strong> secara konstan, dialam bawah sadar kita terus membentuk Intuisi Bahasa Jepang secara intuitif tanpa kita sadari. Layaknya kita semasa kecil belajar Bahasa Ibu (Bahasa Indonesia) tanpa kita sadari kita kemampuan berbahasa itu akan terbentuk secara alami dengan sendirinya.</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="content-section content-section--primary">
+  <div class="pl-objContainer pl-objContainer--image-left">
+    <h2 class="pl-objTitle pl-objTitle--primary">Selembar Sertifikat tidak Menjamin skill Bahasa Jepang-mu</h2>
+    
+    <div class="pl-objImages">
+      <Image src={certificatedNervous} alt='Lolos Kaiwa JLPT N1' width={400} height={400} class="section-image" />
+    </div>
+    
+    <div class="unified-content">
+      <p class="unified-content">Kalian bisa punya seritifkat JLPT/JFT, tetapi sering kali yang "sudah" memiliki sertifikat JLPT N1 sekalipun masih ada yang kesulitan berbicara dengan native orang Jepang. Ini adalah masalah yang sering terjadi, <strong>banyak yang mengira dengan mereka bisa lolos ujian JLPT/JFT maka secara otomatis bisa langsung lancar Berbahasa Jepang?</strong> Ya, mungkin itu hanya didalam mimpi.</p>
+
+      <p class="unified-content">Bagaimana sebaliknya seorang native penutur asli Bahasa Jepang, mereka tidak perlu memiliki sertifikat JLPT/JFT, tetapi bisa berbicara dengan baik dan lancar dalam Bahasa Jepang. Itulah yang menjadi target dalam Metodologi kita yang dinamakan <strong>"Nativeness"</strong>.</p>
+
+      <p class="unified-content">Dan kami 語楽道 ( GoRakuDo ) akan membantu kalian mencapai <strong>"Nativeness"</strong> ini.</p>
     </div>
 
   </div>
@@ -117,10 +117,10 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
 
 <div class="learning-method-section">
   <div class="learning-method-container">
-    <h2 class="learning-method-title">Bagaimana Cara Belajar Bahasa Jepang</h2>
+    <h2 class="pl-objTitle pl-objTitle--secondary">Bagaimana Cara Belajar Bahasa Jepang</h2>
     
-    <div class="learning-method-content">
-      <p>Jadi apakah ada alternatif cara lain untuk belajar Bahasa Jepang?</p>
+    <div class="unified-content">
+      <p class="unified-content">Jadi apakah ada alternatif cara lain untuk belajar Bahasa Jepang?</p>
     </div>
 
   </div>
@@ -128,46 +128,42 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
 
 <div class="sla-section">
   <div class="sla-container">
-    <h2 class="sla-title">Second Language Acquisition (IMMERSION)</h2>
+    <h2 class="pl-objTitle pl-objTitle--secondary pl-objTitle--center">Second Language Acquisition (IMMERSION)</h2>
     
-    <div class="sla-content">
-      <p>Setelah tahun 1980an, ahli dalam bidang pembelajaran bahasa ke-2 (SLA) telah menemukan metode baru yang lebih efektif dalam pembelajaran bahasa, yaitu <strong>"Comprehensible Input"</strong>. Kita manusia mempelajari bahasa melalui "Input" yang bisa kita mengerti.</p>
+    <div class="unified-content">
+      <p class="unified-content">Setelah tahun 1980an, ahli dalam bidang pembelajaran bahasa ke-2 (SLA) telah menemukan metode baru yang lebih efektif dalam pembelajaran bahasa, yaitu <strong>"Comprehensible Input"</strong>. Kita manusia mempelajari bahasa melalui "Input" yang bisa kita mengerti.</p>
 
-      <p>Terlepas dari umur dan kemampuan intelektual, jika kita berada dalam lingkungan yang tepat dan terus terpapar dengan <strong>"Comprehensible Input"</strong>, maka secara disadari atau tidaknya otak alam bawah sadar kita akan melakukan "Acquisition" atau pattern matching yang nantinya akan membentuk Intuisi kemampuan Berbahasa Jepang secara alami. Yang perlu kita lakukan adalah upaya memahami Bahasa Jepang dalam bentuk <strong>"Comprehensible Input"</strong>.</p>
+      <p class="unified-content">Terlepas dari umur dan kemampuan intelektual, jika kita berada dalam lingkungan yang tepat dan terus terpapar dengan <strong>"Comprehensible Input"</strong>, maka secara disadari atau tidaknya otak alam bawah sadar kita akan melakukan "Acquisition" atau pattern matching yang nantinya akan membentuk Intuisi kemampuan Berbahasa Jepang secara alami. Yang perlu kita lakukan adalah upaya memahami Bahasa Jepang dalam bentuk <strong>"Comprehensible Input"</strong>.</p>
 
-      <p>Karena kurangnya minat masyarakat umum dalam Belajar Bahasa ke-2, sehingga Penemuan dalam bidang <strong>"Linguistik Modern"</strong> terjadi Bottleneck, dan kurangnya mendapatkan perhatian dari para guru atau pengajar bahasa ke-2. Terutama bidang (SLA) yang ada pada saat ini secara Metodologi tertinggal jauh seblum tahun 1980an.</p>
+      <p class="unified-content">Karena kurangnya minat masyarakat umum dalam Belajar Bahasa ke-2, sehingga Penemuan dalam bidang <strong>"Linguistik Modern"</strong> terjadi Bottleneck, dan kurangnya mendapatkan perhatian dari para guru atau pengajar bahasa ke-2. Terutama bidang (SLA) yang ada pada saat ini secara Metodologi tertinggal jauh seblum tahun 1980an.</p>
     </div>
 
-    <div class="krashen-quote glassmorphism">
-      <div class="krashen-image">
-        <Image src={krashenImage} alt="Stephen Krashen" width={80} height={80} />
-      </div>
-      <blockquote>
-        <p>"Kita Belajar Bahasa hanya melalui satu cara, yaitu <strong>"Comprehensible Input"</strong> di-lingkungan yang sesuai."</p>
-        <cite>— Stephen Krashen</cite>
-      </blockquote>
-    </div>
+    <KrashenQuote
+      quote='Kita Belajar Bahasa hanya melalui satu cara, yaitu <strong>"Comprehensible Input"</strong> di-lingkungan yang sesuai.'
+      author="Stephen Krashen"
+    />
 
   </div>
 </div>
 
-<div class="comprehensible-input-section">
-  <div class="comprehensible-input-container">
-    <h2 class="comprehensible-input-title">Apa Itu "Comprehensible Input"?</h2>
+<div class="content-section content-section--secondary">
+  <div class="pl-objContainer pl-objContainer--image-right">
+    <h2 class="pl-objTitle pl-objTitle--secondary">Apa Itu "Comprehensible Input"?</h2>
     
-    <div class="comprehensible-input-image">
+    <div class="pl-objImages--right">
       <Image 
         src={comprehensibleSnowball} 
         alt='Comprehensible Input Snowball Effect' 
         width={350}
         height={350}
+        class="section-image"
       />
     </div>
     
-    <div class="comprehensible-input-content">
-      <p>Comprehensible Input adalah salah satu bagian dari ke-5 hipotesis Krashen yang menjadi landasan dalam Metodologi Immersion. Simplenya input <strong>Materi Native</strong> yang dapat kita pahami, meskipun ada beberapa kata atau kalimat yang tidak kita mengerti.</p>
+    <div class="unified-content">
+      <p class="unified-content">Comprehensible Input adalah salah satu bagian dari ke-5 hipotesis Krashen yang menjadi landasan dalam Metodologi Immersion. Simplenya input <strong>Materi Native</strong> yang dapat kita pahami, meskipun ada beberapa kata atau kalimat yang tidak kita mengerti.</p>
 
-      <p>Ketika kalian konsumsi Materi Native dalam bentuk Comprehensible Input I+1 (Input yang dimengerti +1) akan diperoses oleh otak alam bawah sadar membentuk Intuisi sebagaimana Bahasa Jepang itu digunakan oleh Penutur Asli. Dengan meningkatkan "Difficulty (+1)", perlahan-lahan sering dengan waktu maka <strong>kemampuan Berbahasa Jepang akan terbentuk dengan sendirinya secara alami</strong>, layaknya "Snowball Effect".</p>
+      <p class="unified-content">Ketika kalian konsumsi Materi Native dalam bentuk Comprehensible Input I+1 (Input yang dimengerti +1) akan diperoses oleh otak alam bawah sadar membentuk Intuisi sebagaimana Bahasa Jepang itu digunakan oleh Penutur Asli. Dengan meningkatkan "Difficulty (+1)", perlahan-lahan sering dengan waktu maka <strong>kemampuan Berbahasa Jepang akan terbentuk dengan sendirinya secara alami</strong>, layaknya "Snowball Effect".</p>
 
       <h4>Formula kemampuan Berbahasa Jepang (Intuisi)</h4>
 
@@ -193,34 +189,28 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
 </div>
 
 <div class="kaiwa-practice-section">
-  <div class="kaiwa-practice-container">
-    <h2 class="kaiwa-practice-title">Gimana dengan Laithan Kaiwa?</h2>
+  <div class="pl-objContainer pl-objContainer--balanced pl-objContainer--special">
+    <h2 class="pl-objTitle pl-objTitle--secondary">Gimana dengan Laithan Kaiwa?</h2>
     
-    <div class="kaiwa-practice-image">
+    <div class="pl-objImages--special">
       <Image 
         src={japaneseNativeVocabulary} 
         alt='Data Kosakata Penutur Asli Bahasa Jepang' 
-        class="kaiwa-practice-image-clickable"
-        data-full-src={japaneseNativeVocabulary.src}
+        class="section-image image-zoom-trigger"
+        data-zoom-src="/src/assets/images/pages/pl-obj/data/japanese-native-speaker-vocabulary.png"
+        data-zoom-alt='Data Kosakata Penutur Asli Bahasa Jepang'
+        tabindex="0"
+        role="button"
+        aria-label="画像をクリックして拡大表示"
       />
       <p class="kaiwa-practice-caption">*Sumber: Penelitian Ogiwara (2016) and Sato et al. (2017)</p>
     </div>
 
-    {/* Image Popup Overlay */}
-    <div id="image-popup-overlay" class="image-popup-overlay">
-      <div class="image-popup-container">
-        <button class="image-popup-close" aria-label="Close image popup">&times;</button>
-        <img id="popup-image" class="popup-image" alt="Full size image" />
-        <p class="popup-caption">*Sumber: Penelitian Ogiwara (2016) and Sato et al. (2017)</p>
-      </div>
-    </div>
-
-
-    <div class="kaiwa-practice-content">
-      <p>Output dalam bentuk apaun, terutama tulis-menulis dan <strong>Latihan Kaiwa Bahasa Jepang</strong> sebelum kalian "Benar-benar" memahami Bagaimana Bahasa Jepang digunakan oleh Native akan menghambat perkembangan Intuisi Bahasa Jepang. Kenapa?</p>
-      <p>Logikanya adalah adanya relasi antara kemampuan Kosakata Bahasa Jepang kalian dengan kemampuan Output. Sehingga tidaklah logis jika kosakata kalian (1rb-2rb) ingin berbicara dengan lancar layaknya orang dewasa. Periksa tabel "JP Vocab Development".</p>
-      <p>Ya, realita ini memang bertentangan dengan Metode Tradisional di tempat Khursus atau LPK Bahasa Jepang yang memaksa kalian OUTPUT dari hari pertama belajar Bahasa Jepang. Output tulis-menulis dan Latihan Kaiwa Bahasa Jepang memang dapat melatih kemampuan berbahasa Jepang kalian, <strong>tetapi ketika kalian sudah "benar-benar" memiliki pondasi Kosakata dan memahami bagaimana Bahasa Jepang digunakan oleh Native dalam kehidupan sehari-hari.</strong></p>
-      <p>Minimalisir Early OUTPUT, dan fokus pada <strong>Comprehensible Input</strong> akan jauh lebih berkontribusi dalam perkembangan Intuisi Bahasa Jepang kalian.</p>
+    <div class="unified-content">
+      <p class="unified-content">Output dalam bentuk apaun, terutama tulis-menulis dan <strong>Latihan Kaiwa Bahasa Jepang</strong> sebelum kalian "Benar-benar" memahami Bagaimana Bahasa Jepang digunakan oleh Native akan menghambat perkembangan Intuisi Bahasa Jepang. Kenapa?</p>
+      <p class="unified-content">Logikanya adalah adanya relasi antara kemampuan Kosakata Bahasa Jepang kalian dengan kemampuan Output. Sehingga tidaklah logis jika kosakata kalian (1rb-2rb) ingin berbicara dengan lancar layaknya orang dewasa. Periksa tabel "JP Vocab Development".</p>
+      <p class="unified-content">Ya, realita ini memang bertentangan dengan Metode Tradisional di tempat Khursus atau LPK Bahasa Jepang yang memaksa kalian OUTPUT dari hari pertama belajar Bahasa Jepang. Output tulis-menulis dan Latihan Kaiwa Bahasa Jepang memang dapat melatih kemampuan berbahasa Jepang kalian, <strong>tetapi ketika kalian sudah "benar-benar" memiliki pondasi Kosakata dan memahami bagaimana Bahasa Jepang digunakan oleh Native dalam kehidupan sehari-hari.</strong></p>
+      <p class="unified-content">Minimalisir Early OUTPUT, dan fokus pada <strong>Comprehensible Input</strong> akan jauh lebih berkontribusi dalam perkembangan Intuisi Bahasa Jepang kalian.</p>
     </div>
 
   </div>
@@ -228,14 +218,14 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
 
 <div class="immersion-duration-section">
   <div class="immersion-duration-container">
-    <h2 class="immersion-duration-title">Berapa lama IMMERION sampai bisa Berbahasa Jepang dengan lancar?</h2>
+    <h2 class="pl-objTitle pl-objTitle--secondary pl-objTitle--center">Berapa lama IMMERION sampai bisa Berbahasa Jepang dengan lancar?</h2>
     
-    <div class="immersion-duration-content">
-      <p>Jawabannya adalah relative, bergantung pada dirikalian sendiri. Sesuai dengan "Formula Intusi" yang sudah kita bahas bersama sebelumnya, semua tergantung dengan effort kalian menyerap Bahasa Jepang secara rutin. Tidak ada jalan pintas, yang ada hanyalah rute jalan yang lebih efisien yaitu dengan <strong>"IMMERSION"</strong> berdasarkan pada Saintifik Modern Linguistik. Bukan hanya sehari 10-30 menit Belajar Bahasa Jepang, tatapi menjadikan Bahasa Jepang itu bagian dari sepenuhnya keseharian kalian.</p>
+    <div class="unified-content">
+      <p class="unified-content">Jawabannya adalah relative, bergantung pada dirikalian sendiri. Sesuai dengan "Formula Intusi" yang sudah kita bahas bersama sebelumnya, semua tergantung dengan effort kalian menyerap Bahasa Jepang secara rutin. Tidak ada jalan pintas, yang ada hanyalah rute jalan yang lebih efisien yaitu dengan <strong>"IMMERSION"</strong> berdasarkan pada Saintifik Modern Linguistik. Bukan hanya sehari 10-30 menit Belajar Bahasa Jepang, tatapi menjadikan Bahasa Jepang itu bagian dari sepenuhnya keseharian kalian.</p>
 
-      <p>Kita lihat realitanya, tidak ada bayi yang baru lahir 1-3 Tahun langsung bisa lancar berpidato dalam Bahasa Ibu-nya. Tetapi tunggu dulu, kita sebagai manusia dewasa yang memiliki prior-knowdlage dengan intensitas yang cukup dalam Immersion, intuisi Berbahasa Jepang kalian akan lebih mudah cepat terbentuk. Secara pastinya <u class="highlight-underline">dengan mengkonsumsi materi Comprehensible Input sehari 6-8 jam</u> secara rutin selama 1-2 tahun, kalian akan <u class="highlight-underline">jauh lebih fasih dalam Bahasa Jepang tanpa harus menghafal Pola-kalimat atau Tata-Bahasa Jepang</u>.</p>
+      <p class="unified-content">Kita lihat realitanya, tidak ada bayi yang baru lahir 1-3 Tahun langsung bisa lancar berpidato dalam Bahasa Ibu-nya. Tetapi tunggu dulu, kita sebagai manusia dewasa yang memiliki prior-knowdlage dengan intensitas yang cukup dalam Immersion, intuisi Berbahasa Jepang kalian akan lebih mudah cepat terbentuk. Secara pastinya <u class="highlight-underline">dengan mengkonsumsi materi Comprehensible Input sehari 6-8 jam</u> secara rutin selama 1-2 tahun, kalian akan <u class="highlight-underline">jauh lebih fasih dalam Bahasa Jepang tanpa harus menghafal Pola-kalimat atau Tata-Bahasa Jepang</u>.</p>
 
-      <p>Catatan: <u class="highlight-underline">Formula Intuisi tetap berlaku</u>.</p>
+      <p class="unified-content">Catatan: <u class="highlight-underline">Formula Intuisi tetap berlaku</u>.</p>
     </div>
 
   </div>
@@ -243,10 +233,10 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
 
 <div class="methodology-summary-section">
   <div class="methodology-summary-container">
-    <h3 class="methodology-summary-title">Rangkuman Metodologi IMMERSION</h3>
+    <h3 class="pl-objTitle pl-objTitle--secondary pl-objTitle--center">Rangkuman Metodologi IMMERSION</h3>
     
-    <div class="methodology-summary-content">
-      <p>Metodologi kita terfokus pada skill fundamental dalam Berbahasa Jepang, yang berdasarkan pada "Linguistik Modern" yaitu <strong>"IMMERSION"</strong>. Tetapi kita semua tahu perjalanan menguasai Bahasa Jepang itu tidak sesimple memasak mie-instant. Berikut adalah daftar rangkuman yang bisa kalian bisa aplikasikan unutk membentuk "Intusi Berbahasa Jepang" secara alami:</p>
+    <div class="unified-content">
+      <p class="unified-content">Metodologi kita terfokus pada skill fundamental dalam Berbahasa Jepang, yang berdasarkan pada "Linguistik Modern" yaitu <strong>"IMMERSION"</strong>. Tetapi kita semua tahu perjalanan menguasai Bahasa Jepang itu tidak sesimple memasak mie-instant. Berikut adalah daftar rangkuman yang bisa kalian bisa aplikasikan unutk membentuk "Intusi Berbahasa Jepang" secara alami:</p>
 
       <ol class="methodology-phases-list">
         <li><strong>Pahase 1 (幼級)</strong>: Membentuk Pondasi Intuisi</li>
@@ -260,25 +250,26 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
   </div>
 </div>
 
-<div class="phase1-section">
-  <div class="phase1-container">
-    <h2 class="phase1-title">Pahase 1 ( 幼級 ): Membentuk Pondasi Intuisi Berbahasa Jepang</h2>
+<div class="content-section content-section--secondary">
+  <div class="pl-objContainer pl-objContainer--phase1">
+    <h2 class="pl-objTitle pl-objTitle--secondary">Pahase 1 ( 幼級 ): Membentuk Pondasi Intuisi Berbahasa Jepang</h2>
     
-    <blockquote class="phase1-goal">
+    <blockquote class="phase-goal">
       <p>Goal: Memahami 2 Ribu Kosakata Pertama, berserta penggunaannya di Kehidupan Sehari-hari.</p>
     </blockquote>
 
-    <div class="phase1-image">
+    <div class="pl-objImages--right">
       <Image
         src={membentukPondasiIntuisi}
         alt='Membentuk Pondasi Intuisi Berbahasa Jepang'
         width={400}
         height={300}
+        class="section-image"
       />
     </div>
 
-    <div class="phase1-content">
-      <p>Dalam Pahse 1, kalian akan membentuk tulang yang benar-benar tulang dari pondasi Intuisi Bahasa Jepang kalian. Dan diharapkan kalian sudah bisa membaca ひらがな dan カタカナ.</p>
+    <div class="unified-content">
+      <p class="unified-content">Dalam Pahse 1, kalian akan membentuk tulang yang benar-benar tulang dari pondasi Intuisi Bahasa Jepang kalian. Dan diharapkan kalian sudah bisa membaca ひらがな dan カタカナ.</p>
 
       <ul class="phase1-steps-list">
         <li>
@@ -312,3 +303,5 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
 
   </div>
 </div>
+
+<script src='/src/scripts/image-zoom.js'></script>
