@@ -49,11 +49,11 @@
   --leading-normal: 1.4;
   --leading-relaxed: 1.5;
 
-  /* Shadows - Optimized for performance with GPU acceleration */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  /* Shadows - OKLCH形式で最適化 */
+  --shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 0.05);
+  --shadow-md: 0 4px 6px -1px oklch(0% 0 0deg / 0.1);
+  --shadow-lg: 0 10px 15px -3px oklch(0% 0 0deg / 0.1);
+  --shadow-xl: 0 20px 25px -5px oklch(0% 0 0deg / 0.1);
 
   /* Transitions - Hardware accelerated with will-change */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -68,23 +68,23 @@
   --z-popover: 550;
   --z-tooltip: 560;
 
-  /* Phase 1: 統一された色システム - セクション別色適用ルール */
+  /* Phase 1: 統一された色システム - OKLCH形式 */
 
-  /* 基本色システム */
-  --color-primary: #f94d63; /* 赤ピンク（ライン28-117用） */
-  --color-primary-hover: #e63946;
+  /* 基本色システム - OKLCH */
+  --color-primary: oklch(65% 0.18 15deg); /* 赤ピンク（ライン28-117用） */
+  --color-primary-hover: oklch(60% 0.18 15deg);
   --color-secondary: var(--token-purple-base); /* 紫（ライン118-最後用） */
   --color-secondary-hover: var(--token-purple-hover);
 
-  /* セマンティック色 */
+  /* セマンティック色 - OKLCH */
   --color-text-primary: var(--clr-text-primary);
   --color-text-secondary: var(--token-text-muted);
-  --color-background-subtle: rgb(255 245 246 / 0.85);
+  --color-background-subtle: oklch(98% 0.02 15deg / 0.85);
   --color-border-subtle: var(--color-primary);
 
-  /* 警告色 */
-  --color-warning-orange: #ff7f17;
-  --color-text-muted: #aab4c8;
+  /* 警告色 - OKLCH */
+  --color-warning-orange: oklch(70% 0.15 45deg);
+  --color-text-muted: oklch(70% 0.02 250deg);
 
   /* 後方互換性のためのエイリアス */
   --color-brand-primary: var(--color-primary);
@@ -948,7 +948,7 @@ a {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 0.9);
+  background: oklch(0% 0 0deg / 0.9);
   backdrop-filter: blur(8px);
   opacity: 0;
   visibility: hidden;
@@ -963,7 +963,7 @@ a {
 
   /* High contrast mode support */
   @media (prefers-contrast: high) {
-    background: rgb(0 0 0 / 0.95);
+    background: oklch(0% 0 0deg / 0.95);
   }
 }
 
@@ -1107,7 +1107,7 @@ a {
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     border: 2px solid var(--color-text-primary);
-    background: rgb(255 255 255 / 1);
+    background: oklch(100% 0 0deg / 1);
   }
 }
 
@@ -1167,18 +1167,18 @@ a {
   max-width: 1200px;
   margin: 0 auto;
   padding: min(var(--space-3xl), 6vw) min(var(--space-xl), 4vw);
-  border: 1px solid rgb(255 255 255 / 0.2);
+  border: 1px solid oklch(100% 0 0deg / 0.2);
   border-radius: 16px;
-  background: rgb(255 255 255 / 0.1);
+  background: oklch(100% 0 0deg / 0.1);
   backdrop-filter: blur(20px);
   box-shadow:
-    0 8px 32px rgb(0 0 0 / 0.1),
-    inset 0 1px 0 rgb(255 255 255 / 0.2);
+    0 8px 32px oklch(0% 0 0deg / 0.1),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
   text-align: center;
 
   @media (max-width: 768px) {
     backdrop-filter: blur(15px);
-    background: rgb(255 255 255 / 0.08);
+    background: oklch(100% 0 0deg / 0.08);
   }
 
   .learning-method-content {
@@ -1244,17 +1244,17 @@ a {
   max-width: 1000px;
   margin: 0 auto;
   padding: min(var(--space-3xl), 6vw) min(var(--space-xl), 4vw);
-  border: 1px solid rgb(255 255 255 / 0.2);
+  border: 1px solid oklch(100% 0 0deg / 0.2);
   border-radius: 16px;
-  background: rgb(255 255 255 / 0.1);
+  background: oklch(100% 0 0deg / 0.1);
   backdrop-filter: blur(20px);
   box-shadow:
-    0 8px 32px rgb(0 0 0 / 0.1),
-    inset 0 1px 0 rgb(255 255 255 / 0.2);
+    0 8px 32px oklch(0% 0 0deg / 0.1),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
 
   @media (max-width: 768px) {
     backdrop-filter: blur(15px);
-    background: rgb(255 255 255 / 0.08);
+    background: oklch(100% 0 0deg / 0.08);
   }
 
   @media (min-width: 768px) {
@@ -1278,8 +1278,8 @@ a {
   padding: var(--space-lg);
   border-left: 4px solid var(--color-secondary);
   border-radius: 0 8px 8px 0;
-  background: rgb(255 255 255 / 0.05);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  background: oklch(100% 0 0deg / 0.05);
+  box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
 
   /* Mobile: Natural order */
   @media (max-width: 767px) {
@@ -1704,14 +1704,14 @@ ol li::marker {
   margin: var(--space-2xl) auto;
   padding: var(--space-xl);
 
-  /* GlassMorphism styling */
+  /* GlassMorphism styling - OKLCH */
   border: 1px solid var(--clr-glass-border);
   border-radius: 16px;
   background: var(--clr-glass-background);
   backdrop-filter: blur(20px);
   box-shadow:
-    0 8px 32px rgb(0 0 0 / 0.1),
-    inset 0 1px 0 rgb(255 255 255 / 0.2);
+    0 8px 32px oklch(0% 0 0deg / 0.1),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
 
   /* Typography */
   color: var(--color-secondary);
@@ -1726,15 +1726,15 @@ ol li::marker {
   background: var(--clr-glass-background-hover);
   transform: translateY(-2px);
   box-shadow:
-    0 12px 40px rgb(0 0 0 / 0.15),
-    inset 0 1px 0 rgb(255 255 255 / 0.3);
+    0 12px 40px oklch(0% 0 0deg / 0.15),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.3);
 }
 
 /* Formula内の画像に角丸を適用 */
 .formula img {
   overflow: hidden;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 16px oklch(0% 0 0deg / 0.1);
 
   /* 高解像度ディスプレイでの画像品質向上 */
   image-rendering: auto;
@@ -1751,7 +1751,7 @@ ol li::marker {
 
 .formula img:hover {
   transform: scale(1.02);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+  box-shadow: 0 8px 24px oklch(0% 0 0deg / 0.15);
 }
 
 /* Responsive design for formula */
