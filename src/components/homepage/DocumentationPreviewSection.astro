@@ -7,13 +7,17 @@ interface Props {
   description?: string;
   buttonText?: string;
   imageAlt?: string;
+  href?: string;
+  dataAction?: string;
 }
 
 const {
   title = 'Panduan & Dokumentasi',
   description = 'Akses panduan lengkap, metodologi immersion, dan sumber daya pembelajaran yang telah terbukti efektif.',
-  buttonText = 'Lihat Dokumentasi',
+  buttonText = 'Lihat Panduan Immersion',
   imageAlt = 'Japanese Torii Gate - Symbol of Learning Journey',
+  href = '/panduan-lengkap-otodidak-bahasa-jepang',
+  dataAction = 'go-to-posts',
 } = Astro.props;
 ---
 
@@ -64,9 +68,10 @@ const {
             {description}
           </p>
           <div class='docs-cta flex justify-center lg:justify-start'>
-            <button
+            <a
+              href={href}
               class='docs-button inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105'
-              data-action='go-to-posts'
+              data-action={dataAction}
               transition:name='docs-button'
             >
               {buttonText}
@@ -83,7 +88,7 @@ const {
               >
                 <path d='M5 12h14M12 5l7 7-7 7'></path>
               </svg>
-            </button>
+            </a>
           </div>
         </div>
       </div>

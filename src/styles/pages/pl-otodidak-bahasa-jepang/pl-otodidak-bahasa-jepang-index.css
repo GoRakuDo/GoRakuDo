@@ -167,6 +167,54 @@ h3.pl-objTitle {
   margin-bottom: 0;
 }
 
+/* 段落の余白調整 */
+.phase-goal p {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.unified-content p {
+  margin: var(--space-md) 0;
+  line-height: 1.6;
+}
+
+.unified-content p:first-child {
+  margin-top: 0;
+}
+
+.unified-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* リストの余白調整 */
+.unified-content ul,
+.unified-content ol {
+  margin: var(--space-md) 0;
+}
+
+.unified-content ul:first-child,
+.unified-content ol:first-child {
+  margin-top: 0;
+}
+
+.unified-content ul:last-child,
+.unified-content ol:last-child {
+  margin-bottom: 0;
+}
+
+.unified-content li {
+  margin: var(--space-sm) 0;
+  line-height: 1.6;
+}
+
+.unified-content li:first-child {
+  margin-top: 0;
+}
+
+.unified-content li:last-child {
+  margin-bottom: 0;
+}
+
 /* 特別なスタイル - 統合クラスより前に配置 */
 
 /* 赤ピンク系セクション用 */
@@ -283,6 +331,16 @@ h3.pl-objTitle {
   -webkit-text-fill-color: currentcolor;
 }
 
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .page-title-main {
+    background: none;
+    color: var(--color-text-primary);
+    -webkit-text-fill-color: initial;
+    text-shadow: none;
+  }
+}
+
 /* ========================================
    CONTENT LAYOUT - CSS Grid with Subgrid
    ======================================== */
@@ -327,11 +385,6 @@ h3.pl-objTitle {
    CONTENT PARAGRAPH STYLES - DRY Principle Applied
    ======================================== */
 
-.phase-goal p {
-  margin: 0;
-  color: var(--color-secondary);
-}
-
 /* Apply to all headings - Low specificity - Only colors maintained */
 h1,
 h2,
@@ -357,9 +410,19 @@ h6:first-child {
 
 a {
   color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--color-text-secondary) 50%,
+    transparent
+  );
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.1em;
+  transition: text-decoration-color var(--transition-normal);
 
   &:hover {
     color: var(--color-primary-hover);
+    text-decoration-color: var(--color-text-secondary);
   }
 }
 
@@ -593,6 +656,13 @@ a {
   opacity: 1;
 }
 
+/* High contrast mode support for problem images */
+@media (prefers-contrast: high) {
+  .problem-image {
+    filter: none;
+  }
+}
+
 .problem-text {
   margin: 0;
   color: var(--color-text-primary);
@@ -679,21 +749,6 @@ a {
   transition: outline-offset 150ms ease;
 }
 
-/* High contrast mode support - Enhanced */
-@media (prefers-contrast: high) {
-  .page-title-main,
-  .pl-objTitle {
-    background: none;
-    color: var(--color-text-primary);
-    -webkit-text-fill-color: initial;
-    text-shadow: none;
-  }
-
-  .problem-image {
-    filter: none;
-  }
-}
-
 /* ========================================
    TRADITIONAL METHOD SECTION - 2-Column Layout
    ======================================== */
@@ -777,6 +832,16 @@ a {
 /* Center alignment for specific titles */
 .pl-objTitle--center {
   text-align: center;
+}
+
+/* High contrast mode support for titles */
+@media (prefers-contrast: high) {
+  .pl-objTitle {
+    background: none;
+    color: var(--color-text-primary);
+    -webkit-text-fill-color: initial;
+    text-shadow: none;
+  }
 }
 
 /* ========================================
@@ -894,6 +959,11 @@ a {
   &.is-open {
     opacity: 1;
     visibility: visible;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    background: rgb(0 0 0 / 0.95);
   }
 }
 
@@ -1033,6 +1103,12 @@ a {
     height: 44px;
     font-size: 1.25rem;
   }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    border: 2px solid var(--color-text-primary);
+    background: rgb(255 255 255 / 1);
+  }
 }
 
 /* アクセシビリティ対応 */
@@ -1050,18 +1126,6 @@ a {
 
   .image-zoom-close:hover {
     transform: none;
-  }
-}
-
-/* 高コントラストモード対応 */
-@media (prefers-contrast: high) {
-  .image-zoom-modal {
-    background: rgb(0 0 0 / 0.95);
-  }
-
-  .image-zoom-close {
-    border: 2px solid var(--color-text-primary);
-    background: rgb(255 255 255 / 1);
   }
 }
 
@@ -1130,14 +1194,9 @@ a {
   margin: var(--space-6xl) 0;
   padding: var(--space-4xl) 0;
   background: transparent;
-}
 
-.sla-container {
-  max-width: 1000px;
-  margin: 0 auto;
-
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: 0 min(var(--space-xl), 4vw);
+  /* 効率的な色管理システム */
+  --strong-color: var(--color-secondary);
 }
 
 .sla-content {
@@ -1164,14 +1223,6 @@ a {
   margin: var(--space-6xl) 0;
   padding: var(--space-4xl) 0;
   background: transparent;
-}
-
-.immersion-duration-container {
-  max-width: 1000px;
-  margin: 0 auto;
-
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: 0 min(var(--space-xl), 4vw);
 }
 
 .immersion-duration-content {
@@ -1223,7 +1274,7 @@ a {
    PHASE 1 GOAL BLOCKQUOTE
    ======================================== */
 .phase-goal {
-  margin: 0 0 var(--space-2xl);
+  margin: var(--space-md) 0;
   padding: var(--space-lg);
   border-left: 4px solid var(--color-secondary);
   border-radius: 0 8px 8px 0;
@@ -1233,13 +1284,14 @@ a {
   /* Mobile: Natural order */
   @media (max-width: 767px) {
     order: 1;
+    margin: var(--space-sm) 0;
   }
 
   /* Tablet/Desktop: Grid layout */
   @media (min-width: 768px) {
     grid-area: goal;
-    margin-bottom: var(--space-3xl);
-    padding: var(--space-xl);
+    margin: var(--space-sm) 0 var(--space-md) 0;
+    padding: var(--space-lg);
   }
 }
 
@@ -1421,8 +1473,93 @@ a {
   }
 }
 
-/* Phase1用の3エリアレイアウト */
-.pl-objContainer--phase1 {
+/* 通常のコンテンツ用（sla-container, immersion-duration-containerの統合） */
+.pl-objContainer--normal {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  /* Fluid padding using min() - Coding Bible principle */
+  padding: 0 min(var(--space-xl), 4vw);
+
+  /* 効率的な色管理システム */
+  --strong-color: var(--color-secondary);
+  --text-color: var(--color-text-primary);
+
+  /* 通常のコンテンツレイアウト - 画像なし */
+  @media (min-width: 768px) {
+    display: block;
+  }
+
+  /* 統一されたstrong要素のスタイリング */
+  .unified-content strong {
+    color: var(--strong-color);
+    font-weight: var(--font-bold);
+  }
+}
+
+/* セレクターの順序を調整（特異性の降順） */
+.prose .unified-content strong {
+  color: var(--color-primary);
+}
+
+/* 最も効率的な解決方法：クラスベースの色制御 */
+.section--purple-strong {
+  --strong-color: var(--color-secondary);
+}
+
+.section--purple-strong .unified-content strong {
+  color: var(--strong-color);
+  font-weight: var(--font-bold);
+}
+
+/* ========================================
+   PHASE SECTIONS - 統一されたスタイル
+   ======================================== */
+
+/* 共通のPhaseコンテナスタイル */
+.pl-objContainer[class*='--phase'] {
+  @media (min-width: 768px) {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .unified-content {
+    @media (max-width: 767px) {
+      order: 3;
+    }
+  }
+
+  /* 全Phase共通のタイトル余白調整 */
+  .pl-objTitle {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* 全Phase共通の画像スタイル */
+  .pl-objImages {
+    @media (max-width: 767px) {
+      order: 2;
+    }
+  }
+
+  .image-zoom-trigger {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+}
+
+/* Phase画像のホバー効果 */
+.pl-objContainer--phase1 .image-zoom-trigger:hover,
+.pl-objContainer--phase2 .image-zoom-trigger:hover,
+.pl-objContainer--phase3 .image-zoom-trigger:hover,
+.pl-objContainer--phase4 .image-zoom-trigger:hover,
+.pl-objContainer--phase5 .image-zoom-trigger:hover {
+  transform: scale(1.02);
+}
+
+/* 画像右配置のPhase（Phase1, Phase3, Phase5） */
+.pl-objContainer--phase1,
+.pl-objContainer--phase3,
+.pl-objContainer--phase5 {
   @media (min-width: 768px) {
     grid-template-areas:
       'title image'
@@ -1430,11 +1567,17 @@ a {
       'content image';
     grid-template-columns: 0.6fr 0.4fr;
   }
+}
 
-  .unified-content {
-    @media (max-width: 767px) {
-      order: 3;
-    }
+/* 画像左配置のPhase（Phase2, Phase4） */
+.pl-objContainer--phase2,
+.pl-objContainer--phase4 {
+  @media (min-width: 768px) {
+    grid-template-areas:
+      'image title'
+      'image goal'
+      'image content';
+    grid-template-columns: 0.4fr 0.6fr;
   }
 }
 
@@ -1446,34 +1589,86 @@ a {
   margin-bottom: 0;
 }
 
-.prose .unified-content strong {
-  color: var(--color-primary);
-}
-
 /* Maintain existing special styles */
 
 .prose .phase-goal p {
-  color: var(--color-secondary);
+  color: var(--color-text-primary);
+}
+
+/* より具体的なセレクターでmargin-bottomを確実に削除 */
+.content-section .phase-goal {
+  margin-bottom: 0;
 }
 
 /* Maintain existing link colors */
 .prose a {
   color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--color-text-secondary) 50%,
+    transparent
+  );
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.1em;
+  transition: text-decoration-color var(--transition-normal);
 }
 
 /* Phase 1 Links - More specific selectors */
-.phase1-steps-list a,
-.phase1-substeps a {
+.phase-steps-list a,
+.phase-substeps a {
   color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--color-text-secondary) 50%,
+    transparent
+  );
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.1em;
+  transition: text-decoration-color var(--transition-normal);
 }
 
 .prose a:hover {
   color: var(--color-primary-hover);
+  text-decoration-color: var(--color-text-secondary);
 }
 
-.phase1-steps-list a:hover,
-.phase1-substeps a:hover {
+.phase-steps-list a:hover,
+.phase-substeps a:hover {
   color: var(--color-primary-hover);
+  text-decoration-color: var(--color-text-secondary);
+}
+
+/* すべてのリストスタイルを--color-secondaryに統一 */
+ul li::marker,
+ol li::marker {
+  color: var(--color-secondary);
+  font-weight: var(--font-bold);
+}
+
+/* ネストされたリストのマーカー - クラスベース */
+.nested-list li::marker {
+  color: var(--color-secondary);
+  font-weight: var(--font-bold);
+}
+
+/* Phase1リストのマーカー - 直接的な色指定 */
+.phase-steps-list li::marker {
+  color: oklch(65% 0.25 280deg);
+  font-weight: var(--font-bold);
+}
+
+.phase-substeps li::marker {
+  color: oklch(65% 0.25 280deg);
+  font-weight: var(--font-bold);
+}
+
+/* Prose内のリストスタイル */
+.prose ul li::marker,
+.prose ol li::marker {
+  color: var(--color-secondary);
+  font-weight: var(--font-bold);
 }
 
 /* Maintain existing list colors */
@@ -1483,20 +1678,105 @@ a {
 
 .prose .methodology-phases-list li::marker {
   color: var(--color-secondary);
+  font-weight: var(--font-bold);
 }
 
-.prose .phase1-steps-list {
+.prose .phase-steps-list {
   color: var(--color-text-primary);
 }
 
-.prose .phase1-substeps li {
+.prose .phase-substeps li {
   color: var(--color-text-secondary);
 }
 
-/* Maintain existing formula styling */
+/* Formula styling with GlassMorphism and enhanced centering */
 .prose .formula {
+  /* Layout */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  /* Sizing */
+  max-width: 600px;
+  margin: var(--space-2xl) auto;
+  padding: var(--space-xl);
+
+  /* GlassMorphism styling */
+  border: 1px solid var(--clr-glass-border);
+  border-radius: 16px;
+  background: var(--clr-glass-background);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.2);
+
+  /* Typography */
   color: var(--color-secondary);
   text-align: center;
+
+  /* Animation */
+  transition: all 0.3s ease;
+}
+
+.prose .formula:hover {
+  border-color: var(--clr-glass-border-hover);
+  background: var(--clr-glass-background-hover);
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 0.15),
+    inset 0 1px 0 rgb(255 255 255 / 0.3);
+}
+
+/* Formula内の画像に角丸を適用 */
+.formula img {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
+
+  /* 高解像度ディスプレイでの画像品質向上 */
+  image-rendering: auto;
+
+  /* 高DPIディスプレイ対応 */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+
+  /* アニメーション */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.formula img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+}
+
+/* Responsive design for formula */
+@media (max-width: 768px) {
+  .prose .formula {
+    max-width: 100%;
+    margin: var(--space-xl) auto;
+    padding: var(--space-lg);
+    border-radius: 12px;
+  }
+
+  .formula img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+  }
+}
+
+/* 高DPIディスプレイ対応 */
+@media (min-resolution: 192dpi) {
+  .formula img {
+    image-rendering: auto;
+  }
 }
 
 /* Maintain existing highlight underline */
@@ -1586,4 +1866,11 @@ a {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: var(--color-text-primary);
+}
+
+/* より強力なセレクターで確実に適用 - 特異性制限内 */
+.content-section--secondary .phase-steps-list li::marker,
+.content-section--secondary .phase-substeps li::marker {
+  color: var(--color-secondary);
+  font-weight: var(--font-bold);
 }

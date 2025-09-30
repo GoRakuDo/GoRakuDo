@@ -48,9 +48,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
       <!-- Center Logo -->
       <div class='nav-center'>
-        <a href='/' class='logo-japanese' title='GoRakuDo - Kembali ke beranda'>
-          語楽道
-        </a>
+        <a href='/' class='logo-japanese' title='GoRakuDo'> 語楽道 </a>
       </div>
 
       <!-- Right Actions - Desktop Only -->
@@ -787,7 +785,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     } else if (action === 'discord') {
       openDiscordLink();
     } else if (action === 'metodologi') {
-      navigateTo('Dokumentasi');
+      window.location.href = '/panduan-lengkap-otodidak-bahasa-jepang';
     } else if (action === 'get-started') {
       handleGetStartedAction();
     }

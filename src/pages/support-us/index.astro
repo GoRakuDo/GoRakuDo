@@ -2,7 +2,6 @@
 import { getEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
-import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
 
@@ -144,14 +143,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     aria-label='Post content'
   >
     <div class='support-content'>
-      <TrakteerWidget
-        src='https://stream.trakteer.id/milestone/index.html?ms_font=Work+Sans&ms_icon=https%3A%2F%2Fedge-cdn.trakteer.id%2Fimages%2Fmix%2Fegis-in-bottle.png%3Fv%3D14-05-2025&ms_title=Project+Web+GoRakuDo&ms_1_clr1=rgba%28250%2C+250%2C+250%2C+0%29&ms_1_clr2=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr4=rgba%280%2C+0%2C+0%2C+1%29&ms_1_clr7=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr9=rgba%28190%2C+30%2C+45%2C+1%29&ms_sincedate=12-09-2025&ms_only_show_complete=true&ms_is_show_limit_milestone=false&ms_collapse_future_milestone=true&ms_show_total_limit_milestone=3&ms_collapse_complete_milestone=true&key=trstream-9QWbcPd1n8JhpZo9E1BV&mod=3&hash=b9073almo9r5ekzg&timestamp=1757688304'
-        title='Project Web GoRakuDo'
-        width='100%'
-        maxWidth='312px'
-        maxHeight='400px'
-        className='mt-4'
-      />
       <Content />
     </div>
   </article>
