@@ -588,7 +588,7 @@ a {
   position: absolute;
   top: -12.5%;
   left: -12.5%;
-  z-index: var(-z-pl-otodidak-bahasa-jepang-index-problem-icon-overlay);
+  z-index: var(--z-pl-obj-index-problem-icon-overlay);
   display: flex;
   justify-content: center;
   align-items: center;

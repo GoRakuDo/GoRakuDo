@@ -1,0 +1,86 @@
+---
+// YouTube Channel Recommendations Page - 日本語学習チャンネル推奨ページ
+// モバイルファースト最適化済み
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ChannelCard from '../../components/content/ChannelCard.astro';
+import channelsData from '../../data/youtube-channels.json';
+import '../../styles/pages/rChannelYT-BBJ/rChannelYT-BBJ-Index.css';
+
+// ページメタデータ
+const pageTitle =
+  'Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik 2024';
+const pageDescription =
+  'Daftar lengkap channel YouTube terbaik untuk belajar bahasa Jepang dari pemula hingga mahir. Rekomendasi channel berkualitas tinggi dengan konten pembelajaran yang efektif.';
+const pageKeywords = [
+  'channel youtube belajar bahasa jepang',
+  'rekomendasi youtube jepang',
+  'belajar bahasa jepang online',
+  'tutorial bahasa jepang',
+  'JLPT preparation',
+  'nihongo learning',
+  'japanese language',
+  'youtube channels japanese',
+  'pembelajaran bahasa jepang',
+  'kursus bahasa jepang gratis',
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  lang='id'
+  pageType='article'
+>
+  <main class='rc-channel-page' role='main'>
+    <!-- ページヘッダー -->
+    <header class='rc-page-header glassmorphism glassmorphism-card'>
+      <div class='rc-header-content'>
+        <h1 class='rc-page-title-main'>
+          Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik
+        </h1>
+        <p class='rc-page-subtitle'>
+          Temukan channel YouTube berkualitas tinggi untuk mempercepat
+          pembelajaran bahasa Jepang Anda
+        </p>
+      </div>
+    </header>
+
+    <!-- メインコンテンツエリア -->
+    <div class='rc-main-content'>
+      <!-- チャンネルグリッド -->
+      <section class='rc-channels-section'>
+        <div id='channels-grid' class='rc-channels-grid' role='tabpanel'>
+          {
+            channelsData.map(channel => (
+              <article class='rc-channel-item'>
+                <ChannelCard
+                  channelCover={channel.channelCover}
+                  channelName={channel.channelName}
+                  channelProfile={channel.channelProfile}
+                  channelURL={channel.channelURL}
+                />
+              </article>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- スクリーンリーダー用スタイル -->
+  <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</BaseLayout>
