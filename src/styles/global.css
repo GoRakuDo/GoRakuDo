@@ -32,21 +32,44 @@
   --token-accent-foreground: oklch(98% 0.002 270deg);
   --token-secondary-foreground: oklch(15% 0.005 270deg);
 
-  /* ===== OPACITY VALUES ===== */
-  --opacity-01: 0.01;
-  --opacity-02: 0.02;
-  --opacity-05: 0.05;
-  --opacity-1: 0.1;
-  --opacity-15: 0.15;
-  --opacity-2: 0.2;
-  --opacity-25: 0.25;
-  --opacity-3: 0.3;
-  --opacity-4: 0.4;
-  --opacity-6: 0.6;
-  --opacity-7: 0.7;
-  --opacity-8: 0.8;
-  --opacity-85: 0.85;
-  --opacity-95: 0.95;
+  /* ===== OPACITY VALUES - GLOBAL CALCULATION-BASED SYSTEM ===== */
+  --opacity-step: 0.05; /* 基本ステップ */
+  --opacity-step-small: 0.02; /* 小さなステップ */
+  --opacity-step-large: 0.1; /* 大きなステップ */
+
+  /* 計算可能な不透明度値 - 実際に使用されている変数 */
+  --opacity-02: var(--opacity-step-small); /* 0.02 */
+  --opacity-04: calc(var(--opacity-step-small) * 2); /* 0.04 */
+  --opacity-05: var(--opacity-step); /* 0.05 */
+  --opacity-06: calc(var(--opacity-step) * 1.2); /* 0.06 */
+  --opacity-08: calc(var(--opacity-step-small) * 4); /* 0.08 */
+  --opacity-10: calc(var(--opacity-step) * 2); /* 0.1 */
+  --opacity-12: calc(var(--opacity-step-small) * 6); /* 0.12 */
+  --opacity-15: calc(var(--opacity-step) * 3); /* 0.15 */
+  --opacity-20: calc(var(--opacity-step) * 4); /* 0.2 */
+  --opacity-25: calc(var(--opacity-step) * 5); /* 0.25 */
+  --opacity-30: calc(var(--opacity-step) * 6); /* 0.3 */
+  --opacity-35: calc(var(--opacity-step) * 7); /* 0.35 */
+  --opacity-40: calc(var(--opacity-step) * 8); /* 0.4 */
+  --opacity-50: calc(var(--opacity-step-large) * 5); /* 0.5 */
+  --opacity-60: calc(var(--opacity-step) * 12); /* 0.6 */
+  --opacity-70: calc(var(--opacity-step) * 14); /* 0.7 */
+  --opacity-80: calc(var(--opacity-step) * 16); /* 0.8 */
+  --opacity-85: calc(var(--opacity-step) * 17); /* 0.85 */
+  --opacity-90: calc(var(--opacity-step) * 18); /* 0.9 */
+  --opacity-95: calc(var(--opacity-step) * 19); /* 0.95 */
+  --opacity-98: calc(var(--opacity-step) * 19.6); /* 0.98 */
+
+  /* 互換性のためのエイリアス */
+  --opacity-1: var(--opacity-10); /* 0.1 */
+  --opacity-2: var(--opacity-20); /* 0.2 */
+  --opacity-3: var(--opacity-30); /* 0.3 */
+  --opacity-4: var(--opacity-40); /* 0.4 */
+  --opacity-5: var(--opacity-50); /* 0.5 */
+  --opacity-6: var(--opacity-60); /* 0.6 */
+  --opacity-7: var(--opacity-70); /* 0.7 */
+  --opacity-8: var(--opacity-80); /* 0.8 */
+  --opacity-9: var(--opacity-90); /* 0.9 */
 
   /* ===== COLOR SYSTEM - OKLCH Color Space ===== */
 
@@ -64,11 +87,11 @@
   /* White Color with Opacity */
   --clr-white: var(--token-white-base);
   --clr-white-02: oklch(from var(--token-white-base) l c h / var(--opacity-02));
-  --clr-white-04: oklch(from var(--token-white-base) l c h / 0.04);
-  --clr-white-06: oklch(from var(--token-white-base) l c h / 0.06);
-  --clr-white-08: oklch(from var(--token-white-base) l c h / 0.08);
+  --clr-white-04: oklch(from var(--token-white-base) l c h / var(--opacity-04));
+  --clr-white-06: oklch(from var(--token-white-base) l c h / var(--opacity-06));
+  --clr-white-08: oklch(from var(--token-white-base) l c h / var(--opacity-08));
   --clr-white-1: oklch(from var(--token-white-base) l c h / var(--opacity-1));
-  --clr-white-12: oklch(from var(--token-white-base) l c h / 0.12);
+  --clr-white-12: oklch(from var(--token-white-base) l c h / var(--opacity-12));
   --clr-white-15: oklch(from var(--token-white-base) l c h / var(--opacity-15));
   --clr-white-2: oklch(from var(--token-white-base) l c h / var(--opacity-2));
   --clr-white-25: oklch(from var(--token-white-base) l c h / var(--opacity-25));
@@ -147,10 +170,10 @@
   --clr-accent-fallback: var(--clr-accent);
 
   /* ===== GLASSMORPHISM DESIGN TOKENS ===== */
-  --clr-glass-border: oklch(50% 0.02 270deg / 0.2);
-  --clr-glass-background: oklch(20% 0.01 270deg / 0.1);
-  --clr-glass-border-hover: oklch(50% 0.02 270deg / 0.3);
-  --clr-glass-background-hover: oklch(20% 0.01 270deg / 0.15);
+  --clr-glass-border: oklch(50% 0.02 270deg / var(--opacity-20));
+  --clr-glass-background: oklch(20% 0.01 270deg / var(--opacity-10));
+  --clr-glass-border-hover: oklch(50% 0.02 270deg / var(--opacity-30));
+  --clr-glass-background-hover: oklch(20% 0.01 270deg / var(--opacity-15));
 
   /* ===== ANIMATION SYSTEM ===== */
   --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -186,8 +209,6 @@
   --clr-paper-text-secondary: var(--clr-paper-35);
   --clr-paper-border: var(--clr-paper-90);
   --clr-paper-lines: var(--clr-paper-88);
-  --clr-primary: var(--clr-accent);
-  --clr-primary-dark: var(--clr-accent-dark);
 
   /* ===== TYPOGRAPHY SYSTEM ===== */
   --font-primary:
@@ -245,9 +266,11 @@
   --clr-content-text: var(--clr-white-85);
   --clr-content-meta: var(--clr-white-7);
   --clr-content-accent: var(--clr-accent);
-  --clr-content-background-card: oklch(from var(--token-bg-card) l c h / 0.1);
+  --clr-content-background-card: oklch(
+    from var(--token-bg-card) l c h / var(--opacity-10)
+  );
   --clr-content-background-card-hover: oklch(
-    from var(--token-bg-card) l c h / 0.2
+    from var(--token-bg-card) l c h / var(--opacity-20)
   );
   --clr-content-border: var(--clr-purple-15);
   --shadow-content-card: 0 4px 20px var(--clr-black-3);
@@ -259,19 +282,12 @@
   --z-content-progress: 50;
   --z-content-modal: 100;
 
-  /* Z-index scale - preserving legacy values */
+  /* Z-index scale */
   --z-base: 0;
   --z-docked: 10;
-  --z-dropdown: 1000; /* Legacy --z-dropdown */
-  --z-sticky: 1020; /* Legacy --z-sticky */
-  --z-fixed: 1030; /* Legacy --z-fixed */
   --z-banner: 1200;
-  --z-modal-backdrop: 1040; /* Legacy --z-modal-backdrop */
-  --z-modal: 1050; /* Legacy --z-modal */
   --z-overlay: 1300;
-  --z-popover: 1060; /* Legacy --z-popover */
   --z-toast: 1500;
-  --z-tooltip: 1070; /* Legacy --z-tooltip */
   --z-WaveAnimation-transparent-layer: -50;
   --z-WaveAnimation-wave-animation-container: -75;
   --z-WaveAnimation-wave-canvas: -60;
@@ -470,7 +486,7 @@
   .tools-title-main::selection,
   .tools-title-accent::selection,
   .error-title::selection {
-    background-color: var(--clr-primary);
+    background-color: var(--clr-accent);
     color: var(--clr-text-primary);
     -webkit-text-fill-color: var(
       --clr-text-primary
@@ -611,18 +627,18 @@
   }
 
   button:disabled {
-    opacity: 0.6;
+    opacity: var(--opacity-60);
     cursor: not-allowed;
   }
 
   a {
-    color: var(--clr-primary);
+    color: var(--clr-accent);
     text-decoration: none;
     transition: color var(--duration-fast) ease;
   }
 
   a:hover {
-    color: var(--clr-primary-dark);
+    color: var(--clr-accent-dark);
   }
 
   a:active {
@@ -779,7 +795,7 @@
   margin: 1rem 0;
   padding: 1rem;
   padding-left: 1rem;
-  border-left: 4px solid var(--clr-primary);
+  border-left: 4px solid var(--clr-accent);
   border-radius: 0 0.5rem 0.5rem 0;
   background: var(--clr-text-muted);
   color: var(--clr-text-secondary);
@@ -842,7 +858,7 @@
 
 /* Links */
 .article-content a {
-  color: var(--clr-primary);
+  color: var(--clr-accent);
   text-decoration: underline;
   text-decoration-color: oklch(65% 0.18 280deg / var(--opacity-3));
   text-underline-offset: 2px;
@@ -853,13 +869,13 @@ a:focus-visible,
 button:focus-visible,
 .article-content a:focus,
 .article-content button:focus {
-  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+  outline: 2px solid oklch(from var(--clr-accent) l c h / var(--opacity-50));
   outline-offset: 2px;
 }
 
 .article-content a:hover {
   text-decoration-thickness: 2px;
-  text-decoration-color: var(--clr-primary);
+  text-decoration-color: var(--clr-accent);
 }
 
 /* Tables */
@@ -1084,13 +1100,13 @@ button:focus-visible,
   .glassmorphism {
     position: relative;
     overflow: hidden;
-    border: 1px solid rgb(255 255 255 / 0.2);
+    border: 1px solid rgb(255 255 255 / var(--opacity-20));
     border-radius: 16px;
-    background: rgb(255 255 255 / 0.1);
+    background: rgb(255 255 255 / var(--opacity-10));
     backdrop-filter: blur(20px);
     box-shadow:
-      0 8px 32px rgb(0 0 0 / 0.1),
-      inset 0 1px 0 rgb(255 255 255 / 0.2);
+      0 8px 32px rgb(0 0 0 / var(--opacity-10)),
+      inset 0 1px 0 rgb(255 255 255 / var(--opacity-20));
   }
 
   /* GlassMorphism variants */
@@ -1230,7 +1246,7 @@ button:focus-visible,
   position: absolute;
   top: 50%; /* Center vertically */
   left: 0;
-  color: var(--clr-primary); /* Primary purple color */
+  color: var(--clr-accent); /* Primary purple color */
   font-size: 1.1rem; /* Slightly larger for better visibility */
   font-weight: 900; /* Bold weight for visibility */
   line-height: 1; /* Prevent line height issues */
@@ -1268,7 +1284,7 @@ button:focus-visible,
 .article-content ol li::marker,
 .content-description-content ol li::marker {
   /* REASONING: Style the ::marker pseudo-element to fix browser console issues */
-  color: var(--clr-primary); /* Primary purple color for numbers */
+  color: var(--clr-accent); /* Primary purple color for numbers */
   font-size: 1.1rem; /* Slightly larger for better visibility */
   font-weight: 700; /* Bold weight for visibility */
 }
@@ -1353,7 +1369,7 @@ button:focus-visible,
   position: absolute;
   top: 0;
   left: 0;
-  color: var(--clr-primary); /* Primary purple color */
+  color: var(--clr-accent); /* Primary purple color */
   font-size: 0.875rem; /* Smaller size for nesting */
   font-weight: 700; /* Slightly less bold for nesting */
 
@@ -1547,7 +1563,7 @@ button:focus-visible,
 .docs-button:focus-visible,
 .get-started-btn:focus-visible,
 .discord-link:focus-visible {
-  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+  outline: 2px solid oklch(from var(--clr-accent) l c h / var(--opacity-50));
   outline-offset: 2px;
 }
 
@@ -1786,7 +1802,7 @@ button:focus-visible,
   /* Glassmorphism optimization for mobile */
   .glassmorphism {
     backdrop-filter: blur(15px);
-    background: rgb(255 255 255 / 0.08);
+    background: rgb(255 255 255 / var(--opacity-08));
   }
 }
 

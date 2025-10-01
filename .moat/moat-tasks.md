@@ -1,12 +1,12 @@
 # Moat Tasks
 
-**Total**: 0 | **To Do**: 0 | **Doing**: 0 | **Done**: 0
+**Total**: 1 | **To Do**: 1 | **Doing**: 0 | **Done**: 0
 
 ## Tasks
 
-_press "F" to begin making annotations_
+1. [ ] Image: Tired study – "ホバーされると画像がGrayscale適用されちゃうけど、修正して"
 
 ---
 
-_Generated: 2025/9/29 17:18:25_
+_Generated: 2025/10/1 13:03:29_
 _Source: moat-tasks-detail.json_

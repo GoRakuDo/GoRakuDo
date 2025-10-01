@@ -5,21 +5,12 @@
 :root {
   /* Tool-specific colors (to be unified in future phases) */
   --tool-color-secondary: oklch(75% 0.12 65deg);
-  --tool-color-bg-card: oklch(8% 0.01 270deg / 0.5);
+  --tool-color-bg-card: oklch(8% 0.01 270deg / var(--opacity-50));
   --tool-color-text-light: oklch(60% 0.01 270deg);
 
-  /* Optimized opacity values for better performance */
-  --opacity-05: 0.05;
-  --opacity-08: 0.08;
-  --opacity-1: 0.1;
-  --opacity-15: 0.15;
-  --opacity-2: 0.2;
-  --opacity-3: 0.3;
-  --opacity-5: 0.5;
-  --opacity-8: 0.8;
-  --opacity-9: 0.9;
-  --opacity-95: 0.95;
-  --opacity-98: 0.98;
+  /* ===== OPACITY VALUES - グローバルシステムを使用 ===== */
+
+  /* 不透明度変数は global.css から継承 */
 
   /* Black Color with Opacity */
   --clr-black-10: oklch(0% 0 0deg / var(--opacity-1));
@@ -44,7 +35,7 @@
   /* Gray Color with Opacity */
   --clr-gray-5-50: oklch(5% 0.005 270deg / var(--opacity-5));
   --clr-gray-8-50: oklch(8% 0.01 270deg / var(--opacity-5));
-  --clr-gray-8-70: oklch(8% 0.01 270deg / 0.7);
+  --clr-gray-8-70: oklch(8% 0.01 270deg / var(--opacity-70));
   --clr-gray-8-95: oklch(8% 0.01 270deg / var(--opacity-95));
   --clr-gray-8-98: oklch(8% 0.01 270deg / var(--opacity-98));
   --clr-gray-12-98: oklch(12% 0.02 270deg / var(--opacity-98));
@@ -124,7 +115,7 @@
 }
 
 .suggestion-item:hover {
-  background: oklch(from var(--tool-color-bg-card) l c h / 0.7);
+  background: oklch(from var(--tool-color-bg-card) l c h / var(--opacity-70));
   transform: translateY(-1px);
 }
 
@@ -145,7 +136,7 @@
 
 .empty-state-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.2);
+  box-shadow: 0 4px 12px oklch(0% 0 0deg / var(--opacity-20));
 }
 
 .article-image-container {
@@ -318,7 +309,7 @@
 .error-card {
   max-width: 300px;
   padding: var(--spacing-xl);
-  border: 1px solid oklch(from var(--clr-accent) l c h / 0.2);
+  border: 1px solid oklch(from var(--clr-accent) l c h / var(--opacity-20));
   border-radius: var(--radius-lg);
   background: var(--clr-background);
   text-align: center;
@@ -470,9 +461,9 @@
   position: relative;
   z-index: 1000;
   outline: none;
-  border: 4px solid oklch(from var(--clr-accent) l c h / 0.5);
+  border: 4px solid oklch(from var(--clr-accent) l c h / var(--opacity-50));
   border-radius: var(--radius-xl);
-  box-shadow: 0 0 0 6px oklch(from var(--clr-accent) l c h / 0.2);
+  box-shadow: 0 0 0 6px oklch(from var(--clr-accent) l c h / var(--opacity-20));
   will-change: border, box-shadow;
   transition:
     border-color 0.2s ease-in-out,
@@ -481,7 +472,7 @@
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+  outline: 2px solid oklch(from var(--clr-accent) l c h / var(--opacity-50));
   outline-offset: 2px;
 }
 
@@ -599,7 +590,7 @@ button:focus-visible {
   color: var(--tool-color-primary);
   font-family: serif;
   font-size: 4rem;
-  opacity: 0.3;
+  opacity: var(--opacity-30);
   content: '"';
 }
 
@@ -761,8 +752,8 @@ button:focus-visible {
 }
 
 .related-article-badge {
-  border: 1px solid oklch(60% 0.15 280deg / 0.2);
-  background: oklch(60% 0.15 280deg / 0.1);
+  border: 1px solid oklch(60% 0.15 280deg / var(--opacity-20));
+  background: oklch(60% 0.15 280deg / var(--opacity-10));
   color: oklch(60% 0.15 280deg);
 }
 

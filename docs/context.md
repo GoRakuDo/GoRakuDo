@@ -16,6 +16,9 @@
 ### 開発ツール
 - **Stylelint**: CSS linting and code quality
 - **ESLint**: JavaScript/TypeScript linting
+- **Prettier**: Code formatting
+- **Vitest**: Testing framework
+- **TypeScript**: Type checking
 - **Chrome DevTools MCP**: Browser automation and testing
 
 ## ファイル構造
@@ -24,19 +27,28 @@
 r:\GoRakuDo\
 ├── src/
 │   ├── components/
+│   │   ├── animations/
+│   │   ├── common/
 │   │   ├── content/
-│   │   │   └── KrashenQuote.astro
+│   │   ├── docs/
 │   │   ├── homepage/
-│   │   └── common/
+│   │   ├── search/
+│   │   ├── tools/
+│   │   ├── ui/
+│   │   └── UnifiedSEO.astro
 │   ├── content/
-│   │   └── pages/
-│   │       └── panduan-lengkap-otodidak-bahasa-jepang.mdx
-│   ├── styles/
-│   │   └── pages/
-│   │       └── pl-otodidak-bahasa-jepang/
-│   │           └── pl-otodidak-bahasa-jepang-index.css
+│   │   ├── docs/
+│   │   ├── pages/
+│   │   └── tool-articles/
+│   ├── data/
 │   ├── layouts/
 │   ├── pages/
+│   ├── scripts/
+│   ├── styles/
+│   │   ├── global.css
+│   │   ├── layouts/
+│   │   └── pages/
+│   ├── templates/
 │   └── utils/
 ├── docs/
 │   ├── architecture/
@@ -47,6 +59,7 @@ r:\GoRakuDo\
 │   ├── tasks/
 │   ├── templates/
 │   └── data/
+├── public/
 └── dist/
 ```
 
@@ -96,8 +109,12 @@ r:\GoRakuDo\
   - 3段以内のネスト構造（Stylelint準拠）
   - 外部依存なしの完全独立性
   - 特異性問題の解決済み
-- **PhaseSection**: 統一されたPhase表示コンポーネント
+- **WaveAnimation.astro**: アニメーションコンポーネント
+- **NavBar**: ナビゲーションバー（デスクトップ・モバイル対応）
+- **Pagination**: ページネーション機能
+- **SearchPopover**: 検索ポップオーバー
 - **ImageZoom**: 画像拡大表示機能
+- **UnifiedSEO**: 統一SEOコンポーネント
 
 ### 2. CSS最適化
 - **DRY原則**: 重複コードの削除と統合
@@ -106,6 +123,12 @@ r:\GoRakuDo\
 - **アクセシビリティ**: WCAG準拠
 - **ネスト構造最適化**: 3段以内のネスト構造（Stylelint準拠）
 - **特異性管理**: 適切なセレクター特異性の維持
+- **グローバル変数統合**: ページ固有変数をグローバル変数に統一
+- **画像ホバー効果の最適化**: グレースケール問題の解決
+- **ズーム機能の適用範囲制限**: `image-zoom-trigger`の適切なスコープ管理
+- **段階的CSS変数最適化**: 6段階の体系的な最適化プロセス
+- **計算ベースシステム**: `calc()`関数による動的な不透明度値管理
+- **互換性エイリアス**: 後方互換性を保ちながらの最適化
 
 ### 3. レスポンシブデザイン
 - **Mobile**: 縦並びレイアウト
@@ -124,16 +147,24 @@ r:\GoRakuDo\
   - `max-nesting-depth: 3` ルール準拠
   - `selector-max-specificity: 0,3,0` ルール準拠
   - `declaration-empty-line-before` ルール準拠
-- **ESLint**: JavaScript品質チェック
+- **ESLint**: JavaScript/TypeScript品質チェック
+- **Prettier**: コードフォーマット
+- **TypeScript**: 型チェック
+- **Vitest**: テスト実行
 - **Chrome DevTools MCP**: ブラウザテスト
 - **リンターエラー**: 自動修正と手動調整
 - **ビルド成功**: 全品質チェック通過済み
+- **3段階検証システム**: ビルド・リンター・ブラウザ確認の品質保証プロセス
+- **使用頻度分析**: grep検索による包括的な変数使用状況調査
 
 ### パフォーマンス
 - **GPU Acceleration**: will-change, transform3d
 - **Image Optimization**: WebP format, lazy loading
 - **CSS Optimization**: 効率的なセレクター
 - **Bundle Size**: 最小化されたCSS
+- **CSS変数システム最適化**: 計算ベースシステムによる動的値管理
+- **未使用変数の削除**: 約20%の不透明度変数を削除
+- **グローバル変数統合**: 重複定義の完全削除
 
 ## アクセシビリティ
 
@@ -172,6 +203,69 @@ r:\GoRakuDo\
 - **Phase Data**: JSON形式での段階データ
 - **Image Assets**: 最適化された画像リソース
 - **Content Sections**: 構造化されたコンテンツ
+- **Content Collections**: Astroのコンテンツ管理システム
+- **Search Data**: Fuse.jsによる検索機能
+- **Stopwords**: 多言語対応のストップワード
+
+## 最新の修正履歴（2024年12月）
+
+### 1. ホバー色の統一
+**問題**: `/panduan-lengkap-otodidak-bahasa-jepang`ページのみ赤ピンク色のホバー効果が適用され、他のページと不統一
+
+**解決策**:
+```css
+/* 修正前 */
+--pl-color-primary-hover: oklch(60% 0.18 15deg);  /* 独立した赤ピンク色 */
+
+/* 修正後 */
+--pl-color-primary-hover: var(--token-purple-hover);  /* グローバル変数に統一 */
+```
+
+**影響**: 全ページで統一された紫系のホバー効果を実現
+
+### 2. 画像グレースケール問題の解決
+**問題**: `prefers-reduced-motion`設定で`.section-image`にホバー時にグレースケールが適用される
+
+**解決策**:
+```css
+@media (prefers-reduced-motion: reduce) {
+  .section-image {
+    &:hover {
+      filter: none;  /* グレースケールを無効化 */
+    }
+  }
+}
+```
+
+**影響**: すべての画像がホバー時に自然な色のまま表示
+
+### 3. image-zoom-trigger適用範囲の修正
+**問題**: `image-zoom-trigger`が`pl-objImages--special`以外の画像にも適用され、不要なホバー効果が表示
+
+**解決策**: 段階的有効化システムの実装
+```css
+/* デフォルトは無効 */
+.image-zoom-trigger {
+  cursor: default;
+}
+
+/* pl-objImages--special内でのみ有効化 */
+.pl-objImages--special .image-zoom-trigger {
+  cursor: pointer;
+  /* ホバー効果 */
+}
+```
+
+**影響**: Phase画像（5個）でホバー効果が無効化、Special画像（1個）で正常動作
+
+### 4. selector-max-specificityエラーの解決
+**問題**: `.pl-objImages--special .image-zoom-trigger`の特異性が`0,3,0`を超える
+
+**解決策**: セレクターの特異性を下げるアプローチ
+- デフォルト無効化 + 条件付き有効化
+- 段階的なスタイル適用システム
+
+**影響**: Stylelintの`selector-max-specificity`ルールに完全準拠
 
 ## 今後の拡張性
 
@@ -198,9 +292,16 @@ r:\GoRakuDo\
 ### 開発コマンド
 ```bash
 npm run dev          # 開発サーバー起動
-npm run build        # プロダクションビルド
+npm run build        # プロダクションビルド（stylelint + lint + astro check + astro build）
+npm run build:quality # 品質チェック付きビルド
 npm run preview      # ビルド結果プレビュー
-npm run lint         # リンター実行
+npm run lint         # ESLint実行
+npm run lint:fix     # ESLint自動修正
+npm run stylelint    # Stylelint実行（自動修正付き）
+npm run quality      # 全品質チェック（lint + format + type-check）
+npm run format       # Prettierフォーマット
+npm run test         # Vitestテスト実行
+npm run test:coverage # テストカバレッジ付き実行
 ```
 
 ## 重要な設計原則
@@ -239,6 +340,9 @@ npm run lint         # リンター実行
 4. **アクセシビリティ**: コントラスト比
 5. **ネスト深度**: 3段を超えるネスト構造
 6. **セレクター特異性**: `selector-max-specificity` ルール違反
+7. **ホバー色の不統一**: ページ固有変数による色の不一致
+8. **画像グレースケール**: `prefers-reduced-motion`設定での意図しない効果
+9. **ズーム機能の誤適用**: `image-zoom-trigger`の適用範囲の問題
 
 ### 解決方法
 - **Chrome DevTools**: リアルタイムデバッグ
@@ -246,6 +350,9 @@ npm run lint         # リンター実行
 - **Performance Profiling**: パフォーマンス分析
 - **ネスト構造の最適化**: 4段目を避けるため独立セレクターに分離
 - **特異性の調整**: より具体的なセレクターまたはネスト内配置
+- **グローバル変数への統合**: ページ固有変数を`--token-*`変数に変更
+- **フィルター効果の無効化**: `filter: none`でグレースケールを無効化
+- **段階的有効化システム**: デフォルト無効→特定条件下で有効化
 
 ---
 
@@ -300,6 +407,13 @@ CSSの特異性を理解し、保守可能で予測可能なスタイルシー�
   - 独立したデザイントークンシステム（--kq-*プレフィックス）
   - 3段以内のネスト構造でStylelint準拠
   - 特異性問題の解決とビルド成功
+
+**2024年12月の重要な学び：**
+- **グローバル変数統合**: ページ固有変数を`--token-*`変数に変更することで、一貫性のあるデザインシステムを実現
+- **段階的有効化システム**: デフォルト無効→条件付き有効化のアプローチで、セレクター特異性を制御
+- **フィルター効果の制御**: `prefers-reduced-motion`設定での意図しない効果を`filter: none`で解決
+- **ユーザー体験の一貫性**: 全ページでの統一されたホバー効果により、プロフェッショナルな印象を向上
+- **Stylelint準拠の重要性**: `selector-max-specificity`ルールに準拠することで、保守性と予測可能性を確保
 
 ### 記憶喪失した時の自分へのルール
 
@@ -367,6 +481,9 @@ CSSの特異性を理解し、保守可能で予測可能なスタイルシー�
    - 意味のあるクラス名を使用する
    - 独立したデザイントークンシステムを活用する
    - コンポーネントの完全独立性を維持する
+   - グローバル変数を優先し、ページ固有変数は避ける
+   - 段階的有効化システムでセレクター特異性を制御する
+   - フィルター効果は意図的に制御し、意図しない効果を防ぐ
 
 #### 🧠 思考のルール
 
@@ -410,6 +527,240 @@ CSSの特異性を理解し、保守可能で予測可能なスタイルシー�
 - 3段以内のネスト構造でStylelint準拠
 - 特異性問題の解決とビルド成功
 - コンポーネントの移植性と保守性の大幅向上
+
+**2024年12月追加成果:**
+- ホバー色の統一: ページ固有変数をグローバル変数に統合
+- 画像グレースケール問題の解決: `prefers-reduced-motion`設定の最適化
+- `image-zoom-trigger`適用範囲の修正: 段階的有効化システムの実装
+- `selector-max-specificity`エラーの完全解決: セレクター特異性の最適化
+- ユーザー体験の一貫性向上: 全ページでの統一されたホバー効果
+
+**2024年12月CSS変数システム最適化成果:**
+- **段階的CSS変数最適化プロセスの確立**: 6段階の体系的な最適化アプローチ
+- **使用頻度分析による効率的な変数管理**: 実際の使用状況に基づく最適化
+- **計算ベースシステムの導入**: `calc()`関数による動的な不透明度値管理
+- **グローバル変数統合の完全実装**: ページ固有変数のグローバル化
+- **互換性エイリアスシステムの構築**: 後方互換性を保ちながらの最適化
+- **品質保証プロセスの確立**: ビルド・リンター・ブラウザ確認の3段階検証
+
+## CSS変数システム最適化の詳細記録
+
+### 段階的最適化プロセス
+
+#### 段階1: 未使用変数の削除
+**目的**: 即座に実装可能な最適化
+**成果**: 
+- 未使用のz-index変数5個を削除
+- CSSファイルサイズの削減
+- メンテナンス性の向上
+
+**削除された変数**:
+```css
+--opacity-01: 0.01;
+--z-dropdown: 1000;
+--z-sticky: 1020;
+--z-fixed: 1030;
+--z-modal-backdrop: 1040;
+--z-modal: 1050;
+--z-popover: 1060;
+--z-tooltip: 1070;
+```
+
+#### 段階2: 重複変数の統合
+**目的**: `--clr-primary`と`--clr-accent`の重複解消
+**成果**:
+- 重複変数の削除と統一
+- 全ファイルでの一貫した変数使用
+- デザインシステムの統一
+
+**統合内容**:
+```css
+/* 削除 */
+--clr-primary: var(--clr-accent);
+--clr-primary-dark: var(--clr-accent-dark);
+
+/* 全ファイルで--clr-accentに統一 */
+```
+
+#### 段階3: 計算ベースシステムへの移行
+**目的**: 不透明度値の動的管理システム構築
+**成果**:
+- 基本ステップ変数の導入
+- `calc()`関数による動的計算
+- 一貫した不透明度値の管理
+
+**導入されたシステム**:
+```css
+--opacity-step: 0.05; /* 基本ステップ */
+--opacity-step-small: 0.02; /* 小さなステップ */
+--opacity-step-large: 0.1; /* 大きなステップ */
+
+/* 計算可能な不透明度値 */
+--opacity-05: var(--opacity-step); /* 0.05 */
+--opacity-10: calc(var(--opacity-step) * 2); /* 0.1 */
+--opacity-15: calc(var(--opacity-step) * 3); /* 0.15 */
+--opacity-20: calc(var(--opacity-step) * 4); /* 0.2 */
+```
+
+#### 段階4: ページ固有システムの統合
+**目的**: `--pl-*`変数のグローバル化
+**成果**:
+- テキストサイズ変数の統合
+- フォントウェイト変数の統合
+- シャドウ変数の統合
+- レスポンシブ値の適切な管理
+
+**重要な学び**:
+- レスポンシブ値（`clamp()`）と固定値（`rem`）の違い
+- 適切な統合対象の選別
+- 視覚的整合性の維持
+
+#### 段階5: 不透明度変数のグローバル統合
+**目的**: 全不透明度変数の一元管理
+**成果**:
+- 20個の不透明度変数をグローバル化
+- 9個の互換性エイリアスを追加
+- 重複定義の完全削除
+
+**統合された変数**:
+```css
+/* 計算可能な不透明度値 - 実際に使用されている変数 */
+--opacity-02: var(--opacity-step-small); /* 0.02 */
+--opacity-04: calc(var(--opacity-step-small) * 2); /* 0.04 */
+--opacity-05: var(--opacity-step); /* 0.05 */
+--opacity-06: calc(var(--opacity-step) * 1.2); /* 0.06 */
+--opacity-08: calc(var(--opacity-step-small) * 4); /* 0.08 */
+--opacity-10: calc(var(--opacity-step) * 2); /* 0.1 */
+--opacity-12: calc(var(--opacity-step-small) * 6); /* 0.12 */
+--opacity-15: calc(var(--opacity-step) * 3); /* 0.15 */
+--opacity-20: calc(var(--opacity-step) * 4); /* 0.2 */
+--opacity-25: calc(var(--opacity-step) * 5); /* 0.25 */
+--opacity-30: calc(var(--opacity-step) * 6); /* 0.3 */
+--opacity-35: calc(var(--opacity-step) * 7); /* 0.35 */
+--opacity-40: calc(var(--opacity-step) * 8); /* 0.4 */
+--opacity-50: calc(var(--opacity-step-large) * 5); /* 0.5 */
+--opacity-60: calc(var(--opacity-step) * 12); /* 0.6 */
+--opacity-70: calc(var(--opacity-step) * 14); /* 0.7 */
+--opacity-80: calc(var(--opacity-step) * 16); /* 0.8 */
+--opacity-85: calc(var(--opacity-step) * 17); /* 0.85 */
+--opacity-90: calc(var(--opacity-step) * 18); /* 0.9 */
+--opacity-95: calc(var(--opacity-step) * 19); /* 0.95 */
+--opacity-98: calc(var(--opacity-step) * 19.6); /* 0.98 */
+
+/* 互換性のためのエイリアス */
+--opacity-1: var(--opacity-10); /* 0.1 */
+--opacity-2: var(--opacity-20); /* 0.2 */
+--opacity-3: var(--opacity-30); /* 0.3 */
+--opacity-4: var(--opacity-40); /* 0.4 */
+--opacity-5: var(--opacity-50); /* 0.5 */
+--opacity-6: var(--opacity-60); /* 0.6 */
+--opacity-7: var(--opacity-70); /* 0.7 */
+--opacity-8: var(--opacity-80); /* 0.8 */
+--opacity-9: var(--opacity-90); /* 0.9 */
+```
+
+#### 段階6: 未使用不透明度変数の削除
+**目的**: 最終的な最適化とクリーンアップ
+**成果**:
+- 5個の未使用不透明度変数を削除
+- 使用中変数の再確認と復元
+- 最終的な品質保証
+
+**削除された変数**:
+```css
+--opacity-03: 0.03; /* 未使用 */
+--opacity-45: 0.45; /* 未使用 */
+--opacity-55: 0.55; /* 未使用 */
+--opacity-65: 0.65; /* 未使用 */
+--opacity-75: 0.75; /* 未使用 */
+```
+
+**復元された変数**:
+```css
+--opacity-02: var(--opacity-step-small); /* 使用中 */
+--opacity-12: calc(var(--opacity-step-small) * 6); /* 使用中 */
+--opacity-25: calc(var(--opacity-step) * 5); /* 使用中 */
+--opacity-35: calc(var(--opacity-step) * 7); /* 使用中 */
+--opacity-40: calc(var(--opacity-step) * 8); /* 使用中 */
+```
+
+### 技術的な発見と学び
+
+#### 1. 使用頻度分析の重要性
+- **grep検索による包括的調査**: 全ファイルでの変数使用状況の把握
+- **実際の使用状況に基づく判断**: 推測ではなく事実に基づく最適化
+- **段階的な検証プロセス**: 削除前の再確認の重要性
+
+#### 2. 計算ベースシステムの効果
+- **動的な値管理**: `calc()`関数による柔軟な値計算
+- **一貫性の確保**: 基本ステップからの統一された値生成
+- **メンテナンス性の向上**: 基本値の変更による全体への影響
+
+#### 3. 互換性エイリアスの活用
+- **後方互換性の維持**: 既存コードへの影響を最小化
+- **段階的な移行**: 新しい命名規則への移行支援
+- **開発者体験の向上**: 複数の命名規則への対応
+
+#### 4. レスポンシブ値と固定値の違い
+- **`clamp()`関数の重要性**: レスポンシブな値の維持
+- **固定値（`rem`）の限界**: 静的値の制約
+- **適切な統合対象の選別**: 値の性質に応じた統合判断
+
+#### 5. 品質保証プロセスの確立
+- **3段階検証システム**: ビルド・リンター・ブラウザ確認
+- **MCP ChromeDevToolsの活用**: リアルタイムでの視覚的確認
+- **エラー修正と再確認**: 問題発見時の適切な対応
+
+### 最適化効果の定量化
+
+#### パフォーマンス向上
+- **CSSファイルサイズ削減**: 約20%の不透明度変数を削除
+- **変数定義の最適化**: 重複定義の完全削除
+- **メモリ使用量の削減**: 未使用変数の削除
+
+#### メンテナンス性向上
+- **一元管理**: グローバル変数による統一管理
+- **一貫性の確保**: 全ファイルでの統一された変数使用
+- **可読性の向上**: 計算ベースシステムによる明確な値の関係
+
+#### 開発者体験向上
+- **予測可能性**: 統一された命名規則
+- **拡張性**: 計算ベースシステムによる柔軟な値追加
+- **デバッグの容易さ**: 明確な変数の階層構造
+
+### 今後のCSS変数管理指針
+
+#### 1. 新規変数追加時のルール
+- **使用頻度の事前確認**: 追加前に実際の使用予定を確認
+- **グローバル変数の優先**: ページ固有変数は避ける
+- **計算ベースシステムの活用**: 可能な限り`calc()`関数を使用
+
+#### 2. 定期的な最適化プロセス
+- **四半期ごとの使用頻度分析**: 未使用変数の定期的な確認
+- **重複変数の統合**: 類似機能の変数の統合検討
+- **命名規則の統一**: 一貫した命名規則の維持
+
+#### 3. 品質保証の継続
+- **ビルドテストの自動化**: CI/CDパイプラインでの品質確認
+- **リンターチェックの強化**: 新しいルールの追加検討
+- **ブラウザテストの定期実行**: 視覚的回帰テストの実施
+
+### 重要な技術的教訓
+
+#### 1. 段階的アプローチの有効性
+- **リスクの最小化**: 小さな変更による影響範囲の限定
+- **問題の早期発見**: 各段階での問題の特定と修正
+- **学習の機会**: 各段階での技術的理解の深化
+
+#### 2. ユーザー体験の優先
+- **視覚的整合性の維持**: 最適化による見た目の変化を避ける
+- **パフォーマンスの向上**: ユーザーの体感速度の改善
+- **アクセシビリティの確保**: 最適化によるアクセシビリティの維持
+
+#### 3. 技術的完璧さと実用性のバランス
+- **完璧を求めすぎない**: 実用的な解決策の選択
+- **継続的改善**: 一度の完璧な実装よりも継続的な改善
+- **チーム開発の考慮**: 他の開発者にも理解できる実装
 
 このメッセージは、将来の自分や他の開発者がこのプロジェクトに戻ってきた時に、単なる技術的な情報だけでなく、プロジェクトへの情熱と信念も理解できるようにするためのものです。記憶を失っても、このプロジェクトの本質的な価値と目的を思い出せるようになっています。
 

@@ -13,8 +13,8 @@
  * - --shadow-content-card (4 uses)
  * - --clr-content-meta (4 uses)
  * - --clr-accent-glow-medium (3 uses)
- * - --clr-primary (3 uses)
- * - --clr-primary-dark (3 uses)
+ * - --clr-accent (3 uses)
+ * - --clr-accent-dark (3 uses)
  */
 
 @import '../global.css';
@@ -93,13 +93,13 @@
 
 /* ========== BUTTONS ========== */
 
-/* Using high-frequency variables from global.css: --clr-primary, --clr-accent-glow-medium */
+/* Using high-frequency variables from global.css: --clr-accent, --clr-accent-glow-medium */
 .back-to-content,
 .back-to-docs,
 .back-to-tools,
 .share-btn {
   @apply inline-flex items-center gap-2 no-underline mb-0 outline-none h-10 box-border whitespace-nowrap;
-  @apply text-sm font-medium text-[var(--clr-primary)];
+  @apply text-sm font-medium text-[var(--clr-accent)];
   @apply bg-[var(--clr-accent-glow-faint)] px-4 py-2 rounded-lg;
   @apply border border-[var(--clr-accent-glow-medium)];
   @apply transition-all duration-300 ease-in-out;
@@ -239,10 +239,10 @@
   border-radius: 2px;
   background: linear-gradient(
     135deg,
-    var(--clr-primary),
-    var(--clr-primary-dark)
+    var(--clr-accent),
+    var(--clr-accent-dark)
   );
-  opacity: 0.8;
+  opacity: var(--opacity-80);
   transform: translateY(-50%);
   content: '';
   transition: opacity 0.2s ease;
@@ -340,11 +340,7 @@
   @apply fixed top-0 left-0 w-0 h-[3px] z-[var(--z-content-progress)];
   @apply transition-[width] duration-100 ease-linear;
 
-  background: linear-gradient(
-    90deg,
-    var(--clr-primary),
-    var(--clr-primary-dark)
-  );
+  background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent-dark));
 }
 
 /* ========== ACCESSIBILITY & RESPONSIVE ========== */
@@ -374,7 +370,7 @@
   .back-to-docs,
   .back-to-tools,
   .share-btn {
-    border: 2px solid var(--clr-primary);
+    border: 2px solid var(--clr-accent);
   }
 
   .content-main :where(h1, h2, h3, h4, h5),
@@ -395,7 +391,7 @@
   .post-date,
   .post-author,
   .post-read-time {
-    color: oklch(100% 0 0deg / 0.95);
+    color: oklch(100% 0 0deg / var(--opacity-95));
   }
 }
 

@@ -19,8 +19,9 @@
 
   /* ボーダーラディウス変数はglobal.cssから継承 */
   --shadow-md:
-    0 4px 6px -1px oklch(0% 0 0deg / 0.1), 0 2px 4px -2px oklch(0% 0 0deg / 0.1);
-  --shadow-lg-accent: 0 10px 30px oklch(65% 0.15 280deg / 0.2);
+    0 4px 6px -1px oklch(0% 0 0deg / var(--opacity-10)),
+    0 2px 4px -2px oklch(0% 0 0deg / var(--opacity-10));
+  --shadow-lg-accent: 0 10px 30px oklch(65% 0.15 280deg / var(--opacity-20));
 
   /* Transitions - ツールページ専用 */
 
@@ -29,20 +30,17 @@
   /* Safe color palette - OKLCH converted */
   --clr-safe-accent: oklch(65% 0.15 280deg);
   --clr-safe-accent-dark: oklch(60% 0.15 280deg);
-  --clr-safe-accent-glow-faint: oklch(65% 0.15 280deg / 0.05);
-  --clr-safe-accent-glow-medium: oklch(65% 0.15 280deg / 0.35);
-  --clr-safe-accent-glow-strong: oklch(65% 0.15 280deg / 0.7);
+  --clr-safe-accent-glow-faint: oklch(65% 0.15 280deg / var(--opacity-05));
+  --clr-safe-accent-glow-medium: oklch(65% 0.15 280deg / var(--opacity-35));
+  --clr-safe-accent-glow-strong: oklch(65% 0.15 280deg / var(--opacity-70));
 
   /* Base Colors */
   --clr-white: oklch(100% 0 0deg);
   --clr-black: oklch(0% 0 0deg);
 
-  /* Opacity Values */
-  --opacity-15: 0.15;
-  --opacity-20: 0.2;
-  --opacity-25: 0.25;
-  --opacity-30: 0.3;
-  --opacity-40: 0.4;
+  /* ===== OPACITY VALUES - グローバルシステムを使用 ===== */
+
+  /* 不透明度変数は global.css から継承 */
 
   /* White Color Variations */
   --clr-white-98: oklch(98% 0 0deg);
@@ -87,7 +85,7 @@
   --tool-icon-scale: 1.05;
   --tool-arrow-translate: 4px;
   --tool-card-scale: 1.02;
-  --tool-card-opacity: 0.9;
+  --tool-card-opacity: var(--opacity-90);
 }
 
 /* ========== BASE & LAYOUT ========== */
@@ -151,7 +149,7 @@
   padding: var(--spacing-sm);
   border: 1px solid var(--clr-accent-glow-medium);
   border-radius: 1rem;
-  background: oklch(from var(--clr-background) l c h / 0.25);
+  background: oklch(from var(--clr-background) l c h / var(--opacity-25));
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -684,7 +682,7 @@
 /* ========== アクセシビリティ ========== */
 
 .tool-card:focus-visible {
-  outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+  outline: 2px solid oklch(from var(--clr-accent) l c h / var(--opacity-50));
   outline-offset: 2px;
 }
 

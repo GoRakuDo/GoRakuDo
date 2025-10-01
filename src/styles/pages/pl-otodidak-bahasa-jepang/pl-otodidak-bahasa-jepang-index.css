@@ -10,6 +10,7 @@
    DESIGN TOKENS - 最適化された変数
    ======================================== */
 :root {
+  /* スペーシング変数 - レスポンシブ値を復元 */
   --pl-space-xs: clamp(0.25rem, 1vw, 0.5rem);
   --pl-space-sm: clamp(0.5rem, 1.5vw, 0.75rem);
   --pl-space-md: clamp(0.75rem, 2vw, 1rem);
@@ -20,35 +21,41 @@
   --pl-space-4xl: clamp(2.5rem, 5vw, 3rem);
   --pl-space-5xl: clamp(3rem, 6vw, 4rem);
   --pl-space-6xl: clamp(4rem, 8vw, 5rem);
-  --pl-text-xs: clamp(0.75rem, 2vw, 0.875rem);
-  --pl-text-sm: clamp(0.875rem, 2.5vw, 1rem);
-  --pl-text-base: clamp(1rem, 3vw, 1.125rem);
-  --pl-text-lg: clamp(1.125rem, 3.5vw, 1.25rem);
-  --pl-text-xl: clamp(1.25rem, 4vw, 1.5rem);
-  --pl-text-2xl: clamp(1.5rem, 4.5vw, 1.75rem);
-  --pl-text-3xl: clamp(1.75rem, 5vw, 2.25rem);
-  --pl-text-4xl: clamp(2rem, 6vw, 3rem);
-  --pl-text-5xl: clamp(2.5rem, 7vw, 3.5rem);
+
+  /* テキストサイズ変数 - グローバルシステムに統合 */
+  --pl-text-xs: var(--font-size-xs);
+  --pl-text-sm: var(--font-size-sm);
+  --pl-text-base: var(--font-size-base);
+  --pl-text-lg: var(--font-size-lg);
+  --pl-text-xl: var(--font-size-xl);
+  --pl-text-2xl: var(--font-size-2xl);
+  --pl-text-3xl: var(--font-size-3xl);
+  --pl-text-4xl: var(--font-size-4xl);
+  --pl-text-5xl: var(--font-size-5xl);
   --pl-text-heading-sm: clamp(1.25rem, 4vw, 1.75rem);
   --pl-text-heading-md: clamp(1.75rem, 3vw, 2.5rem);
   --pl-text-heading-lg: clamp(2rem, 2.5vw, 3rem);
   --pl-text-title-sm: clamp(1.875rem, 6.25vw, 2.5rem);
   --pl-text-title-md: clamp(2rem, 3.5vw, 3rem);
   --pl-text-title-lg: clamp(2.5rem, 3vw, 3.5rem);
-  --pl-font-normal: 400;
-  --pl-font-medium: 500;
-  --pl-font-semibold: 600;
-  --pl-font-bold: 800;
+
+  /* フォントウェイト変数 - グローバルシステムに統合 */
+  --pl-font-normal: var(--font-weight-normal);
+  --pl-font-medium: var(--font-weight-medium);
+  --pl-font-semibold: var(--font-weight-semibold);
+  --pl-font-bold: var(--font-weight-bold);
   --pl-font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
   --pl-font-family-display: 'Open Sauce One', system-ui, sans-serif;
   --pl-leading-tight: 1.2;
   --pl-leading-snug: 1.3;
   --pl-leading-normal: 1.4;
   --pl-leading-relaxed: 1.5;
-  --pl-shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 0.05);
-  --pl-shadow-md: 0 4px 6px -1px oklch(0% 0 0deg / 0.1);
-  --pl-shadow-lg: 0 10px 15px -3px oklch(0% 0 0deg / 0.1);
-  --pl-shadow-xl: 0 20px 25px -5px oklch(0% 0 0deg / 0.1);
+
+  /* シャドウ変数 - グローバルシステムに統合 */
+  --pl-shadow-sm: var(--shadow-sm);
+  --pl-shadow-md: var(--shadow-md);
+  --pl-shadow-lg: var(--shadow-lg);
+  --pl-shadow-xl: var(--shadow-xl);
   --pl-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --pl-transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --pl-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -67,7 +74,7 @@
   --pl-color-secondary-hover: var(--token-purple-hover);
   --pl-color-text-primary: var(--clr-text-primary);
   --pl-color-text-secondary: var(--token-text-muted);
-  --pl-color-background-subtle: oklch(98% 0.02 15deg / 0.85);
+  --pl-color-background-subtle: oklch(98% 0.02 15deg / var(--opacity-85));
   --pl-color-border-subtle: var(--pl-color-primary);
   --pl-color-warning-orange: oklch(70% 0.15 45deg);
   --pl-color-text-muted: oklch(70% 0.02 250deg);
@@ -593,7 +600,7 @@ a {
     width: 100%;
     height: 100%;
     color: var(--pl-color-primary);
-    opacity: 0.8;
+    opacity: var(--opacity-80);
     transition: opacity var(--pl-transition-normal);
   }
 
@@ -648,7 +655,7 @@ a {
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(var(--pl-shadow-lg));
-    opacity: 0.9;
+    opacity: var(--opacity-90);
     will-change: transform;
     transform: translateZ(0);
     transition: transform var(--pl-transition-normal);
@@ -684,7 +691,7 @@ a {
     transition: none;
 
     &:hover {
-      filter: var(--pl-filter-grayscale);
+      filter: none;
     }
   }
 }
@@ -817,13 +824,20 @@ a {
 /* ========================================
    IMAGE ZOOM FUNCTIONALITY - Modern Modal
    ======================================== */
+
+/* image-zoom-trigger - デフォルトは無効 */
 .image-zoom-trigger {
   overflow: hidden;
   border-radius: var(--pl-radius-lg);
-  cursor: pointer;
+  cursor: default;
   transition:
     transform var(--pl-transition-normal),
     box-shadow var(--pl-transition-normal);
+}
+
+/* pl-objImages--special内でのみ有効化 */
+.pl-objImages--special .image-zoom-trigger {
+  cursor: pointer;
 
   &:hover {
     transform: scale(var(--pl-scale-hover));
@@ -869,7 +883,7 @@ a {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: oklch(0% 0 0deg / 0.9);
+  background: oklch(0% 0 0deg / var(--opacity-90));
   backdrop-filter: blur(8px);
   opacity: 0;
   visibility: hidden;
@@ -878,7 +892,7 @@ a {
     visibility var(--pl-transition-normal);
 
   @media (prefers-contrast: high) {
-    background: oklch(0% 0 0deg / 0.95);
+    background: oklch(0% 0 0deg / var(--opacity-95));
   }
 
   &.is-open {
@@ -1050,18 +1064,18 @@ a {
     margin: 0 auto;
     padding: min(var(--pl-gap-responsive-tablet), 6vw)
       min(var(--pl-gap-responsive-mobile), 4vw);
-    border: 1px solid oklch(100% 0 0deg / 0.2);
+    border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: var(--pl-radius-2xl);
-    background: oklch(100% 0 0deg / 0.1);
+    background: oklch(100% 0 0deg / var(--opacity-10));
     backdrop-filter: blur(20px);
     box-shadow:
-      0 8px 32px oklch(0% 0 0deg / 0.1),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
+      inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
     text-align: center;
 
     @media (max-width: 768px) {
       backdrop-filter: blur(15px);
-      background: oklch(100% 0 0deg / 0.08);
+      background: oklch(100% 0 0deg / var(--opacity-08));
     }
 
     .learning-method-content {
@@ -1128,17 +1142,17 @@ a {
     margin: 0 auto;
     padding: min(var(--pl-gap-responsive-tablet), 6vw)
       min(var(--pl-gap-responsive-mobile), 4vw);
-    border: 1px solid oklch(100% 0 0deg / 0.2);
+    border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: var(--pl-radius-2xl);
-    background: oklch(100% 0 0deg / 0.1);
+    background: oklch(100% 0 0deg / var(--opacity-10));
     backdrop-filter: blur(20px);
     box-shadow:
-      0 8px 32px oklch(0% 0 0deg / 0.1),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
+      inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
 
     @media (max-width: 768px) {
       backdrop-filter: blur(15px);
-      background: oklch(100% 0 0deg / 0.08);
+      background: oklch(100% 0 0deg / var(--opacity-08));
     }
 
     @media (min-width: 768px) {
@@ -1164,8 +1178,8 @@ a {
   padding: var(--pl-space-lg);
   border-left: 4px solid var(--pl-color-secondary);
   border-radius: 0 8px 8px 0;
-  background: oklch(100% 0 0deg / 0.05);
-  box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
+  background: oklch(100% 0 0deg / var(--opacity-05));
+  box-shadow: 0 2px 8px oklch(0% 0 0deg / var(--opacity-10));
 
   @media (max-width: 768px) {
     order: 1;
@@ -1278,8 +1292,8 @@ a {
     background: var(--clr-glass-background);
     backdrop-filter: blur(20px);
     box-shadow:
-      0 8px 32px oklch(0% 0 0deg / 0.1),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
+      inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
 
     /* Typography */
     color: var(--pl-color-secondary);
@@ -1293,8 +1307,8 @@ a {
       background: var(--clr-glass-background-hover);
       transform: translateY(-2px);
       box-shadow:
-        0 12px 40px oklch(0% 0 0deg / 0.15),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.3);
+        0 12px 40px oklch(0% 0 0deg / var(--opacity-15)),
+        inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-30));
     }
   }
 
@@ -1557,19 +1571,12 @@ a {
   }
 
   .image-zoom-trigger {
-    cursor: pointer;
+    cursor: default;
     transition: transform 0.2s ease;
   }
 }
 
-/* Phase画像のホバー効果 */
-.pl-objContainer--phase1 .image-zoom-trigger:hover,
-.pl-objContainer--phase2 .image-zoom-trigger:hover,
-.pl-objContainer--phase3 .image-zoom-trigger:hover,
-.pl-objContainer--phase4 .image-zoom-trigger:hover,
-.pl-objContainer--phase5 .image-zoom-trigger:hover {
-  transform: scale(var(--pl-scale-hover));
-}
+/* Phase画像のホバー効果は削除 - image-zoom-triggerはpl-objImages--specialのみに適用 */
 
 /* 画像右配置のPhase（Phase1, Phase3, Phase5） */
 .pl-objContainer--phase1,
@@ -1627,7 +1634,7 @@ ol li::marker,
 .formula img {
   overflow: hidden;
   border-radius: var(--pl-radius-xl);
-  box-shadow: 0 4px 16px oklch(0% 0 0deg / 0.1);
+  box-shadow: 0 4px 16px oklch(0% 0 0deg / var(--opacity-10));
 
   /* 高解像度ディスプレイでの画像品質向上 */
   image-rendering: auto;
@@ -1643,7 +1650,7 @@ ol li::marker,
 
   &:hover {
     transform: scale(var(--pl-scale-hover));
-    box-shadow: 0 8px 24px oklch(0% 0 0deg / 0.15);
+    box-shadow: 0 8px 24px oklch(0% 0 0deg / var(--opacity-15));
   }
 }
 

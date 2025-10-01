@@ -22,40 +22,35 @@
   --clr-text-medium: oklch(30% 0 0deg);
   --clr-text-light: oklch(45% 0 0deg);
 
-  /* Opacity Values */
-  --opacity-10: 0.1;
-  --opacity-15: 0.15;
-  --opacity-20: 0.2;
-  --opacity-25: 0.25;
-  --opacity-30: 0.3;
-  --opacity-35: 0.35;
-  --opacity-40: 0.4;
-  --opacity-60: 0.6;
-  --opacity-70: 0.7;
-  --opacity-95: 0.95;
-  --opacity-98: 0.98;
+  /* ===== OPACITY VALUES - グローバルシステムを使用 ===== */
+
+  /* 不透明度変数は global.css から継承 */
 
   /* Shadow Values */
   --shadow-subtle: 0 1px 3px var(--clr-black-10);
   --shadow-hover: 0 6px 12px var(--clr-black-15);
   --shadow-card:
-    0 4px 6px -1px var(--clr-black-10), 0 2px 4px -1px oklch(0% 0 0deg / 0.06);
+    0 4px 6px -1px var(--clr-black-10),
+    0 2px 4px -1px oklch(0% 0 0deg / var(--opacity-06));
   --shadow-card-hover:
     0 20px 25px -5px var(--clr-black-10),
-    0 10px 10px -5px oklch(0% 0 0deg / 0.04);
+    0 10px 10px -5px oklch(0% 0 0deg / var(--opacity-04));
   --shadow-text:
-    0 2px 4px var(--clr-black-10), 0 1px 2px oklch(0% 0 0deg / 0.05);
+    0 2px 4px var(--clr-black-10),
+    0 1px 2px oklch(0% 0 0deg / var(--opacity-05));
   --shadow-text-hover:
     0 3px 6px var(--clr-black-20), 0 1px 3px var(--clr-black-10);
   --shadow-emoji: 0 4px 8px var(--clr-black-15), 0 2px 4px var(--clr-black-10);
   --shadow-emoji-hover:
     0 8px 16px var(--clr-black-25), 0 4px 8px var(--clr-black-15);
   --shadow-tag:
-    0 2px 4px var(--clr-black-10), 0 1px 2px oklch(0% 0 0deg / 0.05);
+    0 2px 4px var(--clr-black-10),
+    0 1px 2px oklch(0% 0 0deg / var(--opacity-05));
   --shadow-tag-hover:
     0 8px 16px var(--clr-black-15), 0 4px 8px var(--clr-black-10);
   --shadow-button:
-    0 4px 8px var(--clr-black-10), 0 2px 4px oklch(0% 0 0deg / 0.05);
+    0 4px 8px var(--clr-black-10),
+    0 2px 4px oklch(0% 0 0deg / var(--opacity-05));
   --shadow-button-hover:
     0 12px 24px var(--clr-black-15), 0 6px 12px var(--clr-black-10);
 
@@ -271,42 +266,42 @@
 
 /* Card Variants */
 .post-card-0 {
-  border: 1px solid oklch(90% 0.02 85deg / 0.3);
+  border: 1px solid oklch(90% 0.02 85deg / var(--opacity-30));
   background: linear-gradient(
     135deg,
-    oklch(99% 0.01 85deg / 0.95) 0%,
-    oklch(97% 0.02 85deg / 0.9) 50%,
-    oklch(95% 0.03 85deg / 0.85) 100%
+    oklch(99% 0.01 85deg / var(--opacity-95)) 0%,
+    oklch(97% 0.02 85deg / var(--opacity-90)) 50%,
+    oklch(95% 0.03 85deg / var(--opacity-85)) 100%
   );
 }
 
 .post-card-1 {
-  border: 1px solid oklch(90% 0.02 330deg / 0.3);
+  border: 1px solid oklch(90% 0.02 330deg / var(--opacity-30));
   background: linear-gradient(
     135deg,
-    oklch(98% 0.01 330deg / 0.95) 0%,
-    oklch(96% 0.02 330deg / 0.9) 50%,
-    oklch(94% 0.03 330deg / 0.85) 100%
+    oklch(98% 0.01 330deg / var(--opacity-95)) 0%,
+    oklch(96% 0.02 330deg / var(--opacity-90)) 50%,
+    oklch(94% 0.03 330deg / var(--opacity-85)) 100%
   );
 }
 
 .post-card-2 {
-  border: 1px solid oklch(90% 0.02 240deg / 0.3);
+  border: 1px solid oklch(90% 0.02 240deg / var(--opacity-30));
   background: linear-gradient(
     135deg,
-    oklch(98% 0.01 240deg / 0.95) 0%,
-    oklch(96% 0.02 240deg / 0.9) 50%,
-    oklch(94% 0.03 240deg / 0.85) 100%
+    oklch(98% 0.01 240deg / var(--opacity-95)) 0%,
+    oklch(96% 0.02 240deg / var(--opacity-90)) 50%,
+    oklch(94% 0.03 240deg / var(--opacity-85)) 100%
   );
 }
 
 .post-card-3 {
-  border: 1px solid oklch(90% 0.02 120deg / 0.3);
+  border: 1px solid oklch(90% 0.02 120deg / var(--opacity-30));
   background: linear-gradient(
     135deg,
-    oklch(99% 0.01 120deg / 0.95) 0%,
-    oklch(97% 0.02 120deg / 0.9) 50%,
-    oklch(95% 0.03 120deg / 0.85) 100%
+    oklch(99% 0.01 120deg / var(--opacity-95)) 0%,
+    oklch(97% 0.02 120deg / var(--opacity-90)) 50%,
+    oklch(95% 0.03 120deg / var(--opacity-85)) 100%
   );
 }
 
@@ -341,7 +336,7 @@
   max-height: none;
   font-size: var(--emoji-size);
   white-space: nowrap;
-  opacity: 0.9;
+  opacity: var(--opacity-90);
   pointer-events: none;
   transform: rotate(15deg);
   transition: var(--transition-smooth);
@@ -751,7 +746,7 @@
 
 /* ===== UTILITY STATES ===== */
 .posts-grid.loading {
-  opacity: 0.6;
+  opacity: var(--opacity-60);
   pointer-events: none;
 }
 

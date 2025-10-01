@@ -340,10 +340,10 @@ const CARD_ACCESSIBILITY = {
         calc(var(--spacing-sm) / 4)
       )
       clamp(calc(var(--spacing-sm) / 2), 1vw, calc(var(--spacing-md) / 2));
-    border: 1px solid oklch(from var(--clr-primary) l c h / 0.2);
+    border: 1px solid oklch(from var(--clr-accent) l c h / 0.2);
     border-radius: var(--radius-md);
-    background: oklch(from var(--clr-primary) l c h / 0.15);
-    color: var(--clr-primary);
+    background: oklch(from var(--clr-accent) l c h / 0.15);
+    color: var(--clr-accent);
     font-size: clamp(var(--font-size-xs), 0.75vw, var(--font-size-sm));
     font-weight: 300;
     white-space: nowrap;
@@ -357,7 +357,7 @@ const CARD_ACCESSIBILITY = {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    background: oklch(from var(--clr-primary) l c h / 0.1);
+    background: oklch(from var(--clr-accent) l c h / 0.1);
     opacity: 1;
     flex-shrink: 0;
   }
@@ -365,7 +365,7 @@ const CARD_ACCESSIBILITY = {
   .arrow-icon {
     width: 1rem;
     height: 1rem;
-    color: var(--clr-primary);
+    color: var(--clr-accent);
   }
 
   /* デスクトップ表示ではホバー時にのみ表示 */

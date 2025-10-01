@@ -7,8 +7,8 @@
 
   /* Tool-specific colors (to be unified in future phases) */
   --tool-color-secondary: oklch(75% 0.12 65deg);
-  --tool-color-bg-card: oklch(8% 0.01 270deg / 0.5);
-  --tool-color-bg-card-hover: oklch(8% 0.01 270deg / 0.7);
+  --tool-color-bg-card: oklch(8% 0.01 270deg / var(--opacity-50));
+  --tool-color-bg-card-hover: oklch(8% 0.01 270deg / var(--opacity-70));
   --tool-color-text-light: oklch(60% 0.01 270deg);
 
   /* Transitions */
@@ -134,7 +134,8 @@
 
 .article-content-enhanced h2 {
   padding-bottom: var(--tool-spacing-sm);
-  border-bottom: 2px solid oklch(from var(--clr-primary) l c h / 0.2);
+  border-bottom: 2px solid
+    oklch(from var(--clr-accent) l c h / var(--opacity-20));
   font-size: var(--tool-font-size-xl);
 }
 
@@ -164,7 +165,7 @@
   margin: calc(-1 * var(--tool-spacing-xs));
   padding: var(--tool-spacing-xs);
   border-radius: var(--tool-radius-sm);
-  background: oklch(from var(--clr-primary) l c h / 0.05);
+  background: oklch(from var(--clr-accent) l c h / var(--opacity-05));
   color: var(--tool-color-primary-hover);
   border-bottom-color: var(--tool-color-primary);
 }
@@ -178,12 +179,12 @@
   border-radius: 0 0.75rem 0.75rem 0;
   background: linear-gradient(
     135deg,
-    oklch(15% 0.02 270deg / 0.1) 0%,
-    oklch(20% 0.03 270deg / 0.15) 100%
+    oklch(15% 0.02 270deg / var(--opacity-10)) 0%,
+    oklch(20% 0.03 270deg / var(--opacity-15)) 100%
   );
   color: var(--tool-color-text-secondary);
   font-style: italic;
-  box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.1);
+  box-shadow: 0 4px 12px oklch(0% 0 0deg / var(--opacity-10));
 }
 
 .article-content-enhanced blockquote::before {
@@ -193,7 +194,7 @@
   color: var(--tool-color-primary);
   font-family: serif;
   font-size: 4rem;
-  opacity: 0.3;
+  opacity: var(--opacity-30);
   content: '"';
 }
 
@@ -216,12 +217,12 @@
   overflow: hidden;
   margin: 2rem 0;
   padding: 1.5rem;
-  border: 1px solid oklch(25% 0.02 270deg / 0.2);
+  border: 1px solid oklch(25% 0.02 270deg / var(--opacity-20));
   border-radius: 0.75rem;
   background: linear-gradient(
     135deg,
-    oklch(8% 0.01 270deg / 0.95) 0%,
-    oklch(12% 0.02 270deg / 0.98) 100%
+    oklch(8% 0.01 270deg / var(--opacity-95)) 0%,
+    oklch(12% 0.02 270deg / var(--opacity-98)) 100%
   );
 }
 
@@ -254,37 +255,37 @@
   border-radius: 0.75rem;
   border-spacing: 0;
   border-collapse: separate;
-  box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.1);
+  box-shadow: 0 4px 12px oklch(0% 0 0deg / var(--opacity-10));
 }
 
 .article-content-enhanced thead {
   background: linear-gradient(
     135deg,
     var(--tool-color-primary) 0%,
-    oklch(55% 0.18 280deg / 0.9) 100%
+    oklch(55% 0.18 280deg / var(--opacity-90)) 100%
   );
 }
 
 .article-content-enhanced thead th {
   padding: 1rem 1.5rem;
-  border-bottom: 2px solid oklch(45% 0.15 280deg / 0.3);
+  border-bottom: 2px solid oklch(45% 0.15 280deg / var(--opacity-30));
   color: var(--clr-text-primary);
   font-weight: 600;
   text-align: left;
 }
 
 .article-content-enhanced tbody tr:nth-child(even) {
-  background: oklch(5% 0.005 270deg / 0.5);
+  background: oklch(5% 0.005 270deg / var(--opacity-50));
 }
 
 .article-content-enhanced tbody tr:hover {
-  background: oklch(15% 0.02 270deg / 0.8);
+  background: oklch(15% 0.02 270deg / var(--opacity-80));
   transition: background-color 0.2s ease;
 }
 
 .article-content-enhanced tbody td {
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid oklch(25% 0.02 270deg / 0.1);
+  border-bottom: 1px solid oklch(25% 0.02 270deg / var(--opacity-10));
 }
 
 /* List styling - Enhanced */
@@ -330,8 +331,8 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    oklch(25% 0.02 270deg / 0.5) 20%,
-    oklch(25% 0.02 270deg / 0.5) 80%,
+    oklch(25% 0.02 270deg / var(--opacity-50)) 20%,
+    oklch(25% 0.02 270deg / var(--opacity-50)) 80%,
     transparent 100%
   );
 }
@@ -506,7 +507,7 @@
 }
 
 .nav-action-btn:hover {
-  background: oklch(from var(--clr-primary) l c h / 0.1);
+  background: oklch(from var(--clr-accent) l c h / var(--opacity-10));
   color: var(--tool-color-primary);
   border-color: var(--tool-color-border-hover);
 }

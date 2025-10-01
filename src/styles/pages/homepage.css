@@ -3,14 +3,9 @@
 
 /* ===== DESIGN TOKENS & CSS VARIABLES ===== */
 :root {
-  /* Opacity Scale */
-  --opacity-02: 0.02;
-  --opacity-04: 0.04;
-  --opacity-05: 0.05;
-  --opacity-1: 0.1;
-  --opacity-15: 0.15;
-  --opacity-25: 0.25;
-  --opacity-3: 0.3;
+  /* ===== OPACITY VALUES - グローバルシステムを使用 ===== */
+
+  /* 不透明度変数は global.css から継承 */
 
   /* Color Palette with Opacity */
   --clr-black-05: oklch(4% 0 0deg / var(--opacity-05));
@@ -20,7 +15,7 @@
   --clr-black-3: oklch(4% 0 0deg / var(--opacity-3));
   --clr-purple-02: oklch(65% 0.25 280deg / var(--opacity-02));
   --clr-purple-04: oklch(65% 0.25 280deg / var(--opacity-04));
-  --clr-purple-08: oklch(65% 0.25 280deg / 0.08);
+  --clr-purple-08: oklch(65% 0.25 280deg / var(--opacity-08));
   --clr-gray-67: oklch(67% 0 0deg);
 
   /* Responsive Spacing Scale */
@@ -889,7 +884,7 @@ section .primary-button {
     transform var(--transition-transform),
     opacity var(--transition-opacity);
   touch-action: manipulation;
-  box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
+  box-shadow: 0 2px 8px oklch(0% 0 0deg / var(--opacity-10));
   will-change: transform, background-color, box-shadow;
   -webkit-tap-highlight-color: transparent;
 }
@@ -922,7 +917,7 @@ section .secondary-button {
     transform var(--transition-transform),
     opacity var(--transition-opacity);
   touch-action: manipulation;
-  box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
+  box-shadow: 0 2px 8px oklch(0% 0 0deg / var(--opacity-10));
   will-change: transform, background-color, box-shadow;
   -webkit-tap-highlight-color: transparent;
 }
@@ -933,7 +928,7 @@ section .secondary-button {
   background-image: linear-gradient(
     135deg,
     var(--clr-accent-dark) 0%,
-    var(--clr-primary-dark) 100%
+    var(--clr-accent-dark) 100%
   );
   box-shadow: var(--shadow-hover);
   transform: var(--hover-lift-enhanced);
@@ -946,9 +941,9 @@ section .secondary-button {
 }
 
 .hero-buttons .primary-button:active {
-  opacity: 0.95;
+  opacity: var(--opacity-95);
   transform: translateZ(0) translateY(0);
-  box-shadow: 0 1px 4px oklch(0% 0 0deg / 0.2);
+  box-shadow: 0 1px 4px oklch(0% 0 0deg / var(--opacity-20));
 
   /* Smooth active state transition */
   transition:
@@ -982,9 +977,9 @@ section .secondary-button {
 }
 
 .hero-buttons .secondary-button:active {
-  opacity: 0.95;
+  opacity: var(--opacity-95);
   transform: translateZ(0) translateY(0);
-  box-shadow: 0 1px 4px oklch(0% 0 0deg / 0.2);
+  box-shadow: 0 1px 4px oklch(0% 0 0deg / var(--opacity-20));
 
   /* Smooth active state transition */
   transition:
@@ -1142,7 +1137,8 @@ section .hero-description {
     var(--clr-gold-dark) 70%
   );
   color: var(--clr-gold-dark);
-  text-shadow: 0.0625rem 0.0625rem 0.3125rem oklch(0% 0 0deg / 0.1);
+  text-shadow: 0.0625rem 0.0625rem 0.3125rem
+    oklch(0% 0 0deg / var(--opacity-10));
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
