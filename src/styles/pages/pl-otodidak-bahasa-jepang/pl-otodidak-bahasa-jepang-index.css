@@ -10,105 +10,110 @@
    DESIGN TOKENS - 最適化された変数
    ======================================== */
 :root {
-  /* Spacing Scale - Optimized 4px base unit system */
-  --space-xs: clamp(0.25rem, 1vw, 0.5rem); /* 4px-8px */
-  --space-sm: clamp(0.5rem, 1.5vw, 0.75rem); /* 8px-12px */
-  --space-md: clamp(0.75rem, 2vw, 1rem); /* 12px-16px */
-  --space-lg: clamp(1rem, 2.5vw, 1.25rem); /* 16px-20px */
-  --space-xl: clamp(1.25rem, 3vw, 1.5rem); /* 20px-24px */
-  --space-2xl: clamp(1.5rem, 3.5vw, 2rem); /* 24px-32px */
-  --space-3xl: clamp(2rem, 4vw, 2.5rem); /* 32px-40px */
-  --space-4xl: clamp(2.5rem, 5vw, 3rem); /* 40px-48px */
-  --space-5xl: clamp(3rem, 6vw, 4rem); /* 48px-64px */
-  --space-6xl: clamp(4rem, 8vw, 5rem); /* 64px-80px */
+  --pl-space-xs: clamp(0.25rem, 1vw, 0.5rem);
+  --pl-space-sm: clamp(0.5rem, 1.5vw, 0.75rem);
+  --pl-space-md: clamp(0.75rem, 2vw, 1rem);
+  --pl-space-lg: clamp(1rem, 2.5vw, 1.25rem);
+  --pl-space-xl: clamp(1.25rem, 3vw, 1.5rem);
+  --pl-space-2xl: clamp(1.5rem, 3.5vw, 2rem);
+  --pl-space-3xl: clamp(2rem, 4vw, 2.5rem);
+  --pl-space-4xl: clamp(2.5rem, 5vw, 3rem);
+  --pl-space-5xl: clamp(3rem, 6vw, 4rem);
+  --pl-space-6xl: clamp(4rem, 8vw, 5rem);
+  --pl-text-xs: clamp(0.75rem, 2vw, 0.875rem);
+  --pl-text-sm: clamp(0.875rem, 2.5vw, 1rem);
+  --pl-text-base: clamp(1rem, 3vw, 1.125rem);
+  --pl-text-lg: clamp(1.125rem, 3.5vw, 1.25rem);
+  --pl-text-xl: clamp(1.25rem, 4vw, 1.5rem);
+  --pl-text-2xl: clamp(1.5rem, 4.5vw, 1.75rem);
+  --pl-text-3xl: clamp(1.75rem, 5vw, 2.25rem);
+  --pl-text-4xl: clamp(2rem, 6vw, 3rem);
+  --pl-text-5xl: clamp(2.5rem, 7vw, 3.5rem);
+  --pl-text-heading-sm: clamp(1.25rem, 4vw, 1.75rem);
+  --pl-text-heading-md: clamp(1.75rem, 3vw, 2.5rem);
+  --pl-text-heading-lg: clamp(2rem, 2.5vw, 3rem);
+  --pl-text-title-sm: clamp(1.875rem, 6.25vw, 2.5rem);
+  --pl-text-title-md: clamp(2rem, 3.5vw, 3rem);
+  --pl-text-title-lg: clamp(2.5rem, 3vw, 3.5rem);
+  --pl-font-normal: 400;
+  --pl-font-medium: 500;
+  --pl-font-semibold: 600;
+  --pl-font-bold: 800;
+  --pl-font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --pl-font-family-display: 'Open Sauce One', system-ui, sans-serif;
+  --pl-leading-tight: 1.2;
+  --pl-leading-snug: 1.3;
+  --pl-leading-normal: 1.4;
+  --pl-leading-relaxed: 1.5;
+  --pl-shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 0.05);
+  --pl-shadow-md: 0 4px 6px -1px oklch(0% 0 0deg / 0.1);
+  --pl-shadow-lg: 0 10px 15px -3px oklch(0% 0 0deg / 0.1);
+  --pl-shadow-xl: 0 20px 25px -5px oklch(0% 0 0deg / 0.1);
+  --pl-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --pl-transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --pl-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --pl-gap-responsive-mobile: var(--pl-space-2xl);
+  --pl-gap-responsive-tablet: var(--pl-space-3xl);
+  --pl-gap-responsive-desktop: var(--pl-space-4xl);
+  --pl-z-dropdown: 500;
+  --pl-z-sticky: 520;
+  --pl-z-fixed: 530;
+  --pl-z-modal: 540;
+  --pl-z-popover: 550;
+  --pl-z-tooltip: 560;
+  --pl-color-primary: oklch(65% 0.18 15deg);
+  --pl-color-primary-hover: var(--token-purple-hover);
+  --pl-color-secondary: var(--token-purple-base);
+  --pl-color-secondary-hover: var(--token-purple-hover);
+  --pl-color-text-primary: var(--clr-text-primary);
+  --pl-color-text-secondary: var(--token-text-muted);
+  --pl-color-background-subtle: oklch(98% 0.02 15deg / 0.85);
+  --pl-color-border-subtle: var(--pl-color-primary);
+  --pl-color-warning-orange: oklch(70% 0.15 45deg);
+  --pl-color-text-muted: oklch(70% 0.02 250deg);
+  --pl-color-brand-primary: var(--pl-color-primary);
+  --pl-color-brand-primary-hover: var(--token-purple-hover);
+  --pl-filter-grayscale: grayscale(0.75);
+  --pl-text-decoration-thickness: 2px;
+  --pl-text-underline-offset: 0.1em;
+  --pl-font-weight-bold: var(--pl-font-bold);
+  --pl-font-size-marker: 1.2em;
+  --pl-transition-text-decoration: text-decoration-color
+    var(--pl-transition-normal);
 
-  /* Typography Scale - Optimized fluid typography */
-  --text-xs: clamp(0.75rem, 2vw, 0.875rem); /* 12px-14px */
-  --text-sm: clamp(0.875rem, 2.5vw, 1rem); /* 14px-16px */
-  --text-base: clamp(1rem, 3vw, 1.125rem); /* 16px-18px */
-  --text-lg: clamp(1.125rem, 3.5vw, 1.25rem); /* 18px-20px */
-  --text-xl: clamp(1.25rem, 4vw, 1.5rem); /* 20px-24px */
-  --text-2xl: clamp(1.5rem, 4.5vw, 1.75rem); /* 24px-28px */
-  --text-3xl: clamp(1.75rem, 5vw, 2.25rem); /* 28px-36px */
-  --text-4xl: clamp(2rem, 6vw, 3rem); /* 32px-48px */
-  --text-5xl: clamp(2.5rem, 7vw, 3.5rem); /* 40px-56px */
-
-  /* Font Weights */
-  --font-normal: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 800;
-
-  /* Font Families - Optimized with font-display: swap */
-  --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-display: 'Open Sauce One', system-ui, sans-serif;
-
-  /* Line Heights */
-  --leading-tight: 1.2;
-  --leading-snug: 1.3;
-  --leading-normal: 1.4;
-  --leading-relaxed: 1.5;
-
-  /* Shadows - OKLCH形式で最適化 */
-  --shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 0.05);
-  --shadow-md: 0 4px 6px -1px oklch(0% 0 0deg / 0.1);
-  --shadow-lg: 0 10px 15px -3px oklch(0% 0 0deg / 0.1);
-  --shadow-xl: 0 20px 25px -5px oklch(0% 0 0deg / 0.1);
-
-  /* Transitions - Hardware accelerated with will-change */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Z-Index Scale */
-  --z-dropdown: 500;
-  --z-sticky: 520;
-  --z-fixed: 530;
-  --z-modal: 540;
-  --z-popover: 550;
-  --z-tooltip: 560;
-
-  /* Phase 1: 統一された色システム - OKLCH形式 */
-
-  /* 基本色システム - OKLCH */
-  --color-primary: oklch(65% 0.18 15deg); /* 赤ピンク（ライン28-117用） */
-  --color-primary-hover: oklch(60% 0.18 15deg);
-  --color-secondary: var(--token-purple-base); /* 紫（ライン118-最後用） */
-  --color-secondary-hover: var(--token-purple-hover);
-
-  /* セマンティック色 - OKLCH */
-  --color-text-primary: var(--clr-text-primary);
-  --color-text-secondary: var(--token-text-muted);
-  --color-background-subtle: oklch(98% 0.02 15deg / 0.85);
-  --color-border-subtle: var(--color-primary);
-
-  /* 警告色 - OKLCH */
-  --color-warning-orange: oklch(70% 0.15 45deg);
-  --color-text-muted: oklch(70% 0.02 250deg);
-
-  /* 後方互換性のためのエイリアス */
-  --color-brand-primary: var(--color-primary);
-  --color-brand-primary-hover: var(--color-primary-hover);
-
-  /* Filter effects */
-  --filter-grayscale: grayscale(0.75);
+  /* 共通デザインパターン変数 */
+  --pl-color-mix-oklch: in oklch;
+  --pl-color-mix-srgb: in srgb;
+  --pl-scale-hover: 1.02;
+  --pl-scale-active: 0.98;
+  --pl-scale-zoom: 1.1;
+  --pl-scale-zoom-active: 0.95;
+  --pl-scale-modal: 0.9;
+  --pl-scale-modal-open: 1;
+  --pl-radius-sm: 2px;
+  --pl-radius-md: 5px;
+  --pl-radius-lg: 8px;
+  --pl-radius-xl: 12px;
+  --pl-radius-2xl: 16px;
+  --pl-radius-full: 50%;
+  --pl-text-decoration-mix: color-mix(
+    var(--pl-color-mix-oklch),
+    var(--pl-color-text-secondary) 50%,
+    transparent
+  );
 }
 
 /* ========================================
-   PERFORMANCE OPTIMIZATIONS - GPU Acceleration
+   PERFORMANCE OPTIMIZATIONS
    ======================================== */
 
-/* Enable GPU acceleration for smooth animations */
-
-/* Optimize repaints for animated elements */
 .pl-objTitle {
   will-change: background-position;
 }
 
-/* より効率的なネスト化によるモバイル用フォントサイズ設定 */
 h2.pl-objTitle,
 h3.pl-objTitle {
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     font-size: 1.75em;
   }
 }
@@ -116,15 +121,12 @@ h3.pl-objTitle {
 /* ========================================
    PHASE 2: 統合されたコンポーネントクラス
    ======================================== */
-
-/* 共通セクションスタイル - 重複削除による統合 */
 .content-section {
-  margin: var(--space-6xl) 0;
-  padding: var(--space-4xl) 0;
+  margin: var(--pl-space-6xl) 0;
+  padding: var(--pl-space-4xl) 0;
   background: transparent;
 }
 
-/* 統合された画像スタイル - Optimized for performance */
 .section-image {
   width: 100%;
   max-width: min(350px, 35vw);
@@ -134,29 +136,25 @@ h3.pl-objTitle {
   margin: 0;
   transform: translateZ(0);
   backface-visibility: hidden;
-  transition: transform var(--transition-normal);
+  transition: transform var(--pl-transition-normal);
 
-  /* Mobile: Scale up by 0.6x (1.6x larger) and increase max-width */
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     max-width: min(320px, 60vw); /* スマホ画面での最大幅をさらに拡大 */
     transform: scale(1.75); /* スケールを1.6倍に拡大 */
   }
 
-  /* Tablet: Normal scale */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    transform: scale(1);
+  @media (min-width: 768px) and (max-width: 1024px) {
+    transform: scale(var(--pl-scale-modal-open));
   }
 
-  /* Desktop: Slightly larger */
   @media (min-width: 1024px) {
     transform: scale(1.05);
   }
 }
 
-/* Unified content text styles - All content elements */
 .content-description-content,
 .unified-content {
-  color: var(--color-text-primary);
+  color: var(--pl-color-text-primary);
 }
 
 .unified-content:first-child {
@@ -167,14 +165,13 @@ h3.pl-objTitle {
   margin-bottom: 0;
 }
 
-/* 段落の余白調整 */
 .phase-goal p {
   margin: 0;
-  color: var(--color-text-primary);
+  color: var(--pl-color-text-primary);
 }
 
 .unified-content p {
-  margin: var(--space-md) 0;
+  margin: var(--pl-space-md) 0;
   line-height: 1.6;
 }
 
@@ -186,10 +183,9 @@ h3.pl-objTitle {
   margin-bottom: 0;
 }
 
-/* リストの余白調整 */
 .unified-content ul,
 .unified-content ol {
-  margin: var(--space-md) 0;
+  margin: var(--pl-space-md) 0;
 }
 
 .unified-content ul:first-child,
@@ -203,7 +199,7 @@ h3.pl-objTitle {
 }
 
 .unified-content li {
-  margin: var(--space-sm) 0;
+  margin: var(--pl-space-sm) 0;
   line-height: 1.6;
 }
 
@@ -215,16 +211,12 @@ h3.pl-objTitle {
   margin-bottom: 0;
 }
 
-/* 特別なスタイル - 統合クラスより前に配置 */
-
-/* 赤ピンク系セクション用 */
 .content-section--primary .content-text strong {
-  color: var(--color-primary);
+  color: var(--pl-color-primary);
 }
 
-/* 紫色系セクション用 */
 .content-section--secondary .content-text strong {
-  color: var(--color-secondary);
+  color: var(--pl-color-secondary);
 }
 
 /* ========================================
@@ -233,21 +225,20 @@ h3.pl-objTitle {
 .pl-guide-page {
   min-height: 100vh;
   contain: layout style;
+  padding: min(var(--pl-space-5xl), 8vw) min(var(--pl-space-3xl), 6vw);
+  padding-top: calc(
+    min(var(--pl-space-5xl), 8vw) + 5.75rem
+  ); /* Navbar offset */
 
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: min(var(--space-5xl), 8vw) min(var(--space-3xl), 6vw);
-  padding-top: calc(min(var(--space-5xl), 8vw) + 5.75rem); /* Navbar offset */
   background: transparent;
 
-  /* Mobile: Minimum 8px (0.5rem) horizontal padding */
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     padding-right: min(0.5rem, 6vw);
     padding-left: min(0.5rem, 6vw);
   }
 }
 
 .container {
-  /* Fluid container width using min() - Coding Bible principle */
   max-width: min(1400px, 95vw);
   margin: 0 auto;
   contain: layout;
@@ -257,87 +248,69 @@ h3.pl-objTitle {
    HEADER SECTION - Optimized Typography
    ======================================== */
 .title-section {
-  margin-bottom: calc(var(--space-6xl) / 2);
-
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: 0 min(calc(var(--space-lg) / 2), 2vw);
-
-  /* Fluid typography with larger sizes for tablet and desktop */
-  font-size: clamp(1rem, 2.5vw, 1.5rem); /* Mobile: 16px, Desktop: 24px */
+  margin-bottom: calc(var(--pl-space-6xl) / 2);
+  padding: 0 min(calc(var(--pl-space-lg) / 2), 2vw);
+  font-size: var(--pl-text-heading-lg);
   text-align: center;
 
-  /* Mobile: Smaller font size */
-  @media (max-width: 767px) {
-    font-size: clamp(1rem, 3vw, 1.25rem); /* Mobile: 16px-20px */
-  }
-
-  /* Tablet: Larger font size and reduced bottom margin */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    margin-bottom: calc(var(--space-6xl) / 2); /* Half margin on tablet */
-    font-size: clamp(1.25rem, 2vw, 1.75rem); /* Tablet: 20px-28px */
-  }
-
-  /* Desktop: Even larger font size and reduced bottom margin */
-  @media (min-width: 1024px) {
-    margin-bottom: calc(var(--space-6xl) / 2); /* Half margin on desktop */
-    font-size: clamp(1.5rem, 1.5vw, 2rem); /* Desktop: 24px-32px */
-  }
-}
-
-.page-title-main {
-  margin: 0 0 var(--space-lg);
-
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: 0.2em min(var(--space-lg), 4vw) 0.3em;
-  background: linear-gradient(
-    135deg,
-    var(--color-text-primary) 0%,
-    var(--color-brand-primary) 100%
-  );
-  color: var(--color-text-primary);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  overflow-wrap: break-word;
-  word-break: normal;
-  hyphens: auto;
-
-  /* Fluid typography with larger sizes for tablet and desktop */
-  font-size: clamp(1.25rem, 3vw, 2.25rem);
-  line-height: 1.2;
-  text-align: center;
-
-  /* スマートフォンでの適切な改行制御 */
   @media (max-width: 768px) {
-    padding: 0.3em min(calc(var(--space-lg) / 2), 2vw) 0.4em;
-    font-size: clamp(1.875rem, 6.25vw, 2.5rem); /* Mobile: 30px-40px (1.25倍) */
-    line-height: 1.3;
-    word-break: keep-all;
-    overflow-wrap: anywhere;
+    font-size: var(--pl-text-heading-sm);
   }
 
-  /* Tablet: Larger font size */
   @media (min-width: 768px) and (max-width: 1024px) {
-    font-size: clamp(2rem, 3.5vw, 3rem); /* Tablet: 32px-48px */
+    margin-bottom: calc(var(--pl-space-6xl) / 2);
+    font-size: var(--pl-text-heading-md);
   }
 
-  /* Desktop: Even larger font size */
   @media (min-width: 1024px) {
-    font-size: clamp(2.5rem, 3vw, 3.5rem); /* Desktop: 40px-64px */
+    margin-bottom: calc(var(--pl-space-6xl) / 2);
+    font-size: var(--pl-text-heading-lg);
   }
-}
 
-/* Keep gradient headline readable on tap/click (WebKit) */
-.page-title-main:active {
-  -webkit-text-fill-color: currentcolor;
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
   .page-title-main {
-    background: none;
-    color: var(--color-text-primary);
-    -webkit-text-fill-color: initial;
-    text-shadow: none;
+    margin: 0 0 var(--pl-space-lg);
+    padding: 0.2em min(var(--pl-space-lg), 4vw) 0.3em;
+    background: linear-gradient(
+      135deg,
+      var(--pl-color-text-primary) 0%,
+      var(--pl-color-brand-primary) 100%
+    );
+    color: var(--pl-color-text-primary);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+    font-size: var(--pl-text-title-lg);
+    line-height: 1.2;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      padding: 0.3em min(calc(var(--pl-space-lg) / 2), 2vw) 0.4em;
+      font-size: var(--pl-text-title-sm);
+      line-height: 1.3;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      font-size: var(--pl-text-title-md);
+    }
+
+    @media (min-width: 1024px) {
+      font-size: var(--pl-text-title-lg);
+    }
+
+    @media (prefers-contrast: high) {
+      background: none;
+      color: var(--pl-color-text-primary);
+      -webkit-text-fill-color: initial;
+      text-shadow: none;
+    }
+
+    &:active {
+      -webkit-text-fill-color: currentcolor;
+    }
   }
 }
 
@@ -347,29 +320,27 @@ h3.pl-objTitle {
 .content-frame {
   display: grid;
   contain: layout;
-
-  /* Fluid gap using min() - Coding Bible principle */
-  gap: min(var(--space-6xl), 8vw);
+  gap: min(var(--pl-gap-responsive-desktop), 8vw);
   grid-template-columns: 1fr;
-  margin-bottom: min(var(--space-6xl), 8vw);
+  margin-bottom: min(var(--pl-space-6xl), 8vw);
 
   @media (min-width: 768px) {
     align-items: start;
     grid-template-columns: 1fr minmax(300px, 400px);
   }
-}
 
-.content-left {
-  display: flex;
-  flex-direction: column;
-  min-width: 0; /* Prevent grid blowout */
-}
+  .content-left {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Prevent grid blowout */
+  }
 
-.content-right {
-  order: -1;
+  .content-right {
+    order: -1;
 
-  @media (min-width: 768px) {
-    order: 0;
+    @media (min-width: 768px) {
+      order: 0;
+    }
   }
 }
 
@@ -377,26 +348,24 @@ h3.pl-objTitle {
    DESCRIPTION SECTION - Typography Scale
    ======================================== */
 .description-section {
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: min(var(--space-3xl), 6vw);
+  padding: min(var(--pl-space-3xl), 6vw);
 }
 
 /* ========================================
    CONTENT PARAGRAPH STYLES - DRY Principle Applied
    ======================================== */
 
-/* Apply to all headings - Low specificity - Only colors maintained */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  color: var(--color-text-primary);
+  color: var(--pl-color-text-primary);
 }
 
 h3 {
-  color: var(--color-primary);
+  color: var(--pl-color-primary);
 }
 
 h1:first-child,
@@ -409,20 +378,16 @@ h6:first-child {
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--pl-color-primary);
   text-decoration: underline;
-  text-decoration-color: color-mix(
-    in oklch,
-    var(--color-text-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.1em;
-  transition: text-decoration-color var(--transition-normal);
+  text-decoration-color: var(--pl-text-decoration-mix);
+  text-decoration-thickness: var(--pl-text-decoration-thickness);
+  text-underline-offset: var(--pl-text-underline-offset);
+  transition: var(--pl-transition-text-decoration);
 
   &:hover {
-    color: var(--color-primary-hover);
-    text-decoration-color: var(--color-text-secondary);
+    color: var(--pl-color-primary-hover);
+    text-decoration-color: var(--pl-color-text-secondary);
   }
 }
 
@@ -430,179 +395,156 @@ a {
    PRICE SECTION - Optimized Layout
    ======================================== */
 .price-section {
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: min(var(--space-2xl), 4vw) min(var(--space-3xl), 6vw);
+  padding: min(var(--pl-space-2xl), 4vw) min(var(--pl-space-3xl), 6vw);
   font-weight: bold;
   text-align: left;
-}
 
-.price-container {
-  max-width: 600px;
-  margin: 0;
+  .price-container {
+    max-width: 600px;
+    margin: 0;
 
-  @media (min-width: 768px) {
-    padding-left: var(--space-lg);
-    transform: scale(1.5);
-    transform-origin: left top;
+    @media (min-width: 768px) {
+      padding-left: var(--pl-space-lg);
+      transform: scale(1.5);
+      transform-origin: left top;
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      transform: scale(1.2);
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-gap-responsive-mobile);
+      margin-bottom: var(--pl-space-sm);
+    }
+
+    .price-discount-message {
+      margin-bottom: var(--pl-space-lg);
+    }
   }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    transform: scale(1.2);
-  }
-}
-
-/* Price Row */
-.price-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-sm);
-}
-
-/* Current Price with Badge */
-.price-current-container {
-  flex: 0 0 auto;
-}
-
-.price-current-badge {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: 2px 4px;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 5px;
-  background-color: var(--color-background-subtle);
-}
-
-.discount-icon {
-  width: 16px;
-  height: 16px;
-  color: var(--color-primary);
-}
-
-.price-current-value {
-  color: var(--color-primary);
-}
-
-/* Original Price */
-.price-original-container {
-  flex: 0 0 auto;
-}
-
-.price-original-value {
-  color: var(--color-text-muted);
-  text-decoration: line-through;
-}
-
-/* Discount Message */
-.price-discount-message {
-  margin-bottom: var(--space-lg);
-}
-
-.discount-text {
-  color: var(--color-warning-orange);
 }
 
 /* ========================================
    LANGUAGE LEARNING PROBLEMS SECTION - Optimized Grid
    ======================================== */
 .language-learning-problems {
-  margin: var(--space-4xl) 0;
-  padding: var(--space-4xl) 0;
+  margin: var(--pl-space-4xl) 0;
+  padding: var(--pl-space-4xl) 0;
   background: transparent;
 
   @media (max-width: 768px) {
-    margin: var(--space-3xl) 0;
-    padding: var(--space-3xl) 0;
+    margin: var(--pl-space-3xl) 0;
+    padding: var(--pl-space-3xl) 0;
+  }
+
+  .problems-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--pl-space-lg);
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: calc(var(--pl-space-2xl) * 1.5);
+
+    @media (max-width: 768px) {
+      gap: var(--pl-gap-responsive-mobile);
+      padding: var(--pl-space-2xl);
+    }
+
+    @media (min-width: 768px) {
+      gap: var(--pl-gap-responsive-tablet);
+      padding: calc(var(--pl-space-3xl) * 1.5);
+    }
+
+    .problems-title {
+      margin: 0;
+      color: var(--pl-color-text-primary);
+      font-size: var(--pl-text-heading-lg);
+      text-align: center;
+
+      @media (max-width: 768px) {
+        font-size: var(--pl-text-heading-sm);
+      }
+
+      @media (min-width: 768px) and (max-width: 1024px) {
+        font-size: var(--pl-text-heading-md);
+      }
+
+      @media (min-width: 1024px) {
+        font-size: var(--pl-text-heading-lg);
+      }
+    }
+
+    .problems-subtitle,
+    .problems-subtitle-text {
+      margin: 0;
+      color: var(--pl-color-text-secondary);
+    }
+
+    .problems-subtitle {
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .problems-list {
+      display: grid;
+      contain: layout;
+      gap: var(--pl-gap-responsive-mobile);
+      grid-template-columns: 1fr;
+      margin: var(--pl-space-lg) 0 0;
+      padding: 0;
+      list-style: none;
+
+      @media (max-width: 768px) {
+        gap: calc(var(--pl-gap-responsive-mobile) * 1.5);
+      }
+
+      @media (min-width: 768px) {
+        gap: var(--pl-gap-responsive-tablet);
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
   }
 }
 
-.problems-container {
+/* 価格関連の独立セレクター */
+.price-current-container,
+.price-original-container {
+  flex: 0 0 auto;
+}
+
+.price-current-badge {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--space-lg);
-  max-width: 1050px;
-  margin: 0 auto;
-  padding: calc(var(--space-2xl) * 1.5);
-
-  @media (max-width: 768px) {
-    gap: var(--space-md);
-    padding: var(--space-2xl);
-  }
-
-  @media (min-width: 768px) {
-    gap: var(--space-xl);
-    padding: calc(var(--space-3xl) * 1.5);
-  }
+  gap: var(--pl-space-xs);
+  padding: 2px 4px;
+  border: 1px solid var(--pl-color-border-subtle);
+  border-radius: var(--pl-radius-md);
+  background-color: var(--pl-color-background-subtle);
 }
 
-.problems-title {
-  margin: 0;
-  color: var(--color-text-primary);
-
-  /* Fluid typography with larger sizes for tablet and desktop */
-  font-size: clamp(1.25rem, 3.5vw, 2rem); /* Mobile: 20px, Desktop: 32px */
-  text-align: center;
-
-  /* Mobile: Smaller font size */
-  @media (max-width: 767px) {
-    font-size: clamp(1.25rem, 4vw, 1.75rem); /* Mobile: 20px-28px */
-  }
-
-  /* Tablet: Larger font size */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    font-size: clamp(1.75rem, 3vw, 2.5rem); /* Tablet: 28px-40px */
-  }
-
-  /* Desktop: Even larger font size */
-  @media (min-width: 1024px) {
-    font-size: clamp(2rem, 2.5vw, 3rem); /* Desktop: 32px-48px */
-  }
+.discount-icon,
+.price-current-value {
+  color: var(--pl-color-primary);
 }
 
-.problems-subtitle {
-  max-width: 800px;
-  text-align: center;
+.discount-icon {
+  width: 16px;
+  height: 16px;
 }
 
-.problems-subtitle-text {
-  margin: 0;
-  color: var(--color-text-secondary);
+.price-original-value {
+  color: var(--pl-color-text-muted);
+  text-decoration: line-through;
 }
 
-.problems-list {
-  display: grid;
-  contain: layout;
-  gap: var(--space-2xl);
-  grid-template-columns: 1fr;
-  margin: var(--space-lg) 0 0;
-  padding: 0;
-  list-style: none;
-
-  @media (max-width: 768px) {
-    gap: calc(var(--space-xl) * 2);
-  }
-
-  @media (min-width: 768px) {
-    gap: var(--space-3xl);
-    grid-template-columns: repeat(3, 1fr);
-  }
+.discount-text {
+  color: var(--pl-color-warning-orange);
 }
 
-.problem-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-lg);
-  max-width: 300px;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    max-width: 297px;
-  }
-}
-
+/* 問題画像関連の独立セレクター */
 .problem-image-container {
   position: relative;
   display: flex;
@@ -621,12 +563,16 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: var(--filter-grayscale);
+  filter: var(--pl-filter-grayscale);
   will-change: filter;
   transform: translateZ(0);
-  transition: filter var(--transition-normal);
+  transition: filter var(--pl-transition-normal);
 
   &:hover {
+    filter: none;
+  }
+
+  @media (prefers-contrast: high) {
     filter: none;
   }
 }
@@ -642,41 +588,43 @@ a {
   width: 125%;
   height: 125%;
   pointer-events: none;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    color: var(--pl-color-primary);
+    opacity: 0.8;
+    transition: opacity var(--pl-transition-normal);
+  }
+
+  &:hover svg {
+    opacity: 1;
+  }
 }
 
-.problem-icon-overlay svg {
-  width: 100%;
-  height: 100%;
-  color: var(--color-primary);
-  opacity: 0.8;
-  transition: opacity var(--transition-normal);
-}
+.problem-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pl-space-lg);
+  max-width: 300px;
+  text-align: center;
 
-.problem-icon-overlay:hover svg {
-  opacity: 1;
-}
-
-/* High contrast mode support for problem images */
-@media (prefers-contrast: high) {
-  .problem-image {
-    filter: none;
+  @media (min-width: 768px) {
+    max-width: 297px;
   }
 }
 
 .problem-text {
   margin: 0;
-  color: var(--color-text-primary);
-
-  /* Fluid typography with larger sizes for tablet and desktop */
+  color: var(--pl-color-text-primary);
   font-size: clamp(0.875rem, 2.5vw, 1rem); /* Mobile: 14px, Desktop: 16px */
   font-weight: bold;
 
-  /* Tablet: Larger font size */
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
     font-size: clamp(1rem, 2vw, 1.125rem); /* Tablet: 16px-18px */
   }
 
-  /* Desktop: Even larger font size */
   @media (min-width: 1024px) {
     font-size: clamp(1.125rem, 1.5vw, 1.25rem); /* Desktop: 18px-20px */
   }
@@ -691,26 +639,26 @@ a {
   max-width: 20rem;
   margin: 0 auto;
   aspect-ratio: 1 / 1; /* Modern aspect-ratio property */
-}
 
-.hero-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(var(--shadow-lg));
-  opacity: 0.9;
-  will-change: transform;
-  transform: translateZ(0);
-  transition: transform var(--transition-normal);
+  .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(var(--pl-shadow-lg));
+    opacity: 0.9;
+    will-change: transform;
+    transform: translateZ(0);
+    transition: transform var(--pl-transition-normal);
 
-  &:hover {
-    transform: translateY(-4px);
+    &:hover {
+      transform: translateY(-4px);
 
-    @media (prefers-reduced-motion: reduce) {
-      transform: none;
+      @media (prefers-reduced-motion: reduce) {
+        transform: none;
+      }
     }
   }
 }
@@ -734,18 +682,17 @@ a {
     will-change: auto;
     transform: none;
     transition: none;
-  }
 
-  .problem-image:hover {
-    filter: var(--filter-grayscale);
+    &:hover {
+      filter: var(--pl-filter-grayscale);
+    }
   }
 }
 
-/* Focus styles for keyboard navigation - Optimized */
 *:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--pl-color-primary);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--pl-radius-sm);
   transition: outline-offset 150ms ease;
 }
 
@@ -753,92 +700,78 @@ a {
    TRADITIONAL METHOD SECTION - 2-Column Layout
    ======================================== */
 
-/* 統合されたタイトルスタイル - 赤ピンク系セクション用 */
 .pl-objTitle--primary {
-  margin: 0 0 var(--space-xl); /* 半分に減らしたマージン */
+  margin: 0 0 var(--pl-gap-responsive-tablet);
   background: linear-gradient(
     135deg,
-    var(--color-text-primary) 0%,
-    var(--color-primary) 50%,
-    var(--color-text-primary) 100%
+    var(--pl-color-text-primary) 0%,
+    var(--pl-color-primary) 50%,
+    var(--pl-color-text-primary) 100%
   );
   background-size: 200% 200%;
-  color: var(--color-text-primary);
+  color: var(--pl-color-text-primary);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  /* Fluid typography with larger sizes for tablet and desktop */
-  font-size: clamp(1.25rem, 3.5vw, 2rem); /* Mobile: 20px, Desktop: 32px */
+  font-size: var(--pl-text-heading-lg);
   animation: gradientShift 3s ease-in-out infinite;
 
   @media (min-width: 768px) {
-    margin-bottom: var(--space-2xl); /* 半分に減らしたマージン */
+    margin-bottom: var(--pl-gap-responsive-mobile);
   }
 
-  /* Mobile: Smaller font size */
-  @media (max-width: 767px) {
-    font-size: clamp(1.25rem, 4vw, 1.75rem); /* Mobile: 20px-28px */
+  @media (max-width: 768px) {
+    font-size: var(--pl-text-heading-sm);
   }
 
-  /* Tablet: Larger font size */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    font-size: clamp(1.75rem, 3vw, 2.5rem); /* Tablet: 28px-40px */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    font-size: var(--pl-text-heading-md);
   }
 
-  /* Desktop: Even larger font size */
   @media (min-width: 1024px) {
-    font-size: clamp(2rem, 2.5vw, 3rem); /* Desktop: 32px-48px */
+    font-size: var(--pl-text-heading-lg);
   }
 }
 
-/* 統合されたタイトルスタイル - 紫色系セクション用 */
 .pl-objTitle--secondary {
-  margin: 0 0 var(--space-xl); /* 統一されたマージン */
+  margin: 0 0 var(--pl-gap-responsive-tablet);
   background: linear-gradient(
     135deg,
-    var(--color-text-primary) 0%,
-    var(--color-secondary) 50%,
-    var(--color-text-primary) 100%
+    var(--pl-color-text-primary) 0%,
+    var(--pl-color-secondary) 50%,
+    var(--pl-color-text-primary) 100%
   );
   background-size: 200% 200%;
-  color: var(--color-text-primary);
+  color: var(--pl-color-text-primary);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  /* Fluid typography with larger sizes for tablet and desktop */
   font-size: clamp(1.25rem, 3.5vw, 2rem); /* Mobile: 20px, Desktop: 32px */
   animation: gradientShift 3s ease-in-out infinite;
 
   @media (min-width: 768px) {
-    margin-bottom: var(--space-2xl); /* 統一されたマージン */
+    margin-bottom: var(--pl-gap-responsive-mobile); /* 統一されたマージン */
   }
 
-  /* Mobile: Smaller font size */
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     font-size: clamp(1.25rem, 4vw, 1.75rem); /* Mobile: 20px-28px */
   }
 
-  /* Tablet: Larger font size */
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
     font-size: clamp(1.75rem, 3vw, 2.5rem); /* Tablet: 28px-40px */
   }
 
-  /* Desktop: Even larger font size */
   @media (min-width: 1024px) {
     font-size: clamp(2rem, 2.5vw, 3rem); /* Desktop: 32px-48px */
   }
 }
 
-/* Center alignment for specific titles */
 .pl-objTitle--center {
   text-align: center;
 }
 
-/* High contrast mode support for titles */
 @media (prefers-contrast: high) {
   .pl-objTitle {
     background: none;
-    color: var(--color-text-primary);
+    color: var(--pl-color-text-primary);
     -webkit-text-fill-color: initial;
     text-shadow: none;
   }
@@ -848,50 +781,24 @@ a {
    UNIFIED IMAGE CONTAINER STYLES - DRY Principle Applied
    ======================================== */
 
-/* 統合された画像コンテナクラス - 基本レイアウト */
-.pl-objImages {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* Mobile: Natural order */
-  @media (max-width: 767px) {
-    justify-content: center;
-  }
-
-  /* Tablet/Desktop: Grid layout */
-  @media (min-width: 768px) {
-    justify-content: flex-start;
-    grid-area: image;
-
-    /* 右Marginを追加してスペーシング調整 */
-    margin-right: calc(min(var(--space-4xl), 5.33vw) / 2);
-  }
-}
-
-/* 統合された画像コンテナクラス - 右側配置用 */
+.pl-objImages,
 .pl-objImages--right {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  /* Mobile: Natural order */
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     justify-content: center;
     order: 1;
   }
 
-  /* Tablet/Desktop: Grid layout */
   @media (min-width: 768px) {
     justify-content: flex-end;
     grid-area: image;
-
-    /* 左Marginを追加してスペーシング調整 */
-    margin-left: calc(min(var(--space-4xl), 5.33vw) / 2);
+    margin-left: calc(min(var(--pl-space-4xl), 5.33vw) / 2);
   }
 }
 
-/* 統合された画像コンテナクラス - 標準の画像表示用 */
 .pl-objImages--special {
   display: flex;
   flex-direction: column;
@@ -903,46 +810,60 @@ a {
     align-items: center;
     grid-area: image;
     max-width: 600px; /* 画像コンテナの最大幅を拡大 */
-
-    /* 右Paddingを追加してスペーシング調整 */
-    padding-right: var(--space-lg);
+    padding-right: var(--pl-space-lg);
   }
 }
 
 /* ========================================
    IMAGE ZOOM FUNCTIONALITY - Modern Modal
    ======================================== */
-
-/* 画像ズームトリガーのスタイル */
 .image-zoom-trigger {
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--pl-radius-lg);
   cursor: pointer;
   transition:
-    transform var(--transition-normal),
-    box-shadow var(--transition-normal);
+    transform var(--pl-transition-normal),
+    box-shadow var(--pl-transition-normal);
 
   &:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-lg);
+    transform: scale(var(--pl-scale-hover));
+    box-shadow: var(--pl-shadow-lg);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--pl-color-primary);
     outline-offset: 4px;
   }
 
   &:active {
-    transform: scale(0.98);
+    transform: scale(var(--pl-scale-active));
   }
 }
 
-/* モーダルオーバーレイ */
+/* 画像ズーム関連の独立セレクター - セレクターの順序を考慮 */
+.image-zoom-close:hover {
+  background: color-mix(
+    var(--pl-color-mix-oklch),
+    var(--token-purple-base) 80%,
+    black
+  );
+  transform: scale(var(--pl-scale-zoom));
+}
+
+.image-zoom-close:focus-visible {
+  outline: 2px solid var(--pl-color-primary);
+  outline-offset: 2px;
+}
+
+.image-zoom-close:active {
+  transform: scale(var(--pl-scale-zoom-active));
+}
+
 .image-zoom-modal {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--z-modal);
+  z-index: var(--pl-z-modal);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -953,75 +874,115 @@ a {
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity var(--transition-normal),
-    visibility var(--transition-normal);
+    opacity var(--pl-transition-normal),
+    visibility var(--pl-transition-normal);
+
+  @media (prefers-contrast: high) {
+    background: oklch(0% 0 0deg / 0.95);
+  }
 
   &.is-open {
     opacity: 1;
     visibility: visible;
   }
 
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    background: oklch(0% 0 0deg / 0.95);
+  .image-zoom-container {
+    position: relative;
+    display: grid;
+    gap: var(--pl-gap-responsive-mobile);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    max-width: 90dvw;
+    max-height: 95dvh;
+    margin: var(--pl-space-lg);
+    padding: var(--pl-space-md);
+    background: var(--pl-color-background);
+    transform: scale(var(--pl-scale-modal));
+    transition: transform var(--pl-transition-normal);
+
+    @media (max-width: 768px) {
+      gap: var(--pl-space-sm);
+      max-width: 95dvw;
+      max-height: 90dvh;
+      padding: var(--pl-space-sm);
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      max-width: 70vw;
+      max-height: 80vh;
+      padding: var(--pl-space-md);
+    }
+
+    @media (min-width: 1024px) {
+      max-width: min(60vw, 1000px);
+      max-height: min(80vh, 900px);
+      padding: var(--pl-space-lg);
+    }
+
+    .image-zoom-content {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-background);
+      box-shadow: var(--pl-shadow-xl);
+    }
+
+    .image-zoom-close {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      margin: 0 auto;
+      border: none;
+      border-radius: var(--pl-radius-full);
+      background: var(--token-purple-base);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition:
+        background var(--pl-transition-normal),
+        transform var(--pl-transition-normal);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--pl-shadow-md);
+      place-self: center;
+
+      @media (max-width: 768px) {
+        width: 44px;
+        height: 44px;
+        font-size: 1.25rem;
+      }
+
+      @media (min-width: 768px) and (max-width: 1024px) {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+      }
+
+      @media (min-width: 1024px) {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+      }
+
+      @media (prefers-contrast: high) {
+        border: 2px solid var(--pl-color-text-primary);
+        background: oklch(100% 0 0deg / 1);
+      }
+    }
+  }
+
+  &.is-open .image-zoom-container {
+    transform: scale(var(--pl-scale-modal-open));
   }
 }
 
-/* モーダルコンテナ - 縦並びレイアウト */
-.image-zoom-container {
-  position: relative;
-  display: grid;
-  gap: var(--space-md);
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-  max-width: 90dvw;
-  max-height: 95dvh;
-  margin: var(--space-lg);
-  padding: var(--space-md);
-  background: var(--color-background);
-  transform: scale(0.9);
-  transition: transform var(--transition-normal);
-
-  /* スマホ: 縦並びレイアウト */
-  @media (max-width: 767px) {
-    gap: var(--space-sm);
-    max-width: 95dvw;
-    max-height: 90dvh;
-    padding: var(--space-sm);
-  }
-
-  /* Tablet: 画面の70%に制限、縦長画像に対応 */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    max-width: 70vw;
-    max-height: 80vh;
-    padding: var(--space-md);
-  }
-
-  /* Desktop: 画面の60%に制限、縦長画像に対応 */
-  @media (min-width: 1024px) {
-    max-width: min(60vw, 1000px);
-    max-height: min(80vh, 900px);
-    padding: var(--space-lg);
-  }
-
-  .image-zoom-modal.is-open & {
-    transform: scale(1);
-  }
-}
-
-/* モーダルコンテンツ - 画像エリア */
-.image-zoom-content {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--color-background);
-  box-shadow: var(--shadow-xl);
-}
-
-/* 拡大表示される画像 */
+/* 画像ズーム関連の独立セレクター */
 .image-zoom-image {
   display: block;
   width: 100%;
@@ -1032,83 +993,9 @@ a {
   margin: 0 auto;
   object-fit: contain;
   object-position: center;
-  border-radius: 8px;
-  box-shadow: var(--shadow-xl);
-
-  /* グラフのような縦長画像に対応 */
+  border-radius: var(--pl-radius-lg);
+  box-shadow: var(--pl-shadow-xl);
   flex-shrink: 1;
-}
-
-/* 閉じるボタン - 上部中央に配置 */
-.image-zoom-close {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 48px;
-  height: 48px;
-  margin: 0 auto;
-  border: none;
-  border-radius: 50%;
-  background: var(--token-purple-base);
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    background var(--transition-normal),
-    transform var(--transition-normal);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-md);
-  place-self: center;
-
-  /* スマホ: サイズ調整 */
-  @media (max-width: 767px) {
-    width: 44px;
-    height: 44px;
-    font-size: 1.25rem;
-  }
-
-  /* タブレット: 標準サイズ */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
-  }
-
-  /* デスクトップ: 標準サイズ */
-  @media (min-width: 1024px) {
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
-  }
-
-  &:hover {
-    background: color-mix(in srgb, var(--token-purple-base) 80%, black);
-    transform: scale(1.1);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  /* モバイルでのタッチ対応 */
-  @media (max-width: 767px) {
-    width: 44px;
-    height: 44px;
-    font-size: 1.25rem;
-  }
-
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    border: 2px solid var(--color-text-primary);
-    background: oklch(100% 0 0deg / 1);
-  }
 }
 
 /* アクセシビリティ対応 */
@@ -1118,14 +1005,10 @@ a {
   .image-zoom-content,
   .image-zoom-close {
     transition: none;
-  }
 
-  .image-zoom-trigger:hover {
-    transform: none;
-  }
-
-  .image-zoom-close:hover {
-    transform: none;
+    &:hover {
+      transform: none;
+    }
   }
 }
 
@@ -1156,34 +1039,35 @@ a {
    LEARNING METHOD SECTION - Centered Layout
    ======================================== */
 .learning-method-section {
-  margin: var(--space-6xl) 0;
-  padding: var(--space-4xl) 0;
+  margin: var(--pl-space-6xl) 0;
+  padding: var(--pl-space-4xl) 0;
   background: transparent;
-}
 
-.learning-method-container {
-  position: relative;
-  overflow: hidden;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: min(var(--space-3xl), 6vw) min(var(--space-xl), 4vw);
-  border: 1px solid oklch(100% 0 0deg / 0.2);
-  border-radius: 16px;
-  background: oklch(100% 0 0deg / 0.1);
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 8px 32px oklch(0% 0 0deg / 0.1),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
-  text-align: center;
-
-  @media (max-width: 768px) {
-    backdrop-filter: blur(15px);
-    background: oklch(100% 0 0deg / 0.08);
-  }
-
-  .learning-method-content {
-    max-width: 800px;
+  .learning-method-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: min(var(--pl-gap-responsive-tablet), 6vw)
+      min(var(--pl-gap-responsive-mobile), 4vw);
+    border: 1px solid oklch(100% 0 0deg / 0.2);
+    border-radius: var(--pl-radius-2xl);
+    background: oklch(100% 0 0deg / 0.1);
+    backdrop-filter: blur(20px);
+    box-shadow:
+      0 8px 32px oklch(0% 0 0deg / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+    text-align: center;
+
+    @media (max-width: 768px) {
+      backdrop-filter: blur(15px);
+      background: oklch(100% 0 0deg / 0.08);
+    }
+
+    .learning-method-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
   }
 }
 
@@ -1191,24 +1075,24 @@ a {
    SLA SECTION - Academic Style Layout
    ======================================== */
 .sla-section {
-  margin: var(--space-6xl) 0;
-  padding: var(--space-4xl) 0;
+  margin: var(--pl-space-6xl) 0;
+  padding: var(--pl-space-4xl) 0;
   background: transparent;
 
   /* 効率的な色管理システム */
-  --strong-color: var(--color-secondary);
-}
+  --strong-color: var(--pl-color-secondary);
 
-.sla-content {
-  margin-bottom: var(--space-5xl);
+  .sla-content {
+    margin-bottom: var(--pl-space-5xl);
+  }
 }
 
 /* ========================================
    KAIWA PRACTICE SECTION - Chart Integration
    ======================================== */
 .kaiwa-practice-section {
-  margin: var(--space-6xl) 0;
-  padding: var(--space-4xl) 0;
+  margin: var(--pl-space-6xl) 0;
+  padding: var(--pl-space-4xl) 0;
   background: transparent;
 }
 
@@ -1220,50 +1104,52 @@ a {
    IMMERSION DURATION SECTION - Academic Style Layout
    ======================================== */
 .immersion-duration-section {
-  margin: var(--space-6xl) 0;
-  padding: var(--space-4xl) 0;
+  margin: var(--pl-space-6xl) 0;
+  padding: var(--pl-space-4xl) 0;
   background: transparent;
-}
 
-.immersion-duration-content {
-  margin-bottom: var(--space-5xl);
+  .immersion-duration-content {
+    margin-bottom: var(--pl-space-5xl);
+  }
 }
 
 /* ========================================
    METHODOLOGY SUMMARY SECTION - Academic Style Layout
    ======================================== */
 .methodology-summary-section {
-  margin: var(--space-6xl) 0;
-  padding: var(--space-4xl) 0;
+  margin: var(--pl-space-6xl) 0;
+  padding: var(--pl-space-4xl) 0;
   background: transparent;
-}
 
-.methodology-summary-container {
-  position: relative;
-  overflow: hidden;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: min(var(--space-3xl), 6vw) min(var(--space-xl), 4vw);
-  border: 1px solid oklch(100% 0 0deg / 0.2);
-  border-radius: 16px;
-  background: oklch(100% 0 0deg / 0.1);
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 8px 32px oklch(0% 0 0deg / 0.1),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+  .methodology-summary-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: min(var(--pl-gap-responsive-tablet), 6vw)
+      min(var(--pl-gap-responsive-mobile), 4vw);
+    border: 1px solid oklch(100% 0 0deg / 0.2);
+    border-radius: var(--pl-radius-2xl);
+    background: oklch(100% 0 0deg / 0.1);
+    backdrop-filter: blur(20px);
+    box-shadow:
+      0 8px 32px oklch(0% 0 0deg / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
 
-  @media (max-width: 768px) {
-    backdrop-filter: blur(15px);
-    background: oklch(100% 0 0deg / 0.08);
+    @media (max-width: 768px) {
+      backdrop-filter: blur(15px);
+      background: oklch(100% 0 0deg / 0.08);
+    }
+
+    @media (min-width: 768px) {
+      padding: min(var(--pl-gap-responsive-tablet), 6vw)
+        min(calc(var(--pl-gap-responsive-mobile) * 2), 6vw);
+    }
+
+    .methodology-summary-content {
+      margin-bottom: var(--pl-space-5xl);
+    }
   }
-
-  @media (min-width: 768px) {
-    padding: min(var(--space-3xl), 6vw) min(calc(var(--space-xl) * 2), 6vw);
-  }
-}
-
-.methodology-summary-content {
-  margin-bottom: var(--space-5xl);
 }
 
 /* ========================================
@@ -1274,24 +1160,22 @@ a {
    PHASE 1 GOAL BLOCKQUOTE
    ======================================== */
 .phase-goal {
-  margin: var(--space-md) 0;
-  padding: var(--space-lg);
-  border-left: 4px solid var(--color-secondary);
+  margin: var(--pl-space-md) 0;
+  padding: var(--pl-space-lg);
+  border-left: 4px solid var(--pl-color-secondary);
   border-radius: 0 8px 8px 0;
   background: oklch(100% 0 0deg / 0.05);
   box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
 
-  /* Mobile: Natural order */
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     order: 1;
-    margin: var(--space-sm) 0;
+    margin: var(--pl-space-sm) 0;
   }
 
-  /* Tablet/Desktop: Grid layout */
   @media (min-width: 768px) {
     grid-area: goal;
-    margin: var(--space-sm) 0 var(--space-md) 0;
-    padding: var(--space-lg);
+    margin: var(--pl-space-sm) 0 var(--pl-space-md) 0;
+    padding: var(--pl-space-lg);
   }
 }
 
@@ -1303,42 +1187,169 @@ a {
 .prose {
   /* Override Tailwind Typography defaults to maintain existing design */
   max-width: none; /* Allow full width for existing layout */
-  color: var(--color-text-primary);
+  color: var(--pl-color-text-primary);
+
+  /* 統合されたテキスト色 - 効率化 */
+  .content-description-content,
+  .unified-content,
+  .phase-goal p {
+    color: var(--pl-color-text-primary);
+  }
+
+  /* 統合されたタイトルスタイル - CSS変数活用 */
+  .pl-objTitle--primary,
+  .pl-objTitle--secondary {
+    --title-gradient-start: var(--pl-color-text-primary);
+    --title-gradient-end: var(--pl-color-text-primary);
+
+    background: linear-gradient(
+      135deg,
+      var(--title-gradient-start) 0%,
+      var(--title-accent-color) 50%,
+      var(--title-gradient-end) 100%
+    );
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--pl-color-text-primary);
+    animation: gradientShift 3s ease-in-out infinite;
+  }
+
+  .pl-objTitle--primary {
+    --title-accent-color: var(--pl-color-primary);
+  }
+
+  .pl-objTitle--secondary {
+    --title-accent-color: var(--pl-color-secondary);
+  }
+
+  /* 統合されたテキストスタイル - 効率化 */
+  .kaiwa-practice-caption {
+    --text-color: var(--pl-color-text-muted);
+    --text-style: italic;
+    --text-decoration: none;
+    --text-weight: normal;
+
+    color: var(--pl-text-color);
+    font-weight: var(--pl-text-weight);
+    font-style: var(--pl-text-style);
+    text-decoration: var(--pl-text-decoration);
+  }
+
+  /* 統合されたストロングスタイル - 効率化 */
+  .unified-content strong {
+    color: var(--pl-color-primary);
+  }
+
+  /* 統合されたリストスタイル - 効率化 */
+  .methodology-phases-list,
+  .phase-steps-list,
+  .phase-substeps li {
+    color: var(--list-color);
+  }
+
+  .methodology-phases-list,
+  .phase-steps-list {
+    --list-color: var(--pl-color-text-primary);
+  }
+
+  .phase-substeps li {
+    --list-color: var(--pl-color-text-secondary);
+  }
+
+  /* 統合されたフォーミュラスタイル - 効率化 */
+  .formula {
+    /* Layout */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    /* Sizing */
+    max-width: 600px;
+    margin: var(--pl-space-2xl) auto;
+    padding: var(--pl-gap-responsive-mobile);
+
+    /* GlassMorphism styling - OKLCH */
+    border: 1px solid var(--clr-glass-border);
+    border-radius: var(--pl-radius-2xl);
+    background: var(--clr-glass-background);
+    backdrop-filter: blur(20px);
+    box-shadow:
+      0 8px 32px oklch(0% 0 0deg / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+
+    /* Typography */
+    color: var(--pl-color-secondary);
+    text-align: center;
+
+    /* Animation */
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: var(--clr-glass-border-hover);
+      background: var(--clr-glass-background-hover);
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 40px oklch(0% 0 0deg / 0.15),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.3);
+    }
+  }
+
+  /* 統合されたテキストスタイル - 効率化 */
+  .problem-text u {
+    font-weight: normal;
+    text-decoration: underline;
+    text-decoration-color: color-mix(
+      in oklch,
+      var(--pl-color-text-secondary) 50%,
+      transparent
+    );
+    text-decoration-thickness: var(--pl-text-decoration-thickness);
+    text-underline-offset: var(--pl-text-underline-offset);
+  }
 }
 
-/* Maintain existing title colors with higher specificity */
-.prose .pl-objTitle--primary {
-  background: linear-gradient(
-    135deg,
-    var(--color-text-primary) 0%,
-    var(--color-primary) 50%,
-    var(--color-text-primary) 100%
-  );
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: var(--color-text-primary);
-  animation: gradientShift 3s ease-in-out infinite;
+/* 統合されたリンクスタイル - DRY原則適用 */
+.prose a,
+.phase-steps-list a,
+.phase-substeps a {
+  color: var(--pl-color-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--pl-text-decoration-mix);
+  text-decoration-thickness: var(--pl-text-decoration-thickness);
+  text-underline-offset: var(--pl-text-underline-offset);
+  transition: var(--pl-transition-text-decoration);
+
+  &:hover {
+    color: var(--pl-color-primary-hover);
+    text-decoration-color: var(--pl-color-text-secondary);
+  }
 }
 
-.prose .pl-objTitle--secondary {
-  background: linear-gradient(
-    135deg,
-    var(--color-text-primary) 0%,
-    var(--color-secondary) 50%,
-    var(--color-text-primary) 100%
-  );
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: var(--color-text-primary);
-  animation: gradientShift 3s ease-in-out infinite;
-}
+/* 統合されたレスポンシブデザイン - 効率化 */
+@media (max-width: 768px) {
+  .prose .formula {
+    max-width: 100%;
+    margin: var(--pl-gap-responsive-mobile) auto;
+    padding: var(--pl-space-lg);
+    border-radius: var(--pl-radius-xl);
+  }
 
-/* Maintain existing content text colors - Unified */
-.prose .content-description-content,
-.prose .unified-content {
-  color: var(--color-text-primary);
+  .formula img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--pl-radius-lg);
+    object-fit: contain;
+
+    /* 高DPIディスプレイ対応 */
+    @media (min-resolution: 192dpi) {
+      image-rendering: auto;
+    }
+  }
 }
 
 /* ========================================
@@ -1349,32 +1360,27 @@ a {
 .pl-objContainer {
   max-width: 1200px;
   margin: 0 auto;
-
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: 0 min(var(--space-xl), 4vw);
+  padding: 0 min(var(--pl-gap-responsive-mobile), 4vw);
 
   /* Mobile: Natural order - title, image, content */
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    gap: min(var(--space-4xl), 8vw); /* 2倍のGap */
+    gap: min(var(--pl-space-4xl), 8vw); /* 2倍のGap */
   }
 
-  /* Tablet/Desktop: Grid layout */
   @media (min-width: 768px) {
     display: grid;
     align-items: center;
-    gap: min(var(--space-4xl), 5.33vw); /* 1.5倍減らしたGap */
+    gap: min(var(--pl-space-4xl), 5.33vw); /* 1.5倍減らしたGap */
   }
 
   /* タイトルの共通スタイル */
   .pl-objTitle {
-    /* Mobile: Natural order */
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       order: 0;
     }
 
-    /* Tablet/Desktop: Grid layout */
     @media (min-width: 768px) {
       grid-area: title;
     }
@@ -1382,13 +1388,11 @@ a {
 
   /* コンテンツの共通スタイル */
   .unified-content {
-    /* Mobile: Natural order */
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       display: block;
       order: 2;
     }
 
-    /* Tablet/Desktop: Grid layout */
     @media (min-width: 768px) {
       grid-area: content;
     }
@@ -1396,12 +1400,10 @@ a {
 
   /* 画像の共通スタイル */
   .pl-objImages {
-    /* Mobile: Natural order */
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       order: 1;
     }
 
-    /* Tablet/Desktop: Grid layout */
     @media (min-width: 768px) {
       grid-area: image;
     }
@@ -1420,7 +1422,7 @@ a {
   .pl-objImages {
     @media (min-width: 768px) {
       justify-content: flex-start;
-      margin-right: calc(min(var(--space-4xl), 5.33vw) / 2);
+      margin-right: calc(min(var(--pl-space-4xl), 5.33vw) / 2);
     }
   }
 }
@@ -1437,7 +1439,7 @@ a {
   .pl-objImages {
     @media (min-width: 768px) {
       justify-content: flex-end;
-      margin-left: calc(min(var(--space-4xl), 5.33vw) / 2);
+      margin-left: calc(min(var(--pl-space-4xl), 5.33vw) / 2);
     }
   }
 }
@@ -1468,7 +1470,7 @@ a {
       justify-content: center;
       align-items: center;
       max-width: 600px;
-      padding-right: var(--space-lg);
+      padding-right: var(--pl-space-lg);
     }
   }
 }
@@ -1477,39 +1479,52 @@ a {
 .pl-objContainer--normal {
   max-width: 1000px;
   margin: 0 auto;
-
-  /* Fluid padding using min() - Coding Bible principle */
-  padding: 0 min(var(--space-xl), 4vw);
+  padding: 0 min(var(--pl-gap-responsive-mobile), 4vw);
 
   /* 効率的な色管理システム */
-  --strong-color: var(--color-secondary);
-  --text-color: var(--color-text-primary);
+  --strong-color: var(--pl-color-secondary);
+  --text-color: var(--pl-color-text-primary);
 
   /* 通常のコンテンツレイアウト - 画像なし */
   @media (min-width: 768px) {
     display: block;
   }
 
+  /* スマホでの表示順序調整 */
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+
   /* 統一されたstrong要素のスタイリング */
   .unified-content strong {
     color: var(--strong-color);
-    font-weight: var(--font-bold);
+    font-weight: var(--pl-font-weight-bold);
   }
-}
 
-/* セレクターの順序を調整（特異性の降順） */
-.prose .unified-content strong {
-  color: var(--color-primary);
+  /* KrashenQuoteの表示順序調整 */
+  .krashen-quote {
+    @media (max-width: 768px) {
+      order: 2; /* 段落の後に表示 */
+    }
+  }
+
+  /* 段落コンテンツの表示順序調整 */
+  .unified-content {
+    @media (max-width: 768px) {
+      order: 1; /* 最初に表示 */
+    }
+  }
 }
 
 /* 最も効率的な解決方法：クラスベースの色制御 */
 .section--purple-strong {
-  --strong-color: var(--color-secondary);
+  --strong-color: var(--pl-color-secondary);
 }
 
 .section--purple-strong .unified-content strong {
   color: var(--strong-color);
-  font-weight: var(--font-bold);
+  font-weight: var(--pl-font-weight-bold);
 }
 
 /* ========================================
@@ -1520,23 +1535,23 @@ a {
 .pl-objContainer[class*='--phase'] {
   @media (min-width: 768px) {
     display: grid;
-    gap: var(--space-md);
+    gap: var(--pl-gap-responsive-mobile);
   }
 
   .unified-content {
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       order: 3;
     }
   }
 
   /* 全Phase共通のタイトル余白調整 */
   .pl-objTitle {
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--pl-space-sm);
   }
 
   /* 全Phase共通の画像スタイル */
   .pl-objImages {
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       order: 2;
     }
   }
@@ -1553,7 +1568,7 @@ a {
 .pl-objContainer--phase3 .image-zoom-trigger:hover,
 .pl-objContainer--phase4 .image-zoom-trigger:hover,
 .pl-objContainer--phase5 .image-zoom-trigger:hover {
-  transform: scale(1.02);
+  transform: scale(var(--pl-scale-hover));
 }
 
 /* 画像右配置のPhase（Phase1, Phase3, Phase5） */
@@ -1581,159 +1596,37 @@ a {
   }
 }
 
-.prose .unified-content:first-child {
-  margin-top: 0;
-}
-
-.prose .unified-content:last-child {
-  margin-bottom: 0;
-}
-
-/* Maintain existing special styles */
-
-.prose .phase-goal p {
-  color: var(--color-text-primary);
-}
-
 /* より具体的なセレクターでmargin-bottomを確実に削除 */
 .content-section .phase-goal {
   margin-bottom: 0;
 }
 
-/* Maintain existing link colors */
-.prose a {
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in oklch,
-    var(--color-text-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.1em;
-  transition: text-decoration-color var(--transition-normal);
-}
-
-/* Phase 1 Links - More specific selectors */
-.phase-steps-list a,
-.phase-substeps a {
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in oklch,
-    var(--color-text-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.1em;
-  transition: text-decoration-color var(--transition-normal);
-}
-
-.prose a:hover {
-  color: var(--color-primary-hover);
-  text-decoration-color: var(--color-text-secondary);
-}
-
-.phase-steps-list a:hover,
-.phase-substeps a:hover {
-  color: var(--color-primary-hover);
-  text-decoration-color: var(--color-text-secondary);
-}
-
-/* すべてのリストスタイルを--color-secondaryに統一 */
+/* 統合されたリストマーカースタイル - DRY原則適用 */
 ul li::marker,
-ol li::marker {
-  color: var(--color-secondary);
-  font-weight: var(--font-bold);
-}
-
-/* ネストされたリストのマーカー - クラスベース */
+ol li::marker,
 .nested-list li::marker {
-  color: var(--color-secondary);
-  font-weight: var(--font-bold);
+  color: var(--pl-color-secondary);
+  font-weight: var(--pl-font-weight-bold);
 }
 
-/* Phase1リストのマーカー - 直接的な色指定 */
-.phase-steps-list li::marker {
-  color: oklch(65% 0.25 280deg);
-  font-weight: var(--font-bold);
-}
-
+/* Phase1専用リストマーカー - 特殊色指定 */
+.phase-steps-list li::marker,
 .phase-substeps li::marker {
   color: oklch(65% 0.25 280deg);
-  font-weight: var(--font-bold);
+  font-weight: var(--pl-font-weight-bold);
 }
 
-/* Prose内のリストスタイル */
+/* Prose内のリストマーカー */
 .prose ul li::marker,
 .prose ol li::marker {
-  color: var(--color-secondary);
-  font-weight: var(--font-bold);
+  color: var(--pl-color-secondary);
+  font-weight: var(--pl-font-weight-bold);
 }
 
-/* Maintain existing list colors */
-.prose .methodology-phases-list {
-  color: var(--color-text-primary);
-}
-
-.prose .methodology-phases-list li::marker {
-  color: var(--color-secondary);
-  font-weight: var(--font-bold);
-}
-
-.prose .phase-steps-list {
-  color: var(--color-text-primary);
-}
-
-.prose .phase-substeps li {
-  color: var(--color-text-secondary);
-}
-
-/* Formula styling with GlassMorphism and enhanced centering */
-.prose .formula {
-  /* Layout */
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-
-  /* Sizing */
-  max-width: 600px;
-  margin: var(--space-2xl) auto;
-  padding: var(--space-xl);
-
-  /* GlassMorphism styling - OKLCH */
-  border: 1px solid var(--clr-glass-border);
-  border-radius: 16px;
-  background: var(--clr-glass-background);
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 8px 32px oklch(0% 0 0deg / 0.1),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
-
-  /* Typography */
-  color: var(--color-secondary);
-  text-align: center;
-
-  /* Animation */
-  transition: all 0.3s ease;
-}
-
-.prose .formula:hover {
-  border-color: var(--clr-glass-border-hover);
-  background: var(--clr-glass-background-hover);
-  transform: translateY(-2px);
-  box-shadow:
-    0 12px 40px oklch(0% 0 0deg / 0.15),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.3);
-}
-
-/* Formula内の画像に角丸を適用 */
+/* 統合されたフォーミュラ画像スタイル - 効率化 */
 .formula img {
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: var(--pl-radius-xl);
   box-shadow: 0 4px 16px oklch(0% 0 0deg / 0.1);
 
   /* 高解像度ディスプレイでの画像品質向上 */
@@ -1747,130 +1640,33 @@ ol li::marker {
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
-}
 
-.formula img:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 24px oklch(0% 0 0deg / 0.15);
-}
-
-/* Responsive design for formula */
-@media (max-width: 768px) {
-  .prose .formula {
-    max-width: 100%;
-    margin: var(--space-xl) auto;
-    padding: var(--space-lg);
-    border-radius: 12px;
-  }
-
-  .formula img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: contain;
+  &:hover {
+    transform: scale(var(--pl-scale-hover));
+    box-shadow: 0 8px 24px oklch(0% 0 0deg / 0.15);
   }
 }
 
-/* 高DPIディスプレイ対応 */
-@media (min-resolution: 192dpi) {
-  .formula img {
-    image-rendering: auto;
-  }
-}
-
-/* Maintain existing highlight underline */
-.prose .highlight-underline {
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in srgb,
-    var(--color-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.1em;
-}
-
-/* Specific highlight underline for immersion duration content - More specific selector */
+/* 統合されたハイライト下線スタイル - 効率化 */
 .immersion-duration-content .highlight-underline {
   text-decoration: underline;
   text-decoration-color: color-mix(
-    in srgb,
-    var(--color-secondary) 50%,
+    in oklch,
+    var(--pl-color-secondary) 50%,
     transparent
   );
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.1em;
-  transition: text-decoration-color var(--transition-normal);
-}
+  text-decoration-thickness: var(--pl-text-decoration-thickness);
+  text-underline-offset: var(--pl-text-underline-offset);
+  transition: var(--pl-transition-text-decoration);
 
-.prose .highlight-underline:hover {
-  text-decoration-color: var(--color-secondary);
-}
-
-.immersion-duration-content .highlight-underline:hover {
-  text-decoration-color: var(--color-secondary);
-}
-
-/* Maintain existing problem text styling */
-.prose .problem-text u {
-  font-weight: normal;
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in srgb,
-    var(--color-text-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.1em;
-}
-
-/* Maintain existing caption styling */
-.prose .kaiwa-practice-caption {
-  color: var(--color-text-muted);
-  font-style: italic;
-}
-
-/* Maintain existing price styling */
-.prose .price-current-value {
-  color: var(--color-primary);
-  font-weight: bold;
-}
-
-.prose .price-original-value {
-  color: var(--color-text-muted);
-  text-decoration: line-through;
-}
-
-.prose .discount-text {
-  color: var(--color-warning-orange);
-  font-weight: bold;
-}
-
-/* Maintain existing problems title styling */
-.prose .problems-title {
-  color: var(--color-text-primary);
-}
-
-.prose .problems-subtitle-text {
-  color: var(--color-text-secondary);
-}
-
-/* Maintain existing page title styling */
-.prose .page-title-main {
-  background: linear-gradient(
-    135deg,
-    var(--color-text-primary) 0%,
-    var(--color-brand-primary) 100%
-  );
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: var(--color-text-primary);
+  &:hover {
+    text-decoration-color: var(--pl-color-secondary);
+  }
 }
 
 /* より強力なセレクターで確実に適用 - 特異性制限内 */
 .content-section--secondary .phase-steps-list li::marker,
 .content-section--secondary .phase-substeps li::marker {
-  color: var(--color-secondary);
-  font-weight: var(--font-bold);
+  color: var(--pl-color-secondary);
+  font-weight: var(--pl-font-weight-bold);
 }

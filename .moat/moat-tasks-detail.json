@@ -1,0 +1,137 @@
+[
+  {
+    "id": "bfc39e95-16d5-4a61-a78d-9c8a1a283b72",
+    "title": "h2: Kenapa Banyak yang Gagal, deng",
+    "comment": "タイトルのスタイルを修正して",
+    "selector": "div.content-section.content-section--primary:nth-child(4) > div.traditional-method-container > h2.traditional-method-title.float-highlight",
+    "boundingRect": {
+      "x": 863,
+      "y": 237,
+      "w": 672,
+      "h": 21
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759111259185
+  },
+  {
+    "id": "96b461bc-a21f-4e58-88fe-b9e9ed47875e",
+    "title": "Image: Data Kosakata Penutur Asli Bahasa Jepang",
+    "comment": "この画像をrounded edgesにして",
+    "selector": "div.kaiwa-practice-container > div.kaiwa-practice-image:nth-child(2) > img.kaiwa-practice-image-clickable.float-highlight",
+    "boundingRect": {
+      "x": 375,
+      "y": 219,
+      "w": 544,
+      "h": 371
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759111295546
+  },
+  {
+    "id": "16b59f4a-adb8-457b-9ce7-dc88dce61f93",
+    "title": "Colored Container",
+    "comment": "段落のスタイルをちょうさしてちゃんとしたスタイルを",
+    "selector": "div.container > div.kaiwa-practice-section:nth-child(10) > div.kaiwa-practice-container.float-highlight",
+    "boundingRect": {
+      "x": 355,
+      "y": 3,
+      "w": 1200,
+      "h": 630
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759111386454
+  },
+  {
+    "id": "16e7cd3a-fa40-4b8e-bc32-10fb1f6f197c",
+    "title": "Colored Container",
+    "comment": "GlassMorphismの背景を削除クリンアップして",
+    "selector": "div.container > div.kaiwa-practice-section:nth-child(10) > div.kaiwa-practice-container.float-highlight",
+    "boundingRect": {
+      "x": 355,
+      "y": 97,
+      "w": 1200,
+      "h": 696
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759111737514
+  },
+  {
+    "id": "038f0774-dffe-4b3a-a429-aebe39c4c21a",
+    "title": "p: Output dalam bentuk apaun, ter",
+    "comment": "＜P＞の下Marginがないか効かないらしい、http://localhost:4321/panduan-lengkap-otodidak-bahasa-jepangの一貫した＜P＞Marginをお願い",
+    "selector": "div.kaiwa-practice-container > div.kaiwa-practice-content:nth-child(4) > p.float-highlight:nth-child(1)",
+    "boundingRect": {
+      "x": 975,
+      "y": 325,
+      "w": 559,
+      "h": 102
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759111822974
+  },
+  {
+    "id": "2c22efb2-1593-49fa-b994-93be07ca3d8c",
+    "title": "h1: Panduan Lengkap Belajar Bahasa",
+    "comment": "Tablet画面以上でのtitle-sectionの下Marginを半分減らして",
+    "selector": "div.container > header.title-section > h1.page-title-main.float-highlight",
+    "boundingRect": {
+      "x": 48,
+      "y": 140,
+      "w": 1174,
+      "h": 68
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759122585652
+  },
+  {
+    "id": "3fa41008-2bfa-4fe9-be04-f722b520717c",
+    "title": "h2: Masalah dengan Pembelajaran Ba",
+    "comment": "Tablet以上の画面でproblems-titleをもうちょっと大きく調整して",
+    "selector": "#problems-title",
+    "boundingRect": {
+      "x": 432,
+      "y": 214,
+      "w": 407,
+      "h": 32
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759122645949
+  },
+  {
+    "id": "e61b320f-8c65-47dc-9c09-0ed41ada5744",
+    "title": "Colored Container",
+    "comment": "Border色を内容のGRATIS色と同じくさせて",
+    "selector": "div.price-row:nth-child(1) > div.price-current-container:nth-child(1) > div.price-current-badge.float-highlight",
+    "boundingRect": {
+      "x": 311,
+      "y": 527,
+      "w": 107,
+      "h": 47
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759123760953
+  },
+  {
+    "id": "517254ad-5e58-4bbc-beb0-1208d72138ea",
+    "title": "Image: Data Kosakata Penutur Asli Bahasa Jepang",
+    "comment": ""pl-objImages--special"この画像クラス、クリックするともとの解像度で大きく見れるようにして",
+    "selector": "div.kaiwa-practice-container > div.pl-objImages--special:nth-child(2) > img.section-image.float-highlight",
+    "boundingRect": {
+      "x": 470,
+      "y": 230,
+      "w": 350,
+      "h": 238
+    },
+    "screenshotPath": "",
+    "status": "done",
+    "timestamp": 1759140884944
+  }
+]

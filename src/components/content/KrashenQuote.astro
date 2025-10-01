@@ -50,10 +50,39 @@ const {
 </article>
 
 <style is:global>
-  /* Krashen Quote Component - Optimized */
+  /* Krashen Quote Component - Fully Nested */
   .krashen-quote {
-    --quote-gap: var(--space-lg);
-    --quote-padding: var(--space-3xl);
+    /* Independent design tokens */
+    --kq-space-xs: 0.25rem;
+    --kq-space-sm: 0.5rem;
+    --kq-space-md: 0.75rem;
+    --kq-space-lg: 1rem;
+    --kq-space-xl: 1.25rem;
+    --kq-space-2xl: 1.5rem;
+    --kq-space-3xl: 2rem;
+    --kq-transition-fast: 150ms ease-in-out;
+    --kq-transition-normal: 250ms ease-in-out;
+    --kq-transition-slow: 350ms ease-in-out;
+    --kq-font-bold: 800;
+    --kq-color-text-primary: oklch(20% 0.02 250deg);
+    --kq-color-text-secondary: oklch(50% 0.02 250deg);
+    --kq-color-primary: oklch(65% 0.18 15deg);
+    --kq-color-secondary: oklch(65% 0.25 280deg);
+    --kq-radius-sm: 2px;
+    --kq-radius-md: 5px;
+    --kq-radius-lg: 8px;
+    --kq-radius-xl: 12px;
+    --kq-radius-full: 50%;
+    --kq-scale-hover: 1.02;
+    --kq-scale-zoom: 1.1;
+    --kq-shadow-sm: 0 1px 2px 0 oklch(0% 0 0deg / 0.05);
+    --kq-shadow-md: 0 4px 6px -1px oklch(0% 0 0deg / 0.1);
+    --kq-shadow-lg: 0 10px 15px -3px oklch(0% 0 0deg / 0.1);
+    --kq-shadow-xl: 0 20px 25px -5px oklch(0% 0 0deg / 0.1);
+
+    /* Component-specific variables */
+    --quote-gap: var(--kq-space-lg);
+    --quote-padding: var(--kq-space-3xl);
     --image-size: 80px;
     --image-size-mobile: 60px;
     --image-size-tablet: 70px;
@@ -62,29 +91,35 @@ const {
     display: flex;
     align-items: flex-start;
     gap: var(--quote-gap);
-    margin: var(--space-5xl) 0 0;
+    margin: var(--kq-space-md) 0 0;
     padding: var(--quote-padding);
-    border-radius: 12px;
-    background: oklch(100% 0 0 / 0.1);
+    border-radius: var(--kq-radius-xl);
+    background: oklch(100% 0 0deg / 0.1);
     backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px oklch(0% 0 0 / 0.1);
+    box-shadow: 0 8px 32px oklch(0% 0 0deg / 0.1);
     transition:
-      transform var(--transition-normal),
-      box-shadow var(--transition-normal);
+      transform var(--kq-transition-normal),
+      box-shadow var(--kq-transition-normal);
 
     /* Mobile layout */
     @media (max-width: 767px) {
-      --quote-gap: var(--space-md);
-      --quote-padding: var(--space-xl);
+      --quote-gap: var(--kq-space-md);
+      --quote-padding: var(--kq-space-xl);
+
       flex-direction: column;
       align-items: center;
+      margin: var(--kq-space-md) 0 0;
       text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      margin: var(--kq-space-2xl) 0 0;
     }
 
     /* High contrast mode support */
     @media (prefers-contrast: high) {
-      background: oklch(0% 0 0 / 0.8);
-      border: 2px solid var(--color-text-primary);
+      border: 2px solid var(--kq-color-text-primary);
+      background: oklch(0% 0 0deg / 0.8);
     }
 
     /* Reduced motion support */
@@ -103,138 +138,138 @@ const {
         transition: none;
       }
     }
-  }
 
-  /* Quote Icon Styles */
-  .quote-icon {
-    position: absolute;
-    top: var(--space-lg);
-    left: var(--space-lg);
-    z-index: 1;
-    opacity: 0.3;
-    transition: all var(--transition-normal);
+    /* Quote Icon Styles - Nested */
+    .quote-icon {
+      position: absolute;
+      top: var(--kq-space-lg);
+      left: var(--kq-space-lg);
+      z-index: 1;
+      opacity: 0.3;
+      transition: all var(--kq-transition-normal);
 
-    @media (max-width: 767px) {
-      top: var(--space-md);
-      left: var(--space-md);
-    }
-  }
+      @media (max-width: 767px) {
+        top: var(--kq-space-md);
+        left: var(--kq-space-md);
+      }
 
-  .quote-icon svg {
-    width: 32px;
-    height: 32px;
-    color: oklch(100% 0 0 / 0.4);
-    filter: drop-shadow(0 2px 4px oklch(0% 0 0 / 0.2));
+      svg {
+        width: 32px;
+        height: 32px;
+        color: oklch(100% 0 0deg / 0.4);
+        filter: drop-shadow(0 2px 4px oklch(0% 0 0deg / 0.2));
 
-    @media (max-width: 767px) {
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  /* Hover effect for quote icon */
-  .krashen-quote:hover .quote-icon {
-    opacity: 0.6;
-    transform: scale(1.1);
-    transition: color var(--transition-normal);
-  }
-
-  .krashen-quote:hover .quote-icon svg {
-    color: var(--token-purple-base);
-  }
-
-  .krashen-quote p {
-    margin: 0 0 var(--space-lg);
-    color: oklch(100% 0 0 / 0.95);
-    font-style: italic;
-    text-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
-    line-height: 1.6;
-    font-size: 1rem; /* 16px */
-
-    /* デスクトップでの位置調整 */
-    @media (min-width: 768px) {
-      margin-top: 0.5em; /* 画像の中心とテキストの最初の行を揃える */
-      font-size: 1.25rem; /* 20px - デスクトップではさらに大きく */
-    }
-  }
-
-  .krashen-quote p strong {
-    color: oklch(100% 0 0 / 1);
-    font-weight: var(--font-bold);
-    text-shadow: 0 1px 2px oklch(0% 0 0 / 0.4);
-    transition: color var(--transition-normal);
-  }
-
-  /* ホバー時のstrong要素の色変更 - 確実に動作するように特異性を高める */
-  .krashen-quote:hover p strong {
-    color: var(--token-purple-base);
-  }
-
-  .krashen-image {
-    flex-shrink: 0;
-    margin-top: 0;
-    display: flex;
-    align-items: center;
-
-    /* Desktop layout */
-    @media (min-width: 768px) {
-      padding-left: var(--space-lg);
-      align-self: flex-start;
-      margin-top: 0.5em; /* テキストの最初の行と画像の中心を揃える */
+        @media (max-width: 767px) {
+          width: 24px;
+          height: 24px;
+        }
+      }
     }
 
-    /* Mobile layout */
-    @media (max-width: 767px) {
+    /* Hover effect for quote icon - Nested */
+    &:hover .quote-icon {
+      opacity: 0.6;
+      transform: scale(var(--kq-scale-zoom));
+      transition: color var(--kq-transition-normal);
+    }
+
+    /* Paragraph styles - Nested */
+    p {
+      margin: 0 0 var(--kq-space-lg);
+      color: oklch(100% 0 0deg / 0.95);
+      font-size: 1rem; /* 16px */
+      font-style: italic;
+      line-height: 1.6;
+      text-shadow: 0 1px 2px oklch(0% 0 0deg / 0.3);
+
+      /* デスクトップでの位置調整 */
+      @media (min-width: 768px) {
+        margin-top: 0.5em; /* 画像の中心とテキストの最初の行を揃える */
+        font-size: 1.25rem; /* 20px - デスクトップではさらに大きく */
+      }
+
+      strong {
+        color: oklch(100% 0 0deg / 1);
+        font-weight: var(--kq-font-bold);
+        text-shadow: 0 1px 2px oklch(0% 0 0deg / 0.4);
+        transition: color var(--kq-transition-normal);
+      }
+    }
+
+    /* ホバー時のstrong要素の色変更 - Nested */
+    &:hover p strong {
+      color: var(--kq-color-secondary);
+    }
+
+    /* Image container - Nested */
+    .krashen-image {
+      display: flex;
+      align-items: center;
       margin-top: 0;
-      align-self: center;
+      flex-shrink: 0;
+
+      /* Desktop layout */
+      @media (min-width: 768px) {
+        margin-top: 0.5em; /* テキストの最初の行と画像の中心を揃える */
+        padding-left: var(--kq-space-lg);
+        align-self: flex-start;
+      }
+
+      /* Mobile layout */
+      @media (max-width: 767px) {
+        margin-top: 0;
+        align-self: center;
+      }
+
+      img {
+        width: var(--image-size);
+        height: var(--image-size);
+        margin: 0;
+        border-radius: var(--kq-radius-full);
+        transition: transform var(--kq-transition-normal);
+        object-fit: cover;
+        box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.2);
+
+        /* Mobile image size */
+        @media (max-width: 767px) {
+          width: var(--image-size-mobile);
+          height: var(--image-size-mobile);
+        }
+
+        /* Tablet image size */
+        @media (min-width: 768px) {
+          width: var(--image-size-tablet);
+          height: var(--image-size-tablet);
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
+      }
     }
-  }
 
-  .krashen-quote .krashen-image img {
-    width: var(--image-size);
-    height: var(--image-size);
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 4px 12px oklch(0% 0 0 / 0.2);
-    transition: transform var(--transition-normal);
-    margin: 0;
-
-    /* Mobile image size */
-    @media (max-width: 767px) {
-      width: var(--image-size-mobile);
-      height: var(--image-size-mobile);
+    /* Blockquote styles - Nested */
+    blockquote {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-right: none;
+      border-left: none;
     }
 
-    /* Tablet image size */
-    @media (min-width: 768px) {
-      width: var(--image-size-tablet);
-      height: var(--image-size-tablet);
+    /* Cite styles - Nested */
+    cite {
+      display: block;
+      color: oklch(100% 0 0deg / 0.8);
+      font-size: 0.9em;
+      font-style: normal;
+      text-align: right;
+      text-shadow: 0 1px 2px oklch(0% 0 0deg / 0.3);
     }
-
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  }
-
-  .krashen-quote blockquote {
-    border: none !important;
-    border-left: none !important;
-    border-right: none !important;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-  }
-
-  .krashen-quote cite {
-    display: block;
-    color: oklch(100% 0 0 / 0.8);
-    font-style: normal;
-    text-align: right;
-    text-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
-    font-size: 0.9em;
   }
 </style>
