@@ -1,20 +1,399 @@
-[
-  {
-    "channelCover": "https://yt3.googleusercontent.com/C7V7J2i3zgH74l7TRt5FSBppnvws56k3KxVHmRqP08J6kAP6eEs2iAzlel94dxznixJt4QnH=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
-    "channelName": "Comprehensible Japanese",
-    "channelProfile": "https://yt3.googleusercontent.com/LZQ9ONDxY4K_GgWWWNDkkvaZ13K9SCvCIt_hPb7IUizhs1PtBeypr2zn7GYa4BjcV7v9IfuZIAg=s160",
-    "channelURL": "https://www.youtube.com/@cijapanese"
-  },
-  {
-    "channelCover": "https://yt3.googleusercontent.com/54MDPsak4TGCKXtYRmd4ySYB060nrpc1Fbi3c3Ds0W3vaeJLQ0fKvVD6fCIhpS4O4LgBpRROHQ=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
-    "channelName": "いろいろな日本語",
-    "channelProfile": "https://yt3.googleusercontent.com/iH8CKp2SGTHiwkQyk1kAVQPVWgUoFXAvUlYqBNqgjS73rjDYmkvC2Ag1oNHprCxAeIG4QCvQFME=s160",
-    "channelURL": "https://www.youtube.com/@iroironanihongo"
-  },
-  {
-    "channelCover": "https://yt3.googleusercontent.com/KKnM72k3Z3UxZjT08X8vYhx0NcPYGssYrCKBLmsN0drh5HgQ656g6D2RtNWlRqiOJWWIL_DkEA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
-    "channelName": "Learning Japanese with SakuraTengu",
-    "channelProfile": "https://yt3.googleusercontent.com/p79QiTXV2tOUitmAmfr114A7XToZPa0Dy8nXTOlHhIm7RAR6puzqvoHLRtwiMV5v2ZsPrnvI=s160",
-    "channelURL": "https://www.youtube.com/@LearningJapaneseWithYuru"
-  }
-]
+{
+  "sections": [
+    {
+      "sectionTitle": "Pemula (Level TK/PAUD)",
+      "channels": [
+        {
+          "channelCover": "https://yt3.googleusercontent.com/C7V7J2i3zgH74l7TRt5FSBppnvws56k3KxVHmRqP08J6kAP6eEs2iAzlel94dxznixJt4QnH=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Comprehensible Japanese",
+          "channelProfile": "https://yt3.googleusercontent.com/LZQ9ONDxY4K_GgWWWNDkkvaZ13K9SCvCIt_hPb7IUizhs1PtBeypr2zn7GYa4BjcV7v9IfuZIAg=s160",
+          "channelURL": "https://www.youtube.com/@cijapanese"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/54MDPsak4TGCKXtYRmd4ySYB060nrpc1Fbi3c3Ds0W3vaeJLQ0fKvVD6fCIhpS4O4LgBpRROHQ=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "いろいろな日本語",
+          "channelProfile": "https://yt3.googleusercontent.com/iH8CKp2SGTHiwkQyk1kAVQPVWgUoFXAvUlYqBNqgjS73rjDYmkvC2Ag1oNHprCxAeIG4QCvQFME=s160",
+          "channelURL": "https://www.youtube.com/@iroironanihongo"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/KKnM72k3Z3UxZjT08X8vYhx0NcPYGssYrCKBLmsN0drh5HgQ656g6D2RtNWlRqiOJWWIL_DkEA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Learning Japanese with SakuraTengu",
+          "channelProfile": "https://yt3.googleusercontent.com/p79QiTXV2tOUitmAmfr114A7XToZPa0Dy8nXTOlHhIm7RAR6puzqvoHLRtwiMV5v2ZsPrnvI=s160",
+          "channelURL": "https://www.youtube.com/@LearningJapaneseWithYuru"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Pemula (Level SD Kelas 1-3)",
+      "channels": [
+        {
+          "channelCover": "https://yt3.googleusercontent.com/QqJ8fSwFL18uz-TOhH9jviv4j8NUcQxZ9FEZuUcUrGweY24zqmaWTV3cGjW7LvLbPLK9Q05piQ=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Inaden",
+          "channelProfile": "https://yt3.googleusercontent.com/k1KyTrBfNpzgnoJyk8ZmolFpa5bTeRoikdzJJrJSqvMtNHrHAuywV8iGs_BCS0wwqkZhgP-kAEg=s160",
+          "channelURL": "https://www.youtube.com/@InadenJapanese"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "Jiro, just Japanese",
+          "channelProfile": "https://yt3.googleusercontent.com/bPffA72ezvDAXCEWzb0xsSx2-efkZpu48pkahVBdDhgvJsTOZJlinu7VxKc8-OKm5DNN8AMCsg=s160",
+          "channelURL": "https://www.youtube.com/@JiroJapanese"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/pFAkjlRYBSIUQRr8xKQuPBJNVhdefJs66ioQSIQHVDKoicE6XrqKQsIeeOCN9XiI-eGXtsGBxQ=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "INARI JAPANESE",
+          "channelProfile": "https://yt3.googleusercontent.com/Tqh-KQGNjd-fj4IdbYN2K_spZq6fBtdRt86bnKHZVMWxhPXEF4NltINipVYiMO9peHDVSpa5Cg=s160",
+          "channelURL": "https://www.youtube.com/@inarijapanese/videos"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Pemula (Level SD Kelas 4-6)",
+      "channels": [
+        {
+          "channelCover": "https://yt3.googleusercontent.com/IS7I-gKw4lWX4VeqrSahULol1Z2VHOgmxbwPpA7gFhEDSJYXbkQCclNPl5R0tpKMAR1vQpUs=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "けんさんおかえり",
+          "channelProfile": "https://yt3.googleusercontent.com/WdMna2oNs-rUT7VGfZUNjQxJy8fEGI5GTs8Dv7CHnaQStDGV4DCMnSEe0uNN79iQ7hXjKMRQxw=s160",
+          "channelURL": "https://www.youtube.com/@kensanokaeri"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/reOBcN-1lT4SzXAhKI3ggGDJGQmVrIuAnITTZCfNueHW0TGYuDSzmG0wFGoXpOiCZEmYSDoT-i4=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Japanese with Mako",
+          "channelProfile": "https://yt3.googleusercontent.com/MuCspL7k3EG63i_jAgK5WGl51Q6rB7e6dqBJ2t6hlBK3d__Q56qdEc5JNEHzOQoEC93Oh2C1=s160",
+          "channelURL": "https://www.youtube.com/@JapanesewithMako"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Pemula (Level SMP)",
+      "channels": [
+        {
+          "channelCover": "https://yt3.googleusercontent.com/oqNuwWBLBZ8VA4ffIqGJEbe-tAmCiIX9b1EThKt0Egp8NpHDb0DjKF4JgUCE20aDecnfrIpMgA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "YUYUの日本語Podcast",
+          "channelProfile": "https://yt3.googleusercontent.com/gSp7_d8NvgTPBOFfJTSsVt-auJq89Jb6hp1XV7JdQRYIMbGD84TJapNfnil2z2rlQHuH6xZ7vg=s160",
+          "channelURL": "https://www.youtube.com/@yuyunihongopodcast"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "Sayuri Saying",
+          "channelProfile": "https://yt3.googleusercontent.com/w-0QmylnSKZAnb9PVHOzT7H7nFoBhqMgkHByjTrqNlgLXL1jCtU_BiNRft2qVApdgCPEPxcYQtI=s160",
+          "channelURL": "https://www.youtube.com/@SayuriSaying"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/CHNkCRsM4bLpl4eG_ZBhW7-to7Mf5KnxR6jCFWZX9ixRjVtRbETUO3A3hOn2TggjFX91gQ69mw=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Japanese with Shun",
+          "channelProfile": "https://yt3.googleusercontent.com/1UgKCIYvokbbW75LZATQeU_DMnWgQiZa9MWRQP4UrWpWfGWMqLt4ajijMbO2yNv00wiUYkxBFA=s160",
+          "channelURL": "https://www.youtube.com/@JapanesewithShun"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "WAKU WAKU JAPANESE",
+          "channelProfile": "https://yt3.googleusercontent.com/u042QkUlYdy-sLGxKrMCQxzyALSmOXZloL7lxsfVgHQLNORhvIoKQnvuTNu-96SKn_emzGb-gIw=s160",
+          "channelURL": "https://www.youtube.com/@wakuwakujapanese/"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/ZgBVrULsy4cqmgKQmLrj2zP3l-sdPKVxYcMvbOli_0v_yHFhh4crFHii9RjGLhAhTVt5-UdEktw=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Miku Real Japanese",
+          "channelProfile": "https://yt3.googleusercontent.com/QK6TlMPe0MqqqjPYLa4WNUIkveaC1hCPLqLKaX0ZvbIBglkx8panCaLwlqL1ctQlE42loUg6LDQ=s160",
+          "channelURL": "https://www.youtube.com/@mikurealjapanese"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/KlZPm-GtQuJ3Mi5av4O0vmeChzoN3aMttAKHrG0iMx1Afkl9J_Ygvf-rw-r-PCWzN3pmwEzn=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "あやの〻日本語学習チャンネル𓂃𖧷",
+          "channelProfile": "https://yt3.googleusercontent.com/hFvBA72RnmQ3gt7XJPGxyc0gaDDVs6dgINx4KuojqdDU9fwF0nD8YtgNssHWWhgoxN61N40zkA=s160",
+          "channelURL": "https://www.youtube.com/@am_japanese"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/ovQ74SWWJ2cI1erQdqrDrxW9fdUUQQoH9me3i-ZzrydtWJwO_MD92GOAVv3uurWIeVMqr5kE-w=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Speak Japanese Naturally",
+          "channelProfile": "https://yt3.googleusercontent.com/vNhlOnvOL0J1xhCZJ3urGA7R0LJ6HVJzg1GUdJ53Lk8wqkKzK_6nhJf4QjcOEJyM_N55aFjGHw=s160",
+          "channelURL": "https://www.youtube.com/@SpeakJapaneseNaturally"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/5UVJk7io_3o44P6Svs1wGcIO9smigy3HddiwjU1QU8i6xwDxZ2isvjO0Te2qPazoyJ_cpTGqQQ=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "EASY JAPANESE PODCAS",
+          "channelProfile": "https://yt3.googleusercontent.com/y2TbGITFlalC7W-VsVCP4wVNKgZ83wDsJnyRPCpuGOn0pGHOMG7pzYJznLof20WY1FEOwnyeRRc=s160",
+          "channelURL": "https://www.youtube.com/@EASYJAPANESE"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/lJA_cLwF4gcMzuLQDvas8VtBX17dfqqNcba-B_QochzZZew1ICH2UiRc1qP4CUHa86x5Wz0yhg=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Akiko_Japanese_Conversations",
+          "channelProfile": "https://yt3.googleusercontent.com/wO-rKKtp33Nb0n7H9cMwfcesaMkW5aJ-vjj3Z9Jv0kIhPDztL4KQPY_b_wNLeDFMonfSgaFg=s160",
+          "channelURL": "https://www.youtube.com/@Aki-SenseiJPN"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/Z-VXdmy3HO7rsHjvhAjsnhi5kx_POffTlXOFQ7jIz91dy89pTUsdcYIeZdOTw8idkmFAUq8HSA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Japanese super immersion",
+          "channelProfile": "https://yt3.googleusercontent.com/V4NFNU1RJk_rf7HS1TGhDhSQ5X8VUM77qgFeePT5ZEtKzo-UmTbEsO6jUYVri3lIugI44B42rw=s160",
+          "channelURL": "https://www.youtube.com/@JSI55"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/G5sg_xK0TLSz0v1ulGz4hOuzm4s-wE3ixZdXWWkCLQrvGkNDvLm5HsLeSmmugrz89zdAKDYc=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Nihongo with May【日本語学習】",
+          "channelProfile": "https://yt3.googleusercontent.com/jf54ADa_VRvClL7CXWoWK_v9_9Az9sgvU1q8XpzqZpGsVRIex7ABxm1n9epR_eSUrFHRZYEajA=s160",
+          "channelURL": "https://www.youtube.com/@NihongoWithMay00"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Native Level+ (Difficulty MAX)",
+      "channels": [
+        {
+          "channelCover": "https://yt3.googleusercontent.com/AHCAJq92-ICiuqd-JCb0twM0zjkQ05jp2rM97D9zYzBJOvFA2kHo5jvRrWxDvk1K7lH6nrgL=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ひろゆき, hiroyuki",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_nAYF6EhbM9NhM8QAOBkg6jDQ2Q566nJ-7ANYWIK5aJEhI=s160",
+          "channelURL": "https://www.youtube.com/@hirox246"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/g4CW2RoDgSw5zaRLpkKDi3YK33x4YHlfbEKtXtHDGPAF7M2R-_7GTfeq_s-npaE8h1V_tgtXgA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "メンタリスト DaiGo",
+          "channelProfile": "https://yt3.googleusercontent.com/WmbFPvfL8qjeiU_9jPXZU8W2tuNB_Fo3q7Iuw9_C5QrmfOsgBplUPrADeoeMTF3kVKMCqH22iw=s160",
+          "channelURL": "https://www.youtube.com/@mentalistdaigo"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/CGqwBURVlWYWBFf9kjknu7X1Sh-Et55BhaiC9ZJxgWzwFgm2HuHBbCq4qKlZxv7d8SzhWGI1=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "中田敦彦のYouTube大学",
+          "channelProfile": "https://yt3.googleusercontent.com/1o4KhOJ94ei8FiuPS-DHE9qqgRyx1pnydnG46vI4W8IOwQP7EV5aVWiSQfDlKrKKdNFUWAIJHuM=s160",
+          "channelURL": "https://www.youtube.com/@NKTofficial"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/WNEgHGYP9sQ2Mwd9g1_ZMdHBO0WhfU3qsxNQaGr0LeBeIWsGnwkbVdHL9KClysrC8f3NL6cqcoA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "岡田斗司夫",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_mDuyj59d5uufGlz01B-DzKd2DPKC1Zka4k22tfrIoVPoE=s160",
+          "channelURL": "https://www.youtube.com/@toshiookada0701"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/mKZoKy-XK8pQ4sczOwvHxfbYAnYSVgjYc1UqISysCn_yL-N1SS0pGcpKYgTrHXfuFxLR937zXQ=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "謎解き統計学 | サトマイ",
+          "channelProfile": "https://yt3.googleusercontent.com/RyFHGWLM_PwUZuqYrCAdxmH-B1RBJoiiHGhZOxECRCvfIf7p3lkprUbZTtt_xQA7ndy4XdovAw=s160",
+          "channelURL": "https://www.youtube.com/@satomai811"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/6Pw3LfAk5FFakyiOdQ2iW1vgCdpLLgE3niBGZ99yO4YT46OdVSJALbR41u_EdPYIYUI2uuMn=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "西野亮廣 / Akihiro Nishino",
+          "channelProfile": "https://yt3.googleusercontent.com/_JFhH_HZQh89SZahnSGRYXYdH1llOe2CIli9q6ab1QAffoNXR4Hucb77ju6iPARzu28o59CYHA=s160",
+          "channelURL": "https://www.youtube.com/@akihironishino"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/AA6KxnDmTkL7e_dgX9GeiHh5fRmbRvgrzygNzv6YGPWfIMLzxT2-YfCF6WgQIo5ex2Wp_6TP8g=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "堀江貴文 ホリエモン",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_lzpG4cWbQwIyZg9QouzMvHBYP4YGdU4GvYu71V1fIBsFyq=s160",
+          "channelURL": "https://www.youtube.com/@takaponjp"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Podcast & Audio Learning",
+      "sectionType": "podcast",
+      "sectionDescription": "音声学習に最適なポッドキャストチャンネルで、通勤時間や家事の合間にも効率的に日本語を学習できます",
+      "sectionImage": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=300&fit=crop&crop=center",
+      "channels": [
+        {
+          "channelCover": "https://yt3.googleusercontent.com/PACHSqk9yGS_GyGBpiKh7_MU7CWb0DDTeTblj9fZPhbkDonJLQhjKI-p-S2P4i8sXNzw4o2Dsg=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ゆる言語学ラジオ",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_na3cTkSA0sWhtO4SUp7lKdTc2LRjJ6ivp-UVHb3dzqqfU=s160",
+          "channelURL": "https://www.youtube.com/@yurugengo"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/xtoIPOWHap6g6OgbPmGexnh5G7rexSQMgHvSIC0X3rbgttSOLrQvk1_b6_9v0yXvRUPkhnUM=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ゆる天文学ラジオ",
+          "channelProfile": "https://yt3.googleusercontent.com/QbIVoeGOlEXzfHVV8GOQdcLur81fl57G4ZUhDSeZV46OsWqmQi3iypPOA4udZs71OW9esFsjfw=s160",
+          "channelURL": "https://www.youtube.com/@yurutenmon"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/2vFX7feO1ko0DwvKTznx9IRj9jtzd0u9OnT1hqm21K4j0do0S9Wssn0hcJ22GUWLwu_H_To98w=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "KANERIN Podcast Studios",
+          "channelProfile": "https://yt3.googleusercontent.com/1xrFeXu0hOMoECRwvsK-gBcb4B5G5a9E8Z1xUy8nynkAs83ozqvwg6LD_i_1No4iPHbSS05z=s160",
+          "channelURL": "https://www.youtube.com/@kanerinx"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/JKFDV5ybSYTdrl1P8iCMn6yfb1nbhuemwYSGJ9oJYUAPlmyTH5bzRV6Eczbhv7AfXamQXoO4=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "先輩とぼく【寝落ちラジオ】",
+          "channelProfile": "https://yt3.googleusercontent.com/rvbIW_tXL2xfniHVL1FBq4YAWLhZbrxz1PL5zxai3_d2PibEh8dOuBB7OydYoHRHYFo_2j3S=s160",
+          "channelURL": "https://www.youtube.com/@senbokuradio"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/UC-O0NKuU7KE_y88QncTddj-C5jI4Vs9KUmnByy0STFv31u6dCurx_EJlVACIvyeFM-NvzRX=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "sion👾【EveryDayPodcast】",
+          "channelProfile": "https://yt3.googleusercontent.com/-EBH2GerommEWa8ENLmVk_JdbA__xKmKbTvlQahuAlBrjE89AiH_MThub5lwfwhOWwkXxalF5e8=s160",
+          "channelURL": "https://www.youtube.com/@sion_vliver"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/A7iexuE96BCWcGZbkJG40RtwRJBvopcSlbJgfbell_-Kh9Xt_rXVX4MW9Csc4XDB9FdlnDB1Wc4=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "クリエイターエコノミーニュース",
+          "channelProfile": "https://yt3.googleusercontent.com/461yehdAXalfxX6Nj-Mt-rgUL6d-EVvkdGEKdk8Ir6mtRnYQXrk9aFZOVeoPr5dFvecR7ulg1eo=s160",
+          "channelURL": "https://www.youtube.com/@creator_enews"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/TcEJeXH1OvWl9fSwWac2qdmeHCv-iGf6X3Y5Iz1B9pkU1jgas0Vu_TyCh80zc9QjHikcMrv2CFU=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "あべこべコンビのクリエイティブトーク",
+          "channelProfile": "https://yt3.googleusercontent.com/8LGLF8j1r_isr1ImmslXKQ9JMlLvfrAU5BaSQcQgkU0ECJTQE4ffr0bANvBCyMWGs-0XCiCQ4A=s160",
+          "channelURL": "https://www.youtube.com/@abecre_talk"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/JEcbFhIaRq_F_23bkaM4yKbSg2IB8_0bn1x7LVWGeWLVctFkhboSZ7YNJ9igCmW9ZESlfx9B=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "WHITE SPACE",
+          "channelProfile": "https://yt3.googleusercontent.com/zDN7y6EN_h2fEw6dlZe8R8nHwJLifAEytmg0hSg3f_8-A4qF67R4da0nUybaHRqT0CG9TTMDbg=s160",
+          "channelURL": "https://www.youtube.com/@white.space.00"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/c6hYQVIzoBviOfulL7c_1dc29cbfK85nyxyYsBQ3f5o9EGDFDVlATqwgxJPZJ3YsZlENzIJVjiI=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "イージー・サイドを歩けラヂオ〜お悩みトークラボ〜　",
+          "channelProfile": "https://yt3.googleusercontent.com/e4CS-mEraVZ6nba92gHKJTCS2zTRgJ7cdFCIBpPEyIahwdp2uLY9d35Y8eQU3Cbnhn2WQAXUFJU=s160",
+          "channelURL": "https://www.youtube.com/@イージーサイドを歩けラヂオ"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/By5q2RhfsDDhusuTEwUUyWWQLd02iG4VcgIEjVq4ie_dkcNXt-5e0pNz4sn2gRnEYU0P1YBQ5Q=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Design Morning Radio",
+          "channelProfile": "https://yt3.googleusercontent.com/GdhxY1Tcb0ucWw3__L8j3k0JRDExyj0uOluT1Muc8p3XlagfoSCsQNWT3J55vRYaqILLEhsIhy4=s160",
+          "channelURL": "https://www.youtube.com/@DesignMorningRadio"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/HAgXGVINvhfkrBSlg3N_5uxt-u34rS21t2sZiFalK29klMfOHoNNihfu1z9Zdpl0EPEBUkYbdt8=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "こんどこラジオ",
+          "channelProfile": "https://yt3.googleusercontent.com/SiWE2P_R6Pzp_sru_zQcXtgJyt1EtCE65-IpHjMvHzoynd5Gja46LTa4YK4WyuD90pYC5nKm=s160",
+          "channelURL": "https://www.youtube.com/@kondokojp"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/euYEN4WQQrRfpMZ3QfNHhxw8Wa8miL4eap5RIU5JFvL7gEfX6OZbBq2avba9mwN2jbvgQ1djMCs=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "読んでみてはラジオ",
+          "channelProfile": "https://yt3.googleusercontent.com/_13jQMw5grxG8pFsI3XWGM5OmqOIXNd8SnY7UWFSS5RSW8U7c6qgJug_GC2E4-5r1z9XuvDwKKo=s160",
+          "channelURL": "https://www.youtube.com/@yondemiteha"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/MKHjCNf_nrNAugsUgCAIOcGhW2RCvxN5Z2tzpBQaH_q_Hjp3ho0oeVhJFDEpOJ34HOI388Y7Eg=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ありのままチャンネル",
+          "channelProfile": "https://yt3.googleusercontent.com/Jm4-Ly1oRgye3CATRTCFq7qNS4fFBD6VMomvmw_PqfuL0d4TzGlqjr15M4NBhuhqf1UlLdDpKQ=s160",
+          "channelURL": "https://www.youtube.com/@%E3%81%82%E3%82%8A%E3%81%AE%E3%81%BE%E3%81%BE%E3%83%81%E3%83%A3%E3%83%B3%E3%83%8D%E3%83%AB-q8k"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/fr-GSBbtE2e589ZbX9Qq272ylnr0Mk89CNUBH6VmOsgdFwh11e-5azCX9eVTyqOE_zhV-GpB4fQ=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "水瀬いのり",
+          "channelProfile": "https://yt3.googleusercontent.com/xBqccsKLMQCr9S7U_1P6pBnX-Ik6Rk2Gqn9Csj-YX8GlTh4gMlp9AGoNg9sNjTIlICwn4wt9c9w=s160",
+          "channelURL": "https://www.youtube.com/@inori_minase"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "公式 TBS Podcast",
+          "channelProfile": "https://yt3.googleusercontent.com/lCm3KBVtuIhmbDXVkCuEYdPJe5u-jo7kgFJ0ebceQIVTVkQPZSZLGH4F0sxqp58811QJz5dk=s160",
+          "channelURL": "https://www.youtube.com/@TBS-Podcast"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "Design Morning Radio",
+          "channelProfile": "https://yt3.googleusercontent.com/my517pvX-ZmBuo247H0XO0gsoZOSKul24MU7bYR4Y05l1NZ9qgNdphnXDBH3qhAMKQTCnYo8=s160",
+          "channelURL": "https://www.youtube.com/@FA_RADIO"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "渋谷クロスFM",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_nrmtGs5J0cwrAs8e_iq0xeJf4ZS_0C0hfZww7oyLzU7Q=s160",
+          "channelURL": "https://www.youtube.com/@FM-si9kv"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "色咲チャンネル",
+          "channelProfile": "https://yt3.googleusercontent.com/-7K3iEhsDc8b8z75AYU9Obe8U2haPaU4DyUi0vgBYfxBbKd1d2uipU9SbB1a0DPuADg_P-4WaPQ=s160",
+          "channelURL": "https://www.youtube.com/@irosakuradio1639"
+        },
+        {
+          "channelCover": "None",
+          "channelName": "Yoshiyasu KUBOTA",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_lRVQi7Ui4H8zDeYp8Iws0GEld2IFwzaHg-MW_sYe_Ybfs=s160",
+          "channelURL": "https://www.youtube.com/@YoshiyasuKUBOTA"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Media & TV News",
+      "sectionType": "media",
+      "sectionDescription": "日本のニュース、ドラマ、バラエティ番組を通じて、リアルな日本語と文化を学びましょう。実際の放送内容で生きた日本語に触れることができます",
+      "sectionImage": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop&crop=center",
+      "channels": [
+        {
+          "channelCover": "https://yt3.googleusercontent.com/UDuZWh4w1a7opIMe7LD7Cmv5cTvckZtjwH-4yDPg7oVKHza56MrduOUxwsRLfvBDWinijEHJ-Q=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "PIVOT 公式チャンネル",
+          "channelProfile": "https://yt3.googleusercontent.com/Lm58Y_ADA-v5yYc90tyme_bG2Blb3ZPZrULSVWITIA6yVBvjX8WNm_YOSYaf-zvKNyJ3fqaguH8=s160",
+          "channelURL": "https://www.youtube.com/@pivot00"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/Beuj5IJIYmvPJuU1mHIltfma2VgSbeBWQ9quUBHGYfzBM7Um55kCqBu0xM4a75vR6vTocVw5=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "TBS CROSS DIG with Bloomberg",
+          "channelProfile": "https://yt3.googleusercontent.com/_hSlcOOtoRYLGf4S_JKQDt5QGevxbQkIjBmYXHhzboGTkw_Sx6Z5l1V_IXk0V5TrunltAn47=s160",
+          "channelURL": "https://www.youtube.com/@tbs_bloomberg"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/2jjKpKoXweSlVICruJNRrvSIe6t2MKUMXHOySlBsklgtx0RSygPFJ5iqfpKjkkeI1OOWSDDRhA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ウェザーニュース",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_kNeaPubjZQxR4AX1K5NOy2yKogU-r4jLx32vCPFQp9Dw=s160",
+          "channelURL": "https://www.youtube.com/weathernews"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/9uybzlZhpGNH_AqhPOJ3T7bqucdlDS0Bnea_ETUByOueiCeb_UYZzgDLAQv0eHPYfn5dDFaX=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "MBS NEWS",
+          "channelProfile": "https://yt3.googleusercontent.com/LvLNZvK7ehe3nejxue2IWt7QOosu98D2RQlk8aZCwfqaNw-JSKw4W4l2UdJwbQ6a_PFzvdJ9=s160",
+          "channelURL": "https://www.youtube.com/@mbsnews"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/ZmYPBvuSi5NLBqddWjSTP2bw2l0G3HX9ePR2DmuPaWCJ_froUzMqU4x5VjcLrnL5bazFXQen=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ABEMA Prime #アベプラ【公式】",
+          "channelProfile": "https://yt3.googleusercontent.com/acOK5CXcobi6sLHo_bvMvDvdgI0wWxYbLWzpXXQHe2thRNQ87aTAAe-4U_DcdJtVpe5QiaXJQQE=s160",
+          "channelURL": "https://www.youtube.com/@prime_ABEMA"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/bKNuCf3mIzCE22MYkvcZAh94S938mBZxe9RkMDmLPW8w3asJzkHuUd0uENQHRtsh8WuU5w9O=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ABEMAニュース【公式】",
+          "channelProfile": "https://yt3.googleusercontent.com/4BXNoPDbAHfqEH-KNYC71Rt9VIamw1U5QOEGRIom1Kkh931yLsQYJ_rD2Wy0VDqZ2XClU1LfU_Q=s160",
+          "channelURL": "https://www.youtube.com/@News_ABEMA"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/LQIHxOlN7SdpdXLhgcFsCpjPDD-nyyzT-bRRnCfeU6GT16R9M0Aku332NDx8kjP69xxMObZ8_iY=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "ANNnewsCH",
+          "channelProfile": "https://yt3.googleusercontent.com/Qcph0uKrYMeR4WGK7Rz3SPALBgYekfnABzocMuolebaz1MIyLmrKOcHbM42QMQ-k1CN7VEyrfQ=s160",
+          "channelURL": "https://www.youtube.com/@ANNnewsCH"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/dj04lAb66uwqrKcdXJ9pMgFyhCeioI3qejzd74zcHB0s5bDFpLztfnEAP-6Ysk_v_cga9EFAHw=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "東海テレビ NEWS ONE",
+          "channelProfile": "https://yt3.googleusercontent.com/7Lc3R5GwgwZv4uYfbCorRBcWVqNEj5zq4LmpujPxNgKw9KOvv_biIoL7zlg7Sw-WgCUNAh25kA=s160",
+          "channelURL": "https://www.youtube.com/@newsone4365"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/w9YX1NxhO3Zxqozp09ER004zdCErCtqAGqNSEb5Qx4AvdnFRYIqo7tz3rBe-A3YUvCyxoF25CA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "日経CNBC",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_lUFFh7xGRooPtqFEiv1hWvoEC2Ghh6f-wrrQhFd10arQ=s160",
+          "channelURL": "https://www.youtube.com/@NikkeiCNBC"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/S8ZCvLuxYqbcYgj2USp0-LcnyfBtSBvbyPMQmH-unvXfO8yn6VOsOFrKPWXsJKp-b3JPB9XmRA=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "TBS NEWS DIG Powered by JNN",
+          "channelProfile": "https://yt3.googleusercontent.com/E-A54dDrjqIAfIqwdEGPolaKeVj-jW4kEQR-M6BMR-hiBtw1DhwM_kXGT-4uezIq0-ioeoElZg=s160",
+          "channelURL": "https://www.youtube.com/@tbsnewsdig"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/Z3GpLzRmp0OrNnBEMnTcBppQxiQ_hHG_1FXW_USY5DPNTzlzPqlZdwkCi5ceK6D38mHm0NDFQw=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "日テレNEWS",
+          "channelProfile": "https://yt3.googleusercontent.com/l6O9viXT0NUEet41Y2IAjKvuTbULIaErR8UUppXhtNeW7r-Z7hgruiBOxoCJaSQMlbHv4Cii=s160",
+          "channelURL": "https://www.youtube.com/@ntv_news"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/KPIlRMF_xvSrQJZGbHt6GpMS0UC7dOkrBmCT_7QwV_EI3rdfdp7OWy_clRLjivj-Yx3i1GRM=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "FNNプライムオンライン",
+          "channelProfile": "https://yt3.googleusercontent.com/ytc/AIdro_kcbf1NEt1_bXqZY0oSj-CXYDjANZmcw8k3rfqhobwVmo4=s160",
+          "channelURL": "https://www.youtube.com/@FNNnewsCH"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/BnrcD4wNKy-tB9GFftoyOUUjwikvvoeM1r4Az07pfkOVl6iVqEvpLoY_Ex8MHWQNOL1wNcCmibo=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "Daiichi-TV NEWS",
+          "channelProfile": "https://yt3.googleusercontent.com/m3Jcfr8iJ_HZf6MzmTJ5OnwRuwNGtju5sUMbGrx6r8KRdvOBO-HRG6egnnxPL_zavmBzFceop5I=s160",
+          "channelURL": "https://www.youtube.com/@daiichi-tvnews"
+        },
+        {
+          "channelCover": "https://yt3.googleusercontent.com/rmSg7ZOdl4YiL9jSs2nC7xGZqDnrkXbFGoq3u2mg50cBQy4GY8wuchEwkxIHco07O4PjPPbvEVo=w1800-fcrop64=1,2d5b0000d2a4ffff-k-c0xffffffff-no-nd-rj",
+          "channelName": "福岡TNC ニュース",
+          "channelProfile": "https://yt3.googleusercontent.com/aVFOgkUa076Ayfnxs_dl76w9UjcaXLAOZzwu99bXWxUD9VZ9zSFC5UtlrycVsrtYd6euVmyvFg=s160",
+          "channelURL": "https://www.youtube.com/@fukuokatncnews"
+        }
+      ]
+    }
+  ]
+}

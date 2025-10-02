@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ToolsHeader from '../../components/tools/Tools-Header.astro';
 import ToolsGridSection from '../../components/tools/Tools-GridSection.astro';
 
 // Breadcrumb Schema
@@ -70,6 +69,53 @@ const tools: Tool[] = [
   },
 ];
 
+// ========== TOOLS HEADER CONSTANTS & CONFIGURATION ==========
+const STATS_CONFIG = {
+  tools: {
+    label: 'Tools Terpilih',
+    suffix: '+',
+  },
+  free: {
+    label: 'Gratis',
+    value: '100%',
+  },
+  access: {
+    label: 'Akses',
+    value: '24/7',
+  },
+} as const;
+
+const TITLE_CONFIG = {
+  main: 'Tools & Aplikasi',
+  accent: 'Pembelajaran Bahasa Jepang',
+} as const;
+
+const DESCRIPTION =
+  'Pilih tool yang sesuai dengan tahap pembelajaran dan kebutuhan Anda. Setiap tool telah dipilih berdasarkan efektivitas dan kemudahan penggunaan.';
+
+// ========== UTILITY FUNCTIONS ==========
+const getToolsCount = (tools: Tool[]): number => tools.length;
+
+const getStatsData = (toolsCount: number) => [
+  {
+    number: `${toolsCount}${STATS_CONFIG.tools.suffix}`,
+    label: STATS_CONFIG.tools.label,
+  },
+  {
+    number: STATS_CONFIG.free.value,
+    label: STATS_CONFIG.free.label,
+  },
+  {
+    number: STATS_CONFIG.access.value,
+    label: STATS_CONFIG.access.label,
+  },
+];
+
+// ========== OPTIMIZED DATA PROCESSING ==========
+// メイン処理 - 一度だけ計算
+const toolsCount = getToolsCount(tools);
+const statsData = getStatsData(toolsCount);
+
 // SEO data - Astroネイティブアプローチ（設定ファイル不要）
 const seoData = {
   title: 'Alat Belajar Bahasa Jepang - GoRakuDo',
@@ -120,7 +166,64 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     aria-label='Japanese learning tools and applications'
   >
     <!-- Tools Header Section -->
-    <ToolsHeader tools={tools} />
+    <section
+      class='tools-header-section'
+      aria-labelledby='tools-header-title'
+      role='banner'
+      transition:name='tools-header'
+      itemscope
+      itemtype='https://schema.org/WebPageElement'
+    >
+      <div class='tools-header-container'>
+        <!-- Main Content -->
+        <div class='tools-header-content'>
+          <header class='tools-header-main'>
+            <h2
+              class='tools-header-title'
+              id='tools-header-title'
+              itemprop='headline'
+            >
+              <span class='tools-title-main'>{TITLE_CONFIG.main}</span>
+              <span class='tools-title-accent'>{TITLE_CONFIG.accent}</span>
+            </h2>
+
+            <p class='tools-header-description' itemprop='description'>
+              {DESCRIPTION}
+            </p>
+          </header>
+
+          <!-- Stats Section -->
+          <div
+            class='tools-header-stats'
+            role='region'
+            aria-label='Tools statistics'
+          >
+            {
+              statsData.map((stat, index) => (
+                <>
+                  <div
+                    class='tools-stat-item'
+                    itemprop='mainEntity'
+                    itemscope
+                    itemtype='https://schema.org/QuantitativeValue'
+                  >
+                    <span class='tools-stat-number' itemprop='value'>
+                      {stat.number}
+                    </span>
+                    <span class='tools-stat-label' itemprop='name'>
+                      {stat.label}
+                    </span>
+                  </div>
+                  {index < statsData.length - 1 && (
+                    <div class='tools-stat-divider' aria-hidden='true' />
+                  )}
+                </>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Tools Grid Section - 統合されたコンポーネント -->
     <ToolsGridSection tools={tools} />
@@ -195,4 +298,45 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       // Click interaction only (keyboard navigation removed)
     });
   });
+
+  // ========== TOOLS HEADER STATS ANIMATION ==========
+  // パフォーマンス最適化: 統計アニメーション
+  function optimizeStatsAnimation() {
+    const statsItems = document.querySelectorAll(
+      '.tools-stat-item'
+    ) as NodeListOf<HTMLElement>;
+
+    if ('IntersectionObserver' in window) {
+      const statsObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const element = entry.target as HTMLElement;
+              element.style.opacity = '1';
+              element.style.transform = 'translateY(0)';
+              statsObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px',
+        }
+      );
+
+      statsItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        statsObserver.observe(item);
+      });
+    }
+  }
+
+  // DOM読み込み完了後に実行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', optimizeStatsAnimation);
+  } else {
+    optimizeStatsAnimation();
+  }
 </script>

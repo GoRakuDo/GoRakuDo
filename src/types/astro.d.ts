@@ -5,12 +5,12 @@
 // ========================================
 
 declare module '*.astro' {
- const Component: any;
+ const Component: import('astro').AstroComponentFactory;
  export default Component;
 }
 
 declare module '*.json' {
- const value: any;
+ const value: unknown;
  export default value;
 }
 
@@ -37,12 +37,12 @@ export interface ChannelCardProps {
 // ========================================
 
 declare module '../../../layouts/BaseLayout.astro' {
- const BaseLayout: any;
+ const BaseLayout: import('astro').AstroComponentFactory;
  export default BaseLayout;
 }
 
 declare module '../../../components/content/ChannelCard.astro' {
- const ChannelCard: any;
+ const ChannelCard: import('astro').AstroComponentFactory;
  export default ChannelCard;
 }
 

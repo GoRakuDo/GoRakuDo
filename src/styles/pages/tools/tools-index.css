@@ -90,7 +90,6 @@
 
 /* ========== BASE & LAYOUT ========== */
 
-/* body要素のスタイルは削除 - global.cssに委譲 */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -134,10 +133,277 @@
   max-width: 75rem; /* 1200px */
   margin: 0;
   padding: 0;
+
+  @media (min-width: 640px) {
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    gap: 2rem;
+    grid-template-columns: repeat(3, minmax(20rem, 24rem));
+  }
+
+  @media (min-width: 1024px) {
+    gap: 2rem;
+    grid-template-columns: repeat(3, minmax(20rem, 24rem));
+  }
+
+  @media (min-width: 1280px) {
+    gap: 2.5rem;
+    grid-template-columns: repeat(3, minmax(24rem, 28rem));
+    max-width: 75rem;
+  }
 }
 
 .tool-grid-item {
-  list-style: none; /* Removes bullet from li */
+  list-style: none;
+  display: flex;
+  justify-self: center;
+  width: 100%;
+  max-width: 25rem; /* 400px */
+  height: 100%;
+
+  .tool-card-wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tool-card-frame {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    min-height: 16.25rem; /* 260px */
+    max-height: 20rem; /* 320px */
+    padding: 1rem;
+
+    @media (min-width: 640px) {
+      padding: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+      gap: 0.75rem;
+      padding: 1.25rem;
+    }
+  }
+
+  .tool-card-header {
+    margin-bottom: 0.375rem;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .tool-title-container {
+    display: flex;
+    align-items: center;
+    gap: 1em; /* 親要素のフォントサイズに相対 */
+    width: 100%;
+    min-height: 4rem;
+
+    @media (min-width: 640px) {
+      gap: var(--spacing-lg);
+    }
+
+    @media (min-width: 768px) {
+      gap: var(--spacing-lg);
+    }
+  }
+
+  .tool-icon {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 16px;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    contain: layout style;
+    box-shadow: none;
+    filter: drop-shadow(var(--shadow-icon));
+    will-change: auto;
+
+    &:hover {
+      will-change: transform;
+    }
+
+    @media (min-width: 640px) {
+      width: 56px; /* 固定サイズ - PX単位 */
+      height: 56px; /* 固定サイズ - PX単位 */
+    }
+
+    .tool-icon-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+      transition: transform var(--transition-speed) var(--transition-ease);
+    }
+
+    &::before {
+      display: none;
+      font-size: 1.25rem;
+      content: '🔧';
+    }
+  }
+
+  .tool-icon-image:not([src]) {
+    display: none;
+  }
+
+  .tool-icon-image[src=''] {
+    display: none;
+  }
+
+  .tool-name {
+    flex: 1;
+    margin: 0;
+    color: var(--clr-white-98);
+    font-size: 1.685rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+
+    @media (min-width: 640px) {
+      font-size: 1.875rem;
+    }
+
+    @media (min-width: 768px) {
+      font-size: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .tool-card-body {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 0;
+    padding-bottom: 1rem;
+  }
+
+  .tool-description-card {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--clr-white-88);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    flex-grow: 1;
+    flex-shrink: 1;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+
+    @media (min-width: 640px) {
+      font-size: var(--fs-base);
+    }
+  }
+
+  .tool-card-footer {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--clr-white-20);
+    flex-shrink: 0;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 1px;
+      content: '';
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--clr-white-20),
+        transparent
+      );
+    }
+
+    @media (min-width: 768px) {
+      padding-top: 0.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      padding-top: 0.75rem;
+    }
+  }
+
+  .tool-cta-text {
+    color: var(--clr-purple-75);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+
+  .tool-arrow {
+    width: 18px; /* 固定サイズ - PX単位 */
+    height: 18px; /* 固定サイズ - PX単位 */
+    color: var(--clr-purple-85);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (prefers-contrast: high) {
+    .tool-name {
+      color: var(--clr-white);
+    }
+
+    .tool-description-card {
+      color: var(--clr-white-95);
+    }
+
+    .tool-cta-text {
+      color: var(--clr-purple-80);
+    }
+
+    .tool-arrow {
+      color: var(--clr-white);
+    }
+
+    .tool-title-container {
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 1px solid var(--clr-white-30);
+    }
+  }
+
+  @media (max-width: 639px) {
+    .tool-card-frame {
+      min-height: 15rem;
+      max-height: 19rem;
+    }
+
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .tool-name {
+      font-size: 1.5rem;
+    }
+
+    .tool-description-card {
+      -webkit-line-clamp: 3;
+      font-size: 0.875rem;
+    }
+  }
 }
 
 /* ========== TOOL CARD ========== */
@@ -145,195 +411,63 @@
   display: block;
   overflow: hidden;
   height: 100%;
-  min-height: 44px; /* AC 9: Touch Target Compliance */
+  min-height: 44px;
   padding: var(--spacing-sm);
   border: 1px solid var(--clr-accent-glow-medium);
   border-radius: 1rem;
   background: oklch(from var(--clr-background) l c h / var(--opacity-25));
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* AC 2 & 7: Performance Optimization - optimized for Android */
   will-change: auto;
+
+  @media (min-width: 768px) {
+    article {
+      min-height: 280px;
+    }
+
+    .tool-card-footer {
+      margin-top: auto;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    article {
+      min-height: 300px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    article {
+      min-height: 320px;
+    }
+  }
 }
 
 /* Performance optimization for hover states */
 
-.tool-card article {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
+/* ========== RESPONSIVE DESIGN ========== */
 
-.tool-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--spacing-lg);
-}
-
-.tool-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 44px; /* AC 9: Touch Target */
-  height: 44px; /* AC 9: Touch Target */
-  border-radius: var(--spacing-sm);
-  font-size: 1.5rem; /* 24px */
-}
-
-.tool-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--spacing-sm);
-}
-
-.tool-difficulty,
-.tool-category {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-pill);
-  font-size: var(--fs-xs);
-  font-weight: 450;
-  text-transform: capitalize;
-}
-
-.tool-category {
-  border: 1px solid var(--clr-gray-30);
-  background-color: var(--clr-gray-20);
-  color: var(--clr-text-secondary);
-}
-
-.tool-card-body {
-  flex-grow: 1;
-}
-
-.tool-name {
-  margin-bottom: var(--spacing-sm);
-  color: var(--clr-text-primary);
-  font-size: var(--fs-h3);
-  font-weight: 800;
-}
-
-.tool-description-card {
-  color: var(--clr-text-muted);
-  font-size: var(--fs-sm);
-  line-height: 1.6;
-}
-
-.tool-card-footer {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin-top: auto; /* フッターを下部に固定 */
-  color: var(--clr-text-muted);
-  font-size: var(--fs-sm);
-  font-weight: 450;
-  transition: color var(--transition-speed) var(--transition-ease);
-}
-
-.tool-arrow {
-  transition: transform var(--transition-speed) var(--transition-ease);
-}
-
-/* --- Interaction States --- */
-.tool-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--clr-accent-glow-strong);
-  box-shadow: var(--shadow-card-hover);
-}
-
-.tool-card:hover .tool-card-footer {
-  color: var(--clr-accent);
-}
-
-.tool-card:hover .tool-arrow {
-  color: var(--clr-white);
-  transform: translateX(var(--tool-arrow-translate));
-}
-
-/* ========== RESPONSIVE DESIGN (AC 6: Mobile-First with all Breakpoints) ========== */
-
-/* Base styles (360px and up) are default - Mobile-First Approach */
-
-/* Small devices (640px) - Enhanced mobile experience */
 @media (min-width: 640px) {
-  .tools-grid {
-    justify-content: center;
-    align-items: start;
-    gap: 1.5rem;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .container {
     padding-inline: var(--spacing-xl);
   }
 }
 
-/* Tablet devices (768px) - Improved readability */
 @media (min-width: 768px) {
   :root {
     --fs-h3: 1.5rem; /* 24px */
   }
-
-  .tools-grid {
-    justify-content: center;
-    align-items: start;
-    gap: 2rem;
-    grid-template-columns: repeat(3, minmax(20rem, 24rem)); /* 320px-288px */
-  }
-
-  /* カードレイアウトの最適化 - 768px以上 */
-  .tool-card article {
-    min-height: 280px; /* 最小高さを設定して一貫性を保つ */
-  }
-
-  .tool-card-footer {
-    margin-top: auto; /* フッターを下部に固定 */
-  }
 }
 
-/* Laptops (1024px) - Desktop optimization */
 @media (min-width: 1024px) {
-  .tools-grid {
-    justify-content: center;
-    align-items: start;
-    gap: 2rem;
-    grid-template-columns: repeat(3, minmax(20rem, 24rem)); /* 320px-288px */
-  }
-
   .container {
     padding-inline: var(--spacing-2xl);
   }
-
-  /* デスクトップ用のカードレイアウト最適化 */
-  .tool-card article {
-    min-height: 300px; /* デスクトップ用の最小高さ */
-  }
 }
 
-/* Large desktops (1280px+) - Enhanced spacing */
 @media (min-width: 1280px) {
   .container {
     padding-inline: var(--spacing-3xl);
-  }
-
-  .tools-grid {
-    justify-content: center;
-    align-items: start;
-    gap: 2.5rem;
-    grid-template-columns: repeat(3, minmax(24rem, 28rem)); /* 384px-448px */
-    max-width: 75rem; /* 1200px */
-  }
-
-  /* 大画面用のカードレイアウト最終調整 */
-  .tool-card article {
-    min-height: 320px; /* 大画面用の最小高さ */
-  }
-
-  .tool-card-body {
-    /* 大画面用のmargin-bottomを削除 */
   }
 }
 
@@ -348,56 +482,43 @@
  * All animations respect user's motion preferences and are optimized for performance
  */
 
-/* .loading クラスは global.css から継承 */
-
-@media (prefers-reduced-motion: reduce) {
-  .tool-card,
-  .tool-arrow {
-    transition: none;
-    animation: none;
-  }
-
-  .tool-card:hover {
-    transform: none;
-  }
-}
-
 /* ========== TRANSITIONS & LOADING STATES ========== */
 
 /* Staggered animation for card grids */
 .stagger-animation {
   animation: stagger-fade-in 0.4s ease-out forwards;
   animation-delay: calc(var(--stagger-delay, 0) * 100ms);
-}
 
-/* Micro-interaction utilities */
-.micro-interaction-scale {
-  transition: transform 0.15s ease-out;
-}
-
-.micro-interaction-scale:hover {
-  transform: scale(1.02);
-}
-
-.micro-interaction-scale:active {
-  transform: scale(0.98);
-}
-
-/* Focus management removed - simplified styling for better performance */
-
-.loading-spinner {
-  animation: loading-spinner 1s linear infinite;
-}
-
-/* Progressive enhancement for reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .stagger-animation,
-  .micro-interaction-scale {
+  @media (prefers-reduced-motion: reduce) {
     opacity: 1;
     transform: none;
     transition: none;
     animation: none;
   }
+}
+
+/* Micro-interaction utilities */
+.micro-interaction-scale {
+  transition: transform 0.15s ease-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
+.loading-spinner {
+  animation: loading-spinner 1s linear infinite;
 }
 
 /* ========== LAYOUT UTILITIES ========== */
@@ -410,254 +531,15 @@
 
 /* ========== TOOLS GRID SECTION COMPONENT STYLES ========== */
 
-/* ========== CSS変数定義 ========== */
-
-/* ========== グリッドレイアウト ========== */
-
-/* ========== カード構造 ========== */
-.tools-grid .tool-grid-item {
-  display: flex;
-  justify-self: center;
-  width: 100%;
-  max-width: 25rem; /* 400px */
-  height: 100%;
-}
-
-.tools-grid .tool-grid-item .tool-card-wrapper {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-}
-
-.tools-grid .tool-grid-item .tool-card-frame {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-  height: 100%;
-  min-height: 16.25rem; /* 260px */
-  max-height: 20rem; /* 320px */
-  padding: 1rem;
-}
-
-@media (min-width: 640px) {
-  .tools-grid .tool-grid-item .tool-card-frame {
-    padding: 1rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .tools-grid .tool-grid-item .tool-card-frame {
-    gap: 0.75rem;
-    padding: 1.25rem;
-  }
-}
-
-/* ========== ヘッダー ========== */
-.tools-grid .tool-grid-item .tool-card-header {
-  margin-bottom: 0.375rem;
-  padding: 0;
-  flex-shrink: 0;
-}
-
-.tools-grid .tool-grid-item .tool-title-container {
-  display: flex;
-  align-items: center;
-  gap: 1em; /* 親要素のフォントサイズに相対 */
-  width: 100%;
-  min-height: 4rem;
-}
-
-@media (min-width: 640px) {
-  .tools-grid .tool-grid-item .tool-title-container {
-    gap: var(--spacing-lg);
-  }
-}
-
-@media (min-width: 768px) {
-  .tools-grid .tool-grid-item .tool-title-container {
-    gap: var(--spacing-lg);
-  }
-}
-
-/* ========== アイコン ========== */
-.tool-icon:hover {
-  will-change: transform;
-}
-
-.tools-grid .tool-grid-item .tool-icon {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: visible;
-  width: 56px; /* 固定サイズ - PX単位 */
-  height: 56px; /* 固定サイズ - PX単位 */
-  border: none;
-  border-radius: 16px; /* 固定サイズ - PX単位 */
-  background: transparent;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-  contain: layout style;
-  box-shadow: none;
-  filter: drop-shadow(var(--shadow-icon));
-  will-change: auto; /* Optimized for Android performance */
-}
-
-.tool-icon-image:not([src]),
-.tool-icon-image[src=''] {
-  display: none;
-}
-
-.tools-grid .tool-grid-item .tool-icon-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 4px; /* 固定サイズ - PX単位 */
-  transition: transform var(--transition-speed) var(--transition-ease);
+.tool-icon.empty::before {
+  display: block;
 }
 
 .tool-card:hover .tool-icon-image {
   transform: scale(var(--tool-icon-scale));
 }
 
-.tool-icon::before {
-  display: none;
-  font-size: 1.25rem;
-  content: '🔧';
-}
-
-.tool-icon:has([src=''])::before,
-.tool-icon:has(:not([src]))::before {
-  display: block;
-}
-
-@media (min-width: 640px) {
-  .tools-grid .tool-grid-item .tool-icon {
-    width: 56px; /* 固定サイズ - PX単位 */
-    height: 56px; /* 固定サイズ - PX単位 */
-  }
-}
-
-/* ========== タイトル ========== */
-.tools-grid .tool-grid-item .tool-name {
-  flex: 1;
-  margin: 0;
-  color: var(--clr-white-98);
-  font-size: 1.685rem; /* ルート要素に相対 - REM単位 */
-  font-weight: 800;
-  line-height: 1.3;
-  letter-spacing: -0.025em;
-}
-
-@media (min-width: 640px) {
-  .tools-grid .tool-grid-item .tool-name {
-    font-size: 1.875rem; /* ルート要素に相対 - REM単位 */
-  }
-}
-
-@media (min-width: 768px) {
-  .tools-grid .tool-grid-item .tool-name {
-    font-size: 1.5rem; /* ルート要素に相対 - REM単位 */
-  }
-}
-
-@media (min-width: 1024px) {
-  .tools-grid .tool-grid-item .tool-name {
-    font-size: 1.5rem; /* ルート要素に相対 - REM単位 */
-  }
-}
-
-/* ========== ボディ ========== */
-.tools-grid .tool-grid-item .tool-card-body {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 0;
-  padding-bottom: 1rem;
-}
-
-.tools-grid .tool-grid-item .tool-description-card {
-  display: -webkit-box;
-  overflow: hidden;
-  margin: 0;
-  color: var(--clr-white-88);
-  font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
-  font-weight: 600;
-  line-height: 1.5;
-  flex-grow: 1;
-  flex-shrink: 1;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-}
-
-@media (min-width: 640px) {
-  .tools-grid .tool-grid-item .tool-description-card {
-    font-size: var(--fs-base);
-  }
-}
-
-/* ========== フッター ========== */
-.tools-grid .tool-grid-item .tool-card-footer {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid var(--clr-white-20);
-  flex-shrink: 0;
-}
-
-.tool-card-footer::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 1px;
-  content: '';
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--clr-white-20),
-    transparent
-  );
-}
-
-.tools-grid .tool-grid-item .tool-cta-text {
-  color: var(--clr-purple-75);
-  font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
-  font-weight: 600;
-  letter-spacing: 0.025em;
-}
-
-.tools-grid .tool-grid-item .tool-arrow {
-  width: 18px; /* 固定サイズ - PX単位 */
-  height: 18px; /* 固定サイズ - PX単位 */
-  color: var(--clr-purple-85);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (min-width: 768px) {
-  .tools-grid .tool-grid-item .tool-card-footer {
-    padding-top: 0.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .tools-grid .tool-grid-item .tool-card-footer {
-    padding-top: 0.75rem;
-  }
-}
-
 /* ========== インタラクション ========== */
-.group:hover .tool-arrow {
-  transform: translateX(var(--tool-arrow-translate));
-}
-
 .animation-scale:hover {
   transform: scale(var(--tool-card-scale));
 }
@@ -670,112 +552,10 @@
   opacity: var(--tool-card-opacity);
 }
 
-/* ========== カードホバーエフェクト ========== */
-
-.tool-card:hover .tool-icon {
-  background: transparent;
-  box-shadow: none;
-  filter: drop-shadow(var(--shadow-icon-hover));
-  transform: scale(1.05);
+.group:hover .tool-arrow {
+  transform: translateX(var(--tool-arrow-translate));
 }
 
-/* ========== アクセシビリティ ========== */
-
-.tool-card:focus-visible {
-  outline: 2px solid oklch(from var(--clr-accent) l c h / var(--opacity-50));
-  outline-offset: 2px;
-}
-
-.tool-card:hover .tool-name {
-  color: var(--clr-white);
-}
-
-.tool-card:hover .tool-description-card {
-  color: var(--clr-white-90);
-}
-
-.tool-card:hover .tool-cta-text {
-  color: var(--clr-purple-75-22);
-}
-
-@media (prefers-contrast: high) {
-  .tools-grid .tool-grid-item .tool-name {
-    color: var(--clr-white);
-  }
-
-  .tools-grid .tool-grid-item .tool-description-card {
-    color: var(--clr-white-95);
-  }
-
-  .tools-grid .tool-grid-item .tool-cta-text {
-    color: var(--clr-purple-80);
-  }
-
-  .tools-grid .tool-grid-item .tool-arrow {
-    color: var(--clr-white);
-  }
-
-  .tools-grid .tool-grid-item .tool-title-container {
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid var(--clr-white-30);
-  }
-}
-
-/* ========== レスポンシブ最適化 ========== */
-@media (max-width: 639px) {
-  .tools-grid {
-    gap: 1rem;
-    padding: 0 0.5rem;
-  }
-
-  .tools-grid .tool-grid-item .tool-card-frame {
-    min-height: 15rem; /* 240px - REM単位 */
-    max-height: 19rem; /* 304px - REM単位 */
-  }
-
-  .tools-grid .tool-grid-item .tool-icon {
-    width: 48px; /* 固定サイズ - PX単位 */
-    height: 48px; /* 固定サイズ - PX単位 */
-  }
-
-  .tools-grid .tool-grid-item .tool-name {
-    font-size: 1.5rem; /* ルート要素に相対 - REM単位 */
-  }
-
-  .tools-grid .tool-grid-item .tool-description-card {
-    -webkit-line-clamp: 3;
-    font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
-  }
-}
-
-@media (min-width: 640px) and (max-width: 1023px) {
-  .tools-grid {
-    padding: 0 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .tools-grid {
-    padding: 0 2rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tool-card,
-  .tool-card:hover .tool-icon-image,
-  .animation-scale:hover,
-  .animation-slide:hover,
-  .animation-fade:hover,
-  .group:hover .tool-arrow {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-/* ========== ORIGINAL CLASSES (PRESERVED FOR MIGRATION) ========== */
-
-/* Tool Icon Colors - Replace Inline Styles */
 .tool-icon-anki {
   background-color: var(--clr-accent);
 }
@@ -786,4 +566,201 @@
 
 .tool-icon-migaku {
   background-color: var(--clr-accent-glow-strong);
+}
+
+/* ========== TOOLS HEADER SECTION STYLES ========== */
+.tools-header-section {
+  --header-text-primary: oklch(100% 0 0deg);
+  --header-text-secondary: oklch(90% 0 0deg / 0.8);
+  --header-text-muted: oklch(85% 0 0deg / 0.7);
+  --header-border-divider: oklch(90% 0 0deg / 0.2);
+  --header-padding-mobile: 4.5rem 0 1rem;
+  --header-padding-tablet: 4rem 0 1rem;
+  --header-padding-desktop: 5rem 0 2rem;
+  --header-container-padding: 0 1rem;
+  --header-content-padding: 1rem 0;
+  --header-content-padding-mobile: 1rem 0.75rem 1.5rem;
+  --header-title-mobile: 2.5rem;
+  --header-title-tablet: 3rem;
+  --header-title-desktop: 3.5rem;
+  --header-title-large: 4rem;
+  --header-accent-mobile: 1.5rem;
+  --header-accent-tablet: 1.75rem;
+  --header-accent-desktop: 2rem;
+  --header-accent-large: 2.25rem;
+  --header-description-mobile: 1.125rem;
+  --header-description-tablet: 1.25rem;
+  --header-stat-number-mobile: 1.5rem;
+  --header-stat-number-tablet: 1.75rem;
+  --header-stat-number-desktop: 2rem;
+  --header-stat-label: 0.875rem;
+  --header-container-max-width: 1200px;
+  --header-stats-gap-mobile: 2rem;
+  --header-stats-gap-desktop: 3rem;
+  --header-divider-height: 2rem;
+  --header-transition-fast: 0.2s ease;
+  --header-transition-normal: 0.3s ease;
+
+  position: relative;
+  padding: var(--header-padding-mobile);
+
+  @media (min-width: 640px) {
+    padding: var(--header-padding-tablet);
+  }
+
+  @media (min-width: 768px) {
+    padding: var(--header-padding-desktop);
+  }
+}
+
+.tools-header-container {
+  position: relative;
+  max-width: var(--header-container-max-width);
+  margin: 0 auto;
+  padding: var(--header-container-padding);
+
+  @media (max-width: 768px) {
+    max-width: none;
+    margin: 0 0.5rem;
+    padding: 0;
+  }
+}
+
+/* ========== MAIN CONTENT ========== */
+.tools-header-content {
+  position: relative;
+  padding: var(--header-content-padding);
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: var(--header-content-padding-mobile);
+  }
+}
+
+.tools-header-main {
+  margin-bottom: 3rem;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.tools-header-title {
+  margin: 0 0 1.5rem;
+  color: var(--header-text-primary);
+  font-size: var(--header-title-mobile);
+  font-weight: 700;
+  line-height: 1.2;
+
+  @media (min-width: 640px) {
+    font-size: var(--header-title-tablet);
+  }
+
+  @media (min-width: 768px) {
+    font-size: var(--header-title-desktop);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--header-title-large);
+  }
+}
+
+.tools-title-main {
+  display: block;
+  background: linear-gradient(
+    135deg,
+    var(--header-text-primary) 0%,
+    oklch(90% 0.02 240deg) 100%
+  );
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tools-title-accent {
+  display: block;
+  margin-top: 0.5rem;
+  background: linear-gradient(
+    135deg,
+    oklch(65% 0.25 280deg) 0%,
+    oklch(60% 0.2 250deg) 50%,
+    oklch(70% 0.15 160deg) 100%
+  );
+  font-size: var(--header-accent-mobile);
+  font-weight: 500;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media (min-width: 640px) {
+    font-size: var(--header-accent-tablet);
+  }
+
+  @media (min-width: 768px) {
+    font-size: var(--header-accent-desktop);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--header-accent-large);
+  }
+}
+
+/* ========== DESCRIPTION ========== */
+.tools-header-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--header-text-secondary);
+  font-size: var(--header-description-mobile);
+  line-height: 1.7;
+
+  @media (min-width: 640px) {
+    font-size: var(--header-description-tablet);
+  }
+}
+
+/* ========== STATS SECTION ========== */
+.tools-header-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--header-stats-gap-mobile);
+
+  @media (min-width: 768px) {
+    gap: var(--header-stats-gap-desktop);
+  }
+}
+
+.tools-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  transition: transform var(--header-transition-fast);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.tools-stat-number {
+  color: var(--header-text-primary);
+  font-size: var(--header-stat-number-mobile);
+  font-weight: 700;
+  line-height: 1;
+
+  @media (min-width: 640px) {
+    font-size: var(--header-stat-number-tablet);
+  }
+
+  @media (min-width: 768px) {
+    font-size: var(--header-stat-number-desktop);
+  }
+}
+
+.tools-stat-label {
+  color: var(--header-text-muted);
+  font-size: var(--header-stat-label);
+  font-weight: 500;
+}
+
+.tools-stat-divider {
+  width: 1px;
+  height: var(--header-divider-height);
+  background: var(--header-border-divider);
 }

@@ -20,35 +20,74 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
   <div class='channel-content-container'>
     <!-- チャンネルカバー -->
     <div class='channel-cover-container'>
-      <img
-        src={channelCover}
-        alt={`${channelName}のチャンネルカバー画像`}
-        class='channel-cover'
-        width='320'
-        height='180'
-        loading='lazy'
-        decoding='async'
-        crossorigin='anonymous'
-        referrerpolicy='no-referrer'
-        fetchpriority='low'
-      />
-      <!-- フォールバック画像 -->
-      <div class='channel-cover-fallback' style='display: none;'>
-        <div class='fallback-content'>
-          <svg
-            class='fallback-icon'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            stroke-width='2'
-          >
-            <rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect>
-            <circle cx='8.5' cy='8.5' r='1.5'></circle>
-            <polyline points='21,15 16,10 5,21'></polyline>
-          </svg>
-          <span class='fallback-text'>画像を読み込めません</span>
+      {channelCover === 'None' ? (
+        <!-- EmptyState: チャンネルバナーなし -->
+        <div class='channel-cover-empty'>
+          <div class='empty-state-content'>
+            <svg
+              class='empty-state-icon'
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='1.5'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            >
+              <line x1='2' x2='22' y1='2' y2='22'/>
+              <path d='M10.41 10.41a2 2 0 1 1-2.83-2.83'/>
+              <line x1='13.5' x2='6' y1='13.5' y2='21'/>
+              <line x1='18' x2='21' y1='12' y2='15'/>
+              <path d='M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59'/>
+              <path d='M21 15V5a2 2 0 0 0-2-2H9'/>
+            </svg>
+            <span class='empty-state-text'>チャンネルバナーなし</span>
+          </div>
         </div>
-      </div>
+      ) : (
+        <>
+          <img
+            src={channelCover}
+            alt={`${channelName}のチャンネルカバー画像`}
+            class='channel-cover'
+            width='320'
+            height='180'
+            loading='lazy'
+            decoding='async'
+            crossorigin='anonymous'
+            referrerpolicy='no-referrer'
+            fetchpriority='low'
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <!-- 画像読み込み失敗時のEmptyState -->
+          <div class='channel-cover-empty' style='display: none;'>
+            <div class='empty-state-content'>
+              <svg
+                class='empty-state-icon'
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='1.5'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              >
+                <line x1='2' x2='22' y1='2' y2='22'/>
+                <path d='M10.41 10.41a2 2 0 1 1-2.83-2.83'/>
+                <line x1='13.5' x2='6' y1='13.5' y2='21'/>
+                <line x1='18' x2='21' y1='12' y2='15'/>
+                <path d='M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59'/>
+                <path d='M21 15V5a2 2 0 0 0-2-2H9'/>
+              </svg>
+              <span class='empty-state-text'>画像を読み込めません</span>
+            </div>
+          </div>
+        </>
+      )}
     </div>
 
     <!-- チャンネル情報セクション -->
@@ -107,24 +146,79 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
   </div>
 
   <style is:global>
+    .channel-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      transition: filter var(--transition-normal);
+    }
+
+    .channel-cover-empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      border: 2px dashed var(--rc-color-text-secondary);
+      border-radius: calc(var(--radius-2xl));
+      background: linear-gradient(
+        135deg,
+        var(--clr-background-subtle) 0%,
+        var(--clr-background-light) 100%
+      );
+    }
+
+    .channel-profile {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--shadow-lg);
+      transition:
+        filter var(--transition-normal),
+        box-shadow var(--transition-normal),
+        transform var(--transition-normal);
+
+      @media (min-width: 768px) {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
     .channel-card {
       display: flex;
       flex-direction: column;
+      overflow: hidden;
       height: 100%;
-      background: var(--color-background-subtle);
       border: 1px solid var(--color-border-subtle);
       border-radius: 16px;
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
+      background: var(--color-background-subtle);
       transition:
         box-shadow var(--transition-normal),
         border-color var(--transition-normal),
         transform var(--transition-normal);
+      box-shadow: var(--shadow-md);
 
       &:hover {
         box-shadow: var(--shadow-xl);
         border-color: var(--color-primary);
         transform: translateY(-2px);
+
+        .channel-cover {
+          filter: brightness(1.1) contrast(1.05);
+        }
+
+        .channel-cover-empty {
+          opacity: 0.9;
+          border-color: var(--rc-color-primary);
+        }
+
+        .channel-profile {
+          filter: brightness(1.1) saturate(1.2);
+          box-shadow: var(--shadow-xl);
+          transform: scale(1.05);
+        }
       }
 
       &:focus-within {
@@ -132,6 +226,28 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
         border-color: var(--color-primary);
         outline: 2px solid var(--color-primary);
         outline-offset: 2px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+
+        &:hover {
+          transform: none;
+
+          .channel-cover {
+            filter: none;
+          }
+
+          .channel-profile {
+            filter: none;
+            transform: none;
+            box-shadow: var(--shadow-lg);
+          }
+        }
+      }
+
+      @media (prefers-contrast: high) {
+        border: 2px solid var(--color-text-primary);
       }
     }
 
@@ -148,23 +264,15 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
       border-radius: var(--radius-lg);
     }
 
-    .channel-cover {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      transition: filter var(--transition-normal);
-    }
-
     .channel-cover-fallback {
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       width: 100%;
       height: 100%;
-      background: var(--color-background-muted);
       border: 2px dashed var(--color-border-subtle);
       border-radius: var(--radius-md);
+      background: var(--color-background-muted);
     }
 
     .fallback-content {
@@ -186,32 +294,51 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
       text-align: center;
     }
 
-    .channel-card:hover .channel-cover {
-      filter: brightness(1.1) contrast(1.05);
+    .empty-state-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--rc-space-sm);
+      text-align: center;
     }
 
+    .empty-state-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--rc-color-text-secondary);
+      opacity: 0.6;
+    }
+
+    .empty-state-text {
+      color: var(--rc-color-text-secondary);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      opacity: 0.8;
+    }
+
+
     .channel-profile-header-section {
+      z-index: 2;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: var(--rc-space-lg);
-      margin-top: -35px;
-      z-index: 2;
-      flex-shrink: 0;
-      padding: 0;
       width: 100%;
+      margin-top: -35px;
+      padding: 0 var(--rc-space-md);
+      flex-shrink: 0;
       box-sizing: border-box;
 
       @media (min-width: 768px) {
-        margin-top: -45px;
         gap: var(--rc-space-xl);
-        padding: 0;
+        margin-top: -45px;
+        padding: 0 var(--rc-space-xs);
       }
 
       @media (min-width: 1024px) {
-        margin-top: -55px;
         gap: var(--rc-space-2xl);
-        padding: 0;
+        margin-top: -55px;
       }
     }
 
@@ -222,43 +349,26 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
       flex-shrink: 0;
     }
 
-    .channel-profile,
     .channel-profile-fallback {
-      width: 80px;
-      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 75px;
+      height: 75px;
       border-radius: 50%;
+      background: var(--color-background-muted);
       box-shadow: var(--shadow-lg);
 
       @media (min-width: 768px) {
         width: 80px;
         height: 80px;
       }
-
-      @media (min-width: 1024px) {
-        width: 80px;
-        height: 80px;
-      }
-    }
-
-    .channel-profile {
-      object-fit: cover;
-      transition:
-        filter var(--transition-normal),
-        box-shadow var(--transition-normal),
-        transform var(--transition-normal);
-    }
-
-    .channel-profile-fallback {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--color-background-muted);
     }
 
     .fallback-profile {
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       width: 100%;
       height: 100%;
     }
@@ -280,37 +390,32 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
       }
     }
 
-    .channel-card:hover .channel-profile {
-      filter: brightness(1.1) saturate(1.2);
-      box-shadow: var(--shadow-xl);
-      transform: scale(1.05);
-    }
 
     .channel-info-section {
       display: flex;
-      flex-direction: column;
       flex: 1;
-      padding: 55px var(--rc-space-md) calc(var(--rc-space-md) * 1.25);
+      flex-direction: column;
       gap: var(--rc-space-xl);
+      padding: 55px var(--rc-space-md) calc(var(--rc-space-md) * 1.25);
 
       @media (min-width: 768px) {
-        padding: 65px var(--rc-space-lg) var(--rc-space-lg);
         gap: var(--rc-space-lg);
+        padding: 65px var(--rc-space-lg) var(--rc-space-lg);
       }
 
       @media (min-width: 1024px) {
-        padding: 75px var(--rc-space-xl) var(--rc-space-xl);
         gap: var(--rc-space-xl);
+        padding: 75px var(--rc-space-xl) var(--rc-space-xl);
       }
     }
 
     .channel-header {
       display: flex;
+      flex: 1;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: var(--rc-space-xs);
-      flex: 1;
       min-width: 0;
       max-width: 100%;
 
@@ -330,16 +435,15 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
     }
 
     .channel-name {
+      max-width: 100%;
+      margin: 0;
+      color: var(--color-text-primary);
       font-size: clamp(1.3125rem, 3.75vw, 1.5rem);
       font-weight: var(--font-weight-semibold);
-      color: var(--color-text-primary);
-      margin: 0;
       line-height: 1.3;
-      word-wrap: break-word;
+      text-align: center;
       overflow-wrap: break-word;
       hyphens: auto;
-      text-align: center;
-      max-width: 100%;
 
       @media (min-width: 768px) {
         font-size: clamp(1rem, 2vw, 1.125rem);
@@ -357,36 +461,5 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
       width: 100%;
     }
 
-    /* アクセシビリティ対応 */
-    .channel-card {
-      @media (prefers-reduced-motion: reduce) {
-        transition: none;
-
-        &:hover {
-          transform: none;
-        }
-
-        &:hover .channel-cover {
-          filter: none;
-        }
-
-        &:hover .channel-profile {
-          filter: none;
-          transform: none;
-          box-shadow: var(--shadow-lg);
-        }
-      }
-
-      @media (prefers-contrast: high) {
-        border: 2px solid var(--color-text-primary);
-      }
-    }
-
-    .channel-cover,
-    .channel-profile {
-      @media (prefers-reduced-motion: reduce) {
-        transition: none;
-      }
-    }
   </style>
 </div>

@@ -4,8 +4,15 @@
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
-import channelsData from '../../data/youtube-channels.json';
+import channelsDataRaw from '../../data/youtube-channels.json';
+import { Image } from 'astro:assets';
+import heroImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-rekomendasi-youtube.png';
+import podcastImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-radio-podcast.png';
+import mediaImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-tv-media.png';
 import '../../styles/pages/rChannelYT-BBJ/rChannelYT-BBJ-Index.css';
+
+// データの分割代入
+const { sections } = channelsDataRaw;
 
 // ページメタデータ
 const pageTitle =
@@ -35,37 +42,184 @@ const pageKeywords = [
 >
   <main class='rc-channel-page' role='main'>
     <!-- ページヘッダー -->
-    <header class='rc-page-header glassmorphism glassmorphism-card'>
+    <header class='rc-page-header'>
       <div class='rc-header-content'>
-        <h1 class='rc-page-title-main'>
-          Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik
-        </h1>
-        <p class='rc-page-subtitle'>
-          Temukan channel YouTube berkualitas tinggi untuk mempercepat
-          pembelajaran bahasa Jepang Anda
-        </p>
+        <!-- タイトルセクション -->
+        <div class='rc-title-section'>
+          <h1 class='rc-page-title-main'>
+            Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik
+          </h1>
+        </div>
+
+        <!-- 画像セクション -->
+        <div class='rc-content-right'>
+          <div class='rc-image-section'>
+            <Image
+              src={heroImage}
+              alt='Japanese Learning Illustration - Person relaxing on beach with Mount Fuji background'
+              class='rc-hero-image'
+              loading='eager'
+              fetchpriority='high'
+              format='webp'
+              quality={85}
+            />
+          </div>
+        </div>
+
+        <!-- 説明セクション -->
+        <div class='rc-content-frame'>
+          <div class='rc-content-left'>
+            <div class='rc-description-section'>
+              <p class='rc-page-subtitle'>
+                Temukan channel YouTube berkualitas tinggi untuk mempercepat
+                pembelajaran bahasa Jepang Anda
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
+    <!-- ナビゲーションボタンセクション -->
+    <nav class='rc-navigation-buttons'>
+      <div class='rc-nav-buttons-container'>
+        <button 
+          class='rc-nav-button rc-nav-button-native glassmorphism' 
+          onclick="scrollToSection('native-title')"
+          aria-label="Native Level+ タイトルにスクロール"
+        >
+          <span class='rc-nav-button-icon'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg>
+          </span>
+          <span class='rc-nav-button-text'>Native Level+</span>
+          <span class='rc-nav-button-subtitle'>( Difficulty MAX )</span>
+        </button>
+        
+        <button 
+          class='rc-nav-button rc-nav-button-podcast glassmorphism' 
+          onclick="scrollToSection('podcast-title')"
+          aria-label="Podcast & Audio Learning タイトルにスクロール"
+        >
+          <span class='rc-nav-button-icon'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-podcast-icon lucide-podcast"><path d="M13 17a1 1 0 1 0-2 0l.5 4.5a0.5 0.5 0 0 0 1 0z" fill="currentColor"/><path d="M16.85 18.58a9 9 0 1 0-9.7 0"/><path d="M8 14a5 5 0 1 1 8 0"/><circle cx="12" cy="11" r="1" fill="currentColor"/></svg>
+          </span>
+          <span class='rc-nav-button-text'>Podcast & Audio</span>
+          <span class='rc-nav-button-subtitle'>( Difficulty MIX )</span>
+        </button>
+        
+        <button 
+          class='rc-nav-button rc-nav-button-media glassmorphism' 
+          onclick="scrollToSection('media-title')"
+          aria-label="Media & TV News タイトルにスクロール"
+        >
+          <span class='rc-nav-button-icon'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-newspaper-icon lucide-newspaper"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></svg>
+          </span>
+          <span class='rc-nav-button-text'>Media & TV News</span>
+          <span class='rc-nav-button-subtitle'>( Difficulty MIX )</span>
+        </button>
+      </div>
+    </nav>
+
     <!-- メインコンテンツエリア -->
     <div class='rc-main-content'>
-      <!-- チャンネルグリッド -->
-      <section class='rc-channels-section'>
-        <div id='channels-grid' class='rc-channels-grid' role='tabpanel'>
-          {
-            channelsData.map(channel => (
-              <article class='rc-channel-item'>
-                <ChannelCard
-                  channelCover={channel.channelCover}
-                  channelName={channel.channelName}
-                  channelProfile={channel.channelProfile}
-                  channelURL={channel.channelURL}
-                />
-              </article>
-            ))
-          }
-        </div>
-      </section>
+      <!-- チャンネルセクション -->
+      {
+        sections.map((section, sectionIndex) => (
+          <section 
+            class='rc-channels-section'
+            id={section.sectionType === 'podcast' ? 'podcast-section' : 
+                section.sectionType === 'media' ? 'media-section' : 
+                section.sectionTitle.includes('Native Level+') ? 'native-section' : 
+                `section-${sectionIndex}`}
+          >
+            {section.sectionType === 'podcast' ? (
+              <!-- Podcast専用レイアウト -->
+              <div class='rc-section-header'>
+                <div class='rc-section-header-content'>
+                  <div class='rc-section-title-section'>
+                    <h2 
+                      class='rc-section-title-main'
+                      id='podcast-title'
+                    >{section.sectionTitle}</h2>
+                  </div>
+                  <div class='rc-section-content-right'>
+                    <div class='rc-section-image-section'>
+                      <Image
+                        src={podcastImage}
+                        alt='Podcast Learning Illustration'
+                        class='rc-section-hero-image'
+                        loading='lazy'
+                        decoding='async'
+                        format='webp'
+                        quality={85}
+                      />
+                    </div>
+                  </div>
+                  <div class='rc-section-content-frame'>
+                    <div class='rc-section-description-section'>
+                      <p class='rc-section-description'>{section.sectionDescription}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : section.sectionType === 'media' ? (
+              <!-- Media専用レイアウト -->
+              <div class='rc-section-header'>
+                <div class='rc-section-header-content'>
+                  <div class='rc-section-title-section'>
+                    <h2 
+                      class='rc-section-title-main'
+                      id='media-title'
+                    >{section.sectionTitle}</h2>
+                  </div>
+                  <div class='rc-section-content-right'>
+                    <div class='rc-section-image-section'>
+                      <Image
+                        src={mediaImage}
+                        alt='Media & TV News Learning Illustration'
+                        class='rc-section-hero-image'
+                        loading='lazy'
+                        decoding='async'
+                        format='webp'
+                        quality={85}
+                      />
+                    </div>
+                  </div>
+                  <div class='rc-section-content-frame'>
+                    <div class='rc-section-description-section'>
+                      <p class='rc-section-description'>{section.sectionDescription}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <!-- 通常のセクションタイトル -->
+              <h2 
+                class='rc-channels-title'
+                id={section.sectionTitle.includes('Native Level+') ? 'native-title' : 
+                    `title-${sectionIndex}`}
+              >{section.sectionTitle}</h2>
+            )}
+            <div
+              id={`channels-grid-${sectionIndex}`}
+              class='rc-channels-grid'
+              role='tabpanel'
+            >
+              {section.channels.map(channel => (
+                <article class='rc-channel-item'>
+                  <ChannelCard
+                    channelCover={channel.channelCover}
+                    channelName={channel.channelName}
+                    channelProfile={channel.channelProfile}
+                    channelURL={channel.channelURL}
+                  />
+                </article>
+              ))}
+            </div>
+          </section>
+        ))
+      }
     </div>
   </main>
 
@@ -73,14 +227,28 @@ const pageKeywords = [
   <style>
     .sr-only {
       position: absolute;
+      overflow: hidden;
       width: 1px;
       height: 1px;
-      padding: 0;
       margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
+      padding: 0;
       border: 0;
+      white-space: nowrap;
+      clip-path: inset(50%);
     }
   </style>
+
 </BaseLayout>
+
+<script is:inline>
+  function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
+  }
+</script>

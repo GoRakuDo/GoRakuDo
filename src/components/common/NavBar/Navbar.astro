@@ -141,13 +141,13 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
  * - Progressive enhancement with fallbacks for older browsers
  */
 
-  /* ===== DESIGN TOKENS - FREQUENTLY USED VALUES ===== */
+  /* ===== DESIGN TOKENS - MODERN REDESIGN ===== */
   .navbar-wrapper {
     /* REASONING: Single root element with proper layout flow */
     display: block;
     overflow-x: hidden;
 
-    /* Color Tokens - OKLCH format for consistency */
+    /* Modern Color Tokens - Enhanced OKLCH palette */
     --navbar-white: oklch(100% 0 0deg);
     --navbar-white-05: oklch(100% 0 0deg / 0.05);
     --navbar-white-08: oklch(100% 0 0deg / 0.08);
@@ -162,14 +162,25 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     --navbar-black-6: oklch(6% 0.008 270deg);
     --navbar-black-8: oklch(8% 0.01 270deg);
     --navbar-black-25: oklch(25% 0.015 270deg);
+
+    /* Enhanced Primary Colors - Modern Gradient Palette */
     --navbar-primary: oklch(65% 0.25 280deg);
     --navbar-primary-dark: oklch(60% 0.25 280deg);
+    --navbar-primary-light: oklch(70% 0.18 280deg);
     --navbar-primary-18: oklch(65% 0.18 280deg);
     --navbar-primary-25: oklch(65% 0.25 280deg / 0.25);
     --navbar-primary-30: oklch(65% 0.25 280deg / 0.3);
     --navbar-primary-70: oklch(70% 0.12 280deg);
+
+    /* Secondary Accent Colors */
+    --navbar-accent-orange: oklch(65% 0.18 15deg);
+    --navbar-accent-blue: oklch(65% 0.25 280deg);
+    --navbar-accent-green: oklch(70% 0.15 45deg);
+
+    /* Enhanced Text Colors */
     --navbar-text-primary: oklch(98% 0.002 270deg);
     --navbar-text-secondary: oklch(85% 0.002 270deg);
+    --navbar-text-muted: oklch(75% 0.002 270deg);
 
     /* GlassMorphism Tokens */
     --navbar-glass-bg: oklch(6% 0.008 270deg / 0.12);
@@ -227,7 +238,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     --navbar-blur-transparent: blur(0) saturate(100%) brightness(1) contrast(1);
 
     /* REASONING: Progressive enhancement with fallbacks for browser compatibility */
-    width: 100dvw; /* Dynamic viewport width - excludes scrollbars */
+    width: 100dvw;
 
     /* REASONING: Prevent horizontal overflow and ensure proper containment */
     max-width: 100%;
@@ -241,7 +252,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     container-name: navbar;
     container-type: inline-size;
 
-    /* ---------- Tablet Breakpoint (768px+) - Enhanced Mobile Experience ---------- */
     @media (min-width: 768px) {
       --navbar-padding-y: var(--navbar-gap-medium);
       --navbar-padding-x: 0;
@@ -251,7 +261,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       --navbar-logo-size: var(--navbar-logo-size-md);
     }
 
-    /* ---------- Desktop Breakpoint (1024px+) - Full Navigation ---------- */
     @media (min-width: 1024px) {
       --navbar-nav-display: flex;
       --navbar-mobile-display: none;
@@ -262,7 +271,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       --navbar-logo-size: var(--navbar-logo-size-lg);
     }
 
-    /* ---------- Container Queries - Modern Responsive Design ---------- */
     @container navbar (min-width: 768px) {
       --navbar-container-optimized: true;
       --navbar-padding-y: var(--navbar-gap-medium);
@@ -284,401 +292,478 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       --navbar-logo-size: var(--navbar-logo-size-lg);
     }
 
-    /* ---------- Container Query Support - Modern Responsive Design ---------- */
     @supports (container-type: inline-size) {
       container-name: navbar;
       container-type: inline-size;
     }
-  }
 
-  /* ---------- Component Root Variables - Integrated with Global System ---------- */
+    /* ---------- Main Navbar Container - Modern Redesign with Enhanced GlassMorphism ---------- */
+    .navbar {
+      /* REASONING: Fixed positioning for persistent navigation */
+      position: fixed;
+      top: var(--safe-area-top);
+      right: var(--safe-area-right);
+      left: var(--safe-area-left);
+      z-index: var(--z-Navbar-navbar);
 
-  /* Note: .navbar-wrapper styles are already defined above at line 168 */
+      /* REASONING: Apply safe viewport width to navbar */
+      width: var(--navbar-width);
+      padding: var(--navbar-padding-y);
 
-  /* ---------- Main Navbar Container - Fixed Positioning with CSS Scroll Animation ---------- */
-  .navbar {
-    /* REASONING: Fixed positioning for persistent navigation */
-    position: fixed;
-    top: var(--safe-area-top);
-    right: var(--safe-area-right);
-    left: var(--safe-area-left);
-    z-index: var(--z-Navbar-navbar);
+      /* REASONING: Enhanced glass border styling with gradient */
+      border: none;
+      border-radius: var(--navbar-radius-lg);
 
-    /* REASONING: Apply safe viewport width to navbar */
-    width: var(--navbar-width);
-    padding: var(--navbar-padding-y);
+      /* REASONING: Enhanced glass morphism background with multiple layers */
+      background:
+        linear-gradient(
+          135deg,
+          oklch(6% 0.008 270deg / 0.15) 0%,
+          oklch(8% 0.01 270deg / 0.12) 25%,
+          oklch(6% 0.008 270deg / 0.18) 50%,
+          oklch(8% 0.01 270deg / 0.12) 75%,
+          oklch(6% 0.008 270deg / 0.15) 100%
+        ),
+        radial-gradient(
+          ellipse at 50% 0%,
+          oklch(65% 0.18 280deg / 0.12) 0%,
+          transparent 70%
+        ),
+        radial-gradient(
+          ellipse at 0% 50%,
+          oklch(65% 0.18 15deg / 0.08) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          ellipse at 100% 50%,
+          oklch(70% 0.15 45deg / 0.08) 0%,
+          transparent 50%
+        );
+      transform: translateZ(0);
 
-    /* REASONING: Optimized glass border styling */
-    border: 1px solid var(--navbar-glass-border);
-    border-radius: var(--navbar-radius-md);
+      /* REASONING: Enhanced transition system with modern easing */
+      transition:
+        background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        backdrop-filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    /* REASONING: Optimized single glass morphism background */
-    background:
-      linear-gradient(
-        135deg,
-        var(--navbar-glass-bg) 0%,
-        var(--navbar-glass-bg-8) 50%,
-        var(--navbar-glass-bg) 100%
-      ),
-      radial-gradient(
-        ellipse at 50% 0%,
-        var(--navbar-glass-glow) 0%,
-        transparent 60%
-      );
-    transform: translateZ(0);
+      /* REASONING: CSS Scroll-driven Animation for enhanced opacity */
+      animation: navbarScrollOpacityEnhanced linear;
 
-    /* REASONING: Unified transition system with GPU acceleration */
-    transition:
-      background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      /* REASONING: Enhanced backdrop filters for superior glass effect */
+      backdrop-filter: blur(20px) saturate(180%) brightness(1.1) contrast(1.1);
 
-    /* REASONING: CSS Scroll-driven Animation for opacity based on scroll */
-    animation: navbarScrollOpacity linear;
+      /* REASONING: Enhanced shadow system */
+      box-shadow:
+        0 8px 32px oklch(0% 0 0deg / 0.12),
+        0 4px 16px oklch(0% 0 0deg / 0.08),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+        inset 0 -1px 0 oklch(0% 0 0deg / 0.1);
 
-    /* REASONING: Enhanced backdrop filters for glass effect */
-    backdrop-filter: var(--navbar-blur-base);
+      /* REASONING: GPU acceleration for smooth animations */
+      will-change:
+        background, backdrop-filter, border-color, transform, box-shadow;
+      animation-timeline: scroll(root);
+      animation-range: 0 200px;
+    }
 
-    /* REASONING: GPU acceleration for smooth animations */
-    will-change: background, backdrop-filter, border-color, transform;
-    animation-timeline: scroll(root);
-    animation-range: 0 200px;
-  }
+    /* ---------- Navigation Container - Flexbox Layout ---------- */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 75rem;
 
-  /* ---------- Navigation Container - Flexbox Layout ---------- */
-  .nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 75rem;
+      /* REASONING: Centered container with responsive max-width */
+      margin: 0 auto;
 
-    /* REASONING: Centered container with responsive max-width */
-    margin: 0 auto;
+      /* REASONING: Safe area padding using global variables */
+      padding: 0 calc(var(--navbar-padding-x) + var(--safe-area-right)) 0
+        calc(var(--navbar-padding-x) + var(--safe-area-left));
+      background: transparent;
+    }
 
-    /* REASONING: Safe area padding using global variables */
-    padding: 0 calc(var(--navbar-padding-x) + var(--safe-area-right)) 0
-      calc(var(--navbar-padding-x) + var(--safe-area-left));
-    background: transparent;
-  }
+    /* ---------- SVG Icon System - Unified Styling ---------- */
+    .nav-svg-icon {
+      flex-shrink: 0;
+      width: 1em;
+      max-width: 100%;
+      height: 1em;
+      max-height: 100%;
+      vertical-align: middle;
+      color: inherit;
+      fill: none;
+      stroke: currentcolor;
+      transform: translateZ(0);
+      transition:
+        color var(--duration-fast) ease,
+        transform var(--duration-fast) ease,
+        opacity var(--duration-fast) ease;
+      will-change: transform, opacity;
+    }
 
-  /* ---------- SVG Icon System - Unified Styling ---------- */
-  .nav-svg-icon {
-    /* REASONING: Flexible sizing with proper constraints */
-    flex-shrink: 0;
-    width: 1em;
-    max-width: 100%;
-    height: 1em;
-    max-height: 100%;
-    vertical-align: middle;
+    .nav-svg-icon:hover {
+      opacity: 0.9;
+      transform: translateZ(0) scale(1.05);
+    }
 
-    /* REASONING: Consistent icon styling with inheritance */
-    color: inherit;
-    fill: none;
-    stroke: currentcolor;
-    transform: translateZ(0);
+    .nav-svg-icon:active {
+      opacity: 0.8;
+      transform: translateZ(0) scale(0.95);
+    }
 
-    /* REASONING: Unified transition system with GPU acceleration */
-    transition:
-      color var(--duration-fast) ease,
-      transform var(--duration-fast) ease,
-      opacity var(--duration-fast) ease;
+    /* ---------- Navigation Sections - Mobile First ---------- */
+    .nav-left,
+    .nav-right {
+      /* REASONING: Hidden on mobile, shown on desktop */
+      display: var(--navbar-nav-display);
+      flex: 1 1 0%;
+      align-items: center;
+    }
 
-    /* REASONING: GPU acceleration for icon animations */
-    will-change: transform, opacity;
-  }
+    .nav-left {
+      gap: var(--navbar-gap-left);
+    }
 
-  /* REASONING: Interactive states for SVG icons with GPU acceleration */
-  .nav-svg-icon:hover {
-    opacity: 0.9;
-    transform: translateZ(0) scale(1.05);
-  }
+    .nav-right {
+      justify-content: flex-end;
+      gap: var(--navbar-gap-right);
+    }
 
-  .nav-svg-icon:active {
-    opacity: 0.8;
-    transform: translateZ(0) scale(0.95);
-  }
+    /* ---------- Navigation Items - Touch-Optimized Interactive Elements ---------- */
+    .nav-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: var(--touch-target-min);
+      min-height: var(--touch-target-min);
+      padding: var(--touch-target-padding) var(--navbar-gap-left);
+      border-radius: var(--navbar-radius-sm);
+      color: var(--navbar-text-secondary);
+      font-size: var(--navbar-item-size);
+      cursor: pointer;
+      transform: translateZ(0);
+      transition:
+        color 0.12s ease,
+        background-color 0.12s ease,
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+      outline: none;
+      will-change: transform, background-color;
+    }
 
-  /* Focus styles removed - following Astro's static-first philosophy */
+    .nav-item:hover {
+      background-color: var(--navbar-interactive-hover);
+      color: var(--navbar-primary);
+      transform: translateZ(0) translateY(-1px);
+    }
 
-  /* ---------- Navigation Sections - Mobile First ---------- */
-  .nav-left,
-  .nav-right {
-    /* REASONING: Hidden on mobile, shown on desktop */
-    display: var(--navbar-nav-display);
-    flex: 1 1 0%;
-    align-items: center;
-  }
+    .nav-item:active {
+      background-color: var(--navbar-interactive-active);
+      transform: translateZ(0) translateY(0);
+    }
 
-  .nav-left {
-    gap: var(--navbar-gap-left);
-  }
-
-  .nav-right {
-    justify-content: flex-end;
-    gap: var(--navbar-gap-right);
-  }
-
-  /* ---------- Navigation Items - Touch-Optimized Interactive Elements ---------- */
-  .nav-item {
-    /* REASONING: Flexbox for proper touch target alignment */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: var(--touch-target-min);
-
-    /* REASONING: Touch target optimization - minimum 44px for accessibility */
-    min-height: var(--touch-target-min);
-    padding: var(--touch-target-padding) var(--navbar-gap-left);
-    border-radius: var(--navbar-radius-sm);
-    color: var(--navbar-text-secondary);
-    font-size: var(--navbar-item-size);
-
-    /* REASONING: Touch-optimized accessible interactive elements */
-    cursor: pointer;
-    transform: translateZ(0);
-
-    /* REASONING: Unified transition system with GPU acceleration */
-    transition:
-      color 0.12s ease,
-      background-color 0.12s ease,
-      transform 0.12s ease,
-      box-shadow 0.12s ease;
-    outline: none;
-
-    /* REASONING: GPU acceleration for navigation items */
-    will-change: transform, background-color;
-  }
-
-  .nav-item:hover {
-    background-color: var(--navbar-interactive-hover);
-    color: var(--navbar-primary);
-    transform: translateZ(0) translateY(-1px);
-  }
-
-  /* Focus styles removed - following Astro's static-first philosophy */
-
-  .nav-item:active {
-    background-color: var(--navbar-interactive-active);
-    transform: translateZ(0) translateY(0);
-  }
-
-  /* ---------- Mobile Menu Button - Enhanced Touch Optimization ---------- */
-  .mobile-menu-btn {
-    /* REASONING: Mobile-first button with enhanced touch targets */
-    display: var(--navbar-mobile-display);
-    justify-content: center;
-    align-items: center;
-    gap: var(--navbar-gap-small);
-    min-width: var(--touch-target-min);
-
-    /* REASONING: Touch target optimization - minimum 44px for accessibility */
-    min-height: var(--touch-target-min);
-
-    /* REASONING: Touch-optimized padding with proper spacing */
-    padding: var(--touch-target-padding) var(--navbar-gap-medium);
-    border: none;
-    border-radius: var(--navbar-radius-lg);
-    background-color: var(--navbar-primary);
-    color: var(--navbar-text-primary);
-
-    /* REASONING: Typography with accessibility scaling */
-    font-size: var(--navbar-item-size-md);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-
-    /* REASONING: Accessible button styling with enhanced touch feedback */
-    cursor: pointer;
-    transform: translateZ(0);
-
-    /* REASONING: Unified transition system with GPU acceleration */
-    transition:
-      background-color 0.12s ease,
-      transform 0.12s ease,
-      box-shadow 0.12s ease;
-    touch-action: manipulation;
-
-    /* REASONING: GPU acceleration for mobile menu button */
-    will-change: transform, background-color;
-
-    /* REASONING: Touch-specific enhancements */
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .mobile-menu-btn:hover {
-    background-color: var(--navbar-primary-dark);
-    box-shadow: 0 4px 12px var(--navbar-black-25);
-    transform: translateZ(0) translateY(-1px);
-  }
-
-  .mobile-menu-btn:active {
-    box-shadow: 0 2px 6px var(--navbar-black-10);
-    transform: translateZ(0) translateY(0);
-  }
-
-  /* ---------- Logo Component - Brand Identity ---------- */
-  .logo-japanese {
-    color: var(--navbar-primary);
-    font-family: var(--font-jp);
-    font-size: var(--navbar-logo-size);
-    line-height: 1;
-    text-decoration: none;
-
-    /* REASONING: Brand-consistent logo styling */
-    cursor: pointer;
-    transform: translateZ(0);
-
-    /* REASONING: Unified transition system with GPU acceleration */
-    transition:
-      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* REASONING: Initial state with subtle glow */
-    text-shadow:
-      0 0 0 var(--navbar-brand-glow),
-      0 0 0 var(--navbar-brand-glow);
-
-    /* REASONING: GPU acceleration for logo animations */
-    will-change: transform, color, text-shadow, filter;
-  }
-
-  /* Desktop: White logo color for 1024px+ */
-  @media (min-width: 1024px) {
-    .logo-japanese {
+    /* ---------- Mobile Menu Button - Modern Redesign with Enhanced Styling ---------- */
+    .mobile-menu-btn {
+      position: relative;
+      display: var(--navbar-mobile-display);
+      justify-content: center;
+      align-items: center;
+      gap: var(--navbar-gap-small);
+      overflow: hidden;
+      min-width: var(--touch-target-min);
+      min-height: var(--touch-target-min);
+      padding: var(--touch-target-padding) var(--navbar-gap-medium);
+      border: none;
+      border-radius: var(--navbar-radius-lg);
+      background:
+        linear-gradient(var(--navbar-primary), var(--navbar-primary))
+          padding-box,
+        linear-gradient(
+            135deg,
+            var(--navbar-accent-orange) 0%,
+            var(--navbar-accent-blue) 50%,
+            var(--navbar-accent-green) 100%
+          )
+          border-box;
       color: var(--navbar-text-primary);
+      font-size: var(--navbar-item-size-md);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transform: translateZ(0);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      touch-action: manipulation;
+      box-shadow:
+        0 4px 16px oklch(65% 0.25 280deg / 0.2),
+        0 2px 8px oklch(0% 0 0deg / 0.1),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      will-change: transform, background, box-shadow, filter;
+      -webkit-tap-highlight-color: transparent;
+      filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
+    }
+
+    .mobile-menu-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.1) 0%,
+        transparent 50%,
+        oklch(100% 0 0deg / 0.05) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      background:
+        linear-gradient(
+            var(--navbar-primary-light),
+            var(--navbar-primary-light)
+          )
+          padding-box,
+        linear-gradient(
+            135deg,
+            var(--navbar-accent-orange) 0%,
+            var(--navbar-accent-blue) 50%,
+            var(--navbar-accent-green) 100%
+          )
+          border-box;
+      box-shadow:
+        0 8px 32px oklch(65% 0.25 280deg / 0.3),
+        0 4px 16px oklch(0% 0 0deg / 0.15),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      transform: translateZ(0) translateY(-2px) scale(1.02);
+      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
+    }
+
+    .mobile-menu-btn:active {
+      transform: translateZ(0) translateY(0) scale(0.98);
+      box-shadow:
+        0 2px 8px oklch(65% 0.25 280deg / 0.2),
+        0 1px 4px oklch(0% 0 0deg / 0.1);
+      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
+    }
+
+    /* ---------- Logo Component - Brand Identity ---------- */
+    .logo-japanese {
+      color: var(--navbar-primary);
+      font-family: var(--font-jp);
+      font-size: var(--navbar-logo-size);
+      line-height: 1;
+      text-decoration: none;
+
+      /* REASONING: Brand-consistent logo styling */
+      cursor: pointer;
+      transform: translateZ(0);
+
+      /* REASONING: Unified transition system with GPU acceleration */
+      transition:
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* REASONING: Initial state with subtle glow */
+      text-shadow:
+        0 0 0 var(--navbar-brand-glow),
+        0 0 0 var(--navbar-brand-glow);
+
+      /* REASONING: GPU acceleration for logo animations */
+      will-change: transform, color, text-shadow, filter;
+
+      @media (min-width: 1024px) {
+        color: var(--navbar-text-primary);
+      }
+    }
+
+    .logo-japanese:hover {
+      text-shadow:
+        0 0 8px var(--navbar-brand-glow),
+        0 0 16px var(--navbar-brand-glow),
+        0 0 24px var(--navbar-brand-glow);
+      filter: drop-shadow(0 0 8px var(--navbar-brand-glow));
+      transform: translateZ(0) translateY(-2px) scale(1.02);
+    }
+
+    /* ---------- Ruby Text Styling - Japanese Typography ---------- */
+    .logo-japanese rt {
+      margin-bottom: -15px;
+      color: var(--navbar-brand-ruby);
+      font-family: Inter, sans-serif;
+      font-size: 0.4em;
+      font-weight: 600;
+      transition:
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-shadow: 0 0 0 var(--navbar-brand-glow);
+    }
+
+    /* ---------- Get Started Buttons - Modern Redesign with Enhanced Styling ---------- */
+    .get-started-btn {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--navbar-gap-small);
+      overflow: hidden;
+      min-width: var(--touch-target-min);
+      min-height: var(--touch-target-min);
+      padding: var(--touch-target-padding) var(--navbar-padding-btn);
+      border: none;
+      border-radius: var(--navbar-radius-lg);
+      background:
+        linear-gradient(var(--navbar-primary), var(--navbar-primary))
+          padding-box,
+        linear-gradient(
+            135deg,
+            var(--navbar-accent-orange) 0%,
+            var(--navbar-accent-blue) 50%,
+            var(--navbar-accent-green) 100%
+          )
+          border-box;
+      color: var(--navbar-text-primary);
+      font-size: var(--navbar-item-size-md);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transform: translateZ(0);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      touch-action: manipulation;
+      box-shadow:
+        0 4px 16px oklch(65% 0.25 280deg / 0.2),
+        0 2px 8px oklch(0% 0 0deg / 0.1),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      will-change: transform, background, box-shadow, filter;
+      -webkit-tap-highlight-color: transparent;
+      filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
+    }
+
+    .get-started-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.1) 0%,
+        transparent 50%,
+        oklch(100% 0 0deg / 0.05) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .get-started-btn:hover {
+      background:
+        linear-gradient(
+            var(--navbar-primary-light),
+            var(--navbar-primary-light)
+          )
+          padding-box,
+        linear-gradient(
+            135deg,
+            var(--navbar-accent-orange) 0%,
+            var(--navbar-accent-blue) 50%,
+            var(--navbar-accent-green) 100%
+          )
+          border-box;
+      box-shadow:
+        0 8px 32px oklch(65% 0.25 280deg / 0.3),
+        0 4px 16px oklch(0% 0 0deg / 0.15),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      transform: translateZ(0) translateY(-2px) scale(1.02);
+      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
+    }
+
+    .get-started-btn:active {
+      transform: translateZ(0) translateY(0) scale(0.98);
+      box-shadow:
+        0 2px 8px oklch(65% 0.25 280deg / 0.2),
+        0 1px 4px oklch(0% 0 0deg / 0.1);
+      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
     }
   }
 
-  .logo-japanese:hover {
-    text-shadow:
-      0 0 8px var(--navbar-brand-glow),
-      0 0 16px var(--navbar-brand-glow),
-      0 0 24px var(--navbar-brand-glow);
-    filter: drop-shadow(0 0 8px var(--navbar-brand-glow));
-
-    /* REASONING: Lift effect with enhanced glow and GPU acceleration */
-    transform: translateZ(0) translateY(-2px) scale(1.02);
-  }
-
-  /* ---------- Ruby Text Styling - Japanese Typography ---------- */
-  .logo-japanese rt {
-    /* REASONING: Precise ruby text positioning */
-    margin-bottom: -15px;
-    color: var(--navbar-brand-ruby);
-    font-family: Inter, sans-serif;
-    font-size: 0.4em;
-    font-weight: 600;
-
-    /* REASONING: Coordinated transitions with parent */
-    transition:
-      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-shadow: 0 0 0 var(--navbar-brand-glow);
-  }
-
-  .logo-japanese:hover rt {
-    color: var(--navbar-brand-ruby-hover);
-    text-shadow:
-      0 0 4px var(--navbar-brand-glow),
-      0 0 8px var(--navbar-brand-glow);
-  }
-
-  /* ---------- Get Started Buttons - Touch-Optimized Call to Action ---------- */
-  .get-started-btn {
-    /* REASONING: Flexbox for icon and text alignment */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--navbar-gap-small);
-    min-width: var(--touch-target-min);
-
-    /* REASONING: Touch target optimization - minimum 44px for accessibility */
-    min-height: var(--touch-target-min);
-    padding: var(--touch-target-padding) var(--navbar-padding-btn);
-    border: none;
-    border-radius: var(--navbar-radius-btn);
-    background-color: var(--navbar-primary);
-    color: var(--navbar-text-primary);
-
-    /* REASONING: Touch-optimized button styling with accessibility */
-    font-size: var(--navbar-item-size-md);
-    font-weight: 500;
-    cursor: pointer;
-    transform: translateZ(0);
-
-    /* REASONING: Unified transition system with GPU acceleration */
-    transition:
-      background-color var(--animate-duration-slow) ease,
-      box-shadow var(--animate-duration-normal) ease,
-      transform var(--animate-duration-fast) ease,
-      opacity var(--animate-duration-fast) ease;
-    touch-action: manipulation;
-    box-shadow: 0 2px 8px var(--navbar-black-10);
-
-    /* REASONING: GPU acceleration for get started buttons */
-    will-change: transform, background-color, box-shadow;
-
-    /* REASONING: Touch-specific enhancements */
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .get-started-btn:hover {
-    background-color: var(--navbar-primary-dark);
-    box-shadow:
-      0 8px 25px var(--navbar-black-20),
-      0 4px 12px var(--navbar-black-15);
-    transform: translateZ(0) translateY(-1px);
-  }
-
-  .get-started-btn:active {
-    opacity: 0.98;
-    transform: translateZ(0) translateY(0);
-  }
-
-  /* ---------- CSS Scroll-driven Animations - No JavaScript Required ---------- */
-  @keyframes navbarScrollOpacity {
-    from {
+  /* ---------- CSS Scroll-driven Animations - Enhanced Modern Design ---------- */
+  @keyframes navbarScrollOpacityEnhanced {
+    0% {
       /* REASONING: Initial state - transparent background */
       background:
         linear-gradient(
           135deg,
           oklch(6% 0.008 270deg / 0) 0%,
-          oklch(8% 0.01 270deg / 0) 50%,
+          oklch(8% 0.01 270deg / 0) 25%,
+          oklch(6% 0.008 270deg / 0) 50%,
+          oklch(8% 0.01 270deg / 0) 75%,
           oklch(6% 0.008 270deg / 0) 100%
         ),
         radial-gradient(
           ellipse at 50% 0%,
           oklch(65% 0.18 280deg / 0) 0%,
-          transparent 60%
+          transparent 70%
+        ),
+        radial-gradient(
+          ellipse at 0% 50%,
+          oklch(65% 0.18 15deg / 0) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          ellipse at 100% 50%,
+          oklch(70% 0.15 45deg / 0) 0%,
+          transparent 50%
         );
-      border-color: oklch(25% 0.015 270deg / 0);
-      backdrop-filter: var(--navbar-blur-transparent);
+      border-color: transparent;
+      backdrop-filter: blur(0) saturate(100%) brightness(1) contrast(1);
+      box-shadow:
+        0 0 0 oklch(0% 0 0deg / 0),
+        0 0 0 oklch(0% 0 0deg / 0),
+        inset 0 0 0 oklch(100% 0 0deg / 0),
+        inset 0 0 0 oklch(0% 0 0deg / 0);
     }
 
-    to {
-      /* REASONING: Final state - full glass morphism effect */
+    100% {
+      /* REASONING: Final state - enhanced glass morphism effect */
       background:
         linear-gradient(
           135deg,
-          var(--navbar-glass-bg) 0%,
-          var(--navbar-glass-bg-8) 50%,
-          var(--navbar-glass-bg) 100%
+          oklch(6% 0.008 270deg / 0.15) 0%,
+          oklch(8% 0.01 270deg / 0.12) 25%,
+          oklch(6% 0.008 270deg / 0.18) 50%,
+          oklch(8% 0.01 270deg / 0.12) 75%,
+          oklch(6% 0.008 270deg / 0.15) 100%
         ),
         radial-gradient(
           ellipse at 50% 0%,
-          var(--navbar-glass-glow) 0%,
-          transparent 60%
+          oklch(65% 0.18 280deg / 0.12) 0%,
+          transparent 70%
+        ),
+        radial-gradient(
+          ellipse at 0% 50%,
+          oklch(65% 0.18 15deg / 0.08) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          ellipse at 100% 50%,
+          oklch(70% 0.15 45deg / 0.08) 0%,
+          transparent 50%
         );
-      border-color: var(--navbar-glass-border);
-      backdrop-filter: var(--navbar-blur-base);
+      border-color: transparent;
+      backdrop-filter: blur(20px) saturate(180%) brightness(1.1) contrast(1.1);
+      box-shadow:
+        0 8px 32px oklch(0% 0 0deg / 0.12),
+        0 4px 16px oklch(0% 0 0deg / 0.08),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+        inset 0 -1px 0 oklch(0% 0 0deg / 0.1);
     }
   }
 
   /* ---------- Fallback for browsers without Scroll-driven Animations ---------- */
   @supports not (animation-timeline: scroll(root)) {
-    .navbar {
+    .navbar-wrapper .navbar {
       /* REASONING: Fallback - use CSS custom property for JavaScript control */
       background:
         linear-gradient(
@@ -701,12 +786,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         contrast(calc(1 + var(--navbar-opacity, 0.12) * 0.05));
     }
   }
-
-  /* ---------- Safe Viewport Units Support - Removed Problematic Units ---------- */
-
-  /* REASONING: Removed modern viewport units that were causing display issues */
-
-  /* Using stable 100vw/100vh for consistent cross-browser compatibility */
 </style>
 
 <script>
