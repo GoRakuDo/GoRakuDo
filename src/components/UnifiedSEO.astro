@@ -205,10 +205,7 @@ const {
   dnsPrefetch = [],
   prefetch = [],
   preload = [
-    // デフォルトフォントpreload - パフォーマンス最適化
-    { href: 'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2', as: 'font', crossorigin: true, type: 'font/woff2' },
-    { href: 'https://fonts.gstatic.com/s/yujisyuku/v1/7cHrv4oG0xtp02os4X3y1JXyQJ8.woff2', as: 'font', crossorigin: true, type: 'font/woff2' },
-    { href: 'https://fonts.gstatic.com/s/notoemoji/v47/bMrnmSyK7YY-MEu6b_7wM4FqN1sQrcFmow.woff2', as: 'font', crossorigin: true, type: 'font/woff2' }
+    // フォントpreload削除 - Google Fonts CSS importに変更
   ],
   
   // サイトマップ関連 - デフォルト値設定
@@ -624,6 +621,14 @@ addOptionalSchemas(structuredDataSchemas);
 <!-- Font Loading - 日本語フォントと絵文字の完全対応 (Layout Shift Prevention) -->
 <!-- Critical font loading - synchronous to prevent layout shift -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&family=Gochi+Hand&family=Noto+Emoji:wght@300;400;500;600;700&display=swap" />
+
+<!-- Google Fonts - 正しいURLでCSS import -->
+<link rel='preconnect' href='https://fonts.googleapis.com' />
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+<link
+  href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Yuji+Syuku:wght@400&family=Noto+Emoji:wght@400&display=swap'
+  rel='stylesheet'
+/>
 
 <!-- ロボット設定 - サイトマップ情報統合 -->
 <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, sitemap'} />

@@ -16,8 +16,7 @@ const { className = '' } = Astro.props;
 // ========== NAVIGATION CONFIGURATION ==========
 // REASONING: Centralized route management following DRY principle
 const NAV_ROUTES = {
-  Tutorial: { path: '/tools', label: 'Tutorial' },
-  Dokumentasi: { path: '/docs', label: 'Dokumentasi' },
+  'Doc-Penjelasan': { path: '/docs', label: 'Doc-Penjelasan' },
 } as const;
 
 // ========== ASTRO-NATIVE NAVIGATION ITEMS ==========
@@ -32,6 +31,41 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     <div class='nav-container'>
       <!-- Left Navigation - Desktop Only -->
       <div class='nav-left'>
+        <button class='nav-item nav-menu-btn' data-action='menu'>
+          <svg
+            class='nav-svg-icon'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'
+          >
+            <rect
+              width='18'
+              height='18'
+              x='3'
+              y='3'
+              rx='2'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'></rect>
+            <path
+              d='M3 9h18'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+            <path
+              d='m9 16 3-3 3 3'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+          </svg>
+          Menu
+        </button>
         {
           navItems.map(item => (
             <a
@@ -40,6 +74,39 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
               data-route={item.key}
               data-path={item.path}
             >
+              <svg
+                class='nav-svg-icon'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                aria-hidden='true'
+              >
+                <path
+                  d='M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <circle
+                  cx='12'
+                  cy='8'
+                  r='2'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M8.714 14h-3.71a1 1 0 0 0-.948.683l-2.004 6A1 1 0 0 0 3 22h18a1 1 0 0 0 .948-1.316l-2-6a1 1 0 0 0-.949-.684h-3.712'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
               {item.label}
             </a>
           ))
@@ -64,12 +131,12 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
             aria-hidden='true'
           >
             <path
-              d='M11 3V11L14 8L17 11V3M5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3Z'
+              d='M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z'
               stroke-width='2'
               stroke-linecap='round'
               stroke-linejoin='round'></path>
           </svg>
-          Metodologi
+          Panduan
         </button>
         <button class='get-started-btn' data-action='get-started'>
           <svg
@@ -202,7 +269,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     /* Spacing Tokens */
     --navbar-padding-y: 0.75rem;
     --navbar-padding-x: 0;
-    --navbar-gap-left: 0.75rem;
+    --navbar-gap-left: 0.5rem;
     --navbar-gap-right: 0.5rem;
     --navbar-gap-small: 0.25rem;
     --navbar-gap-medium: 1rem;
@@ -255,7 +322,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     @media (min-width: 768px) {
       --navbar-padding-y: var(--navbar-gap-medium);
       --navbar-padding-x: 0;
-      --navbar-gap-left: var(--navbar-gap-large);
+      --navbar-gap-left: var(--navbar-gap-medium);
       --navbar-gap-right: var(--navbar-gap-medium);
       --navbar-item-size: var(--navbar-item-size-md);
       --navbar-logo-size: var(--navbar-logo-size-md);
@@ -265,7 +332,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       --navbar-nav-display: flex;
       --navbar-mobile-display: none;
       --navbar-padding-x: 0;
-      --navbar-gap-left: var(--navbar-gap-xl);
+      --navbar-gap-left: var(--navbar-gap-large);
       --navbar-gap-right: var(--navbar-gap-large);
       --navbar-item-size: var(--navbar-item-size-md);
       --navbar-logo-size: var(--navbar-logo-size-lg);
@@ -275,7 +342,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       --navbar-container-optimized: true;
       --navbar-padding-y: var(--navbar-gap-medium);
       --navbar-padding-x: 0;
-      --navbar-gap-left: var(--navbar-gap-large);
+      --navbar-gap-left: var(--navbar-gap-medium);
       --navbar-gap-right: var(--navbar-gap-medium);
       --navbar-item-size: var(--navbar-item-size-md);
       --navbar-logo-size: var(--navbar-logo-size-md);
@@ -286,7 +353,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       --navbar-nav-display: flex;
       --navbar-mobile-display: none;
       --navbar-padding-x: 0;
-      --navbar-gap-left: var(--navbar-gap-xl);
+      --navbar-gap-left: var(--navbar-gap-large);
       --navbar-gap-right: var(--navbar-gap-large);
       --navbar-item-size: var(--navbar-item-size-md);
       --navbar-logo-size: var(--navbar-logo-size-lg);
@@ -312,7 +379,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
       /* REASONING: Enhanced glass border styling with gradient */
       border: none;
-      border-radius: var(--navbar-radius-lg);
+      border-radius: 0 0 var(--navbar-radius-lg) var(--navbar-radius-lg);
 
       /* REASONING: Enhanced glass morphism background with multiple layers */
       background:
@@ -437,32 +504,58 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 0.5rem;
       min-width: var(--touch-target-min);
       min-height: var(--touch-target-min);
       padding: var(--touch-target-padding) var(--navbar-gap-left);
-      border-radius: var(--navbar-radius-sm);
-      color: var(--navbar-text-secondary);
+      border-radius: var(--navbar-radius-lg);
+      color: oklch(95% 0.01 60deg);
       font-size: var(--navbar-item-size);
+      font-weight: 600;
+      letter-spacing: 0.025em;
       cursor: pointer;
-      transform: translateZ(0);
+      text-decoration: none;
+      transform: none;
       transition:
         color 0.12s ease,
         background-color 0.12s ease,
         transform 0.12s ease,
-        box-shadow 0.12s ease;
+        box-shadow 0.12s ease,
+        text-shadow 0.12s ease;
       outline: none;
-      will-change: transform, background-color;
+      will-change: background-color, color;
+      text-shadow:
+        0 1px 2px oklch(0% 0 0deg / 0.4),
+        0 0 8px oklch(90% 0.02 60deg / 0.3);
+      backdrop-filter: blur(4px);
+      background: oklch(100% 0 0deg / 0.12);
+      border: 1px solid oklch(100% 0 0deg / 0.15);
     }
 
     .nav-item:hover {
-      background-color: var(--navbar-interactive-hover);
-      color: var(--navbar-primary);
-      transform: translateZ(0) translateY(-1px);
+      background: oklch(100% 0 0deg / 0.18);
+      color: oklch(95% 0.01 50deg);
+      transform: translateY(-1px);
+      text-shadow:
+        0 2px 4px oklch(0% 0 0deg / 0.5),
+        0 0 12px oklch(95% 0.01 50deg / 0.4);
+      border-color: oklch(100% 0 0deg / 0.25);
+      box-shadow:
+        0 4px 12px oklch(0% 0 0deg / 0.15),
+        0 2px 6px oklch(0% 0 0deg / 0.1);
     }
 
     .nav-item:active {
-      background-color: var(--navbar-interactive-active);
-      transform: translateZ(0) translateY(0);
+      background: oklch(100% 0 0deg / 0.22);
+      color: oklch(98% 0.005 45deg);
+      transform: translateY(0);
+      text-shadow:
+        0 1px 2px oklch(0% 0 0deg / 0.6),
+        0 0 8px oklch(98% 0.005 45deg / 0.5);
+      border-color: oklch(100% 0 0deg / 0.3);
+      box-shadow:
+        0 2px 6px oklch(0% 0 0deg / 0.2),
+        inset 0 1px 2px oklch(100% 0 0deg / 0.1);
     }
 
     /* ---------- Mobile Menu Button - Modern Redesign with Enhanced Styling ---------- */
@@ -549,13 +642,18 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
     }
 
-    /* ---------- Logo Component - Brand Identity ---------- */
+    /* ---------- Logo Component - Brand Identity with Enhanced Readability ---------- */
     .logo-japanese {
-      color: var(--navbar-primary);
+      color: oklch(from var(--token-white-base) l c h);
       font-family: var(--font-jp);
       font-size: var(--navbar-logo-size);
+      font-weight: 500;
       line-height: 1;
       text-decoration: none;
+      letter-spacing: 0.005em;
+      -webkit-text-stroke: 0.25px
+        oklch(from var(--token-black-base) l c h / 0.4);
+      text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.4);
 
       /* REASONING: Brand-consistent logo styling */
       cursor: pointer;
@@ -568,39 +666,64 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-      /* REASONING: Initial state with subtle glow */
+      /* REASONING: Enhanced readability with optimized shadow system */
       text-shadow:
-        0 0 0 var(--navbar-brand-glow),
-        0 0 0 var(--navbar-brand-glow);
+        0 2px 4px oklch(from var(--token-black-base) l c h / 0.4),
+        0 1px 2px oklch(from var(--token-black-base) l c h / 0.5),
+        0 0 8px oklch(from var(--token-black-base) l c h / 0.3),
+        0 0 16px oklch(from var(--token-purple-base) l c h / 0.2);
 
       /* REASONING: GPU acceleration for logo animations */
       will-change: transform, color, text-shadow, filter;
 
       @media (min-width: 1024px) {
-        color: var(--navbar-text-primary);
+        color: oklch(from var(--token-white-base) l c h);
+        font-weight: 450;
+        -webkit-text-stroke: 0.25px
+          oklch(from var(--token-black-base) l c h / 0.5);
+        text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.5);
+        text-shadow:
+          0 3px 6px oklch(from var(--token-black-base) l c h / 0.5),
+          0 1px 3px oklch(from var(--token-black-base) l c h / 0.6),
+          0 0 12px oklch(from var(--token-black-base) l c h / 0.4),
+          0 0 20px oklch(from var(--token-white-base) l c h / 0.3);
       }
     }
 
     .logo-japanese:hover {
+      color: oklch(from var(--token-white-base) l c h);
+      -webkit-text-stroke: 0.25px
+        oklch(from var(--token-black-base) l c h / 0.6);
+      text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.6);
       text-shadow:
-        0 0 8px var(--navbar-brand-glow),
-        0 0 16px var(--navbar-brand-glow),
-        0 0 24px var(--navbar-brand-glow);
-      filter: drop-shadow(0 0 8px var(--navbar-brand-glow));
+        0 4px 8px oklch(from var(--token-black-base) l c h / 0.6),
+        0 2px 4px oklch(from var(--token-black-base) l c h / 0.7),
+        0 0 16px oklch(from var(--token-black-base) l c h / 0.5),
+        0 0 24px oklch(from var(--token-purple-base) l c h / 0.4),
+        0 0 32px oklch(from var(--token-purple-base) l c h / 0.3);
+      filter: drop-shadow(
+        0 0 12px oklch(from var(--token-purple-base) l c h / 0.4)
+      );
       transform: translateZ(0) translateY(-2px) scale(1.02);
     }
 
-    /* ---------- Ruby Text Styling - Japanese Typography ---------- */
+    /* ---------- Ruby Text Styling - Japanese Typography with Enhanced Readability ---------- */
     .logo-japanese rt {
       margin-bottom: -15px;
-      color: var(--navbar-brand-ruby);
+      color: oklch(from var(--token-white-base) l c h / 0.8);
       font-family: Inter, sans-serif;
       font-size: 0.4em;
-      font-weight: 600;
+      font-weight: 350;
+      -webkit-text-stroke: 0.25px
+        oklch(from var(--token-black-base) l c h / 0.3);
+      text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.3);
       transition:
         color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      text-shadow: 0 0 0 var(--navbar-brand-glow);
+      text-shadow:
+        0 1px 2px oklch(from var(--token-black-base) l c h / 0.5),
+        0 0 4px oklch(from var(--token-black-base) l c h / 0.3),
+        0 0 8px oklch(from var(--token-white-base) l c h / 0.2);
     }
 
     /* ---------- Get Started Buttons - Modern Redesign with Enhanced Styling ---------- */
@@ -794,14 +917,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
   // KISS Principle: Simple, focused functions under 5 lines each
 
   /**
-   * Navigation configuration - matches Astro component data
-   */
-  const NAV_ROUTES = {
-    Tutorial: { path: '/tools', label: 'Tutorial' },
-    Dokumentasi: { path: '/docs', label: 'Dokumentasi' },
-  };
-
-  /**
    * Open Discord invitation - 3-line function following KISS principle
    */
   function openDiscordLink() {
@@ -809,11 +924,12 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
   }
 
   /**
-   * Generic navigation function - 3-line function following KISS principle
+   * Generic navigation function - simplified for single route
    */
   function navigateTo(routeKey) {
-    const route = NAV_ROUTES[routeKey];
-    if (route) window.location.href = route.path;
+    if (routeKey === 'Doc-Penjelasan') {
+      window.location.href = '/docs';
+    }
   }
 
   /**
@@ -867,10 +983,14 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       window.location.href = '/panduan-lengkap-otodidak-bahasa-jepang';
     } else if (action === 'get-started') {
       handleGetStartedAction();
+    } else if (action === 'menu') {
+      // Dispatch custom event to open BottomNavBar menu overlay
+      const menuEvent = new CustomEvent('openMenuOverlay', {
+        detail: { source: 'navbar' },
+      });
+      document.dispatchEvent(menuEvent);
     }
   }
-
-  // Keyboard navigation removed - following Astro's static-first philosophy
 
   /**
    * Initialize navbar functionality

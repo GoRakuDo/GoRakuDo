@@ -8,16 +8,39 @@ const { className = '' } = Astro.props;
 // Navigation items with icons and labels
 const navItems = [
   {
+    href: '/panduan-lengkap-otodidak-bahasa-jepang',
+    label: 'Panduan',
+    icon: 'panduan',
+    ariaLabel: 'Panduan - 学習ガイド',
+  },
+  {
+    href: '/docs',
+    label: 'Doc Penjelasan',
+    icon: 'documentation',
+    ariaLabel: 'Dokumentasi - ドキュメント',
+  },
+  {
+    href: '#',
+    label: 'Menu',
+    icon: 'menu',
+    ariaLabel: 'Menu - メニュー',
+    isMenuButton: true,
+  },
+];
+
+// Menu overlay items
+const menuItems = [
+  {
+    href: '/search',
+    label: 'Search',
+    icon: 'search',
+    ariaLabel: 'Search - 検索',
+  },
+  {
     href: '/tools',
     label: 'Tutorial',
     icon: 'tutorial',
     ariaLabel: 'Tutorial - 学習ガイド',
-  },
-  {
-    href: '/docs',
-    label: 'Dokumentasi',
-    icon: 'documentation',
-    ariaLabel: 'Dokumentasi - ドキュメント',
   },
   {
     href: '/',
@@ -25,14 +48,94 @@ const navItems = [
     icon: 'home',
     ariaLabel: 'Home - ホーム',
   },
+  {
+    href: '/rekomendasi-channel-youtube-belajar-bahasa-jepang',
+    label: 'Rekomendasi YT Jepang',
+    icon: 'youtube',
+    ariaLabel: 'Rekomendasi YT Jepang - おすすめチャンネル',
+  },
+  {
+    href: 'https://youtube.com/@yosiakefas',
+    label: 'Subscribe YouTube',
+    icon: 'subscribe',
+    ariaLabel: 'Subscribe YouTube - チャンネル登録',
+    target: '_blank',
+  },
+  {
+    href: 'https://trakteer.id/yosiakefas/tip',
+    label: 'Dukung Kami',
+    icon: 'heart-plus',
+    ariaLabel: 'Dukung Kami - サポート',
+    target: '_blank',
+  },
 ];
 ---
 
 <nav class={`bottom-nav ${className}`}>
   {
     navItems.map(item => (
-      <a href={item.href} class='nav-btn' data-icon={item.icon}>
+      <a
+        href={item.href}
+        class='nav-btn'
+        data-icon={item.icon}
+        data-menu-button={item.isMenuButton ? 'true' : 'false'}
+        aria-label={item.ariaLabel}
+      >
         <div class='nav-icon'>
+          {item.icon === 'panduan' && (
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
+            >
+              <path
+                d='M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+            </svg>
+          )}
+          {item.icon === 'menu' && (
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
+            >
+              <rect
+                width='18'
+                height='18'
+                x='3'
+                y='3'
+                rx='2'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='M3 9h18'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <path
+                d='m9 16 3-3 3 3'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+            </svg>
+          )}
           {item.icon === 'tutorial' && (
             <svg
               width='20'
@@ -75,35 +178,23 @@ const navItems = [
               aria-hidden='true'
             >
               <path
-                d='M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z'
+                d='M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              />
+              <circle
+                cx='12'
+                cy='8'
+                r='2'
                 stroke='currentColor'
                 stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
               />
               <path
-                d='M14 2V8H20'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M16 13H8'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M16 17H8'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M10 9H8'
+                d='M8.714 14h-3.71a1 1 0 0 0-.948.683l-2.004 6A1 1 0 0 0 3 22h18a1 1 0 0 0 .948-1.316l-2-6a1 1 0 0 0-.949-.684h-3.712'
                 stroke='currentColor'
                 stroke-width='2'
                 stroke-linecap='round'
@@ -143,8 +234,250 @@ const navItems = [
   }
 </nav>
 
+<!-- Menu Overlay -->
+<div id='menu-overlay' class='menu-overlay' aria-hidden='true'>
+  <div class='menu-overlay-backdrop'></div>
+  <div class='menu-overlay-content'>
+    <div class='menu-overlay-header'>
+      <h2 class='menu-overlay-title'>Menu</h2>
+      <button class='menu-overlay-close' aria-label='Close menu'>
+        <svg
+          width='24'
+          height='24'
+          viewBox='0 0 24 24'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M18 6L6 18'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'></path>
+          <path
+            d='M6 6L18 18'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'></path>
+        </svg>
+      </button>
+    </div>
+    <div class='menu-overlay-items'>
+      {
+        menuItems.map((item, index) => (
+          <>
+            {item.icon === 'subscribe' && <hr class='menu-overlay-divider' />}
+            <a
+              href={item.href}
+              class='menu-overlay-item'
+              aria-label={item.ariaLabel}
+              target={item.target || '_self'}
+            >
+              <div class='menu-overlay-icon'>
+                {item.icon === 'search' && (
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M14 2v4a2 2 0 0 0 2 2h4'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M4.268 21a2 2 0 0 0 1.727 1H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='m9 18-1.5-1.5'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <circle
+                      cx='5'
+                      cy='14'
+                      r='3'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </svg>
+                )}
+                {item.icon === 'tutorial' && (
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M10 15h4'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='m14.817 10.995-.971-1.45 1.034-1.232a2 2 0 0 0-2.025-3.238l-1.82.364L9.91 3.885a2 2 0 0 0-3.625.748L6.141 6.55l-1.725.426a2 2 0 0 0-.19 3.756l.657.27'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='m18.822 10.995 2.26-5.38a1 1 0 0 0-.557-1.318L16.954 2.9a1 1 0 0 0-1.281.533l-.924 2.122'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M4 12.006A1 1 0 0 1 4.994 11H19a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </svg>
+                )}
+                {item.icon === 'youtube' && (
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M22.54 6.42C22.4212 5.94541 22.1793 5.51057 21.8387 5.15941C21.498 4.80824 21.0707 4.55318 20.6 4.42C18.88 4 12 4 12 4C12 4 5.12 4 3.4 4.42C2.92931 4.55318 2.50198 4.80824 2.16135 5.15941C1.82072 5.51057 1.57881 5.94541 1.46 6.42C1.14521 8.18656 0.991235 9.97622 1 11.77C0.991235 13.5638 1.14521 15.3534 1.46 17.12C1.57881 17.5946 1.82072 18.0294 2.16135 18.3806C2.50198 18.7317 2.92931 18.9868 3.4 19.12C5.12 19.54 12 19.54 12 19.54C12 19.54 18.88 19.54 20.6 19.12C21.0707 18.9868 21.498 18.7317 21.8387 18.3806C22.1793 18.0294 22.4212 17.5946 22.54 17.12C22.8548 15.3534 23.0088 13.5638 23 11.77C23.0088 9.97622 22.8548 8.18656 22.54 6.42Z'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <polygon
+                      points='9.75,15.02 15.5,11.77 9.75,8.52'
+                      fill='currentColor'
+                    />
+                  </svg>
+                )}
+                {item.icon === 'subscribe' && (
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M22.54 6.42C22.4212 5.94541 22.1793 5.51057 21.8387 5.15941C21.498 4.80824 21.0707 4.55318 20.6 4.42C18.88 4 12 4 12 4C12 4 5.12 4 3.4 4.42C2.92931 4.55318 2.50198 4.80824 2.16135 5.15941C1.82072 5.51057 1.57881 5.94541 1.46 6.42C1.14521 8.18656 0.991235 9.97622 1 11.77C0.991235 13.5638 1.14521 15.3534 1.46 17.12C1.57881 17.5946 1.82072 18.0294 2.16135 18.3806C2.50198 18.7317 2.92931 18.9868 3.4 19.12C5.12 19.54 12 19.54 12 19.54C12 19.54 18.88 19.54 20.6 19.12C21.0707 18.9868 21.498 18.7317 21.8387 18.3806C22.1793 18.0294 22.4212 17.5946 22.54 17.12C22.8548 15.3534 23.0088 13.5638 23 11.77C23.0088 9.97622 22.8548 8.18656 22.54 6.42Z'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <polygon
+                      points='9.75,15.02 15.5,11.77 9.75,8.52'
+                      fill='currentColor'
+                    />
+                  </svg>
+                )}
+                {item.icon === 'home' && (
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M9 22V12H15V22'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </svg>
+                )}
+                {item.icon === 'heart-plus' && (
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='m14.479 19.374-.971.939a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5a5.2 5.2 0 0 1-.219 1.49'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M15 15h6'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                    <path
+                      d='M18 12v6'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    />
+                  </svg>
+                )}
+              </div>
+              <span class='menu-overlay-label'>{item.label}</span>
+            </a>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
 <style is:global>
-  /* ===== DESIGN TOKENS - FREQUENTLY USED VALUES ===== */
+  /* ========== ASTRO NATIVE CSS OPTIMIZATION - UNIFIED DESIGN SYSTEM ========== */
+  /* 
+   * ARCHITECTURAL DECISION: Unified design system with Navbar.astro
+   * This ensures consistent visual language across all navigation components
+   * 
+   * PERFORMANCE CONSIDERATIONS:
+   * - Shared design tokens reduce CSS bundle size
+   * - Consistent animations improve perceived performance
+   * - Unified color system enables better theme management
+   * 
+   * FUTURE EXTENSIBILITY:
+   * - Shared tokens enable easy theme switching
+   * - Consistent patterns improve maintainability
+   * - Unified animations create cohesive user experience
+   */
+
+  /* ===== DESIGN TOKENS - UNIFIED WITH NAVBAR ===== */
   .bottom-nav {
     /* Layout properties */
     position: fixed;
@@ -163,24 +496,55 @@ const navItems = [
     margin: var(--bottom-nav-margin);
     margin-bottom: calc(var(--bottom-nav-margin) + var(--safe-area-bottom));
     padding: var(--bottom-nav-padding);
-    border: 1px solid var(--bottom-nav-white-15);
-
-    /* 角丸と内側余白 */
+    border: none;
     border-radius: var(--bottom-nav-radius-xl);
 
-    /* GlassMorphism背景効果 */
-    background: linear-gradient(
-      135deg,
-      var(--bottom-nav-white-10) 0%,
-      var(--bottom-nav-white-05) 50%,
-      var(--bottom-nav-white-08) 100%
-    );
-    backdrop-filter: var(--bottom-nav-blur-base);
+    /* UNIFIED GlassMorphism背景効果 - Navbar.astroと同じ */
+    background:
+      linear-gradient(
+        135deg,
+        oklch(6% 0.008 270deg / 0.15) 0%,
+        oklch(8% 0.01 270deg / 0.12) 25%,
+        oklch(6% 0.008 270deg / 0.18) 50%,
+        oklch(8% 0.01 270deg / 0.12) 75%,
+        oklch(6% 0.008 270deg / 0.15) 100%
+      ),
+      radial-gradient(
+        ellipse at 50% 0%,
+        oklch(65% 0.18 280deg / 0.12) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse at 0% 50%,
+        oklch(65% 0.18 15deg / 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 100% 50%,
+        oklch(70% 0.15 45deg / 0.08) 0%,
+        transparent 50%
+      );
+    transform: translateZ(0);
+
+    /* UNIFIED backdrop filters - Navbar.astroと同じ */
+    backdrop-filter: blur(16px) saturate(125%) brightness(1.05) contrast(1.05);
+
+    /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
-      0 8px 32px var(--bottom-nav-black-15),
-      0 4px 16px var(--bottom-nav-black-10),
-      inset 0 1px 0 var(--bottom-nav-white-20),
-      inset 0 -1px 0 var(--bottom-nav-white-10);
+      0 8px 32px oklch(0% 0 0deg / 0.12),
+      0 4px 16px oklch(0% 0 0deg / 0.08),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+      inset 0 -1px 0 oklch(0% 0 0deg / 0.1);
+
+    /* UNIFIED transition system - Navbar.astroと同じ */
+    transition:
+      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      backdrop-filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* GPU acceleration */
+    will-change: background, backdrop-filter, transform, box-shadow;
 
     /* デスクトップでは非表示 */
     @media (min-width: 1024px) {
@@ -197,21 +561,57 @@ const navItems = [
       padding: var(--bottom-nav-padding-small);
     }
 
-    /* Color Tokens - OKLCH format for consistency */
+    /* UNIFIED Color Tokens - Navbar.astroと同じ */
     --bottom-nav-white: oklch(100% 0 0deg);
+    --bottom-nav-white-05: oklch(100% 0 0deg / 0.05);
+    --bottom-nav-white-08: oklch(100% 0 0deg / 0.08);
+    --bottom-nav-white-10: oklch(100% 0 0deg / 0.1);
     --bottom-nav-white-15: oklch(100% 0 0deg / 0.15);
     --bottom-nav-white-20: oklch(100% 0 0deg / 0.2);
     --bottom-nav-white-25: oklch(100% 0 0deg / 0.25);
-    --bottom-nav-white-10: oklch(100% 0 0deg / 0.1);
-    --bottom-nav-white-08: oklch(100% 0 0deg / 0.08);
-    --bottom-nav-white-05: oklch(100% 0 0deg / 0.05);
-    --bottom-nav-primary: oklch(65% 0.25 280deg);
+    --bottom-nav-black: oklch(0% 0 0deg);
+    --bottom-nav-black-05: oklch(0% 0 0deg / 0.05);
+    --bottom-nav-black-10: oklch(0% 0 0deg / 0.1);
+    --bottom-nav-black-15: oklch(0% 0 0deg / 0.15);
+    --bottom-nav-black-6: oklch(6% 0.008 270deg);
+    --bottom-nav-black-8: oklch(8% 0.01 270deg);
+    --bottom-nav-black-25: oklch(25% 0.015 270deg);
+
+    /* UNIFIED Primary Colors - Medium to High Contrast Dark Violet */
+    --bottom-nav-primary: oklch(45% 0.25 280deg / 0.65);
+    --bottom-nav-primary-dark: oklch(40% 0.3 280deg / 0.65);
+    --bottom-nav-primary-light: oklch(50% 0.2 280deg / 0.65);
+    --bottom-nav-primary-18: oklch(65% 0.18 280deg);
     --bottom-nav-primary-25: oklch(65% 0.25 280deg / 0.25);
     --bottom-nav-primary-30: oklch(65% 0.25 280deg / 0.3);
-    --bottom-nav-black: oklch(0% 0 0deg);
-    --bottom-nav-black-15: oklch(0% 0 0deg / 0.15);
-    --bottom-nav-black-10: oklch(0% 0 0deg / 0.1);
-    --bottom-nav-black-05: oklch(0% 0 0deg / 0.05);
+    --bottom-nav-primary-70: oklch(70% 0.12 280deg);
+
+    /* UNIFIED Secondary Accent Colors - Navbar.astroと同じ */
+    --bottom-nav-accent-orange: oklch(65% 0.18 15deg);
+    --bottom-nav-accent-blue: oklch(65% 0.25 280deg);
+    --bottom-nav-accent-green: oklch(70% 0.15 45deg);
+
+    /* UNIFIED Text Colors - Navbar.astroと同じ */
+    --bottom-nav-text-primary: oklch(98% 0.002 270deg);
+    --bottom-nav-text-secondary: oklch(85% 0.002 270deg);
+    --bottom-nav-text-muted: oklch(75% 0.002 270deg);
+
+    /* UNIFIED GlassMorphism Tokens - Navbar.astroと同じ */
+    --bottom-nav-glass-bg: oklch(6% 0.008 270deg / 0.12);
+    --bottom-nav-glass-bg-8: oklch(8% 0.01 270deg / 0.08);
+    --bottom-nav-glass-border: oklch(25% 0.015 270deg / 0.15);
+    --bottom-nav-glass-glow: oklch(65% 0.18 280deg / 0.08);
+    --bottom-nav-glass-glow-60: oklch(65% 0.18 280deg / 0.6);
+
+    /* UNIFIED Interactive State Tokens - Navbar.astroと同じ */
+    --bottom-nav-interactive-hover: oklch(98% 0.002 270deg / 0.1);
+    --bottom-nav-interactive-focus: oklch(98% 0.002 270deg / 0.15);
+    --bottom-nav-interactive-active: oklch(98% 0.002 270deg / 0.2);
+
+    /* UNIFIED Brand Tokens - Navbar.astroと同じ */
+    --bottom-nav-brand-glow: oklch(65% 0.18 280deg / 0.6);
+    --bottom-nav-brand-ruby: oklch(65% 0.008 270deg);
+    --bottom-nav-brand-ruby-hover: oklch(70% 0.12 280deg);
 
     /* Spacing Tokens */
     --bottom-nav-margin: 0.75rem;
@@ -221,135 +621,563 @@ const navItems = [
     --bottom-nav-gap: 0.25rem;
     --bottom-nav-gap-small: 0.125rem;
 
-    /* Border Radius Tokens */
-    --bottom-nav-radius: var(--border-radius-md, 0.5rem);
+    /* UNIFIED Border Radius Tokens - Navbar.astroと同じ */
+    --bottom-nav-radius-sm: 0.375rem;
+    --bottom-nav-radius-md: 0.75rem;
+    --bottom-nav-radius-lg: 1.25rem;
     --bottom-nav-radius-xl: var(--radius-xl, 1rem);
 
-    /* Backdrop Filter Tokens */
-    --bottom-nav-blur-base: blur(8px) saturate(120%);
-    --bottom-nav-blur-hover: blur(12px) saturate(140%);
-    --bottom-nav-blur-active: blur(6px) saturate(130%);
-    --bottom-nav-blur-current: blur(10px) saturate(150%);
-    --bottom-nav-blur-overlay: blur(4px) saturate(110%);
-    --bottom-nav-blur-touch: blur(8px) saturate(130%);
-  }
+    /* UNIFIED Backdrop Filter Tokens */
+    --bottom-nav-blur-base: blur(16px) saturate(125%) brightness(1.05)
+      contrast(1.05);
+    --bottom-nav-blur-transparent: blur(0) saturate(100%) brightness(1)
+      contrast(1);
 
-  /* モバイル専用の固定ボトムナビ。デスクトップでは非表示 */
+    /* ---------- Navigation Buttons - UNIFIED WITH MOBILE-MENU-BTN DESIGN ---------- */
+    .nav-btn {
+      position: relative;
+      display: flex;
+      flex: 1 1 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      min-height: 48px;
+      padding: 0.75rem 0.5rem;
+      border: none;
+      border-radius: var(--bottom-nav-radius-lg);
 
-  /* Note: .bottom-nav styles are already defined above at line 156 */
+      /* UNIFIED background - mobile-menu-btnと完全に同じ、グラデーション透明化 */
+      background:
+        linear-gradient(var(--bottom-nav-primary), var(--bottom-nav-primary))
+          padding-box,
+        linear-gradient(
+            135deg,
+            oklch(100% 0 0deg / 0.3) 0%,
+            oklch(98% 0 0deg / 0.3) 50%,
+            oklch(95% 0 0deg / 0.3) 100%
+          )
+          border-box;
 
-  .nav-btn {
-    position: relative;
-    display: flex;
-    flex: 1 1 0;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    min-height: var(--touch-target-min, 44px);
-    padding: var(--bottom-nav-padding) 0.25rem;
-    border-radius: var(--bottom-nav-radius);
-    background: var(--bottom-nav-white-15);
-    color: var(--bottom-nav-white);
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    transition:
-      background-color var(--transition-bg, 0.2s ease),
-      transform var(--transition-transform, 0.2s ease),
-      box-shadow var(--transition-shadow, 0.2s ease),
-      color var(--transition-bg, 0.2s ease),
-      backdrop-filter var(--transition-bg, 0.2s ease);
-    backdrop-filter: var(--bottom-nav-blur-base);
+      color: var(--bottom-nav-text-primary);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transform: translateZ(0);
 
-    /* 小さな画面での調整 */
-    @media (max-width: 360px) {
-      padding: var(--bottom-nav-padding-small) 0.125rem;
+      /* UNIFIED transition system - mobile-menu-btnと同じ */
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      touch-action: manipulation;
+      /* UNIFIED shadow system - mobile-menu-btnと同じ、薄い影追加 */
+      box-shadow:
+        0 6px 20px oklch(0% 0 0deg / 0.08),
+        0 4px 16px oklch(65% 0.25 280deg / 0.15),
+        0 2px 8px oklch(0% 0 0deg / 0.06),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      will-change: transform, background, box-shadow, filter;
+      -webkit-tap-highlight-color: transparent;
+      filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
     }
-  }
 
-  .nav-btn::before {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      var(--bottom-nav-white-20) 0%,
-      var(--bottom-nav-white-10) 100%
-    );
-    opacity: 0;
-    transition: opacity var(--transition-bg, 0.2s ease);
-    content: '';
-    backdrop-filter: var(--bottom-nav-blur-overlay);
-  }
-
-  .nav-btn:hover {
-    background: var(--bottom-nav-white-20);
-    color: var(--bottom-nav-primary);
-    transform: translateY(-2px);
-    backdrop-filter: var(--bottom-nav-blur-hover);
-    box-shadow:
-      0 4px 12px var(--bottom-nav-black-15),
-      0 2px 4px var(--bottom-nav-black-10);
-  }
-
-  .nav-btn:hover::before {
-    opacity: 1;
-  }
-
-  .nav-btn:active {
-    background: var(--bottom-nav-white-25);
-    backdrop-filter: var(--bottom-nav-blur-active);
-    transform: translateY(-1px);
-    box-shadow:
-      0 2px 6px var(--bottom-nav-black-10),
-      0 1px 2px var(--bottom-nav-black-05);
-  }
-
-  /* Focus styles removed - following Astro's static-first philosophy */
-
-  .nav-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 0.25rem;
-    transition: transform var(--transition-transform, 0.2s ease);
-  }
-
-  .nav-btn:hover .nav-icon {
-    transform: scale(1.1);
-  }
-
-  .nav-btn:active .nav-icon {
-    transform: scale(0.95);
-  }
-
-  .nav-label {
-    font-size: 0.6875rem;
-    font-weight: 500;
-    line-height: 1;
-    text-align: center;
-    transition: color var(--transition-bg, 0.2s ease);
-
-    /* 小さな画面での調整 */
-    @media (max-width: 360px) {
-      font-size: 0.625rem;
+    .nav-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.1) 0%,
+        transparent 50%,
+        oklch(100% 0 0deg / 0.05) 100%
+      );
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
-  }
 
-  /* Active state styling removed - following Astro's static-first philosophy */
-
-  /* タッチデバイス向けの最適化 */
-  @media (hover: none) and (pointer: coarse) {
     .nav-btn:hover {
-      transform: none;
-      box-shadow: none;
+      background:
+        linear-gradient(
+            var(--bottom-nav-primary-light),
+            var(--bottom-nav-primary-light)
+          )
+          padding-box,
+        linear-gradient(
+            135deg,
+            oklch(100% 0 0deg / 0.4) 0%,
+            oklch(98% 0 0deg / 0.4) 50%,
+            oklch(95% 0 0deg / 0.4) 100%
+          )
+          border-box;
+      box-shadow:
+        0 10px 40px oklch(0% 0 0deg / 0.12),
+        0 8px 32px oklch(65% 0.25 280deg / 0.25),
+        0 4px 16px oklch(0% 0 0deg / 0.1),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      transform: translateZ(0) translateY(-2px) scale(1.02);
+      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
+    }
+
+    .nav-btn:hover::before {
+      opacity: 1;
     }
 
     .nav-btn:active {
-      background: var(--bottom-nav-white-25);
+      transform: translateZ(0) translateY(0) scale(0.98);
+      box-shadow:
+        0 3px 12px oklch(0% 0 0deg / 0.06),
+        0 2px 8px oklch(65% 0.25 280deg / 0.15),
+        0 1px 4px oklch(0% 0 0deg / 0.05),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
+      /* 小さな画面での調整 */
+      @media (max-width: 360px) {
+        min-height: 44px;
+        padding: 0.625rem 0.375rem;
+      }
+    }
+
+    /* Focus styles removed - following Astro's static-first philosophy */
+
+    /* ---------- SVG Icon System - UNIFIED WITH NAVBAR ---------- */
+    .nav-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.375rem;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateZ(0);
+      will-change: transform, filter;
+
+      svg {
+        flex-shrink: 0;
+        width: 1.25em;
+        max-width: 100%;
+        height: 1.25em;
+        max-height: 100%;
+        vertical-align: middle;
+        color: oklch(98% 0.005 50deg);
+        fill: none;
+        stroke: currentcolor;
+        stroke-width: 2.5;
+        transform: translateZ(0);
+        transition:
+          color var(--duration-fast) ease,
+          transform var(--duration-fast) ease,
+          opacity var(--duration-fast) ease;
+        will-change: transform, opacity;
+      }
+    }
+
+    &:active .nav-icon {
       transform: scale(0.95);
-      backdrop-filter: var(--bottom-nav-blur-touch);
+
+      svg {
+        color: oklch(92% 0.008 55deg);
+        opacity: 0.8;
+        transform: translateZ(0) scale(0.95);
+      }
+    }
+
+    /* ---------- Navigation Label - UNIFIED WITH NAVBAR ---------- */
+    .nav-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      color: oklch(98% 0.005 50deg);
+      letter-spacing: 0.025em;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateZ(0);
+      will-change: color, transform;
+
+      /* 小さな画面での調整 */
+      @media (max-width: 360px) {
+        font-size: 0.6875rem;
+      }
+    }
+
+    /* Active state styling removed - following Astro's static-first philosophy */
+
+    /* ---------- Touch Device Optimization - UNIFIED WITH NAVBAR ---------- */
+    @media (hover: none) and (pointer: coarse) {
+      .nav-btn:active {
+        /* UNIFIED active effect for touch - Navbar.astroと同じ */
+        transform: translateZ(0) translateY(0) scale(0.98);
+        box-shadow:
+          0 1px 4px oklch(from var(--token-black-base) l c h / 0.08),
+          0 1px 2px oklch(from var(--token-black-base) l c h / 0.06),
+          inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+          inset 0 -1px 0 oklch(from var(--token-black-base) l c h / 0.08);
+        filter: drop-shadow(
+          0 1px 4px oklch(from var(--token-black-base) l c h / 0.08)
+        );
+      }
+
+      .nav-btn:active .nav-icon {
+        transform: scale(0.95);
+
+        svg {
+          color: oklch(92% 0.008 55deg);
+          opacity: 0.8;
+          transform: translateZ(0) scale(0.95);
+        }
+      }
+
+      .nav-btn:active .nav-label {
+        transform: none;
+        text-shadow: none;
+      }
     }
   }
+
+  /* ========== MENU OVERLAY STYLES - UNIFIED WITH NAVBAR DESIGN ========== */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .menu-overlay-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: oklch(from var(--token-black-base) l c h / 0.8);
+    backdrop-filter: blur(12px) saturate(120%);
+  }
+
+  .menu-overlay-content {
+    position: relative;
+    width: 90%;
+    max-width: 420px;
+    max-height: 80vh;
+    /* UNIFIED GlassMorphism背景効果 - Navbar.astroと同じ */
+    background:
+      linear-gradient(
+        135deg,
+        oklch(6% 0.008 270deg / 0.15) 0%,
+        oklch(8% 0.01 270deg / 0.12) 25%,
+        oklch(6% 0.008 270deg / 0.18) 50%,
+        oklch(8% 0.01 270deg / 0.12) 75%,
+        oklch(6% 0.008 270deg / 0.15) 100%
+      ),
+      radial-gradient(
+        ellipse at 50% 0%,
+        oklch(65% 0.18 280deg / 0.12) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse at 0% 50%,
+        oklch(65% 0.18 15deg / 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at 100% 50%,
+        oklch(70% 0.15 45deg / 0.08) 0%,
+        transparent 50%
+      );
+    border: 1px solid oklch(25% 0.015 270deg / 0.15);
+    border-radius: 1.5rem;
+    /* UNIFIED backdrop filters - Navbar.astroと同じ */
+    backdrop-filter: blur(20px) saturate(150%) brightness(1.1) contrast(1.1);
+    /* UNIFIED shadow system - Navbar.astroと同じ */
+    box-shadow:
+      0 20px 60px oklch(from var(--token-black-base) l c h / 0.25),
+      0 8px 32px oklch(from var(--token-black-base) l c h / 0.15),
+      0 4px 16px oklch(from var(--token-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+      inset 0 -1px 0 oklch(from var(--token-black-base) l c h / 0.1);
+    transform: scale(0.9) translateY(20px);
+    /* UNIFIED transition system - Navbar.astroと同じ */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+  }
+
+  .menu-overlay.active .menu-overlay-content {
+    transform: scale(1) translateY(0);
+  }
+
+  .menu-overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid oklch(100% 0 0deg / 0.1);
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.05) 0%,
+      oklch(100% 0 0deg / 0.02) 100%
+    );
+  }
+
+  .menu-overlay-title {
+    color: oklch(from var(--token-white-base) l c h);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.02em;
+    /* UNIFIED text shadow - Navbar.astroと同じ */
+    text-shadow:
+      0 2px 4px oklch(from var(--token-black-base) l c h / 0.4),
+      0 1px 2px oklch(from var(--token-black-base) l c h / 0.5),
+      0 0 8px oklch(from var(--token-black-base) l c h / 0.3);
+  }
+
+  .menu-overlay-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.1) 0%,
+      oklch(100% 0 0deg / 0.05) 100%
+    );
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 50%;
+    color: oklch(from var(--token-white-base) l c h);
+    cursor: pointer;
+    /* UNIFIED transition system - Navbar.astroと同じ */
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* UNIFIED shadow system - Navbar.astroと同じ */
+    box-shadow:
+      0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+  }
+
+  .menu-overlay-close:hover {
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.2) 0%,
+      oklch(100% 0 0deg / 0.1) 100%
+    );
+    border-color: oklch(100% 0 0deg / 0.25);
+    transform: scale(1.05);
+    box-shadow:
+      0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+  }
+
+  .menu-overlay-close:active {
+    transform: scale(0.95);
+    box-shadow:
+      0 1px 4px oklch(from var(--token-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+  }
+
+  .menu-overlay-items {
+    padding: 1rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .menu-overlay-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(from var(--token-white-base) l c h / 0.2) 20%,
+      oklch(from var(--token-white-base) l c h / 0.4) 50%,
+      oklch(from var(--token-white-base) l c h / 0.2) 80%,
+      transparent 100%
+    );
+    border: none;
+    margin: 0.5rem 0;
+  }
+
+  .menu-overlay-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    /* UNIFIED background - Navbar.astroと同じ */
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.08) 0%,
+      oklch(100% 0 0deg / 0.05) 100%
+    );
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 1rem;
+    color: oklch(from var(--token-white-base) l c h);
+    text-decoration: none;
+    /* UNIFIED transition system - Navbar.astroと同じ */
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    /* UNIFIED shadow system - Navbar.astroと同じ */
+    box-shadow:
+      0 2px 8px oklch(from var(--token-black-base) l c h / 0.08),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+  }
+
+  .menu-overlay-item:hover {
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.15) 0%,
+      oklch(100% 0 0deg / 0.1) 100%
+    );
+    border-color: oklch(100% 0 0deg / 0.25);
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 24px oklch(from var(--token-black-base) l c h / 0.15),
+      0 4px 12px oklch(from var(--token-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+  }
+
+  .menu-overlay-item:active {
+    transform: translateY(0);
+    box-shadow:
+      0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+  }
+
+  .menu-overlay-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    /* UNIFIED background - Navbar.astroと同じ */
+    background: linear-gradient(
+      135deg,
+      var(--bottom-nav-primary) 0%,
+      var(--bottom-nav-primary-dark) 100%
+    );
+    border: 1px solid oklch(100% 0 0deg / 0.1);
+    border-radius: 50%;
+    color: oklch(from var(--token-white-base) l c h);
+    /* UNIFIED shadow system - Navbar.astroと同じ */
+    box-shadow:
+      0 2px 8px oklch(from var(--token-black-base) l c h / 0.15),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .menu-overlay-item:hover .menu-overlay-icon {
+    background: linear-gradient(
+      135deg,
+      var(--bottom-nav-primary-light) 0%,
+      var(--bottom-nav-primary) 100%
+    );
+    transform: scale(1.05);
+    box-shadow:
+      0 4px 12px oklch(from var(--token-black-base) l c h / 0.2),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+  }
+
+  .menu-overlay-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .menu-overlay-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: oklch(from var(--token-white-base) l c h);
+    letter-spacing: 0.02em;
+    /* UNIFIED text shadow - Navbar.astroと同じ */
+    text-shadow:
+      0 1px 2px oklch(from var(--token-black-base) l c h / 0.3),
+      0 0 4px oklch(from var(--token-black-base) l c h / 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .menu-overlay-item:hover .menu-overlay-label {
+    color: oklch(from var(--token-white-base) l c h / 0.95);
+    text-shadow:
+      0 2px 4px oklch(from var(--token-black-base) l c h / 0.4),
+      0 1px 2px oklch(from var(--token-black-base) l c h / 0.5);
+  }
 </style>
+
+<script is:inline>
+  // Menu Overlay functionality
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuButton = document.querySelector('[data-menu-button="true"]');
+    const closeButton = document.querySelector('.menu-overlay-close');
+    const backdrop = document.querySelector('.menu-overlay-backdrop');
+
+    // Open menu overlay
+    function openMenu() {
+      if (menuOverlay) {
+        menuOverlay.classList.add('active');
+        menuOverlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Close menu overlay
+    function closeMenu() {
+      if (menuOverlay) {
+        menuOverlay.classList.remove('active');
+        menuOverlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Event listeners
+    if (menuButton) {
+      menuButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        openMenu();
+      });
+    }
+
+    if (closeButton) {
+      closeButton.addEventListener('click', closeMenu);
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', closeMenu);
+    }
+
+    // Close on escape key
+    document.addEventListener('keydown', function (e) {
+      if (
+        e.key === 'Escape' &&
+        menuOverlay &&
+        menuOverlay.classList.contains('active')
+      ) {
+        closeMenu();
+      }
+    });
+
+    // Close on menu item click
+    const menuItems = document.querySelectorAll('.menu-overlay-item');
+    menuItems.forEach(item => {
+      item.addEventListener('click', function () {
+        // Small delay to allow navigation
+        setTimeout(closeMenu, 100);
+      });
+    });
+
+    // Listen for custom event from Navbar to open menu overlay
+    document.addEventListener('openMenuOverlay', function (event) {
+      if (event.detail && event.detail.source === 'navbar') {
+        openMenu();
+      }
+    });
+  });
+</script>

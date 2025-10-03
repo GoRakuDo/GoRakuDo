@@ -207,19 +207,19 @@ const pageKeywords = [
               role='tabpanel'
             >
               {section.channels.map(channel => (
-                <article class='rc-channel-item'>
-                  <ChannelCard
-                    channelCover={channel.channelCover}
-                    channelName={channel.channelName}
-                    channelProfile={channel.channelProfile}
-                    channelURL={channel.channelURL}
-                  />
-                </article>
+              <article class='rc-channel-item'>
+                <ChannelCard
+                  channelCover={channel.channelCover}
+                  channelName={channel.channelName}
+                  channelProfile={channel.channelProfile}
+                  channelURL={channel.channelURL}
+                />
+              </article>
               ))}
             </div>
           </section>
-        ))
-      }
+            ))
+          }
     </div>
   </main>
 

@@ -360,6 +360,8 @@
     flex-direction: column;
     background-color: var(--token-black-base);
     color: var(--token-white-base);
+
+    /* padding-top: 76px; Navbar height compensation */
   }
 
   /* REASONING: Preserving legacy layout structure */
