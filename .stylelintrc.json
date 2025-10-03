@@ -107,7 +107,7 @@
     "declaration-block-no-shorthand-property-overrides": true,
     "selector-max-type": 2,
     "declaration-no-important": true,
-    "selector-class-pattern": "^[a-z][a-zA-Z0-9-]*$",
+    "selector-class-pattern": "^[a-z][a-zA-Z0-9_-]*$",
     "selector-pseudo-class-no-unknown": [
       true,
       {

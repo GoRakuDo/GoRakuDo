@@ -508,13 +508,15 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       min-width: var(--touch-target-min);
       min-height: var(--touch-target-min);
       padding: var(--touch-target-padding) var(--navbar-gap-left);
+      border: 1px solid oklch(100% 0 0deg / 0.15);
       border-radius: var(--navbar-radius-lg);
+      background: oklch(100% 0 0deg / 0.12);
       color: oklch(95% 0.01 60deg);
       font-size: var(--navbar-item-size);
       font-weight: 600;
+      text-decoration: none;
       letter-spacing: 0.025em;
       cursor: pointer;
-      text-decoration: none;
       transform: none;
       transition:
         color 0.12s ease,
@@ -528,8 +530,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         0 1px 2px oklch(0% 0 0deg / 0.4),
         0 0 8px oklch(90% 0.02 60deg / 0.3);
       backdrop-filter: blur(4px);
-      background: oklch(100% 0 0deg / 0.12);
-      border: 1px solid oklch(100% 0 0deg / 0.15);
     }
 
     .nav-item:hover {
@@ -653,7 +653,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       letter-spacing: 0.005em;
       -webkit-text-stroke: 0.25px
         oklch(from var(--token-black-base) l c h / 0.4);
-      text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.4);
+
+      /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.4); Non-standard property removed */
 
       /* REASONING: Brand-consistent logo styling */
       cursor: pointer;
@@ -681,7 +682,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         font-weight: 450;
         -webkit-text-stroke: 0.25px
           oklch(from var(--token-black-base) l c h / 0.5);
-        text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.5);
+
+        /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.5); Non-standard property removed */
         text-shadow:
           0 3px 6px oklch(from var(--token-black-base) l c h / 0.5),
           0 1px 3px oklch(from var(--token-black-base) l c h / 0.6),
@@ -694,7 +696,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       color: oklch(from var(--token-white-base) l c h);
       -webkit-text-stroke: 0.25px
         oklch(from var(--token-black-base) l c h / 0.6);
-      text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.6);
+
+      /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.6); Non-standard property removed */
       text-shadow:
         0 4px 8px oklch(from var(--token-black-base) l c h / 0.6),
         0 2px 4px oklch(from var(--token-black-base) l c h / 0.7),
@@ -716,7 +719,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       font-weight: 350;
       -webkit-text-stroke: 0.25px
         oklch(from var(--token-black-base) l c h / 0.3);
-      text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.3);
+
+      /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.3); Non-standard property removed */
       transition:
         color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);

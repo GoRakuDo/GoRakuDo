@@ -81,7 +81,7 @@ const menuItems = [
         data-menu-button={item.isMenuButton ? 'true' : 'false'}
         aria-label={item.ariaLabel}
       >
-        <div class='nav-icon'>
+        <div class='nav-btn__icon'>
           {item.icon === 'panduan' && (
             <svg
               width='20'
@@ -228,7 +228,7 @@ const menuItems = [
             </svg>
           )}
         </div>
-        <span class='nav-label'>{item.label}</span>
+        <span class='nav-btn__label'>{item.label}</span>
       </a>
     ))
   }
@@ -462,6 +462,7 @@ const menuItems = [
 
 <style is:global>
   /* ========== ASTRO NATIVE CSS OPTIMIZATION - UNIFIED DESIGN SYSTEM ========== */
+
   /* 
    * ARCHITECTURAL DECISION: Unified design system with Navbar.astro
    * This ensures consistent visual language across all navigation components
@@ -658,7 +659,6 @@ const menuItems = [
             oklch(95% 0 0deg / 0.3) 100%
           )
           border-box;
-
       color: var(--bottom-nav-text-primary);
       font-size: 0.8125rem;
       font-weight: 600;
@@ -670,6 +670,7 @@ const menuItems = [
       /* UNIFIED transition system - mobile-menu-btnと同じ */
       transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       touch-action: manipulation;
+
       /* UNIFIED shadow system - mobile-menu-btnと同じ、薄い影追加 */
       box-shadow:
         0 6px 20px oklch(0% 0 0deg / 0.08),
@@ -682,21 +683,23 @@ const menuItems = [
     }
 
     .nav-btn::before {
-      content: '';
       position: absolute;
-      inset: 0;
+      border-radius: inherit;
       background: linear-gradient(
         135deg,
         oklch(100% 0 0deg / 0.1) 0%,
         transparent 50%,
         oklch(100% 0 0deg / 0.05) 100%
       );
-      border-radius: inherit;
       opacity: 0;
       transition: opacity 0.4s ease;
+      content: '';
+      inset: 0;
     }
 
-    .nav-btn:hover {
+    /* Moved hover::before to reduce specificity */
+
+    .nav-btn--hover {
       background:
         linear-gradient(
             var(--bottom-nav-primary-light),
@@ -719,11 +722,13 @@ const menuItems = [
       filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
     }
 
-    .nav-btn:hover::before {
+    .nav-btn--hover::before {
       opacity: 1;
     }
 
-    .nav-btn:active {
+    /* Removed duplicate .nav-btn::before selector */
+
+    .nav-btn--active {
       transform: translateZ(0) translateY(0) scale(0.98);
       box-shadow:
         0 3px 12px oklch(0% 0 0deg / 0.06),
@@ -731,6 +736,7 @@ const menuItems = [
         0 1px 4px oklch(0% 0 0deg / 0.05),
         inset 0 1px 0 oklch(100% 0 0deg / 0.1);
       filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
+
       /* 小さな画面での調整 */
       @media (max-width: 360px) {
         min-height: 44px;
@@ -741,55 +747,55 @@ const menuItems = [
     /* Focus styles removed - following Astro's static-first philosophy */
 
     /* ---------- SVG Icon System - UNIFIED WITH NAVBAR ---------- */
-    .nav-icon {
+    .nav-btn__icon {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 0.375rem;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       transform: translateZ(0);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform, filter;
 
       svg {
-        flex-shrink: 0;
         width: 1.25em;
         max-width: 100%;
         height: 1.25em;
         max-height: 100%;
-        vertical-align: middle;
         color: oklch(98% 0.005 50deg);
-        fill: none;
-        stroke: currentcolor;
-        stroke-width: 2.5;
         transform: translateZ(0);
         transition:
           color var(--duration-fast) ease,
           transform var(--duration-fast) ease,
           opacity var(--duration-fast) ease;
+        flex-shrink: 0;
+        fill: none;
+        stroke: currentcolor;
+        stroke-width: 2.5;
+        vertical-align: middle;
         will-change: transform, opacity;
       }
     }
 
-    &:active .nav-icon {
-      transform: scale(0.95);
+    /* ---------- Menu Overlay Icon SVG Styling - Properly Ordered ---------- */
+    .menu-overlay-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.5;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-      svg {
-        color: oklch(92% 0.008 55deg);
-        opacity: 0.8;
-        transform: translateZ(0) scale(0.95);
-      }
+      /* Moved to reduce specificity */
     }
 
     /* ---------- Navigation Label - UNIFIED WITH NAVBAR ---------- */
-    .nav-label {
+    .nav-btn__label {
+      color: oklch(98% 0.005 50deg);
       font-size: 0.75rem;
       font-weight: 700;
       line-height: 1.2;
       text-align: center;
-      color: oklch(98% 0.005 50deg);
       letter-spacing: 0.025em;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       transform: translateZ(0);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: color, transform;
 
       /* 小さな画面での調整 */
@@ -798,11 +804,27 @@ const menuItems = [
       }
     }
 
+    /* ---------- Active State Styling - BEM Method ---------- */
+    .nav-btn--active .nav-btn__icon {
+      transform: scale(0.95);
+    }
+
+    .nav-btn--active svg {
+      color: oklch(92% 0.008 55deg);
+      opacity: 0.8;
+      transform: translateZ(0) scale(0.95);
+    }
+
+    .nav-btn--active .nav-btn__label {
+      transform: none;
+      text-shadow: none;
+    }
+
     /* Active state styling removed - following Astro's static-first philosophy */
 
     /* ---------- Touch Device Optimization - UNIFIED WITH NAVBAR ---------- */
     @media (hover: none) and (pointer: coarse) {
-      .nav-btn:active {
+      .nav-btn--active {
         /* UNIFIED active effect for touch - Navbar.astroと同じ */
         transform: translateZ(0) translateY(0) scale(0.98);
         box-shadow:
@@ -815,34 +837,20 @@ const menuItems = [
         );
       }
 
-      .nav-btn:active .nav-icon {
-        transform: scale(0.95);
-
-        svg {
-          color: oklch(92% 0.008 55deg);
-          opacity: 0.8;
-          transform: translateZ(0) scale(0.95);
-        }
-      }
-
-      .nav-btn:active .nav-label {
-        transform: none;
-        text-shadow: none;
-      }
+      /* Removed duplicate active state selectors */
     }
+
+    /* Removed duplicate .nav-btn__icon svg selector */
   }
 
   /* ========== MENU OVERLAY STYLES - UNIFIED WITH NAVBAR DESIGN ========== */
   .menu-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     z-index: 9999;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -855,19 +863,20 @@ const menuItems = [
 
   .menu-overlay-backdrop {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: oklch(from var(--token-black-base) l c h / 0.8);
     backdrop-filter: blur(12px) saturate(120%);
   }
 
   .menu-overlay-content {
     position: relative;
+    overflow: hidden;
     width: 90%;
     max-width: 420px;
     max-height: 80vh;
+    border: 1px solid oklch(25% 0.015 270deg / 0.15);
+    border-radius: 1.5rem;
+
     /* UNIFIED GlassMorphism背景効果 - Navbar.astroと同じ */
     background:
       linear-gradient(
@@ -893,10 +902,14 @@ const menuItems = [
         oklch(70% 0.15 45deg / 0.08) 0%,
         transparent 50%
       );
-    border: 1px solid oklch(25% 0.015 270deg / 0.15);
-    border-radius: 1.5rem;
+    transform: scale(0.9) translateY(20px);
+
+    /* UNIFIED transition system - Navbar.astroと同じ */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
     /* UNIFIED backdrop filters - Navbar.astroと同じ */
     backdrop-filter: blur(20px) saturate(150%) brightness(1.1) contrast(1.1);
+
     /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
       0 20px 60px oklch(from var(--token-black-base) l c h / 0.25),
@@ -904,10 +917,6 @@ const menuItems = [
       0 4px 16px oklch(from var(--token-black-base) l c h / 0.1),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1),
       inset 0 -1px 0 oklch(from var(--token-black-base) l c h / 0.1);
-    transform: scale(0.9) translateY(20px);
-    /* UNIFIED transition system - Navbar.astroと同じ */
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    overflow: hidden;
   }
 
   .menu-overlay.active .menu-overlay-content {
@@ -916,8 +925,8 @@ const menuItems = [
 
   .menu-overlay-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 1.5rem 1.5rem 1rem;
     border-bottom: 1px solid oklch(100% 0 0deg / 0.1);
     background: linear-gradient(
@@ -928,11 +937,12 @@ const menuItems = [
   }
 
   .menu-overlay-title {
+    margin: 0;
     color: oklch(from var(--token-white-base) l c h);
     font-size: 1.5rem;
     font-weight: 700;
-    margin: 0;
     letter-spacing: 0.02em;
+
     /* UNIFIED text shadow - Navbar.astroと同じ */
     text-shadow:
       0 2px 4px oklch(from var(--token-black-base) l c h / 0.4),
@@ -942,21 +952,23 @@ const menuItems = [
 
   .menu-overlay-close {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     width: 40px;
     height: 40px;
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 50%;
     background: linear-gradient(
       135deg,
       oklch(100% 0 0deg / 0.1) 0%,
       oklch(100% 0 0deg / 0.05) 100%
     );
-    border: 1px solid oklch(100% 0 0deg / 0.15);
-    border-radius: 50%;
     color: oklch(from var(--token-white-base) l c h);
     cursor: pointer;
+
     /* UNIFIED transition system - Navbar.astroと同じ */
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
     /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
@@ -984,15 +996,17 @@ const menuItems = [
   }
 
   .menu-overlay-items {
-    padding: 1rem 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    padding: 1rem 1.5rem 1.5rem;
   }
 
   .menu-overlay-divider {
     width: 100%;
     height: 1px;
+    margin: 0.5rem 0;
+    border: none;
     background: linear-gradient(
       90deg,
       transparent 0%,
@@ -1001,8 +1015,6 @@ const menuItems = [
       oklch(from var(--token-white-base) l c h / 0.2) 80%,
       transparent 100%
     );
-    border: none;
-    margin: 0.5rem 0;
   }
 
   .menu-overlay-item {
@@ -1010,19 +1022,22 @@ const menuItems = [
     align-items: center;
     gap: 1rem;
     padding: 1rem;
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 1rem;
+
     /* UNIFIED background - Navbar.astroと同じ */
     background: linear-gradient(
       135deg,
       oklch(100% 0 0deg / 0.08) 0%,
       oklch(100% 0 0deg / 0.05) 100%
     );
-    border: 1px solid oklch(100% 0 0deg / 0.15);
-    border-radius: 1rem;
     color: oklch(from var(--token-white-base) l c h);
     text-decoration: none;
+    cursor: pointer;
+
     /* UNIFIED transition system - Navbar.astroと同じ */
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    cursor: pointer;
+
     /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.08),
@@ -1052,24 +1067,26 @@ const menuItems = [
 
   .menu-overlay-icon {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     width: 40px;
     height: 40px;
+    border: 1px solid oklch(100% 0 0deg / 0.1);
+    border-radius: 50%;
+
     /* UNIFIED background - Navbar.astroと同じ */
     background: linear-gradient(
       135deg,
       var(--bottom-nav-primary) 0%,
       var(--bottom-nav-primary-dark) 100%
     );
-    border: 1px solid oklch(100% 0 0deg / 0.1);
-    border-radius: 50%;
     color: oklch(from var(--token-white-base) l c h);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
     /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.15),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .menu-overlay-item:hover .menu-overlay-icon {
@@ -1084,23 +1101,19 @@ const menuItems = [
       inset 0 1px 0 oklch(100% 0 0deg / 0.15);
   }
 
-  .menu-overlay-icon svg {
-    width: 20px;
-    height: 20px;
-    stroke-width: 2.5;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
+  /* ---------- Menu Overlay Icon SVG Styling - Moved for proper ordering ---------- */
 
   .menu-overlay-label {
+    color: oklch(from var(--token-white-base) l c h);
     font-size: 1rem;
     font-weight: 600;
-    color: oklch(from var(--token-white-base) l c h);
     letter-spacing: 0.02em;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
     /* UNIFIED text shadow - Navbar.astroと同じ */
     text-shadow:
       0 1px 2px oklch(from var(--token-black-base) l c h / 0.3),
       0 0 4px oklch(from var(--token-black-base) l c h / 0.2);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .menu-overlay-item:hover .menu-overlay-label {
@@ -1117,6 +1130,41 @@ const menuItems = [
     const menuOverlay = document.getElementById('menu-overlay');
     const menuButton = document.querySelector('[data-menu-button="true"]');
     const closeButton = document.querySelector('.menu-overlay-close');
+
+    // BEM hover and active state management
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(button => {
+      // Hover state management
+      button.addEventListener('mouseenter', function () {
+        this.classList.add('nav-btn--hover');
+      });
+
+      button.addEventListener('mouseleave', function () {
+        this.classList.remove('nav-btn--hover');
+      });
+
+      // Active state management
+      button.addEventListener('mousedown', function () {
+        this.classList.add('nav-btn--active');
+      });
+
+      button.addEventListener('mouseup', function () {
+        this.classList.remove('nav-btn--active');
+      });
+
+      button.addEventListener('mouseleave', function () {
+        this.classList.remove('nav-btn--active');
+      });
+
+      // Touch device support
+      button.addEventListener('touchstart', function () {
+        this.classList.add('nav-btn--active');
+      });
+
+      button.addEventListener('touchend', function () {
+        this.classList.remove('nav-btn--active');
+      });
+    });
     const backdrop = document.querySelector('.menu-overlay-backdrop');
 
     // Open menu overlay
