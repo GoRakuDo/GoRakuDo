@@ -132,16 +132,19 @@ const CARD_ACCESSIBILITY = {
       <div class='card-action-indicator' aria-hidden='true'>
         <svg
           class='arrow-icon'
+          xmlns='http://www.w3.org/2000/svg'
+          width='24'
+          height='24'
+          viewBox='0 0 24 24'
           fill='none'
           stroke='currentColor'
-          viewBox='0 0 24 24'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
           aria-hidden='true'
         >
-          <path
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            stroke-width='2'
-            d='M17 8l4 4m0 0l-4 4m4-4H3'></path>
+          <path d='M5 12h14'></path>
+          <path d='m12 5 7 7-7 7'></path>
         </svg>
       </div>
     </header>
@@ -189,18 +192,91 @@ const CARD_ACCESSIBILITY = {
 </article>
 
 <style is:global>
-  /* ========== OPTIMIZED ARTICLE CARD STYLES ========== */
+  /* ========== MODERN COMPACT ARTICLE CARD STYLES ========== */
   .article-card-optimized {
     position: relative;
-    overflow: visible;
+    overflow: hidden;
     height: fit-content;
-    margin: 0 clamp(var(--spacing-xs), 2vw, var(--spacing-md));
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-xl);
-    background: oklch(from var(--clr-background) l c h / 0.25);
-    box-shadow: var(--shadow-md);
+    margin: 0;
+    padding: 0;
+    border: 1px solid oklch(100% 0 0deg / 0.08);
+    border-radius: 16px;
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.12) 0%,
+      oklch(100% 0 0deg / 0.08) 100%
+    );
+    backdrop-filter: blur(24px) saturate(1.2);
+    box-shadow:
+      0 4px 20px oklch(0% 0 0deg / 0.08),
+      0 1px 3px oklch(0% 0 0deg / 0.12),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.15);
     contain: layout style paint;
-    will-change: transform;
+    will-change: transform, box-shadow;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* Smooth Hover Lift Effect */
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.2) 0%,
+        oklch(100% 0 0deg / 0.15) 100%
+      );
+      transform: translateY(-8px) scale(1.01);
+      border-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 30%,
+        transparent
+      );
+      box-shadow:
+        0 20px 60px oklch(0% 0 0deg / 0.18),
+        0 8px 25px oklch(0% 0 0deg / 0.12),
+        0 2px 8px oklch(0% 0 0deg / 0.08),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.3),
+        0 0 0 1px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+    }
+
+    /* Active State - Smooth Press Effect */
+    &:active {
+      transform: translateY(-4px) scale(1.005);
+      transition-duration: 0.1s;
+      box-shadow:
+        0 10px 30px oklch(0% 0 0deg / 0.15),
+        0 4px 15px oklch(0% 0 0deg / 0.1),
+        0 1px 4px oklch(0% 0 0deg / 0.06),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.25);
+    }
+
+    /* Focus State */
+    &:focus-within {
+      outline: 2px solid var(--token-purple-base);
+      outline-offset: 2px;
+    }
+
+    /* High Contrast Support */
+    @media (prefers-contrast: high) {
+      border-color: var(--clr-text-primary);
+      background: var(--clr-background);
+      box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.3);
+    }
+
+    /* Dark Mode Optimization */
+    @media (prefers-color-scheme: dark) {
+      background: linear-gradient(
+        135deg,
+        oklch(20% 0 0deg / 0.15) 0%,
+        oklch(15% 0 0deg / 0.1) 100%
+      );
+      border-color: oklch(100% 0 0deg / 0.12);
+
+      &:hover {
+        background: linear-gradient(
+          135deg,
+          oklch(25% 0 0deg / 0.2) 0%,
+          oklch(20% 0 0deg / 0.15) 100%
+        );
+      }
+    }
   }
 
   /* Reduce layout thrashing */
@@ -208,77 +284,177 @@ const CARD_ACCESSIBILITY = {
     contain: layout;
   }
 
+  /* ========== MODERN COMPACT CARD LINK ========== */
   .card-link {
     position: relative;
     z-index: var(--z-Tool-IdArticle-card-link);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     height: 100%;
+    border-radius: inherit;
     color: inherit;
     text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    isolation: isolate;
+
+    /* Modern Focus Management */
+    &:focus-visible {
+      position: relative;
+      z-index: var(--z-Tool-IdArticle-card-link-focus-visible);
+      outline: 2px solid var(--token-purple-base);
+      outline-offset: 3px;
+      border-radius: 16px;
+      will-change: outline;
+      transition: outline 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 0 0 1px
+        color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+    }
+
+    /* Enhanced Hover State */
+    &:hover {
+      color: inherit;
+      text-decoration: none;
+      transform: translateZ(0);
+    }
+
+    /* Active State */
+    &:active {
+      color: inherit;
+      text-decoration: none;
+      transform: translateZ(0) scale(0.98);
+      transition-duration: 0.1s;
+    }
+
+    /* High Contrast Support */
+    @media (prefers-contrast: high) {
+      &:focus-visible {
+        outline-color: var(--clr-text-primary);
+        outline-width: 3px;
+        box-shadow: none;
+      }
+    }
+
+    /* Dark Mode Optimization */
+    @media (prefers-color-scheme: dark) {
+      &:focus-visible {
+        outline-color: color-mix(in oklch, var(--token-purple-base) 80%, white);
+        box-shadow: 0 0 0 1px
+          color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+      }
+    }
   }
 
-  .card-link::before {
-    position: absolute;
-    inset: 0;
-    z-index: var(--z-card-link-before);
-    content: '';
-  }
-
-  /* Optimized focus management - 50% transparent outline */
-  .card-link:focus-visible {
-    position: relative;
-    z-index: var(--z-Tool-IdArticle-card-link-focus-visible);
-    outline: none;
-    border: 4px solid oklch(from var(--clr-accent) l c h / 0.5);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 0 0 6px oklch(from var(--clr-accent) l c h / 0.2);
-    will-change: border, box-shadow;
-    transition:
-      border-color 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out;
-  }
-
-  /* Enhanced hover state for better interactivity */
-  .card-link:hover {
-    transform: translateY(-2px);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  /* ========== カードヘッダー ========== */
+  /* ========== MODERN COMPACT CARD HEADER ========== */
   .card-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: var(--spacing-sm);
-    padding: clamp(var(--spacing-sm), 2vw, var(--spacing-md))
-      clamp(var(--spacing-md), 4vw, var(--spacing-lg)) var(--spacing-sm);
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    padding: clamp(0.5rem, 1.25vw, 0.75rem);
+    flex-shrink: 0;
+    border-bottom: 1px solid oklch(100% 0 0deg / 0.06);
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.08) 0%,
+      oklch(100% 0 0deg / 0.04) 100%
+    );
+    backdrop-filter: blur(12px) saturate(1.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* スマホ画面で上下左右パディングを2倍に */
+    @media (max-width: 767px) {
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    /* タブレット以上でパディング調整（統一） */
+    @media (min-width: 768px) {
+      padding: 1rem;
+    }
+
+    /* Modern Hover Enhancement */
+    .card-link:hover & {
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.12) 0%,
+        oklch(100% 0 0deg / 0.08) 100%
+      );
+      border-bottom-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 15%,
+        transparent
+      );
+    }
+
+    /* Dark Mode Optimization */
+    @media (prefers-color-scheme: dark) {
+      background: linear-gradient(
+        135deg,
+        oklch(20% 0 0deg / 0.1) 0%,
+        oklch(15% 0 0deg / 0.06) 100%
+      );
+      border-bottom-color: oklch(100% 0 0deg / 0.08);
+
+      .card-link:hover & {
+        background: linear-gradient(
+          135deg,
+          oklch(25% 0 0deg / 0.15) 0%,
+          oklch(20% 0 0deg / 0.1) 100%
+        );
+      }
+    }
   }
 
   .card-date {
     color: var(--clr-text-muted);
-    font-size: var(--font-size-sm);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
     font-weight: 500;
+    opacity: 0.8;
   }
 
-  /* ========== メインコンテンツ ========== */
+  /* ========== メインコンテンツ (MOBILE PADDING OPTIMIZED) ========== */
   .card-content {
+    display: flex;
     flex: 1;
-    padding: var(--spacing-sm) var(--spacing-md);
+    flex-direction: column;
+    min-height: 0; /* Prevents flex item from overflowing */
+    padding: clamp(0.5rem, 1.25vw, 0.75rem);
+    background: transparent;
+
+    /* スマホ画面で上下左右パディングを2倍に */
+    @media (max-width: 767px) {
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    /* タブレット以上でパディング調整（統一） */
+    @media (min-width: 768px) {
+      padding: 1rem;
+    }
   }
 
   .card-image-section {
-    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+    margin-bottom: clamp(0.5rem, 1.25vw, 0.75rem);
+    border-radius: clamp(8px, 1.5vw, 12px);
+    background: oklch(100% 0 0deg / var(--opacity-05));
   }
 
   .card-image {
     width: 100%;
-    height: clamp(100px, 15vh, 160px);
-    border-radius: var(--radius-md);
+    height: clamp(120px, 18vh, 180px);
+    border-radius: clamp(8px, 1.5vw, 12px);
     background: var(--clr-background);
     object-fit: cover;
     object-position: center;
-    image-rendering: crisp-edges;
+    image-rendering: auto;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+
+    /* Smooth Hover Effect */
+    .card-link:hover & {
+      transform: scale(1.03);
+    }
   }
 
   /* 画像読み込み最適化 */
@@ -286,42 +462,108 @@ const CARD_ACCESSIBILITY = {
     opacity: 1;
   }
 
-  /* ========== テキストコンテンツ ========== */
+  /* ========== テキストコンテンツ (COMPACT DESIGN) ========== */
+  .card-text-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: clamp(0.25rem, 0.75vw, 0.375rem);
+    min-height: 0;
+  }
+
   .card-title {
     display: -webkit-box;
     overflow: hidden;
-    margin: 0 0 var(--spacing-sm) 0;
+    margin: 0;
     color: var(--clr-text-primary);
-    font-size: clamp(var(--font-size-md), 2vw, var(--font-size-xl));
-    font-weight: 600;
-    line-height: 1.4;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1.3;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
   }
 
   .card-description {
     display: -webkit-box;
+    flex: 1;
     overflow: hidden;
     margin: 0;
     color: var(--clr-text-secondary);
-    font-size: clamp(var(--font-size-xs), 1.5vw, var(--font-size-sm));
-    line-height: 1.5;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-weight: 400;
+    line-height: 1.6;
+    opacity: 0.9;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
 
-  /* ========== カードフッター ========== */
+  /* ========== MODERN COMPACT CARD FOOTER ========== */
   .card-footer {
+    display: flex;
+    flex-direction: column;
     margin-top: auto;
-    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+    padding: clamp(0.5rem, 1.25vw, 0.75rem);
+    flex-shrink: 0;
+    border-top: 1px solid oklch(100% 0 0deg / 0.06);
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.08) 0%,
+      oklch(100% 0 0deg / 0.04) 100%
+    );
+    backdrop-filter: blur(12px) saturate(1.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* スマホ画面で上下左右パディングを2倍に */
+    @media (max-width: 767px) {
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    /* タブレット以上でパディング調整（統一） */
+    @media (min-width: 768px) {
+      padding: 1rem;
+    }
+
+    /* Modern Hover Enhancement */
+    .card-link:hover & {
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.12) 0%,
+        oklch(100% 0 0deg / 0.08) 100%
+      );
+      border-top-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 15%,
+        transparent
+      );
+    }
+
+    /* Dark Mode Optimization */
+    @media (prefers-color-scheme: dark) {
+      background: linear-gradient(
+        135deg,
+        oklch(20% 0 0deg / 0.1) 0%,
+        oklch(15% 0 0deg / 0.06) 100%
+      );
+      border-top-color: oklch(100% 0 0deg / 0.08);
+
+      .card-link:hover & {
+        background: linear-gradient(
+          135deg,
+          oklch(25% 0 0deg / 0.15) 0%,
+          oklch(20% 0 0deg / 0.1) 100%
+        );
+      }
+    }
   }
 
   .card-tags {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: clamp(0.25rem, 0.75vw, 0.375rem);
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -334,67 +576,121 @@ const CARD_ACCESSIBILITY = {
 
   .card-tag {
     flex-shrink: 0;
-    padding: clamp(
-        calc(var(--spacing-xs) / 4),
-        0.75vw,
-        calc(var(--spacing-sm) / 4)
-      )
-      clamp(calc(var(--spacing-sm) / 2), 1vw, calc(var(--spacing-md) / 2));
-    border: 1px solid oklch(from var(--clr-accent) l c h / 0.2);
-    border-radius: var(--radius-md);
-    background: oklch(from var(--clr-accent) l c h / 0.15);
-    color: var(--clr-accent);
-    font-size: clamp(var(--font-size-xs), 0.75vw, var(--font-size-sm));
-    font-weight: 300;
+    padding: clamp(0.25rem, 1vw, 0.375rem) clamp(0.5rem, 1.5vw, 0.75rem);
+    border: 1px solid
+      color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+    border-radius: clamp(6px, 1vw, 8px);
+    background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
+    color: var(--token-purple-base);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    font-weight: 500;
     white-space: nowrap;
-  }
+    transition: all 0.2s ease-in-out;
 
-  /* ========== アクションインジケーター ========== */
-  .card-action-indicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    background: oklch(from var(--clr-accent) l c h / 0.1);
-    opacity: 1;
-    flex-shrink: 0;
-  }
+    /* ホバー効果 */
+    &:hover {
+      background: color-mix(
+        in oklch,
+        var(--token-purple-base) 20%,
+        transparent
+      );
+      border-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 50%,
+        transparent
+      );
+    }
 
-  .arrow-icon {
-    width: 1rem;
-    height: 1rem;
-    color: var(--clr-accent);
-  }
-
-  /* デスクトップ表示ではホバー時にのみ表示 */
-  @media (min-width: 768px) {
-    .card-action-indicator {
-      opacity: 0;
+    /* モーション軽減対応 */
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
-  /* ========== レスポンシブデザイン ========== */
+  /* ========== アクションインジケーター (REDESIGNED) ========== */
+  .card-action-indicator {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(2rem, 4vw, 2.5rem);
+    height: clamp(2rem, 4vw, 2.5rem);
+    border: 1px solid
+      color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    flex-shrink: 0;
+    backdrop-filter: blur(10px);
+
+    /* Smooth Hover Effect */
+    .card-link:hover & {
+      background: color-mix(
+        in oklch,
+        var(--token-purple-base) 25%,
+        transparent
+      );
+      border-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 40%,
+        transparent
+      );
+      transform: scale(1.15);
+    }
+
+    /* デスクトップ表示ではホバー時にのみ表示 */
+    @media (min-width: 768px) {
+      opacity: 0;
+      transform: scale(0.8);
+
+      .card-link:hover & {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .arrow-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(0.875rem, 2vw, 1rem);
+    height: clamp(0.875rem, 2vw, 1rem);
+    color: var(--token-purple-base);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    flex-shrink: 0;
+    transform-origin: center;
+
+    /* Smooth Hover Effect - 中央を基準としたアニメーション */
+    .card-link:hover & {
+      transform: scale(1.1) translateX(2px);
+    }
+  }
+
+  /* ========== レスポンシブデザイン (REDESIGNED) ========== */
 
   /* モバイル (320px+) - デフォルト */
 
-  /* タブレット (768px+) */
+  /* タブレット (768px+) - コンパクトデザイン */
   @media (min-width: 768px) {
     .article-card-optimized {
       height: fit-content;
       min-height: auto;
       padding: 0;
     }
+  }
 
-    .card-content {
-      padding: var(--spacing-sm)
-        clamp(var(--spacing-md), 4vw, var(--spacing-lg));
-    }
-
-    .card-footer {
-      padding: var(--spacing-sm)
-        clamp(var(--spacing-md), 4vw, var(--spacing-lg)) var(--spacing-md);
+  /* デスクトップ (1024px+) - コンパクトデザイン */
+  @media (min-width: 1024px) {
+    .article-card-optimized {
+      /* より大きなホバー効果 */
+      &:hover {
+        transform: translateY(-6px);
+        box-shadow:
+          0 16px 48px oklch(0% 0 0deg / var(--opacity-20)),
+          inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-40));
+      }
     }
   }
 </style>

@@ -26,12 +26,12 @@ const EMPTY_STATE_CONFIG = {
 } as const;
 ---
 
-<!-- Optimized Main Content with Modern Layout -->
+<!-- FlexBox Optimized Main Content with Modern Layout -->
 <div class="tool-main-content">
   {hasArticles ? (
-    <div class="articles-section">
-      <!-- Optimized Articles Grid with Enhanced Design -->
-      <div class="articles-grid-wireframe" role="grid" aria-label={`Articles for ${formattedToolName}`}>
+    <div class="tool__articles-section">
+      <!-- FlexBox Optimized Articles Grid -->
+      <div class="tool__articles-grid" role="grid" aria-label={`Articles for ${formattedToolName}`}>
         {toolArticles.map((article, index) => (
           <ToolIdArticle 
             article={article} 
@@ -44,38 +44,38 @@ const EMPTY_STATE_CONFIG = {
       </div>
     </div>
   ) : (
-    <div class="empty-state" role="region" aria-label="No articles available">
-      <div class="empty-state-content">
-        <div class="empty-state-icon">
+    <div class="tool__empty-state" role="region" aria-label="No articles available">
+      <div class="tool__empty-state-content">
+        <div class="tool__empty-state-icon">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
         </div>
-        <h2 class="empty-state-title">{EMPTY_STATE_CONFIG.title}</h2>
-        <p class="empty-state-description">
+        <h2 class="tool__empty-state-title">{EMPTY_STATE_CONFIG.title}</h2>
+        <p class="tool__empty-state-description">
           {EMPTY_STATE_CONFIG.description}
         </p>
-        <div class="empty-state-actions">
-          <a href="/tools" class="empty-state-btn primary" aria-label="Browse other available tools">
+        <div class="tool__empty-state-actions">
+          <a href="/tools" class="tool__empty-state-btn tool__empty-state-btn--primary" aria-label="Browse other available tools">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
             <span>Lihat Alat Lain</span>
           </a>
-          <a href="/docs" class="empty-state-btn secondary" aria-label="Browse documentation">
+          <a href="/docs" class="tool__empty-state-btn tool__empty-state-btn--secondary" aria-label="Browse documentation">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
             </svg>
             <span>Lihat Dokumentasi</span>
           </a>
         </div>
-        <div class="empty-state-suggestions">
-          <h3 class="suggestions-title">Alat yang Direkomendasikan</h3>
-          <div class="suggestions-list" role="list" aria-label="Recommended tools">
+        <div class="tool__empty-state-suggestions">
+          <h3 class="tool__suggestions-title">Alat yang Direkomendasikan</h3>
+          <div class="tool__suggestions-list" role="list" aria-label="Recommended tools">
             {EMPTY_STATE_CONFIG.suggestions.map((suggestion) => (
-              <a href={suggestion.href} class="suggestion-tool" role="listitem" aria-label={`Visit ${suggestion.name} tool page`}>
-                <span class="tool-icon" aria-hidden="true">{suggestion.icon}</span>
-                <span class="tool-name">{suggestion.name}</span>
+              <a href={suggestion.href} class="tool__suggestion-tool" role="listitem" aria-label={`Visit ${suggestion.name} tool page`}>
+                <span class="tool__suggestion-tool-icon" aria-hidden="true">{suggestion.icon}</span>
+                <span class="tool__suggestion-tool-name">{suggestion.name}</span>
               </a>
             ))}
           </div>

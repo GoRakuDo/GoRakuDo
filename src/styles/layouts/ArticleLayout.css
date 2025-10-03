@@ -460,7 +460,7 @@
   .tool-navigation-wrapper .breadcrumb-section {
     justify-content: flex-start;
     width: auto;
-    padding: 0.5rem 0.17rem;
+    padding: 0.5rem;
   }
 
   .tool-navigation-wrapper .search-section {

@@ -1,6 +1,6 @@
 ---
-// ========== OPTIMIZED TOOL INDEX PAGE ==========
-// Architect Optimization: Performance-first, Astro-native approach
+// ========== BEM METHOD - TOOL INDEX PAGE ==========
+// Architect Optimization: BEM-compliant, performance-first approach
 // Purpose: Display all articles for a specific tool category with optimal performance
 // File: src/pages/tools/[tool]/index.astro
 
@@ -11,16 +11,16 @@ import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import SearchPopover from '../../../components/common/SearchPopover.astro';
-import ToolIdHeader from '../../../components/tools/Tool-IdHeader.astro';
+// ToolIdHeader component has been integrated directly into this file
 
 // Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 
-// Import tool-specific styles
+// Import BEM-compliant tool styles
 import '../../../styles/pages/tools/[tool]/Tool-IdIndex.css';
 
-// ========== OPTIMIZED TOOL DISCOVERY ==========
-// Single function for tool discovery with caching
+// ========== BEM METHOD - TOOL DISCOVERY ==========
+// Optimized tool discovery with caching and error handling
 async function getValidToolsFromCollection() {
   try {
     const allArticles = await getCollection('tool-articles');
@@ -40,7 +40,7 @@ async function getValidToolsFromCollection() {
   }
 }
 
-// ========== STATIC PATH GENERATION ==========
+// ========== BEM METHOD - STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
   const getAllToolsFromCollection = async () => {
     try {
@@ -70,7 +70,7 @@ export async function getStaticPaths() {
       }));
 }
 
-// ========== COMPONENT LOGIC ==========
+// ========== BEM METHOD - COMPONENT LOGIC ==========
 const { tool } = Astro.params as { tool: string };
 
 // Early validation and redirect
@@ -137,7 +137,7 @@ const toolArticles = uniqueToolArticles;
 // Check if there are any visible articles for this tool
 const hasVisibleArticles = toolArticles.length > 0;
 
-// ========== CENTRALIZED DATA MANAGEMENT ==========
+// ========== BEM METHOD - CENTRALIZED DATA MANAGEMENT ==========
 // All data processing centralized here for maximum efficiency and maintainability
 
 // Tool configuration mapping
@@ -173,7 +173,7 @@ const currentYear = new Date(
     new Date()
 ).getFullYear();
 
-// ========== PROCESSED ARTICLE DATA ==========
+// ========== BEM METHOD - PROCESSED ARTICLE DATA ==========
 // Pre-process all article data for components
 const processedArticles = toolArticles.map(
   (article: CollectionEntry<'tool-articles'>, index: number) => {
@@ -233,7 +233,7 @@ const processedArticles = toolArticles.map(
   }
 );
 
-// ========== HEADER DATA ==========
+// ========== BEM METHOD - HEADER DATA ==========
 // Pre-processed header data
 const headerData = {
   tool,
@@ -245,7 +245,31 @@ const headerData = {
   currentYear,
 };
 
-// ========== CONTENT GRID DATA ==========
+// ========== INTEGRATED TOOL-IdHeader LOGIC ==========
+// Optimized constants for display
+const ICON_DIMENSIONS = { width: 175, height: 175 };
+const iconAlt = `${headerData.formattedToolName} tool icon`;
+
+// Optimized meta items with better performance and accessibility
+const META_ITEMS = [
+  {
+    icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+    label:
+      headerData.articleCount === 0
+        ? 'No Articles'
+        : headerData.articleCount === 1
+          ? '1 Article'
+          : `${headerData.articleCount} Articles`,
+    ariaLabel: `This tool has ${headerData.articleCount} articles available`,
+  },
+  {
+    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+    label: 'Free Resources',
+    ariaLabel: 'All resources are free to use',
+  },
+] as const;
+
+// ========== BEM METHOD - CONTENT GRID DATA ==========
 // Pre-processed content grid data
 const contentGridData = {
   hasArticles: toolArticles.length > 0,
@@ -254,7 +278,7 @@ const contentGridData = {
   formattedToolName,
 };
 
-// ========== BREADCRUMB SCHEMA ==========
+// ========== BEM METHOD - BREADCRUMB SCHEMA ==========
 // Tool page用のBreadcrumb Schema生成
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
@@ -272,16 +296,69 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   lang='id'
   breadcrumbSchema={breadcrumbSchema}
 >
-  <ToolIdHeader
+  <!-- ========== INTEGRATED ENHANCED HEADER COMPONENT ========== -->
+  <header
     slot='articles-header'
-    tool={tool}
-    articleCount={headerData.articleCount}
-    title={headerData.title}
-    description={headerData.description}
-    iconPath={headerData.iconPath}
-    formattedToolName={headerData.formattedToolName}
-    currentYear={headerData.currentYear}
-  />
+    class='component-header'
+    role='banner'
+    itemscope
+    itemtype='https://schema.org/WebPageElement'
+  >
+    <div class='header-container glassmorphism glassmorphism-card'>
+      <!-- Integrated Content Section with Icon and Text -->
+      <div class='header-content-section'>
+        <!-- Icon Container -->
+        <div class='tool-icon-container'>
+          <img
+            src={headerData.iconPath}
+            alt={iconAlt}
+            class='tool-icon-large'
+            loading='eager'
+            width={ICON_DIMENSIONS.width}
+            height={ICON_DIMENSIONS.height}
+            itemprop='image'
+          />
+        </div>
+
+        <!-- Text Content -->
+        <div class='header-text-content'>
+          <h1 class='header-title' itemprop='headline'>
+            {headerData.title}
+          </h1>
+          <p class='header-description' itemprop='description'>
+            {headerData.description}
+          </p>
+          <div class='header-meta' role='list' aria-label='Tool statistics'>
+            {
+              META_ITEMS.map(item => (
+                <span
+                  class='meta-item'
+                  role='listitem'
+                  aria-label={item.ariaLabel}
+                >
+                  <svg
+                    class='meta-icon'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                    aria-hidden='true'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d={item.icon}
+                    />
+                  </svg>
+                  {item.label}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <Breadcrumb
     slot='breadcrumb'
