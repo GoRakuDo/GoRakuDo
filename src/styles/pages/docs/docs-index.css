@@ -434,7 +434,7 @@
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizelegibility; /* テキストレンダリング最適化 */
+  text-rendering: optimizeLegibility; /* テキストレンダリング最適化 */
 }
 
 @media (min-width: 768px) {
@@ -516,7 +516,7 @@
   -webkit-box-orient: vertical;
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizelegibility; /* テキストレンダリング最適化 */
+  text-rendering: optimizeLegibility; /* テキストレンダリング最適化 */
 }
 
 @media (min-width: 768px) {

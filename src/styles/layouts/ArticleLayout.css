@@ -100,7 +100,7 @@
   font-feature-settings:
     'kern' 1,
     'liga' 1;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

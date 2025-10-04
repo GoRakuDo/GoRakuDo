@@ -11,22 +11,22 @@ const { headings = [] } = Astro.props
     <aside class="toc-container" aria-label="Table of Contents">
       <div class="toc-header">
         <h2 class="toc-title">
-          On this page
+          Daftar isi:
         </h2>
         <button class="toc-toggle" aria-label="Hide table of contents" aria-expanded="true" data-state="visible">
           <svg 
             class="toc-hide-icon"
-            width="16" 
-            height="16" 
+            width="20" 
+            height="20" 
             viewBox="0 0 24 24" 
             fill="none" 
-            stroke="currentColor" 
+            stroke="var(--token-purple-base)" 
             stroke-width="2" 
             stroke-linecap="round" 
             stroke-linejoin="round"
           >
-            <line x1="4" y1="4" x2="20" y2="20"></line>
-            <line x1="20" y1="4" x2="4" y2="20"></line>
+            <rect width="18" height="18" x="3" y="3" rx="2"/>
+            <path d="M8 12h8"/>
           </svg>
           <svg 
             class="toc-show-icon"
@@ -63,6 +63,28 @@ const { headings = [] } = Astro.props
           ))}
         </ol>
       </nav>
+      
+      <!-- Mobile TOC Footer - Only visible on mobile -->
+      <div class="toc-footer">
+        <button class="toc-expand-toggle" aria-label="Expand table of contents" aria-expanded="false">
+          <span class="toc-expand-text">Tampilkan Daftar isi</span>
+          <svg 
+            class="toc-expand-icon"
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="m7 6 5 5 5-5"/>
+            <path d="m7 13 5 5 5-5"/>
+          </svg>
+        </button>
+      </div>
     </aside>
 
     <!-- Floating toggle button for when TOC is hidden -->
@@ -89,6 +111,33 @@ const { headings = [] } = Astro.props
 )}
 
 <style is:global>
+  .toc-nav {
+    overflow: hidden auto;
+    max-height: calc(100vh - 200px);
+    opacity: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    scrollbar-color: color-mix(in oklch, var(--token-purple-base) 30%, transparent) transparent;
+    scrollbar-width: thin;
+    will-change: max-height, opacity, transform;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background: color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: color-mix(in oklch, var(--token-purple-base) 50%, transparent);
+    }
+  }
+
   .toc-container {
     position: sticky;
     top: 100px;
@@ -98,25 +147,75 @@ const { headings = [] } = Astro.props
     height: fit-content;
     max-height: calc(100vh - 120px);
     padding: 10px 20px;
-    border: 1px solid rgb(139 93 255 / 0.2);
+    border: none;
     border-radius: 12px;
-    background: rgb(15 15 15 / 0.95);
+    background: transparent;
     transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgb(0 0 0 / 0.3);
-    backdrop-filter: blur(10px);
-  }
+    box-shadow: none;
+    backdrop-filter: none;
 
-  .toc-container::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 2px;
-    content: '';
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 2px;
+      content: '';
+      border-radius: 12px 12px 0 0;
+      opacity: 0.6;
+    }
 
-    /* background: linear-gradient(90deg, transparent, #8b5dff, transparent); */
-    border-radius: 12px 12px 0 0;
-    opacity: 0.6;
+    /* デスクトップTOC専用のスタイル */
+    &:not(.mobile-toc) {
+      position: sticky;
+      top: 100px;
+      z-index: var(-z-TableOfContents-toc-container);
+      overflow-x: hidden;
+      width: 18rem;
+      height: fit-content;
+      max-height: calc(100vh - 120px);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      background: transparent;
+      transition: all 0.3s ease;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    /* TOC States */
+    &.toc-hidden {
+      display: none;
+    }
+
+    &.toc-collapsed {
+      width: auto;
+      min-width: 200px;
+
+      .toc-nav {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Legacy collapsed class support */
+    &.collapsed {
+      width: auto;
+      min-width: 200px;
+
+      .toc-nav {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+      }
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 1200px) {
+      display: none;
+    }
   }
 
   .toc-header {
@@ -126,27 +225,26 @@ const { headings = [] } = Astro.props
     align-items: center;
     width: 100%;
     margin: 10px 0;
-  }
 
-  .toc-header::after {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    border-radius: 1px;
-    background: #8b5dff;
-    transition: width 0.3s ease;
-    content: '';
+    &::after {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--token-purple-base);
+      transition: width 0.3s ease;
+      content: '';
+    }
   }
-
 
   .toc-title {
     display: flex;
     align-items: center;
     gap: 8px;
     margin: 0;
-    color: #8b5dff;
+    color: var(--token-purple-base);
     font-size: 16px;
     font-weight: 600;
   }
@@ -162,77 +260,78 @@ const { headings = [] } = Astro.props
     border: none;
     border-radius: 4px;
     background: none;
-    color: #e5e7eb;
+    color: var(--token-white-base);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, background-color, color;
+
+    /* Tooltip for toggle */
+    &::after {
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      z-index: var(--z-TableOfContents-toc-toggle-after);
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: color-mix(in oklch, var(--token-white-base) 10%, transparent);
+      color: var(--token-white-base);
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%);
+      transition: opacity 0.2s ease;
+      content: attr(aria-label);
+    }
+
+    &:hover {
+      background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
+      color: var(--token-purple-base);
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    /* Hide toggle button on desktop - only allow collapse on mobile */
+    @media (min-width: 1201px) {
+      display: none;
+    }
   }
 
-  .toc-toggle:hover {
-    background: rgb(139 93 255 / 0.1);
-    color: #8b5dff;
+  /* TOC Footer - Mobile only */
+  .toc-footer {
+    display: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: none;
   }
 
-  /* Tooltip for toggle */
-  .toc-toggle::after {
-    position: absolute;
-    bottom: -35px;
-    left: 50%;
-    z-index: var(--z-TableOfContents-toc-toggle-after);
-    padding: 4px 8px;
-    border-radius: 4px;
-    background: rgb(0 0 0 / 0.9);
-    color: white;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-50%);
-    transition: opacity 0.2s ease;
-    content: attr(aria-label);
-  }
-
-  .toc-toggle:hover::after {
-    opacity: 1;
-  }
-
-  /* TOC States */
-  .toc-container.toc-hidden {
+  .mobile-toc.toc-collapsed .toc-header {
     display: none;
   }
 
-  /* Use consistent animation-based collapse instead of display:none */
-  .toc-container.toc-collapsed {
-    width: auto;
-    min-width: 200px;
+  .mobile-toc.toc-collapsed .toc-nav {
+    display: none;
+  }
+
+  /* Remove footer margin and padding when TOC is collapsed */
+  .mobile-toc.toc-collapsed .toc-footer {
+    margin-top: 0;
+    padding-top: 0;
   }
 
   /* Toggle button states - Clear visibility rules */
   .toc-toggle .toc-hide-icon {
     display: block;
-    transition: transform 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
   }
 
   .toc-toggle .toc-show-icon {
     display: none;
-    transition: transform 0.2s ease;
-  }
-
-  /* When collapsed, show the expand icon (show-icon) and hide the collapse icon (hide-icon) */
-  .toc-collapsed .toc-hide-icon {
-    display: none;
-  }
-
-  .toc-collapsed .toc-show-icon {
-    display: block;
-  }
-
-  /* Also handle aria-expanded attribute for redundancy */
-  .toc-toggle[aria-expanded="false"] .toc-hide-icon {
-    display: none;
-  }
-
-  .toc-toggle[aria-expanded="false"] .toc-show-icon {
-    display: block;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
   }
 
   .toc-toggle:hover .toc-hide-icon,
@@ -245,6 +344,50 @@ const { headings = [] } = Astro.props
     display: none;
   }
 
+  .toc-expand-icon {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .toc-expand-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(
+      135deg,
+      oklch(25% 0 0deg / 0.1) 0%,
+      oklch(20% 0 0deg / 0.05) 100%
+    );
+    color: oklch(90% 0 0deg);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+    box-shadow: 
+      0 1px 3px oklch(0% 0 0deg / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+
+    &:active {
+      transform: translateY(0);
+      transition-duration: 0.1s;
+    }
+
+    &[aria-expanded="true"] .toc-expand-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .toc-expand-text {
+    font-weight: 500;
+  }
+
+
   /* Rotation effects for collapsed state */
   .toc-container.toc-collapsed .toc-toggle,
   .toc-toggle[aria-expanded="false"] {
@@ -254,38 +397,6 @@ const { headings = [] } = Astro.props
   .toc-collapsed .toc-toggle:hover,
   .toc-toggle[aria-expanded="false"]:hover {
     transform: rotate(0deg) scale(1.1);
-  }
-
-  .toc-nav {
-    overflow: hidden auto;
-    max-height: calc(100vh - 200px);
-    opacity: 1;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
-    scrollbar-color: rgb(139 93 255 / 0.3) transparent;
-    scrollbar-width: thin;
-  }
-
-  .toc-container.toc-collapsed .toc-nav {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-  }
-
-  .toc-nav::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .toc-nav::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .toc-nav::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: rgb(139 93 255 / 0.3);
-  }
-
-  .toc-nav::-webkit-scrollbar-thumb:hover {
-    background: rgb(139 93 255 / 0.5);
   }
 
   .toc-list {
@@ -305,7 +416,7 @@ const { headings = [] } = Astro.props
     padding: 8px 10px;
     border-left: 3px solid transparent;
     border-radius: 6px;
-    color: #e5e7eb;
+    color: var(--token-white-base);
     font-size: 14px;
     line-height: 1.4;
     text-decoration: none;
@@ -313,66 +424,66 @@ const { headings = [] } = Astro.props
     transform: translateX(0);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-overflow: ellipsis;
-  }
 
-  .toc-link:hover {
-    background: rgb(139 93 255 / 0.1);
-    color: #8b5dff;
-    transform: translateX(4px);
+    &:hover {
+      background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
+      color: var(--token-purple-base);
+      transform: translateX(4px);
+    }
   }
 
   /* Active link highlighting */
   .toc-link.active {
-    border-left: 3px solid #8b5dff;
-    background: rgb(139 93 255 / 0.15);
-    color: #8b5dff;
+    border-left: 3px solid var(--token-purple-base);
+    background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
+    color: var(--token-purple-base);
     font-weight: 600;
     animation: activeGlow 0.3s ease-in-out;
-    box-shadow: 0 2px 8px rgb(139 93 255 / 0.2);
-  }
+    box-shadow: 0 2px 8px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
 
-  .toc-link.active::before {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 3px;
-    border-radius: 0 2px 2px 0;
-    background: linear-gradient(180deg, #8b5dff, #a855f7);
-    content: '';
-  }
+    &::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 3px;
+      border-radius: 0 2px 2px 0;
+      background: linear-gradient(180deg, var(--token-purple-base), color-mix(in oklch, var(--token-purple-base) 80%, var(--token-white-base)));
+      content: '';
+    }
 
-  .toc-link.active::after {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #8b5dff;
-    transform: translateY(-50%);
-    animation: pulse 2s infinite;
-    content: '';
-  }
+    &::after {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--token-purple-base);
+      transform: translateY(-50%);
+      animation: pulse 2s infinite;
+      content: '';
+    }
 
-  .toc-link.active:hover {
-    background: rgb(139 93 255 / 0.2);
-    transform: translateX(2px);
+    &:hover {
+      background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+      transform: translateX(2px);
+    }
   }
 
   @keyframes activeGlow {
     0% {
-      background: rgb(139 93 255 / 0.05);
+      background: color-mix(in oklch, var(--token-purple-base) 5%, transparent);
       transform: translateX(0);
     }
 
     50% {
-      background: rgb(139 93 255 / 0.2);
+      background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
       transform: translateX(4px);
     }
 
     100% {
-      background: rgb(139 93 255 / 0.15);
+      background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
       transform: translateX(0);
     }
   }
@@ -414,118 +525,120 @@ const { headings = [] } = Astro.props
     opacity: 0.8;
   }
 
-  /* Legacy collapsed class support */
-  .toc-container.collapsed .toc-nav {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-  }
-
-  .toc-container.collapsed {
-    width: auto;
-    min-width: 200px;
-  }
-
-  /* Mobile responsiveness */
-  @media (max-width: 1200px) {
-    .toc-container {
-      display: none;
-    }
-  }
-
-  /* Hide toggle button on desktop - only allow collapse on mobile */
-  @media (min-width: 1201px) {
-    .toc-toggle {
-      display: none;
-    }
-  }
 
   /* Mobile TOC - show as collapsible at top on mobile */
   @media (max-width: 1200px) {
-    .toc-container.mobile-toc {
+    aside.toc-container.mobile-toc {
       position: relative;
       top: 0;
+      right: auto;
+      left: 0;
+      z-index: auto;
       display: block;
       overflow-x: hidden;
       width: 100%;
       max-width: 100%;
       max-height: none;
-      margin-bottom: 24px;
+      margin: 0 0 24px;
       padding: 8px 16px;
-      border: 1px solid rgb(139 93 255 / 0.3);
-      background: rgb(15 15 15 / 0.98);
+      border: 1px solid oklch(100% 0 0deg / 0.12);
+      border-radius: 16px;
+      background: linear-gradient(
+        135deg,
+        oklch(20% 0 0deg / 0.15) 0%,
+        oklch(15% 0 0deg / 0.1) 100%
+      );
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(24px) saturate(1.2);
+      box-shadow:
+        0 4px 20px oklch(0% 0 0deg / 0.08),
+        0 1px 3px oklch(0% 0 0deg / 0.12),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.15);
       touch-action: manipulation;
     }
 
-    .toc-container.mobile-toc .toc-title {
-      font-size: 14px;
-      font-weight: 600;
-    }
 
-    .toc-container.mobile-toc .toc-header {
-      margin-left: 0;
-    }
+    .toc-container.mobile-toc {
+      .toc-title {
+        font-size: 21px;
+        font-weight: 600;
+      }
 
-    .toc-container.mobile-toc .toc-nav {
-      max-height: 300px;
+      .toc-header {
+        width: 100%;
+        max-width: calc(100% - 1rem);
+        margin: 0.5rem auto;
+        box-sizing: border-box;
+      }
+
+      /* Show TOC footer only on mobile */
+      .toc-footer {
+        display: block;
+      }
+
+      .toc-nav {
+        max-height: 300px;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: max-height, opacity, transform;
+      }
+
+      .toc-toggle {
+        color: var(--token-white-base);
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform, background-color, color;
+      }
     }
     
     .mobile-toc.toc-collapsed .toc-nav {
       overflow: hidden;
       max-height: 0;
       opacity: 0;
+      transform: translateY(-12px) scale(0.98);
     }
 
-    .toc-container.mobile-toc .toc-toggle {
-      color: #e5e7eb;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .mobile-toc .toc-toggle:hover {
-      color: #8b5dff;
-    }
 
     .mobile-toc .toc-link {
       padding: 10px 12px;
       font-size: 14px;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
-    }
 
-    /* Mobile indentation levels with smaller fonts */
-    .mobile-toc .toc-level-1 .toc-link {
-      padding-left: 12px;
-      font-size: 14px;
-      font-weight: 600;
-    }
+      /* Mobile indentation levels with smaller fonts */
+      &.toc-level-1 {
+        padding-left: 12px;
+        font-size: 14px;
+        font-weight: 600;
+      }
 
-    .mobile-toc .toc-level-2 .toc-link {
-      padding-left: 20px;
-      font-size: 13px;
-    }
+      &.toc-level-2 {
+        padding-left: 20px;
+        font-size: 13px;
+      }
 
-    .mobile-toc .toc-level-3 .toc-link {
-      padding-left: 28px;
-      font-size: 12px;
-      opacity: 0.9;
-    }
+      &.toc-level-3 {
+        padding-left: 28px;
+        font-size: 12px;
+        opacity: 0.9;
+      }
 
-    .mobile-toc .toc-level-4 .toc-link,
-    .mobile-toc .toc-level-5 .toc-link,
-    .mobile-toc .toc-level-6 .toc-link {
-      padding-left: 36px;
-      font-size: 12px;
-      opacity: 0.8;
-    }
+      &.toc-level-4,
+      &.toc-level-5,
+      &.toc-level-6 {
+        padding-left: 36px;
+        font-size: 12px;
+        opacity: 0.8;
+      }
 
-    .mobile-toc .toc-link.active {
-      position: relative;
-      border-left: 4px solid #8b5dff;
-      background: rgb(139 93 255 / 0.2);
-      color: #8b5dff;
-      font-weight: 600;
-      animation: mobileActiveGlow 0.3s ease-in-out;
+      &.active {
+        position: relative;
+        border-left: 4px solid var(--token-purple-base);
+        background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+        color: var(--token-purple-base);
+        font-weight: 600;
+        animation: mobileActiveGlow 0.3s ease-in-out;
+      }
     }
 
     .toc-mobile-active::before {
@@ -535,7 +648,7 @@ const { headings = [] } = Astro.props
       left: 0;
       width: 4px;
       border-radius: 0 2px 2px 0;
-      background: linear-gradient(180deg, #8b5dff, #a855f7);
+      background: linear-gradient(180deg, var(--token-purple-base), color-mix(in oklch, var(--token-purple-base) 80%, var(--token-white-base)));
       content: '';
     }
 
@@ -543,7 +656,7 @@ const { headings = [] } = Astro.props
       position: absolute;
       top: 50%;
       right: 12px;
-      color: #8b5dff;
+      color: var(--token-purple-base);
       font-size: 8px;
       transform: translateY(-50%);
       animation: pulse 2s infinite;
@@ -552,28 +665,42 @@ const { headings = [] } = Astro.props
 
     @keyframes mobileActiveGlow {
       0% {
-        background: rgb(139 93 255 / 0.1);
+        background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
       }
 
       50% {
-        background: rgb(139 93 255 / 0.25);
+        background: color-mix(in oklch, var(--token-purple-base) 25%, transparent);
       }
 
       100% {
-        background: rgb(139 93 255 / 0.2);
+        background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
       }
     }
   }
 
-  /* Improved mobile styling */
-  @media (max-width: 768px) {
-    .toc-container.mobile-toc {
-      margin: 16px -20px 24px -0;
-      border-right: none;
-      border-left: none;
-      border-radius: 10px;
+    /* Improved mobile styling */
+    @media (max-width: 768px) {
+      aside.toc-container.mobile-toc {
+        position: relative;
+        top: 0;
+        right: auto;
+        left: 0;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+        margin: 0;
+        padding: 1rem;
+        border: 1px solid oklch(100% 0 0deg / 0.12);
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          oklch(20% 0 0deg / 0.15) 0%,
+          oklch(15% 0 0deg / 0.1) 100%
+        );
+        box-sizing: border-box;
+        backdrop-filter: blur(24px) saturate(1.2);
+      }
     }
-  }
 </style>
 
 <script>
@@ -829,17 +956,20 @@ const { headings = [] } = Astro.props
       const existing = document.querySelector('.toc-container.mobile-toc');
       if (window.innerWidth <= 1200) {
         if (!existing) {
-          const contentMain = document.getElementById('contentMain');
+          const contentMain = document.getElementById('main-content');
           if (contentMain && contentMain.parentNode) {
-            const clone = tocContainer.cloneNode(true) as HTMLElement;
-            clone.classList.add('mobile-toc');
+             const clone = tocContainer.cloneNode(true) as HTMLElement;
+             clone.classList.add('mobile-toc');
             
             // Re-attach event listeners to mobile TOC
             const mobileToggle = clone.querySelector('.toc-toggle') as HTMLButtonElement;
             const mobileLinks = clone.querySelectorAll('.toc-link') as NodeListOf<HTMLAnchorElement>;
+            const mobileExpandToggle = clone.querySelector('.toc-expand-toggle') as HTMLButtonElement;
+            
+            // Shared state for mobile TOC
+            let mobileCollapsed = false;
             
             if (mobileToggle) {
-              let mobileCollapsed = false;
               
               const updateMobileToggleState = (collapsed: boolean) => {
                 if (collapsed) {
@@ -851,20 +981,85 @@ const { headings = [] } = Astro.props
                 }
               };
               
-              mobileToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                mobileCollapsed = !mobileCollapsed;
-                if (mobileCollapsed) {
-                  clone.classList.add('toc-collapsed');
-                } else {
-                  clone.classList.remove('toc-collapsed');
-                }
-                updateMobileToggleState(mobileCollapsed);
-              });
+               mobileToggle.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 e.stopPropagation();
+                 
+                 mobileCollapsed = !mobileCollapsed;
+                 if (mobileCollapsed) {
+                   clone.classList.add('toc-collapsed');
+                 } else {
+                   clone.classList.remove('toc-collapsed');
+                 }
+                 updateMobileToggleState(mobileCollapsed);
+                 
+                 // Reset expand toggle state when TOC is collapsed/expanded by toggle
+                 const mobileExpandToggle = clone.querySelector('.toc-expand-toggle') as HTMLButtonElement;
+                 if (mobileExpandToggle) {
+                   if (mobileCollapsed) {
+                     // When collapsed by toggle, reset expand toggle to normal state
+                     mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
+                     mobileExpandToggle.setAttribute('aria-expanded', 'false');
+                   } else {
+                     // When expanded by toggle, reset expand toggle to normal state
+                     mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
+                     mobileExpandToggle.setAttribute('aria-expanded', 'false');
+                   }
+                 }
+               });
               
               // Initialize mobile toggle state
               updateMobileToggleState(mobileCollapsed);
+            }
+            
+            // Mobile expand toggle functionality
+            if (mobileExpandToggle) {
+              let isExpanded = false;
+              const mobileTocNav = clone.querySelector('.toc-nav') as HTMLElement;
+              
+              const updateExpandToggleState = (expanded: boolean) => {
+                isExpanded = expanded;
+                if (expanded) {
+                  mobileExpandToggle.setAttribute('aria-label', 'Collapse table of contents');
+                  mobileExpandToggle.setAttribute('aria-expanded', 'true');
+                  if (mobileTocNav) {
+                    mobileTocNav.style.maxHeight = 'none';
+                    mobileTocNav.style.overflow = 'visible';
+                  }
+                } else {
+                  mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
+                  mobileExpandToggle.setAttribute('aria-expanded', 'false');
+                  if (mobileTocNav) {
+                    mobileTocNav.style.maxHeight = '300px';
+                    mobileTocNav.style.overflow = 'hidden auto';
+                  }
+                }
+              };
+              
+              mobileExpandToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Check if TOC is collapsed by toggle button
+                if (mobileCollapsed) {
+                  // State 2: TOC is collapsed by toggle, expand it back
+                  clone.classList.remove('toc-collapsed');
+                  mobileCollapsed = false;
+                  
+                  // Update mobile toggle state
+                  const mobileToggle = clone.querySelector('.toc-toggle') as HTMLButtonElement;
+                  if (mobileToggle) {
+                    mobileToggle.setAttribute('aria-label', 'Collapse table of contents');
+                    mobileToggle.setAttribute('aria-expanded', 'true');
+                  }
+                } else {
+                  // State 1: Normal state, toggle expand/collapse of nav content
+                  updateExpandToggleState(!isExpanded);
+                }
+              });
+              
+              // Initialize expand toggle state
+              updateExpandToggleState(isExpanded);
             }
             
             mobileLinks.forEach(link => {

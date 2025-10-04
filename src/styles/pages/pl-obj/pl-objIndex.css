@@ -90,7 +90,7 @@
 
   /* 共通デザインパターン変数 */
   --pl-color-mix-oklch: in oklch;
-  --pl-color-mix-srgb: in srgb;
+  --pl-color-mix-srgb: in sRGB;
   --pl-scale-hover: 1.02;
   --pl-scale-active: 0.98;
   --pl-scale-zoom: 1.1;
@@ -316,7 +316,7 @@ h3.pl-objTitle {
     }
 
     &:active {
-      -webkit-text-fill-color: currentcolor;
+      -webkit-text-fill-color: currentColor;
     }
   }
 }

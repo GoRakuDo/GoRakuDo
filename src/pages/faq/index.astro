@@ -158,14 +158,9 @@ const faqSchema = generateFAQSchema(defaultFAQData);
   </header>
 
   <!-- Content Slot -->
-  <article
-    slot='content'
-    class='prose prose-invert max-w-none content-main'
-    id='contentMain'
-    aria-label='FAQ content'
-  >
+  <div slot='content'>
     <Content />
-  </article>
+  </div>
 
   <!-- Actions Slot -->
   <footer slot='actions' class='content-actions'>

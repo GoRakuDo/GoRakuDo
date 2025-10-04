@@ -27,68 +27,269 @@
   @apply pt-20 pb-8 backdrop-blur-[1px];
   @apply md:pt-16 md:pb-6;
   @apply max-sm:pt-12 max-sm:pb-4;
-}
 
-/* Android optimization - remove backdrop-filter on mobile for better performance */
-@media screen and (max-width: 768px) {
-  .content-page {
+  /* Android optimization - remove backdrop-filter on mobile for better performance */
+  @media screen and (max-width: 768px) {
     @apply backdrop-blur-none;
+  }
+
+  /* Content Container */
+  .content-container {
+    @apply max-w-4xl pt-8 px-0 pb-0 box-border;
+    @apply md:pt-6;
+    @apply max-sm:pt-4;
+    @apply w-dvw max-w-full;
   }
 }
 
-.content-container {
-  @apply max-w-4xl pt-8 px-0 pb-0 box-border;
-  @apply md:pt-6;
-  @apply max-sm:pt-4;
-  @apply w-dvw max-w-full;
+/* ========== BREADCRUMB CONTAINER STYLING (Must come before nested selectors) ========== */
+
+/* Breadcrumb Container Scrollbar Styling */
+.content-container .breadcrumb-container {
+  /* スクロールバーのスタイリング */
+  @media (max-width: 767px) {
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background: oklch(100% 0 0deg / 0.3);
+      transition: background 0.3s ease;
+    }
+  }
+
+  /* スクロール可能な場合アニメーション効果 */
+  @media (max-width: 767px) {
+    position: relative;
+
+    /* スクロール可能な場合左右フェード効果 */
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 1;
+      width: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    &::before {
+      left: 0;
+      background: linear-gradient(
+        to right,
+        oklch(20% 0 0deg / 0.15) 0%,
+        transparent 100%
+      );
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(
+        to left,
+        oklch(20% 0 0deg / 0.15) 0%,
+        transparent 100%
+      );
+    }
+  }
 }
 
 /* ========== LAYOUT SUPPORT ========== */
 .content-wrapper {
-  @apply flex gap-0 px-0 max-w-full;
+  @apply grid gap-0 px-0 max-w-full;
+
+  /* スマホ: 1列レイアウト */
+  grid-template-areas:
+    'content'
+    'toc';
+  grid-template-columns: 1fr;
+
+  /* タブレット以上: 2列レイアウト */
   @apply sm:gap-4;
   @apply md:gap-5;
   @apply lg:gap-6;
   @apply xl:gap-8;
   @apply 2xl:gap-8;
-}
 
-.content-wrapper .content-container {
-  @apply flex-1 min-w-0 max-w-full p-3;
-  @apply sm:p-4;
-  @apply md:p-6;
-  @apply lg:p-7;
-  @apply xl:p-8;
-  @apply 2xl:p-10 2xl:max-w-4xl;
+  /* スマホでのオーバーフロー防止 */
+  @media (max-width: 767px) {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* タブレット以上で2列Gridレイアウト */
+  @media (min-width: 768px) {
+    gap: 1.5rem;
+    grid-template: 'content toc' 1fr / 1fr 300px;
+
+    /* デスクトップでサイドバー幅調整 */
+    @media (min-width: 1024px) {
+      gap: 2rem;
+      grid-template: 'content toc' 1fr / 1fr 320px;
+    }
+
+    @media (min-width: 1280px) {
+      gap: 2.5rem;
+      grid-template: 'content toc' 1fr / 1fr 350px;
+    }
+  }
+
+  /* Content Container - Grid Area: content */
+  .content-container {
+    @apply min-w-0 max-w-full;
+
+    /* Flexboxフレーム箱 */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    grid-area: content;
+    padding: 0.9375rem; /* 15px (12px × 1.25) */
+
+    @apply sm:p-4;
+    @apply md:p-6;
+    @apply lg:p-7;
+    @apply xl:p-8;
+    @apply 2xl:p-10 2xl:max-w-4xl;
+
+    /* レスポンシブギャップ */
+    @media (min-width: 768px) {
+      gap: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+      gap: 1.25rem;
+    }
+
+    /* Breadcrumb Container - Inside content-container */
+    .breadcrumb-container {
+      @apply w-full max-w-full overflow-hidden relative;
+
+      /* Global CSS GlassMorphism効果 */
+      border: 1px solid oklch(100% 0 0deg / 0.12);
+      border-radius: 16px;
+      background: linear-gradient(
+        135deg,
+        oklch(20% 0 0deg / 0.15) 0%,
+        oklch(15% 0 0deg / 0.1) 100%
+      );
+      backdrop-filter: blur(24px) saturate(1.2);
+      box-shadow:
+        0 4px 20px oklch(0% 0 0deg / 0.08),
+        0 1px 3px oklch(0% 0 0deg / 0.12),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* スマホ画面でのマージンとパディング */
+      @media (max-width: 767px) {
+        overflow: auto hidden;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0.5rem 1rem;
+        box-sizing: border-box;
+        scrollbar-width: thin;
+        scrollbar-color: oklch(100% 0 0deg / 0.3) transparent;
+      }
+
+      /* タブレット画面でのパディング */
+      @media (min-width: 768px) and (max-width: 1023px) {
+        padding: 0.5rem 0.75rem;
+      }
+
+      /* デスクトップ画面でのパディング */
+      @media (min-width: 1024px) {
+        padding: 0.625rem 1rem;
+      }
+    }
+
+    /* Modern Breadcrumb Navigation */
+
+    .modern-breadcrumb-nav {
+      @apply w-full max-w-full m-0 p-0 overflow-hidden;
+    }
+
+    .breadcrumb-list {
+      @apply w-full max-w-full overflow-x-auto overflow-y-hidden p-0 m-0;
+    }
+
+    .breadcrumb-item {
+      @apply flex-shrink-0 max-w-fit gap-1 items-center;
+    }
+
+    .breadcrumb-icon {
+      @apply flex-shrink-0 text-base leading-none;
+    }
+
+    .breadcrumb-separator {
+      @apply flex-shrink-0 mx-1;
+    }
+  }
+
+  /* Sidebar Container - Grid Area: toc */
+  .sidebar-container {
+    @apply w-full;
+
+    grid-area: toc;
+  }
 }
 
 /* ========== BREADCRUMB ========== */
+
 .breadcrumb-nav {
   @apply bg-transparent backdrop-filter-none border-none shadow-none;
+
+  /* スマホでのbreadcrumb-navのオーバーフロー防止 */
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    overflow: auto hidden;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0.5rem;
+    box-sizing: border-box;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+
+    &::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+  }
 }
 
-.content-container .modern-breadcrumb-nav {
-  @apply w-full max-w-full m-0 p-0 overflow-hidden;
+/* Breadcrumb Container Hover Effect */
+.content-container .breadcrumb-container:hover {
+  background: linear-gradient(
+    135deg,
+    oklch(25% 0 0deg / 0.2) 0%,
+    oklch(20% 0 0deg / 0.15) 100%
+  );
+  border-color: color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+  box-shadow:
+    0 8px 32px oklch(0% 0 0deg / 0.12),
+    0 2px 8px oklch(0% 0 0deg / 0.08),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
 }
 
-.content-container .breadcrumb-container {
-  @apply w-full max-w-full overflow-hidden relative;
+/* Breadcrumb Scrollable States */
+.breadcrumb-container.scrollable-left::before,
+.breadcrumb-container.scrollable-right::after {
+  opacity: 1;
 }
 
-.content-container .breadcrumb-list {
-  @apply w-full max-w-full overflow-x-auto overflow-y-hidden p-0 m-0;
-}
-
-.content-container .breadcrumb-item {
-  @apply flex-shrink-0 max-w-fit gap-1 items-center;
-}
-
-.content-container .breadcrumb-icon {
-  @apply flex-shrink-0 text-base leading-none;
-}
-
-.content-container .breadcrumb-separator {
-  @apply flex-shrink-0 mx-1;
+.breadcrumb-container.scrolling {
+  box-shadow:
+    0 4px 20px oklch(0% 0 0deg / 0.08),
+    0 1px 3px oklch(0% 0 0deg / 0.12),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.15),
+    0 0 0 1px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
 }
 
 /* ========== BUTTONS ========== */
@@ -117,34 +318,278 @@
 
 /* Using high-frequency variables from global.css: --clr-content-border, --clr-content-background-card, --shadow-content-card */
 .content-header {
-  @apply text-center mx-2 my-8 p-6 rounded-2xl min-h-60;
-  @apply border border-[var(--clr-content-border)];
-  @apply bg-[var(--clr-content-background-card)] backdrop-blur-[5px];
-  @apply shadow-[var(--shadow-content-card)];
+  @apply text-center mx-2 p-6 min-h-60;
   @apply flex flex-col justify-center items-center;
-  @apply md:mx-1 md:my-6 md:p-5 md:min-h-50;
-  @apply max-sm:mx-0 max-sm:my-4 max-sm:p-4 max-sm:min-h-40;
+  @apply md:mx-1 md:p-5 md:min-h-50;
+  @apply max-sm:mx-0 max-sm:p-4 max-sm:min-h-40;
+
+  /* Global CSS GlassMorphism効果 */
+  border: 1px solid oklch(100% 0 0deg / 0.12);
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    oklch(20% 0 0deg / 0.15) 0%,
+    oklch(15% 0 0deg / 0.1) 100%
+  );
+  backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow:
+    0 4px 20px oklch(0% 0 0deg / 0.08),
+    0 1px 3px oklch(0% 0 0deg / 0.12),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* H1要素 */
+  h1 {
+    @apply font-bold mb-8 leading-tight;
+
+    /* 紫色→赤色グラデーション */
+    background: linear-gradient(
+      135deg,
+      oklch(65% 0.25 280deg) 30%,
+      oklch(65% 0.18 15deg) 100%
+    );
+    background-clip: text;
+    color: transparent;
+    font-size: 2.25rem; /* 36px - チャレンジページ */
+
+    @apply max-sm:text-xl max-sm:mb-3;
+    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-accent)] focus:ring-offset-2;
+    @apply focus:ring-offset-[var(--clr-content-background-card)];
+
+    /* タブレットサイズでのフォントサイズ調整 */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      font-size: 1.5rem; /* 24px - タブレット */
+    }
+  }
+
+  /* Content Meta */
+  .content-meta {
+    @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
+    @apply text-[var(--clr-content-meta)];
+    @apply max-sm:gap-3 max-sm:text-[0.8rem];
+  }
+
+  .content-date,
+  .content-author,
+  .content-read-time {
+    @apply text-[var(--clr-content-meta)];
+  }
+
+  /* Content Tags */
+  .content-tags {
+    @apply flex items-center justify-center gap-3;
+  }
+
+  /* Difficulty Badges */
+  .difficulty-badge {
+    @apply py-1.5 px-3 rounded-full text-xs font-semibold inline-block mx-auto text-center;
+
+    &.difficulty-beginner {
+      @apply bg-[oklch(60%_0.15_145deg/0.2)] text-green-300 border border-[oklch(60%_0.15_145deg/0.3)];
+    }
+
+    &.difficulty-intermediate {
+      @apply bg-[oklch(70%_0.15_85deg/0.2)] text-yellow-300 border border-[oklch(70%_0.15_85deg/0.3)];
+    }
+
+    &.difficulty-advanced {
+      @apply bg-[oklch(60%_0.15_25deg/0.2)] text-red-300 border border-[oklch(60%_0.15_25deg/0.3)];
+    }
+  }
 }
 
-.content-header h1 {
-  @apply text-3xl font-bold mb-4 text-white leading-tight;
-  @apply md:text-2xl;
-  @apply max-sm:text-xl max-sm:mb-3;
-  @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-accent)] focus:ring-offset-2;
-  @apply focus:ring-offset-[var(--clr-content-background-card)];
+/* Content Header Hover Effect */
+.content-header:hover {
+  background: linear-gradient(
+    135deg,
+    oklch(25% 0 0deg / 0.2) 0%,
+    oklch(20% 0 0deg / 0.15) 100%
+  );
+  border-color: color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+  box-shadow:
+    0 8px 32px oklch(0% 0 0deg / 0.12),
+    0 2px 8px oklch(0% 0 0deg / 0.08),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
 }
 
-/* Using high-frequency variable from global.css: --clr-content-meta */
-.content-meta {
-  @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
-  @apply text-[var(--clr-content-meta)];
-  @apply max-sm:gap-3 max-sm:text-[0.8rem];
+/* ========== CONTENT MAIN ========== */
+.content-main {
+  @apply p-6 px-4 max-w-none bg-transparent rounded-lg w-full relative block;
+  @apply md:p-5 md:px-4;
+  @apply max-sm:p-4;
+
+  /* Prose paragraph styling */
+  &.prose p {
+    @apply mb-8 leading-relaxed; /* 32px bottom margin + relaxed line height */
+  }
+
+  /* Prose heading scroll margin */
+  &.prose :where(h1, h2, h3, h4, h5) {
+    @apply scroll-mt-8;
+  }
+
+  /* Prose H1 styling */
+  &.prose h1 {
+    @apply mb-6 leading-tight; /* 24px bottom margin */
+  }
+
+  /* H1要素 - 紫色→赤色グラデーション */
+  h1 {
+    @apply font-bold mb-8 leading-tight;
+
+    /* 紫色→赤色グラデーション */
+    background: linear-gradient(
+      135deg,
+      oklch(65% 0.25 280deg) 30%,
+      oklch(65% 0.18 15deg) 100%
+    );
+    background-clip: text;
+    color: transparent;
+    font-size: 2.25rem; /* 36px - チャレンジページ */
+
+    @apply max-sm:text-xl max-sm:mb-3;
+    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-accent)] focus:ring-offset-2;
+    @apply focus:ring-offset-[var(--clr-content-background-card)];
+
+    /* タブレットサイズでのフォントサイズ調整 */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      font-size: 1.5rem; /* 24px - タブレット */
+    }
+  }
+
+  /* H2要素 - 紫色→赤色グラデーション */
+  h2 {
+    @apply relative mb-5 leading-tight; /* 20px bottom margin */
+
+    /* 紫色→赤色グラデーション */
+    background: linear-gradient(
+      135deg,
+      oklch(65% 0.25 280deg) 5%,
+      var(--token-white-base) 100%
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* H3要素 - 紫色→赤色グラデーション */
+  h3 {
+    @apply mb-4 mt-6 leading-snug; /* 16px bottom, 24px top margin */
+
+    /* 紫色→赤色グラデーション */
+    background: linear-gradient(
+      135deg,
+      oklch(65% 0.25 280deg) 5%,
+      var(--token-white-base) 100%
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* H4要素 - 紫色→赤色グラデーション */
+  h4 {
+    @apply mb-3 mt-5 leading-snug; /* 12px bottom, 20px top margin */
+
+    /* 紫色→赤色グラデーション */
+    background: linear-gradient(
+      135deg,
+      oklch(65% 0.25 280deg) 5%,
+      var(--token-white-base) 100%
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* H5要素 - 紫色→赤色グラデーション */
+  h5 {
+    @apply mb-2 mt-4 leading-snug; /* 8px bottom, 16px top margin */
+
+    /* 紫色→赤色グラデーション */
+    background: linear-gradient(
+      135deg,
+      oklch(65% 0.25 280deg) 5%,
+      var(--token-white-base) 100%
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* H6要素 - 紫色→赤色グラデーション */
+  h6 {
+    @apply mb-2 mt-3 leading-snug; /* 8px bottom, 12px top margin */
+
+    /* 紫色→赤色グラデーション */
+    background: linear-gradient(
+      135deg,
+      oklch(65% 0.25 280deg) 5%,
+      var(--token-white-base) 100%
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Prose list styling */
+
+  &.prose ul {
+    @apply my-4;
+
+    padding-left: 1.5rem;
+    list-style-type: disc;
+  }
+
+  &.prose ol {
+    @apply my-4;
+
+    padding-left: 1.5rem;
+    list-style-type: decimal;
+  }
+
+  /* Prose horizontal rule */
+
+  &.prose hr {
+    @apply my-4;
+  }
 }
 
-.content-date,
-.content-author,
-.content-read-time {
-  @apply text-[var(--clr-content-meta)];
+/* Content Main Prose List Items */
+
+.content-main.prose ul li {
+  @apply relative pl-2 mb-2;
+
+  list-style-type: disc;
+}
+
+.content-main.prose ul li::before {
+  display: none; /* Disable custom bullet to show default disc */
+}
+
+.content-main.prose ol li {
+  @apply relative pl-2 mb-2;
+
+  list-style-type: decimal;
+}
+
+/* Content Main Prose Last Child */
+
+.prose p:last-child {
+  @apply mb-0; /* Remove bottom margin from last paragraph */
+}
+
+/* Content Main H2 Before Pseudo-element */
+.content-main h2::before {
+  position: absolute;
+  top: 0;
+  left: -1.25rem;
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(
+    135deg,
+    var(--clr-accent),
+    var(--clr-accent-dark)
+  );
+  opacity: var(--opacity-80);
+  content: '';
+  transition: opacity 0.2s ease;
 }
 
 /* ========== LEGACY SUPPORT ========== */
@@ -158,140 +603,26 @@
   @apply flex flex-col justify-center items-center;
   @apply md:mx-1 md:my-6 md:p-5 md:min-h-50;
   @apply max-sm:mx-0 max-sm:my-4 max-sm:p-4 max-sm:min-h-40;
-}
 
-.post-meta {
-  @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
-  @apply text-[var(--clr-content-meta)];
-  @apply max-sm:gap-3 max-sm:text-[0.8rem];
-}
+  .post-meta {
+    @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
+    @apply text-[var(--clr-content-meta)];
+    @apply max-sm:gap-3 max-sm:text-[0.8rem];
+  }
 
-.post-date,
-.post-author,
-.post-read-time {
-  @apply text-[var(--clr-content-meta)];
-}
+  .post-date,
+  .post-author,
+  .post-read-time {
+    @apply text-[var(--clr-content-meta)];
+  }
 
-.post-title {
-  @apply text-inherit;
-}
+  .post-title {
+    @apply text-inherit;
+  }
 
-/* ========== DIFFICULTY BADGES ========== */
-
-/* Low-frequency variables (1-2 uses) - kept local for component-specific styling */
-.content-tags {
-  @apply flex items-center justify-center gap-3;
-}
-
-.difficulty-badge {
-  @apply py-1.5 px-3 rounded-full text-xs font-semibold inline-block mx-auto text-center;
-}
-
-.difficulty-badge.difficulty-beginner {
-  @apply bg-[oklch(60%_0.15_145deg/0.2)] text-green-300 border border-[oklch(60%_0.15_145deg/0.3)];
-}
-
-.difficulty-badge.difficulty-intermediate {
-  @apply bg-[oklch(70%_0.15_85deg/0.2)] text-yellow-300 border border-[oklch(70%_0.15_85deg/0.3)];
-}
-
-.difficulty-badge.difficulty-advanced {
-  @apply bg-[oklch(60%_0.15_25deg/0.2)] text-red-300 border border-[oklch(60%_0.15_25deg/0.3)];
-}
-
-.post-tags {
-  @apply flex items-center justify-center gap-3;
-}
-
-/* ========== CONTENT TYPOGRAPHY ========== */
-.content-main {
-  @apply p-6 px-4 max-w-none bg-transparent rounded-lg w-full relative block;
-  @apply md:p-5 md:px-3;
-  @apply max-sm:p-4 max-sm:px-2;
-}
-
-.content-main.prose p {
-  @apply mb-8 leading-relaxed; /* 32px bottom margin + relaxed line height */
-}
-
-.prose p:last-child {
-  @apply mb-0; /* Remove bottom margin from last paragraph */
-}
-
-.content-main.prose :where(h1, h2, h3, h4, h5) {
-  @apply scroll-mt-8;
-}
-
-.content-main.prose h1 {
-  @apply mb-6 mt-8 leading-tight; /* 24px bottom, 32px top margin */
-}
-
-.content-main.prose h2 {
-  @apply relative mb-5 mt-8 leading-tight; /* 20px bottom, 32px top margin */
-}
-
-.content-main.prose h2::before {
-  position: absolute;
-  top: 50%;
-  left: -1.25rem;
-  width: 4px;
-  height: 1.5rem;
-  border-radius: 2px;
-  background: linear-gradient(
-    135deg,
-    var(--clr-accent),
-    var(--clr-accent-dark)
-  );
-  opacity: var(--opacity-80);
-  transform: translateY(-50%);
-  content: '';
-  transition: opacity 0.2s ease;
-}
-
-.content-main.prose h3 {
-  @apply mb-4 mt-6 leading-snug; /* 16px bottom, 24px top margin */
-}
-
-.content-main.prose h4 {
-  @apply mb-3 mt-5 leading-snug; /* 12px bottom, 20px top margin */
-}
-
-.content-main.prose h5 {
-  @apply mb-2 mt-4 leading-snug; /* 8px bottom, 16px top margin */
-}
-
-.content-main.prose ul {
-  @apply my-4;
-
-  padding-left: 1.5rem;
-  list-style-type: disc;
-}
-
-.content-main.prose ol {
-  @apply my-4;
-
-  padding-left: 1.5rem;
-  list-style-type: decimal;
-}
-
-.content-main.prose hr {
-  @apply my-4;
-}
-
-.content-main.prose ul li {
-  @apply relative pl-2 mb-2;
-
-  list-style-type: disc;
-}
-
-.content-main.prose ol li {
-  @apply relative pl-2 mb-2;
-
-  list-style-type: decimal;
-}
-
-.content-main.prose ul li::before {
-  display: none; /* Disable custom bullet to show default disc */
+  .post-tags {
+    @apply flex items-center justify-center gap-3;
+  }
 }
 
 .post-content {
@@ -312,17 +643,17 @@
   @apply sm:flex-row;
   @apply md:my-6 md:p-5;
   @apply max-sm:my-4 max-sm:p-4 max-sm:gap-3;
-}
 
-.action-buttons {
-  @apply flex items-center gap-4 w-full justify-between;
-  @apply max-sm:flex-col max-sm:gap-3;
-  @apply max-[480px]:gap-2;
-}
+  .action-buttons {
+    @apply flex items-center gap-4 w-full justify-between;
+    @apply max-sm:flex-col max-sm:gap-3;
+    @apply max-[480px]:gap-2;
+  }
 
-.share-buttons {
-  @apply flex gap-3 items-center;
-  @apply max-[480px]:gap-2;
+  .share-buttons {
+    @apply flex gap-3 items-center;
+    @apply max-[480px]:gap-2;
+  }
 }
 
 .post-actions {
@@ -341,6 +672,18 @@
   @apply transition-[width] duration-100 ease-linear;
 
   background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent-dark));
+}
+
+/* ========== CODE BLOCKS ========== */
+code {
+  padding: 0;
+  background: none;
+}
+
+pre {
+  @apply my-4 p-4 border border-[var(--clr-accent-glow-faint)] rounded-lg;
+  @apply bg-none shadow-[var(--shadow-content-card)];
+  @apply overflow-x-auto;
 }
 
 /* ========== ACCESSIBILITY & RESPONSIVE ========== */
@@ -395,13 +738,6 @@
   }
 }
 
-/* ========== CODE BLOCKS ========== */
-
-code {
-  padding: 0;
-  background: none;
-}
-
 /* ========== ANDROID PERFORMANCE OPTIMIZATIONS ========== */
 
 /* Reduce expensive CSS effects on Android devices for better performance */
@@ -434,10 +770,4 @@ code {
   .content-actions {
     box-shadow: none;
   }
-}
-
-pre {
-  @apply my-4 p-4 border border-[var(--clr-accent-glow-faint)] rounded-lg;
-  @apply bg-none shadow-[var(--shadow-content-card)];
-  @apply overflow-x-auto;
 }

@@ -366,7 +366,7 @@
     }
 
     &:active {
-      -webkit-text-fill-color: currentcolor;
+      -webkit-text-fill-color: currentColor;
     }
   }
 

@@ -343,7 +343,7 @@
     /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
     font-display: swap; /* Prevent layout shift during font loading */
     scroll-behavior: smooth !important;
-    text-rendering: optimizespeed !important;
+    text-rendering: optimizeSpeed !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
 
@@ -609,7 +609,7 @@
     td,
     th
   ):active {
-    -webkit-text-fill-color: currentcolor !important;
+    -webkit-text-fill-color: currentColor !important;
   }
 
   /* Improved form elements */
@@ -644,7 +644,7 @@
   }
 
   a:active {
-    -webkit-text-fill-color: currentcolor !important;
+    -webkit-text-fill-color: currentColor !important;
   }
 
   img {

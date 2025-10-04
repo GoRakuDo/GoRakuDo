@@ -128,7 +128,7 @@
     "no-duplicate-selectors": true,
     "no-descending-specificity": true,
     "property-no-vendor-prefix": true,
-    "value-keyword-case": "lower",
+    "value-keyword-case": ["lower", { "camelCaseSvgKeywords": true }],
     "declaration-block-no-redundant-longhand-properties": true,
     "declaration-block-no-duplicate-properties": true,
     "declaration-block-no-shorthand-property-overrides": true,

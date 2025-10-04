@@ -3,16 +3,12 @@
 // Centralized layout management following ArticleLayout pattern
 // All content sections are provided through named slots
 import UnifiedSEO from '../components/UnifiedSEO.astro';
-import Breadcrumb from '../components/common/Breadcrumb.astro';
 import TableOfContents from '../components/content/TableOfContents.astro';
 
 import Navbar from '../components/common/NavBar/Navbar.astro';
 import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
 
 import Prose from '../components/Prose.astro';
-
-// Animation
-import WaveAnimation from '../components/animations/WaveAnimation.astro';
 
 // Global CSS
 import '../styles/global.css';
@@ -36,6 +32,12 @@ export interface Props {
   postActions?: boolean;
   // Featured image from ContentCollection
   featuredImage?: string;
+  // Content article configuration
+  contentConfig?: {
+    id?: string;
+    ariaLabel?: string;
+    className?: string;
+  };
   // Breadcrumb configuration
   breadcrumbConfig?: {
     currentPath?: string;
@@ -78,6 +80,7 @@ const {
   author,
   tags = [],
   headings,
+  contentConfig = {},
   breadcrumbSchema,
   faqSchema,
   featuredImage,
@@ -106,9 +109,6 @@ const {
     <Navbar />
     <BottomNavBar />
 
-    <!-- Background Wave Animation - Optimized for Article Reading -->
-    <WaveAnimation className='wave-canvas' backgroundLayer='darker' />
-
     <!-- Main Content -->
     <main
       class='content-page items-center justify-center w-full max-w-full flex flex-col'
@@ -116,15 +116,26 @@ const {
       style='padding-top: 5rem;'
     >
       <div class='content-wrapper'>
+        <!-- Content Container - Grid Area: content -->
         <div class='content-container'>
-          <!-- Breadcrumb Navigation Slot -->
-          <slot name='breadcrumb' />
+          <!-- Breadcrumb Navigation - Inside content-container -->
+          <div class='breadcrumb-container'>
+            <slot name='breadcrumb' />
+          </div>
 
           <!-- Article Header Slot -->
           <slot name='header' />
 
           <!-- Article Content Slot -->
-          <slot name='content' />
+          <article
+            class={`max-w-none content-main ${contentConfig.className || ''}`}
+            id={contentConfig.id || 'contentMain'}
+            aria-label={contentConfig.ariaLabel || 'Post content'}
+          >
+            <Prose>
+              <slot name='content' />
+            </Prose>
+          </article>
 
           <!-- Post Actions Slot -->
           <slot name='actions' />
@@ -133,7 +144,7 @@ const {
           <slot name='footer' />
         </div>
 
-        <!-- Sidebar Container -->
+        <!-- Sidebar Container - Grid Area: toc -->
         <div class='sidebar-container'>
           <!-- Table of Contents Sidebar Slot -->
           <slot name='sidebar'>
@@ -150,5 +161,98 @@ const {
         </div>
       </div>
     </main>
+
+    <!-- Breadcrumb Scroll Animation Script -->
+    <script>
+      // スマホ画面でのbreadcrumb-containerのスクロールアニメーション
+      function initBreadcrumbScrollAnimation() {
+        const breadcrumbContainer = document.querySelector(
+          '.breadcrumb-container'
+        ) as HTMLElement;
+
+        if (!breadcrumbContainer || window.innerWidth > 767) {
+          return; // スマホ画面以外では実行しない
+        }
+
+        let scrollTimeout: number;
+        let isScrolling = false;
+
+        // スクロール可能な状態をチェック
+        function checkScrollable() {
+          if (!breadcrumbContainer) return;
+
+          const { scrollLeft, scrollWidth, clientWidth } = breadcrumbContainer;
+
+          // 左側にスクロール可能かチェック
+          if (scrollLeft > 0) {
+            breadcrumbContainer.classList.add('scrollable-left');
+          } else {
+            breadcrumbContainer.classList.remove('scrollable-left');
+          }
+
+          // 右側にスクロール可能かチェック
+          if (scrollLeft < scrollWidth - clientWidth) {
+            breadcrumbContainer.classList.add('scrollable-right');
+          } else {
+            breadcrumbContainer.classList.remove('scrollable-right');
+          }
+        }
+
+        // スクロール開始時のアニメーション
+        function handleScrollStart() {
+          if (!breadcrumbContainer || isScrolling) return;
+
+          isScrolling = true;
+          breadcrumbContainer.classList.add('scrolling');
+        }
+
+        // スクロール終了時のアニメーション
+        function handleScrollEnd() {
+          if (!breadcrumbContainer) return;
+
+          isScrolling = false;
+          breadcrumbContainer.classList.remove('scrolling');
+        }
+
+        // スクロールイベントリスナー
+        breadcrumbContainer.addEventListener('scroll', () => {
+          handleScrollStart();
+          checkScrollable();
+
+          // スクロール終了を検出
+          clearTimeout(scrollTimeout);
+          scrollTimeout = window.setTimeout(handleScrollEnd, 150);
+        });
+
+        // 初期状態をチェック
+        checkScrollable();
+
+        // リサイズ時に再チェック
+        window.addEventListener('resize', () => {
+          if (!breadcrumbContainer) return;
+
+          if (window.innerWidth <= 767) {
+            setTimeout(checkScrollable, 100);
+          } else {
+            // デスクトップ画面ではクラスを削除
+            breadcrumbContainer.classList.remove(
+              'scrollable-left',
+              'scrollable-right',
+              'scrolling'
+            );
+          }
+        });
+      }
+
+      // DOM読み込み完了後に実行
+      if (document.readyState === 'loading') {
+        document.addEventListener(
+          'DOMContentLoaded',
+          initBreadcrumbScrollAnimation
+        );
+      } else {
+        initBreadcrumbScrollAnimation();
+      }
+    </script>
   </body>
 </html>

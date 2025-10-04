@@ -84,18 +84,6 @@
   --tool__margin-xl: clamp(2rem, 5vw, 3rem);
 }
 
-/* ========== BEM METHOD - TOOL UTILITY CLASSES ========== */
-
-/* Utility classes removed - not used in current implementation */
-
-/* ========== BEM METHOD - TOOL COMPONENT STYLES ========== */
-
-/* Component styles removed - not used in current implementation */
-
-/* ========== BEM METHOD - TOOL HEADER COMPONENT ========== */
-
-/* Header component styles removed - integrated into header-* classes */
-
 /* ========== TOOL-IdHeader.astro INTEGRATED STYLES ========== */
 
 /* ========== COMPONENT HEADER STYLES ========== */
@@ -196,11 +184,11 @@
 }
 
 .header-text-content {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
   justify-content: center;
   width: 100%;
-  text-align: center;
+    text-align: center;
 
   /* タブレット以上で左寄せ */
   @media (min-width: 640px) {
@@ -208,17 +196,17 @@
     justify-content: center;
     text-align: left;
   }
-}
+  }
 
 .header-title {
-  margin: 0 0 var(--spacing-md) 0;
+    margin: 0 0 var(--spacing-md) 0;
   color: var(--clr-text-primary);
   font-size: clamp(1.5rem, 5vw, 2.5rem);
-  font-weight: 800;
-  line-height: 1.2;
+    font-weight: 800;
+    line-height: 1.2;
 
   /* デスクトップでフォントサイズ調整 */
-  @media (min-width: 768px) {
+    @media (min-width: 768px) {
     font-size: clamp(2rem, 6vw, 2.5rem);
   }
 }
@@ -227,34 +215,34 @@
   margin: 0 0 var(--spacing-lg) 0;
   color: var(--clr-text-secondary);
   font-size: clamp(0.875rem, 2.5vw, 1rem);
-  line-height: 1.6;
-}
+    line-height: 1.6;
+  }
 
 .header-meta {
-  display: flex;
+    display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+    justify-content: center;
   gap: var(--spacing-lg);
 
   /* タブレット以上で左寄せ */
   @media (min-width: 640px) {
-    justify-content: flex-start;
+      justify-content: flex-start;
   }
 }
 
 .meta-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
   color: var(--clr-text-muted);
   font-size: var(--font-size-base);
-  font-weight: 500;
-}
+    font-weight: 500;
+  }
 
 .meta-icon {
-  width: var(--spacing-md);
-  height: var(--spacing-md);
+    width: var(--spacing-md);
+    height: var(--spacing-md);
   color: var(--clr-accent);
 }
 
@@ -303,21 +291,21 @@
 }
 
 .tool__articles-grid {
-  position: relative;
-  display: grid;
+    position: relative;
+    display: grid;
   gap: var(--tool__spacing-md);
-  grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   width: 100%;
   max-width: 100%;
   margin-bottom: var(--tool__spacing-2xl);
-  padding: 0;
-  will-change: transform;
+    padding: 0;
+    will-change: transform;
 
   /* タブレット以上: 2列 */
-  @media (min-width: 768px) {
+    @media (min-width: 768px) {
     gap: var(--tool__spacing-lg);
-    grid-template-columns: repeat(2, 1fr);
-  }
+      grid-template-columns: repeat(2, 1fr);
+    }
 
   /* デスクトップ: 最適化されたスペーシング */
   @media (min-width: 1024px) {
@@ -327,9 +315,451 @@
 
 /* ========== FLEXBOX OPTIMIZATION UTILITIES ========== */
 .tool-main-content {
-  display: flex;
+    display: flex;
   flex-direction: column;
-  align-items: center;
+    align-items: center;
   width: 100%;
   min-height: auto;
+}
+
+/* ========== TOOL-IdArticle.astro INTEGRATED STYLES ========== */
+
+/* ========== MODERN COMPACT ARTICLE CARD STYLES ========== */
+.article-card-optimized {
+  position: relative;
+  overflow: hidden;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  border: 1px solid oklch(100% 0 0deg / 0.12);
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    oklch(20% 0 0deg / 0.15) 0%,
+    oklch(15% 0 0deg / 0.1) 100%
+  );
+  backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow:
+    0 4px 20px oklch(0% 0 0deg / 0.08),
+    0 1px 3px oklch(0% 0 0deg / 0.12),
+    inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+  contain: layout style paint;
+  will-change: transform, box-shadow;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Smooth Hover Lift Effect */
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      oklch(25% 0 0deg / 0.2) 0%,
+      oklch(20% 0 0deg / 0.15) 100%
+    );
+    transform: none;
+    border-color: color-mix(
+      in oklch,
+      var(--token-purple-base) 30%,
+      transparent
+    );
+    backdrop-filter: blur(24px) saturate(1.2);
+    box-shadow:
+      0 20px 60px oklch(0% 0 0deg / 0.18),
+      0 8px 25px oklch(0% 0 0deg / 0.12),
+      0 2px 8px oklch(0% 0 0deg / 0.08),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.3),
+      0 0 0 1px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+  }
+
+  /* Active State - Smooth Press Effect */
+  &:active {
+    transform: none;
+    transition-duration: 0.1s;
+    box-shadow:
+      0 10px 30px oklch(0% 0 0deg / 0.15),
+      0 4px 15px oklch(0% 0 0deg / 0.1),
+      0 1px 4px oklch(0% 0 0deg / 0.06),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.25);
+  }
+
+  /* Focus State */
+  &:focus-within {
+    outline: 2px solid var(--token-purple-base);
+    outline-offset: 2px;
+  }
+
+  /* High Contrast Support */
+  @media (prefers-contrast: high) {
+    border-color: var(--clr-text-primary);
+    background: var(--clr-background);
+    box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.3);
+  }
+
+  /* Reduce layout thrashing */
+  .card-meta {
+    contain: layout;
+  }
+}
+
+/* ========== MODERN COMPACT CARD LINK ========== */
+.card-link {
+  position: relative;
+  z-index: var(--z-Tool-IdArticle-card-link);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  border-radius: inherit;
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  isolation: isolate;
+
+  /* Modern Focus Management */
+  &:focus-visible {
+    position: relative;
+    z-index: var(--z-Tool-IdArticle-card-link-focus-visible);
+    outline: 2px solid var(--token-purple-base);
+    outline-offset: 3px;
+    border-radius: 16px;
+    will-change: outline;
+    transition: outline 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 0 0 1px
+      color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+  }
+
+  /* Enhanced Hover State */
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+    transform: translateZ(0);
+  }
+
+  /* Active State */
+  &:active {
+    color: inherit;
+    text-decoration: none;
+    transform: translateZ(0) scale(0.98);
+    transition-duration: 0.1s;
+  }
+
+  /* High Contrast Support */
+  @media (prefers-contrast: high) {
+    &:focus-visible {
+      outline-color: var(--clr-text-primary);
+      outline-width: 3px;
+      box-shadow: none;
+    }
+  }
+
+  /* ========== MODERN COMPACT CARD HEADER ========== */
+  .card-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    padding: clamp(0.5rem, 1.25vw, 0.75rem);
+    flex-shrink: 0;
+    border-bottom: 1px solid oklch(100% 0 0deg / 0.08);
+    background: linear-gradient(
+      135deg,
+      oklch(20% 0 0deg / 0.1) 0%,
+      oklch(15% 0 0deg / 0.06) 100%
+    );
+    backdrop-filter: blur(12px) saturate(1.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* スマホ画面で上下左右パディングを2倍に */
+    @media (max-width: 767px) {
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    /* タブレット以上でパディング調整（統一） */
+    @media (min-width: 768px) {
+      padding: 1rem;
+    }
+
+    /* Modern Hover Enhancement */
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        oklch(25% 0 0deg / 0.15) 0%,
+        oklch(20% 0 0deg / 0.1) 100%
+      );
+      border-bottom-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 15%,
+        transparent
+      );
+    }
+  }
+
+  .card-date {
+    color: var(--clr-text-muted);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    font-weight: 500;
+    opacity: 0.8;
+  }
+
+  /* ========== メインコンテンツ (MOBILE PADDING OPTIMIZED) ========== */
+  .card-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0; /* Prevents flex item from overflowing */
+    padding: clamp(0.5rem, 1.25vw, 0.75rem);
+    background: transparent;
+
+    /* スマホ画面で上下左右パディングを2倍に */
+    @media (max-width: 767px) {
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    /* タブレット以上でパディング調整（統一） */
+@media (min-width: 768px) {
+      padding: 1rem;
+    }
+  }
+
+  .card-image-section {
+    overflow: hidden;
+    margin-bottom: clamp(0.5rem, 1.25vw, 0.75rem);
+    border-radius: clamp(8px, 1.5vw, 12px);
+    background: oklch(100% 0 0deg / var(--opacity-05));
+  }
+
+  .card-image {
+    width: 100%;
+    height: clamp(120px, 18vh, 180px);
+    border-radius: clamp(8px, 1.5vw, 12px);
+    background: var(--clr-background);
+    object-fit: cover;
+    object-position: center;
+    image-rendering: auto;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+
+    /* Smooth Hover Effect */
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  /* 画像読み込み最適化 */
+  .card-image[loading='lazy'] {
+    opacity: 1;
+  }
+
+  /* ========== テキストコンテンツ (COMPACT DESIGN) ========== */
+  .card-text-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: clamp(0.25rem, 0.75vw, 0.375rem);
+    min-height: 0;
+  }
+
+  .card-title {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--clr-text-primary);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1.3;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .card-description {
+    display: -webkit-box;
+    flex: 1;
+    overflow: hidden;
+    margin: 0;
+    color: var(--clr-text-secondary);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-weight: 400;
+    line-height: 1.6;
+    opacity: 0.9;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ========== MODERN COMPACT CARD FOOTER ========== */
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    padding: clamp(0.5rem, 1.25vw, 0.75rem);
+    flex-shrink: 0;
+    border-top: 1px solid oklch(100% 0 0deg / 0.08);
+    background: linear-gradient(
+      135deg,
+      oklch(20% 0 0deg / 0.1) 0%,
+      oklch(15% 0 0deg / 0.06) 100%
+    );
+    backdrop-filter: blur(12px) saturate(1.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* スマホ画面で上下左右パディングを2倍に */
+    @media (max-width: 767px) {
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    /* タブレット以上でパディング調整（統一） */
+    @media (min-width: 768px) {
+      padding: 1rem;
+    }
+
+    /* Modern Hover Enhancement */
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        oklch(25% 0 0deg / 0.15) 0%,
+        oklch(20% 0 0deg / 0.1) 100%
+      );
+      border-top-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 15%,
+        transparent
+      );
+    }
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: clamp(0.25rem, 0.75vw, 0.375rem);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    contain: layout;
+  }
+
+  .card-tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card-tag {
+    flex-shrink: 0;
+    padding: clamp(0.25rem, 1vw, 0.375rem) clamp(0.5rem, 1.5vw, 0.75rem);
+    border: 1px solid
+      color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+    border-radius: clamp(6px, 1vw, 8px);
+    background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
+    color: var(--token-purple-base);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+
+    /* ホバー効果 */
+    &:hover {
+      background: color-mix(
+        in oklch,
+        var(--token-purple-base) 20%,
+        transparent
+      );
+      border-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 50%,
+        transparent
+      );
+    }
+
+    /* モーション軽減対応 */
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  /* ========== アクションインジケーター (REDESIGNED) ========== */
+  .card-action-indicator {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(2rem, 4vw, 2.5rem);
+    height: clamp(2rem, 4vw, 2.5rem);
+    border: 1px solid
+      color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    flex-shrink: 0;
+    backdrop-filter: blur(10px);
+
+    /* Smooth Hover Effect */
+    &:hover {
+      background: color-mix(
+        in oklch,
+        var(--token-purple-base) 25%,
+        transparent
+      );
+      border-color: color-mix(
+        in oklch,
+        var(--token-purple-base) 40%,
+        transparent
+      );
+      transform: scale(1.15);
+    }
+
+    /* デスクトップ表示ではホバー時にのみ表示 */
+    @media (min-width: 768px) {
+      opacity: 0;
+      transform: scale(0.8);
+
+      &:hover {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .arrow-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(0.875rem, 2vw, 1rem);
+    height: clamp(0.875rem, 2vw, 1rem);
+    color: var(--token-purple-base);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    flex-shrink: 0;
+    transform-origin: center;
+
+    /* Smooth Hover Effect - 中央を基準としたアニメーション */
+    &:hover {
+      transform: scale(1.1) translateX(2px);
+    }
+  }
+
+  /* ========== レスポンシブデザイン (REDESIGNED) ========== */
+
+  /* タブレット (768px+) - コンパクトデザイン */
+  @media (min-width: 768px) {
+    height: fit-content;
+    min-height: auto;
+    padding: 0;
+  }
+
+  /* デスクトップ (1024px+) - コンパクトデザイン */
+  @media (min-width: 1024px) {
+    /* より大きなホバー効果 */
+    &:hover {
+      transform: none;
+      box-shadow:
+        0 16px 48px oklch(0% 0 0deg / var(--opacity-20)),
+        inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-40));
+    }
+  }
 }
