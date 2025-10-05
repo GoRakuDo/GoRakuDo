@@ -232,10 +232,24 @@ const config = {
     private updateDimensions() {
       if (!this.canvas) return;
 
-      // GitHub Pages対応: clientWidth/Heightが0の場合、windowサイズを使用
+      // GitHub Pages対応: 複数の方法でサイズを取得
       let newWidth = this.canvas.clientWidth;
       let newHeight = this.canvas.clientHeight;
 
+      // フォールバック1: computed style
+      if (newWidth === 0 || newHeight === 0) {
+        const computedStyle = window.getComputedStyle(this.canvas);
+        newWidth = parseInt(computedStyle.width) || window.innerWidth;
+        newHeight = parseInt(computedStyle.height) || window.innerHeight;
+        console.log(
+          'Canvas dimensions fallback to computed style:',
+          newWidth,
+          'x',
+          newHeight
+        );
+      }
+
+      // フォールバック2: window size
       if (newWidth === 0 || newHeight === 0) {
         newWidth = window.innerWidth;
         newHeight = window.innerHeight;
@@ -382,32 +396,49 @@ const config = {
   }
 
   // --- 初期化スクリプト ---
-  document.addEventListener('DOMContentLoaded', () => {
-    let waveAnimationInstance;
+  let waveAnimationInstance;
 
-    const initAnimation = () => {
-      if (waveAnimationInstance) waveAnimationInstance.destroy();
+  const initAnimation = () => {
+    if (waveAnimationInstance) waveAnimationInstance.destroy();
 
-      const container = document.querySelector('.wave-animation-container');
-      if (!container) return;
-
-      waveAnimationInstance = new WaveAnimation();
-    };
-
-    // 非クリティカルな初期レンダリングにrequestIdleCallbackを使用
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(initAnimation);
-    } else {
-      setTimeout(initAnimation, 0);
+    const container = document.querySelector('.wave-animation-container');
+    if (!container) {
+      console.log('WaveAnimation container not found, retrying...');
+      setTimeout(initAnimation, 100);
+      return;
     }
 
-    // タブが非アクティブの時に電力を節約するため可視性を処理
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        waveAnimationInstance?.destroy();
-      } else {
-        initAnimation();
-      }
-    });
+    console.log('Initializing WaveAnimation...');
+    waveAnimationInstance = new WaveAnimation();
+    (window as any).waveAnimation = waveAnimationInstance; // デバッグ用
+  };
+
+  // GitHub Pages対応: 複数の初期化方法を試行
+  const tryInit = () => {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAnimation);
+    } else {
+      initAnimation();
+    }
+  };
+
+  // 即座に初期化を試行
+  tryInit();
+
+  // フォールバック: 少し遅れて再試行
+  setTimeout(() => {
+    if (!waveAnimationInstance) {
+      console.log('WaveAnimation fallback initialization...');
+      initAnimation();
+    }
+  }, 500);
+
+  // タブが非アクティブの時に電力を節約するため可視性を処理
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      waveAnimationInstance?.destroy();
+    } else {
+      initAnimation();
+    }
   });
 </script>
