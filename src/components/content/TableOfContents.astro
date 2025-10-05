@@ -155,14 +155,14 @@ const { headings = [] } = Astro.props
     backdrop-filter: none;
 
     &::before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      height: 2px;
-      content: '';
-      border-radius: 12px 12px 0 0;
-      opacity: 0.6;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    content: '';
+    border-radius: 12px 12px 0 0;
+    opacity: 0.6;
     }
 
     /* デスクトップTOC専用のスタイル */
@@ -227,15 +227,15 @@ const { headings = [] } = Astro.props
     margin: 10px 0;
 
     &::after {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      border-radius: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    border-radius: 1px;
       background: var(--token-purple-base);
-      transition: width 0.3s ease;
-      content: '';
+    transition: width 0.3s ease;
+    content: '';
     }
   }
 
@@ -265,38 +265,38 @@ const { headings = [] } = Astro.props
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform, background-color, color;
 
-    /* Tooltip for toggle */
+  /* Tooltip for toggle */
     &::after {
-      position: absolute;
-      bottom: -35px;
-      left: 50%;
-      z-index: var(--z-TableOfContents-toc-toggle-after);
-      padding: 4px 8px;
-      border-radius: 4px;
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    z-index: var(--z-TableOfContents-toc-toggle-after);
+    padding: 4px 8px;
+    border-radius: 4px;
       background: color-mix(in oklch, var(--token-white-base) 10%, transparent);
       color: var(--token-white-base);
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(-50%);
-      transition: opacity 0.2s ease;
-      content: attr(aria-label);
-    }
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%);
+    transition: opacity 0.2s ease;
+    content: attr(aria-label);
+  }
 
     &:hover {
       background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
       color: var(--token-purple-base);
 
       &::after {
-        opacity: 1;
+    opacity: 1;
       }
-    }
+  }
 
     /* Hide toggle button on desktop - only allow collapse on mobile */
     @media (min-width: 1201px) {
-      display: none;
-    }
+    display: none;
+  }
   }
 
   /* TOC Footer - Mobile only */
@@ -428,7 +428,7 @@ const { headings = [] } = Astro.props
     &:hover {
       background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
       color: var(--token-purple-base);
-      transform: translateX(4px);
+    transform: translateX(4px);
     }
   }
 
@@ -442,32 +442,32 @@ const { headings = [] } = Astro.props
     box-shadow: 0 2px 8px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
 
     &::before {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 3px;
-      border-radius: 0 2px 2px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
       background: linear-gradient(180deg, var(--token-purple-base), color-mix(in oklch, var(--token-purple-base) 80%, var(--token-white-base)));
-      content: '';
-    }
+    content: '';
+  }
 
     &::after {
-      position: absolute;
-      top: 50%;
-      right: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
       background: var(--token-purple-base);
-      transform: translateY(-50%);
-      animation: pulse 2s infinite;
-      content: '';
-    }
+    transform: translateY(-50%);
+    animation: pulse 2s infinite;
+    content: '';
+  }
 
     &:hover {
       background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
-      transform: translateX(2px);
+    transform: translateX(2px);
     }
   }
 
@@ -561,8 +561,8 @@ const { headings = [] } = Astro.props
     .toc-container.mobile-toc {
       .toc-title {
         font-size: 21px;
-        font-weight: 600;
-      }
+      font-weight: 600;
+    }
 
       .toc-header {
         width: 100%;
@@ -584,8 +584,8 @@ const { headings = [] } = Astro.props
 
       .toc-toggle {
         color: var(--token-white-base);
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         will-change: transform, background-color, color;
       }
@@ -605,39 +605,39 @@ const { headings = [] } = Astro.props
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
 
-      /* Mobile indentation levels with smaller fonts */
+    /* Mobile indentation levels with smaller fonts */
       &.toc-level-1 {
-        padding-left: 12px;
-        font-size: 14px;
-        font-weight: 600;
-      }
+      padding-left: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
 
       &.toc-level-2 {
-        padding-left: 20px;
-        font-size: 13px;
-      }
+      padding-left: 20px;
+      font-size: 13px;
+    }
 
       &.toc-level-3 {
-        padding-left: 28px;
-        font-size: 12px;
-        opacity: 0.9;
-      }
+      padding-left: 28px;
+      font-size: 12px;
+      opacity: 0.9;
+    }
 
       &.toc-level-4,
       &.toc-level-5,
       &.toc-level-6 {
-        padding-left: 36px;
-        font-size: 12px;
-        opacity: 0.8;
-      }
+      padding-left: 36px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
 
       &.active {
-        position: relative;
+      position: relative;
         border-left: 4px solid var(--token-purple-base);
         background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
         color: var(--token-purple-base);
-        font-weight: 600;
-        animation: mobileActiveGlow 0.3s ease-in-out;
+      font-weight: 600;
+      animation: mobileActiveGlow 0.3s ease-in-out;
       }
     }
 
@@ -678,8 +678,8 @@ const { headings = [] } = Astro.props
     }
   }
 
-    /* Improved mobile styling */
-    @media (max-width: 768px) {
+  /* Improved mobile styling */
+  @media (max-width: 768px) {
       aside.toc-container.mobile-toc {
         position: relative;
         top: 0;
@@ -699,8 +699,8 @@ const { headings = [] } = Astro.props
         );
         box-sizing: border-box;
         backdrop-filter: blur(24px) saturate(1.2);
-      }
     }
+  }
 </style>
 
 <script>
@@ -958,8 +958,8 @@ const { headings = [] } = Astro.props
         if (!existing) {
           const contentMain = document.getElementById('main-content');
           if (contentMain && contentMain.parentNode) {
-             const clone = tocContainer.cloneNode(true) as HTMLElement;
-             clone.classList.add('mobile-toc');
+            const clone = tocContainer.cloneNode(true) as HTMLElement;
+            clone.classList.add('mobile-toc');
             
             // Re-attach event listeners to mobile TOC
             const mobileToggle = clone.querySelector('.toc-toggle') as HTMLButtonElement;
@@ -967,7 +967,7 @@ const { headings = [] } = Astro.props
             const mobileExpandToggle = clone.querySelector('.toc-expand-toggle') as HTMLButtonElement;
             
             // Shared state for mobile TOC
-            let mobileCollapsed = false;
+              let mobileCollapsed = false;
             
             if (mobileToggle) {
               
@@ -981,17 +981,17 @@ const { headings = [] } = Astro.props
                 }
               };
               
-               mobileToggle.addEventListener('click', (e) => {
-                 e.preventDefault();
-                 e.stopPropagation();
+              mobileToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                  
-                 mobileCollapsed = !mobileCollapsed;
-                 if (mobileCollapsed) {
-                   clone.classList.add('toc-collapsed');
-                 } else {
-                   clone.classList.remove('toc-collapsed');
-                 }
-                 updateMobileToggleState(mobileCollapsed);
+                mobileCollapsed = !mobileCollapsed;
+                if (mobileCollapsed) {
+                  clone.classList.add('toc-collapsed');
+                } else {
+                  clone.classList.remove('toc-collapsed');
+                }
+                updateMobileToggleState(mobileCollapsed);
                  
                  // Reset expand toggle state when TOC is collapsed/expanded by toggle
                  const mobileExpandToggle = clone.querySelector('.toc-expand-toggle') as HTMLButtonElement;
@@ -1006,7 +1006,7 @@ const { headings = [] } = Astro.props
                      mobileExpandToggle.setAttribute('aria-expanded', 'false');
                    }
                  }
-               });
+              });
               
               // Initialize mobile toggle state
               updateMobileToggleState(mobileCollapsed);

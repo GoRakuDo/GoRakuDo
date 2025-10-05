@@ -50,3 +50,164 @@ const pageKeywords = [
     </main>
   </Prose>
 </BaseLayout>
+
+<script>
+  // Lazy import for image zoom functionality
+  let imageZoomLoaded = false;
+  let imageZoomInstance: { openModal: (event: any) => void } | null = null;
+  let imageZoomPromise: Promise<{ openModal: (event: any) => void }> | null =
+    null;
+
+  const loadImageZoom = async () => {
+    // 既にロード済みの場合はインスタンスを返す
+    if (imageZoomLoaded && imageZoomInstance) {
+      return imageZoomInstance;
+    }
+
+    // 既にロード中の場合はPromiseを返す
+    if (imageZoomPromise) {
+      return imageZoomPromise;
+    }
+
+    // 新しいロードを開始
+    imageZoomPromise = (async () => {
+      try {
+        if (import.meta.env.DEV) console.log('Loading ImageZoom script...');
+        const { default: ImageZoom } = await import(
+          '../../scripts/image-zoom.js'
+        );
+
+        // インスタンスを作成
+        imageZoomInstance = new ImageZoom();
+        imageZoomLoaded = true;
+
+        if (import.meta.env.DEV) console.log('ImageZoom loaded successfully');
+        return imageZoomInstance;
+      } catch (error) {
+        console.error('Failed to load ImageZoom:', error);
+        imageZoomPromise = null; // エラー時はPromiseをリセット
+        throw error;
+      }
+    })();
+
+    return imageZoomPromise;
+  };
+
+  const handleImageZoomClick = async (event: Event) => {
+    // イベントオブジェクトの参照を事前に保存
+    const currentTarget = event.currentTarget;
+    const target = event.target;
+
+    if (import.meta.env.DEV) {
+      console.log('handleImageZoomClick called');
+      console.log('Original event currentTarget:', currentTarget);
+      console.log('Original event target:', target);
+    }
+
+    try {
+      // スクリプトをロード
+      const zoomInstance = await loadImageZoom();
+
+      if (zoomInstance) {
+        // イベントオブジェクトを正しく構築
+        const syntheticEvent = {
+          currentTarget: currentTarget,
+          target: target,
+          preventDefault: () => event.preventDefault(),
+          stopPropagation: () => event.stopPropagation(),
+        };
+
+        if (import.meta.env.DEV) {
+          console.log('Synthetic event:', syntheticEvent);
+          console.log(
+            'Synthetic event currentTarget:',
+            syntheticEvent.currentTarget
+          );
+        }
+
+        // クリックイベントを処理
+        zoomInstance.openModal(syntheticEvent);
+      }
+    } catch (error) {
+      console.error('ImageZoom failed to load:', error);
+      // フォールバック: 画像を新しいタブで開く
+      if (currentTarget && 'querySelector' in currentTarget) {
+        const img = (currentTarget as Element).querySelector('img');
+        if (img && 'src' in img) {
+          window.open((img as HTMLImageElement).src, '_blank');
+        }
+      }
+    }
+  };
+
+  // 画像ズームトリガーの初期化
+  const initializeLazyImageZoom = () => {
+    const triggers = document.querySelectorAll('.image-zoom-trigger');
+    if (import.meta.env.DEV) {
+      console.log(
+        'Initializing lazy image zoom for',
+        triggers.length,
+        'triggers'
+      );
+    }
+
+    // 既に初期化済みのトリガーを追跡
+    const initializedTriggers = new WeakSet();
+
+    triggers.forEach(trigger => {
+      // 既に初期化済みの場合はスキップ
+      if (initializedTriggers.has(trigger)) return;
+
+      initializedTriggers.add(trigger);
+
+      // クリックハンドラー
+      const clickHandler = (event: Event) => {
+        if (import.meta.env.DEV) {
+          console.log('Click handler called with event:', event);
+          console.log('Event currentTarget:', event.currentTarget);
+        }
+        handleImageZoomClick(event);
+      };
+
+      // キーボードハンドラー
+      const keydownHandler = ((e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleImageZoomClick(e);
+        }
+      }) as EventListener;
+
+      trigger.addEventListener('click', clickHandler);
+      trigger.addEventListener('keydown', keydownHandler);
+    });
+  };
+
+  // DOM準備完了時に初期化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeLazyImageZoom);
+  } else {
+    initializeLazyImageZoom();
+  }
+
+  // クリーンアップ機能
+  const cleanupImageZoom = () => {
+    imageZoomInstance = null;
+    imageZoomPromise = null;
+    imageZoomLoaded = false;
+  };
+
+  // デバッグ用（開発時のみ）
+  if (import.meta.env.DEV) {
+    (window as any).imageZoomDebug = {
+      loadImageZoom,
+      handleImageZoomClick,
+      initializeLazyImageZoom,
+      cleanupImageZoom,
+      getLoaded: () => imageZoomLoaded,
+      getInstance: () => imageZoomInstance,
+    };
+  }
+
+  // ページ離脱時のクリーンアップ
+  window.addEventListener('beforeunload', cleanupImageZoom);
+</script>

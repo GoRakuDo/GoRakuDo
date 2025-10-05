@@ -81,9 +81,20 @@ class ImageZoom {
   }
 
   openModal(event) {
+    console.log('openModal called with event:', event);
+    console.log('event.currentTarget:', event.currentTarget);
+    
     const trigger = event.currentTarget;
+    if (!trigger) {
+      console.error('Image zoom: event.currentTarget is null');
+      return;
+    }
+    
     const imageSrc = trigger.dataset.zoomSrc;
     const imageAlt = trigger.dataset.zoomAlt;
+    
+    console.log('Image src:', imageSrc);
+    console.log('Image alt:', imageAlt);
 
     if (!imageSrc) {
       console.warn('Image zoom: No data-zoom-src attribute found');
@@ -128,16 +139,5 @@ class ImageZoom {
   }
 }
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    new ImageZoom();
-  });
-} else {
-  new ImageZoom();
-}
-
-// Export for potential module usage
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ImageZoom;
-}
+// Export for ES6 module usage
+export default ImageZoom;
