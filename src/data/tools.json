@@ -2,7 +2,7 @@
   {
     "id": "anki",
     "name": "Anki",
-    "description": "Sistem flashcard dengan Spaced Repetition System (SRS) untuk menghafal kosakata dan kanji secara efektif.",
+    "description": "Anki adalah aplikasi flashcard yang sangat powerful untuk menghafal kosakata bahasa Jepang. Dengan sistem spaced repetition, Anki membantu Anda mengingat kata-kata dengan lebih efektif dan efisien.",
     "iconUrl": "/icon/anki-icon-240.webp",
     "color": "var(--clr-accent)",
     "link": "/tools/anki"
@@ -10,7 +10,7 @@
   {
     "id": "yomitan",
     "name": "Yomichan",
-    "description": "Browser extension untuk membaca bahasa Jepang dengan hover dictionary dan furigana generation.",
+    "description": "Yomitan adalah browser extension yang memudahkan membaca teks bahasa Jepang. Dengan hover dictionary dan furigana generation, Yomitan membuat proses pembelajaran menjadi lebih interaktif dan menyenangkan.",
     "iconUrl": "/icon/yomitan-icon-240.webp",
     "color": "var(--clr-accent-dark)",
     "link": "/tools/yomitan"
@@ -18,7 +18,7 @@
   {
     "id": "migaku",
     "name": "Migaku",
-    "description": "Suite tools untuk immersion learning termasuk browser extension dan Anki integration.",
+    "description": "Migaku adalah platform pembelajaran bahasa Jepang yang komprehensif dengan fokus pada immersion learning. Pelajari bahasa Jepang melalui konten asli seperti anime, manga, dan drama dengan bantuan AI.",
     "iconUrl": "/icon/migaku-icon-240.webp",
     "color": "var(--clr-accent-glow-strong)",
     "link": "/tools/migaku"

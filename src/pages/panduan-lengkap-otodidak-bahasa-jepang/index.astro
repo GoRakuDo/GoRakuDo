@@ -33,7 +33,11 @@ const structuredData = panduanSeoData.structuredData;
 
 // Breadcrumb Schema生成
 const breadcrumbSchema = generateBreadcrumbSchema({
-  items: panduanSeoData.breadcrumbData.items,
+  items: panduanSeoData.breadcrumbData.items.map((item, index) => ({
+    title: item.name,
+    url: item.url,
+    isActive: index === panduanSeoData.breadcrumbData.items.length - 1,
+  })),
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 
@@ -66,11 +70,22 @@ const faqSchema = {
   <!-- 2025年SEO最適化: 構造化データ -->
   <script
     type='application/ld+json'
-    set:html={JSON.stringify(structuredData.article)}
+    set:html={JSON.stringify({
+      ...structuredData.article,
+      image: {
+        '@type': 'ImageObject',
+        url: gorakudoImmerisonImage.src,
+        width: 1200,
+        height: 1200,
+      },
+    })}
   />
   <script
     type='application/ld+json'
-    set:html={JSON.stringify(structuredData.howTo)}
+    set:html={JSON.stringify({
+      ...structuredData.howTo,
+      image: gorakudoImmerisonImage.src,
+    })}
   />
 
   <!-- 2025年SEO最適化: 技術的SEO要素 -->
@@ -94,21 +109,9 @@ const faqSchema = {
   <!-- パフォーマンス最適化 -->
   <link rel='preconnect' href='https://fonts.googleapis.com' />
   <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-  <link rel='dns-prefetch' href='https://apps.ankiweb.net' />
-  <link rel='dns-prefetch' href='https://jpdb.io' />
-  <link rel='dns-prefetch' href='https://learnnatively.com' />
-
-  <!-- 重要なリソースのプリロード -->
-  <link
-    rel='preload'
-    href={gorakudoImmerisonImage.src}
-    as='image'
-    type='image/png'
-  />
 
   <!-- セキュリティヘッダー -->
   <meta http-equiv='X-Content-Type-Options' content='nosniff' />
-  <meta http-equiv='X-Frame-Options' content='DENY' />
   <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
   <meta
     http-equiv='Referrer-Policy'

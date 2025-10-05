@@ -30,30 +30,17 @@
       "description": "Panduan komprehensif menguasai bahasa Jepang secara otodidak dengan metode immersion yang terbukti efektif berdasarkan linguistik modern.",
       "author": {
         "@type": "Organization",
-        "name": "GoRakuDo Team",
-        "url": "https://gorakudo.org"
+        "name": "GoRakuDo Team"
       },
       "publisher": {
         "@type": "Organization",
-        "name": "GoRakuDo",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://gorakudo.org/img/FullDC Logo.webp",
-          "width": 400,
-          "height": 200
-        }
+        "name": "GoRakuDo"
       },
       "datePublished": "2025-01-01T00:00:00.000Z",
       "dateModified": "2025-01-01T00:00:00.000Z",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang"
-      },
-      "image": {
-        "@type": "ImageObject",
-        "url": "https://gorakudo.org/assets/images/pages/pl-obj/gorakudo-immerison.png",
-        "width": 1200,
-        "height": 1200
+        "@id": "/panduan-lengkap-otodidak-bahasa-jepang"
       },
       "articleSection": "Japanese Learning Guide",
       "wordCount": 8500,
@@ -64,7 +51,7 @@
       "@type": "HowTo",
       "name": "Cara Belajar Bahasa Jepang Secara Otodidak dengan Metode Immersion",
       "description": "Langkah-langkah sistematis untuk menguasai bahasa Jepang secara otodidak menggunakan metode immersion berbasis linguistik modern",
-      "image": "https://gorakudo.org/assets/images/pages/pl-obj/gorakudo-immerison.png",
+      "image": "https://gorakudo.org/assets/gorakudo-immerison-HAk-WsDe_ZJ1RAW.webp",
       "totalTime": "P2Y",
       "estimatedCost": {
         "@type": "MonetaryAmount",
@@ -108,31 +95,35 @@
           "@type": "HowToStep",
           "name": "Phase 1: Membentuk Pondasi Intuisi",
           "text": "Pelajari 2000 kosa kata pertama menggunakan Anki dan biasakan active listening dari YouTube Comprehensible Japanese",
-          "image": "https://gorakudo.org/assets/images/pages/pl-obj/gorakudo-membentuk-pondasi-intuisi.png",
+          "image": "https://gorakudo.org/assets/gorakudo-membentuk-pondasi-intuisi-LHJL1fa6_Zx6sF3.webp",
           "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-1"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 2: Bentuk Kerangka Intuisi Active Immersion",
           "text": "Pahami 7500 kosa kata pertama dan mulai membaca Light Novel dengan difficulty di bawah 50%",
+          "image": "https://gorakudo.org/assets/gorakudo-kerangka-active-BjBIOBfd_Z1YRawR.webp",
           "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-2"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 3: Konsolidasi Intuisi dengan Double Reading & Listening",
           "text": "Pahami 12500 kosa kata dan gunakan kamus monolingual untuk memahami dari perspektif penutur asli",
+          "image": "https://gorakudo.org/assets/gorakudo-konsolidasi-intuisi-CGcjgtKU_7EATs.webp",
           "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-3"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 4: Menata Intuisi dengan Output",
           "text": "Perdalam 20000 kosa kata dan mulai praktik berbicara dengan native speaker Jepang",
+          "image": "https://gorakudo.org/assets/gorakudo-menata-intusi-BfRtscdT_1f65Nb.webp",
           "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-4"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 5: Optimalisasi dan Memperluas Intuisi",
           "text": "Optimalisasi 30000 kosa kata dan capai near native level dengan perfect pitch accent",
+          "image": "https://gorakudo.org/assets/gorakudo-immerison-HAk-WsDe_ZJ1RAW.webp",
           "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-5"
         }
       ]
@@ -187,14 +178,12 @@
   "breadcrumbData": {
     "items": [
       {
-        "title": "Home",
-        "url": "/",
-        "isActive": false
+        "name": "Beranda",
+        "url": "/"
       },
       {
-        "title": "Panduan Lengkap",
-        "url": "/panduan-lengkap-otodidak-bahasa-jepang",
-        "isActive": true
+        "name": "Panduan Lengkap",
+        "url": "/panduan-lengkap-otodidak-bahasa-jepang"
       }
     ]
   }

@@ -327,7 +327,7 @@ const prefetchUrls = generatePrefetch(prefetch);
 const preloadResources = generatePreload(preload);
 
 // Schema生成ヘルパー関数
-const createImageObject = (imageUrl: string, width = 320, height = 320) => ({
+const createImageObject = (imageUrl: string, width = 1200, height = 1200) => ({
   '@type': 'ImageObject',
   url: normalizeUrl(getSiteUrl(), imageUrl),
   width,
@@ -513,7 +513,6 @@ addOptionalSchemas(structuredDataSchemas);
 <!-- セキュリティ設定 - JSON設定から読み込み -->
 <meta name="referrer" content={seoConfig.security.referrer} />
 <meta http-equiv="X-Content-Type-Options" content={seoConfig.security.contentTypeOptions} />
-<meta http-equiv="X-Frame-Options" content={seoConfig.security.frameOptions} />
 <meta http-equiv="X-XSS-Protection" content={seoConfig.security.xssProtection} />
 <!-- より強力なCSPは astro.config.mjs で設定推奨 -->
 
@@ -541,8 +540,6 @@ addOptionalSchemas(structuredDataSchemas);
 <meta property="og:type" content={pageType} />
 <meta property="og:url" content={normalizedCanonical} />
 <meta property="og:image" content={fullImageUrl} />
-<meta property="og:image:width" content="400" />
-<meta property="og:image:height" content="400" />
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:alt" content={title} />
 <meta property="og:site_name" content={defaultConfig.siteName} />

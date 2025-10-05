@@ -11,6 +11,8 @@ import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import SearchPopover from '../../../components/common/SearchPopover.astro';
+import toolsData from '../../../data/tools.json';
+import toolSeoTemplate from './_tool-seo.json';
 // ToolIdHeader component has been integrated directly into this file
 
 // Breadcrumb Schema
@@ -140,29 +142,8 @@ const hasVisibleArticles = toolArticles.length > 0;
 // ========== BEM METHOD - CENTRALIZED DATA MANAGEMENT ==========
 // All data processing centralized here for maximum efficiency and maintainability
 
-// Tool configuration mapping
-const toolConfigs = {
-  anki: {
-    iconPath: '/icon/anki-icon-240.webp',
-    description:
-      'Anki adalah aplikasi flashcard yang sangat powerful untuk menghafal kosakata bahasa Jepang. Dengan sistem spaced repetition, Anki membantu Anda mengingat kata-kata dengan lebih efektif dan efisien.',
-  },
-  migaku: {
-    iconPath: '/icon/migaku-icon-240.webp',
-    description:
-      'Migaku adalah platform pembelajaran bahasa Jepang yang komprehensif dengan fokus pada immersion learning. Pelajari bahasa Jepang melalui konten asli seperti anime, manga, dan drama dengan bantuan AI.',
-  },
-  yomitan: {
-    iconPath: '/icon/yomitan-icon-240.webp',
-    description:
-      'Yomitan adalah browser extension yang memudahkan membaca teks bahasa Jepang. Dengan hover dictionary dan furigana generation, Yomitan membuat proses pembelajaran menjadi lebih interaktif dan menyenangkan.',
-  },
-} as const;
-
-// Centralized data processing
-const toolConfig = toolConfigs[
-  tool.toLowerCase() as keyof typeof toolConfigs
-] || {
+// Tool configuration - simplified
+const toolConfig = {
   iconPath: '/icon/yomitan-icon-240.webp',
   description: `Comprehensive learning resources and guides for mastering ${tool}. From beginner basics to advanced techniques, everything you need to succeed.`,
 };
@@ -278,24 +259,171 @@ const contentGridData = {
   formattedToolName,
 };
 
+// ========== DYNAMIC SEO DATA GENERATION ==========
+// JSONテンプレートから動的にSEOデータを生成
+const replaceTemplateVariables = (
+  template: string,
+  variables: Record<string, string>
+): string => {
+  return template.replace(
+    /\{\{(\w+)\}\}/g,
+    (match, key) => variables[key] || match
+  );
+};
+
+const replaceTemplateArray = (
+  template: string[],
+  variables: Record<string, string>
+): string[] => {
+  return template.map(item => replaceTemplateVariables(item, variables));
+};
+
+const replaceTemplateObject = (
+  template: any,
+  variables: Record<string, string>
+): any => {
+  if (typeof template === 'string') {
+    return replaceTemplateVariables(template, variables);
+  } else if (Array.isArray(template)) {
+    return template.map(item => replaceTemplateObject(item, variables));
+  } else if (template && typeof template === 'object') {
+    const result: any = {};
+    for (const [key, value] of Object.entries(template)) {
+      result[key] = replaceTemplateObject(value, variables);
+    }
+    return result;
+  }
+  return template;
+};
+
+// テンプレート変数の定義
+const templateVariables = {
+  tool: tool,
+  toolName: formattedToolName,
+  formattedToolName: formattedToolName,
+  toolDescription: toolConfig.description,
+  articleCount: toolArticles.length.toString(),
+};
+
+// SEOデータをテンプレートから生成
+const seoData = replaceTemplateObject(
+  toolSeoTemplate.seoData,
+  templateVariables
+);
+
+// ========== STRUCTURED DATA GENERATION ==========
+// 構造化データをテンプレートから生成
+const softwareApplicationSchema = replaceTemplateObject(
+  toolSeoTemplate.structuredData.softwareApplication,
+  templateVariables
+);
+
+// CollectionPage構造化データをテンプレートから生成
+const collectionPageTemplate = replaceTemplateObject(
+  toolSeoTemplate.structuredData.collectionPage,
+  templateVariables
+);
+const collectionPageSchema = {
+  ...collectionPageTemplate,
+  mainEntity: {
+    ...collectionPageTemplate.mainEntity,
+    itemListElement: toolArticles.map(
+      (article: CollectionEntry<'tool-articles'>, index: number) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Article',
+          name: article.data.title || `Panduan ${formattedToolName}`,
+          description:
+            article.data.description || `Panduan lengkap ${formattedToolName}`,
+          url: `/tools/${tool}/${article.slug}`,
+          datePublished: article.data.publishedDate,
+          author: {
+            '@type': 'Organization',
+            name: 'GoRakuDo Team',
+          },
+        },
+      })
+    ),
+  },
+};
+
+// FAQ構造化データをテンプレートから生成
+const faqSchema = replaceTemplateObject(
+  toolSeoTemplate.structuredData.faq,
+  templateVariables
+);
+
 // ========== BEM METHOD - BREADCRUMB SCHEMA ==========
-// Tool page用のBreadcrumb Schema生成
+// パンくずリストをテンプレートから生成
+const breadcrumbData = replaceTemplateObject(
+  toolSeoTemplate.breadcrumbData,
+  templateVariables
+);
 const breadcrumbSchema = generateBreadcrumbSchema({
-  items: [
-    { title: 'Home', url: '/', isActive: false },
-    { title: 'Tools', url: '/tools', isActive: false },
-    { title: formattedToolName, url: `/tools/${tool}`, isActive: true },
-  ],
+  items: breadcrumbData.items.map((item, index) => ({
+    title: item.name || item.title,
+    url: item.url,
+    isActive: index === breadcrumbData.items.length - 1,
+  })),
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 ---
 
 <ArticleLayout
-  title={`${formattedToolName} - GoRakuDo`}
-  description={`All articles and guides for ${tool} tool`}
+  title={seoData.title}
+  description={seoData.description}
   lang='id'
+  author={seoData.author}
   breadcrumbSchema={breadcrumbSchema}
 >
+  <!-- 2025 SEO Optimization: Technical SEO -->
+  <link rel='canonical' href={`${Astro.site}/tools/${tool}`} />
+  <meta
+    name='robots'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='googlebot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='bingbot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+
+  <!-- Performance Optimization -->
+  <link rel='preconnect' href='https://fonts.googleapis.com' />
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+  <link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
+  <link rel='dns-prefetch' href='//github.com' />
+
+  <!-- Critical Resource Preloading -->
+  <link
+    rel='preload'
+    href='/styles/pages/tools/[tool]/Tool-IdIndex.css'
+    as='style'
+  />
+
+  <!-- Security Headers -->
+  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
+  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
+
+  <!-- Structured Data: SoftwareApplication -->
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(softwareApplicationSchema)}
+  />
+
+  <!-- Structured Data: CollectionPage -->
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(collectionPageSchema)}
+  />
+
+  <!-- Structured Data: FAQ -->
+  <script type='application/ld+json' set:html={JSON.stringify(faqSchema)} />
+
   <!-- ========== INTEGRATED ENHANCED HEADER COMPONENT ========== -->
   <header
     slot='articles-header'
@@ -386,3 +514,110 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     formattedToolName={contentGridData.formattedToolName}
   />
 </ArticleLayout>
+
+<script>
+  // ========== 2025 SEO OPTIMIZATION: PERFORMANCE MONITORING ==========
+  // Core Web Vitals monitoring (simplified for 2025)
+  function monitorCoreWebVitals() {
+    // Basic performance monitoring without external dependencies
+    if ('performance' in window && 'PerformanceObserver' in window) {
+      try {
+        const observer = new PerformanceObserver(list => {
+          list.getEntries().forEach(entry => {
+            if (entry.entryType === 'largest-contentful-paint') {
+              console.log('LCP:', entry.startTime);
+            } else if (entry.entryType === 'first-input') {
+              const fidEntry = entry as any;
+              console.log('FID:', fidEntry.processingStart - entry.startTime);
+            } else if (entry.entryType === 'layout-shift') {
+              const clsEntry = entry as any;
+              console.log('CLS:', clsEntry.value);
+            }
+          });
+        });
+
+        observer.observe({
+          entryTypes: [
+            'largest-contentful-paint',
+            'first-input',
+            'layout-shift',
+          ],
+        });
+      } catch (error) {
+        console.log('Performance monitoring not available:', error);
+      }
+    }
+  }
+
+  // Intersection Observer for lazy loading optimization
+  function optimizeLazyLoading() {
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target as HTMLImageElement;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
+              }
+            }
+          });
+        },
+        {
+          rootMargin: '50px 0px',
+          threshold: 0.01,
+        }
+      );
+
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+  }
+
+  // Service Worker registration for caching
+  function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('/sw.js', {
+            scope: '/',
+            updateViaCache: 'none',
+          })
+          .then(registration => {
+            console.log('SW registered: ', registration);
+
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (
+                    newWorker.state === 'installed' &&
+                    navigator.serviceWorker.controller
+                  ) {
+                    // New content available, notify user
+                    if (confirm('New version available! Reload to update?')) {
+                      window.location.reload();
+                    }
+                  }
+                });
+              }
+            });
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  }
+
+  // Initialize all optimizations
+  document.addEventListener('DOMContentLoaded', () => {
+    monitorCoreWebVitals();
+    optimizeLazyLoading();
+    registerServiceWorker();
+  });
+</script>

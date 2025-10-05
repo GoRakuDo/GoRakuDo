@@ -10,6 +10,7 @@ import '../../styles/pages/tools/tools-index.css';
 
 // Import data
 import toolsData from '../../data/tools.json';
+import toolsSeoData from './_tools-seo.json';
 
 // ========== TYPE DEFINITIONS ==========
 interface Tool {
@@ -71,48 +72,97 @@ const getStatsData = (toolsCount: number) => [
 const toolsCount = getToolsCount(tools);
 const statsData = getStatsData(toolsCount);
 
-// SEO data - Astroネイティブアプローチ（設定ファイル不要）
-const seoData = {
-  title: 'Alat Belajar Bahasa Jepang - GoRakuDo',
-  description:
-    'Alat bantu pembelajaran bahasa Jepang yang efektif untuk memperoleh kemahiran berbahasa Jepang. Utilitas pembelajaran terbaik di Indonesia',
-  keywords: [
-    'alat',
-    'bantu',
-    'pembelajaran',
-    'bahasa',
-    'jepang',
-    'belajar',
-    'efektif',
-    'kemahiran',
-    'utilitas',
-    'learning',
-  ],
-  pageType: 'website' as const,
-};
+// SEO data - JSONファイルから読み込み
+const seoData = toolsSeoData.seoData;
 
 // Tools page用のBreadcrumb Schema生成
 const breadcrumbSchema = generateBreadcrumbSchema({
-  items: [
-    { title: 'Home', url: '/', isActive: false },
-    { title: 'Tools', url: '/tools', isActive: true },
-  ],
+  items: toolsSeoData.breadcrumbData.items.map(item => ({
+    title: item.title,
+    url: item.url,
+    isActive: item.isActive,
+  })),
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
+
+// FAQ Schema生成
+const faqSchema = {
+  '@context': 'https://schema.org' as const,
+  '@type': 'FAQPage' as const,
+  mainEntity: toolsSeoData.structuredData.faq.mainEntity.map(faq => ({
+    '@type': 'Question' as const,
+    name: faq.name,
+    acceptedAnswer: {
+      '@type': 'Answer' as const,
+      text: faq.acceptedAnswer.text,
+    },
+  })),
+} as const;
 ---
 
 <BaseLayout
   title={seoData.title}
   description={seoData.description}
   keywords={seoData.keywords}
-  pageType={seoData.pageType}
+  pageType={seoData.pageType as 'article' | 'website'}
   lang='id'
   breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema}
 >
-  <!-- Astro Native Resource Preloading (0 JavaScript) -->
+  <!-- 2025 SEO Optimization: Technical SEO -->
+  <link rel='canonical' href={`${Astro.site}/tools`} />
+  <meta
+    name='robots'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='googlebot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='bingbot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+
+  <!-- Performance Optimization -->
+  <link rel='preconnect' href='https://fonts.googleapis.com' />
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+  <link rel='dns-prefetch' href='//github.com' />
+
+  <!-- Critical Resource Preloading -->
+  <link
+    rel='preload'
+    href='/icon/anki-icon-240.webp'
+    as='image'
+    type='image/webp'
+  />
+  <link
+    rel='preload'
+    href='/icon/yomitan-icon-240.webp'
+    as='image'
+    type='image/webp'
+  />
+  <link
+    rel='preload'
+    href='/icon/migaku-icon-240.webp'
+    as='image'
+    type='image/webp'
+  />
+
+  <!-- Astro Native Resource Preloading -->
   <link rel='prefetch' href='/tools/anki' fetchpriority='low' />
   <link rel='prefetch' href='/tools/yomitan' fetchpriority='low' />
   <link rel='prefetch' href='/tools/migaku' fetchpriority='low' />
+
+  <!-- Security Headers -->
+  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
+  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
+
+  <!-- Structured Data: CollectionPage -->
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(toolsSeoData.structuredData.collectionPage)}
+  />
   <!-- Main Content -->
   <main
     class='main-content min-h-screen tools-layout-optimized'
@@ -294,4 +344,109 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   } else {
     optimizeStatsAnimation();
   }
+
+  // ========== 2025 SEO OPTIMIZATION: PERFORMANCE MONITORING ==========
+  // Core Web Vitals monitoring (simplified for 2025)
+  function monitorCoreWebVitals() {
+    // Basic performance monitoring without external dependencies
+    if ('performance' in window && 'PerformanceObserver' in window) {
+      try {
+        const observer = new PerformanceObserver(list => {
+          list.getEntries().forEach(entry => {
+            if (entry.entryType === 'largest-contentful-paint') {
+              console.log('LCP:', entry.startTime);
+            } else if (entry.entryType === 'first-input') {
+              const fidEntry = entry as any;
+              console.log('FID:', fidEntry.processingStart - entry.startTime);
+            } else if (entry.entryType === 'layout-shift') {
+              const clsEntry = entry as any;
+              console.log('CLS:', clsEntry.value);
+            }
+          });
+        });
+
+        observer.observe({
+          entryTypes: [
+            'largest-contentful-paint',
+            'first-input',
+            'layout-shift',
+          ],
+        });
+      } catch (error) {
+        console.log('Performance monitoring not available:', error);
+      }
+    }
+  }
+
+  // Intersection Observer for lazy loading optimization
+  function optimizeLazyLoading() {
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target as HTMLImageElement;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
+              }
+            }
+          });
+        },
+        {
+          rootMargin: '50px 0px',
+          threshold: 0.01,
+        }
+      );
+
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+  }
+
+  // Service Worker registration for caching
+  function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('/sw.js', {
+            scope: '/',
+            updateViaCache: 'none',
+          })
+          .then(registration => {
+            console.log('SW registered: ', registration);
+
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (
+                    newWorker.state === 'installed' &&
+                    navigator.serviceWorker.controller
+                  ) {
+                    // New content available, notify user
+                    if (confirm('New version available! Reload to update?')) {
+                      window.location.reload();
+                    }
+                  }
+                });
+              }
+            });
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  }
+
+  // Initialize all optimizations
+  document.addEventListener('DOMContentLoaded', () => {
+    monitorCoreWebVitals();
+    optimizeLazyLoading();
+    registerServiceWorker();
+  });
 </script>

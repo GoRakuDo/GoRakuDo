@@ -36,25 +36,17 @@
       "description": "Daftar lengkap 50+ channel YouTube terbaik untuk belajar bahasa Jepang dari pemula hingga mahir dengan konten pembelajaran yang efektif.",
       "author": {
         "@type": "Organization",
-        "name": "GoRakuDo Team",
-        "url": "https://gorakudo.org"
+        "name": "GoRakuDo Team"
       },
       "publisher": {
         "@type": "Organization",
-        "name": "GoRakuDo",
-        "url": "https://gorakudo.org",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://gorakudo.org/icon/icon-192x192.png",
-          "width": 192,
-          "height": 192
-        }
+        "name": "GoRakuDo"
       },
       "datePublished": "2024-01-01T00:00:00+07:00",
       "dateModified": "2025-01-01T00:00:00+07:00",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang"
+        "@id": "/rekomendasi-channel-youtube-belajar-bahasa-jepang"
       },
       "articleSection": "Japanese Learning Resources",
       "keywords": "channel youtube belajar bahasa jepang, rekomendasi youtube jepang, belajar bahasa jepang online",
@@ -74,7 +66,7 @@
       "@type": "CollectionPage",
       "name": "Rekomendasi Channel YouTube Belajar Bahasa Jepang",
       "description": "Koleksi lengkap channel YouTube terbaik untuk pembelajaran bahasa Jepang",
-      "url": "https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang",
+      "url": "/rekomendasi-channel-youtube-belajar-bahasa-jepang",
       "mainEntity": {
         "@type": "ItemList",
         "name": "Channel YouTube Belajar Bahasa Jepang",
@@ -220,11 +212,11 @@
     "items": [
       {
         "name": "Beranda",
-        "url": "https://gorakudo.org/"
+        "url": "/"
       },
       {
         "name": "Rekomendasi Channel YouTube",
-        "url": "https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang"
+        "url": "/rekomendasi-channel-youtube-belajar-bahasa-jepang"
       }
     ]
   }

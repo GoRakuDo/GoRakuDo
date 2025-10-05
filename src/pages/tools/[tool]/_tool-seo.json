@@ -1,0 +1,127 @@
+{
+  "seoData": {
+    "title": "{{toolName}} - Panduan Lengkap & Tutorial 2025 | GoRakuDo",
+    "description": "Panduan lengkap {{toolName}} untuk belajar bahasa Jepang. Tutorial, tips, dan best practices {{toolName}} yang terbukti efektif untuk metode immersion learning.",
+    "keywords": [
+      "tutorial {{tool}}",
+      "panduan {{tool}}",
+      "{{tool}} bahasa jepang",
+      "belajar {{tool}}",
+      "guide {{tool}}",
+      "tips {{tool}}",
+      "{{tool}} best practices",
+      "immersion learning {{tool}}",
+      "{{tool}} japanese learning",
+      "{{tool}} nihongo",
+      "{{tool}} tools",
+      "software {{tool}}",
+      "aplikasi {{tool}}",
+      "cara menggunakan {{tool}}",
+      "setup {{tool}}",
+      "cara setting {{tool}}",
+      "optimization {{tool}}",
+      "pemula {{tool}}"
+    ],
+    "author": "GoRakuDo Team",
+    "lang": "id"
+  },
+  "structuredData": {
+    "softwareApplication": {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "{{formattedToolName}}",
+      "description": "{{toolDescription}}",
+      "applicationCategory": "EducationalApplication",
+      "url": "/tools/{{tool}}",
+      "author": {
+        "@type": "Organization",
+        "name": "GoRakuDo Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GoRakuDo"
+      },
+      "inLanguage": "id",
+      "isAccessibleForFree": true,
+      "educationalLevel": "Beginner to Advanced",
+      "learningResourceType": "Collection",
+      "teaches": "Japanese Language",
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "student",
+        "audienceType": "Japanese language learners"
+      }
+    },
+    "collectionPage": {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "{{formattedToolName}} - Panduan & Tutorial",
+      "description": "Koleksi lengkap panduan dan tutorial {{formattedToolName}} untuk pembelajaran bahasa Jepang",
+      "url": "/tools/{{tool}}",
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Panduan {{formattedToolName}}",
+        "description": "Daftar panduan dan tutorial {{formattedToolName}} yang terorganisir",
+        "numberOfItems": "{{articleCount}}",
+        "itemListElement": []
+      }
+    },
+    "faq": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu {{formattedToolName}}?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{toolDescription}}"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara menggunakan {{formattedToolName}}?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anda dapat mempelajari cara menggunakan {{formattedToolName}} melalui panduan lengkap yang tersedia di halaman ini. Mulai dari setup dasar hingga teknik advanced."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah {{formattedToolName}} gratis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, {{formattedToolName}} adalah tool gratis dan open source yang dapat digunakan untuk pembelajaran bahasa Jepang."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah {{formattedToolName}} cocok untuk pemula?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, {{formattedToolName}} cocok untuk semua level, mulai dari pemula hingga advanced. Panduan yang tersedia akan membantu Anda memulai dengan mudah."
+          }
+        }
+      ]
+    }
+  },
+  "breadcrumbData": {
+    "items": [
+      {
+        "title": "Home",
+        "url": "/",
+        "isActive": false
+      },
+      {
+        "title": "Tools",
+        "url": "/tools",
+        "isActive": false
+      },
+      {
+        "title": "{{formattedToolName}}",
+        "url": "/tools/{{tool}}",
+        "isActive": true
+      }
+    ]
+  }
+}

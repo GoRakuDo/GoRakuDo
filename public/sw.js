@@ -12,15 +12,16 @@ const STATIC_FILES = [
   '/favicon/favicon.ico',
   '/favicon/favicon.svg',
   '/favicon/apple-touch-icon.png',
-  '/favicon/site.webmanifest'
+  '/favicon/site.webmanifest',
 ];
 
 // Install event - cache static files
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   console.log('🔧 Service Worker installing...');
   event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then((cache) => {
+    caches
+      .open(STATIC_CACHE)
+      .then(cache => {
         console.log('📦 Caching static files');
         return cache.addAll(STATIC_FILES);
       })
@@ -28,20 +29,21 @@ self.addEventListener('install', (event) => {
         console.log('✅ Service Worker installed successfully');
         return self.skipWaiting();
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('❌ Service Worker installation failed:', error);
       })
   );
 });
 
 // Activate event - clean up old caches
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   console.log('🔧 Service Worker activating...');
   event.waitUntil(
-    caches.keys()
-      .then((cacheNames) => {
+    caches
+      .keys()
+      .then(cacheNames => {
         return Promise.all(
-          cacheNames.map((cacheName) => {
+          cacheNames.map(cacheName => {
             if (cacheName !== STATIC_CACHE && cacheName !== CACHE_NAME) {
               console.log('🗑️ Deleting old cache:', cacheName);
               return caches.delete(cacheName);
@@ -57,7 +59,7 @@ self.addEventListener('activate', (event) => {
 });
 
 // Fetch event - serve from cache, fallback to network
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
@@ -76,11 +78,12 @@ self.addEventListener('fetch', (event) => {
     // For HTML pages - network first, cache fallback
     event.respondWith(
       fetch(request)
-        .then((response) => {
+        .then(response => {
           if (response.status === 200) {
             const responseClone = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => cache.put(request, responseClone));
+            caches
+              .open(CACHE_NAME)
+              .then(cache => cache.put(request, responseClone));
           }
           return response;
         })
@@ -91,27 +94,26 @@ self.addEventListener('fetch', (event) => {
   } else {
     // For static assets - cache first, network fallback
     event.respondWith(
-      caches.match(request)
-        .then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
+      caches.match(request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(request).then(response => {
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches
+              .open(STATIC_CACHE)
+              .then(cache => cache.put(request, responseClone));
           }
-          return fetch(request)
-            .then((response) => {
-              if (response.status === 200) {
-                const responseClone = response.clone();
-                caches.open(STATIC_CACHE)
-                  .then((cache) => cache.put(request, responseClone));
-              }
-              return response;
-            });
-        })
+          return response;
+        });
+      })
     );
   }
 });
 
 // Message event - handle updates
-self.addEventListener('message', (event) => {
+self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }

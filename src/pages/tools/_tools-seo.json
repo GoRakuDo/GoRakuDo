@@ -1,0 +1,97 @@
+{
+  "seoData": {
+    "title": "Tools & Aplikasi Belajar Bahasa Jepang Terbaik 2025 | GoRakuDo",
+    "description": "Koleksi lengkap tools dan aplikasi terbaik untuk belajar bahasa Jepang secara efektif. Anki, Yomitan, Migaku dan tools pembelajaran bahasa Jepang terpilih untuk metode immersion yang terbukti.",
+    "keywords": [
+      "tools belajar bahasa jepang",
+      "aplikasi bahasa jepang",
+      "anki bahasa jepang",
+      "yomitan browser extension",
+      "migaku immersion learning",
+      "spaced repetition system",
+      "flashcard bahasa jepang",
+      "furigana generator",
+      "immersion learning tools",
+      "japanese learning software",
+      "srs bahasa jepang",
+      "kanji learning tools",
+      "vocabulary builder japanese",
+      "reading tools japanese",
+      "comprehensible input tools",
+      "japanese learning utilities",
+      "language learning apps",
+      "nihongo learning tools",
+      "japanese study tools",
+      "immersion method tools"
+    ],
+    "pageType": "website",
+    "author": "GoRakuDo Team",
+    "lang": "id"
+  },
+  "structuredData": {
+    "collectionPage": {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Tools & Aplikasi Belajar Bahasa Jepang",
+      "description": "Koleksi lengkap tools dan aplikasi terbaik untuk pembelajaran bahasa Jepang dengan metode immersion",
+      "url": "/tools",
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Tools Pembelajaran Bahasa Jepang",
+        "description": "Daftar tools terpilih untuk pembelajaran bahasa Jepang yang efektif"
+      }
+    },
+    "faq": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Tools apa saja yang direkomendasikan untuk belajar bahasa Jepang?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kami merekomendasikan Anki untuk spaced repetition learning, Yomitan untuk reading assistance, dan Migaku untuk immersion learning. Semua tools ini gratis dan telah terbukti efektif untuk pembelajaran bahasa Jepang."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah semua tools yang direkomendasikan gratis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, semua tools yang kami rekomendasikan adalah gratis dan open source. Beberapa tools mungkin menawarkan fitur premium, tetapi fitur dasar tetap dapat diakses tanpa biaya."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara memilih tool yang sesuai dengan level pembelajaran?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Untuk pemula, kami merekomendasikan Anki untuk membangun vocabulary base. Yomitan cocok untuk semua level untuk reading practice. Migaku lebih cocok untuk intermediate dan advanced learners yang ingin immersion learning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah tools ini kompatibel dengan metode immersion?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, semua tools yang kami rekomendasikan dirancang khusus untuk mendukung metode immersion learning. Mereka membantu dalam comprehensible input, vocabulary acquisition, dan reading comprehension yang merupakan inti dari immersion method."
+          }
+        }
+      ]
+    }
+  },
+  "breadcrumbData": {
+    "items": [
+      {
+        "title": "Beranda",
+        "url": "/",
+        "isActive": false
+      },
+      {
+        "title": "Tools & Aplikasi",
+        "url": "/tools",
+        "isActive": true
+      }
+    ]
+  }
+}
