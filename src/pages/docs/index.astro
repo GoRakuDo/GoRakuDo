@@ -1,22 +1,14 @@
 ---
-// ========== DOCS INDEX PAGE (SEO 2025 Optimized) ==========
+// ========== IMPORTS ==========
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import PostsHeader from '../../components/docs/PostsHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
 import Pagination from '../../components/common/Pagination/Pagination.astro';
 import SearchPopover from '../../components/common/SearchPopover.astro';
-
-// ========== GET PAGE DATA ==========
 import { getDocsPageData } from '../../utils/docs-config';
-
-// Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
-
-// SEO Data
-import docsSeoData from './_docs-seo.json';
-
-// スタイルインポート
+import docsSeoData from '../../data/seo/docs.json';
 import '../../styles/pages/docs/docs-index.css';
 
 // ========== QUERY PARAMETER REDIRECT ==========
@@ -29,8 +21,7 @@ if (queryPage && parseInt(queryPage) > 1) {
 const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
   await getDocsPageData(1);
 
-// ========== SEO DATA OPTIMIZATION ==========
-// Use optimized SEO data from JSON
+// ========== SEO DATA ==========
 const seoData = {
   ...docsSeoData.seoData,
   title: docsSeoData.seoData.title,
@@ -41,8 +32,7 @@ const seoData = {
   lang: docsSeoData.seoData.lang as 'id' | 'ja',
 };
 
-// ========== BREADCRUMB SCHEMA ==========
-// Docs page用のBreadcrumb Schema生成
+// ========== STRUCTURED DATA ==========
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: docsSeoData.breadcrumbData.items.map((item, index) => ({
     title: item.name,
@@ -52,8 +42,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 
-// ========== FAQ SCHEMA ==========
-// FAQ構造化データを生成
 const faqSchema = {
   ...docsSeoData.structuredData.faq,
   '@context': 'https://schema.org' as const,
@@ -61,15 +49,10 @@ const faqSchema = {
   mainEntity: docsSeoData.structuredData.faq.mainEntity.map(item => ({
     ...item,
     '@type': 'Question' as const,
-    acceptedAnswer: {
-      ...item.acceptedAnswer,
-      '@type': 'Answer' as const,
-    },
+    acceptedAnswer: { ...item.acceptedAnswer, '@type': 'Answer' as const },
   })),
 };
 
-// ========== COLLECTION PAGE SCHEMA ==========
-// CollectionPage構造化データを動的に生成
 const collectionPageSchema = {
   ...docsSeoData.structuredData.collectionPage,
   mainEntity: {
@@ -82,10 +65,7 @@ const collectionPageSchema = {
       description: post.description,
       url: post.url,
       datePublished: post.publishedDate,
-      author: {
-        '@type': 'Organization',
-        name: 'GoRakuDo Team',
-      },
+      author: { '@type': 'Organization', name: 'GoRakuDo Team' },
     })),
   },
 };
@@ -101,30 +81,6 @@ const collectionPageSchema = {
   publishedDate={new Date().toISOString()}
   breadcrumbSchema={breadcrumbSchema}
 >
-  <!-- 2025 SEO Optimization: Technical SEO -->
-  <link rel='canonical' href={`${Astro.site}/docs`} />
-  <meta
-    name='robots'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='googlebot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='bingbot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-
-  <!-- Performance Optimization -->
-  <link rel='preconnect' href='https://fonts.googleapis.com' />
-  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-  <link rel='dns-prefetch' href='//github.com' />
-
-  <!-- Security Headers -->
-  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
-  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
-
   <!-- Structured Data: CollectionPage -->
   <script
     type='application/ld+json'
@@ -188,109 +144,102 @@ const collectionPageSchema = {
   }
 </ArticleLayout>
 
+<!-- ========== SCRIPTS ========== -->
 <script>
-  // ========== 2025 SEO OPTIMIZATION: PERFORMANCE MONITORING ==========
-  // Core Web Vitals monitoring (simplified for 2025)
-  function monitorCoreWebVitals() {
-    // Basic performance monitoring without external dependencies
-    if ('performance' in window && 'PerformanceObserver' in window) {
-      try {
-        const observer = new PerformanceObserver(list => {
-          list.getEntries().forEach(entry => {
-            if (entry.entryType === 'largest-contentful-paint') {
-              console.log('LCP:', entry.startTime);
-            } else if (entry.entryType === 'first-input') {
-              const fidEntry = entry as any;
-              console.log('FID:', fidEntry.processingStart - entry.startTime);
-            } else if (entry.entryType === 'layout-shift') {
-              const clsEntry = entry as any;
-              console.log('CLS:', clsEntry.value);
-            }
-          });
+  // Performance monitoring
+  const initPerformanceMonitoring = () => {
+    if (!('performance' in window && 'PerformanceObserver' in window)) return;
+
+    try {
+      const observer = new PerformanceObserver(list => {
+        list.getEntries().forEach(entry => {
+          if (entry.entryType === 'largest-contentful-paint') {
+            console.log('LCP:', entry.startTime);
+          } else if (entry.entryType === 'first-input') {
+            const fidEntry = entry as any;
+            console.log('FID:', fidEntry.processingStart - entry.startTime);
+          } else if (entry.entryType === 'layout-shift') {
+            const clsEntry = entry as any;
+            console.log('CLS:', clsEntry.value);
+          }
         });
-
-        observer.observe({
-          entryTypes: [
-            'largest-contentful-paint',
-            'first-input',
-            'layout-shift',
-          ],
-        });
-      } catch (error) {
-        console.log('Performance monitoring not available:', error);
-      }
-    }
-  }
-
-  // Intersection Observer for lazy loading optimization
-  function optimizeLazyLoading() {
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target as HTMLImageElement;
-              if (img.dataset.src) {
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-              }
-            }
-          });
-        },
-        {
-          rootMargin: '50px 0px',
-          threshold: 0.01,
-        }
-      );
-
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
       });
+
+      observer.observe({
+        entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
+      });
+    } catch (error) {
+      console.log('Performance monitoring not available:', error);
     }
-  }
+  };
 
-  // Service Worker registration for caching
-  function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/sw.js', {
-            scope: '/',
-            updateViaCache: 'none',
-          })
-          .then(registration => {
-            console.log('SW registered: ', registration);
+  // Lazy loading
+  const initLazyLoading = () => {
+    if (!('IntersectionObserver' in window)) return;
 
-            // Check for updates
-            registration.addEventListener('updatefound', () => {
-              const newWorker = registration.installing;
-              if (newWorker) {
-                newWorker.addEventListener('statechange', () => {
-                  if (
-                    newWorker.state === 'installed' &&
-                    navigator.serviceWorker.controller
-                  ) {
-                    // New content is available, ask user to refresh
-                    if (confirm('New content available! Refresh to update?')) {
-                      window.location.reload();
-                    }
+    const imageObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+              observer.unobserve(img);
+            }
+          }
+        });
+      },
+      { rootMargin: '50px 0px', threshold: 0.01 }
+    );
+
+    document
+      .querySelectorAll('img[data-src]')
+      .forEach(img => imageObserver.observe(img));
+  };
+
+  // Service Worker
+  const initServiceWorker = () => {
+    if (!('serviceWorker' in navigator)) return;
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
+        .then(registration => {
+          console.log('SW registered: ', registration);
+
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (
+                  newWorker.state === 'installed' &&
+                  navigator.serviceWorker.controller
+                ) {
+                  if (confirm('New content available! Refresh to update?')) {
+                    window.location.reload();
                   }
-                });
-              }
-            });
-          })
-          .catch(registrationError => {
-            console.log('SW registration failed: ', registrationError);
+                }
+              });
+            }
           });
-      });
-    }
-  }
+        })
+        .catch(registrationError => {
+          console.log('SW registration failed: ', registrationError);
+        });
+    });
+  };
 
-  // Initialize all optimizations
-  document.addEventListener('DOMContentLoaded', () => {
-    monitorCoreWebVitals();
-    optimizeLazyLoading();
-    registerServiceWorker();
-  });
+  // Initialize all
+  const init = () => {
+    initPerformanceMonitoring();
+    initLazyLoading();
+    initServiceWorker();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>

@@ -1,0 +1,90 @@
+{
+  "seoData": {
+    "title": "Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik 2025 | GoRakuDo",
+    "description": "Daftar lengkap channel YouTube terbaik untuk belajar bahasa Jepang dengan metode immersion. Dari pemula hingga mahir, temukan konten berkualitas tinggi yang akan mempercepat pembelajaran bahasa Jepang Anda.",
+    "keywords": [
+      "channel youtube belajar bahasa jepang",
+      "youtube bahasa jepang pemula",
+      "comprehensible japanese youtube",
+      "belajar jepang dari youtube",
+      "channel jepang terbaik",
+      "youtube nihongo",
+      "japanese learning youtube",
+      "immersion japanese youtube",
+      "youtube jepang gratis",
+      "tutorial bahasa jepang youtube",
+      "channel jepang indonesia",
+      "youtube belajar kanji",
+      "youtube belajar hiragana katakana",
+      "japanese conversation youtube",
+      "youtube jlpt preparation"
+    ],
+    "pageType": "article",
+    "author": "Tim GoRakuDo",
+    "lang": "id"
+  },
+  "structuredData": {
+    "article": {
+      "@type": "Article",
+      "headline": "Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik 2025",
+      "description": "Daftar lengkap channel YouTube terbaik untuk belajar bahasa Jepang dengan metode immersion yang terbukti efektif",
+      "author": {
+        "@type": "Organization",
+        "name": "GoRakuDo Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GoRakuDo"
+      },
+      "datePublished": "2025-01-01T00:00:00.000Z",
+      "dateModified": "2025-01-01T00:00:00.000Z",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/rekomendasi-channel-youtube-belajar-bahasa-jepang"
+      },
+      "articleSection": "Japanese Learning Resources",
+      "wordCount": 12000,
+      "inLanguage": "id",
+      "keywords": "youtube bahasa jepang, channel jepang, comprehensible japanese, immersion learning"
+    },
+    "collectionPage": {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Rekomendasi Channel YouTube Belajar Bahasa Jepang",
+      "description": "Koleksi channel YouTube terbaik untuk pembelajaran bahasa Jepang dengan metode immersion",
+      "url": "https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang",
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Channel YouTube Belajar Bahasa Jepang",
+        "description": "Daftar channel YouTube terbaik untuk belajar bahasa Jepang",
+        "numberOfItems": 15
+      }
+    },
+    "faq": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Channel YouTube mana yang terbaik untuk pemula belajar bahasa Jepang?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Untuk pemula, kami merekomendasikan channel seperti 'Comprehensible Japanese', 'いろいろな日本語', dan 'Learning Japanese with SakuraTengu' yang menyediakan konten pembelajaran yang mudah dipahami dengan penjelasan yang jelas."
+          }
+        }
+      ]
+    }
+  },
+  "breadcrumbData": {
+    "items": [
+      {
+        "name": "Beranda",
+        "url": "/"
+      },
+      {
+        "name": "Rekomendasi YouTube",
+        "url": "/rekomendasi-channel-youtube-belajar-bahasa-jepang"
+      }
+    ]
+  }
+}

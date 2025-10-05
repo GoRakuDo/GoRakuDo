@@ -1,19 +1,13 @@
 ---
-// ========== OPTIMIZED ARTICLE LAYOUT COMPONENT ==========
-// Centralized data management - this component only handles layout structure
-// All data processing is done in the parent index.astro
+// ========== IMPORTS ==========
 import UnifiedSEO from '../components/UnifiedSEO.astro';
-
 import Navbar from '../components/common/NavBar/Navbar.astro';
 import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
-
-// Animation
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
-
-// Global CSS
 import '../styles/global.css';
 import '../styles/layouts/ArticleLayout.css';
 
+// ========== TYPE DEFINITIONS ==========
 export interface Props {
   title: string;
   description: string;
@@ -21,7 +15,9 @@ export interface Props {
   lang?: 'id' | 'ja';
   author?: string;
   tags?: string[];
-  // Breadcrumb Schema統合
+  currentPage?: number;
+  totalPages?: number;
+  baseUrl?: string;
   breadcrumbSchema?: {
     '@context': 'https://schema.org';
     '@type': 'BreadcrumbList';
@@ -34,6 +30,7 @@ export interface Props {
   };
 }
 
+// ========== PROPS DESTRUCTURING ==========
 const {
   title,
   description,
@@ -41,10 +38,13 @@ const {
   lang = 'id',
   author,
   tags = [],
+  currentPage,
+  totalPages,
+  baseUrl,
   breadcrumbSchema,
 } = Astro.props;
 
-// Optimized constants for better performance
+// ========== LAYOUT CONFIGURATION ==========
 const LAYOUT_CONFIG = {
   navbarSpacing: '5rem',
   containerMaxWidth: '1200px',
@@ -63,20 +63,18 @@ const LAYOUT_CONFIG = {
       author={author}
       publishedDate={publishedDate}
       modifiedDate={publishedDate}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      baseUrl={baseUrl}
       breadcrumbSchema={breadcrumbSchema}
     />
   </head>
   <body>
-    <!-- Navigation - 共通コンポーネント -->
     <Navbar />
     <BottomNavBar />
-
-    <!-- Background Wave Animation - Optimized Performance -->
     <WaveAnimation backgroundLayer='normal' />
 
-    <!-- Optimized Article Container with Modern Design -->
     <div class='article-layout-container'>
-      <!-- Optimized Main Content Area with Navbar Spacing -->
       <main
         class='article-main-content'
         style={`padding-top: ${LAYOUT_CONFIG.navbarSpacing};`}
@@ -84,10 +82,8 @@ const LAYOUT_CONFIG = {
         aria-label='Main content'
       >
         <div class='article-content-wrapper'>
-          <!-- Tool ID Header -->
           <slot name='articles-header' />
 
-          <!-- Optimized Navigation with Enhanced Spacing -->
           <nav
             class='tool-navigation-wrapper'
             role='navigation'
@@ -96,19 +92,15 @@ const LAYOUT_CONFIG = {
             <div class='breadcrumb-section glassmorphism'>
               <slot name='breadcrumb' />
             </div>
-
             <div class='search-section'>
-              <!-- Search Popover Component -->
               <slot name='search' />
             </div>
           </nav>
 
-          <!-- Page Content Slot -->
           <div class='page-content' role='region' aria-label='Page content'>
             <slot />
           </div>
 
-          <!-- Pagination Slot -->
           <div
             class='pagination-wrapper'
             role='navigation'

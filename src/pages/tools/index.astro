@@ -1,16 +1,11 @@
 ---
+// ========== IMPORTS ==========
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolsGridSection from '../../components/tools/Tools-GridSection.astro';
-
-// Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
-
-// Import CSS
-import '../../styles/pages/tools/tools-index.css';
-
-// Import data
 import toolsData from '../../data/tools.json';
-import toolsSeoData from './_tools-seo.json';
+import toolsSeoData from '../../data/seo/tools.json';
+import '../../styles/pages/tools/tools-index.css';
 
 // ========== TYPE DEFINITIONS ==========
 interface Tool {
@@ -22,23 +17,13 @@ interface Tool {
   readonly link: string;
 }
 
-// Tools data - JSONファイルから読み込み
+// ========== DATA & CONFIGURATION ==========
 const tools: Tool[] = toolsData as Tool[];
 
-// ========== TOOLS HEADER CONSTANTS & CONFIGURATION ==========
 const STATS_CONFIG = {
-  tools: {
-    label: 'Tools Terpilih',
-    suffix: '+',
-  },
-  free: {
-    label: 'Gratis',
-    value: '100%',
-  },
-  access: {
-    label: 'Akses',
-    value: '24/7',
-  },
+  tools: { label: 'Tools Terpilih', suffix: '+' },
+  free: { label: 'Gratis', value: '100%' },
+  access: { label: 'Akses', value: '24/7' },
 } as const;
 
 const TITLE_CONFIG = {
@@ -50,32 +35,21 @@ const DESCRIPTION =
   'Pilih tool yang sesuai dengan tahap pembelajaran dan kebutuhan Anda. Setiap tool telah dipilih berdasarkan efektivitas dan kemudahan penggunaan.';
 
 // ========== UTILITY FUNCTIONS ==========
-const getToolsCount = (tools: Tool[]): number => tools.length;
-
 const getStatsData = (toolsCount: number) => [
   {
     number: `${toolsCount}${STATS_CONFIG.tools.suffix}`,
     label: STATS_CONFIG.tools.label,
   },
-  {
-    number: STATS_CONFIG.free.value,
-    label: STATS_CONFIG.free.label,
-  },
-  {
-    number: STATS_CONFIG.access.value,
-    label: STATS_CONFIG.access.label,
-  },
+  { number: STATS_CONFIG.free.value, label: STATS_CONFIG.free.label },
+  { number: STATS_CONFIG.access.value, label: STATS_CONFIG.access.label },
 ];
 
-// ========== OPTIMIZED DATA PROCESSING ==========
-// メイン処理 - 一度だけ計算
-const toolsCount = getToolsCount(tools);
+// ========== PROCESSED DATA ==========
+const toolsCount = tools.length;
 const statsData = getStatsData(toolsCount);
-
-// SEO data - JSONファイルから読み込み
 const seoData = toolsSeoData.seoData;
 
-// Tools page用のBreadcrumb Schema生成
+// ========== STRUCTURED DATA ==========
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: toolsSeoData.breadcrumbData.items.map(item => ({
     title: item.title,
@@ -85,7 +59,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 
-// FAQ Schema生成
 const faqSchema = {
   '@context': 'https://schema.org' as const,
   '@type': 'FAQPage' as const,
@@ -97,7 +70,7 @@ const faqSchema = {
       text: faq.acceptedAnswer.text,
     },
   })),
-} as const;
+};
 ---
 
 <BaseLayout
@@ -109,55 +82,6 @@ const faqSchema = {
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
 >
-  <!-- 2025 SEO Optimization: Technical SEO -->
-  <link rel='canonical' href={`${Astro.site}/tools`} />
-  <meta
-    name='robots'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='googlebot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='bingbot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-
-  <!-- Performance Optimization -->
-  <link rel='preconnect' href='https://fonts.googleapis.com' />
-  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-  <link rel='dns-prefetch' href='//github.com' />
-
-  <!-- Critical Resource Preloading -->
-  <link
-    rel='preload'
-    href='/icon/anki-icon-240.webp'
-    as='image'
-    type='image/webp'
-  />
-  <link
-    rel='preload'
-    href='/icon/yomitan-icon-240.webp'
-    as='image'
-    type='image/webp'
-  />
-  <link
-    rel='preload'
-    href='/icon/migaku-icon-240.webp'
-    as='image'
-    type='image/webp'
-  />
-
-  <!-- Astro Native Resource Preloading -->
-  <link rel='prefetch' href='/tools/anki' fetchpriority='low' />
-  <link rel='prefetch' href='/tools/yomitan' fetchpriority='low' />
-  <link rel='prefetch' href='/tools/migaku' fetchpriority='low' />
-
-  <!-- Security Headers -->
-  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
-  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
-
   <!-- Structured Data: CollectionPage -->
   <script
     type='application/ld+json'
@@ -235,19 +159,13 @@ const faqSchema = {
   </main>
 </BaseLayout>
 
+<!-- ========== SCRIPTS ========== -->
 <script>
-  // ========== ASTRO NATIVE APPROACH (Minimal JavaScript) ==========
-  // Performance-optimized with CSS-first approach
-
-  // Minimal loading state management (CSS handles most animations)
-  document.addEventListener('DOMContentLoaded', function () {
-    // Apply page load animations with performance monitoring
+  // Page animations
+  const initPageAnimations = () => {
     const mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-      mainContent.classList.add('page-load-fade-in');
-    }
+    if (mainContent) mainContent.classList.add('page-load-fade-in');
 
-    // Apply staggered animations to tool cards using CSS custom properties
     const toolCards = document.querySelectorAll('.tool-card');
     toolCards.forEach((card, index) => {
       (card as HTMLElement).style.setProperty(
@@ -256,197 +174,160 @@ const faqSchema = {
       );
       card.classList.add('stagger-animation');
     });
+  };
 
-    console.log('✅ Astro native loading states applied');
-  });
-
-  // Enhanced micro-interactions for better feedback
-  document.addEventListener('DOMContentLoaded', function () {
-    // Add micro-interactions ONLY to tools page elements (avoid navbar conflicts)
-    const toolsPageElements = document.querySelectorAll(`
-      .tool-card,
-      .tools-section a,
-      .tools-section button,
-      .main-content a:not([href="/"]),
-      .main-content button:not(.get-started-btn):not(.mobile-menu-btn)
-    `);
-    toolsPageElements.forEach(element => {
-      element.classList.add('micro-interaction-scale');
-    });
-
-    // Tool card interactions simplified (keyboard navigation removed)
-
-    console.log(
-      '✅ Astro native micro-interactions and scroll reveals initialized'
+  // Micro-interactions
+  const initMicroInteractions = () => {
+    const elements = document.querySelectorAll(`
+        .tool-card,
+        .tools-section a,
+        .tools-section button,
+        .main-content a:not([href="/"]),
+        .main-content button:not(.get-started-btn):not(.mobile-menu-btn)
+      `);
+    elements.forEach(element =>
+      element.classList.add('micro-interaction-scale')
     );
-  });
+  };
 
-  // REDESIGNED tool card interaction system
-  document.addEventListener('DOMContentLoaded', () => {
+  // Tool card interactions
+  const initToolCardInteractions = () => {
     const toolCards = document.querySelectorAll('.tool-card');
-
     toolCards.forEach(card => {
-      // Click/Tap feedback for all devices
       card.addEventListener('click', e => {
         e.preventDefault();
-
-        // Add visual feedback
         card.classList.add('is-interacting');
-
-        // Navigate after animation
         setTimeout(() => {
           card.classList.remove('is-interacting');
           window.location.href = (card as HTMLAnchorElement).href;
         }, 150);
       });
-
-      // Click interaction only (keyboard navigation removed)
     });
-  });
+  };
 
-  // ========== TOOLS HEADER STATS ANIMATION ==========
-  // パフォーマンス最適化: 統計アニメーション
-  function optimizeStatsAnimation() {
+  // Stats animation
+  const initStatsAnimation = () => {
     const statsItems = document.querySelectorAll(
       '.tools-stat-item'
     ) as NodeListOf<HTMLElement>;
+    if (!('IntersectionObserver' in window)) return;
 
-    if ('IntersectionObserver' in window) {
-      const statsObserver = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const element = entry.target as HTMLElement;
-              element.style.opacity = '1';
-              element.style.transform = 'translateY(0)';
-              statsObserver.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          threshold: 0.1,
-          rootMargin: '0px 0px -50px 0px',
-        }
-      );
-
-      statsItems.forEach(item => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        statsObserver.observe(item);
-      });
-    }
-  }
-
-  // DOM読み込み完了後に実行
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', optimizeStatsAnimation);
-  } else {
-    optimizeStatsAnimation();
-  }
-
-  // ========== 2025 SEO OPTIMIZATION: PERFORMANCE MONITORING ==========
-  // Core Web Vitals monitoring (simplified for 2025)
-  function monitorCoreWebVitals() {
-    // Basic performance monitoring without external dependencies
-    if ('performance' in window && 'PerformanceObserver' in window) {
-      try {
-        const observer = new PerformanceObserver(list => {
-          list.getEntries().forEach(entry => {
-            if (entry.entryType === 'largest-contentful-paint') {
-              console.log('LCP:', entry.startTime);
-            } else if (entry.entryType === 'first-input') {
-              const fidEntry = entry as any;
-              console.log('FID:', fidEntry.processingStart - entry.startTime);
-            } else if (entry.entryType === 'layout-shift') {
-              const clsEntry = entry as any;
-              console.log('CLS:', clsEntry.value);
-            }
-          });
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const element = entry.target as HTMLElement;
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+          }
         });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
 
-        observer.observe({
-          entryTypes: [
-            'largest-contentful-paint',
-            'first-input',
-            'layout-shift',
-          ],
+    statsItems.forEach(item => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(item);
+    });
+  };
+
+  // Performance monitoring
+  const initPerformanceMonitoring = () => {
+    if (!('performance' in window && 'PerformanceObserver' in window)) return;
+
+    try {
+      const observer = new PerformanceObserver(list => {
+        list.getEntries().forEach(entry => {
+          if (entry.entryType === 'largest-contentful-paint') {
+            console.log('LCP:', entry.startTime);
+          } else if (entry.entryType === 'first-input') {
+            const fidEntry = entry as any;
+            console.log('FID:', fidEntry.processingStart - entry.startTime);
+          } else if (entry.entryType === 'layout-shift') {
+            const clsEntry = entry as any;
+            console.log('CLS:', clsEntry.value);
+          }
         });
-      } catch (error) {
-        console.log('Performance monitoring not available:', error);
-      }
-    }
-  }
-
-  // Intersection Observer for lazy loading optimization
-  function optimizeLazyLoading() {
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target as HTMLImageElement;
-              if (img.dataset.src) {
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-              }
-            }
-          });
-        },
-        {
-          rootMargin: '50px 0px',
-          threshold: 0.01,
-        }
-      );
-
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
       });
+
+      observer.observe({
+        entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
+      });
+    } catch (error) {
+      console.log('Performance monitoring not available:', error);
     }
-  }
+  };
 
-  // Service Worker registration for caching
-  function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/sw.js', {
-            scope: '/',
-            updateViaCache: 'none',
-          })
-          .then(registration => {
-            console.log('SW registered: ', registration);
+  // Lazy loading
+  const initLazyLoading = () => {
+    if (!('IntersectionObserver' in window)) return;
 
-            // Check for updates
-            registration.addEventListener('updatefound', () => {
-              const newWorker = registration.installing;
-              if (newWorker) {
-                newWorker.addEventListener('statechange', () => {
-                  if (
-                    newWorker.state === 'installed' &&
-                    navigator.serviceWorker.controller
-                  ) {
-                    // New content available, notify user
-                    if (confirm('New version available! Reload to update?')) {
-                      window.location.reload();
-                    }
-                  }
-                });
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+              observer.unobserve(img);
+            }
+          }
+        });
+      },
+      { rootMargin: '50px 0px', threshold: 0.01 }
+    );
+
+    document
+      .querySelectorAll('img[data-src]')
+      .forEach(img => observer.observe(img));
+  };
+
+  // Service Worker
+  const initServiceWorker = () => {
+    if (!('serviceWorker' in navigator)) return;
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
+        .then(registration => {
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (!newWorker) return;
+
+            newWorker.addEventListener('statechange', () => {
+              if (
+                newWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
+                if (confirm('New version available! Reload to update?')) {
+                  window.location.reload();
+                }
               }
             });
-          })
-          .catch(registrationError => {
-            console.log('SW registration failed: ', registrationError);
           });
-      });
-    }
-  }
+        })
+        .catch(error => console.log('SW registration failed:', error));
+    });
+  };
 
-  // Initialize all optimizations
-  document.addEventListener('DOMContentLoaded', () => {
-    monitorCoreWebVitals();
-    optimizeLazyLoading();
-    registerServiceWorker();
-  });
+  // Initialize all
+  const init = () => {
+    initPageAnimations();
+    initMicroInteractions();
+    initToolCardInteractions();
+    initStatsAnimation();
+    initPerformanceMonitoring();
+    initLazyLoading();
+    initServiceWorker();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>

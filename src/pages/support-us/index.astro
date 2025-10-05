@@ -1,34 +1,27 @@
 ---
+// ========== IMPORTS ==========
 import { getEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
-
-// Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
-
 import '../../styles/layouts/PostLayout.css';
 
+// ========== CONTENT LOADING ==========
 const post = await getEntry('pages', 'support-us');
 
-if (!post) {
-  return Astro.redirect('/pages?error=post-not-found');
-}
+if (!post) return Astro.redirect('/pages?error=post-not-found');
+if (post.data.status !== 'published') return Astro.redirect('/404');
 
-// ページのステータスをチェック（非公開の場合は404を返す）
-if (post.data.status !== 'published') {
-  return Astro.redirect('/404');
-}
-
+// ========== CONTENT PROCESSING ==========
 const { Content, headings } = await post.render();
-
 const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
-
 const resolvedPath = { path: resolvePath('pages', post.slug) };
 const collectionMetadata = getCollectionInfo('pages');
 
+// ========== SEO DATA ==========
 const seoData = {
   title: post.data.title || `Dukung Kami - GoRakuDo`,
   description:
@@ -43,13 +36,14 @@ const seoData = {
   isDraft: false,
 };
 
+// ========== CLIENT DATA ==========
 const postData = {
   title: post.data.title,
   description: post.data.description,
   resolvedPath: resolvedPath.path,
 };
 
-// Breadcrumb configuration
+// ========== BREADCRUMB CONFIGURATION ==========
 const breadcrumbConfig = {
   currentPath: resolvedPath.path,
   showHome: true,
@@ -57,8 +51,6 @@ const breadcrumbConfig = {
   ariaLabel: 'Support us page navigation breadcrumb',
 };
 
-// ========== BREADCRUMB SCHEMA ==========
-// Support us page用のBreadcrumb Schema生成
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
     { title: 'Home', url: '/', isActive: false },
@@ -143,8 +135,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   </div>
 </PostLayout>
 
+<!-- ========== SCRIPTS ========== -->
 <script is:inline define:vars={{ postData }}>
-  function sharePost() {
+  const sharePost = () => {
     const shareUrl = postData?.resolvedPath
       ? `${window.location.origin}${postData.resolvedPath}`
       : window.location.href;
@@ -162,7 +155,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         alert('Link berhasil disalin ke clipboard!');
       });
     }
-  }
+  };
 
   window.sharePost = sharePost;
 </script>

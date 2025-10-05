@@ -1,70 +1,51 @@
 ---
-// Import required dependencies for tool articles
+// ========== IMPORTS ==========
+import { getCollection, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../../layouts/PostLayout.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
-
-// Import PostLayout styles
-import '../../../styles/layouts/PostLayout.css';
-
-import { getCollection, type CollectionEntry } from 'astro:content';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
-
-// Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
+import '../../../styles/layouts/PostLayout.css';
 
-// Get visible tool articles from Content Collections (shared utility)
+// ========== UTILITY FUNCTIONS ==========
 export async function getVisibleToolArticlesData() {
   const allPosts = await getCollection('tool-articles');
   return getVisibleToolArticles(allPosts);
 }
 
-// Extract tool name from post slug
 export function extractToolNameFromSlug(slug: string): string {
   return slug.split('/')[0];
 }
 
-// Generate static paths for all tool articles
-export async function getStaticPaths() {
-  const posts = await getVisibleToolArticlesData();
-
-  return posts.map((post: CollectionEntry<'tool-articles'>) => {
-    const toolName = extractToolNameFromSlug(post.slug);
-    const articleSlug = post.slug.split('/').slice(1).join('/');
-
-    return {
-      params: { tool: toolName, slug: articleSlug },
-      props: { post },
-    };
-  });
-}
-
-// Get valid tools from Content Collections dynamically
 async function getValidTools(): Promise<string[]> {
   const posts = await getVisibleToolArticlesData();
-
-  // Extract unique tool names from posts
   const toolNames = new Set<string>();
   posts.forEach((post: CollectionEntry<'tool-articles'>) => {
     const toolName = extractToolNameFromSlug(post.slug);
-    if (toolName) {
-      toolNames.add(toolName);
-    }
+    if (toolName) toolNames.add(toolName);
   });
-
   return Array.from(toolNames).sort();
 }
 
-// Get the post from props with type safety
-const { post } = Astro.props as { post: CollectionEntry<'tool-articles'> };
+// ========== STATIC PATH GENERATION ==========
+export async function getStaticPaths() {
+  const posts = await getVisibleToolArticlesData();
+  return posts.map((post: CollectionEntry<'tool-articles'>) => {
+    const toolName = extractToolNameFromSlug(post.slug);
+    const articleSlug = post.slug.split('/').slice(1).join('/');
+    return { params: { tool: toolName, slug: articleSlug }, props: { post } };
+  });
+}
 
-// Security: Validate and sanitize URL parameters
+// ========== COMPONENT LOGIC ==========
+const { post } = Astro.props as { post: CollectionEntry<'tool-articles'> };
 const params = Astro.params as { tool: string; slug: string };
 const toolName = params.tool;
 const articleSlug = params.slug;
 
-// Prevent path traversal attacks
+// ========== SECURITY VALIDATION ==========
 if (
   toolName?.includes('..') ||
   toolName?.includes('/') ||
@@ -78,14 +59,12 @@ if (
   return Astro.redirect('/404', 301);
 }
 
-// Validate tool name against Content Collections (defense in depth)
 const validTools = await getValidTools();
 if (!validTools.includes(toolName)) {
   logger.log(`Security: Invalid tool name requested: ${toolName}`, 'warning');
   return Astro.redirect('/tools', 301);
 }
 
-// Sanitize slug to prevent XSS through URL manipulation
 const sanitizedSlug = articleSlug?.replace(/[<>\"'&]/g, '');
 if (sanitizedSlug !== articleSlug) {
   logger.log(
@@ -95,25 +74,20 @@ if (sanitizedSlug !== articleSlug) {
   return Astro.redirect('/404', 301);
 }
 
-// Error handling pattern - redirect to 404 if post not found
 if (!post) {
   logger.log(`Tool article not found: ${toolName}, ${articleSlug}`, 'warning');
   return Astro.redirect('/404', 301);
 }
 
-// Render the content
+// ========== CONTENT PROCESSING ==========
 const { Content, headings } = await post.render();
-
-// Filter headings for TOC (h2-h3 levels work best for navigation)
 const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
-
-// Dynamic content path resolution for SEO
 const resolvedPath = { path: resolvePath('tool-articles', post.slug) };
 const collectionMetadata = getCollectionInfo('tool-articles');
 
-// Dynamic SEO data based on tool article content
+// ========== SEO DATA ==========
 const seoData = {
   title: post.data.title || `Tool Article - ${toolName}`,
   description:
@@ -128,15 +102,15 @@ const seoData = {
   isDraft: post.data.isDraft || false,
 };
 
-// Prepare data for client-side scripts
+// ========== CLIENT DATA ==========
 const postData = {
   title: post.data.title,
   description: post.data.description,
   resolvedPath: resolvedPath.path,
-  toolName: toolName,
+  toolName,
 };
 
-// Breadcrumb configuration for tools
+// ========== BREADCRUMB CONFIGURATION ==========
 const breadcrumbConfig = {
   currentPath: resolvedPath.path,
   showHome: true,
@@ -144,8 +118,6 @@ const breadcrumbConfig = {
   ariaLabel: `Tool article navigation breadcrumb for ${toolName}`,
 };
 
-// ========== BREADCRUMB SCHEMA ==========
-// Tool article page用のBreadcrumb Schema生成
 const formattedToolName = toolName.charAt(0).toUpperCase() + toolName.slice(1);
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
@@ -377,10 +349,10 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   )
 }
 
-<!-- Application Script with Enhanced Tool Article Features -->
+<!-- ========== SCRIPTS ========== -->
 <script is:inline define:vars={{ postData, toolName, articleSlug }}>
-  // Share functionality with dynamic path support
-  function sharePost() {
+  // Share functionality
+  const sharePost = () => {
     const shareUrl = postData?.resolvedPath
       ? `${window.location.origin}${postData.resolvedPath}`
       : window.location.href;
@@ -394,62 +366,55 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         url: shareUrl,
       });
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(shareUrl).then(() => {
         alert('Link berhasil disalin ke clipboard!');
       });
     }
-  }
+  };
 
-  // Make sharePost globally accessible for onclick handlers
   window.sharePost = sharePost;
 
-  // Log successful tool article access
-  console.log('✅ Tool article accessed:', {
-    tool: toolName,
-    slug: articleSlug,
-    title: postData?.title,
-    timestamp: new Date().toISOString(),
-  });
-
-  // Performance monitoring
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('📊 Tool Article Performance:');
-    console.log('  🎯 Article loaded successfully');
-    console.log('  🔧 Tool:', toolName);
-    console.log('  📄 Title:', postData?.title);
-
-    // Accessibility enhancements
+  // Accessibility enhancements
+  const initAccessibility = () => {
     const articleContent = document.querySelector('.content-main');
-    if (articleContent) {
-      // Add skip link for screen readers
-      const skipLink = document.createElement('a');
-      skipLink.href = '#main-content';
-      skipLink.className =
-        'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50';
-      skipLink.textContent = 'Skip to main content';
-      document.body.insertBefore(skipLink, document.body.firstChild);
+    if (!articleContent) return;
 
-      // Add proper ARIA labels for images without alt text
-      const images = articleContent.querySelectorAll('img:not([alt])');
-      images.forEach(img => {
-        img.alt = `${toolName} tool illustration`;
-      });
+    // Add skip link
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main-content';
+    skipLink.className =
+      'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50';
+    skipLink.textContent = 'Skip to main content';
+    document.body.insertBefore(skipLink, document.body.firstChild);
 
-      // Validate heading hierarchy
-      const headings = articleContent.querySelectorAll(
-        'h1, h2, h3, h4, h5, h6'
-      );
-      let lastLevel = 0;
-      headings.forEach(heading => {
-        const level = parseInt(heading.tagName.charAt(1));
-        if (level - lastLevel > 1) {
-          console.warn(
-            `⚠️ Accessibility: Heading level skipped from h${lastLevel} to h${level}`
-          );
-        }
-        lastLevel = level;
-      });
-    }
+    // Add alt text to images
+    const images = articleContent.querySelectorAll('img:not([alt])');
+    images.forEach(img => {
+      img.alt = `${toolName} tool illustration`;
+    });
+
+    // Validate heading hierarchy
+    const headings = articleContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    let lastLevel = 0;
+    headings.forEach(heading => {
+      const level = parseInt(heading.tagName.charAt(1));
+      if (level - lastLevel > 1) {
+        console.warn(
+          `⚠️ Accessibility: Heading level skipped from h${lastLevel} to h${level}`
+        );
+      }
+      lastLevel = level;
+    });
+  };
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('✅ Tool article accessed:', {
+      tool: toolName,
+      slug: articleSlug,
+      title: postData?.title,
+      timestamp: new Date().toISOString(),
+    });
+    initAccessibility();
   });
 </script>

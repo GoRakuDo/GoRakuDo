@@ -1,18 +1,13 @@
 ---
-// ========== POST LAYOUT COMPONENT ==========
-// Centralized layout management following ArticleLayout pattern
-// All content sections are provided through named slots
+// ========== IMPORTS ==========
 import UnifiedSEO from '../components/UnifiedSEO.astro';
 import TableOfContents from '../components/content/TableOfContents.astro';
-
 import Navbar from '../components/common/NavBar/Navbar.astro';
 import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
-
 import Prose from '../components/Prose.astro';
-
-// Global CSS
 import '../styles/global.css';
 
+// ========== TYPE DEFINITIONS ==========
 export interface Props {
   title: string;
   description: string;
@@ -20,25 +15,14 @@ export interface Props {
   lang?: 'id' | 'ja';
   author?: string;
   tags?: string[];
-  // Post-specific props
   post?:
     | import('astro:content').CollectionEntry<'docs'>
     | import('astro:content').CollectionEntry<'tool-articles'>;
-  collectionMetadata?: {
-    displayName: string;
-    basePath: string;
-  };
+  collectionMetadata?: { displayName: string; basePath: string };
   headings?: { depth: number; slug: string; text: string }[];
   postActions?: boolean;
-  // Featured image from ContentCollection
   featuredImage?: string;
-  // Content article configuration
-  contentConfig?: {
-    id?: string;
-    ariaLabel?: string;
-    className?: string;
-  };
-  // Breadcrumb configuration
+  contentConfig?: { id?: string; ariaLabel?: string; className?: string };
   breadcrumbConfig?: {
     currentPath?: string;
     showHome?: boolean;
@@ -46,7 +30,6 @@ export interface Props {
     showIcons?: boolean;
     ariaLabel?: string;
   };
-  // Breadcrumb Schema統合
   breadcrumbSchema?: {
     '@context': 'https://schema.org';
     '@type': 'BreadcrumbList';
@@ -57,21 +40,18 @@ export interface Props {
       item: string;
     }>;
   };
-  // FAQ Schema統合
   faqSchema?: {
     '@context': 'https://schema.org';
     '@type': 'FAQPage';
     mainEntity: Array<{
       '@type': 'Question';
       name: string;
-      acceptedAnswer: {
-        '@type': 'Answer';
-        text: string;
-      };
+      acceptedAnswer: { '@type': 'Answer'; text: string };
     }>;
   } | null;
 }
 
+// ========== PROPS DESTRUCTURING ==========
 const {
   title,
   description,
@@ -162,79 +142,64 @@ const {
       </div>
     </main>
 
-    <!-- Breadcrumb Scroll Animation Script -->
+    <!-- ========== SCRIPTS ========== -->
     <script>
-      // スマホ画面でのbreadcrumb-containerのスクロールアニメーション
-      function initBreadcrumbScrollAnimation() {
+      // Breadcrumb scroll animation for mobile
+      const initBreadcrumbScrollAnimation = () => {
         const breadcrumbContainer = document.querySelector(
           '.breadcrumb-container'
         ) as HTMLElement;
 
-        if (!breadcrumbContainer || window.innerWidth > 767) {
-          return; // スマホ画面以外では実行しない
-        }
+        if (!breadcrumbContainer || window.innerWidth > 767) return;
 
         let scrollTimeout: number;
         let isScrolling = false;
 
-        // スクロール可能な状態をチェック
-        function checkScrollable() {
+        const checkScrollable = () => {
           if (!breadcrumbContainer) return;
 
           const { scrollLeft, scrollWidth, clientWidth } = breadcrumbContainer;
 
-          // 左側にスクロール可能かチェック
           if (scrollLeft > 0) {
             breadcrumbContainer.classList.add('scrollable-left');
           } else {
             breadcrumbContainer.classList.remove('scrollable-left');
           }
 
-          // 右側にスクロール可能かチェック
           if (scrollLeft < scrollWidth - clientWidth) {
             breadcrumbContainer.classList.add('scrollable-right');
           } else {
             breadcrumbContainer.classList.remove('scrollable-right');
           }
-        }
+        };
 
-        // スクロール開始時のアニメーション
-        function handleScrollStart() {
+        const handleScrollStart = () => {
           if (!breadcrumbContainer || isScrolling) return;
-
           isScrolling = true;
           breadcrumbContainer.classList.add('scrolling');
-        }
+        };
 
-        // スクロール終了時のアニメーション
-        function handleScrollEnd() {
+        const handleScrollEnd = () => {
           if (!breadcrumbContainer) return;
-
           isScrolling = false;
           breadcrumbContainer.classList.remove('scrolling');
-        }
+        };
 
-        // スクロールイベントリスナー
         breadcrumbContainer.addEventListener('scroll', () => {
           handleScrollStart();
           checkScrollable();
-
-          // スクロール終了を検出
           clearTimeout(scrollTimeout);
           scrollTimeout = window.setTimeout(handleScrollEnd, 150);
         });
 
-        // 初期状態をチェック
         checkScrollable();
 
-        // リサイズ時に再チェック
         window.addEventListener('resize', () => {
           if (!breadcrumbContainer) return;
 
           if (window.innerWidth <= 767) {
             setTimeout(checkScrollable, 100);
           } else {
-            // デスクトップ画面ではクラスを削除
             breadcrumbContainer.classList.remove(
               'scrollable-left',
               'scrollable-right',
@@ -242,9 +207,9 @@ const {
             );
           }
         });
-      }
+      };
 
-      // DOM読み込み完了後に実行
+      // Initialize
       if (document.readyState === 'loading') {
         document.addEventListener(
           'DOMContentLoaded',

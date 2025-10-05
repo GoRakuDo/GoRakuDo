@@ -1,26 +1,22 @@
 ---
-// YouTube Channel Recommendations Page - 日本語学習チャンネル推奨ページ
-// モバイルファースト最適化済み + SEO2025最適化
-
+// ========== IMPORTS ==========
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
 import channelsDataRaw from '../../data/youtube-channels.json';
-import { Image } from 'astro:assets';
+import youtubeSeoData from '../../data/seo/youtube-rekomendasi.json';
 import heroImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-rekomendasi-youtube.png';
 import podcastImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-radio-podcast.png';
 import mediaImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-tv-media.png';
-import youtubeSeoData from './_youtube-seo.json';
 import '../../styles/pages/rChannelYT-BBJ/rChannelYT-BBJ-Index.css';
 
-// データの分割代入
+// ========== DATA PROCESSING ==========
 const { sections } = channelsDataRaw;
-
-// SEOデータの取得
 const seoData = youtubeSeoData.seoData;
 const structuredData = youtubeSeoData.structuredData;
 const breadcrumbData = youtubeSeoData.breadcrumbData;
 
-// パンくずリスト構造化データの生成
+// ========== STRUCTURED DATA ==========
 const breadcrumbSchema = {
   '@context': 'https://schema.org' as const,
   '@type': 'BreadcrumbList' as const,
@@ -32,7 +28,6 @@ const breadcrumbSchema = {
   })),
 };
 
-// FAQ構造化データの生成
 const faqSchema = {
   '@context': 'https://schema.org' as const,
   '@type': 'FAQPage' as const,
@@ -55,7 +50,7 @@ const faqSchema = {
   pageType={seoData.pageType as 'article' | 'website'}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
-  ogImage={heroImage.src}
+  ogImage="/assets/gorakudo-rekomendasi-youtube-C9Zx4Dwm.png"
 >
   <main class='rc-channel-page' role='main'>
     <!-- ページヘッダー -->
@@ -241,92 +236,80 @@ const faqSchema = {
   </main>
 
   <!-- 構造化データ -->
-  <script type='application/ld+json' set:html={JSON.stringify({
-    ...structuredData.article,
-    image: {
-      "@type": "ImageObject",
-      "url": heroImage.src,
-      "width": 1200,
-      "height": 1200
-    }
-  })} />
   <script type='application/ld+json' set:html={JSON.stringify(structuredData.collectionPage)} />
 
-  <!-- 技術的SEO最適化 -->
-  <link rel='canonical' href='https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang' />
-  <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
-  <meta name='googlebot' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
-  <meta name='bingbot' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
-  
-  <!-- パフォーマンス最適化 -->
-  <link rel='preconnect' href='https://www.youtube.com' />
-  <link rel='preconnect' href='https://yt3.googleusercontent.com' />
-  <link rel='dns-prefetch' href='https://www.youtube.com' />
-  <link rel='dns-prefetch' href='https://yt3.googleusercontent.com' />
-  
-  <!-- セキュリティヘッダー -->
-  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
-  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
-  <meta http-equiv='Referrer-Policy' content='strict-origin-when-cross-origin' />
 
-  <!-- パフォーマンス監視とレイジーローディング -->
+  <!-- ========== SCRIPTS ========== -->
   <script is:inline>
-    // パフォーマンス監視
-    if ('performance' in window) {
+    // Performance monitoring
+    const initPerformanceMonitoring = () => {
+      if (!('performance' in window)) return;
+      
       window.addEventListener('load', () => {
         const perfData = performance.getEntriesByType('navigation')[0];
         if (perfData) {
           console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
         }
       });
-    }
+    };
 
-    // レイジーローディング最適化
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-              imageObserver.unobserve(img);
+    // Lazy loading
+    const initLazyLoading = () => {
+      if (!('IntersectionObserver' in window)) return;
+
+      const imageObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+              }
             }
-          }
-        });
-      }, {
-        rootMargin: '50px 0px',
-        threshold: 0.01
-      });
+          });
+        },
+        { rootMargin: '50px 0px', threshold: 0.01 }
+      );
 
-      // 画像の遅延読み込み
       document.addEventListener('DOMContentLoaded', () => {
         const lazyImages = document.querySelectorAll('img[data-src]');
         lazyImages.forEach(img => imageObserver.observe(img));
       });
-    }
+    };
 
-    // スクロール最適化
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-      scrollTimeout = setTimeout(() => {
-        // スクロールイベントの処理
-        const scrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
+    // Scroll optimization
+    const initScrollOptimization = () => {
+      let scrollTimeout;
+      window.addEventListener('scroll', () => {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
         
-        // スクロール進捗の計算
-        const scrollProgress = (scrollY / (documentHeight - windowHeight)) * 100;
-        
-        // パフォーマンス最適化: 必要に応じてのみ処理を実行
-        if (scrollProgress > 0 && scrollProgress < 100) {
-          // スクロール関連の処理
-        }
-      }, 16); // 60fps
-    });
+        scrollTimeout = setTimeout(() => {
+          const scrollY = window.scrollY;
+          const windowHeight = window.innerHeight;
+          const documentHeight = document.documentElement.scrollHeight;
+          const scrollProgress = (scrollY / (documentHeight - windowHeight)) * 100;
+          
+          if (scrollProgress > 0 && scrollProgress < 100) {
+            // Scroll-related processing
+          }
+        }, 16);
+      });
+    };
+
+    // Initialize all
+    const init = () => {
+      initPerformanceMonitoring();
+      initLazyLoading();
+      initScrollOptimization();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
   </script>
 
   <!-- スクリーンリーダー用スタイル -->
@@ -346,15 +329,16 @@ const faqSchema = {
 
 </BaseLayout>
 
-<script is:inline>
-  function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest'
-      });
-    }
-  }
-</script>
+  <!-- ========== NAVIGATION SCRIPT ========== -->
+  <script is:inline>
+    const scrollToSection = (sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        });
+      }
+    };
+  </script>

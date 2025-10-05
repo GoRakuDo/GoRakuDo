@@ -1,0 +1,80 @@
+{
+  "seoData": {
+    "title": "Dokumentasi Belajar Bahasa Jepang | Panduan Lengkap Metode Immersion - GoRakuDo",
+    "description": "Dokumentasi lengkap dan panduan belajar bahasa Jepang dengan metode immersion. Akses semua materi pembelajaran, strategi, dan tips untuk menguasai bahasa Jepang secara alami.",
+    "keywords": [
+      "dokumentasi bahasa jepang",
+      "panduan belajar jepang",
+      "metode immersion jepang",
+      "dokumentasi nihongo",
+      "japanese learning documentation",
+      "immersion method guide",
+      "japanese study materials",
+      "japanese learning resources",
+      "japanese immersion guide",
+      "japanese learning documentation",
+      "japanese study guide",
+      "japanese learning materials",
+      "japanese immersion resources",
+      "japanese learning tips",
+      "japanese study documentation"
+    ],
+    "pageType": "website",
+    "author": "GoRakuDo Team",
+    "lang": "id"
+  },
+  "structuredData": {
+    "website": {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Dokumentasi Belajar Bahasa Jepang - GoRakuDo",
+      "description": "Dokumentasi lengkap dan panduan belajar bahasa Jepang dengan metode immersion",
+      "url": "https://gorakudo.org/docs",
+      "publisher": {
+        "@type": "Organization",
+        "name": "GoRakuDo"
+      }
+    },
+    "collectionPage": {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Dokumentasi Belajar Bahasa Jepang",
+      "description": "Koleksi dokumentasi dan panduan pembelajaran bahasa Jepang",
+      "url": "https://gorakudo.org/docs",
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Dokumentasi Belajar Bahasa Jepang",
+        "description": "Daftar dokumentasi dan panduan belajar bahasa Jepang",
+        "numberOfItems": 20
+      }
+    },
+    "faq": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu metode immersion learning untuk bahasa Jepang?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Immersion learning adalah metode pembelajaran bahasa Jepang dengan membenamkan diri dalam lingkungan berbahasa Jepang melalui konten asli seperti anime, manga, drama, dan musik. Metode ini membantu mengembangkan intuisi bahasa secara alami."
+          }
+        }
+      ]
+    }
+  },
+  "breadcrumbData": {
+    "items": [
+      {
+        "name": "Home",
+        "url": "/",
+        "isActive": false
+      },
+      {
+        "name": "Dokumentasi",
+        "url": "/docs",
+        "isActive": true
+      }
+    ]
+  }
+}

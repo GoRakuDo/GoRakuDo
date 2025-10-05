@@ -1,24 +1,18 @@
 ---
-// Japanese Learning Guide Page - 2025年SEO最適化
+// ========== IMPORTS ==========
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
-
+import panduanSeoData from '../../data/seo/panduan-lengkap.json';
 import '../../styles/pages/pl-obj/pl-objIndex.css';
 
-import { getCollection } from 'astro:content';
-
-// SEOデータと構造化データをJSONファイルからインポート
-import panduanSeoData from './_panduan-seo.json';
-import gorakudoImmerisonImage from '../../assets/images/pages/pl-obj/gorakudo-immerison.png';
-
-// Get the specific page from the pages collection
+// ========== CONTENT LOADING ==========
 const pages = await getCollection('pages');
 const entry = pages.find(
   page => page.slug === 'panduan-lengkap-otodidak-bahasa-jepang'
 );
 
-// Error handling if page not found
 if (!entry) {
   throw new Error(
     'Page "panduan-lengkap-otodidak-bahasa-jepang" not found in pages collection'
@@ -27,11 +21,11 @@ if (!entry) {
 
 const { Content } = await entry.render();
 
-// 2025年SEO最適化: JSONファイルから取得
+// ========== SEO DATA ==========
 const seoData = panduanSeoData.seoData;
 const structuredData = panduanSeoData.structuredData;
 
-// Breadcrumb Schema生成
+// ========== STRUCTURED DATA ==========
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: panduanSeoData.breadcrumbData.items.map((item, index) => ({
     title: item.name,
@@ -41,7 +35,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 
-// FAQ Schema生成
 const faqSchema = {
   '@context': 'https://schema.org' as const,
   '@type': 'FAQPage' as const,
@@ -63,60 +56,11 @@ const faqSchema = {
   lang={seoData.lang}
   pageType={seoData.pageType as 'article' | 'website'}
   publishedDate={entry.data.publishedDate}
-  ogImage={gorakudoImmerisonImage.src}
+  ogImage='/assets/gorakudo-immerison-HAk-WsDe.png'
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
 >
-  <!-- 2025年SEO最適化: 構造化データ -->
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify({
-      ...structuredData.article,
-      image: {
-        '@type': 'ImageObject',
-        url: gorakudoImmerisonImage.src,
-        width: 1200,
-        height: 1200,
-      },
-    })}
-  />
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify({
-      ...structuredData.howTo,
-      image: gorakudoImmerisonImage.src,
-    })}
-  />
-
-  <!-- 2025年SEO最適化: 技術的SEO要素 -->
-  <link
-    rel='canonical'
-    href='https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang/'
-  />
-  <meta
-    name='robots'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='googlebot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='bingbot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-
-  <!-- パフォーマンス最適化 -->
-  <link rel='preconnect' href='https://fonts.googleapis.com' />
-  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-
-  <!-- セキュリティヘッダー -->
-  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
-  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
-  <meta
-    http-equiv='Referrer-Policy'
-    content='strict-origin-when-cross-origin'
-  />
+  <!-- 構造化データはUnifiedSEOコンポーネントで統一管理 -->
 
   <Prose>
     <main class='pl-guide-page' role='main'>
@@ -127,41 +71,31 @@ const faqSchema = {
   </Prose>
 </BaseLayout>
 
+<!-- ========== SCRIPTS ========== -->
 <script>
-  // Lazy import for image zoom functionality
+  // Image zoom functionality
   let imageZoomLoaded = false;
   let imageZoomInstance: { openModal: (event: any) => void } | null = null;
   let imageZoomPromise: Promise<{ openModal: (event: any) => void }> | null =
     null;
 
   const loadImageZoom = async () => {
-    // 既にロード済みの場合はインスタンスを返す
-    if (imageZoomLoaded && imageZoomInstance) {
-      return imageZoomInstance;
-    }
+    if (imageZoomLoaded && imageZoomInstance) return imageZoomInstance;
+    if (imageZoomPromise) return imageZoomPromise;
 
-    // 既にロード中の場合はPromiseを返す
-    if (imageZoomPromise) {
-      return imageZoomPromise;
-    }
-
-    // 新しいロードを開始
     imageZoomPromise = (async () => {
       try {
         if (import.meta.env.DEV) console.log('Loading ImageZoom script...');
         const { default: ImageZoom } = await import(
           '../../scripts/image-zoom.js'
         );
-
-        // インスタンスを作成
         imageZoomInstance = new ImageZoom();
         imageZoomLoaded = true;
-
         if (import.meta.env.DEV) console.log('ImageZoom loaded successfully');
         return imageZoomInstance;
       } catch (error) {
         console.error('Failed to load ImageZoom:', error);
-        imageZoomPromise = null; // エラー時はPromiseをリセット
+        imageZoomPromise = null;
         throw error;
       }
     })();
@@ -170,7 +104,6 @@ const faqSchema = {
   };
 
   const handleImageZoomClick = async (event: Event) => {
-    // イベントオブジェクトの参照を事前に保存
     const currentTarget = event.currentTarget;
     const target = event.target;
 
@@ -181,14 +114,11 @@ const faqSchema = {
     }
 
     try {
-      // スクリプトをロード
       const zoomInstance = await loadImageZoom();
-
       if (zoomInstance) {
-        // イベントオブジェクトを正しく構築
         const syntheticEvent = {
-          currentTarget: currentTarget,
-          target: target,
+          currentTarget,
+          target,
           preventDefault: () => event.preventDefault(),
           stopPropagation: () => event.stopPropagation(),
         };
@@ -201,12 +131,10 @@ const faqSchema = {
           );
         }
 
-        // クリックイベントを処理
         zoomInstance.openModal(syntheticEvent);
       }
     } catch (error) {
       console.error('ImageZoom failed to load:', error);
-      // フォールバック: 画像を新しいタブで開く
       if (currentTarget && 'querySelector' in currentTarget) {
         const img = (currentTarget as Element).querySelector('img');
         if (img && 'src' in img) {
@@ -216,7 +144,6 @@ const faqSchema = {
     }
   };
 
-  // 画像ズームトリガーの初期化
   const initializeLazyImageZoom = () => {
     const triggers = document.querySelectorAll('.image-zoom-trigger');
     if (import.meta.env.DEV) {
@@ -227,16 +154,11 @@ const faqSchema = {
       );
     }
 
-    // 既に初期化済みのトリガーを追跡
     const initializedTriggers = new WeakSet();
-
     triggers.forEach(trigger => {
-      // 既に初期化済みの場合はスキップ
       if (initializedTriggers.has(trigger)) return;
-
       initializedTriggers.add(trigger);
 
-      // クリックハンドラー
       const clickHandler = (event: Event) => {
         if (import.meta.env.DEV) {
           console.log('Click handler called with event:', event);
@@ -245,7 +167,6 @@ const faqSchema = {
         handleImageZoomClick(event);
       };
 
-      // キーボードハンドラー
       const keydownHandler = ((e: KeyboardEvent) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -258,49 +179,25 @@ const faqSchema = {
     });
   };
 
-  // DOM準備完了時に初期化
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeLazyImageZoom);
-  } else {
-    initializeLazyImageZoom();
-  }
-
-  // クリーンアップ機能
   const cleanupImageZoom = () => {
     imageZoomInstance = null;
     imageZoomPromise = null;
     imageZoomLoaded = false;
   };
 
-  // デバッグ用（開発時のみ）
-  if (import.meta.env.DEV) {
-    (window as any).imageZoomDebug = {
-      loadImageZoom,
-      handleImageZoomClick,
-      initializeLazyImageZoom,
-      cleanupImageZoom,
-      getLoaded: () => imageZoomLoaded,
-      getInstance: () => imageZoomInstance,
-    };
-  }
+  // Performance monitoring
+  const initPerformanceMonitoring = () => {
+    if ('performance' in window && 'mark' in performance) {
+      performance.mark('panduan-page-start');
+    }
+    if ('web-vital' in window) {
+      console.log('📊 Core Web Vitals monitoring enabled for panduan page');
+    }
+  };
 
-  // ページ離脱時のクリーンアップ
-  window.addEventListener('beforeunload', cleanupImageZoom);
-
-  // 2025年SEO最適化: パフォーマンス監視
-  if ('performance' in window && 'mark' in performance) {
-    performance.mark('panduan-page-start');
-  }
-
-  // 2025年SEO最適化: Core Web Vitals監視
-  if ('web-vital' in window) {
-    console.log('📊 Core Web Vitals monitoring enabled for panduan page');
-  }
-
-  // 2025年SEO最適化: 最適化されたIntersection Observer
+  // Lazy loading
   const initLazyLoading = () => {
     const lazyElements = document.querySelectorAll('[data-lazy]');
-
     if (lazyElements.length === 0) return;
 
     const lazyObserver = new IntersectionObserver(
@@ -317,19 +214,37 @@ const faqSchema = {
           }
         });
       },
-      {
-        rootMargin: '100px 0px -5% 0px',
-        threshold: [0.05, 0.1],
-      }
+      { rootMargin: '100px 0px -5% 0px', threshold: [0.05, 0.1] }
     );
 
     lazyElements.forEach(el => lazyObserver.observe(el));
   };
 
-  // 2025年SEO最適化: 最適化された初期化
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLazyLoading);
-  } else {
+  // Initialize all
+  const init = () => {
+    initializeLazyImageZoom();
+    initPerformanceMonitoring();
     initLazyLoading();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
+
+  // Debug tools (dev only)
+  if (import.meta.env.DEV) {
+    (window as any).imageZoomDebug = {
+      loadImageZoom,
+      handleImageZoomClick,
+      initializeLazyImageZoom,
+      cleanupImageZoom,
+      getLoaded: () => imageZoomLoaded,
+      getInstance: () => imageZoomInstance,
+    };
+  }
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', cleanupImageZoom);
 </script>

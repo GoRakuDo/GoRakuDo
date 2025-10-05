@@ -1,18 +1,14 @@
 ---
+// ========== IMPORTS ==========
+import { getCollection, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
-
-// Import content page styles with Tailwind v4 optimization
-import '../../styles/layouts/PostLayout.css';
-
-import { getCollection, type CollectionEntry } from 'astro:content';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
-
-// Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import '../../styles/layouts/PostLayout.css';
 
-// Generate static paths for all docs posts
+// ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
   const allPosts = await getCollection('docs');
   const visiblePosts = getVisibleDocs(allPosts);
@@ -23,59 +19,52 @@ export async function getStaticPaths() {
   }));
 }
 
-// Get the post from props with explicit type casting
+// ========== COMPONENT LOGIC ==========
 const { post } = Astro.props as { post: CollectionEntry<'docs'> };
-
-// Check if slug starts with 'page-' and redirect to pagination
 const { slug } = Astro.params;
-if (slug) {
-  const slugStr = String(slug);
-  if (slugStr.startsWith('page-')) {
-    const pageNumber = slugStr.replace('page-', '');
-    return Astro.redirect(`/docs/page-${pageNumber}`, 301);
-  }
+
+// Redirect pagination slugs
+if (slug && String(slug).startsWith('page-')) {
+  const pageNumber = String(slug).replace('page-', '');
+  return Astro.redirect(`/docs/page-${pageNumber}`, 301);
 }
 
-// Smart error handling - redirect to docs listing if post not found
-if (!post) {
-  return Astro.redirect('/docs?error=post-not-found');
-}
+// Error handling
+if (!post) return Astro.redirect('/docs?error=post-not-found');
 
-// Render the post content
+// ========== CONTENT PROCESSING ==========
 const { Content, headings } = await post.render();
-
-// Filter headings for TOC (h2-h3 levels work best for navigation)
 const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
 
-// Dynamic content path resolution for SEO
+// ========== PATH & METADATA ==========
 const resolvedPath = { path: resolvePath('docs', post.slug) };
 const collectionMetadata = getCollectionInfo('docs');
 
-// Dynamic SEO data based on document content
+// ========== SEO DATA ==========
 const seoData = {
   title: post.data.title || `Documentation - ${post.slug}`,
   description:
     post.data.description ||
     `Learn about ${post.slug} in GoRakuDo documentation`,
-  keywords: post.data.tags || ['documentation', post.slug, 'guide'], // ✅ tagsフィールドを使用
+  keywords: post.data.tags || ['documentation', post.slug, 'guide'],
   articleType: 'guide',
-  learningStage: post.data.difficulty || 'intermediate', // ✅ difficultyフィールドを使用
+  learningStage: post.data.difficulty || 'intermediate',
   searchIntent: 'informational',
   publishedDate: post.data.publishedDate,
   modifiedDate: post.data.publishedDate,
   isDraft: post.data.isDraft || false,
 };
 
-// Prepare minimal data for client-side scripts
+// ========== CLIENT DATA ==========
 const postData = {
   title: post.data.title,
   description: post.data.description,
   resolvedPath: resolvedPath.path,
 };
 
-// Breadcrumb configuration
+// ========== BREADCRUMB CONFIGURATION ==========
 const breadcrumbConfig = {
   currentPath: resolvedPath.path,
   showHome: true,
@@ -83,8 +72,7 @@ const breadcrumbConfig = {
   ariaLabel: 'Documentation navigation breadcrumb',
 };
 
-// ========== BREADCRUMB SCHEMA ==========
-// Docs article page用のBreadcrumb Schema生成
+// ========== STRUCTURED DATA ==========
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
     { title: 'Home', url: '/', isActive: false },
@@ -220,10 +208,10 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   </footer>
 </PostLayout>
 
-<!-- Main Application Script -->
+<!-- ========== SCRIPTS ========== -->
 <script is:inline define:vars={{ postData }}>
-  // Share functionality with dynamic path support
-  function sharePost() {
+  // Share functionality
+  const sharePost = () => {
     const shareUrl = postData?.resolvedPath
       ? `${window.location.origin}${postData.resolvedPath}`
       : window.location.href;
@@ -235,13 +223,12 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         url: shareUrl,
       });
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(shareUrl).then(() => {
         alert('Link berhasil disalin ke clipboard!');
       });
     }
-  }
+  };
 
-  // Make sharePost globally accessible for onclick handlers
+  // Make sharePost globally accessible
   window.sharePost = sharePost;
 </script>

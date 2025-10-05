@@ -1,61 +1,27 @@
 ---
-// ========== BEM METHOD - TOOL INDEX PAGE ==========
-// Architect Optimization: BEM-compliant, performance-first approach
-// Purpose: Display all articles for a specific tool category with optimal performance
-// File: src/pages/tools/[tool]/index.astro
-
-// Import required dependencies
+// ========== IMPORTS ==========
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import SearchPopover from '../../../components/common/SearchPopover.astro';
-import toolsData from '../../../data/tools.json';
-import toolSeoTemplate from './_tool-seo.json';
-// ToolIdHeader component has been integrated directly into this file
-
-// Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
-
-// Import BEM-compliant tool styles
+import toolsData from '../../../data/tools.json';
+import toolSeoTemplate from '../../../data/seo/tool-template.json';
 import '../../../styles/pages/tools/[tool]/Tool-IdIndex.css';
 
-// ========== BEM METHOD - TOOL DISCOVERY ==========
-// Optimized tool discovery with caching and error handling
-async function getValidToolsFromCollection() {
-  try {
-    const allArticles = await getCollection('tool-articles');
-    const articles = getVisibleToolArticles(allArticles);
-    const toolNames = new Set<string>();
-
-    articles.forEach((article: CollectionEntry<'tool-articles'>) => {
-      if (article.data.toolName) {
-        toolNames.add(article.data.toolName.toLowerCase());
-      }
-    });
-
-    return Array.from(toolNames).sort();
-  } catch (error) {
-    console.error('Failed to load tools from collection:', error);
-    return [];
-  }
-}
-
-// ========== BEM METHOD - STATIC PATH GENERATION ==========
+// ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
   const getAllToolsFromCollection = async () => {
     try {
       const allArticles = await getCollection('tool-articles');
       const toolNames = new Set<string>();
-
-      // すべての記事（公開・非公開問わず）からツール名を取得
       allArticles.forEach((article: CollectionEntry<'tool-articles'>) => {
         if (article.data.toolName) {
           toolNames.add(article.data.toolName.toLowerCase());
         }
       });
-
       return Array.from(toolNames).sort();
     } catch (error) {
       console.error('Failed to load tools from collection:', error);
@@ -66,30 +32,23 @@ export async function getStaticPaths() {
   const allTools = await getAllToolsFromCollection();
   return allTools.length === 0
     ? []
-    : allTools.map(tool => ({
-        params: { tool },
-        props: { toolName: tool },
-      }));
+    : allTools.map(tool => ({ params: { tool }, props: { toolName: tool } }));
 }
 
-// ========== BEM METHOD - COMPONENT LOGIC ==========
+// ========== COMPONENT LOGIC ==========
 const { tool } = Astro.params as { tool: string };
 
-// Early validation and redirect
 if (!tool) return Astro.redirect('/tools', 301);
 
-// Get all tools and validate
 const getAllToolsFromCollection = async () => {
   try {
     const allArticles = await getCollection('tool-articles');
     const toolNames = new Set<string>();
-
     allArticles.forEach((article: CollectionEntry<'tool-articles'>) => {
       if (article.data.toolName) {
         toolNames.add(article.data.toolName.toLowerCase());
       }
     });
-
     return Array.from(toolNames).sort();
   } catch (error) {
     console.error('Failed to load tools from collection:', error);
@@ -102,17 +61,15 @@ if (allTools.length === 0 || !allTools.includes(tool.toLowerCase())) {
   return Astro.redirect('/tools', 301);
 }
 
-// Fetch and filter articles
+// ========== DATA PROCESSING ==========
 const allArticles = await getCollection('tool-articles');
 const articles = getVisibleToolArticles(allArticles);
 
-// Filter articles for this tool (direct toolName match)
 const directToolArticles = articles.filter(
   (article: CollectionEntry<'tool-articles'>) =>
     article.data.toolName?.toLowerCase() === tool.toLowerCase()
 );
 
-// Filter articles that mention this tool in relatedTools
 const relatedToolArticles = articles.filter(
   (article: CollectionEntry<'tool-articles'>) =>
     article.data.relatedTools?.some(
@@ -120,9 +77,8 @@ const relatedToolArticles = articles.filter(
     )
 );
 
-// Combine and deduplicate articles
 const allToolArticles = [...directToolArticles, ...relatedToolArticles];
-const uniqueToolArticles = allToolArticles.filter(
+const toolArticles = allToolArticles.filter(
   (
     article: CollectionEntry<'tool-articles'>,
     index: number,
@@ -134,64 +90,46 @@ const uniqueToolArticles = allToolArticles.filter(
     )
 );
 
-const toolArticles = uniqueToolArticles;
-
-// Check if there are any visible articles for this tool
-const hasVisibleArticles = toolArticles.length > 0;
-
-// ========== BEM METHOD - CENTRALIZED DATA MANAGEMENT ==========
-// All data processing centralized here for maximum efficiency and maintainability
-
-// Tool configuration - simplified
+// ========== TOOL CONFIGURATION ==========
+const toolData = toolsData.find(t => t.id === tool);
 const toolConfig = {
-  iconPath: '/icon/yomitan-icon-240.webp',
-  description: `Comprehensive learning resources and guides for mastering ${tool}. From beginner basics to advanced techniques, everything you need to succeed.`,
+  iconPath: toolData?.iconUrl || '/icon/yomitan-icon-240.webp',
+  description:
+    toolData?.description ||
+    `Comprehensive learning resources and guides for mastering ${tool}. From beginner basics to advanced techniques, everything you need to succeed.`,
 };
 
-const formattedToolName = tool.charAt(0).toUpperCase() + tool.slice(1);
+const formattedToolName =
+  toolData?.name || tool.charAt(0).toUpperCase() + tool.slice(1);
 const currentYear = new Date(
   (toolArticles[0] as CollectionEntry<'tool-articles'>)?.data.publishedDate ||
     new Date()
 ).getFullYear();
 
-// ========== BEM METHOD - PROCESSED ARTICLE DATA ==========
-// Pre-process all article data for components
+// ========== PROCESSED ARTICLE DATA ==========
 const processedArticles = toolArticles.map(
   (article: CollectionEntry<'tool-articles'>, index: number) => {
-    // Article slug processing
     const articleSlug =
       article.slug?.split('/').slice(1).join('/') || article.id;
-
-    // Determine article type (direct tool article or related tool article)
     const isDirectToolArticle =
       article.data.toolName?.toLowerCase() === tool.toLowerCase();
     const isRelatedToolArticle = article.data.relatedTools?.some(
       (relatedTool: string) => relatedTool.toLowerCase() === tool.toLowerCase()
     );
-
-    // Article title processing
     const articleTitle =
       article.data.title || `Complete ${formattedToolName} Guide`;
-
-    // Article description processing
     const articleDescription =
       article.data.description ||
       `Master ${tool} with our comprehensive guide. Learn essential techniques, best practices, and advanced tips.`;
-
-    // Article tags processing
     const DEFAULT_TAGS = ['guide', 'tutorial'];
     const articleTags = article.data.tags?.length
       ? article.data.tags
       : [tool, ...DEFAULT_TAGS];
-    const displayTags = articleTags.slice(0, 3); // Max 3 tags for display
-
-    // Article date processing
+    const displayTags = articleTags.slice(0, 3);
     const DATE_LOCALE = 'id-ID';
     const publishedDate = article.data.publishedDate
       ? new Date(article.data.publishedDate).toLocaleDateString(DATE_LOCALE)
       : new Date().toLocaleDateString(DATE_LOCALE);
-
-    // Article image processing
     const articleImage =
       article.data.featuredImage || article.data.image || null;
     const hasImage = Boolean(articleImage?.trim());
@@ -206,7 +144,6 @@ const processedArticles = toolArticles.map(
       hasImage,
       originalArticle: article,
       index,
-      // Add article type information
       isDirectToolArticle,
       isRelatedToolArticle,
       articleType: isDirectToolArticle ? 'direct' : 'related',
@@ -214,8 +151,7 @@ const processedArticles = toolArticles.map(
   }
 );
 
-// ========== BEM METHOD - HEADER DATA ==========
-// Pre-processed header data
+// ========== HEADER DATA ==========
 const headerData = {
   tool,
   articleCount: toolArticles.length,
@@ -226,12 +162,10 @@ const headerData = {
   currentYear,
 };
 
-// ========== INTEGRATED TOOL-IdHeader LOGIC ==========
-// Optimized constants for display
+// ========== DISPLAY CONSTANTS ==========
 const ICON_DIMENSIONS = { width: 175, height: 175 };
 const iconAlt = `${headerData.formattedToolName} tool icon`;
 
-// Optimized meta items with better performance and accessibility
 const META_ITEMS = [
   {
     icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
@@ -250,8 +184,7 @@ const META_ITEMS = [
   },
 ] as const;
 
-// ========== BEM METHOD - CONTENT GRID DATA ==========
-// Pre-processed content grid data
+// ========== CONTENT GRID DATA ==========
 const contentGridData = {
   hasArticles: toolArticles.length > 0,
   toolArticles: processedArticles,
@@ -259,8 +192,7 @@ const contentGridData = {
   formattedToolName,
 };
 
-// ========== DYNAMIC SEO DATA GENERATION ==========
-// JSONテンプレートから動的にSEOデータを生成
+// ========== SEO DATA GENERATION ==========
 const replaceTemplateVariables = (
   template: string,
   variables: Record<string, string>
@@ -269,13 +201,6 @@ const replaceTemplateVariables = (
     /\{\{(\w+)\}\}/g,
     (match, key) => variables[key] || match
   );
-};
-
-const replaceTemplateArray = (
-  template: string[],
-  variables: Record<string, string>
-): string[] => {
-  return template.map(item => replaceTemplateVariables(item, variables));
 };
 
 const replaceTemplateObject = (
@@ -296,33 +221,30 @@ const replaceTemplateObject = (
   return template;
 };
 
-// テンプレート変数の定義
 const templateVariables = {
-  tool: tool,
+  tool,
   toolName: formattedToolName,
-  formattedToolName: formattedToolName,
+  formattedToolName,
   toolDescription: toolConfig.description,
   articleCount: toolArticles.length.toString(),
 };
 
-// SEOデータをテンプレートから生成
 const seoData = replaceTemplateObject(
   toolSeoTemplate.seoData,
   templateVariables
 );
 
 // ========== STRUCTURED DATA GENERATION ==========
-// 構造化データをテンプレートから生成
 const softwareApplicationSchema = replaceTemplateObject(
   toolSeoTemplate.structuredData.softwareApplication,
   templateVariables
 );
 
-// CollectionPage構造化データをテンプレートから生成
 const collectionPageTemplate = replaceTemplateObject(
   toolSeoTemplate.structuredData.collectionPage,
   templateVariables
 );
+
 const collectionPageSchema = {
   ...collectionPageTemplate,
   mainEntity: {
@@ -338,24 +260,18 @@ const collectionPageSchema = {
             article.data.description || `Panduan lengkap ${formattedToolName}`,
           url: `/tools/${tool}/${article.slug}`,
           datePublished: article.data.publishedDate,
-          author: {
-            '@type': 'Organization',
-            name: 'GoRakuDo Team',
-          },
+          author: { '@type': 'Organization', name: 'GoRakuDo Team' },
         },
       })
     ),
   },
 };
 
-// FAQ構造化データをテンプレートから生成
 const faqSchema = replaceTemplateObject(
   toolSeoTemplate.structuredData.faq,
   templateVariables
 );
 
-// ========== BEM METHOD - BREADCRUMB SCHEMA ==========
-// パンくずリストをテンプレートから生成
 const breadcrumbData = replaceTemplateObject(
   toolSeoTemplate.breadcrumbData,
   templateVariables
@@ -377,38 +293,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   author={seoData.author}
   breadcrumbSchema={breadcrumbSchema}
 >
-  <!-- 2025 SEO Optimization: Technical SEO -->
-  <link rel='canonical' href={`${Astro.site}/tools/${tool}`} />
-  <meta
-    name='robots'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='googlebot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-  <meta
-    name='bingbot'
-    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  />
-
-  <!-- Performance Optimization -->
-  <link rel='preconnect' href='https://fonts.googleapis.com' />
-  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-  <link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
-  <link rel='dns-prefetch' href='//github.com' />
-
-  <!-- Critical Resource Preloading -->
-  <link
-    rel='preload'
-    href='/styles/pages/tools/[tool]/Tool-IdIndex.css'
-    as='style'
-  />
-
-  <!-- Security Headers -->
-  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
-  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
-
   <!-- Structured Data: SoftwareApplication -->
   <script
     type='application/ld+json'
@@ -515,109 +399,98 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   />
 </ArticleLayout>
 
+<!-- ========== SCRIPTS ========== -->
 <script>
-  // ========== 2025 SEO OPTIMIZATION: PERFORMANCE MONITORING ==========
-  // Core Web Vitals monitoring (simplified for 2025)
-  function monitorCoreWebVitals() {
-    // Basic performance monitoring without external dependencies
-    if ('performance' in window && 'PerformanceObserver' in window) {
-      try {
-        const observer = new PerformanceObserver(list => {
-          list.getEntries().forEach(entry => {
-            if (entry.entryType === 'largest-contentful-paint') {
-              console.log('LCP:', entry.startTime);
-            } else if (entry.entryType === 'first-input') {
-              const fidEntry = entry as any;
-              console.log('FID:', fidEntry.processingStart - entry.startTime);
-            } else if (entry.entryType === 'layout-shift') {
-              const clsEntry = entry as any;
-              console.log('CLS:', clsEntry.value);
-            }
-          });
+  // Performance monitoring
+  const initPerformanceMonitoring = () => {
+    if (!('performance' in window && 'PerformanceObserver' in window)) return;
+
+    try {
+      const observer = new PerformanceObserver(list => {
+        list.getEntries().forEach(entry => {
+          if (entry.entryType === 'largest-contentful-paint') {
+            console.log('LCP:', entry.startTime);
+          } else if (entry.entryType === 'first-input') {
+            const fidEntry = entry as any;
+            console.log('FID:', fidEntry.processingStart - entry.startTime);
+          } else if (entry.entryType === 'layout-shift') {
+            const clsEntry = entry as any;
+            console.log('CLS:', clsEntry.value);
+          }
         });
-
-        observer.observe({
-          entryTypes: [
-            'largest-contentful-paint',
-            'first-input',
-            'layout-shift',
-          ],
-        });
-      } catch (error) {
-        console.log('Performance monitoring not available:', error);
-      }
-    }
-  }
-
-  // Intersection Observer for lazy loading optimization
-  function optimizeLazyLoading() {
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target as HTMLImageElement;
-              if (img.dataset.src) {
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-              }
-            }
-          });
-        },
-        {
-          rootMargin: '50px 0px',
-          threshold: 0.01,
-        }
-      );
-
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
       });
+
+      observer.observe({
+        entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
+      });
+    } catch (error) {
+      console.log('Performance monitoring not available:', error);
     }
-  }
+  };
 
-  // Service Worker registration for caching
-  function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/sw.js', {
-            scope: '/',
-            updateViaCache: 'none',
-          })
-          .then(registration => {
-            console.log('SW registered: ', registration);
+  // Lazy loading
+  const initLazyLoading = () => {
+    if (!('IntersectionObserver' in window)) return;
 
-            // Check for updates
-            registration.addEventListener('updatefound', () => {
-              const newWorker = registration.installing;
-              if (newWorker) {
-                newWorker.addEventListener('statechange', () => {
-                  if (
-                    newWorker.state === 'installed' &&
-                    navigator.serviceWorker.controller
-                  ) {
-                    // New content available, notify user
-                    if (confirm('New version available! Reload to update?')) {
-                      window.location.reload();
-                    }
-                  }
-                });
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+              observer.unobserve(img);
+            }
+          }
+        });
+      },
+      { rootMargin: '50px 0px', threshold: 0.01 }
+    );
+
+    document
+      .querySelectorAll('img[data-src]')
+      .forEach(img => observer.observe(img));
+  };
+
+  // Service Worker
+  const initServiceWorker = () => {
+    if (!('serviceWorker' in navigator)) return;
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
+        .then(registration => {
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (!newWorker) return;
+
+            newWorker.addEventListener('statechange', () => {
+              if (
+                newWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
+                if (confirm('New version available! Reload to update?')) {
+                  window.location.reload();
+                }
               }
             });
-          })
-          .catch(registrationError => {
-            console.log('SW registration failed: ', registrationError);
           });
-      });
-    }
-  }
+        })
+        .catch(error => console.log('SW registration failed:', error));
+    });
+  };
 
-  // Initialize all optimizations
-  document.addEventListener('DOMContentLoaded', () => {
-    monitorCoreWebVitals();
-    optimizeLazyLoading();
-    registerServiceWorker();
-  });
+  // Initialize all
+  const init = () => {
+    initPerformanceMonitoring();
+    initLazyLoading();
+    initServiceWorker();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>

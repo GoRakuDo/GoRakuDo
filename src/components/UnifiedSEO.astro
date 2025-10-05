@@ -1,64 +1,8 @@
 ---
-/**
- * UnifiedSEO.astro - AstroネイティブSEOコンポーネント
- * 
- * 設計原則:
- * - KISS: シンプルで理解しやすい実装
- * - Astro Native: Astroの標準パターンに従う
- * - Performance First: 高速な静的生成を重視
- * - Zero Config: デフォルト設定で動作
- * - Configurable: JSONファイルによる設定管理
- * 
- * Resource Hints拡張:
- * - dnsPrefetch: 外部ドメインのDNS解決を事前に行う
- * - prefetch: 次のページ遷移で使用される可能性の高いリソースを事前取得
- * - preload: 現在のページで重要なリソースを優先的に読み込み
- * 
- * サイトマップ統合:
- * - sitemapUrl: サイトマップのURL（デフォルト: /sitemap-index.xml）
- * - robotsTxtUrl: robots.txtのURL（デフォルト: /robots.txt）
- * 
- * 設定管理:
- * - デフォルト設定は src/data/seo-config.json から読み込み
- * - プロパティで上書き可能
- * - 環境別設定に対応
- * 
- * 使用例:
- * ```astro
- * ---
- * import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
- * 
- * const breadcrumbSchema = generateBreadcrumbSchema({
- *   items: [
- *     { title: 'ホーム', url: '/', isActive: false },
- *     { title: 'ブログ', url: '/blog', isActive: false },
- *     { title: '記事タイトル', url: '/blog/article', isActive: true }
- *   ],
- *   siteUrl: String(Astro.site)
- * });
- * ---
- * 
- * <UnifiedSEO
- *   title="ページタイトル"
- *   description="ページの説明"
- *   breadcrumbSchema={breadcrumbSchema}
- *   dnsPrefetch={['https://api.example.com', 'https://cdn.example.com']}
- *   prefetch={['/next-page', '/important-asset.js']}
- *   preload={[
- *     { href: '/critical.css', as: 'style' },
- *     { href: '/hero-image.webp', as: 'image' },
- *     { href: '/font.woff2', as: 'font', crossorigin: true, type: 'font/woff2' }
- *   ]}
- *   sitemapUrl="/sitemap-index.xml"
- *   robotsTxtUrl="/robots.txt"
- * />
- * ```
- */
-
-// 設定ファイルの読み込み
+// ========== IMPORTS ==========
 import seoConfig from '../data/seo-config.json';
 
-// 型定義の分離 - 可読性向上
+// ========== TYPE DEFINITIONS ==========
 interface ContactAddress {
   country?: string;
   locality?: string;
@@ -86,10 +30,7 @@ interface BreadcrumbSchema {
 interface FAQItem {
   '@type': 'Question';
   name: string;
-  acceptedAnswer: {
-    '@type': 'Answer';
-    text: string;
-  };
+  acceptedAnswer: { '@type': 'Answer'; text: string };
 }
 
 interface FAQSchema {
@@ -105,9 +46,8 @@ interface PreloadResource {
   type?: string;
 }
 
-// メインProps定義 - 構造化された型定義
+// ========== MAIN PROPS INTERFACE ==========
 export interface Props {
-  // 基本SEO情報
   title?: string;
   description?: string;
   keywords?: string[];
@@ -120,48 +60,37 @@ export interface Props {
   modifiedDate?: string;
   noindex?: boolean;
   gtag?: string;
-  
-  // 組織情報
+  currentPage?: number;
+  totalPages?: number;
+  baseUrl?: string;
   organizationName?: string;
   organizationDescription?: string;
   organizationUrl?: string;
   organizationLogo?: string;
   organizationFoundedDate?: string;
-  
-  // 連絡先情報
   contactEmail?: string;
   contactAddress?: ContactAddress;
   contactGeo?: ContactGeo;
-  
-  // ソーシャルメディア
   socialLinks?: string[];
-  
-  // 営業時間・料金
   openingHours?: string;
   priceRange?: string;
   currenciesAccepted?: string;
   paymentAccepted?: string;
-  
-  // Schema統合
   breadcrumbSchema?: BreadcrumbSchema;
   faqSchema?: FAQSchema | null;
-  
-  // Resource Hints
   dnsPrefetch?: string[];
   prefetch?: string[];
   preload?: PreloadResource[];
-  
-  // サイトマップ関連
   sitemapUrl?: string;
   robotsTxtUrl?: string;
 }
 
+// ========== PROPS DESTRUCTURING ==========
 const {
-  // 基本SEO情報 - JSON設定から読み込み
   title = seoConfig.site.name,
   description = seoConfig.site.description,
   keywords = [],
-  canonical, // 手動指定があれば使用、なければ自動生成
+  canonical,
   lang = seoConfig.site.language,
   pageType = seoConfig.seo.defaultPageType,
   image = seoConfig.site.defaultImage,
@@ -170,120 +99,97 @@ const {
   modifiedDate,
   noindex = false,
   gtag = seoConfig.analytics.gtag,
-  
-  // 組織情報 - JSON設定から読み込み
+  currentPage,
+  totalPages,
+  baseUrl,
   organizationName = seoConfig.organization.name,
   organizationDescription = seoConfig.organization.description,
   organizationUrl = seoConfig.organization.url,
   organizationLogo = seoConfig.organization.logo,
   organizationFoundedDate = seoConfig.organization.foundedDate,
-  
-  // 連絡先情報 - JSON設定から読み込み
   contactEmail = seoConfig.contact.email,
   contactAddress = seoConfig.contact.address,
   contactGeo = seoConfig.contact.geo,
-  
-  // ソーシャルメディア - JSON設定から読み込み
   socialLinks = seoConfig.social.links,
-  
-  // 営業時間・料金 - JSON設定から読み込み
   openingHours = seoConfig.business.openingHours,
   priceRange = seoConfig.business.priceRange,
   currenciesAccepted = seoConfig.business.currenciesAccepted,
   paymentAccepted = seoConfig.business.paymentAccepted,
-  
-  // Breadcrumb Schema統合
   breadcrumbSchema,
-  // FAQ Schema統合
   faqSchema,
-  // Resource Hints - デフォルト値設定
   dnsPrefetch = [],
   prefetch = [],
-  preload = [
-    // フォントpreload削除 - Google Fonts CSS importに変更
-  ],
-  
-  // サイトマップ関連 - JSON設定から読み込み
+  preload = [],
   sitemapUrl = seoConfig.sitemap.url,
   robotsTxtUrl = seoConfig.sitemap.robotsTxtUrl
 } = Astro.props;
 
-// ヘルパー関数群 - 単一責任の原則
-const removeTrailingSlashes = (url: string): string => url.replace(/\/+$/, '');
-
-const ensureLeadingSlash = (path: string): string => 
-  path.startsWith('/') ? path : '/' + path;
-
-const removeDoubleSlashes = (url: string): string => 
-  url.replace(/([^:]\/)\/+/g, '$1').replace(/\/+/g, '/');
-
-// URL正規化関数 - ガード句と単純化
-const normalizeUrl = (baseUrl: string, path: string): string => {
-  if (!baseUrl || !path) return baseUrl || path;
-  
-  const cleanBase = removeTrailingSlashes(baseUrl);
-  const cleanPath = ensureLeadingSlash(path);
-  const combinedUrl = `${cleanBase}${cleanPath}`;
-  
-  return removeDoubleSlashes(combinedUrl);
+// ========== URL UTILITY FUNCTIONS ==========
+const getSiteUrl = (): string => {
+  const siteUrl = Astro.site || 'https://gorakudo.org';
+  const normalizedUrl = String(siteUrl).trim();
+  return normalizedUrl.startsWith('https://') ? normalizedUrl : `https://${normalizedUrl.replace(/^https?:\/\//, '')}`;
 };
 
-// URL生成ヘルパー関数
-const getSiteUrl = (): string => String(Astro.site || 'https://gorakudo.org');
+const joinUrl = (baseUrl: string, path: string): string => {
+  if (!baseUrl || !path) return baseUrl || path;
+  const cleanBase = baseUrl.replace(/\/+$/, '');
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${cleanBase}${cleanPath}`;
+};
 
 const getCurrentPath = (): string => Astro.url.pathname || '/';
 
 const generateCanonicalUrl = (): string => {
   const siteUrl = getSiteUrl();
   const currentPath = getCurrentPath();
-  return normalizeUrl(siteUrl, currentPath);
+  return joinUrl(siteUrl, currentPath);
 };
 
 const removeTrailingSlashIfNeeded = (url: string): string => {
   const siteUrl = getSiteUrl();
   const isRootUrl = url === `${siteUrl}/`;
   const hasTrailingSlash = url.endsWith('/');
-  
   return hasTrailingSlash && !isRootUrl ? url.slice(0, -1) : url;
 };
 
 const createFullImageUrl = (imagePath: string): string => {
   if (imagePath.startsWith('http')) return imagePath;
-  
+  if (!imagePath) {
+    const siteUrl = getSiteUrl();
+    const defaultImage = '/img/FullDC Logo.webp';
+    return joinUrl(siteUrl, defaultImage);
+  }
   const siteUrl = getSiteUrl();
-  const defaultImage = '/img/FullDC Logo.webp';
-  return normalizeUrl(siteUrl, imagePath || defaultImage);
+  return joinUrl(siteUrl, imagePath);
 };
 
-// サイトマップ関連URL生成ヘルパー関数
 const createFullSitemapUrl = (sitemapPath: string): string => {
   if (sitemapPath.startsWith('http')) return sitemapPath;
-  return normalizeUrl(getSiteUrl(), sitemapPath);
+  return joinUrl(getSiteUrl(), sitemapPath);
 };
 
 const createFullRobotsTxtUrl = (robotsPath: string): string => {
   if (robotsPath.startsWith('http')) return robotsPath;
-  return normalizeUrl(getSiteUrl(), robotsPath);
+  return joinUrl(getSiteUrl(), robotsPath);
 };
 
-// メインURL生成
+// ========== URL GENERATION ==========
 const autoCanonical = canonical || generateCanonicalUrl();
 const normalizedCanonical = removeTrailingSlashIfNeeded(autoCanonical);
 const fullImageUrl = createFullImageUrl(image);
-
-// サイトマップ関連URL生成
 const fullSitemapUrl = createFullSitemapUrl(sitemapUrl);
 const fullRobotsTxtUrl = createFullRobotsTxtUrl(robotsTxtUrl);
 
-// デフォルト設定（JSON設定から読み込み）
+// ========== DEFAULT CONFIGURATION ==========
 const defaultConfig = {
   siteName: seoConfig.site.name,
-  locale: seoConfig.site.locale, // JSON設定から読み込み
+  locale: seoConfig.site.locale,
   twitterCard: seoConfig.seo.twitterCard,
   favicon: seoConfig.site.favicon
 };
 
-// Resource Hints生成ヘルパー関数
+// ========== RESOURCE HINTS UTILITIES ==========
 const extractOriginFromUrl = (url: string): string => {
   try {
     const urlObj = new URL(url);
@@ -296,22 +202,15 @@ const extractOriginFromUrl = (url: string): string => {
 const isRelativeUrl = (url: string): boolean => url.startsWith('/');
 
 const convertToFullUrl = (url: string): string => {
-  return isRelativeUrl(url) ? normalizeUrl(getSiteUrl(), url) : url;
+  return isRelativeUrl(url) ? joinUrl(getSiteUrl(), url) : url;
 };
 
 const createCrossoriginAttribute = (crossorigin?: boolean): string | undefined => {
   return crossorigin ? 'anonymous' : undefined;
 };
 
-// Resource Hints生成関数 - 単純化
-const generateDnsPrefetch = (urls: string[]): string[] => {
-  return urls.map(extractOriginFromUrl);
-};
-
-const generatePrefetch = (urls: string[]): string[] => {
-  return urls.map(convertToFullUrl);
-};
-
+const generateDnsPrefetch = (urls: string[]): string[] => urls.map(extractOriginFromUrl);
+const generatePrefetch = (urls: string[]): string[] => urls.map(convertToFullUrl);
 const generatePreload = (resources: PreloadResource[]) => {
   return resources.map(resource => ({
     href: convertToFullUrl(resource.href),
@@ -321,15 +220,15 @@ const generatePreload = (resources: PreloadResource[]) => {
   }));
 };
 
-// 生成されたResource Hints
+// ========== RESOURCE HINTS GENERATION ==========
 const dnsPrefetchUrls = generateDnsPrefetch(dnsPrefetch);
 const prefetchUrls = generatePrefetch(prefetch);
 const preloadResources = generatePreload(preload);
 
-// Schema生成ヘルパー関数
-const createImageObject = (imageUrl: string, width = 1200, height = 1200) => ({
+// ========== SCHEMA HELPER FUNCTIONS ==========
+const createImageObject = (imageUrl: string, width = 512, height = 512) => ({
   '@type': 'ImageObject',
-  url: normalizeUrl(getSiteUrl(), imageUrl),
+  url: createFullImageUrl(imageUrl),
   width,
   height
 });
@@ -341,7 +240,7 @@ const createContactPoint = () => ({
   email: contactEmail
 });
 
-// 基本組織スキーマ - 構造化
+// ========== BASE ORGANIZATION SCHEMA ==========
 const baseOrganization = {
   '@type': 'Organization',
   name: organizationName,
@@ -353,7 +252,7 @@ const baseOrganization = {
   contactPoint: createContactPoint()
 };
 
-// WebSite Schema生成
+// ========== WEBSITE SCHEMA ==========
 const createSearchAction = () => ({
   '@type': 'SearchAction',
   target: {
@@ -372,17 +271,12 @@ const websiteSchema = {
   inLanguage: lang,
   publisher: baseOrganization,
   potentialAction: createSearchAction(),
-  // サイトマップ情報の追加
-  mainEntity: {
-    '@type': 'Sitemap',
-    url: fullSitemapUrl
-  }
+  mainEntity: { '@type': 'Sitemap', url: fullSitemapUrl }
 };
 
-// Article Schema生成
+// ========== ARTICLE SCHEMA ==========
 const createAuthorObject = () => {
   if (!author) return baseOrganization;
-  
   const authorSlug = author.toLowerCase().replace(/\s+/g, '-');
   return {
     '@type': 'Person',
@@ -391,11 +285,7 @@ const createAuthorObject = () => {
   };
 };
 
-const createMainEntityOfPage = () => ({
-  '@type': 'WebPage',
-  '@id': normalizedCanonical
-});
-
+const createMainEntityOfPage = () => ({ '@type': 'WebPage', '@id': normalizedCanonical });
 const estimateWordCount = (text: string): number => text.length * 2;
 
 const articleSchema = pageType === 'article' ? {
@@ -416,7 +306,7 @@ const articleSchema = pageType === 'article' ? {
   wordCount: estimateWordCount(description)
 } : null;
 
-// LocalBusiness Schema生成
+// ========== LOCAL BUSINESS SCHEMA ==========
 const createPostalAddress = () => ({
   '@type': 'PostalAddress',
   addressCountry: contactAddress.country,
@@ -448,7 +338,7 @@ const localBusinessSchema = {
   sameAs: socialLinks
 };
 
-// 構造化データ統合 - ガード句と単純化
+// ========== STRUCTURED DATA INTEGRATION ==========
 const addMainSchema = (schemas: any[]): void => {
   const isArticlePage = pageType === 'article' && articleSchema;
   schemas.push(isArticlePage ? articleSchema : websiteSchema);
@@ -463,7 +353,6 @@ const addOptionalSchemas = (schemas: any[]): void => {
   if (faqSchema) schemas.push(faqSchema);
 };
 
-// 構造化データの統合
 const structuredDataSchemas: any[] = [];
 addMainSchema(structuredDataSchemas);
 addOrganizationSchemas(structuredDataSchemas);
@@ -471,70 +360,52 @@ addOptionalSchemas(structuredDataSchemas);
 
 ---
 
-<!-- SEO Meta Tags - Astroネイティブ実装 -->
-<!-- 文字エンコーディング設定 -->
+<!-- ========== BASIC META TAGS ========== -->
 <meta charset="UTF-8" />
-
-<!-- モバイル最適化メタタグ - 統合版 -->
-<!-- ビューポート設定 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, minimum-scale=0.8, user-scalable=yes, viewport-fit=cover" />
+<meta name="language" content={lang} />
+<meta name="generator" content="Astro" />
+<title>{title}</title>
+<meta name="description" content={description} />
+{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+{author && <meta name="author" content={author} />}
 
-<!-- モバイルブラウザ最適化 -->
+<!-- ========== MOBILE OPTIMIZATION ========== -->
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content={title} />
 <meta name="apple-touch-fullscreen" content="yes" />
 <meta name="apple-mobile-web-app-orientations" content="portrait" />
-
-<!-- タッチ操作とUX向上 -->
 <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
 <meta name="HandheldFriendly" content="true" />
 <meta name="MobileOptimized" content="width" />
 <meta name="msapplication-tap-highlight" content="no" />
 
-<!-- テーマカラー設定 - JSON設定から読み込み -->
+<!-- ========== THEME & APPLICATION ========== -->
 <meta name="theme-color" content={seoConfig.theme.color} />
 <meta name="msapplication-TileColor" content={seoConfig.theme.color} />
 <meta name="msapplication-navbutton-color" content={seoConfig.theme.color} />
 <meta name="color-scheme" content={seoConfig.theme.colorScheme} />
-
-<!-- アプリケーション情報 -->
 <meta name="application-name" content={title} />
 <meta name="msapplication-tooltip" content={description} />
 <meta name="msapplication-starturl" content="/" />
 <meta name="msapplication-TileImage" content="/favicon/web-app-manifest-192x192.png" />
 
-<!-- レンダリング最適化 -->
+<!-- ========== RENDERING & SECURITY ========== -->
 <meta name="renderer" content="webkit" />
 <meta name="force-rendering" content="webkit" />
 <meta name="screen-orientation" content="portrait" />
-
-<!-- セキュリティ設定 - JSON設定から読み込み -->
 <meta name="referrer" content={seoConfig.security.referrer} />
 <meta http-equiv="X-Content-Type-Options" content={seoConfig.security.contentTypeOptions} />
 <meta http-equiv="X-XSS-Protection" content={seoConfig.security.xssProtection} />
-<!-- より強力なCSPは astro.config.mjs で設定推奨 -->
 
-
-<!-- 言語設定 -->
-<meta name="language" content={lang} />
-
-<!-- GitHub Pages SEO最適化 -->
-<meta name="generator" content="Astro" />
+<!-- ========== SEARCH ENGINE OPTIMIZATION ========== -->
 <meta name="googlebot" content="index, follow" />
 <meta name="bingbot" content="index, follow" />
-
-<!-- サイトマップ発見機能 - 検索エンジン最適化 -->
 <meta name="sitemap" content={fullSitemapUrl} />
 
-<!-- 基本メタタグ -->
-<title>{title}</title>
-<meta name="description" content={description} />
-{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
-{author && <meta name="author" content={author} />}
-
-<!-- Open Graph - 2025年最適化 -->
+<!-- ========== OPEN GRAPH ========== -->
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content={pageType} />
@@ -546,7 +417,7 @@ addOptionalSchemas(structuredDataSchemas);
 <meta property="og:locale" content={defaultConfig.locale} />
 <meta property="og:updated_time" content={new Date().toISOString()} />
 
-<!-- Twitter Cards - 2025年最適化 -->
+<!-- ========== TWITTER CARDS ========== -->
 <meta name="twitter:card" content={defaultConfig.twitterCard} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
@@ -555,23 +426,19 @@ addOptionalSchemas(structuredDataSchemas);
 <meta name="twitter:site" content="@yosiakefas" />
 <meta name="twitter:creator" content="@yosiakefas" />
 
-<!-- 正規化リンク -->
+<!-- ========== CANONICAL & SITEMAP ========== -->
 <link rel="canonical" href={normalizedCanonical} />
-
-<!-- サイトマップ関連リンク - SEO最適化 -->
 <link rel="sitemap" type="application/xml" title="Sitemap" href={fullSitemapUrl} />
 <link rel="alternate" type="application/xml" title="Sitemap" href={fullSitemapUrl} />
 
-<!-- Favicon - モダンブラウザ対応 -->
+<!-- ========== FAVICON ========== -->
 <link rel="icon" type="image/svg+xml" href={defaultConfig.favicon} />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-96x96.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-96x96.png" />
 <link rel="shortcut icon" href="/favicon/favicon.ico" />
 
-<!-- iOS Safari最適化 - Apple Touch Icons -->
-<!-- 標準解像度 -->
+<!-- ========== APPLE TOUCH ICONS ========== -->
 <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-<!-- Retinaディスプレイ対応 -->
 <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon.png" />
 <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon.png" />
 <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon.png" />
@@ -582,26 +449,22 @@ addOptionalSchemas(structuredDataSchemas);
 <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 
-<!-- PWA対応 - Web App Manifest -->
+<!-- ========== PWA MANIFEST ========== -->
 <link rel="manifest" href="/favicon/site.webmanifest" />
 
-<!-- Resource Hints - パフォーマンス最適化の戦略的配置 -->
-<!-- DNS Prefetch: 外部ドメインのDNS解決を事前に行う -->
+<!-- ========== RESOURCE HINTS ========== -->
 {dnsPrefetchUrls.map(url => (
   <link rel="dns-prefetch" href={url} />
 ))}
 
-<!-- Preconnect: 重要な外部リソースへの接続を事前確立 - JSON設定から読み込み -->
 {seoConfig.fonts.googleFonts.preconnect.map(url => (
   <link rel="preconnect" href={url} />
 ))}
 
-<!-- Prefetch: 次のページ遷移で使用される可能性の高いリソースを事前取得 -->
 {prefetchUrls.map(url => (
   <link rel="prefetch" href={url} />
 ))}
 
-<!-- Preload: 現在のページで重要なリソースを優先的に読み込み -->
 {preloadResources.map(resource => (
   <link 
     rel="preload" 
@@ -612,48 +475,49 @@ addOptionalSchemas(structuredDataSchemas);
   />
 ))}
 
-<!-- Font Loading - 日本語フォントと絵文字の完全対応 (Layout Shift Prevention) -->
-<!-- Critical font loading - synchronous to prevent layout shift -->
+<!-- ========== FONT LOADING ========== -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&family=Gochi+Hand&family=Noto+Emoji:wght@300;400;500;600;700&display=swap" />
+<link href={seoConfig.fonts.googleFonts.url} rel="stylesheet" />
 
-<!-- Google Fonts - JSON設定から読み込み -->
-{seoConfig.fonts.googleFonts.preconnect.map(url => (
-  <link rel='preconnect' href={url} />
-))}
-<link
-  href={seoConfig.fonts.googleFonts.url}
-  rel='stylesheet'
-/>
-
-<!-- ロボット設定 - JSON設定から読み込み -->
+<!-- ========== ROBOTS & PAGINATION ========== -->
 <meta name="robots" content={noindex ? 'noindex, nofollow' : seoConfig.seo.robots.default} />
 
-<!-- JSON-LD Structured Data -->
+{currentPage && currentPage > 1 && (
+  <meta name="robots" content="noindex, follow" />
+)}
+{currentPage && typeof totalPages === 'number' && currentPage < totalPages && (
+  <link rel="next" href={joinUrl(getSiteUrl(), `${baseUrl || ''}/page-${currentPage + 1}`)} />
+)}
+{currentPage && currentPage > 1 && (
+  <link rel="prev" href={
+    currentPage === 2 
+      ? joinUrl(getSiteUrl(), baseUrl || '')
+      : joinUrl(getSiteUrl(), `${baseUrl || ''}/page-${currentPage - 1}`)
+  } />
+)}
+
+<!-- ========== STRUCTURED DATA ========== -->
 {structuredDataSchemas.map(schema => (
   <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
 ))}
 
-<!-- Google Analytics - GitHub Pages最適化 -->
+<!-- ========== GOOGLE ANALYTICS ========== -->
 {gtag && (
   <>
-    <!-- Google tag (gtag.js) - GitHub Pages対応 -->
     <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gtag}`}></script>
     <script is:inline define:vars={{ gtagId: gtag }}>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', gtagId, {
-        // GitHub Pages最適化設定
         send_page_view: true,
         transport_type: 'beacon',
-        // パフォーマンス向上のための設定
         custom_map: {
           'custom_parameter_1': 'site_type',
           'custom_parameter_2': 'deployment_platform'
         }
       });
       
-      // サイトタイプとデプロイメントプラットフォームを送信
       gtag('event', 'page_view', {
         site_type: 'static_site',
         deployment_platform: 'github_pages'

@@ -1,15 +1,12 @@
 ---
+// ========== IMPORTS ==========
 import UnifiedSEO from '../components/UnifiedSEO.astro';
 import Navbar from '../components/common/NavBar/Navbar.astro';
 import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
-
-// Animation
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
-
-// CSSをインポート
 import '../styles/global.css';
 
-// Propsインターフェース定義
+// ========== TYPE DEFINITIONS ==========
 export interface Props {
   title?: string;
   description?: string;
@@ -18,7 +15,9 @@ export interface Props {
   publishedDate?: string;
   lang?: string;
   keywords?: string[];
-  // Breadcrumb Schema統合
+  currentPage?: number;
+  totalPages?: number;
+  baseUrl?: string;
   breadcrumbSchema?: {
     '@context': 'https://schema.org';
     '@type': 'BreadcrumbList';
@@ -29,22 +28,18 @@ export interface Props {
       item: string;
     }>;
   };
-  // FAQ Schema統合
   faqSchema?: {
     '@context': 'https://schema.org';
     '@type': 'FAQPage';
     mainEntity: Array<{
       '@type': 'Question';
       name: string;
-      acceptedAnswer: {
-        '@type': 'Answer';
-        text: string;
-      };
+      acceptedAnswer: { '@type': 'Answer'; text: string };
     }>;
   };
 }
 
-// propsを受け取ります
+// ========== PROPS DESTRUCTURING ==========
 const {
   title,
   description,
@@ -53,16 +48,17 @@ const {
   publishedDate,
   lang,
   keywords,
+  currentPage,
+  totalPages,
+  baseUrl,
   breadcrumbSchema,
   faqSchema,
 } = Astro.props;
 ---
 
 <!doctype html>
-<!-- <html>タグのlang属性も動的に設定 -->
 <html lang={lang || 'id'}>
   <head>
-    <!-- UnifiedSEO - 統合SEOコンポーネント -->
     <UnifiedSEO
       title={title}
       description={description}
@@ -71,25 +67,19 @@ const {
       image={ogImage}
       publishedDate={publishedDate}
       lang={lang}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      baseUrl={baseUrl}
       breadcrumbSchema={breadcrumbSchema}
       faqSchema={faqSchema}
     />
-
-    <!-- スタイルシートの<link>タグは不要です。上のimport文がその役割を果たします。 -->
   </head>
   <body>
-    <!-- Navigation - 共通コンポーネント -->
     <Navbar />
     <BottomNavBar />
-
-    <!-- Enhanced Wave Animation Background - Optimized Performance -->
     <WaveAnimation className='wave-canvas' backgroundLayer='normal' />
-
-    <!-- この<slot />に、各ページのユニークなコンテンツが挿入されます -->
     <div class='layout-content'>
       <slot />
     </div>
-
-    <!-- 共通のスクリプトなどがあればここに配置 -->
   </body>
 </html>
