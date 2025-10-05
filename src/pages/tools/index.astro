@@ -8,7 +8,10 @@ import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 // Import CSS
 import '../../styles/pages/tools/tools-index.css';
 
-// ========== INLINE TYPE DEFINITIONS ==========
+// Import data
+import toolsData from '../../data/tools.json';
+
+// ========== TYPE DEFINITIONS ==========
 interface Tool {
   readonly id: string;
   readonly name: string;
@@ -16,58 +19,10 @@ interface Tool {
   readonly iconUrl: string;
   readonly color?: string;
   readonly link: string;
-  readonly interactiveElements?: {
-    hasHoverEffect?: boolean;
-    hasClickAction?: boolean;
-    animationType?: 'scale' | 'slide' | 'fade';
-  };
 }
 
-// Tools data - 中央集権化されたデータ管理
-const tools: Tool[] = [
-  {
-    id: 'anki',
-    name: 'Anki',
-    description:
-      'Sistem flashcard dengan Spaced Repetition System (SRS) untuk menghafal kosakata dan kanji secara efektif.',
-    iconUrl: '/icon/anki-icon-240.webp',
-    color: 'var(--clr-accent)',
-    link: '/tools/anki',
-    interactiveElements: {
-      hasHoverEffect: true,
-      hasClickAction: true,
-      animationType: 'scale' as const,
-    },
-  },
-  {
-    id: 'yomitan',
-    name: 'Yomichan',
-    description:
-      'Browser extension untuk membaca bahasa Jepang dengan hover dictionary dan furigana generation.',
-    iconUrl: '/icon/yomitan-icon-240.webp',
-    color: 'var(--clr-accent-dark)',
-    link: '/tools/yomitan',
-    interactiveElements: {
-      hasHoverEffect: true,
-      hasClickAction: true,
-      animationType: 'slide' as const,
-    },
-  },
-  {
-    id: 'migaku',
-    name: 'Migaku',
-    description:
-      'Suite tools untuk immersion learning termasuk browser extension dan Anki integration.',
-    iconUrl: '/icon/migaku-icon-240.webp',
-    color: 'var(--clr-accent-glow-strong)',
-    link: '/tools/migaku',
-    interactiveElements: {
-      hasHoverEffect: true,
-      hasClickAction: true,
-      animationType: 'scale' as const,
-    },
-  },
-];
+// Tools data - JSONファイルから読み込み
+const tools: Tool[] = toolsData as Tool[];
 
 // ========== TOOLS HEADER CONSTANTS & CONFIGURATION ==========
 const STATS_CONFIG = {

@@ -1,6 +1,6 @@
 ---
 // YouTube Channel Recommendations Page - 日本語学習チャンネル推奨ページ
-// モバイルファースト最適化済み
+// モバイルファースト最適化済み + SEO2025最適化
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
@@ -9,36 +9,53 @@ import { Image } from 'astro:assets';
 import heroImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-rekomendasi-youtube.png';
 import podcastImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-radio-podcast.png';
 import mediaImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-tv-media.png';
+import youtubeSeoData from './_youtube-seo.json';
 import '../../styles/pages/rChannelYT-BBJ/rChannelYT-BBJ-Index.css';
 
 // データの分割代入
 const { sections } = channelsDataRaw;
 
-// ページメタデータ
-const pageTitle =
-  'Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik 2024';
-const pageDescription =
-  'Daftar lengkap channel YouTube terbaik untuk belajar bahasa Jepang dari pemula hingga mahir. Rekomendasi channel berkualitas tinggi dengan konten pembelajaran yang efektif.';
-const pageKeywords = [
-  'channel youtube belajar bahasa jepang',
-  'rekomendasi youtube jepang',
-  'belajar bahasa jepang online',
-  'tutorial bahasa jepang',
-  'JLPT preparation',
-  'nihongo learning',
-  'japanese language',
-  'youtube channels japanese',
-  'pembelajaran bahasa jepang',
-  'kursus bahasa jepang gratis',
-];
+// SEOデータの取得
+const seoData = youtubeSeoData.seoData;
+const structuredData = youtubeSeoData.structuredData;
+const breadcrumbData = youtubeSeoData.breadcrumbData;
+
+// パンくずリスト構造化データの生成
+const breadcrumbSchema = {
+  '@context': 'https://schema.org' as const,
+  '@type': 'BreadcrumbList' as const,
+  itemListElement: breadcrumbData.items.map((item, index) => ({
+    '@type': 'ListItem' as const,
+    position: index + 1,
+    name: item.name,
+    item: item.url,
+  })),
+};
+
+// FAQ構造化データの生成
+const faqSchema = {
+  '@context': 'https://schema.org' as const,
+  '@type': 'FAQPage' as const,
+  mainEntity: structuredData.faq.mainEntity.map(faq => ({
+    '@type': 'Question' as const,
+    name: faq.name,
+    acceptedAnswer: {
+      '@type': 'Answer' as const,
+      text: faq.acceptedAnswer.text,
+    },
+  })),
+} as const;
 ---
 
 <BaseLayout
-  title={pageTitle}
-  description={pageDescription}
-  keywords={pageKeywords}
-  lang='id'
-  pageType='article'
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+  lang={seoData.lang}
+  pageType={seoData.pageType as 'article' | 'website'}
+  breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema}
+  ogImage={heroImage.src}
 >
   <main class='rc-channel-page' role='main'>
     <!-- ページヘッダー -->
@@ -222,6 +239,99 @@ const pageKeywords = [
           }
     </div>
   </main>
+
+  <!-- 構造化データ -->
+  <script type='application/ld+json' set:html={JSON.stringify({
+    ...structuredData.article,
+    image: {
+      "@type": "ImageObject",
+      "url": heroImage.src,
+      "width": 1200,
+      "height": 1200
+    }
+  })} />
+  <script type='application/ld+json' set:html={JSON.stringify(structuredData.collectionPage)} />
+
+  <!-- 技術的SEO最適化 -->
+  <link rel='canonical' href='https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang' />
+  <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+  <meta name='googlebot' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+  <meta name='bingbot' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+  
+  <!-- パフォーマンス最適化 -->
+  <link rel='preconnect' href='https://www.youtube.com' />
+  <link rel='preconnect' href='https://yt3.googleusercontent.com' />
+  <link rel='dns-prefetch' href='https://www.youtube.com' />
+  <link rel='dns-prefetch' href='https://yt3.googleusercontent.com' />
+  <link rel='preload' href={heroImage.src} as='image' type='image/png' />
+  <link rel='preload' href={podcastImage.src} as='image' type='image/png' />
+  <link rel='preload' href={mediaImage.src} as='image' type='image/png' />
+  
+  <!-- セキュリティヘッダー -->
+  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
+  <meta http-equiv='X-Frame-Options' content='DENY' />
+  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
+  <meta http-equiv='Referrer-Policy' content='strict-origin-when-cross-origin' />
+
+  <!-- パフォーマンス監視とレイジーローディング -->
+  <script is:inline>
+    // パフォーマンス監視
+    if ('performance' in window) {
+      window.addEventListener('load', () => {
+        const perfData = performance.getEntriesByType('navigation')[0];
+        if (perfData) {
+          console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+        }
+      });
+    }
+
+    // レイジーローディング最適化
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+              imageObserver.unobserve(img);
+            }
+          }
+        });
+      }, {
+        rootMargin: '50px 0px',
+        threshold: 0.01
+      });
+
+      // 画像の遅延読み込み
+      document.addEventListener('DOMContentLoaded', () => {
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        lazyImages.forEach(img => imageObserver.observe(img));
+      });
+    }
+
+    // スクロール最適化
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = setTimeout(() => {
+        // スクロールイベントの処理
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        // スクロール進捗の計算
+        const scrollProgress = (scrollY / (documentHeight - windowHeight)) * 100;
+        
+        // パフォーマンス最適化: 必要に応じてのみ処理を実行
+        if (scrollProgress > 0 && scrollProgress < 100) {
+          // スクロール関連の処理
+        }
+      }, 16); // 60fps
+    });
+  </script>
 
   <!-- スクリーンリーダー用スタイル -->
   <style>

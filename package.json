@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run stylelint && npm run lint && astro check && astro build",
+    "build": "npm run stylelint && npm run lint && astro check && npm run process-auto-dates:fast && astro build",
     "build:quality": "npm run quality && astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -18,6 +18,10 @@
     "quality": "npm run lint && npm run format:check && npm run type-check",
     "stylelint": "stylelint \"src/**/*.{css,scss,vue,astro}\" --fix",
     "stylelint:fix": "stylelint \"**/*.{css,scss,vue,astro}\" --fix",
+    "process-auto-dates": "tsx src/scripts/type-scripts/auto-date/processor-basic.ts",
+    "process-auto-dates:fast": "tsx src/scripts/type-scripts/auto-date/processor-efficient.ts",
+    "process-auto-dates:clear": "tsx src/scripts/type-scripts/auto-date/processor-efficient.ts --clear-cache",
+    "dev:watch-dates": "tsx src/scripts/type-scripts/auto-date/watcher.ts",
     "stylelint:file": "stylelint",
     "stylelint:all": "stylelint \"src/**/*.{css,scss,vue,astro,ts,tsx,js,jsx}\" ",
     "stylelint:css-only": "stylelint \"src/**/*.{css,scss,vue,astro}\"",
@@ -63,6 +67,7 @@
     "stylelint-config-recommended-scss": "^16.0.1",
     "stylelint-config-standard": "^39.0.0",
     "stylelint-config-tailwindcss": "^1.0.0",
+    "tsx": "^4.20.6",
     "vitest": "^3.2.4",
     "vue-eslint-parser": "^10.2.0"
   }

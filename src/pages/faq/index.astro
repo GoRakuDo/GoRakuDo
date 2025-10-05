@@ -7,7 +7,6 @@ import '../../styles/layouts/PostLayout.css';
 
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
-import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 
 // Breadcrumb Schema
@@ -41,14 +40,7 @@ const tocHeadings = headings.filter(
 const resolvedPath = { path: resolvePath('pages', faqPage.slug) };
 const collectionMetadata = getCollectionInfo('pages');
 
-// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
-const fileDates = getMergedDates(
-  { slug: faqPage.slug, collection: 'pages' },
-  faqPage.data.publishedDate,
-  faqPage.data.updatedDate
-);
-
-// Dynamic SEO data based on document content (フロントマター完全対応 + 自動日付)
+// Dynamic SEO data based on document content
 const seoData = {
   title: faqPage.data.title || 'よくある質問 - GoRakuDo',
   description:
@@ -65,9 +57,8 @@ const seoData = {
   articleType: 'faq',
   learningStage: 'all',
   searchIntent: 'informational',
-  // フロントマターの日付があれば使用、なければファイルシステムの日付を使用
-  publishedDate: fileDates.publishedDate,
-  modifiedDate: fileDates.updatedDate,
+  publishedDate: faqPage.data.publishedDate,
+  modifiedDate: faqPage.data.publishedDate,
   isDraft: faqPage.data.status === 'draft',
 };
 

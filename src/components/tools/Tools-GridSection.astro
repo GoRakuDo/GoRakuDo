@@ -1,17 +1,18 @@
 ---
 // ========== OPTIMIZED TOOLS GRID SECTION ==========
-// Tools-GridSection.astro - 最適化されたチE�EルグリチE��セクションコンポ�EネンチE
+// Tools-GridSection.astro - 最適化されたツールグリッドセクションコンポーネント
 
-// ========== SIMPLIFIED TYPE DEFINITIONS ==========
-export interface Tool {
+// ========== TYPE DEFINITIONS ==========
+interface Tool {
   readonly id: string;
   readonly name: string;
   readonly description: string;
   readonly iconUrl: string;
+  readonly color?: string;
   readonly link: string;
-  readonly animationType?: 'scale' | 'slide' | 'fade';
 }
 
+// ========== COMPONENT PROPS TYPE DEFINITIONS ==========
 export interface GridSectionProps {
   tools: Tool[];
   className?: string;
@@ -21,31 +22,20 @@ export interface GridSectionProps {
 }
 
 // ========== OPTIMIZED CONFIGURATION ==========
-const DEFAULT_ANIMATION = 'scale';
-const ANIMATION_CLASSES = {
-  scale: 'animation-scale',
-  slide: 'animation-slide',
-  fade: 'animation-fade',
-} as const;
+const DEFAULT_ANIMATION_CLASS = 'animation-scale';
 
 // ========== OPTIMIZED UTILITY FUNCTIONS ==========
-const getAnimationClass = (animationType?: string): string =>
-  ANIMATION_CLASSES[animationType as keyof typeof ANIMATION_CLASSES] ||
-  ANIMATION_CLASSES.scale;
+const getAnimationClass = (): string => {
+  return DEFAULT_ANIMATION_CLASS;
+};
 
 const validateTool = (tool: Tool): boolean =>
   !!(tool.id && tool.name && tool.description && tool.iconUrl && tool.link);
 
 // ========== OPTIMIZED DATA PROCESSING ==========
-const {
-  tools = [],
-  className = '',
-  title = 'Learning Tools',
-  description = 'Discover our comprehensive collection of language learning tools',
-  showTitle = false,
-} = Astro.props;
+const { tools = [], className = '' } = Astro.props;
 
-// チE�Eルの検証とフィルタリング
+// ツールの検証とフィルタリング
 const validTools: Tool[] = tools.filter(validateTool);
 ---
 
@@ -62,7 +52,7 @@ const validTools: Tool[] = tools.filter(validateTool);
             <article class='tool-card-wrapper'>
               <a
                 href={tool.link}
-                class={`tool-card glassmorphism glassmorphism-card group ${getAnimationClass(tool.animationType)}`}
+                class={`tool-card glassmorphism glassmorphism-card group ${getAnimationClass()}`}
                 aria-labelledby={`tool-name-${tool.id}`}
                 aria-describedby={`tool-desc-${tool.id}`}
                 aria-label={`Learn more about ${tool.name} tool`}
@@ -123,428 +113,3 @@ const validTools: Tool[] = tools.filter(validateTool);
     </div>
   </div>
 </section>
-
-<style is:global>
-  /* ========== CONFLICT-FREE COMPONENT STYLES ========== */
-
-  /* すべてのセレクタをコンポ�Eネント固有�Eクラスでスコープ化 */
-
-  /* ========== CSS変数定義 ========== */
-  :root {
-    --tool-icon-scale: 1.05;
-    --tool-arrow-translate: 4px;
-    --tool-card-scale: 1.02;
-    --tool-card-opacity: 0.9;
-  }
-
-  /* ========== グリッドレイアウト ========== */
-  .tools-grid {
-    display: grid;
-    justify-content: center;
-    align-items: start;
-    gap: 1.5rem;
-    grid-template-columns: 1fr;
-    width: 100%;
-    max-width: 75rem; /* 1200px */
-  }
-
-  @media (min-width: 640px) {
-    .tools-grid {
-      justify-content: center;
-      align-items: start;
-      gap: 1.5rem;
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .tools-grid {
-      justify-content: center;
-      align-items: start;
-      gap: 2rem;
-      grid-template-columns: repeat(3, minmax(20rem, 24rem)); /* 320px-288px */
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .tools-grid {
-      justify-content: center;
-      align-items: start;
-      gap: 2.5rem;
-      grid-template-columns: repeat(3, minmax(24rem, 28rem)); /* 384px-448px */
-      max-width: 75rem; /* 1200px */
-    }
-  }
-
-  /* ========== カード構造 ========== */
-  .tools-grid .tool-grid-item {
-    display: flex;
-    justify-self: center;
-    width: 100%;
-    max-width: 25rem; /* 400px */
-    height: 100%;
-  }
-
-  .tools-grid .tool-grid-item .tool-card-wrapper {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 100%;
-  }
-
-  .tools-grid .tool-grid-item .tool-card-frame {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    height: 100%;
-    min-height: 16.25rem; /* 260px */
-    max-height: 20rem; /* 320px */
-    padding: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .tools-grid .tool-grid-item .tool-card-frame {
-      padding: 1rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .tools-grid .tool-grid-item .tool-card-frame {
-      gap: 0.75rem;
-      padding: 1.25rem;
-    }
-  }
-
-  /* ========== ヘッダー ========== */
-  .tools-grid .tool-grid-item .tool-card-header {
-    margin-bottom: 0.375rem;
-    padding: 0;
-    flex-shrink: 0;
-  }
-
-  .tools-grid .tool-grid-item .tool-title-container {
-    display: flex;
-    align-items: center;
-    gap: 1em; /* 親要素のフォントサイズに相対 */
-    width: 100%;
-    min-height: 4rem;
-  }
-
-  @media (min-width: 640px) {
-    .tools-grid .tool-grid-item .tool-title-container {
-      gap: var(--spacing-lg);
-    }
-  }
-
-  @media (min-width: 768px) {
-    .tools-grid .tool-grid-item .tool-title-container {
-      gap: var(--spacing-lg);
-    }
-  }
-
-  /* ========== アイコン ========== */
-  .tools-grid .tool-grid-item .tool-icon {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: visible;
-    width: 56px; /* 固定サイズ - PX単位 */
-    height: 56px; /* 固定サイズ - PX単位 */
-    border: none;
-    border-radius: 16px; /* 固定サイズ - PX単位 */
-    background: transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0;
-    contain: layout style;
-    box-shadow: none;
-    filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
-    will-change: transform;
-  }
-
-  .tool-icon-image:not([src]),
-  .tool-icon-image[src=''] {
-    display: none;
-  }
-
-  .tools-grid .tool-grid-item .tool-icon-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 4px; /* 固定サイズ - PX単位 */
-    transition: transform var(--transition-speed) var(--transition-ease);
-  }
-
-  .tool-card:hover .tool-icon-image {
-    transform: scale(var(--tool-icon-scale));
-  }
-
-  .tool-icon::before {
-    display: none;
-    font-size: 1.25rem;
-    content: '🔧';
-  }
-
-  .tool-icon:has([src=''])::before,
-  .tool-icon:has(:not([src]))::before {
-    display: block;
-  }
-
-  @media (min-width: 640px) {
-    .tools-grid .tool-grid-item .tool-icon {
-      width: 56px; /* 固定サイズ - PX単位 */
-      height: 56px; /* 固定サイズ - PX単位 */
-    }
-  }
-
-  /* ========== タイトル ========== */
-  .tools-grid .tool-grid-item .tool-name {
-    flex: 1;
-    margin: 0;
-    color: oklch(98% 0 0deg);
-    font-size: 1.685rem; /* ルート要素に相対 - REM単位 */
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: -0.025em;
-  }
-
-  @media (min-width: 640px) {
-    .tools-grid .tool-grid-item .tool-name {
-      font-size: 1.875rem; /* ルート要素に相対 - REM単位 */
-    }
-  }
-
-  @media (min-width: 768px) {
-    .tools-grid .tool-grid-item .tool-name {
-      font-size: 1.5rem; /* ルート要素に相対 - REM単位 */
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .tools-grid .tool-grid-item .tool-name {
-      font-size: 1.5rem; /* ルート要素に相対 - REM単位 */
-    }
-  }
-
-  /* ========== ボディ ========== */
-  .tools-grid .tool-grid-item .tool-card-body {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-height: 0;
-    padding-bottom: 1rem;
-  }
-
-  .tools-grid .tool-grid-item .tool-description-card {
-    display: -webkit-box;
-    overflow: hidden;
-    margin: 0;
-    color: oklch(88% 0 0deg);
-    font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
-    font-weight: 400;
-    line-height: 1.5;
-    flex-grow: 1;
-    flex-shrink: 1;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-  }
-
-  @media (min-width: 640px) {
-    .tools-grid .tool-grid-item .tool-description-card {
-      font-size: var(--fs-base);
-    }
-  }
-
-  /* ========== フッター ========== */
-  .tools-grid .tool-grid-item .tool-card-footer {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid oklch(100% 0 0deg / 0.2);
-    flex-shrink: 0;
-  }
-
-  .tool-card-footer::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 1px;
-    content: '';
-    background: linear-gradient(
-      90deg,
-      transparent,
-      oklch(100% 0 0deg / 0.2),
-      transparent
-    );
-  }
-
-  .tools-grid .tool-grid-item .tool-cta-text {
-    color: oklch(75% 0.25 280deg);
-    font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
-    font-weight: 600;
-    letter-spacing: 0.025em;
-  }
-
-  .tools-grid .tool-grid-item .tool-arrow {
-    width: 18px; /* 固定サイズ - PX単位 */
-    height: 18px; /* 固定サイズ - PX単位 */
-    color: oklch(85% 0.2 280deg);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @media (min-width: 768px) {
-    .tools-grid .tool-grid-item .tool-card-footer {
-      padding-top: 0.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .tools-grid .tool-grid-item .tool-card-footer {
-      padding-top: 0.75rem;
-    }
-  }
-
-  /* ========== インタラクション ========== */
-  .group:hover .tool-arrow {
-    transform: translateX(var(--tool-arrow-translate));
-  }
-
-  .animation-scale:hover {
-    transform: scale(var(--tool-card-scale));
-  }
-
-  .animation-slide:hover {
-    transform: translateX(var(--tool-arrow-translate));
-  }
-
-  .animation-fade:hover {
-    opacity: var(--tool-card-opacity);
-  }
-
-  /* ========== カードホバーエフェクト ========== */
-  .tool-card {
-    overflow: hidden;
-    border-radius: 1rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .tool-card:hover {
-    box-shadow:
-      0 20px 40px -10px oklch(0% 0 0deg / 0.3),
-      0 8px 16px -4px oklch(0% 0 0deg / 0.15);
-    transform: translateY(-6px);
-  }
-
-  .tool-card:hover .tool-icon {
-    background: transparent;
-    box-shadow: none;
-    filter: drop-shadow(0 6px 12px oklch(0% 0 0deg / 0.4));
-    transform: scale(1.05);
-  }
-
-  /* ========== アクセシビリチE�� ========== */
-
-  /* Focus management - 50% transparent outline */
-  .tool-card:focus-visible {
-    outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
-    outline-offset: 2px;
-  }
-
-  .tool-card:hover .tool-name {
-    color: oklch(100% 0 0deg);
-  }
-
-  .tool-card:hover .tool-description-card {
-    color: oklch(90% 0 0deg);
-  }
-
-  .tool-card:hover .tool-cta-text {
-    color: oklch(75% 0.22 280deg);
-  }
-
-  .tool-card:hover .tool-arrow {
-    color: oklch(100% 0 0deg);
-  }
-
-  @media (prefers-contrast: high) {
-    .tools-grid .tool-grid-item .tool-name {
-      color: oklch(100% 0 0deg);
-    }
-
-    .tools-grid .tool-grid-item .tool-description-card {
-      color: oklch(95% 0 0deg);
-    }
-
-    .tools-grid .tool-grid-item .tool-cta-text {
-      color: oklch(80% 0.25 280deg);
-    }
-
-    .tools-grid .tool-grid-item .tool-arrow {
-      color: oklch(100% 0 0deg);
-    }
-
-    .tools-grid .tool-grid-item .tool-title-container {
-      padding-bottom: var(--spacing-sm);
-      border-bottom: 1px solid oklch(100% 0 0deg / 0.3);
-    }
-  }
-
-  /* ========== レスポンシブ最適化 ========== */
-  @media (max-width: 639px) {
-    .tools-grid {
-      gap: 1rem;
-      padding: 0 0.5rem;
-    }
-
-    .tools-grid .tool-grid-item .tool-card-frame {
-      min-height: 15rem; /* 240px - REM単位 */
-      max-height: 19rem; /* 304px - REM単位 */
-    }
-
-    .tools-grid .tool-grid-item .tool-icon {
-      width: 48px; /* 固定サイズ - PX単位 */
-      height: 48px; /* 固定サイズ - PX単位 */
-    }
-
-    .tools-grid .tool-grid-item .tool-name {
-      font-size: 1.5rem; /* ルート要素に相対 - REM単位 */
-    }
-
-    .tools-grid .tool-grid-item .tool-description-card {
-      -webkit-line-clamp: 3;
-      font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
-    }
-  }
-
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .tools-grid {
-      padding: 0 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .tools-grid {
-      padding: 0 2rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .tool-card,
-    .tool-card:hover .tool-icon-image,
-    .animation-scale:hover,
-    .animation-slide:hover,
-    .animation-fade:hover,
-    .group:hover .tool-arrow {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-  }
-</style>

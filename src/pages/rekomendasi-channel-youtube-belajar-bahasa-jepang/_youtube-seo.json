@@ -1,0 +1,231 @@
+{
+  "seoData": {
+    "title": "Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik 2025 | Panduan Lengkap",
+    "description": "Daftar lengkap 50+ channel YouTube terbaik untuk belajar bahasa Jepang dari pemula hingga mahir. Rekomendasi channel berkualitas tinggi dengan konten pembelajaran yang efektif, terorganisir berdasarkan level kesulitan.",
+    "keywords": [
+      "channel youtube belajar bahasa jepang",
+      "rekomendasi youtube jepang 2025",
+      "belajar bahasa jepang online gratis",
+      "tutorial bahasa jepang youtube",
+      "JLPT preparation youtube",
+      "nihongo learning channels",
+      "japanese language youtube",
+      "youtube channels japanese learning",
+      "pembelajaran bahasa jepang online",
+      "kursus bahasa jepang gratis youtube",
+      "channel jepang pemula",
+      "youtube japanese immersion",
+      "belajar jepang otodidak",
+      "channel jepang native speaker",
+      "youtube japanese podcast",
+      "media jepang youtube",
+      "news jepang youtube",
+      "anime jepang youtube",
+      "drama jepang youtube",
+      "music jepang youtube"
+    ],
+    "pageType": "article",
+    "author": "GoRakuDo Team",
+    "lang": "id"
+  },
+  "structuredData": {
+    "article": {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik 2025",
+      "description": "Daftar lengkap 50+ channel YouTube terbaik untuk belajar bahasa Jepang dari pemula hingga mahir dengan konten pembelajaran yang efektif.",
+      "author": {
+        "@type": "Organization",
+        "name": "GoRakuDo Team",
+        "url": "https://gorakudo.org"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GoRakuDo",
+        "url": "https://gorakudo.org",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://gorakudo.org/icon/icon-192x192.png",
+          "width": 192,
+          "height": 192
+        }
+      },
+      "datePublished": "2024-01-01T00:00:00+07:00",
+      "dateModified": "2025-01-01T00:00:00+07:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang"
+      },
+      "articleSection": "Japanese Learning Resources",
+      "keywords": "channel youtube belajar bahasa jepang, rekomendasi youtube jepang, belajar bahasa jepang online",
+      "inLanguage": "id",
+      "isAccessibleForFree": true,
+      "educationalLevel": "Beginner to Advanced",
+      "learningResourceType": "Collection",
+      "teaches": "Japanese Language",
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "student",
+        "audienceType": "Japanese language learners"
+      }
+    },
+    "collectionPage": {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Rekomendasi Channel YouTube Belajar Bahasa Jepang",
+      "description": "Koleksi lengkap channel YouTube terbaik untuk pembelajaran bahasa Jepang",
+      "url": "https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang",
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "Channel YouTube Belajar Bahasa Jepang",
+        "description": "Daftar channel YouTube terorganisir berdasarkan level kesulitan",
+        "numberOfItems": 50,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Pemula (Level TK/PAUD)",
+            "description": "Channel untuk pemula yang baru mulai belajar bahasa Jepang",
+            "item": {
+              "@type": "ItemList",
+              "name": "Channel Pemula TK/PAUD",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Comprehensible Japanese",
+                  "url": "https://www.youtube.com/@cijapanese"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "いろいろな日本語",
+                  "url": "https://www.youtube.com/@iroironanihongo"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Learning Japanese with SakuraTengu",
+                  "url": "https://www.youtube.com/@LearningJapaneseWithYuru"
+                }
+              ]
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Pemula (Level SD Kelas 1-3)",
+            "description": "Channel untuk pemula dengan konten dasar bahasa Jepang",
+            "item": {
+              "@type": "ItemList",
+              "name": "Channel Pemula SD Kelas 1-3",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Inaden",
+                  "url": "https://www.youtube.com/@InadenJapanese"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Jiro, just Japanese",
+                  "url": "https://www.youtube.com/@JiroJapanese"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "INARI JAPANESE",
+                  "url": "https://www.youtube.com/@inarijapanese/videos"
+                }
+              ]
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Native Level+",
+            "description": "Channel untuk level native dengan konten advanced",
+            "item": {
+              "@type": "ItemList",
+              "name": "Channel Native Level+",
+              "itemListElement": []
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Podcast & Audio Learning",
+            "description": "Channel podcast dan audio untuk pembelajaran bahasa Jepang",
+            "item": {
+              "@type": "ItemList",
+              "name": "Channel Podcast & Audio",
+              "itemListElement": []
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Media & TV News",
+            "description": "Channel media dan berita Jepang untuk pembelajaran",
+            "item": {
+              "@type": "ItemList",
+              "name": "Channel Media & TV News",
+              "itemListElement": []
+            }
+          }
+        ]
+      }
+    },
+    "faq": {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Channel YouTube mana yang terbaik untuk pemula belajar bahasa Jepang?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Untuk pemula, kami merekomendasikan channel seperti 'Comprehensible Japanese', 'いろいろな日本語', dan 'Learning Japanese with SakuraTengu' yang menyediakan konten pembelajaran yang mudah dipahami dengan penjelasan yang jelas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah ada channel YouTube untuk persiapan JLPT?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, beberapa channel dalam daftar ini menyediakan konten khusus untuk persiapan JLPT, termasuk latihan soal, strategi ujian, dan materi pembelajaran yang disesuaikan dengan level N5 hingga N1."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara memilih channel YouTube yang sesuai dengan level kemampuan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kami telah mengorganisir channel berdasarkan level kesulitan, mulai dari pemula (TK/PAUD) hingga native level+. Pilih channel yang sesuai dengan level kemampuan Anda saat ini dan tingkatkan secara bertahap."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah semua channel YouTube dalam daftar ini gratis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, semua channel YouTube yang kami rekomendasikan menyediakan konten pembelajaran bahasa Jepang secara gratis. Beberapa channel mungkin menawarkan konten premium tambahan, tetapi konten dasar tetap dapat diakses tanpa biaya."
+          }
+        }
+      ]
+    }
+  },
+  "breadcrumbData": {
+    "items": [
+      {
+        "name": "Beranda",
+        "url": "https://gorakudo.org/"
+      },
+      {
+        "name": "Rekomendasi Channel YouTube",
+        "url": "https://gorakudo.org/rekomendasi-channel-youtube-belajar-bahasa-jepang"
+      }
+    ]
+  }
+}

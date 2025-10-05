@@ -10,7 +10,6 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
-import { getMergedDates } from '../../../utils/content/cc-Auto-FileDates';
 
 // Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
@@ -114,13 +113,6 @@ const tocHeadings = headings.filter(
 const resolvedPath = { path: resolvePath('tool-articles', post.slug) };
 const collectionMetadata = getCollectionInfo('tool-articles');
 
-// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
-const fileDates = getMergedDates(
-  { slug: post.slug, collection: 'tool-articles' },
-  post.data.publishedDate,
-  post.data.updatedDate
-);
-
 // Dynamic SEO data based on tool article content
 const seoData = {
   title: post.data.title || `Tool Article - ${toolName}`,
@@ -131,8 +123,8 @@ const seoData = {
   articleType: 'tool-guide',
   learningStage: post.data.difficulty || 'intermediate',
   searchIntent: 'informational',
-  publishedDate: fileDates.publishedDate,
-  modifiedDate: fileDates.updatedDate,
+  publishedDate: post.data.publishedDate,
+  modifiedDate: post.data.publishedDate,
   isDraft: post.data.isDraft || false,
 };
 

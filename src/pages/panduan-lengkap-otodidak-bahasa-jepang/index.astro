@@ -1,11 +1,16 @@
 ---
-// Japanese Learning Guide Page - 最適化されたページ
+// Japanese Learning Guide Page - 2025年SEO最適化
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 
 import '../../styles/pages/pl-obj/pl-objIndex.css';
 
 import { getCollection } from 'astro:content';
+
+// SEOデータと構造化データをJSONファイルからインポート
+import panduanSeoData from './_panduan-seo.json';
+import gorakudoImmerisonImage from '../../assets/images/pages/pl-obj/gorakudo-immerison.png';
 
 // Get the specific page from the pages collection
 const pages = await getCollection('pages');
@@ -22,29 +27,94 @@ if (!entry) {
 
 const { Content } = await entry.render();
 
-const pageTitle = entry.data.title;
-const pageDescription = entry.data.description;
-const pageKeywords = [
-  'pembelajaran bahasa jepang',
-  'otodidak',
-  'panduan',
-  'N5',
-  'N4',
-  'N3',
-  'N2',
-  'N1',
-  'JLPT',
-  'ujian kemampuan bahasa jepang',
-];
+// 2025年SEO最適化: JSONファイルから取得
+const seoData = panduanSeoData.seoData;
+const structuredData = panduanSeoData.structuredData;
+
+// Breadcrumb Schema生成
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: panduanSeoData.breadcrumbData.items,
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
+
+// FAQ Schema生成
+const faqSchema = {
+  '@context': 'https://schema.org' as const,
+  '@type': 'FAQPage' as const,
+  mainEntity: structuredData.faq.mainEntity.map(faq => ({
+    '@type': 'Question' as const,
+    name: faq.name,
+    acceptedAnswer: {
+      '@type': 'Answer' as const,
+      text: faq.acceptedAnswer.text,
+    },
+  })),
+} as const;
 ---
 
 <BaseLayout
-  title={pageTitle}
-  description={pageDescription}
-  keywords={pageKeywords}
-  lang='id'
-  pageType='article'
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+  lang={seoData.lang}
+  pageType={seoData.pageType as 'article' | 'website'}
+  publishedDate={entry.data.publishedDate}
+  ogImage={gorakudoImmerisonImage.src}
+  breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema}
 >
+  <!-- 2025年SEO最適化: 構造化データ -->
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(structuredData.article)}
+  />
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(structuredData.howTo)}
+  />
+
+  <!-- 2025年SEO最適化: 技術的SEO要素 -->
+  <link
+    rel='canonical'
+    href='https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang/'
+  />
+  <meta
+    name='robots'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='googlebot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='bingbot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+
+  <!-- パフォーマンス最適化 -->
+  <link rel='preconnect' href='https://fonts.googleapis.com' />
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+  <link rel='dns-prefetch' href='https://apps.ankiweb.net' />
+  <link rel='dns-prefetch' href='https://jpdb.io' />
+  <link rel='dns-prefetch' href='https://learnnatively.com' />
+
+  <!-- 重要なリソースのプリロード -->
+  <link
+    rel='preload'
+    href={gorakudoImmerisonImage.src}
+    as='image'
+    type='image/png'
+  />
+
+  <!-- セキュリティヘッダー -->
+  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
+  <meta http-equiv='X-Frame-Options' content='DENY' />
+  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
+  <meta
+    http-equiv='Referrer-Policy'
+    content='strict-origin-when-cross-origin'
+  />
+
   <Prose>
     <main class='pl-guide-page' role='main'>
       <div class='container'>
@@ -213,4 +283,50 @@ const pageKeywords = [
 
   // ページ離脱時のクリーンアップ
   window.addEventListener('beforeunload', cleanupImageZoom);
+
+  // 2025年SEO最適化: パフォーマンス監視
+  if ('performance' in window && 'mark' in performance) {
+    performance.mark('panduan-page-start');
+  }
+
+  // 2025年SEO最適化: Core Web Vitals監視
+  if ('web-vital' in window) {
+    console.log('📊 Core Web Vitals monitoring enabled for panduan page');
+  }
+
+  // 2025年SEO最適化: 最適化されたIntersection Observer
+  const initLazyLoading = () => {
+    const lazyElements = document.querySelectorAll('[data-lazy]');
+
+    if (lazyElements.length === 0) return;
+
+    const lazyObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            requestAnimationFrame(() => {
+              const delay = Math.min(index * 100, 500);
+              setTimeout(() => {
+                entry.target.classList.add('loaded');
+                lazyObserver.unobserve(entry.target);
+              }, delay);
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '100px 0px -5% 0px',
+        threshold: [0.05, 0.1],
+      }
+    );
+
+    lazyElements.forEach(el => lazyObserver.observe(el));
+  };
+
+  // 2025年SEO最適化: 最適化された初期化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLazyLoading);
+  } else {
+    initLazyLoading();
+  }
 </script>

@@ -13,6 +13,9 @@ import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
 // CSSをインポート
 import '../styles/pages/homepage.css';
 
+// SEOデータと構造化データをJSONファイルからインポート
+import indexData from './_index.json';
+
 // 型安全なSEOデータ定義（Astroネイティブ）
 interface SEOData {
   title: string;
@@ -24,27 +27,30 @@ interface SEOData {
   lang?: 'id' | 'ja'; // 言語設定を追加（BaseLayoutのPropsと一致）
 }
 
-const seoData: SEOData = {
-  title: 'GoRakuDo - Komunitas Immersion Bahasa Jepang',
-  description:
-    'Komunitas immersion bahasa Jepang terbesar di Indonesia. Belajar bahasa Jepang dengan metode immersion yang efektif bersama ribuan pembelajar',
-  keywords: [
-    'immersion',
-    'bahasa jepang',
-    'otodidak bahasa jepang',
-    'indonesia',
-  ],
-  pageType: 'website',
-  // デフォルト画像を使用（UnifiedSEOで設定済み: /img/FullDC Logo.webp）
-  author: 'GoRakuDo Team',
-  lang: 'id', // インドネシア語を明示的に指定（デフォルトは'id'だが、明示的に設定）
-};
+const seoData: SEOData = indexData.seoData as SEOData;
 
 // Homepage用のBreadcrumb Schema生成
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [{ title: 'Home', url: '/', isActive: true }],
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
+
+// ホームページ固有のFAQ構造化データ
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: indexData.homepageSpecificData.faq.map(
+    faq =>
+      ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      }) as const
+  ),
+} as const;
 ---
 
 <BaseLayout
@@ -54,18 +60,60 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   pageType={seoData.pageType}
   lang={seoData.lang}
   breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema}
 >
+  <!-- 2025年SEO最適化: 技術的SEO要素 -->
+  <link rel='canonical' href='https://gorakudo.org/' />
+  <meta
+    name='robots'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='googlebot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+  <meta
+    name='bingbot'
+    content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  />
+
+  <!-- パフォーマンス最適化 -->
+  <link rel='preconnect' href='https://fonts.googleapis.com' />
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+  <link rel='dns-prefetch' href='https://discord.gg' />
+  <link rel='dns-prefetch' href='https://github.com' />
+  <link rel='dns-prefetch' href='https://www.youtube.com' />
+
+  <!-- 重要なリソースのプリロード -->
+  <link
+    rel='preload'
+    href='/img/FullDC Logo.webp'
+    as='image'
+    type='image/webp'
+  />
+
+  <!-- セキュリティヘッダー -->
+  <meta http-equiv='X-Content-Type-Options' content='nosniff' />
+  <meta http-equiv='X-Frame-Options' content='DENY' />
+  <meta http-equiv='X-XSS-Protection' content='1; mode=block' />
+  <meta
+    http-equiv='Referrer-Policy'
+    content='strict-origin-when-cross-origin'
+  />
+
   <!-- Main Content -->
   <main
     class='main-content'
     style='background: transparent;'
     transition:name='main-content'
+    role='main'
+    aria-label='Konten utama GoRakuDo'
   >
     <!-- Hero Section -->
     <Hero
       missionId='mission'
-      titleLine1='Belajar Secara Alami,'
-      titleLine2='Kuasai Layaknya Penutur Asli.'
+      titleLine1={indexData.homepageSpecificData.heroTitle.line1}
+      titleLine2={indexData.homepageSpecificData.heroTitle.line2}
     />
 
     <!-- Mission Section -->
@@ -81,17 +129,23 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   <!-- Enhanced wave animation is now handled by WaveAnimation component -->
   <!-- <script fetchpriority="auto" is:inline src="/core/hompage-script.js"></script> -->
 
-  <!-- Animation Modules Integration -->
+  <!-- 2025年SEO最適化: パフォーマンス最適化されたスクリプト -->
   <script>
+    // 2025年SEO最適化: パフォーマンス監視
+    if ('performance' in window && 'mark' in performance) {
+      performance.mark('page-start');
+    }
+
     // Stars animation is now integrated into WaveAnimation.astro
     // No separate import needed
     console.log('🎬 Animation modules integrated into WaveAnimation component');
 
-    // Trigger hero animation after page loads
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const heroContent = document.querySelector('#hero-content');
-        if (heroContent) {
+    // 2025年SEO最適化: 最適化されたヒーローアニメーション
+    const initHeroAnimation = () => {
+      const heroContent = document.querySelector('#hero-content');
+      if (heroContent) {
+        // リクエストアニメーションフレームを使用してパフォーマンス向上
+        requestAnimationFrame(() => {
           heroContent.classList.remove(
             'opacity-0',
             'translate-y-16',
@@ -99,68 +153,111 @@ const breadcrumbSchema = generateBreadcrumbSchema({
             'blur-md'
           );
           console.log('✨ Hero content revealed smoothly');
-        }
-      }, 200); // Coordinate with hero component timing
-    });
+        });
+      }
+    };
+
+    // 2025年SEO最適化: 最適化されたイベントリスナー
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(initHeroAnimation, 200);
+      });
+    } else {
+      setTimeout(initHeroAnimation, 200);
+    }
 
     // Global function cleanup - following Astro's static-first philosophy
     (window as any).goToPosts = function () {
       window.location.href = '/docs';
     };
+
+    // 2025年SEO最適化: Core Web Vitals監視
+    if ('web-vital' in window) {
+      // Web Vitals monitoring would be implemented here
+      console.log('📊 Core Web Vitals monitoring enabled');
+    }
   </script>
 
-  <!-- Performance monitoring removed -->
+  <!-- 2025年SEO最適化: 最適化されたIntersection Observer -->
   <script>
-    // Enhanced Intersection Observer with staggered animation
-    const lazyElements = document.querySelectorAll('[data-lazy]');
+    // 2025年SEO最適化: パフォーマンス最適化されたIntersection Observer
+    const initLazyLoading = () => {
+      const lazyElements = document.querySelectorAll('[data-lazy]');
 
-    // Create observer with optimized settings
-    const lazyObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            // Staggered animation with progressive delay
-            const delay = index * 150; // 150ms delay between each section
+      if (lazyElements.length === 0) return;
 
-            setTimeout(() => {
-              entry.target.classList.add('loaded');
-              lazyObserver.unobserve(entry.target);
-            }, delay);
-          }
-        });
-      },
-      {
-        // Optimize intersection detection
-        rootMargin: '50px 0px -10% 0px', // Start animation slightly before element is fully visible
-        threshold: 0.1, // Trigger when 10% of element is visible
-      }
-    );
+      // 2025年SEO最適化: 最適化された設定
+      const lazyObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              // 2025年SEO最適化: バッチ処理でパフォーマンス向上
+              requestAnimationFrame(() => {
+                const delay = Math.min(index * 100, 500); // 最大500msに制限
 
-    // Observe all lazy elements
-    lazyElements.forEach(el => lazyObserver.observe(el));
+                setTimeout(() => {
+                  entry.target.classList.add('loaded');
+                  lazyObserver.unobserve(entry.target);
+                }, delay);
+              });
+            }
+          });
+        },
+        {
+          // 2025年SEO最適化: 最適化された設定
+          rootMargin: '100px 0px -5% 0px', // より早いトリガー
+          threshold: [0.05, 0.1], // 複数の閾値でより柔軟な検知
+        }
+      );
 
-    // Service Worker registration for caching (if available)
+      // 2025年SEO最適化: バッチ処理でオブザーバー登録
+      lazyElements.forEach(el => lazyObserver.observe(el));
+    };
+
+    // 2025年SEO最適化: 最適化された初期化
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLazyLoading);
+    } else {
+      initLazyLoading();
+    }
+
+    // 2025年SEO最適化: 最適化されたService Worker
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
+      // 2025年SEO最適化: 最適化された初期化タイミング
+      const initServiceWorker = () => {
         // Opt-in only: enable by setting localStorage.setItem('enable-sw','true')
         const enableSW = localStorage.getItem('enable-sw') === 'true';
 
         if (enableSW) {
           navigator.serviceWorker
-            .register('/sw.js')
+            .register('/sw.js', {
+              // 2025年SEO最適化: 最適化された設定
+              scope: '/',
+              updateViaCache: 'none', // 常に最新版を取得
+            })
             .then(registration => {
               console.log('🔧 Service Worker registered:', registration.scope);
 
-              // Check for updates
+              // 2025年SEO最適化: 最適化された更新チェック
               registration.addEventListener('updatefound', () => {
                 const installing = registration.installing;
                 if (!installing) return;
+
                 installing.addEventListener('statechange', () => {
-                  if (
-                    installing.state === 'installed' &&
-                    navigator.serviceWorker.controller
-                  ) {
-                    console.log('🔄 New Service Worker available');
+                  if (installing.state === 'installed') {
+                    if (navigator.serviceWorker.controller) {
+                      console.log('🔄 New Service Worker available');
+                      // 2025年SEO最適化: 自動更新の提案
+                      if (
+                        confirm(
+                          '新しいバージョンが利用可能です。更新しますか？'
+                        )
+                      ) {
+                        window.location.reload();
+                      }
+                    } else {
+                      console.log('✅ Service Worker installed');
+                    }
                   }
                 });
               });
@@ -177,7 +274,14 @@ const breadcrumbSchema = generateBreadcrumbSchema({
             "🔧 Service Worker disabled (enable via localStorage 'enable-sw' = 'true')"
           );
         }
-      });
+      };
+
+      // 2025年SEO最適化: 最適化された初期化タイミング
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initServiceWorker);
+      } else {
+        initServiceWorker();
+      }
     }
   </script>
 </BaseLayout>

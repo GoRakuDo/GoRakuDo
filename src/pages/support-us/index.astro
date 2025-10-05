@@ -3,7 +3,6 @@ import { getEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
-import { getMergedDates } from '../../utils/content/cc-Auto-FileDates';
 
 // Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
@@ -30,13 +29,6 @@ const tocHeadings = headings.filter(
 const resolvedPath = { path: resolvePath('pages', post.slug) };
 const collectionMetadata = getCollectionInfo('pages');
 
-// ファイルの作成日・更新日を自動取得（ユーティリティ使用）
-const fileDates = getMergedDates(
-  { slug: post.slug, collection: 'pages' },
-  post.data.publishedDate,
-  post.data.updatedDate
-);
-
 const seoData = {
   title: post.data.title || `Dukung Kami - GoRakuDo`,
   description:
@@ -46,8 +38,8 @@ const seoData = {
   articleType: 'guide',
   learningStage: 'beginner',
   searchIntent: 'informational',
-  publishedDate: fileDates.publishedDate,
-  modifiedDate: fileDates.updatedDate,
+  publishedDate: post.data.publishedDate,
+  modifiedDate: post.data.publishedDate,
   isDraft: false,
 };
 

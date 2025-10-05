@@ -35,8 +35,16 @@ export default defineConfig({
     placeholder: 'blur',
   },
 
-  // MDX support
-  integrations: [mdx()],
+  // MDX support and Sitemap generation
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: page => !page.includes('404'),
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+    }),
+  ],
 
   // Vite optimization - Astro Native Best Practice
   vite: {

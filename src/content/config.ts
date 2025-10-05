@@ -23,7 +23,7 @@ const docsCollection = defineCollection({
   schema: z.object({
     title: z.string().min(1).max(LIMITS.TITLE_MAX),
     description: z.string().min(LIMITS.DESCRIPTION_MIN).max(LIMITS.DESCRIPTION_MAX),
-    publishedDate: z.string().datetime(),
+    publishedDate: z.string(),
     author: z.string().max(LIMITS.AUTHOR_MAX).default(DEFAULTS.AUTHOR),
     emoji: z.string().regex(/^[\p{Emoji}\p{Emoji_Modifier}\p{Emoji_Component}\p{Emoji_Presentation}\p{Extended_Pictographic}]+$/u).optional(),
     categories: z.array(z.string().max(LIMITS.CATEGORY_MAX)).min(1).max(LIMITS.CATEGORIES_MAX).default(['general']),
@@ -54,7 +54,7 @@ const pagesCollection = defineCollection({
   schema: z.object({
     title: z.string().min(1).max(LIMITS.TITLE_MAX),
     description: z.string().min(LIMITS.DESCRIPTION_MIN).max(LIMITS.DESCRIPTION_MAX),
-    publishedDate: z.string().datetime(),
+    publishedDate: z.string(),
     author: z.string().max(LIMITS.AUTHOR_MAX).default(DEFAULTS.AUTHOR),
     status: z.enum(['published', 'draft', 'archived']).default(DEFAULTS.STATUS),
   }),
@@ -66,8 +66,7 @@ const toolArticlesCollection = defineCollection({
   schema: z.object({
     title: z.string().min(1).max(LIMITS.TITLE_MAX),
     description: z.string().min(LIMITS.DESCRIPTION_MIN).max(LIMITS.DESCRIPTION_MAX),
-    publishedDate: z.string().datetime(),
-    updatedDate: z.string().datetime().optional(),
+    publishedDate: z.string(),
     author: z.string().max(LIMITS.AUTHOR_MAX).default(DEFAULTS.AUTHOR),
     toolName: z.string().min(1).max(50),
     icon: z.string().regex(/^\/[a-zA-Z0-9/\-_.]+\.(png|jpg|jpeg|svg|webp)$/).optional(),

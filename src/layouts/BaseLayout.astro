@@ -29,6 +29,19 @@ export interface Props {
       item: string;
     }>;
   };
+  // FAQ Schema統合
+  faqSchema?: {
+    '@context': 'https://schema.org';
+    '@type': 'FAQPage';
+    mainEntity: Array<{
+      '@type': 'Question';
+      name: string;
+      acceptedAnswer: {
+        '@type': 'Answer';
+        text: string;
+      };
+    }>;
+  };
 }
 
 // propsを受け取ります
@@ -41,6 +54,7 @@ const {
   lang,
   keywords,
   breadcrumbSchema,
+  faqSchema,
 } = Astro.props;
 ---
 
@@ -58,6 +72,7 @@ const {
       publishedDate={publishedDate}
       lang={lang}
       breadcrumbSchema={breadcrumbSchema}
+      faqSchema={faqSchema}
     />
 
     <!-- スタイルシートの<link>タグは不要です。上のimport文がその役割を果たします。 -->

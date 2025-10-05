@@ -441,6 +441,65 @@
       min-height: 320px;
     }
   }
+
+  /* ========== カードホバーエフェクト ========== */
+  &:hover {
+    box-shadow:
+      0 20px 40px -10px oklch(0% 0 0deg / 0.3),
+      0 8px 16px -4px oklch(0% 0 0deg / 0.15);
+    transform: translateY(-6px);
+
+    .tool-icon {
+      background: transparent;
+      box-shadow: none;
+      filter: drop-shadow(0 6px 12px oklch(0% 0 0deg / 0.4));
+      transform: scale(1.05);
+    }
+
+    .tool-name {
+      color: oklch(100% 0 0deg);
+    }
+
+    .tool-description-card {
+      color: oklch(90% 0 0deg);
+    }
+
+    .tool-cta-text {
+      color: oklch(75% 0.22 280deg);
+    }
+
+    .tool-arrow {
+      color: oklch(100% 0 0deg);
+    }
+  }
+
+  /* ========== アクセシビリティ ========== */
+  &:focus-visible {
+    outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+    outline-offset: 2px;
+  }
+}
+
+/* ========== アニメーションクラス ========== */
+.animation-scale:hover {
+  transform: scale(var(--tool-card-scale));
+}
+
+.animation-slide:hover {
+  transform: translateX(var(--tool-arrow-translate));
+}
+
+.animation-fade:hover {
+  opacity: var(--tool-card-opacity);
+}
+
+/* ========== インタラクション ========== */
+.group:hover .tool-arrow {
+  transform: translateX(var(--tool-arrow-translate));
+}
+
+.tool-card:hover .tool-icon-image {
+  transform: scale(var(--tool-icon-scale));
 }
 
 /* Performance optimization for hover states */
@@ -468,6 +527,82 @@
 @media (min-width: 1280px) {
   .container {
     padding-inline: var(--spacing-3xl);
+  }
+}
+
+/* ========== レスポンシブ最適化 ========== */
+@media (max-width: 639px) {
+  .tools-grid {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .tool-grid-item .tool-card-frame {
+    min-height: 15rem; /* 240px - REM単位 */
+    max-height: 19rem; /* 304px - REM単位 */
+  }
+
+  .tool-grid-item .tool-icon {
+    width: 48px; /* 固定サイズ - PX単位 */
+    height: 48px; /* 固定サイズ - PX単位 */
+  }
+
+  .tool-grid-item .tool-name {
+    font-size: 1.5rem; /* ルート要素に相対 - REM単位 */
+  }
+
+  .tool-grid-item .tool-description-card {
+    -webkit-line-clamp: 3;
+    font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tools-grid {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tools-grid {
+    padding: 0 2rem;
+  }
+}
+
+/* ========== アクセシビリティ ========== */
+@media (prefers-contrast: high) {
+  .tool-grid-item .tool-name {
+    color: oklch(100% 0 0deg);
+  }
+
+  .tool-grid-item .tool-description-card {
+    color: oklch(95% 0 0deg);
+  }
+
+  .tool-grid-item .tool-cta-text {
+    color: oklch(80% 0.25 280deg);
+  }
+
+  .tool-grid-item .tool-arrow {
+    color: oklch(100% 0 0deg);
+  }
+
+  .tool-grid-item .tool-title-container {
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid oklch(100% 0 0deg / 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-card,
+  .tool-card:hover .tool-icon-image,
+  .animation-scale:hover,
+  .animation-slide:hover,
+  .animation-fade:hover,
+  .group:hover .tool-arrow {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
@@ -530,31 +665,6 @@
 }
 
 /* ========== TOOLS GRID SECTION COMPONENT STYLES ========== */
-
-.tool-icon.empty::before {
-  display: block;
-}
-
-.tool-card:hover .tool-icon-image {
-  transform: scale(var(--tool-icon-scale));
-}
-
-/* ========== インタラクション ========== */
-.animation-scale:hover {
-  transform: scale(var(--tool-card-scale));
-}
-
-.animation-slide:hover {
-  transform: translateX(var(--tool-arrow-translate));
-}
-
-.animation-fade:hover {
-  opacity: var(--tool-card-opacity);
-}
-
-.group:hover .tool-arrow {
-  transform: translateX(var(--tool-arrow-translate));
-}
 
 .tool-icon-anki {
   background-color: var(--clr-accent);

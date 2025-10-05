@@ -51,7 +51,6 @@ mindmap
         title
         description
         publishedDate
-        updatedDate
         author
       ツール固有情報
         toolName
@@ -199,8 +198,7 @@ graph TD
     B --> B1[title: 1-100文字]
     B --> B2[description: 10-200文字]
     B --> B3[publishedDate: ISO形式]
-    B --> B4[updatedDate: ISO形式]
-    B --> B5[author: デフォルト値あり]
+    B --> B4[author: デフォルト値あり]
     
     C --> C1[toolName: 1-50文字]
     
