@@ -74,6 +74,7 @@
   --pl-color-secondary-hover: var(--token-purple-hover);
   --pl-color-text-primary: var(--clr-text-primary);
   --pl-color-text-secondary: var(--token-text-muted);
+  --pl-color-background: oklch(98% 0.02 15deg);
   --pl-color-background-subtle: oklch(98% 0.02 15deg / var(--opacity-85));
   --pl-color-border-subtle: var(--pl-color-primary);
   --pl-color-warning-orange: oklch(70% 0.15 45deg);
@@ -811,13 +812,14 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 25px; /* 左右均等なパディングで拡大時の余裕を確保 */
 
   @media (min-width: 768px) {
     justify-content: center;
     align-items: center;
     grid-area: image;
     max-width: 600px; /* 画像コンテナの最大幅を拡大 */
-    padding-right: var(--pl-space-lg);
+    padding: 0 25px; /* メディアクエリ内でもパディングを確実に適用 */
   }
 }
 
@@ -838,6 +840,7 @@ a {
 /* pl-objImages--special内でのみ有効化 */
 .pl-objImages--special .image-zoom-trigger {
   cursor: pointer;
+  transform-origin: center center; /* 中心から拡大して左右の切れを防ぐ */
 
   &:hover {
     transform: scale(var(--pl-scale-hover));
@@ -883,6 +886,7 @@ a {
   align-items: center;
   width: 100vw;
   height: 100vh;
+  border-radius: var(--pl-radius-lg); /* モーダルに角丸を追加 */
   background: oklch(0% 0 0deg / var(--opacity-90));
   backdrop-filter: blur(8px);
   opacity: 0;
@@ -910,7 +914,7 @@ a {
     max-height: 95dvh;
     margin: var(--pl-space-lg);
     padding: var(--pl-space-md);
-    background: var(--pl-color-background);
+    border-radius: var(--pl-radius-lg); /* コンテナに角丸を追加 */
     transform: scale(var(--pl-scale-modal));
     transition: transform var(--pl-transition-normal);
 
@@ -922,8 +926,8 @@ a {
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
-      max-width: 70vw;
-      max-height: 80vh;
+      max-width: 95vw;
+      max-height: 90vh;
       padding: var(--pl-space-md);
     }
 
@@ -938,9 +942,9 @@ a {
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      border-radius: var(--pl-radius-lg);
-      background: var(--pl-color-background);
+      overflow: hidden; /* 角丸の表示を確実にするため */
+      border-radius: var(--pl-radius-2xl); /* より大きな角丸を適用 */
+      background-color: oklch(100% 0 0deg);
       box-shadow: var(--pl-shadow-xl);
     }
 
@@ -999,6 +1003,7 @@ a {
 /* 画像ズーム関連の独立セレクター */
 .image-zoom-image {
   display: block;
+  overflow: visible; /* 角丸の表示を確実にするため */
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -1007,7 +1012,7 @@ a {
   margin: 0 auto;
   object-fit: contain;
   object-position: center;
-  border-radius: var(--pl-radius-lg);
+  border-radius: var(--pl-radius-2xl); /* より大きな角丸を適用 */
   box-shadow: var(--pl-shadow-xl);
   flex-shrink: 1;
 }
