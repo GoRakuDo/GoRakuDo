@@ -11,7 +11,6 @@ import LanguageLearningProblems from '../../components/content/LanguageLearningP
 import KrashenQuote from '../../components/content/KrashenQuote.astro';
 import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 import { Image } from 'astro:assets';
-import '../../styles/pages/pl-obj/pl-objIndex.css';
 
 import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.png';
 import ledgerPencil from '../../assets/images/pages/pl-obj/ledger-pencil.png';
@@ -208,7 +207,7 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
         src={japaneseNativeVocabulary} 
         alt='Data Kosakata Penutur Asli Bahasa Jepang' 
         class="section-image image-zoom-trigger"
-        data-zoom-src="/src/assets/images/pages/pl-obj/data/japanese-native-speaker-vocabulary.png"
+        data-zoom-src={japaneseNativeVocabulary.src}
         data-zoom-alt='Data Kosakata Penutur Asli Bahasa Jepang'
         tabindex="0"
         role="button"
@@ -270,9 +269,7 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
     </div>
 
     <div class="pl-objImages pl-objImages--right">
-      <div class="image-zoom-trigger">
         <Image src={membentukPondasiIntuisi} alt='Membentuk Pondasi Intuisi Berbahasa Jepang' width={400} height={300} quality={95} format='webp' loading='eager'/>
-      </div>
     </div>
 
     <div class="unified-content">
@@ -334,9 +331,7 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
       </div>
 
       <div class='pl-objImages pl-objImages--left'>
-        <div class='image-zoom-trigger'>
           <Image src={KerangkaActive} alt='Phase 2: Kerangka Intuisi Active Immersion' width={400} height={300} quality={95} format='webp' loading='eager'/>
-        </div>
       </div>
 
       <div class='unified-content'>
@@ -362,9 +357,7 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
     </div>
 
     <div class='pl-objImages pl-objImages--right'>
-      <div class='image-zoom-trigger'>
         <Image src={KonsolidasiIntuisi} alt='Phase 3: Konsolidasi Intuisi dengan double Reading & Listening' width={400} height={300} quality={95} format='webp' loading='eager'/>
-      </div>
     </div>
 
     <div class='unified-content'>
@@ -399,9 +392,7 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
     </div>
 
     <div class='pl-objImages pl-objImages--left'>
-      <div class='image-zoom-trigger'>
         <Image src={MenataIntusi} alt='Phase 4: Menata Intuisi dengan Output' width={400} height={300} quality={95} format='webp' loading='eager'/>
-      </div>
     </div>
 
     <div class='unified-content'>
@@ -436,9 +427,7 @@ imageAlt="Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisiona
     </div>
 
     <div class='pl-objImages pl-objImages--right'>
-      <div class='image-zoom-trigger'>
         <Image src={gorakudoImmerison} alt='Phase 5: Optimalisasi dan Memperluas Intuisi - GoRakuDo Immersion' width={400} height={300} quality={95} format='webp' loading='eager'/>
-      </div>
     </div>
 
     <div class='unified-content'>
