@@ -1,0 +1,76 @@
+{
+  "site": {
+    "name": "GoRakuDo",
+    "description": "Website Otodidak Bahasa Jepang dengan metode (immersion) linguistik modern - GoRakuDo",
+    "url": "https://gorakudo.org",
+    "defaultImage": "/img/FullDC Logo.webp",
+    "favicon": "/favicon.svg",
+    "language": "id",
+    "locale": "id_ID"
+  },
+  "organization": {
+    "name": "GoRakuDo",
+    "description": "Website Otodidak Bahasa Jepang dengan metode (immersion) linguistik modern - GoRakuDo",
+    "url": "https://gorakudo.org",
+    "logo": "/img/FullDC Logo.webp",
+    "foundedDate": "2024"
+  },
+  "contact": {
+    "email": "contact@gorakudo.org",
+    "address": {
+      "country": "ID",
+      "locality": "Jakarta",
+      "region": "DKI Jakarta"
+    },
+    "geo": {
+      "latitude": -6.2088,
+      "longitude": 106.8456
+    }
+  },
+  "social": {
+    "links": [
+      "https://discord.gg/j8qmYPAGQh",
+      "https://github.com/gorakudo",
+      "https://www.youtube.com/@yosiakefas"
+    ]
+  },
+  "business": {
+    "openingHours": "Mo-Su 00:00-23:59",
+    "priceRange": "Free",
+    "currenciesAccepted": "IDR",
+    "paymentAccepted": "Free"
+  },
+  "analytics": {
+    "gtag": "G-R4V6TV2BM3"
+  },
+  "seo": {
+    "defaultPageType": "website",
+    "twitterCard": "summary",
+    "robots": {
+      "default": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, sitemap"
+    }
+  },
+  "sitemap": {
+    "url": "/sitemap-index.xml",
+    "robotsTxtUrl": "/robots.txt"
+  },
+  "theme": {
+    "color": "oklch(0.18 0 0)",
+    "colorScheme": "dark"
+  },
+  "fonts": {
+    "googleFonts": {
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Yuji+Syuku:wght@400&family=Noto+Emoji:wght@400&display=swap",
+      "preconnect": [
+        "https://fonts.googleapis.com",
+        "https://fonts.gstatic.com"
+      ]
+    }
+  },
+  "security": {
+    "referrer": "strict-origin-when-cross-origin",
+    "contentTypeOptions": "nosniff",
+    "frameOptions": "DENY",
+    "xssProtection": "1; mode=block"
+  }
+}

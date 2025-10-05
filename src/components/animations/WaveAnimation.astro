@@ -64,8 +64,11 @@ const config = {
   .wave-canvas {
     position: fixed;
     z-index: var(--z-WaveAnimation-wave-canvas);
-    width: 100lvw;
-    height: 100lvh;
+    display: block;
+    width: 100vw;
+    min-width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
     pointer-events: none;
     inset: 0;
   }
@@ -205,7 +208,16 @@ const config = {
 
     init() {
       this.setupResizeHandler(); // これがupdateDimensionsを呼び出す
-      this.startAnimation();
+
+      // GitHub Pages対応: DOMContentLoadedを待ってから初期化
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => this.startAnimation(), 100);
+        });
+      } else {
+        // DOMが既に読み込まれている場合
+        setTimeout(() => this.startAnimation(), 100);
+      }
     }
 
     private setupResizeHandler() {
@@ -220,14 +232,27 @@ const config = {
     private updateDimensions() {
       if (!this.canvas) return;
 
-      const newWidth = this.canvas.clientWidth;
-      const newHeight = this.canvas.clientHeight;
+      // GitHub Pages対応: clientWidth/Heightが0の場合、windowサイズを使用
+      let newWidth = this.canvas.clientWidth;
+      let newHeight = this.canvas.clientHeight;
+
+      if (newWidth === 0 || newHeight === 0) {
+        newWidth = window.innerWidth;
+        newHeight = window.innerHeight;
+        console.log(
+          'Canvas dimensions fallback to window size:',
+          newWidth,
+          'x',
+          newHeight
+        );
+      }
 
       if (
         this.dimensions.width !== newWidth ||
         this.dimensions.height !== newHeight
       ) {
         this.dimensions = { width: newWidth, height: newHeight };
+        console.log('WaveAnimation dimensions updated:', this.dimensions);
 
         // --- パフォーマンス最適化: ピクセル比制御 ---
         const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // DPRを1.5に制限
