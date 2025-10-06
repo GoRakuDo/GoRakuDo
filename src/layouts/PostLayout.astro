@@ -1,6 +1,8 @@
 ---
 // ========== IMPORTS ==========
-import UnifiedSEO from '../components/UnifiedSEO.astro';
+import UnifiedSEO, {
+  type Props as UnifiedSEOProps,
+} from '../components/UnifiedSEO.astro';
 import TableOfContents from '../components/content/TableOfContents.astro';
 import Navbar from '../components/common/NavBar/Navbar.astro';
 import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
@@ -30,25 +32,10 @@ export interface Props {
     showIcons?: boolean;
     ariaLabel?: string;
   };
-  breadcrumbSchema?: {
-    '@context': 'https://schema.org';
-    '@type': 'BreadcrumbList';
-    itemListElement: Array<{
-      '@type': 'ListItem';
-      position: number;
-      name: string;
-      item: string;
-    }>;
-  };
-  faqSchema?: {
-    '@context': 'https://schema.org';
-    '@type': 'FAQPage';
-    mainEntity: Array<{
-      '@type': 'Question';
-      name: string;
-      acceptedAnswer: { '@type': 'Answer'; text: string };
-    }>;
-  } | null;
+  breadcrumbSchema?: UnifiedSEOProps['breadcrumbSchema'];
+  faqSchema?: UnifiedSEOProps['faqSchema'];
+  howToSchema?: UnifiedSEOProps['howToSchema'];
+  softwareApplicationSchema?: UnifiedSEOProps['softwareApplicationSchema'];
 }
 
 // ========== PROPS DESTRUCTURING ==========
@@ -63,6 +50,8 @@ const {
   contentConfig = {},
   breadcrumbSchema,
   faqSchema,
+  howToSchema,
+  softwareApplicationSchema,
   featuredImage,
 } = Astro.props;
 ---
@@ -82,6 +71,8 @@ const {
       image={featuredImage}
       breadcrumbSchema={breadcrumbSchema}
       faqSchema={faqSchema}
+      howToSchema={howToSchema}
+      softwareApplicationSchema={softwareApplicationSchema}
     />
   </head>
   <body>

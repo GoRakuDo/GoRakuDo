@@ -6,7 +6,7 @@ import MissionSection from '../components/homepage/MissionSection.astro';
 import FeaturesSection from '../components/homepage/FeaturesSection.astro';
 import DocumentationPreviewSection from '../components/homepage/DocumentationPreviewSection.astro';
 import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
-import indexData from '../data/seo/index.json';
+import indexData from '../data/seo/pages/index.json';
 import '../styles/pages/homepage.css';
 
 // ========== SEO DATA ==========
@@ -78,11 +78,6 @@ const faqSchema = {
 
   <!-- ========== SCRIPTS ========== -->
   <script>
-    // Performance monitoring
-    if ('performance' in window && 'mark' in performance) {
-      performance.mark('page-start');
-    }
-
     // Hero animation
     const initHeroAnimation = () => {
       const heroContent = document.querySelector('#hero-content');
@@ -139,44 +134,13 @@ const faqSchema = {
       lazyElements.forEach(el => observer.observe(el));
     };
 
-    // Service Worker
-    const initServiceWorker = () => {
-      const enableSW = localStorage.getItem('enable-sw') === 'true';
-      if (!enableSW) return;
-
-      navigator.serviceWorker
-        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
-        .then(registration => {
-          registration.addEventListener('updatefound', () => {
-            const installing = registration.installing;
-            if (!installing) return;
-
-            installing.addEventListener('statechange', () => {
-              if (
-                installing.state === 'installed' &&
-                navigator.serviceWorker.controller
-              ) {
-                if (confirm('新しいバージョンが利用可能です。更新しますか？')) {
-                  window.location.reload();
-                }
-              }
-            });
-          });
-        })
-        .catch(error =>
-          console.log('Service Worker registration failed:', error)
-        );
-    };
-
     // Initialize
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         initLazyLoading();
-        if ('serviceWorker' in navigator) initServiceWorker();
       });
     } else {
       initLazyLoading();
-      if ('serviceWorker' in navigator) initServiceWorker();
     }
   </script>
 </BaseLayout>

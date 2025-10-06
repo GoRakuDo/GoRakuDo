@@ -1,6 +1,6 @@
 ---
 // ========== IMPORTS ==========
-import seoConfig from '../data/seo-config.json';
+import seoConfig from '../data/seo/unifiedSeo-config.json';
 
 // ========== TYPE DEFINITIONS ==========
 interface ContactAddress {
@@ -15,28 +15,87 @@ interface ContactGeo {
 }
 
 interface BreadcrumbItem {
-  '@type': 'ListItem';
+  '@type': string;
   position: number;
   name: string;
   item: string;
 }
 
 interface BreadcrumbSchema {
-  '@context': 'https://schema.org';
-  '@type': 'BreadcrumbList';
+  '@context': string;
+  '@type': string;
   itemListElement: BreadcrumbItem[];
 }
 
 interface FAQItem {
-  '@type': 'Question';
+  '@type': string;
   name: string;
-  acceptedAnswer: { '@type': 'Answer'; text: string };
+  acceptedAnswer: { '@type': string; text: string };
 }
 
 interface FAQSchema {
-  '@context': 'https://schema.org';
-  '@type': 'FAQPage';
+  '@context': string;
+  '@type': string;
   mainEntity: FAQItem[];
+}
+
+interface HowToSchema {
+  '@context': string;
+  '@type': string;
+  name: string;
+  description: string;
+  image: string;
+  totalTime: string;
+  estimatedCost: { '@type': string; currency: string; value: string };
+  supply: Array<{ '@type': string; name: string }>;
+  tool: Array<{ '@type': string; name: string }>;
+  step: Array<{ '@type': string; name: string; text: string; url: string }>;
+}
+
+interface CollectionPageSchema {
+  '@context': string;
+  '@type': string;
+  name: string;
+  description: string;
+  url: string;
+  mainEntity: {
+    '@type': string;
+    name: string;
+    description: string;
+    numberOfItems: number;
+  };
+}
+
+interface SoftwareApplicationSchema {
+  '@context': string;
+  '@type': string;
+  name: string;
+  description: string;
+  url: string;
+  applicationCategory: string;
+  operatingSystem: string;
+  offers: {
+    '@type': string;
+    price: string;
+    priceCurrency: string;
+  };
+}
+
+interface WebsiteSchema {
+  '@context': string;
+  '@type': string;
+  name: string;
+  url: string;
+  description: string;
+  inLanguage: string;
+  potentialAction: {
+    '@type': string;
+    target: {
+      '@type': string;
+      urlTemplate: string;
+    };
+    'query-input': string;
+  };
 }
 
 interface PreloadResource {
@@ -78,6 +137,10 @@ export interface Props {
   paymentAccepted?: string;
   breadcrumbSchema?: BreadcrumbSchema;
   faqSchema?: FAQSchema | null;
+  howToSchema?: HowToSchema | null;
+  collectionPageSchema?: CollectionPageSchema | null;
+  softwareApplicationSchema?: SoftwareApplicationSchema | null;
+  websiteSchema?: WebsiteSchema | null;
   dnsPrefetch?: string[];
   prefetch?: string[];
   preload?: PreloadResource[];
@@ -117,6 +180,10 @@ const {
   paymentAccepted = seoConfig.business.paymentAccepted,
   breadcrumbSchema,
   faqSchema,
+  howToSchema,
+  collectionPageSchema,
+  softwareApplicationSchema,
+  websiteSchema,
   dnsPrefetch = [],
   prefetch = [],
   preload = [],
@@ -242,6 +309,7 @@ const createContactPoint = () => ({
 
 // ========== BASE ORGANIZATION SCHEMA ==========
 const baseOrganization = {
+  '@context': 'https://schema.org',
   '@type': 'Organization',
   name: organizationName,
   url: organizationUrl,
@@ -262,17 +330,6 @@ const createSearchAction = () => ({
   'query-input': 'required name=search_term_string'
 });
 
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: organizationName,
-  url: organizationUrl,
-  description: organizationDescription,
-  inLanguage: lang,
-  publisher: baseOrganization,
-  potentialAction: createSearchAction(),
-  mainEntity: { '@type': 'Sitemap', url: fullSitemapUrl }
-};
 
 // ========== ARTICLE SCHEMA ==========
 const createAuthorObject = () => {
@@ -291,6 +348,7 @@ const estimateWordCount = (text: string): number => text.length * 2;
 const articleSchema = pageType === 'article' ? {
   '@context': 'https://schema.org',
   '@type': 'Article',
+  name: title,
   headline: title,
   description: description,
   url: normalizedCanonical,
@@ -341,7 +399,25 @@ const localBusinessSchema = {
 // ========== STRUCTURED DATA INTEGRATION ==========
 const addMainSchema = (schemas: any[]): void => {
   const isArticlePage = pageType === 'article' && articleSchema;
-  schemas.push(isArticlePage ? articleSchema : websiteSchema);
+  if (isArticlePage) {
+    schemas.push(articleSchema);
+  } else if (websiteSchema) {
+    schemas.push(websiteSchema);
+  } else {
+    // デフォルトのwebsiteSchema
+    const defaultWebsiteSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: organizationName,
+      url: organizationUrl,
+      description: organizationDescription,
+      inLanguage: lang,
+      publisher: baseOrganization,
+      potentialAction: createSearchAction(),
+      mainEntity: { '@type': 'Sitemap', url: fullSitemapUrl }
+    };
+    schemas.push(defaultWebsiteSchema);
+  }
 };
 
 const addOrganizationSchemas = (schemas: any[]): void => {
@@ -351,6 +427,10 @@ const addOrganizationSchemas = (schemas: any[]): void => {
 const addOptionalSchemas = (schemas: any[]): void => {
   if (breadcrumbSchema) schemas.push(breadcrumbSchema);
   if (faqSchema) schemas.push(faqSchema);
+  if (howToSchema) schemas.push(howToSchema);
+  if (collectionPageSchema) schemas.push(collectionPageSchema);
+  if (softwareApplicationSchema) schemas.push(softwareApplicationSchema);
+  if (websiteSchema) schemas.push(websiteSchema);
 };
 
 const structuredDataSchemas: any[] = [];

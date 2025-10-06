@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
 import channelsDataRaw from '../../data/youtube-channels.json';
-import youtubeSeoData from '../../data/seo/youtube-rekomendasi.json';
+import youtubeSeoData from '../../data/seo/pages/youtube-rekomendasi.json';
 import heroImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-rekomendasi-youtube.png';
 import podcastImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-radio-podcast.png';
 import mediaImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-tv-media.png';
@@ -40,6 +40,8 @@ const faqSchema = {
     },
   })),
 } as const;
+
+const collectionPageSchema = structuredData.collectionPage;
 ---
 
 <BaseLayout
@@ -50,6 +52,7 @@ const faqSchema = {
   pageType={seoData.pageType as 'article' | 'website'}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
+  collectionPageSchema={collectionPageSchema}
   ogImage="/assets/gorakudo-rekomendasi-youtube-C9Zx4Dwm.png"
 >
   <main class='rc-channel-page' role='main'>
@@ -235,23 +238,10 @@ const faqSchema = {
     </div>
   </main>
 
-  <!-- 構造化データ -->
-  <script type='application/ld+json' set:html={JSON.stringify(structuredData.collectionPage)} />
 
 
   <!-- ========== SCRIPTS ========== -->
   <script is:inline>
-    // Performance monitoring
-    const initPerformanceMonitoring = () => {
-      if (!('performance' in window)) return;
-      
-      window.addEventListener('load', () => {
-        const perfData = performance.getEntriesByType('navigation')[0];
-        if (perfData) {
-          console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
-        }
-      });
-    };
 
     // Lazy loading
     const initLazyLoading = () => {
@@ -300,7 +290,6 @@ const faqSchema = {
 
     // Initialize all
     const init = () => {
-      initPerformanceMonitoring();
       initLazyLoading();
       initScrollOptimization();
     };

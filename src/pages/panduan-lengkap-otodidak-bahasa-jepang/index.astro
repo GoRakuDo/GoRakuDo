@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
-import panduanSeoData from '../../data/seo/panduan-lengkap.json';
+import panduanSeoData from '../../data/seo/pages/panduan-lengkap.json';
 import '../../styles/pages/pl-obj/pl-objIndex.css';
 
 // ========== CONTENT LOADING ==========
@@ -185,16 +185,6 @@ const faqSchema = {
     imageZoomLoaded = false;
   };
 
-  // Performance monitoring
-  const initPerformanceMonitoring = () => {
-    if ('performance' in window && 'mark' in performance) {
-      performance.mark('panduan-page-start');
-    }
-    if ('web-vital' in window) {
-      console.log('📊 Core Web Vitals monitoring enabled for panduan page');
-    }
-  };
-
   // Lazy loading
   const initLazyLoading = () => {
     const lazyElements = document.querySelectorAll('[data-lazy]');
@@ -223,7 +213,6 @@ const faqSchema = {
   // Initialize all
   const init = () => {
     initializeLazyImageZoom();
-    initPerformanceMonitoring();
     initLazyLoading();
   };
 

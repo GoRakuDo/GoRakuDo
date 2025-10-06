@@ -1,21 +1,33 @@
 ---
+// ========== IMPORTS ==========
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CategorySection from '../../components/search/CategorySection.astro';
 import TagSection from '../../components/search/TagSection.astro';
 import SearchSection from '../../components/search/SearchSection.astro';
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import searchSeoData from '../../data/seo/pages/search.json';
 import '../../styles/pages/search/search-index.css';
 
-// URLパラメータの取得
+// ========== URL PARAMETERS ==========
 const { searchParams } = Astro.url;
 const initialQuery = searchParams.get('q') || '';
 const initialCategory = searchParams.get('category') || '';
 const initialTag = searchParams.get('tag') || '';
 
-const seoData = {
-  title: 'Cari - GoRakuDo',
-  description: 'Cari melalui semua konten GoRakuDo (Docs/Tools/Pages).',
-  keywords: ['cari', 'pembelajaran jepang', 'immersion', 'alat', 'dokumentasi'],
-};
+// ========== SEO DATA ==========
+const seoData = searchSeoData.seoData;
+
+// ========== STRUCTURED DATA ==========
+const websiteSchema = searchSeoData.structuredData.website;
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: searchSeoData.breadcrumbData.items.map((item, index) => ({
+    title: item.name,
+    url: item.url,
+    isActive: index === searchSeoData.breadcrumbData.items.length - 1,
+  })),
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
+const faqSchema = searchSeoData.structuredData.faq;
 ---
 
 <BaseLayout
@@ -24,23 +36,48 @@ const seoData = {
   keywords={seoData.keywords}
   pageType='website'
   lang='id'
+  breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema}
+  websiteSchema={websiteSchema}
 >
-  <main class='search-page'>
-    <!-- 上層: カテゴリ閲覧 -->
-    <section class='category-section' id='category-section'>
+  <main class='search-page' role='main' aria-label='Search page'>
+    <!-- ========== SEARCH INTRODUCTION ========== -->
+    <section class='search-intro' aria-labelledby='search-intro-title'>
+      <div class='search-intro-content'>
+        <h1 id='search-intro-title' class='search-intro-title'>
+          Pencarian Konten GoRakuDo
+        </h1>
+        <p class='search-intro-description'>
+          Temukan semua konten pembelajaran bahasa Jepang dengan mudah. Gunakan
+          fitur pencarian canggih untuk menemukan dokumentasi, tutorial, alat
+          belajar, dan panduan immersion yang sesuai dengan kebutuhan Anda.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== CATEGORY SECTION ========== -->
+    <section
+      class='category-section'
+      id='category-section'
+      aria-labelledby='category-title'
+    >
       <CategorySection
         initialCategory={initialCategory}
         initialQuery={initialQuery}
       />
     </section>
 
-    <!-- 中層: タグ表示 -->
-    <section class='tag-section' id='tag-section'>
+    <!-- ========== TAG SECTION ========== -->
+    <section class='tag-section' id='tag-section' aria-labelledby='tag-title'>
       <TagSection initialTag={initialTag} initialQuery={initialQuery} />
     </section>
 
-    <!-- 下層: 検索バー + 結果表示 -->
-    <section class='search-section' id='search-section'>
+    <!-- ========== SEARCH SECTION ========== -->
+    <section
+      class='search-section'
+      id='search-section'
+      aria-labelledby='search-title'
+    >
       <SearchSection
         initialQuery={initialQuery}
         initialCategory={initialCategory}

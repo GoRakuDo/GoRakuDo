@@ -8,7 +8,7 @@ import Pagination from '../../components/common/Pagination/Pagination.astro';
 import SearchPopover from '../../components/common/SearchPopover.astro';
 import { getDocsPageData } from '../../utils/docs-config';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
-import docsSeoData from '../../data/seo/docs.json';
+import docsSeoData from '../../data/seo/pages/docs.json';
 import '../../styles/pages/docs/docs-index.css';
 
 // ========== QUERY PARAMETER REDIRECT ==========
@@ -80,16 +80,9 @@ const collectionPageSchema = {
   author={seoData.author}
   publishedDate={new Date().toISOString()}
   breadcrumbSchema={breadcrumbSchema}
+  collectionPageSchema={collectionPageSchema}
+  faqSchema={faqSchema}
 >
-  <!-- Structured Data: CollectionPage -->
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify(collectionPageSchema)}
-  />
-
-  <!-- Structured Data: FAQ -->
-  <script type='application/ld+json' set:html={JSON.stringify(faqSchema)} />
-
   <!-- ページヘッダー -->
   <PostsHeader
     slot='articles-header'
@@ -146,33 +139,6 @@ const collectionPageSchema = {
 
 <!-- ========== SCRIPTS ========== -->
 <script>
-  // Performance monitoring
-  const initPerformanceMonitoring = () => {
-    if (!('performance' in window && 'PerformanceObserver' in window)) return;
-
-    try {
-      const observer = new PerformanceObserver(list => {
-        list.getEntries().forEach(entry => {
-          if (entry.entryType === 'largest-contentful-paint') {
-            console.log('LCP:', entry.startTime);
-          } else if (entry.entryType === 'first-input') {
-            const fidEntry = entry as any;
-            console.log('FID:', fidEntry.processingStart - entry.startTime);
-          } else if (entry.entryType === 'layout-shift') {
-            const clsEntry = entry as any;
-            console.log('CLS:', clsEntry.value);
-          }
-        });
-      });
-
-      observer.observe({
-        entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
-      });
-    } catch (error) {
-      console.log('Performance monitoring not available:', error);
-    }
-  };
-
   // Lazy loading
   const initLazyLoading = () => {
     if (!('IntersectionObserver' in window)) return;
@@ -198,43 +164,9 @@ const collectionPageSchema = {
       .forEach(img => imageObserver.observe(img));
   };
 
-  // Service Worker
-  const initServiceWorker = () => {
-    if (!('serviceWorker' in navigator)) return;
-
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
-        .then(registration => {
-          console.log('SW registered: ', registration);
-
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            if (newWorker) {
-              newWorker.addEventListener('statechange', () => {
-                if (
-                  newWorker.state === 'installed' &&
-                  navigator.serviceWorker.controller
-                ) {
-                  if (confirm('New content available! Refresh to update?')) {
-                    window.location.reload();
-                  }
-                }
-              });
-            }
-          });
-        })
-        .catch(registrationError => {
-          console.log('SW registration failed: ', registrationError);
-        });
-    });
-  };
-
   // Initialize all
   const init = () => {
-    initPerformanceMonitoring();
     initLazyLoading();
-    initServiceWorker();
   };
 
   if (document.readyState === 'loading') {

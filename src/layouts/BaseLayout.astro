@@ -1,6 +1,8 @@
 ---
 // ========== IMPORTS ==========
-import UnifiedSEO from '../components/UnifiedSEO.astro';
+import UnifiedSEO, {
+  type Props as UnifiedSEOProps,
+} from '../components/UnifiedSEO.astro';
 import Navbar from '../components/common/NavBar/Navbar.astro';
 import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
@@ -18,25 +20,11 @@ export interface Props {
   currentPage?: number;
   totalPages?: number;
   baseUrl?: string;
-  breadcrumbSchema?: {
-    '@context': 'https://schema.org';
-    '@type': 'BreadcrumbList';
-    itemListElement: Array<{
-      '@type': 'ListItem';
-      position: number;
-      name: string;
-      item: string;
-    }>;
-  };
-  faqSchema?: {
-    '@context': 'https://schema.org';
-    '@type': 'FAQPage';
-    mainEntity: Array<{
-      '@type': 'Question';
-      name: string;
-      acceptedAnswer: { '@type': 'Answer'; text: string };
-    }>;
-  };
+  breadcrumbSchema?: UnifiedSEOProps['breadcrumbSchema'];
+  faqSchema?: UnifiedSEOProps['faqSchema'];
+  collectionPageSchema?: UnifiedSEOProps['collectionPageSchema'];
+  softwareApplicationSchema?: UnifiedSEOProps['softwareApplicationSchema'];
+  websiteSchema?: UnifiedSEOProps['websiteSchema'];
 }
 
 // ========== PROPS DESTRUCTURING ==========
@@ -53,6 +41,9 @@ const {
   baseUrl,
   breadcrumbSchema,
   faqSchema,
+  collectionPageSchema,
+  softwareApplicationSchema,
+  websiteSchema,
 } = Astro.props;
 ---
 
@@ -72,6 +63,9 @@ const {
       baseUrl={baseUrl}
       breadcrumbSchema={breadcrumbSchema}
       faqSchema={faqSchema}
+      collectionPageSchema={collectionPageSchema}
+      softwareApplicationSchema={softwareApplicationSchema}
+      websiteSchema={websiteSchema}
     />
   </head>
   <body>

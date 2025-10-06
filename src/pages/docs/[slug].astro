@@ -5,7 +5,7 @@ import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
-import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
 import '../../styles/layouts/PostLayout.css';
 
 // ========== STATIC PATH GENERATION ==========
@@ -38,20 +38,218 @@ const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
 
+// articleContentのheadingsを更新（後で実行）
+
 // ========== PATH & METADATA ==========
 const resolvedPath = { path: resolvePath('docs', post.slug) };
 const collectionMetadata = getCollectionInfo('docs');
 
-// ========== SEO DATA ==========
+// ========== ARTICLE CONTENT EXTRACTION ==========
+// 記事の内容を抽出（SEO最適化用）
+let articleContent = {
+  title: post.data.title || '',
+  description: post.data.description || '',
+  tags: post.data.tags || [],
+  categories: post.data.categories || [],
+  headings: [], // 後で設定
+  content: post.body || '',
+  publishedDate: post.data.publishedDate || '',
+  author: post.data.author || 'GoRakuDo Team',
+};
+
+// ========== SEO DATA OPTIMIZATION ==========
+// Phase 2: メタタグ最適化 - 検索意図に合わせたタイトル・説明文・キーワード
+
+// テンプレート変数置換関数（SEO最適化用）
+const replaceTemplateVariables = (template, variables) => {
+  if (typeof template === 'string') {
+    return template.replace(
+      /\{\{(\w+)\}\}/g,
+      (match, key) => variables[key] || match
+    );
+  } else if (Array.isArray(template)) {
+    return template.map(item => replaceTemplateVariables(item, variables));
+  } else if (template && typeof template === 'object') {
+    const result = {};
+    for (const [key, value] of Object.entries(template)) {
+      result[key] = replaceTemplateVariables(value, variables);
+    }
+    return result;
+  }
+  return template;
+};
+
+// テンプレートベースのタイトル生成
+const generateTemplateBasedTitle = (post, articleType) => {
+  // フォールバック用のタイトル生成
+  if (!docsArticleTemplate || !docsArticleTemplate.seoOptimization) {
+    const baseTitle = post.data.title || post.slug;
+    switch (articleType) {
+      case 'tutorial':
+        return `${baseTitle} - Panduan Lengkap | GoRakuDo Pembelajaran Bahasa Jepang`;
+      case 'guide':
+        return `${baseTitle} - Panduan Praktis | GoRakuDo Pembelajaran Bahasa Jepang`;
+      case 'setup':
+        return `${baseTitle} - Panduan Setup | GoRakuDo Pembelajaran Bahasa Jepang`;
+      default:
+        return `${baseTitle} - Panduan Pembelajaran Bahasa Jepang | GoRakuDo`;
+    }
+  }
+
+  const titleTemplate =
+    docsArticleTemplate.seoOptimization.titleTemplates[articleType] ||
+    docsArticleTemplate.seoOptimization.titleTemplates.general;
+
+  return replaceTemplateVariables(titleTemplate, {
+    articleTitle: post.data.title || post.slug,
+  });
+};
+
+// テンプレートベースの説明文生成
+const generateTemplateBasedDescription = (post, articleType) => {
+  // フォールバック用の説明文生成
+  if (!docsArticleTemplate || !docsArticleTemplate.seoOptimization) {
+    const baseDescription = post.data.description || '';
+    const difficulty = post.data.difficulty || 'intermediate';
+    const tags = post.data.tags || [];
+
+    const tagKeywords = tags.slice(0, 3).join(', ');
+    const difficultyText =
+      difficulty === 'beginner'
+        ? 'untuk Pemula'
+        : difficulty === 'advanced'
+          ? 'untuk Tingkat Lanjut'
+          : 'untuk Menengah';
+
+    return `Pelajari ${tagKeywords} secara efektif. ${baseDescription || 'Panduan komprehensif'} yang direkomendasikan untuk ${difficultyText} pembelajaran bahasa Jepang. Kuasai bahasa Jepang secara efisien dengan GoRakuDo.`;
+  }
+
+  const descriptionTemplate =
+    docsArticleTemplate.seoOptimization.descriptionTemplates[articleType] ||
+    docsArticleTemplate.seoOptimization.descriptionTemplates.general;
+
+  const tags = post.data.tags || [];
+  const difficulty = post.data.difficulty || 'intermediate';
+
+  // タグに基づく追加キーワード
+  const tagKeywords = tags.slice(0, 3).join(', ');
+
+  // 難易度テキストを取得
+  const difficultyText =
+    docsArticleTemplate.seoOptimization.difficultyTexts[difficulty] ||
+    docsArticleTemplate.seoOptimization.difficultyTexts.intermediate;
+
+  return replaceTemplateVariables(descriptionTemplate, {
+    tagKeywords: tagKeywords,
+    difficultyText: difficultyText,
+    articleDescription: post.data.description || 'Panduan komprehensif',
+  });
+};
+
+// テンプレートベースのキーワード生成
+const generateTemplateBasedKeywords = (post, articleType) => {
+  const baseTags = post.data.tags || [];
+  const difficulty = post.data.difficulty || 'intermediate';
+  const categories = post.data.categories || [];
+
+  // フォールバック用のキーワード生成
+  if (!docsArticleTemplate || !docsArticleTemplate.seoOptimization) {
+    const baseKeywords = [
+      'Pembelajaran Bahasa Jepang',
+      'GoRakuDo',
+      'Bahasa Jepang',
+      'Panduan Pembelajaran',
+    ];
+    const typeKeywords = {
+      tutorial: [
+        'Tutorial',
+        'Langkah Demi Langkah',
+        'untuk Pemula',
+        'Panduan Lengkap',
+      ],
+      guide: ['Panduan', 'Praktis', 'Metode', 'Teknik'],
+      setup: ['Setup', 'Instalasi', 'Konfigurasi', 'Konfigurasi Awal'],
+      general: ['Pembelajaran', 'Belajar', 'Peningkatan', 'Tips'],
+    };
+    const difficultyKeywords = {
+      beginner: ['Pemula', 'Dasar', 'Awal', 'Mudah'],
+      intermediate: ['Menengah', 'Praktis', 'Lanjutan'],
+      advanced: ['Mahir', 'Expert', 'Profesional', 'Tingkat Tinggi'],
+    };
+
+    return [
+      ...baseKeywords,
+      ...(typeKeywords[articleType] || typeKeywords.general),
+      ...(difficultyKeywords[difficulty] || []),
+      ...baseTags,
+    ]
+      .filter((keyword, index, array) => array.indexOf(keyword) === index)
+      .slice(0, 15);
+  }
+
+  // テンプレートからキーワードを取得
+  const baseKeywords = docsArticleTemplate.seoOptimization.baseKeywords;
+  const typeKeywords =
+    docsArticleTemplate.seoOptimization.typeKeywords[articleType] ||
+    docsArticleTemplate.seoOptimization.typeKeywords.general;
+  const difficultyKeywords =
+    docsArticleTemplate.seoOptimization.difficultyKeywords[difficulty] || [];
+
+  // カテゴリ別キーワード
+  const categoryKeywords = categories
+    .map(cat => {
+      const categoryKey = cat.toLowerCase();
+      return (
+        docsArticleTemplate.seoOptimization.categoryKeywords[categoryKey] || [
+          cat,
+        ]
+      );
+    })
+    .flat();
+
+  // すべてのキーワードを統合
+  return [
+    ...baseKeywords,
+    ...typeKeywords,
+    ...difficultyKeywords,
+    ...categoryKeywords,
+    ...baseTags,
+  ]
+    .filter((keyword, index, array) => array.indexOf(keyword) === index) // 重複削除
+    .slice(0, 15); // 最大15個のキーワード
+};
+
+// 記事の種類を判定（SEO最適化用）
+const getArticleType = (tags, categories) => {
+  if (
+    tags.some(tag => ['tutorial', 'setup', 'guide'].includes(tag.toLowerCase()))
+  ) {
+    return 'tutorial';
+  }
+  if (categories.some(cat => cat.toLowerCase().includes('tutorial'))) {
+    return 'tutorial';
+  }
+  if (tags.some(tag => ['guide', 'howto'].includes(tag.toLowerCase()))) {
+    return 'guide';
+  }
+  return 'general';
+};
+
+// 記事タイプを取得（SEO最適化用）
+const seoArticleType = getArticleType(
+  post.data.tags || [],
+  post.data.categories || []
+);
+
+// テンプレートベースの最適化されたSEOデータ
 const seoData = {
-  title: post.data.title || `Documentation - ${post.slug}`,
-  description:
-    post.data.description ||
-    `Learn about ${post.slug} in GoRakuDo documentation`,
-  keywords: post.data.tags || ['documentation', post.slug, 'guide'],
-  articleType: 'guide',
+  title: generateTemplateBasedTitle(post, seoArticleType),
+  description: generateTemplateBasedDescription(post, seoArticleType),
+  keywords: generateTemplateBasedKeywords(post, seoArticleType),
+  articleType: seoArticleType,
   learningStage: post.data.difficulty || 'intermediate',
-  searchIntent: 'informational',
+  searchIntent:
+    seoArticleType === 'tutorial' ? 'instructional' : 'informational',
   publishedDate: post.data.publishedDate,
   modifiedDate: post.data.publishedDate,
   isDraft: post.data.isDraft || false,
@@ -72,22 +270,169 @@ const breadcrumbConfig = {
   ariaLabel: 'Documentation navigation breadcrumb',
 };
 
-// ========== STRUCTURED DATA ==========
-const breadcrumbSchema = generateBreadcrumbSchema({
-  items: [
-    { title: 'Home', url: '/', isActive: false },
-    { title: 'Documentation', url: '/docs', isActive: false },
-    { title: post.data.title, url: resolvedPath.path, isActive: true },
-  ],
-  siteUrl: String(Astro.site || 'https://gorakudo.org'),
-});
+// ========== DYNAMIC STRUCTURED DATA GENERATION ==========
+// 0スクリプト（JS/TSなし）で直接実装 + テンプレート連携
+
+// articleContentのheadingsを更新
+articleContent.headings = tocHeadings;
+const articleUrl = `https://gorakudo.org${resolvedPath.path}`;
+const articleImage =
+  post.data.featuredImage || 'https://gorakudo.org/img/FullDC Logo.webp';
+
+// テンプレート変数の準備
+const templateVariables = {
+  articleTitle: articleContent.title,
+  articleDescription: articleContent.description,
+  articleUrl,
+  articleImage,
+};
+
+// テンプレートベースの動的FAQ生成
+const generateTemplateBasedFAQ = (content, articleType) => {
+  // テンプレートからFAQテンプレートを取得
+  const faqTemplate =
+    docsArticleTemplate.faqTemplates[articleType] ||
+    docsArticleTemplate.faqTemplates.general;
+
+  // テンプレート変数を準備（まず基本変数で置換）
+  const baseVariables = {
+    ...templateVariables,
+  };
+
+  // FAQテンプレートの質問と回答を基本変数で置換
+  const processedFaqTemplate = {
+    faqQuestion1: replaceTemplateVariables(
+      faqTemplate.faqQuestion1,
+      baseVariables
+    ),
+    faqAnswer1: replaceTemplateVariables(faqTemplate.faqAnswer1, baseVariables),
+    faqQuestion2: replaceTemplateVariables(
+      faqTemplate.faqQuestion2,
+      baseVariables
+    ),
+    faqAnswer2: replaceTemplateVariables(faqTemplate.faqAnswer2, baseVariables),
+    faqQuestion3: replaceTemplateVariables(
+      faqTemplate.faqQuestion3,
+      baseVariables
+    ),
+    faqAnswer3: replaceTemplateVariables(faqTemplate.faqAnswer3, baseVariables),
+  };
+
+  // 最終的なFAQ変数を準備
+  const faqVariables = {
+    ...baseVariables,
+    ...processedFaqTemplate,
+  };
+
+  // テンプレートを置換してFAQ Schemaを生成
+  const faqSchema = replaceTemplateVariables(
+    docsArticleTemplate.structuredData.faq,
+    faqVariables
+  );
+
+  return faqSchema.mainEntity;
+};
+
+// テンプレートベースの動的HowTo生成
+const generateTemplateBasedHowTo = (content, articleType) => {
+  // チュートリアル記事でない場合はnullを返す
+  const isTutorial =
+    content.categories.some(
+      cat =>
+        cat.toLowerCase().includes('tutorial') ||
+        cat.toLowerCase().includes('guide')
+    ) ||
+    content.tags.some(tag =>
+      ['tutorial', 'guide', 'howto', 'setup'].includes(tag.toLowerCase())
+    );
+
+  if (!isTutorial) return null;
+
+  // テンプレートからHowToテンプレートを取得
+  const howToTemplate =
+    docsArticleTemplate.howToTemplates[articleType] ||
+    docsArticleTemplate.howToTemplates.tutorial;
+
+  // 基本変数を準備
+  const baseVariables = {
+    ...templateVariables,
+  };
+
+  // HowToテンプレートの各項目を基本変数で置換
+  const processedHowToTemplate = {
+    howToTitle: replaceTemplateVariables(
+      howToTemplate.howToTitle,
+      baseVariables
+    ),
+    howToDescription: replaceTemplateVariables(
+      howToTemplate.howToDescription,
+      baseVariables
+    ),
+    howToImage: replaceTemplateVariables(
+      howToTemplate.howToImage,
+      baseVariables
+    ),
+    howToTotalTime: howToTemplate.howToTotalTime,
+    howToSupply1: howToTemplate.howToSupply1,
+    howToSupply2: howToTemplate.howToSupply2,
+    howToTool1: howToTemplate.howToTool1,
+    howToStep1Name: howToTemplate.howToStep1Name,
+    howToStep1Text: howToTemplate.howToStep1Text,
+    howToStep1Url: replaceTemplateVariables(
+      howToTemplate.howToStep1Url,
+      baseVariables
+    ),
+    howToStep2Name: howToTemplate.howToStep2Name,
+    howToStep2Text: howToTemplate.howToStep2Text,
+    howToStep2Url: replaceTemplateVariables(
+      howToTemplate.howToStep2Url,
+      baseVariables
+    ),
+    howToStep3Name: howToTemplate.howToStep3Name,
+    howToStep3Text: howToTemplate.howToStep3Text,
+    howToStep3Url: replaceTemplateVariables(
+      howToTemplate.howToStep3Url,
+      baseVariables
+    ),
+  };
+
+  // 最終的なHowTo変数を準備
+  const howToVariables = {
+    ...baseVariables,
+    ...processedHowToTemplate,
+  };
+
+  // テンプレートを置換してHowTo Schemaを生成
+  const howToSchema = replaceTemplateVariables(
+    docsArticleTemplate.structuredData.howTo,
+    howToVariables
+  );
+
+  return howToSchema;
+};
+
+// テンプレートベースのSchema生成
+const faqSchema = {
+  '@context': 'https://schema.org' as const,
+  '@type': 'FAQPage' as const,
+  mainEntity: generateTemplateBasedFAQ(articleContent, seoArticleType),
+};
+
+// HowTo Schema生成（チュートリアル記事の場合）
+const howToSchema = generateTemplateBasedHowTo(articleContent, seoArticleType);
+
+// テンプレートベースのBreadcrumb Schema生成
+const breadcrumbSchema = replaceTemplateVariables(
+  docsArticleTemplate.structuredData.breadcrumb,
+  templateVariables
+);
 ---
 
 <PostLayout
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
-  lang='ja'
+  lang='id'
   author={post.data.author || 'GoRakuDo Team'}
   tags={seoData.keywords}
   post={post}
@@ -95,7 +440,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   headings={tocHeadings}
   postActions={true}
   breadcrumbConfig={breadcrumbConfig}
-  breadcrumbSchema={breadcrumbSchema}
+  breadcrumbSchema={breadcrumbSchema as any}
+  faqSchema={faqSchema}
+  howToSchema={howToSchema}
   featuredImage={post.data.featuredImage}
 >
   <!-- Breadcrumb Slot -->

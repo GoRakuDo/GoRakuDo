@@ -8,7 +8,7 @@ import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import SearchPopover from '../../../components/common/SearchPopover.astro';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolsData from '../../../data/tools.json';
-import toolSeoTemplate from '../../../data/seo/tool-template.json';
+import toolSeoTemplate from '../../../data/seo/pages/tool-template.json';
 import '../../../styles/pages/tools/[tool]/Tool-IdIndex.css';
 
 // ========== STATIC PATH GENERATION ==========
@@ -267,10 +267,7 @@ const collectionPageSchema = {
   },
 };
 
-const faqSchema = replaceTemplateObject(
-  toolSeoTemplate.structuredData.faq,
-  templateVariables
-);
+// FAQ Schema is now handled by UnifiedSEO via toolSeoTemplate.structuredData.faq
 
 const breadcrumbData = replaceTemplateObject(
   toolSeoTemplate.breadcrumbData,
@@ -292,22 +289,13 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   lang='id'
   author={seoData.author}
   breadcrumbSchema={breadcrumbSchema}
+  faqSchema={replaceTemplateObject(
+    toolSeoTemplate.structuredData.faq,
+    templateVariables
+  )}
+  collectionPageSchema={collectionPageSchema}
+  softwareApplicationSchema={softwareApplicationSchema}
 >
-  <!-- Structured Data: SoftwareApplication -->
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify(softwareApplicationSchema)}
-  />
-
-  <!-- Structured Data: CollectionPage -->
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify(collectionPageSchema)}
-  />
-
-  <!-- Structured Data: FAQ -->
-  <script type='application/ld+json' set:html={JSON.stringify(faqSchema)} />
-
   <!-- ========== INTEGRATED ENHANCED HEADER COMPONENT ========== -->
   <header
     slot='articles-header'
@@ -401,33 +389,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
 <!-- ========== SCRIPTS ========== -->
 <script>
-  // Performance monitoring
-  const initPerformanceMonitoring = () => {
-    if (!('performance' in window && 'PerformanceObserver' in window)) return;
-
-    try {
-      const observer = new PerformanceObserver(list => {
-        list.getEntries().forEach(entry => {
-          if (entry.entryType === 'largest-contentful-paint') {
-            console.log('LCP:', entry.startTime);
-          } else if (entry.entryType === 'first-input') {
-            const fidEntry = entry as any;
-            console.log('FID:', fidEntry.processingStart - entry.startTime);
-          } else if (entry.entryType === 'layout-shift') {
-            const clsEntry = entry as any;
-            console.log('CLS:', clsEntry.value);
-          }
-        });
-      });
-
-      observer.observe({
-        entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
-      });
-    } catch (error) {
-      console.log('Performance monitoring not available:', error);
-    }
-  };
-
   // Lazy loading
   const initLazyLoading = () => {
     if (!('IntersectionObserver' in window)) return;
@@ -453,39 +414,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       .forEach(img => observer.observe(img));
   };
 
-  // Service Worker
-  const initServiceWorker = () => {
-    if (!('serviceWorker' in navigator)) return;
-
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
-        .then(registration => {
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            if (!newWorker) return;
-
-            newWorker.addEventListener('statechange', () => {
-              if (
-                newWorker.state === 'installed' &&
-                navigator.serviceWorker.controller
-              ) {
-                if (confirm('New version available! Reload to update?')) {
-                  window.location.reload();
-                }
-              }
-            });
-          });
-        })
-        .catch(error => console.log('SW registration failed:', error));
-    });
-  };
-
   // Initialize all
   const init = () => {
-    initPerformanceMonitoring();
     initLazyLoading();
-    initServiceWorker();
   };
 
   if (document.readyState === 'loading') {

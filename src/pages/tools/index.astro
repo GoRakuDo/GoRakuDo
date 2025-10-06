@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolsGridSection from '../../components/tools/Tools-GridSection.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import toolsData from '../../data/tools.json';
-import toolsSeoData from '../../data/seo/tools.json';
+import toolsSeoData from '../../data/seo/pages/tools.json';
 import '../../styles/pages/tools/tools-index.css';
 
 // ========== TYPE DEFINITIONS ==========
@@ -59,18 +59,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 
-const faqSchema = {
-  '@context': 'https://schema.org' as const,
-  '@type': 'FAQPage' as const,
-  mainEntity: toolsSeoData.structuredData.faq.mainEntity.map(faq => ({
-    '@type': 'Question' as const,
-    name: faq.name,
-    acceptedAnswer: {
-      '@type': 'Answer' as const,
-      text: faq.acceptedAnswer.text,
-    },
-  })),
-};
+// FAQ Schema is now handled by UnifiedSEO via toolsSeoData.structuredData.faq
 ---
 
 <BaseLayout
@@ -80,13 +69,9 @@ const faqSchema = {
   pageType={seoData.pageType as 'article' | 'website'}
   lang='id'
   breadcrumbSchema={breadcrumbSchema}
-  faqSchema={faqSchema}
+  faqSchema={toolsSeoData.structuredData.faq}
+  collectionPageSchema={toolsSeoData.structuredData.collectionPage}
 >
-  <!-- Structured Data: CollectionPage -->
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify(toolsSeoData.structuredData.collectionPage)}
-  />
   <!-- Main Content -->
   <main
     class='main-content min-h-screen tools-layout-optimized'
@@ -234,33 +219,6 @@ const faqSchema = {
     });
   };
 
-  // Performance monitoring
-  const initPerformanceMonitoring = () => {
-    if (!('performance' in window && 'PerformanceObserver' in window)) return;
-
-    try {
-      const observer = new PerformanceObserver(list => {
-        list.getEntries().forEach(entry => {
-          if (entry.entryType === 'largest-contentful-paint') {
-            console.log('LCP:', entry.startTime);
-          } else if (entry.entryType === 'first-input') {
-            const fidEntry = entry as any;
-            console.log('FID:', fidEntry.processingStart - entry.startTime);
-          } else if (entry.entryType === 'layout-shift') {
-            const clsEntry = entry as any;
-            console.log('CLS:', clsEntry.value);
-          }
-        });
-      });
-
-      observer.observe({
-        entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
-      });
-    } catch (error) {
-      console.log('Performance monitoring not available:', error);
-    }
-  };
-
   // Lazy loading
   const initLazyLoading = () => {
     if (!('IntersectionObserver' in window)) return;
@@ -286,43 +244,13 @@ const faqSchema = {
       .forEach(img => observer.observe(img));
   };
 
-  // Service Worker
-  const initServiceWorker = () => {
-    if (!('serviceWorker' in navigator)) return;
-
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/sw.js', { scope: '/', updateViaCache: 'none' })
-        .then(registration => {
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            if (!newWorker) return;
-
-            newWorker.addEventListener('statechange', () => {
-              if (
-                newWorker.state === 'installed' &&
-                navigator.serviceWorker.controller
-              ) {
-                if (confirm('New version available! Reload to update?')) {
-                  window.location.reload();
-                }
-              }
-            });
-          });
-        })
-        .catch(error => console.log('SW registration failed:', error));
-    });
-  };
-
   // Initialize all
   const init = () => {
     initPageAnimations();
     initMicroInteractions();
     initToolCardInteractions();
     initStatsAnimation();
-    initPerformanceMonitoring();
     initLazyLoading();
-    initServiceWorker();
   };
 
   if (document.readyState === 'loading') {
