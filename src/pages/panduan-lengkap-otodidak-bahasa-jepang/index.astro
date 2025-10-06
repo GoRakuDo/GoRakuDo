@@ -30,13 +30,22 @@ const { Content } = await entry.render();
 const seoData = panduanSeoData.seoData;
 
 // ========== DYNAMIC STRUCTURED DATA ==========
+// 本番環境での正しい画像URLを取得
+const getImageUrl = (image: any) => {
+  // 本番環境ではAstroが自動的に最適化されたURLを生成
+  // ローカル環境では開発用パスが返される
+  return image.src;
+};
+
 // ステップ画像のマッピング
 const stepImages = {
-  'gorakudo-membentuk-pondasi-intuisi': gorakudoMembentukPondasiImage.src,
-  'gorakudo-kerangka-active': gorakudoKerangkaActiveImage.src,
-  'gorakudo-konsolidasi-intuisi': gorakudoKonsolidasiImage.src,
-  'gorakudo-menata-intusi': gorakudoMenataIntuisiImage.src,
-  'gorakudo-immerison': gorakudoImmerisonImage.src,
+  'gorakudo-membentuk-pondasi-intuisi': getImageUrl(
+    gorakudoMembentukPondasiImage
+  ),
+  'gorakudo-kerangka-active': getImageUrl(gorakudoKerangkaActiveImage),
+  'gorakudo-konsolidasi-intuisi': getImageUrl(gorakudoKonsolidasiImage),
+  'gorakudo-menata-intusi': getImageUrl(gorakudoMenataIntuisiImage),
+  'gorakudo-immerison': getImageUrl(gorakudoImmerisonImage),
 };
 
 // 動的画像URLを使用して構造化データを生成
@@ -46,7 +55,7 @@ const structuredData = {
     ...panduanSeoData.structuredData.article,
     image: {
       '@type': 'ImageObject',
-      url: gorakudoImmerisonImage.src,
+      url: getImageUrl(gorakudoImmerisonImage),
       width: 630,
       height: 630,
     },
@@ -55,7 +64,7 @@ const structuredData = {
     ...panduanSeoData.structuredData.howTo,
     image: {
       '@type': 'ImageObject',
-      url: gorakudoImmerisonImage.src,
+      url: getImageUrl(gorakudoImmerisonImage),
       width: 630,
       height: 630,
     },
@@ -76,7 +85,7 @@ const structuredData = {
         ...step,
         image: {
           '@type': 'ImageObject',
-          url: stepImages[imageKey] || gorakudoImmerisonImage.src,
+          url: stepImages[imageKey] || getImageUrl(gorakudoImmerisonImage),
           width: 630,
           height: 630,
         },
@@ -116,7 +125,7 @@ const faqSchema = {
   lang={seoData.lang}
   pageType={seoData.pageType as 'article' | 'website'}
   publishedDate={entry.data.publishedDate}
-  ogImage={gorakudoImmerisonImage.src}
+  ogImage={getImageUrl(gorakudoImmerisonImage)}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
 >

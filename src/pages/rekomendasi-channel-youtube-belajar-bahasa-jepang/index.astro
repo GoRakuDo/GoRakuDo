@@ -16,6 +16,13 @@ const seoData = youtubeSeoData.seoData;
 const structuredData = youtubeSeoData.structuredData;
 const breadcrumbData = youtubeSeoData.breadcrumbData;
 
+// ========== IMAGE URL UTILITY ==========
+const getImageUrl = (image: any) => {
+  // 本番環境ではAstroが自動的に最適化されたURLを生成
+  // ローカル環境では開発用パスが返される
+  return image.src;
+};
+
 // ========== STRUCTURED DATA ==========
 const breadcrumbSchema = {
   '@context': 'https://schema.org' as const,
@@ -53,7 +60,7 @@ const collectionPageSchema = structuredData.collectionPage;
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
   collectionPageSchema={collectionPageSchema}
-  ogImage="/assets/gorakudo-rekomendasi-youtube-C9Zx4Dwm.png"
+  ogImage={getImageUrl(heroImage)}
 >
   <main class='rc-channel-page' role='main'>
     <!-- ページヘッダー -->

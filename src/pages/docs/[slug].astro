@@ -26,7 +26,7 @@ const { slug } = Astro.params;
 // Redirect pagination slugs
 if (slug && String(slug).startsWith('page-')) {
   const pageNumber = String(slug).replace('page-', '');
-  return Astro.redirect(`/docs/page-${pageNumber}`, 301);
+    return Astro.redirect(`/docs/page-${pageNumber}`, 301);
 }
 
 // Error handling

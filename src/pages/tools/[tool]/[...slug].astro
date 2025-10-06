@@ -780,37 +780,37 @@ const breadcrumbConfig = {
 
   window.sharePost = sharePost;
 
-  // Accessibility enhancements
+    // Accessibility enhancements
   const initAccessibility = () => {
     const articleContent = document.querySelector('.content-main');
     if (!articleContent) return;
 
     // Add skip link
-    const skipLink = document.createElement('a');
-    skipLink.href = '#main-content';
-    skipLink.className =
-      'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50';
-    skipLink.textContent = 'Skip to main content';
-    document.body.insertBefore(skipLink, document.body.firstChild);
+      const skipLink = document.createElement('a');
+      skipLink.href = '#main-content';
+      skipLink.className =
+        'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50';
+      skipLink.textContent = 'Skip to main content';
+      document.body.insertBefore(skipLink, document.body.firstChild);
 
     // Add alt text to images
-    const images = articleContent.querySelectorAll('img:not([alt])');
-    images.forEach(img => {
-      img.alt = `${toolName} tool illustration`;
-    });
+      const images = articleContent.querySelectorAll('img:not([alt])');
+      images.forEach(img => {
+        img.alt = `${toolName} tool illustration`;
+      });
 
-    // Validate heading hierarchy
+      // Validate heading hierarchy
     const headings = articleContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    let lastLevel = 0;
-    headings.forEach(heading => {
-      const level = parseInt(heading.tagName.charAt(1));
-      if (level - lastLevel > 1) {
-        console.warn(
-          `⚠️ Accessibility: Heading level skipped from h${lastLevel} to h${level}`
-        );
-      }
-      lastLevel = level;
-    });
+      let lastLevel = 0;
+      headings.forEach(heading => {
+        const level = parseInt(heading.tagName.charAt(1));
+        if (level - lastLevel > 1) {
+          console.warn(
+            `⚠️ Accessibility: Heading level skipped from h${lastLevel} to h${level}`
+          );
+        }
+        lastLevel = level;
+      });
   };
 
   // Initialize
