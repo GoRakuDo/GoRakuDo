@@ -5,6 +5,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import panduanSeoData from '../../data/seo/pages/panduan-lengkap.json';
+import gorakudoImmerisonImage from '../../assets/images/pages/pl-obj/gorakudo-immerison.png';
+import gorakudoMembentukPondasiImage from '../../assets/images/pages/pl-obj/gorakudo-membentuk-pondasi-intuisi.png';
+import gorakudoKerangkaActiveImage from '../../assets/images/pages/pl-obj/gorakudo-kerangka-active.png';
+import gorakudoKonsolidasiImage from '../../assets/images/pages/pl-obj/gorakudo-konsolidasi-intuisi.png';
+import gorakudoMenataIntuisiImage from '../../assets/images/pages/pl-obj/gorakudo-menata-intusi.png';
 import '../../styles/pages/pl-obj/pl-objIndex.css';
 
 // ========== CONTENT LOADING ==========
@@ -23,7 +28,62 @@ const { Content } = await entry.render();
 
 // ========== SEO DATA ==========
 const seoData = panduanSeoData.seoData;
-const structuredData = panduanSeoData.structuredData;
+
+// ========== DYNAMIC STRUCTURED DATA ==========
+// ステップ画像のマッピング
+const stepImages = {
+  'gorakudo-membentuk-pondasi-intuisi': gorakudoMembentukPondasiImage.src,
+  'gorakudo-kerangka-active': gorakudoKerangkaActiveImage.src,
+  'gorakudo-konsolidasi-intuisi': gorakudoKonsolidasiImage.src,
+  'gorakudo-menata-intusi': gorakudoMenataIntuisiImage.src,
+  'gorakudo-immerison': gorakudoImmerisonImage.src,
+};
+
+// 動的画像URLを使用して構造化データを生成
+const structuredData = {
+  ...panduanSeoData.structuredData,
+  article: {
+    ...panduanSeoData.structuredData.article,
+    image: {
+      '@type': 'ImageObject',
+      url: gorakudoImmerisonImage.src,
+      width: 630,
+      height: 630,
+    },
+  },
+  howTo: {
+    ...panduanSeoData.structuredData.howTo,
+    image: {
+      '@type': 'ImageObject',
+      url: gorakudoImmerisonImage.src,
+      width: 630,
+      height: 630,
+    },
+    step: panduanSeoData.structuredData.howTo.step.map((step, index) => {
+      // ステップ名から画像を特定
+      let imageKey = '';
+      if (step.name.includes('Phase 1'))
+        imageKey = 'gorakudo-membentuk-pondasi-intuisi';
+      else if (step.name.includes('Phase 2'))
+        imageKey = 'gorakudo-kerangka-active';
+      else if (step.name.includes('Phase 3'))
+        imageKey = 'gorakudo-konsolidasi-intuisi';
+      else if (step.name.includes('Phase 4'))
+        imageKey = 'gorakudo-menata-intusi';
+      else if (step.name.includes('Phase 5')) imageKey = 'gorakudo-immerison';
+
+      return {
+        ...step,
+        image: {
+          '@type': 'ImageObject',
+          url: stepImages[imageKey] || gorakudoImmerisonImage.src,
+          width: 630,
+          height: 630,
+        },
+      };
+    }),
+  },
+};
 
 // ========== STRUCTURED DATA ==========
 const breadcrumbSchema = generateBreadcrumbSchema({
@@ -56,7 +116,7 @@ const faqSchema = {
   lang={seoData.lang}
   pageType={seoData.pageType as 'article' | 'website'}
   publishedDate={entry.data.publishedDate}
-  ogImage='/assets/gorakudo-immerison-HAk-WsDe.png'
+  ogImage={gorakudoImmerisonImage.src}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
 >

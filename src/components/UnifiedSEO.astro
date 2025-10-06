@@ -221,12 +221,17 @@ const removeTrailingSlashIfNeeded = (url: string): string => {
 };
 
 const createFullImageUrl = (imagePath: string): string => {
-  if (imagePath.startsWith('http')) return imagePath;
-  if (!imagePath) {
+  // 空文字列やnull/undefinedの場合はデフォルト画像を使用
+  if (!imagePath || imagePath.trim() === '') {
     const siteUrl = getSiteUrl();
-    const defaultImage = '/img/FullDC Logo.webp';
+    const defaultImage = seoConfig.site.defaultImage;
     return joinUrl(siteUrl, defaultImage);
   }
+  
+  // 既に完全なURLの場合はそのまま返す
+  if (imagePath.startsWith('http')) return imagePath;
+  
+  // 相対パスの場合は完全なURLに変換
   const siteUrl = getSiteUrl();
   return joinUrl(siteUrl, imagePath);
 };
@@ -580,6 +585,96 @@ addOptionalSchemas(structuredDataSchemas);
 {structuredDataSchemas.map(schema => (
   <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
 ))}
+
+<!-- ========== IMAGE FALLBACK SCRIPT ========== -->
+<script is:inline>
+  // ========== IMAGE FALLBACK FUNCTIONALITY ==========
+  (function() {
+    'use strict';
+    
+    // デフォルト画像の設定
+    const DEFAULT_IMAGE = '/img/FullDC Logo.webp';
+    const SITE_URL = window.location.origin;
+    const FULL_DEFAULT_IMAGE = SITE_URL + DEFAULT_IMAGE;
+    
+    // 画像読み込み失敗時のFallback処理
+    function handleImageError(img) {
+      if (img.src !== FULL_DEFAULT_IMAGE) {
+        console.warn('Image failed to load, using fallback:', img.src);
+        img.src = FULL_DEFAULT_IMAGE;
+        img.alt = img.alt || 'GoRakuDo Logo';
+      }
+    }
+    
+    // 画像要素の監視とFallback設定
+    function setupImageFallbacks() {
+      // 既存の画像要素にerrorイベントリスナーを追加
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        if (!img.hasAttribute('data-fallback-setup')) {
+          img.addEventListener('error', () => handleImageError(img));
+          img.setAttribute('data-fallback-setup', 'true');
+        }
+      });
+      
+      // 新しく追加される画像要素を監視
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          mutation.addedNodes.forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              if (node.tagName === 'IMG') {
+                node.addEventListener('error', () => handleImageError(node));
+                node.setAttribute('data-fallback-setup', 'true');
+              } else if (node.querySelectorAll) {
+                const newImages = node.querySelectorAll('img');
+                newImages.forEach(img => {
+                  if (!img.hasAttribute('data-fallback-setup')) {
+                    img.addEventListener('error', () => handleImageError(img));
+                    img.setAttribute('data-fallback-setup', 'true');
+                  }
+                });
+              }
+            }
+          });
+        });
+      });
+      
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }
+    
+    // OG:IMAGEの動的更新
+    function updateOGImage(imageUrl) {
+      if (!imageUrl || imageUrl.trim() === '') {
+        imageUrl = FULL_DEFAULT_IMAGE;
+      }
+      
+      // meta要素の更新
+      const ogImageMeta = document.querySelector('meta[property="og:image"]');
+      const twitterImageMeta = document.querySelector('meta[name="twitter:image"]');
+      
+      if (ogImageMeta) {
+        ogImageMeta.setAttribute('content', imageUrl);
+      }
+      if (twitterImageMeta) {
+        twitterImageMeta.setAttribute('content', imageUrl);
+      }
+    }
+    
+    // DOM読み込み完了後に実行
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupImageFallbacks);
+    } else {
+      setupImageFallbacks();
+    }
+    
+    // グローバル関数として公開
+    window.updateOGImage = updateOGImage;
+    window.handleImageError = handleImageError;
+  })();
+</script>
 
 <!-- ========== GOOGLE ANALYTICS ========== -->
 {gtag && (

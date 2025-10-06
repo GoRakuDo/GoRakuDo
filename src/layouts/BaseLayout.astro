@@ -45,6 +45,10 @@ const {
   softwareApplicationSchema,
   websiteSchema,
 } = Astro.props;
+
+// ========== IMAGE FALLBACK PROCESSING ==========
+// ogImageが未指定または空の場合はデフォルト画像を使用
+const processedOgImage = ogImage && ogImage.trim() !== '' ? ogImage : undefined;
 ---
 
 <!doctype html>
@@ -55,7 +59,7 @@ const {
       description={description}
       keywords={keywords}
       pageType={pageType}
-      image={ogImage}
+      image={processedOgImage}
       publishedDate={publishedDate}
       lang={lang}
       currentPage={currentPage}
