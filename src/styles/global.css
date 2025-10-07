@@ -925,7 +925,7 @@ button:focus-visible,
 /* Emphasis */
 .article-content strong,
 .article-content b {
-  color: var(--clr-text-primary);
+  color: var(--clr-accent);
   font-weight: 600;
 }
 

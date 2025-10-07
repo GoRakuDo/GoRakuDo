@@ -1,0 +1,365 @@
+---
+// PageHeader Component - 再利用可能なページヘッダーコンポーネント
+// レスポンシブレイアウト: モバイル（縦並び）、タブレット・デスクトップ（横並び）
+// UX最適化: アクセシビリティ向上、パフォーマンス最適化、視覚的改善
+
+import { CldImage } from 'astro-cloudinary';
+
+export interface Props {
+  title: string;
+  description: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  className?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low';
+  titleId?: string;
+  descriptionId?: string;
+}
+
+const {
+  title,
+  description,
+  imageSrc,
+  imageAlt = '',
+  imageWidth = 350,
+  className = '',
+  loading = 'lazy',
+  fetchpriority = 'low',
+  titleId = `page-title-${Math.random().toString(36).substr(2, 9)}`,
+  descriptionId = `page-description-${Math.random().toString(36).substr(2, 9)}`,
+} = Astro.props;
+---
+
+<div class={`rc-page-header ${className}`} role='banner'>
+  <div class='rc-header-content'>
+    <h1
+      class='rc-page-title-main'
+      id={titleId}
+      aria-describedby={descriptionId}
+    >
+      {title}
+    </h1>
+
+    {
+      imageSrc && (
+        <div class='rc-content-right'>
+          <CldImage
+            src={imageSrc}
+            alt={imageAlt}
+            width={imageWidth}
+            height={imageWidth}
+            class='rc-hero-image'
+            quality='auto'
+            loading={loading}
+            decoding='async'
+            {...(fetchpriority && { fetchpriority })}
+            sizes='(max-width: 768px) 250px, (max-width: 1024px) 280px, 350px'
+          />
+        </div>
+      )
+    }
+
+    <p
+      class='rc-page-description'
+      id={descriptionId}
+      aria-label={`ページの説明: ${description}`}
+    >
+      {description}
+    </p>
+  </div>
+</div>
+
+<style is:global>
+  /* ========================================
+     PAGE HEADER COMPONENT STYLES - ネスト構造
+     ======================================== */
+
+  .rc-page-header {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    text-align: center;
+    box-sizing: border-box;
+
+    /* パフォーマンス最適化 */
+    contain: layout style paint;
+    will-change: transform;
+
+    @media (min-width: 768px) {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(1.75rem, 3.75vw, 2.5rem);
+    }
+
+    /* アクセシビリティ対応 */
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+      will-change: auto;
+    }
+
+    /* 高コントラスト対応 */
+    @media (prefers-contrast: high) {
+      border: 2px solid oklch(80% 0 0deg);
+      background: oklch(20% 0 0deg);
+    }
+
+    /* フォーカス可視性向上 */
+    &:focus-within {
+      outline: 2px solid oklch(65% 0.18 15deg);
+      outline-offset: 2px;
+    }
+
+    /* 深度2: rc-header-content */
+    .rc-header-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1.5rem, 3vw, 2rem);
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0;
+
+      /* より具体的なセレクターで確実に適用 */
+      &[class*='rc-header-content'] {
+        gap: clamp(1.5rem, 3vw, 2rem);
+      }
+
+      @media (min-width: 768px) {
+        display: grid;
+        justify-content: center;
+        align-items: start;
+        gap: clamp(1.5rem, 2.5vw, 1.75rem);
+        grid-template-areas:
+          'title image'
+          'description image';
+        grid-template-columns: 7fr 3fr;
+        max-width: 1200px;
+        margin: 0 auto;
+
+        &[class*='rc-header-content'] {
+          grid-template-columns: 7fr 3fr;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        gap: 1rem 1.5rem;
+      }
+
+      /* 深度3: rc-page-title-main */
+      .rc-page-title-main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0.15em 0 0.25em;
+        background: linear-gradient(
+          135deg,
+          oklch(65% 0.25 280deg) 30%,
+          oklch(65% 0.18 15deg) 100%
+        );
+        color: oklch(20% 0 0deg);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        overflow-wrap: break-word;
+        word-break: normal;
+        hyphens: auto;
+        font-family:
+          Open Sauce One,
+          system-ui,
+          sans-serif;
+        font-size: clamp(1.5rem, 5vw, 1.875rem);
+        font-weight: 700;
+        line-height: 1.15;
+        text-align: center;
+        letter-spacing: -0.025em;
+
+        /* アクセシビリティ向上 */
+        scroll-margin-top: 2rem;
+
+        @media (max-width: 768px) {
+          padding: 0.2em min(calc(1rem / 2), 2vw) 0.3em;
+          font-size: clamp(1.5rem, 5vw, 2.25rem);
+          line-height: 1.3;
+          word-break: keep-all;
+          overflow-wrap: anywhere;
+        }
+
+        @media (min-width: 768px) {
+          grid-area: title;
+          width: 100%;
+          font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+          text-align: center;
+          place-self: center stretch;
+          justify-self: center;
+        }
+
+        @media (min-width: 1024px) {
+          font-size: clamp(1.75rem, 3.25vw, 2.5rem);
+          justify-self: center;
+        }
+
+        /* 高コントラスト対応 */
+        @media (prefers-contrast: high) {
+          background: none;
+          color: oklch(20% 0 0deg);
+          -webkit-text-fill-color: initial;
+          text-shadow: none;
+        }
+      }
+
+      /* 深度3: rc-page-description */
+      .rc-page-description {
+        max-width: 56rem;
+        margin: 0;
+        padding: 0;
+        color: var(--token-white-base);
+        font-family:
+          Open Sauce One,
+          system-ui,
+          sans-serif;
+        font-size: clamp(1rem, 2.4vw, 1.2rem);
+        font-weight: 400;
+        line-height: 1.7;
+        overflow-wrap: break-word;
+        text-align: center;
+        letter-spacing: 0.01em;
+        opacity: 0.9;
+
+        /* アクセシビリティ向上 */
+        scroll-margin-top: 1rem;
+
+        @media (min-width: 768px) {
+          grid-area: description;
+          width: 100%;
+          font-size: clamp(1rem, 1.75vw, 1.25rem);
+          text-align: left;
+          place-self: start stretch;
+        }
+
+        @media (min-width: 1024px) {
+          font-size: clamp(1rem, 1.75vw, 1.25rem);
+          text-align: left;
+        }
+
+        /* 高コントラスト対応 */
+        @media (prefers-contrast: high) {
+          color: oklch(90% 0 0deg);
+          opacity: 1;
+        }
+      }
+
+      /* 深度3: rc-content-right */
+      .rc-content-right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: clamp(250px, 50vw, 350px);
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+        @media (min-width: 768px) {
+          justify-content: center;
+          align-items: center;
+          grid-area: image;
+          width: 100%;
+          max-width: clamp(200px, 25vw, 280px);
+          min-height: auto;
+          margin: 0;
+          padding: 0;
+          place-self: center stretch;
+        }
+
+        @media (min-width: 1024px) {
+          max-width: clamp(250px, 25vw, 350px);
+          min-height: auto;
+          padding: 0.5rem;
+        }
+      }
+
+      /* 深度3: rc-hero-image */
+      .rc-hero-image {
+        width: auto;
+        max-width: clamp(250px, 50vw, 350px);
+        height: auto;
+        border-radius: clamp(0.5rem, 1vw, 0.75rem);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        object-fit: contain;
+        box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.08);
+        filter: brightness(1.02) contrast(1.05);
+
+        /* パフォーマンス最適化 */
+        will-change: transform;
+        contain: layout style paint;
+
+        @media (min-width: 768px) {
+          max-width: clamp(200px, 25vw, 280px);
+          border-radius: clamp(0.75rem, 1.2vw, 1rem);
+          box-shadow: 0 6px 16px oklch(0% 0 0deg / 0.1);
+        }
+
+        @media (min-width: 1024px) {
+          max-width: clamp(250px, 25vw, 350px);
+          border-radius: clamp(1rem, 1.5vw, 1.25rem);
+          box-shadow: 0 8px 20px oklch(0% 0 0deg / 0.12);
+        }
+
+        /* アクセシビリティ対応 */
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+          will-change: auto;
+        }
+
+        /* 高コントラスト対応 */
+        @media (prefers-contrast: high) {
+          box-shadow: 0 0 0 2px currentColor;
+          filter: none;
+        }
+      }
+    }
+
+    /* ホバー効果 - 深度2 */
+    .rc-hero-image:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 25px oklch(0% 0 0deg / 0.15);
+      filter: brightness(1.05) contrast(1.08);
+    }
+
+    /* フォーカス可視性 - 深度2 */
+    .rc-page-title-main:focus-visible,
+    .rc-page-description:focus-visible,
+    .rc-hero-image:focus-visible {
+      outline: 2px solid oklch(65% 0.18 15deg);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    /* アクセシビリティ対応 - ホバー無効化 */
+    @media (prefers-reduced-motion: reduce) {
+      .rc-hero-image:hover {
+        transform: none;
+        filter: none;
+      }
+    }
+
+    /* 高コントラスト対応 - ホバー効果調整 */
+    @media (prefers-contrast: high) {
+      .rc-hero-image:hover {
+        filter: none;
+        box-shadow: 0 0 0 3px oklch(65% 0.18 15deg);
+      }
+    }
+  }
+</style>

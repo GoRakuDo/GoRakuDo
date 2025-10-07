@@ -95,13 +95,6 @@
   }
 }
 
-/* ========== TOOL NAVIGATION WRAPPER STYLES ========== */
-.tool-navigation-wrapper {
-  /* 上下マージンを統一（下マージンと同じ値） */
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 /* ========== OPTIMIZED ICON STYLES ========== */
 .tool-icon-large {
   width: clamp(100px, 12.5vw, 170px);
@@ -184,11 +177,11 @@
 }
 
 .header-text-content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
-    text-align: center;
+  text-align: center;
 
   /* タブレット以上で左寄せ */
   @media (min-width: 640px) {
@@ -196,17 +189,17 @@
     justify-content: center;
     text-align: left;
   }
-  }
+}
 
 .header-title {
-    margin: 0 0 var(--spacing-md) 0;
+  margin: 0 0 var(--spacing-md) 0;
   color: var(--clr-text-primary);
   font-size: clamp(1.5rem, 5vw, 2.5rem);
-    font-weight: 800;
-    line-height: 1.2;
+  font-weight: 800;
+  line-height: 1.2;
 
   /* デスクトップでフォントサイズ調整 */
-    @media (min-width: 768px) {
+  @media (min-width: 768px) {
     font-size: clamp(2rem, 6vw, 2.5rem);
   }
 }
@@ -215,34 +208,34 @@
   margin: 0 0 var(--spacing-lg) 0;
   color: var(--clr-text-secondary);
   font-size: clamp(0.875rem, 2.5vw, 1rem);
-    line-height: 1.6;
-  }
+  line-height: 1.6;
+}
 
 .header-meta {
-    display: flex;
+  display: flex;
   flex-wrap: wrap;
-    justify-content: center;
+  justify-content: center;
   gap: var(--spacing-lg);
 
   /* タブレット以上で左寄せ */
   @media (min-width: 640px) {
-      justify-content: flex-start;
+    justify-content: flex-start;
   }
 }
 
 .meta-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--spacing-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
   color: var(--clr-text-muted);
   font-size: var(--font-size-base);
-    font-weight: 500;
-  }
+  font-weight: 500;
+}
 
 .meta-icon {
-    width: var(--spacing-md);
-    height: var(--spacing-md);
+  width: var(--spacing-md);
+  height: var(--spacing-md);
   color: var(--clr-accent);
 }
 
@@ -291,21 +284,21 @@
 }
 
 .tool__articles-grid {
-    position: relative;
-    display: grid;
+  position: relative;
+  display: grid;
   gap: var(--tool__spacing-md);
-    grid-template-columns: 1fr;
+  grid-template-columns: 1fr;
   width: 100%;
   max-width: 100%;
   margin-bottom: var(--tool__spacing-2xl);
-    padding: 0;
-    will-change: transform;
+  padding: 0;
+  will-change: transform;
 
   /* タブレット以上: 2列 */
-    @media (min-width: 768px) {
+  @media (min-width: 768px) {
     gap: var(--tool__spacing-lg);
-      grid-template-columns: repeat(2, 1fr);
-    }
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   /* デスクトップ: 最適化されたスペーシング */
   @media (min-width: 1024px) {
@@ -315,9 +308,9 @@
 
 /* ========== FLEXBOX OPTIMIZATION UTILITIES ========== */
 .tool-main-content {
-    display: flex;
+  display: flex;
   flex-direction: column;
-    align-items: center;
+  align-items: center;
   width: 100%;
   min-height: auto;
 }
@@ -515,7 +508,7 @@
     }
 
     /* タブレット以上でパディング調整（統一） */
-@media (min-width: 768px) {
+    @media (min-width: 768px) {
       padding: 1rem;
     }
   }
@@ -588,8 +581,8 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* ========== MODERN COMPACT CARD FOOTER ========== */

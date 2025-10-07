@@ -42,7 +42,7 @@ const {
   <div class='problems-container glassmorphism glassmorphism-card'>
     <h2 class='problems-title' id='problems-title'>{title}</h2>
 
-    <p class='problems-subtitle'>{subtitle}</p>
+    {subtitle && <p>{subtitle}</p>}
 
     <!-- Problem 1 -->
     <ol class='problems-list'>

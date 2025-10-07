@@ -2,6 +2,7 @@
 // ========== IMPORTS ==========
 import { CldImage } from 'astro-cloudinary';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
 import channelsDataRaw from '../../data/youtube-channels.json';
 import youtubeSeoData from '../../data/seo/pages/youtube-rekomendasi.json';
@@ -17,10 +18,9 @@ const seoData = youtubeSeoData.seoData;
 const structuredData = youtubeSeoData.structuredData;
 const breadcrumbData = youtubeSeoData.breadcrumbData;
 
-// ========== IMAGE URL UTILITY ==========
-const getImageUrl = (publicId: string) => {
-  return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${publicId}`;
-};
+// ========== HEADER IMAGE CONFIG ==========
+const headerImageId = heroImage; // PageHeaderで使用されている画像ID
+const headerImageUrl = `https://res.cloudinary.com/dbvd1cm7u/image/upload/${headerImageId}`;
 
 // ========== STRUCTURED DATA ==========
 const breadcrumbSchema = {
@@ -59,45 +59,20 @@ const collectionPageSchema = structuredData.collectionPage;
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
   collectionPageSchema={collectionPageSchema}
-  ogImage={getImageUrl(heroImage)}
+  ogImage={headerImageUrl}
 >
   <main class='rc-channel-page' role='main'>
     <!-- ページヘッダー -->
-    <header class='rc-page-header'>
-      <div class='rc-header-content'>
-        <!-- タイトルセクション -->
-        <div class='rc-title-section'>
-          <h1 class='rc-page-title-main'>
-            Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik
-          </h1>
-        </div>
+    <PageHeader
+      title="Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik"
+      description="Temukan channel YouTube terbaik untuk belajar bahasa Jepang dengan konten berkualitas tinggi dan metode pembelajaran yang efektif."
+      imageSrc={headerImageId}
+      imageAlt="Japanese Learning Illustration - Person relaxing on beach with Mount Fuji background"
+      imageWidth={350}
+      loading="eager"
+      fetchpriority="high"
+    />
 
-        <!-- 画像セクション -->
-        <div class='rc-content-right'>
-          <div class='rc-image-section'>
-            <CldImage
-              src={heroImage}
-              alt='Japanese Learning Illustration - Person relaxing on beach with Mount Fuji background'
-              quality='auto'
-              class='rc-hero-image'
-              loading='eager'
-              fetchpriority='high'
-            />
-          </div>
-        </div>
-
-        <!-- 説明セクション -->
-        <div class='rc-content-frame'>
-          <div class='rc-content-left'>
-            <div class='rc-description-section'>
-              <p class='rc-page-subtitle'>
-                Temukan channel YouTube berkualitas tinggi untuk mempercepat
-                pembelajaran bahasa Jepang Anda
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </header>
 
     <!-- ナビゲーションボタンセクション -->

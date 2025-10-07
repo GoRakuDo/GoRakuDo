@@ -2,7 +2,7 @@
 // ========== IMPORTS ==========
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
-import PostsHeader from '../../components/docs/PostsHeader.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
 import Pagination from '../../components/common/Pagination/Pagination.astro';
 import SearchPopover from '../../components/common/SearchPopover.astro';
@@ -21,6 +21,10 @@ if (queryPage && parseInt(queryPage) > 1) {
 const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
   await getDocsPageData(1);
 
+// ========== HEADER IMAGE CONFIG ==========
+const headerImageId = 'gorakudo-docs_nmobpw';
+const headerImageUrl = `https://res.cloudinary.com/dbvd1cm7u/image/upload/${headerImageId}`;
+
 // ========== SEO DATA ==========
 const seoData = {
   ...docsSeoData.seoData,
@@ -28,6 +32,9 @@ const seoData = {
   description: docsSeoData.seoData.description,
   keywords: docsSeoData.seoData.keywords,
   author: docsSeoData.seoData.author,
+  imageSrc: headerImageUrl,
+  ogImage: headerImageUrl,
+  twitterImage: headerImageUrl,
   pageType: docsSeoData.seoData.pageType as 'website' | 'article',
   lang: docsSeoData.seoData.lang as 'id' | 'ja',
 };
@@ -84,10 +91,15 @@ const collectionPageSchema = {
   faqSchema={faqSchema}
 >
   <!-- ページヘッダー -->
-  <PostsHeader
+  <PageHeader
     slot='articles-header'
-    title={seoData.title}
-    description={seoData.description}
+    title='Dokumentasi Metodologi Immersion'
+    description='Dokumentasi yang kami buat untuk membantu kalian untuk menguasai Bahasa Jepang, secara natural layaknya Penutur Asli Jepang. Yang berdasarkan "Linguistik Modern".'
+    imageSrc={headerImageId}
+    imageAlt='Artikel Metodologi Immersion Belajar Bahasa Jepang - GoRakuDo'
+    imageWidth={350}
+    loading='eager'
+    fetchpriority='high'
   />
 
   <!-- ブレッドクラム -->
@@ -115,9 +127,10 @@ const collectionPageSchema = {
       <PostsGrid posts={transformedPosts} />
     ) : (
       <div class='empty-state'>
-        <h2>記事が見つかりません</h2>
+        <h2>Maaf, belum ada artikel yang dipublikasikan.</h2>
         <p>
-          現在、公開されている記事がありません。しばらくしてから再度お試しください。
+          Saat ini kami sendang menyusun dokumentasi ini. Silakan Refresh F5 dan
+          tunggu beberapa saat.
         </p>
       </div>
     )

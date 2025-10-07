@@ -136,6 +136,10 @@
   --rc-radius-full: 9999px;
 }
 
+body {
+  padding-top: 80px;
+}
+
 /* ========================================
    ページレイアウト - モバイルファースト
    ======================================== */
@@ -154,234 +158,8 @@
 }
 
 /* ========================================
-   ページヘッダー - 最適化版
+   ページヘッダー - PageHeader.astroコンポーネントに移行済み
    ======================================== */
-
-.rc-page-header {
-  position: relative;
-  overflow: hidden;
-  max-width: 100%;
-  margin: var(--rc-safe-area-top) 0.5rem 0;
-  padding: clamp(1.5rem, 3.5vw, 2.25rem) clamp(1rem, 2.5vw, 1.75rem);
-  text-align: center;
-
-  @media (min-width: 768px) {
-    max-width: 1200px;
-    margin: var(--rc-safe-area-top) auto 0;
-    padding: clamp(2rem, 4vw, 2.5rem) clamp(1.5rem, 3vw, 2rem);
-  }
-
-  @media (min-width: 1024px) {
-    padding: clamp(2.25rem, 4.5vw, 3rem) clamp(1.75rem, 3.5vw, 2.25rem);
-  }
-
-  .rc-header-content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.5rem, 3vw, 2rem);
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0;
-
-    /* Tablet以上: 2カラムレイアウト */
-    @media (min-width: 768px) {
-      display: grid;
-      justify-content: center;
-      align-items: start;
-      gap: clamp(1.5rem, 2.5vw, 1.75rem);
-      grid-template-areas:
-        'title image'
-        'description image';
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-  }
-
-  /* タイトルセクション - 最適化版 */
-  .rc-title-section {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto clamp(0.75rem, 2vw, 1.25rem);
-    text-align: center;
-
-    /* Tablet以上: グリッドエリア指定 */
-    @media (min-width: 768px) {
-      grid-area: title;
-      place-self: center;
-      max-width: 500px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    @media (min-width: 1024px) {
-      margin-bottom: 0;
-    }
-  }
-
-  /* コンテンツフレーム - 最適化版 */
-  .rc-content-frame {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1rem, 2.5vw, 1.5rem);
-
-    /* Tablet以上: グリッドエリア指定 */
-    @media (min-width: 768px) {
-      gap: 0;
-      grid-area: description;
-    }
-  }
-
-  /* コンテンツ左側（説明） - 最適化版 */
-  .rc-content-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 0;
-
-    @media (min-width: 768px) {
-      justify-content: flex-start;
-    }
-  }
-
-  /* コンテンツ右側（画像） - 最適化版 */
-  .rc-content-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
-
-    /* Tablet以上: グリッドエリア指定 */
-    @media (min-width: 768px) {
-      justify-content: flex-end;
-      grid-area: image;
-      min-height: 300px;
-    }
-
-    @media (min-width: 1024px) {
-      min-height: 350px;
-    }
-  }
-
-  /* 説明セクション - 最適化版 */
-  .rc-description-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: clamp(0.5rem, 1.5vw, 0.75rem);
-    text-align: center;
-
-    @media (min-width: 768px) {
-      align-items: flex-start;
-      gap: clamp(0.75rem, 2vw, 1rem);
-      text-align: left;
-    }
-  }
-
-  /* 画像セクション - 最適化版 */
-  .rc-image-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-
-    @media (min-width: 768px) {
-      justify-content: flex-end;
-      width: auto;
-      max-width: none;
-    }
-  }
-
-  /* ヒーロー画像 - 最適化版 */
-  .rc-hero-image {
-    width: auto;
-    max-width: clamp(200px, 30vw, 280px);
-    height: auto;
-    border-radius: clamp(0.75rem, 1.5vw, 1rem);
-    object-fit: cover;
-
-    @media (min-width: 768px) {
-      width: 250px;
-      max-width: 250px;
-      height: 250px;
-    }
-  }
-
-  .rc-page-title-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0.15em 0 0.25em;
-    background: linear-gradient(
-      135deg,
-      oklch(65% 0.25 280deg) 30%,
-      oklch(65% 0.18 15deg) 100%
-    );
-    color: var(--rc-color-text-primary);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    overflow-wrap: break-word;
-    word-break: normal;
-    hyphens: auto;
-    font-family: var(--rc-font-family-display);
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    font-weight: 700;
-    line-height: 1.15;
-    text-align: center;
-    letter-spacing: -0.025em;
-
-    @media (max-width: 768px) {
-      padding: 0.2em min(calc(var(--rc-space-lg) / 2), 2vw) 0.3em;
-      font-size: clamp(1.5rem, 5vw, 2.25rem);
-      line-height: 1.3;
-      word-break: keep-all;
-      overflow-wrap: anywhere;
-    }
-
-    @media (min-width: 768px) and (max-width: 1024px) {
-      justify-self: center;
-      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    }
-
-    @media (min-width: 1024px) {
-      justify-self: center;
-      font-size: clamp(1.75rem, 3.25vw, 2.5rem);
-    }
-
-    @media (prefers-contrast: high) {
-      background: none;
-      color: var(--rc-color-text-primary);
-      -webkit-text-fill-color: initial;
-      text-shadow: none;
-    }
-
-    &:active {
-      -webkit-text-fill-color: currentColor;
-    }
-  }
-
-  .rc-page-subtitle {
-    max-width: 56rem;
-    margin: 0;
-    color: var(--rc-color-text-secondary);
-    font-size: clamp(1rem, 2.4vw, 1.2rem);
-    font-weight: var(--rc-font-medium);
-    line-height: 1.7;
-    overflow-wrap: break-word;
-    text-align: center;
-    opacity: 0.9;
-  }
-}
 
 /* ========================================
    メインコンテンツエリア - モバイルファースト
@@ -563,26 +341,8 @@
    ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .rc-page-header {
-    transition: none;
-
-    &::before {
-      animation: none;
-    }
-  }
-
   .rc-channel-item {
     transition: none;
-  }
-}
-
-@media (prefers-contrast: high) {
-  .rc-page-header {
-    background: var(--rc-color-primary);
-
-    .rc-page-title-main {
-      text-shadow: none;
-    }
   }
 }
 

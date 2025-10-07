@@ -220,7 +220,7 @@ h3.pl-objTitle {
 }
 
 .content-section--primary .content-text strong {
-  color: var(--pl-color-primary);
+  color: var(--pl-color-secondary);
 }
 
 .content-section--secondary .content-text strong {
@@ -333,8 +333,9 @@ h3.pl-objTitle {
   margin-bottom: min(var(--pl-space-6xl), 8vw);
 
   @media (min-width: 768px) {
-    align-items: start;
-    grid-template-columns: 1fr minmax(300px, 400px);
+    justify-content: space-between;
+    grid-template-columns: 1fr auto;
+    place-items: start center;
   }
 
   .content-left {
@@ -345,6 +346,11 @@ h3.pl-objTitle {
 
   .content-right {
     order: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto;
 
     @media (min-width: 768px) {
       order: 0;
@@ -483,13 +489,6 @@ a {
       @media (min-width: 1024px) {
         font-size: var(--pl-text-heading-lg);
       }
-    }
-
-    .problems-subtitle {
-      max-width: 800px;
-      margin: 0;
-      color: var(--pl-color-text-secondary);
-      text-align: center;
     }
 
     .problems-list {
@@ -639,10 +638,12 @@ a {
    ======================================== */
 .image-container {
   position: relative;
-  width: 100%;
-  max-width: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 20rem;
   margin: 0 auto;
-  aspect-ratio: 1 / 1; /* Modern aspect-ratio property */
 
   .hero-image {
     position: absolute;
@@ -1293,9 +1294,14 @@ a {
     text-decoration: var(--pl-text-decoration);
   }
 
-  /* 統合されたストロングスタイル - 効率化 */
-  .unified-content strong {
-    color: var(--pl-color-primary);
+  /* Prose内のstrong要素のスタイル - CSS変数で制御 */
+  .pl-guide-page {
+    --strong-color: var(--pl-color-secondary);
+  }
+
+  .pl-guide-page strong {
+    color: var(--strong-color);
+    font-weight: var(--pl-font-weight-bold);
   }
 
   /* 統合されたリストスタイル - 効率化 */
@@ -1555,12 +1561,6 @@ a {
     flex-direction: column;
   }
 
-  /* 統一されたstrong要素のスタイリング */
-  .unified-content strong {
-    color: var(--strong-color);
-    font-weight: var(--pl-font-weight-bold);
-  }
-
   /* KrashenQuoteの表示順序調整 */
   .krashen-quote {
     @media (max-width: 768px) {
@@ -1579,11 +1579,6 @@ a {
 /* 最も効率的な解決方法：クラスベースの色制御 */
 .section--purple-strong {
   --strong-color: var(--pl-color-secondary);
-}
-
-.section--purple-strong .unified-content strong {
-  color: var(--strong-color);
-  font-weight: var(--pl-font-weight-bold);
 }
 
 /* ========================================
