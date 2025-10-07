@@ -17,15 +17,6 @@ pnpm-debug.log*
 .env.development
 .env.production
 .env.*.local
-.cursor
-.cursor/
-.vscode
-.vscode/
-
-.bmad-core/
-
-bmad-core/
-bmad-docs/
 
 # SECURITY: Also ignore env.example if it contains real API keys
 # env.example
@@ -45,3 +36,14 @@ bmad-docs/
 secrets/
 secrets.json
 config/secrets.json
+
+# other settings
+.cursor
+.cursor/
+.vscode
+.vscode/
+
+.bmad-core/
+
+bmad-core/
+bmad-docs/
