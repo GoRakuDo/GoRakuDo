@@ -188,7 +188,7 @@ async function processMdxFilesParallel(filePaths: string[], cache: Map<string, C
  * 効率化されたMDXファイル処理
  */
 export async function processMdxFilesEfficiently(): Promise<ProcessResult> {
- console.log('🚀 Starting efficient auto date processing...');
+ console.log('+ Starting efficient auto date processing...');
 
  const cache = loadCache();
  const contentDir = join(process.cwd(), 'src', 'content');
@@ -215,7 +215,7 @@ export async function processMdxFilesEfficiently(): Promise<ProcessResult> {
  }
 
  collectMdxFiles(contentDir);
- console.log(`📁 Found ${mdxFiles.length} MDX files`);
+ console.log(`+ Found ${mdxFiles.length} MDX files`);
 
  // 並列処理でファイルを処理
  const result = await processMdxFilesParallel(mdxFiles, cache);
@@ -223,11 +223,11 @@ export async function processMdxFilesEfficiently(): Promise<ProcessResult> {
  // キャッシュを保存
  saveCache(cache);
 
- console.log(`✅ Processing completed:`);
- console.log(`   📝 Processed: ${result.processed} files`);
- console.log(`   ⏭️  Skipped: ${result.skipped} files`);
- console.log(`   ❌ Errors: ${result.errors} files`);
- console.log(`   ⏱️  Duration: ${result.duration}ms`);
+ console.log(`+ Processing completed:`);
+ console.log(`   - Processed: ${result.processed} files`);
+ console.log(`   - Skipped: ${result.skipped} files`);
+ console.log(`   - Errors: ${result.errors} files`);
+ console.log(`   - Duration: ${result.duration}ms`);
 
  return result;
 }

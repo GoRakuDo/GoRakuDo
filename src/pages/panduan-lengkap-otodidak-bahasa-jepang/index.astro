@@ -1,40 +1,49 @@
 ---
 // ========== IMPORTS ==========
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import panduanSeoData from '../../data/seo/pages/panduan-lengkap.json';
-import gorakudoImmerisonImage from '../../assets/images/pages/pl-obj/gorakudo-immerison.png';
-import gorakudoMembentukPondasiImage from '../../assets/images/pages/pl-obj/gorakudo-membentuk-pondasi-intuisi.png';
-import gorakudoKerangkaActiveImage from '../../assets/images/pages/pl-obj/gorakudo-kerangka-active.png';
-import gorakudoKonsolidasiImage from '../../assets/images/pages/pl-obj/gorakudo-konsolidasi-intuisi.png';
-import gorakudoMenataIntuisiImage from '../../assets/images/pages/pl-obj/gorakudo-menata-intusi.png';
+// Cloudinary image public IDs
+const gorakudoImmerisonImage = 'gorakudo-immerison_pwog2a';
+const gorakudoMembentukPondasiImage =
+  'gorakudo-membentuk-pondasi-intuisi_wgwdt4';
+const gorakudoKerangkaActiveImage = 'gorakudo-kerangka-active_ija47y';
+const gorakudoKonsolidasiImage = 'gorakudo-konsolidasi-intuisi_ykkbvk';
+const gorakudoMenataIntuisiImage = 'gorakudo-menata-intusi_nrrl6c';
 import '../../styles/pages/pl-obj/pl-objIndex.css';
 
-// ========== CONTENT LOADING ==========
-const pages = await getCollection('pages');
-const entry = pages.find(
-  page => page.slug === 'panduan-lengkap-otodidak-bahasa-jepang'
-);
+// ========== CONTENT COMPONENTS ==========
+import JapaneseLearningGuide from '../../components/content/JapaneseLearningGuide.astro';
+import LanguageLearningProblems from '../../components/content/LanguageLearningProblems.astro';
+import KrashenQuote from '../../components/content/KrashenQuote.astro';
+import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
+import { CldImage } from 'astro-cloudinary';
 
-if (!entry) {
-  throw new Error(
-    'Page "panduan-lengkap-otodidak-bahasa-jepang" not found in pages collection'
-  );
-}
-
-const { Content } = await entry.render();
+// ========== ASSETS ==========
+import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.png';
+// Additional Cloudinary image public IDs
+const ledgerPencil = 'ledger-pencil_mvpdkn';
+const heartOnFire = 'heart-on-fire_biuif8';
+const pageMedal = 'page-medal_jbkmyo';
+const tiredStudy = 'gorakudo-tired-study_zhhh2b';
+const motivationWind = 'gorakudo-motivation-wind_buvpbk';
+const certificatedNervous = 'gorakudo-certificated-nervous_kdmhai';
+const comprehensibleSnowball = 'gorakudo-comprehensible-snowball_qslbro';
+const japaneseNativeVocabulary = 'japanese-native-speaker-vocabulary_boqx6t';
+const rumusIntuisi = 'rumus-intuisi_lab7fs';
+const membentukPondasiIntuisi = 'gorakudo-membentuk-pondasi-intuisi_wgwdt4';
+const KerangkaActive = 'gorakudo-kerangka-active_ija47y';
+const KonsolidasiIntuisi = 'gorakudo-konsolidasi-intuisi_ykkbvk';
+const MenataIntusi = 'gorakudo-menata-intusi_nrrl6c';
 
 // ========== SEO DATA ==========
 const seoData = panduanSeoData.seoData;
 
 // ========== DYNAMIC STRUCTURED DATA ==========
-// 本番環境での正しい画像URLを取得
-const getImageUrl = (image: any) => {
-  // 本番環境ではAstroが自動的に最適化されたURLを生成
-  // ローカル環境では開発用パスが返される
-  return image.src;
+// Cloudinary画像URLを生成（CldImageコンポーネント用）
+const getImageUrl = (publicId: string) => {
+  return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${publicId}`;
 };
 
 // ステップ画像のマッピング
@@ -57,7 +66,6 @@ const structuredData = {
       '@type': 'ImageObject',
       url: getImageUrl(gorakudoImmerisonImage),
       width: 630,
-      height: 630,
     },
   },
   howTo: {
@@ -66,7 +74,6 @@ const structuredData = {
       '@type': 'ImageObject',
       url: getImageUrl(gorakudoImmerisonImage),
       width: 630,
-      height: 630,
     },
     step: panduanSeoData.structuredData.howTo.step.map((step, index) => {
       // ステップ名から画像を特定
@@ -87,7 +94,6 @@ const structuredData = {
           '@type': 'ImageObject',
           url: stepImages[imageKey] || getImageUrl(gorakudoImmerisonImage),
           width: 630,
-          height: 630,
         },
       };
     }),
@@ -124,7 +130,7 @@ const faqSchema = {
   keywords={seoData.keywords}
   lang={seoData.lang}
   pageType={seoData.pageType as 'article' | 'website'}
-  publishedDate={entry.data.publishedDate}
+  publishedDate='2025-09-30T00:00:00.000Z'
   ogImage={getImageUrl(gorakudoImmerisonImage)}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
@@ -134,7 +140,973 @@ const faqSchema = {
   <Prose>
     <main class='pl-guide-page' role='main'>
       <div class='container'>
-        <Content />
+        <!-- ========== 導入部分 ========== -->
+        <JapaneseLearningGuide
+          contentTitle='Panduan Lengkap Belajar Bahasa Jepang Otodidak'
+          contentDescription={`
+            <p>Tertarik atau sedang belajar Bahasa Jepang? Banyak di internet, lembaga khursus, dan LPK yang menawakan tips-trik solusi untuk menguasai Bahasa Jepang, tetapi kenyataannya banyak yang stuck kesulitan dalam menjalankan proses pembelajarannya.</p>
+
+            <p>Dan kami 語楽道 ( GoRakuDo ) menawarkan solusi jitu yang berdasarkan "Linguistik Modern" yaitu <strong>Metode IMMERSION</strong>.</p>
+
+        `}
+          priceOriginal='¥ 40,980'
+          priceCurrent='Gratis'
+          priceDiscount='100%'
+          imageSrc={flaticonJapanTorii}
+          imageAlt='Panduan pembelajaran bahasa Jepang dengan ikon torii Jepang tradisional'
+        />
+
+        <LanguageLearningProblems
+          title='Masalah dengan Pembelajaran Bahasa'
+          subtitle='Ada 3 masalah utama dalam pembelajaran bahasa:'
+          problem1Title='Metode Tradisional'
+          problem1Description='tidak efektif, sehingga banyak yang gagal'
+          problem1ImageSrc={ledgerPencil}
+          problem1ImageAlt='Metode pembelajaran bahasa tradisional'
+          problem2Title='Motivasi'
+          problem2Description='tidak akan membuat kalian fasih'
+          problem2ImageSrc={heartOnFire}
+          problem2ImageAlt='Motivasi untuk belajar bahasa baru'
+          problem3Title='Sertifikasi'
+          problem3Description='tidak menjamin kefasihan'
+          problem3ImageSrc={pageMedal}
+          problem3ImageAlt='Sertifikasi untuk belajar bahasa baru'
+        />
+
+        <!-- ========== 問題説明セクション ========== -->
+        <div class='content-section content-section--primary'>
+          <div class='pl-objContainer pl-objContainer--image-left'>
+            <h2 class='pl-objTitle pl-objTitle--primary'>
+              Kenapa Banyak yang Gagal, dengan Metode Tradisional?
+            </h2>
+
+            <div class='pl-objImages'>
+              <CldImage
+                src={tiredStudy}
+                alt='Tired study'
+                quality='auto'
+                width={350}
+                class='section-image'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Metode Tradisional (Latihan, Menghafal Pola-kalimat dan
+                Mempelajari Buku) seakan bisa membantu kalian memahami Bahasa
+                Jepang, tetapi itu bukan cara yang manusiawi dalam belajar
+                Bahasa Jepang. Alasannya akan kita bahas dalam bagian "Second
+                Language Acquisition".
+              </p>
+
+              <p class='unified-content'>
+                Jika tujuan kalian ingin bisa Bahasa Jepang secara fasih <strong
+                  >"Tanpa Loading diKepala"</strong
+                >, maka kalian harus belajar dengan cara yang alami layaknya
+                kalian ketika mempelajari Bahasa Ibu (Bahasa Indonesia).
+              </p>
+
+              <p class='unified-content'>
+                Konsep utama dalam Metodologi Immersion kita adalah
+                "Comprehensible Input". Kita akan mempelajari Bahasa Jepang
+                melalui konten yang mudah dipahami, seperti (YouTube / TV
+                Jepang, Buku, Podcast, dll). Meskipun ada beberapa kata atau
+                Pola-kalimat yang tidak kita mengerti, melalui media Native yang
+                interaktif, kita akan mulai <strong
+                  >meresap dan membentuk Intuisi Bahasa Jepang</strong
+                >.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class='content-section content-section--primary'>
+          <div class='pl-objContainer pl-objContainer--image-right'>
+            <h2 class='pl-objTitle pl-objTitle--primary'>
+              Motivasi Bagaikan angin yang Bertiup
+            </h2>
+
+            <div class='pl-objImages--right'>
+              <CldImage
+                src={motivationWind}
+                alt='Motivasi Belajar Bahasa Jepang'
+                quality='auto'
+                width={350}
+                class='section-image'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Ayo jujur banyak dari kalian yang belajar Bahasa Jepang, tetapi
+                "angin-anginan" doang, yap itulah Motivasi terkadang muncul
+                entah kapan kita sendiri tidak tahu.
+              </p>
+
+              <p class='unified-content'>
+                Oleh karena itu, Belajar Bahasa Jepang dengan Metode Immersion
+                kita tidak bisa mengandalkan motivasi, tetapi membentuk <strong
+                  >Atomic Habbits</strong
+                > dan <strong>Mindset</strong> untuk menyerap Bahasa Jepang secara
+                efektif.
+              </p>
+
+              <p class='unified-content'>
+                Dengan paparan <strong>Comprehensible Input</strong> secara konstan,
+                dialam bawah sadar kita terus membentuk Intuisi Bahasa Jepang secara
+                intuitif tanpa kita sadari. Layaknya kita semasa kecil belajar Bahasa
+                Ibu (Bahasa Indonesia) tanpa kita sadari kita kemampuan berbahasa
+                itu akan terbentuk secara alami dengan sendirinya.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class='content-section content-section--primary'>
+          <div class='pl-objContainer pl-objContainer--image-left'>
+            <h2 class='pl-objTitle pl-objTitle--primary'>
+              Selembar Sertifikat tidak Menjamin skill Bahasa Jepang-mu
+            </h2>
+
+            <div class='pl-objImages'>
+              <CldImage
+                src={certificatedNervous}
+                alt='Lolos Kaiwa JLPT N1'
+                quality='auto'
+                width={350}
+                class='section-image'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Kalian bisa punya seritifkat JLPT/JFT, tetapi sering kali yang
+                "sudah" memiliki sertifikat JLPT N1 sekalipun masih ada yang
+                kesulitan berbicara dengan native orang Jepang. Ini adalah
+                masalah yang sering terjadi, <strong
+                  >banyak yang mengira dengan mereka bisa lolos ujian JLPT/JFT
+                  maka secara otomatis bisa langsung lancar Berbahasa Jepang?</strong
+                > Ya, mungkin itu hanya didalam mimpi.
+              </p>
+
+              <p class='unified-content'>
+                Bagaimana sebaliknya seorang native penutur asli Bahasa Jepang,
+                mereka tidak perlu memiliki sertifikat JLPT/JFT, tetapi bisa
+                berbicara dengan baik dan lancar dalam Bahasa Jepang. Itulah
+                yang menjadi target dalam Metodologi kita yang dinamakan <strong
+                  >"Nativeness"</strong
+                >.
+              </p>
+
+              <p class='unified-content'>
+                Dan kami 語楽道 ( GoRakuDo ) akan membantu kalian mencapai <strong
+                  >"Nativeness"</strong
+                > ini.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== 学習方法セクション ========== -->
+        <div class='learning-method-section'>
+          <div class='learning-method-container'>
+            <h2 class='pl-objTitle pl-objTitle--secondary'>
+              Bagaimana Cara Belajar Bahasa Jepang
+            </h2>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Jadi apakah ada alternatif cara lain untuk belajar Bahasa
+                Jepang?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== SLAセクション ========== -->
+        <div class='sla-section section--purple-strong'>
+          <div class='pl-objContainer pl-objContainer--normal'>
+            <h2 class='pl-objTitle pl-objTitle--secondary pl-objTitle--center'>
+              Second Language Acquisition (IMMERSION)
+            </h2>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Setelah tahun 1980an, ahli dalam bidang pembelajaran bahasa ke-2
+                (SLA) telah menemukan metode baru yang lebih efektif dalam
+                pembelajaran bahasa, yaitu <strong
+                  >"Comprehensible Input"</strong
+                >. Kita manusia mempelajari bahasa melalui "Input" yang bisa
+                kita mengerti.
+              </p>
+
+              <p class='unified-content'>
+                Terlepas dari umur dan kemampuan intelektual, jika kita berada
+                dalam lingkungan yang tepat dan terus terpapar dengan <strong
+                  >"Comprehensible Input"</strong
+                >, maka secara disadari atau tidaknya otak alam bawah sadar kita
+                akan melakukan "Acquisition" atau pattern matching yang nantinya
+                akan membentuk Intuisi kemampuan Berbahasa Jepang secara alami.
+                Yang perlu kita lakukan adalah upaya memahami Bahasa Jepang
+                dalam bentuk <strong>"Comprehensible Input"</strong>.
+              </p>
+
+              <p class='unified-content'>
+                Karena kurangnya minat masyarakat umum dalam Belajar Bahasa
+                ke-2, sehingga Penemuan dalam bidang <strong
+                  >"Linguistik Modern"</strong
+                > terjadi Bottleneck, dan kurangnya mendapatkan perhatian dari para
+                guru atau pengajar bahasa ke-2. Terutama bidang (SLA) yang ada pada
+                saat ini secara Metodologi tertinggal jauh seblum tahun 1980an.
+              </p>
+            </div>
+
+            <KrashenQuote
+              quote='Kita Belajar Bahasa hanya melalui satu cara, yaitu <strong>"Comprehensible Input"</strong> di-lingkungan yang sesuai.'
+              author='Stephen Krashen'
+            />
+          </div>
+        </div>
+
+        <!-- ========== Comprehensible Inputセクション ========== -->
+        <div
+          class='content-section content-section--secondary section--purple-strong'
+        >
+          <div class='pl-objContainer pl-objContainer--image-right'>
+            <h2 class='pl-objTitle pl-objTitle--secondary'>
+              Apa Itu "Comprehensible Input"?
+            </h2>
+
+            <div class='pl-objImages--right'>
+              <CldImage
+                src={comprehensibleSnowball}
+                alt='Comprehensible Input Snowball Effect'
+                quality='auto'
+                width={350}
+                class='section-image'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Comprehensible Input adalah salah satu bagian dari ke-5
+                hipotesis Krashen yang menjadi landasan dalam Metodologi
+                Immersion. Simplenya input <strong>Materi Native</strong> yang dapat
+                kita pahami, meskipun ada beberapa kata atau kalimat yang tidak kita
+                mengerti.
+              </p>
+
+              <p class='unified-content'>
+                Ketika kalian konsumsi Materi Native dalam bentuk Comprehensible
+                Input I+1 (Input yang dimengerti +1) akan diperoses oleh otak
+                alam bawah sadar membentuk Intuisi sebagaimana Bahasa Jepang itu
+                digunakan oleh Penutur Asli. Dengan meningkatkan "Difficulty
+                (+1)", perlahan-lahan sering dengan waktu maka <strong
+                  >kemampuan Berbahasa Jepang akan terbentuk dengan sendirinya
+                  secara alami</strong
+                >, layaknya "Snowball Effect".
+              </p>
+
+              <h4>Formula kemampuan Berbahasa Jepang (Intuisi)</h4>
+
+              <div class='formula'>
+                <CldImage
+                  src={rumusIntuisi}
+                  alt='Formula kemampuan Berbahasa Jepang (Intuisi ≈ [Comprehensible INPUT (i+1) × Waktu Paparan Bermakna] ÷ Filter Afektif)'
+                  quality='auto'
+                  width={600}
+                  loading='eager'
+                />
+              </div>
+
+              <h4>Waktu Paparan Bermakna (Jam Terbang):</h4>
+
+              <p>
+                Bukan haya sekedar durasi dalam konsumsi Materi Native, tetapi
+                juga <strong>kualitas & waktu</strong> yang telah kalian curahkan
+                untuk berinteraksi dengan Bahasa Jepang. Dalam artian kalian wajib
+                memahami setiap makna yang disampaikan, atau istilahnya itu <strong
+                  >"nge-KLIK dalam Otak kalian"</strong
+                > (hal ini mendukung faktor pembentukan Intuisi).
+              </p>
+
+              <p>
+                Semakin banyaknya paparan pada input yang relevan dan menarik,
+                semakin baik.
+              </p>
+
+              <h4>Hipotesis Filter Afektif.</h4>
+
+              <p>
+                Jika filter afektif kalian bermasalah contohnya misalnya cemas,
+                kurang percaya diri, meskipun input-nya sebanyak apapun dan
+                berkualitas, semua balik ke <strong
+                  >zero sum hasil-nya NOL NIHIL</strong
+                >. Istilahnya "Snowball Effect" kalian terkikis oleh rintangan
+                cabang pohon sepanjang jalan.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Kaiwa練習セクション ========== -->
+        <div class='kaiwa-practice-section section--purple-strong'>
+          <div
+            class='pl-objContainer pl-objContainer--balanced pl-objContainer--special'
+          >
+            <h2 class='pl-objTitle pl-objTitle--secondary'>
+              Gimana dengan Laithan Kaiwa?
+            </h2>
+
+            <div class='pl-objImages--special'>
+              <CldImage
+                src={japaneseNativeVocabulary}
+                alt='Data Kosakata Penutur Asli Bahasa Jepang'
+                quality='auto'
+                class='section-image image-zoom-trigger'
+                data-zoom-src={getImageUrl(japaneseNativeVocabulary)}
+                data-zoom-alt='Data Kosakata Penutur Asli Bahasa Jepang'
+                tabindex='0'
+                role='button'
+                aria-label='画像をクリックして拡大表示'
+              />
+              <p class='kaiwa-practice-caption'>
+                *Sumber: Penelitian Ogiwara (2016) and Sato et al. (2017)
+              </p>
+            </div>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Output dalam bentuk apaun, terutama tulis-menulis dan <strong
+                  >Latihan Kaiwa Bahasa Jepang</strong
+                > sebelum kalian "Benar-benar" memahami Bagaimana Bahasa Jepang digunakan
+                oleh Native akan menghambat perkembangan Intuisi Bahasa Jepang. Kenapa?
+              </p>
+              <p class='unified-content'>
+                Logikanya adalah adanya relasi antara kemampuan Kosakata Bahasa
+                Jepang kalian dengan kemampuan Output. Sehingga tidaklah logis
+                jika kosakata kalian (1rb-2rb) ingin berbicara dengan lancar
+                layaknya orang dewasa. Periksa tabel "JP Vocab Development",
+                klik untuk perbesar gambar.
+              </p>
+              <p class='unified-content'>
+                Ya, realita ini memang bertentangan dengan Metode Tradisional di
+                tempat Khursus atau LPK Bahasa Jepang yang memaksa kalian OUTPUT
+                dari hari pertama belajar Bahasa Jepang. Output tulis-menulis
+                dan Latihan Kaiwa Bahasa Jepang memang dapat melatih kemampuan
+                berbahasa Jepang kalian, tetapi ketika kalian <strong
+                  >sudah "benar-benar" memiliki pondasi Kosakata dan memahami
+                  bagaimana Bahasa Jepang digunakan</strong
+                > oleh Native dalam kehidupan sehari-hari.
+              </p>
+              <p class='unified-content'>
+                Minimalisir Early OUTPUT, dan fokus pada <strong
+                  >Comprehensible Input</strong
+                > akan jauh lebih berkontribusi dalam perkembangan Intuisi Bahasa
+                Jepang kalian.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== 期間セクション ========== -->
+        <div class='immersion-duration-section section--purple-strong'>
+          <div class='pl-objContainer pl-objContainer--normal'>
+            <h2 class='pl-objTitle pl-objTitle--secondary pl-objTitle--center'>
+              Berapa lama IMMERION sampai bisa Berbahasa Jepang dengan lancar?
+            </h2>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Jawabannya adalah relative, bergantung pada dirikalian sendiri.
+                Sesuai dengan "Formula Intusi" yang sudah kita bahas bersama
+                sebelumnya, semua tergantung dengan effort kalian menyerap
+                Bahasa Jepang secara rutin. Tidak ada jalan pintas, yang ada
+                hanyalah rute jalan yang lebih efisien yaitu dengan <strong
+                  >"IMMERSION"</strong
+                > berdasarkan pada Saintifik Modern Linguistik. Bukan hanya sehari
+                10-30 menit Belajar Bahasa Jepang, tatapi menjadikan Bahasa Jepang
+                itu bagian dari sepenuhnya keseharian kalian.
+              </p>
+
+              <p class='unified-content'>
+                Kita lihat realitanya, tidak ada bayi yang baru lahir 1-3 Tahun
+                langsung bisa lancar berpidato dalam Bahasa Ibu-nya. Tetapi
+                tunggu dulu, kita sebagai manusia dewasa yang memiliki
+                prior-knowdlage dengan intensitas yang cukup dalam Immersion,
+                intuisi Berbahasa Jepang kalian akan lebih mudah cepat
+                terbentuk. Secara pastinya <u class='highlight-underline'
+                  >dengan mengkonsumsi materi Comprehensible Input sehari 6-8
+                  jam</u
+                > secara rutin selama 1-2 tahun, kalian akan <u
+                  class='highlight-underline'
+                  >jauh lebih fasih dalam Bahasa Jepang tanpa harus menghafal
+                  Pola-kalimat atau Tata-Bahasa Jepang</u
+                >.
+              </p>
+
+              <p class='unified-content'>
+                Catatan: <u class='highlight-underline'
+                  >Formula Intuisi tetap berlaku</u
+                >.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== 方法論サマリーセクション ========== -->
+        <div class='methodology-summary-section'>
+          <div class='methodology-summary-container'>
+            <h3 class='pl-objTitle pl-objTitle--secondary pl-objTitle--center'>
+              Rangkuman Metodologi IMMERSION
+            </h3>
+
+            <div class='unified-content'>
+              <p class='unified-content'>
+                Metodologi kita terfokus pada skill fundamental dalam Berbahasa
+                Jepang, yang berdasarkan pada "Linguistik Modern" yaitu <strong
+                  >"IMMERSION"</strong
+                >. Tetapi kita semua tahu perjalanan menguasai Bahasa Jepang itu
+                tidak sesimple memasak mie-instant. Berikut adalah daftar
+                rangkuman yang bisa kalian bisa aplikasikan unutk membentuk
+                "Intusi Berbahasa Jepang" secara alami:
+              </p>
+
+              <ol class='methodology-phases-list'>
+                <li>
+                  <strong>Phase 1 ( 幼級 )</strong>: Membentuk Pondasi Intuisi
+                </li>
+                <li>
+                  <strong>Phase 2 ( 小級 )</strong>: Bentuk kerangka Intuisi
+                  Active Immersion
+                </li>
+                <li>
+                  <strong>Phase 3 ( 中級 )</strong>: Konsolidasi Intuisi dengan
+                  double Reading & Listening
+                </li>
+                <li>
+                  <strong>Phase 4 ( 高級 )</strong>: Menata Intuisi dengan
+                  Output
+                </li>
+                <li>
+                  <strong>Phase 5 ( 大級 )</strong>: Optimalisasi dan Memperluas
+                  Intuisi
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Phase 1 ========== -->
+        <div
+          class='content-section content-section--secondary section--purple-strong'
+        >
+          <div class='pl-objContainer pl-objContainer--phase1'>
+            <h2 class='pl-objTitle pl-objTitle--secondary'>
+              Phase 1 ( 幼級 ): Membentuk Pondasi Intuisi Berbahasa Jepang
+            </h2>
+
+            <div class='phase-goal'>
+              <p>
+                Goal: Memahami 2 Ribu Kosakata Pertama, berserta penggunaannya
+                di Kehidupan Sehari-hari.
+              </p>
+            </div>
+
+            <div class='pl-objImages pl-objImages--right'>
+              <CldImage
+                src={membentukPondasiIntuisi}
+                alt='Membentuk Pondasi Intuisi Berbahasa Jepang'
+                quality='auto'
+                width={350}
+                loading='eager'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p>
+                Dalam Phase 1, kalian akan membentuk tulang yang benar-benar
+                tulang dari pondasi Intuisi Bahasa Jepang kalian. Dan diharapkan
+                kalian sudah bisa membaca ひらがな dan カタカナ.
+              </p>
+
+              <ul class='phase-steps-list'>
+                <li>
+                  <strong>Gunakan Flashcard Anki</strong>: Tersedia untuk{' '}
+                  <a
+                    href='https://apps.ankiweb.net/'
+                    target='_blank'
+                    rel='noopener noreferrer'><strong>Windows</strong></a
+                  >{' '}dan{' '}
+                  <a
+                    href='https://play.google.com/store/apps/details?id=com.ichi2.anki'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    ><strong>Andorid PlayStore</strong></a
+                  >{' '}secara Gratis. Dan berbayar unutk{' '}
+                  <a
+                    href='https://apps.apple.com/us/app/ankimobile-flashcards/id373493387'
+                    target='_blank'
+                    rel='noopener noreferrer'><strong>IOS AppStore</strong></a
+                  >.
+                </li>
+                <li>
+                  <strong>Import 1.500 Kosakata Jepang</strong>: Cek Rekomendasi
+                  Deck Anki untuk Pemula di{' '}
+                  <a
+                    href='https://discord.com/channels/1075777026482520114/1348198195540398181'
+                    target='_blank'
+                    rel='noopener noreferrer'><strong>Sini</strong></a
+                  >.
+                  <ul class='phase-substeps'>
+                    <li>
+                      Jangan Skip Review Kalian, disini rutinitas adalah kunci
+                      utamanya.
+                    </li>
+                    <li>
+                      Cek video tutorial Setting Anki di{' '}
+                      <a
+                        href='https://www.youtube.com/watch?v=6BKA603SaZ4'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <strong>Windows - YouTube Video</strong></a
+                      >, dan di{' '}
+                      <a
+                        href='https://youtu.be/dvT3CpE7IdU'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        ><strong>Android / IOS - YouTube Video</strong></a
+                      >.
+                    </li>
+                    <li>
+                      Coba mulai dengan 35 New Cards per Hari dan mengatur FSRS
+                      ke 0,85-0,90.
+                    </li>
+                    <li>
+                      Jika tingkat Retensi daya ingat kalian di bawah 75%,
+                      silahkan kurangi jumlah kartu baru per harinya.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <strong
+                    >Biasakan Active Listening dari YouTube Comprehensible
+                    Japanese</strong
+                  >: Bisa kalian lihat daftar channelnya di{' '}
+                  <a
+                    href='/rekomendasi-channel-youtube-belajar-bahasa-jepang'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    ><strong>Comprehensive Japanese - YouTube</strong></a
+                  >, dan{' '}
+                  <a
+                    href='https://discord.com/channels/1075777026482520114/1389601147882573844'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    ><strong>Animasi Comprehensible Japanese</strong></a
+                  >.
+                </li>
+                <li>
+                  <strong>Mulai Sentence Mining</strong>: Setelah statistik
+                  kartu Anki kalian mencapai Young atau Learned sebanyak 750,
+                  kalian bisa mulai mengumpulkan kosakata dari Materi Native
+                  (Anime, YouTube, Artikel Website Jepang, dll).
+                  <ul class='phase-substeps'>
+                    <li>
+                      Tutorial Setup Sentence Mining di{' '}
+                      <a
+                        href='https://discord.com/channels/1075777026482520114/1294182374531141672'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        ><strong>Windows - YouTube Video</strong></a
+                      >, dan di{' '}
+                      <a
+                        href='https://discord.com/channels/1075777026482520114/1302948603035254784'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        ><strong>Andorid - YouTube Video</strong></a
+                      >.
+                    </li>
+                    <li>
+                      Rekomendasi Anime untuk Sentence Mining di{' '}
+                      <a
+                        href='https://jpdb.io/'
+                        target='_blank'
+                        rel='noopener noreferrer'><strong>JPDB.io</strong></a
+                      >, pilihlah dengan Difficulty yang sesuai dengan kemampuan
+                      kalian dibawah 35%.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Passive Listening</strong>: Meskipun kalian sibuk
+                  tidak memiliki waktu, kalian bisa memanfaatkan waktu kalian
+                  dengan passive listening dari materi YouTube Comprehensible
+                  Japanese diatas, atau penjelasan lebih detail di{' '}
+                  <a
+                    href='https://youtu.be/_jb1lpjPMXY'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    ><strong>Video - YouTube.com</strong></a
+                  >.
+                  <ul class='phase-substeps'>
+                    <li>
+                      Materi Native lainnya untuk passive listening di{' '}
+                      <a
+                        href='/rekomendasi-channel-youtube-belajar-bahasa-jepang'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        ><strong>Kumpulan Podcast Radio Native JP</strong></a
+                      >, dan{' '}
+                      <a
+                        href='https://discord.com/channels/1075777026482520114/1297098886183387187/1297385558066069524'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        ><strong>Kumpulan Condensed Audio</strong></a
+                      >.
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Phase 2 ========== -->
+        <div
+          class='content-section content-section--secondary section--purple-strong'
+        >
+          <div class='pl-objContainer pl-objContainer--phase2'>
+            <h3 class='pl-objTitle pl-objTitle--secondary'>
+              Phase 2 ( 小級 ): Bentuk kerangka Intuisi Active Immersion
+            </h3>
+
+            <div class='phase-goal'>
+              <p>
+                Goal: Memahami 7500 Kosakata Pertama, berserta definisinya dari
+                "Kacamata Penutur Asli Jepang".
+              </p>
+            </div>
+
+            <div class='pl-objImages pl-objImages--left'>
+              <CldImage
+                src={KerangkaActive}
+                alt='Phase 2: Kerangka Intuisi Active Immersion'
+                quality='auto'
+                width={350}
+                loading='eager'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p>
+                Phase 2 ini dimana kalian mulai bisa mengikuti percakapan Bahasa
+                Jepang, walaupun belum sepenuhnya mengerti kalian bisa dapet
+                makna pesannya dalam konteks sehari-hari. Tujuan kalian terus
+                mengembangkan kerangka Intuisi dari Phase 1.
+              </p>
+
+              <ul class='phase-steps-list'>
+                <li>
+                  <strong>Fukus Perbanyak Active Immerison</strong>: Buatlah
+                  accountbaru di YouTube khurus untuk kontent Native Jepang,
+                  tutorialnya kalian bisa lihat di{' '}
+                  <a
+                    href='https://youtu.be/QOjauyzWT9w'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    ><strong>Trik Algorithm YouTube - YouTube.com</strong></a
+                  >.
+                </li>
+                <li>
+                  <strong>Mulai mencoba Membaca Light Novel</strong>: Pilihlah
+                  Light Novel yang sesuai dengan kemampuan kalian bisa
+                  refrensikan dari{' '}
+                  <a
+                    href='https://learnnatively.com/search/jpn/books/?type=light_novel,novel&min=34&max=40&leveltag=n3'
+                    target='_blank'
+                    rel='noopener noreferrer'><strong>Natively</strong></a
+                  >{' '}dan{' '}<a
+                    href='https://jpdb.io/novel-difficulty-list'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    ><strong>Novel difficulty list - JPDB.io</strong></a
+                  >{' '}(Average difficulty diBawah 50%).
+                </li>
+                <li>
+                  <strong
+                    >Gunakan KBBJ (Kamus Besar Bahasa Jepang - Monolingual)</strong
+                  >: Mulailah coba memahai Bahasa Jepang dari Perspektif Kaca
+                  Mata Penutur Asli Jepang. Jika kalian masih kesulitan bisa cek
+                  Artikel kita{' '}
+                  <a
+                    href='https://discord.com/channels/1075777026482520114/1391719753688809534'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    ><strong
+                      >Manfaatkan AI ChatGPT untuk memahami Bahasa Jepang</strong
+                    ></a
+                  >.
+                </li>
+                <li>
+                  <strong>Perbanyak Kartu Anki dengan Sentence Mining</strong>:
+                  Lanjutkan dari Phase 1, dan kalian mulain bisa perluas ke
+                  Difficulty 35-50%. Termasuk Sentence Mining dari Media Anime,
+                  YouTube, Light Novel, dll.
+                </li>
+              </ul>
+
+              <p>
+                Kedengarannya memang simple, tetapi jika kalian bisa commitment
+                disini JLPT N3 ada ditanggan kalian, dan ingat sertifikasi tidak
+                menjamin skill Bahasa Jepang kalian. Tujuan kita adalah <strong
+                  >Membentuk Intuisi Berbahasa Jepang secara alami</strong
+                >.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Phase 3 ========== -->
+        <div
+          class='content-section content-section--secondary section--purple-strong'
+        >
+          <div class='pl-objContainer pl-objContainer--phase3'>
+            <h3 class='pl-objTitle pl-objTitle--secondary'>
+              Phase 3 ( 中級 ): Konsolidasi Intuisi dengan double Reading &
+              Listening
+            </h3>
+
+            <div class='phase-goal'>
+              <p>
+                Goal: Memahami 12.500 Kosakata, dengan memperdalam pemahaman
+                dari "Otak Penutur Asli Jepang".
+              </p>
+            </div>
+
+            <div class='pl-objImages pl-objImages--right'>
+              <CldImage
+                src={KonsolidasiIntuisi}
+                alt='Phase 3: Konsolidasi Intuisi dengan double Reading & Listening'
+                quality='auto'
+                width={350}
+                loading='eager'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p>
+                Phase 3 Otak alam bawah sadar kalian mulai sadar banyak pattern
+                kemiripan satu samalain, ini dimana saatnya kalian berusaha
+                "Solving The Ambiguity" dari Phase 2 sebelumnya kalian
+                mendapatkan banyak pustaka database Kosakata Baru.
+              </p>
+
+              <p>
+                Cara yang paliang ampuh adalah <strong
+                  >"Let it Go" dan "Tolerate The Ambiguity"</strong
+                > diPhase ini kalian coba fokus memahami dari "Otak Penutur Asli
+                Jepang". Kali hanya butuh menemukan setiap Puzzle Konteksnya dari
+                Materi Native sebanyak mungki. Ingat <strong
+                  >bukan sekedar arti belaka</strong
+                > tetapi kalian mencoba menangkap <strong
+                  >pola pikir Penutur Asli Jepang</strong
+                > itulah definisi makna yang sebenarnya.
+              </p>
+
+              <ul class='phase-steps-list'>
+                <li>
+                  <strong>Lupakan Semua Bahasa Indoensia dan Inggirs</strong>:
+                  Disini kalian wajib Remove semua kamus Bilingual, termasuk
+                  JMDict / JitenDex. Pahami langsung dari Kamus Monolingual
+                  <ul class='phase-substeps'>
+                    <li>
+                      Rekomendasi Kamus Monolingual: (広辞苑 第七版),
+                      (新明解国語辞典 第八版), (三省堂国語辞典 第八版), dan
+                      (実用日本語表現辞典 Extended).
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Reading menjadi keseharian</strong>: Selalu sedikan
+                  waktu setiap harinya untuk membaca Light Novel, atau Website
+                  Artikel Jepang minimal 1-2jam sehari.
+                </li>
+                <li>
+                  <strong>Expand Difficulty dari 75%-80%</strong>: Hal ini untuk
+                  menjaga "Input I+1" tetap efektif, kalian bisa mulai dari
+                  kontent Berita Jepang, Politik, dll.
+                </li>
+                <li>
+                  <strong>Tetap Jaga Intensitas Input</strong>: Disini
+                  kebanyakan dari aklian akan merasa Stuck dalam Progress, ini
+                  adalah fase yang paling berat yaitu "Dunning-Krugger Effect"
+                  dimana semakin kalian banyak tahu semakin terbuka pikiran
+                  kalian itu masih banyak yang perlu dipahami lebih dalam.
+                  <ul class='phase-substeps'>
+                    <li>
+                      Kunci untuk solusinya adalah <strong
+                        >Konsistensi Harian</strong
+                      > dan <strong>Variasi Input</strong> dari berbagai media Native
+                      Jepang.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Persiapan Phase 4</strong>: Inport kamus Pitch Accent,
+                  dan perhatikan gaya cara berbicara Native Jepang. Bukan cuma
+                  sekedar listening atau nonton doang, tetapi perhatikan
+                  penekanan dan intonasi cara Penutur Asli Jepang berbicara.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Phase 4 ========== -->
+        <div
+          class='content-section content-section--secondary section--purple-strong'
+        >
+          <div class='pl-objContainer pl-objContainer--phase4'>
+            <h3 class='pl-objTitle pl-objTitle--secondary'>
+              Phase 4 ( 高級 ): Menata Intuisi dengan Output
+            </h3>
+
+            <div class='phase-goal'>
+              <p>
+                Goal: Memperdalam 20.000 Kosakata, dan memahami "Cara Orang
+                Jepang Berbicara".
+              </p>
+            </div>
+
+            <div class='pl-objImages pl-objImages--left'>
+              <CldImage
+                src={MenataIntusi}
+                alt='Phase 4: Menata Intuisi dengan Output'
+                quality='auto'
+                width={350}
+                loading='eager'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p>
+                Tujuan kalian di Phase ini telinga kalian <strong
+                  >sudah terbisa sepenuhnya dengan penekanan</strong
+                > dan <strong>gaya orang Jepang berbicara</strong>. Dalam
+                percakan sehari-hari kalian sudah <strong
+                  >meresap effort-less paham tanpa perlu mikir</strong
+                >. Semua Input yang kalian daptkan dari materi <strong
+                  >Naitve sudah terasa familiar</strong
+                >.
+              </p>
+
+              <p>
+                Tahun pertama ketika mulai OUTPUT <strong
+                  >pastikan lawan bicara kalian adalah Native Penutur Asli
+                  Jepang</strong
+                >. Mungkin akan <strong
+                  >terasa Awkward pertama kalinya mencoba berbicara</strong
+                > Kaiwa dengan Bahasa Jepang, ini terjadi karen kalian <strong
+                  >punya Intuisi Alam Bawah Sadar</strong
+                > yang berusah mendikte (memberitahu) diri kalian akan "Bahasa Jepang
+                yang Natural". Wajar kalian melakukan kesalahan, dan tetap "<strong
+                  >Follow The Intuition</strong
+                >" karena Intusi kalian yang akan membimbing dirikalian.
+              </p>
+
+              <p>
+                Perhatikan juga setiap respon (Penutur Asli Jepang) lawan bicara
+                kalian, dan 100% tiru cara mereka berbicara. Output seperlunya
+                jangan paksakan dirikalian untuk terus menerus Output berbicara,
+                selingi dengan Input yang seimbang dapat mengoreksi kesalahan
+                kalian. Dan selalu tanyakan kediri kalian "Andaikan diri-ku
+                seorang Native Penutur Asli Bahasa Jepang, bagaiman cara aku
+                merespon-nya?, dan apakah ada yang bisa aku perbaiki agar
+                terdengar lebih seperti Penutur Asli Jepang?".
+              </p>
+
+              <ul class='phase-steps-list'>
+                <li><strong>Lanjutkan semua dari Phase 2-3.</strong></li>
+                <li>
+                  <strong>Monitoring Aksen Suara kalian sendiri</strong>: Kalian
+                  bisa menggunakan Mic Condenser yang memiliki Earphone Jack,
+                  dan pastikan secara Real-Time monitoring tanpa delay.
+                  Tujuannya dalah mengetahui bagaimana suara kalian terdengar
+                  oleh orang lain. Awalnya akan merasa aneh, tetapi seiring
+                  waktu kalian akan terbiasa.
+                </li>
+                <li>
+                  <strong>Koreksi Kesalahan</strong>: Hanya menerima koreksi
+                  dari "Penutur Asli Jepang" atau Yang lebih senior dalam
+                  Metodologi IMMERISON.
+                  <ul class='phase-substeps'>
+                    <li>
+                      Jika kalian membaca semua dari atas sampai saat ini kalian
+                      sendiri harusnya sudah realize kalau Metodologi
+                      Pembelajaran bahasa yang ada pada saat ini (Metodologi
+                      tradisional) umumnya didasari pada persepsi yang salah
+                      akan bahasa.
+                    </li>
+                    <li>
+                      Metodologi tradisional sudah tertinggal berdasarkan
+                      pemahaman lama sebelum tahun 80an. Akan segera kita bahas
+                      lebih lanjut di Artikel Dokumentasi...
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Phase 5 ========== -->
+        <div
+          class='content-section content-section--secondary section--purple-strong'
+        >
+          <div class='pl-objContainer pl-objContainer--phase5'>
+            <h3 class='pl-objTitle pl-objTitle--secondary'>
+              Phase 5 ( 大級 ): Optimalisasi dan Memperluas Intuisi
+            </h3>
+
+            <div class='phase-goal'>
+              <p>
+                Goal: Optimalisasi 30.000 Kosakata diluar kepala, dan Perfect
+                Pitch Accent (Near Native Level).
+              </p>
+            </div>
+
+            <div class='pl-objImages pl-objImages--right'>
+              <CldImage
+                src={gorakudoImmerisonImage}
+                alt='Phase 5: Optimalisasi dan Memperluas Intuisi - GoRakuDo Immersion'
+                quality='auto'
+                width={350}
+                loading='eager'
+              />
+            </div>
+
+            <div class='unified-content'>
+              <p>
+                Phase 5 ini adalah tips dan trik extra yang sedang dipersiapkan
+                jika kalian tertarik akan kita tambahkan setelah Prize VII
+                Tercapai. Kita butuh bantukan kalian untuk membagun Platform dan
+                Komunitas Immersion untuk membantu kalian mencapai semua tujuan
+                ini.
+              </p>
+
+              <TrakteerWidget
+                src='https://stream.trakteer.id/milestone/index.html?ms_font=Work+Sans&ms_icon=https%3A%2F%2Fedge-cdn.trakteer.id%2Fimages%2Fmix%2Fegis-in-bottle.png%3Fv%3D14-05-2025&ms_title=Project+Web+GoRakuDo&ms_1_clr1=rgba%28250%2C+250%2C+250%2C+0%29&ms_1_clr2=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr4=rgba%280%2C+0%2C+0%2C+1%29&ms_1_clr7=rgba%28103%2C+58%2C+183%2C+1%29&ms_1_clr9=rgba%28190%2C+30%2C+45%2C+1%29&ms_sincedate=12-09-2025&ms_only_show_complete=true&ms_is_show_limit_milestone=false&ms_collapse_future_milestone=true&ms_show_total_limit_milestone=3&ms_collapse_complete_milestone=true&key=trstream-9QWbcPd1n8JhpZo9E1BV&mod=3&hash=b9073almo9r5ekzg&timestamp=1757688304'
+                title='Project Web GoRakuDo'
+                width='100%'
+                maxWidth='312px'
+                maxHeight='400px'
+                className='mt-4'
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </Prose>

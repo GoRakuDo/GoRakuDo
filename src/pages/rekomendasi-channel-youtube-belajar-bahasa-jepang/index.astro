@@ -1,13 +1,14 @@
 ---
 // ========== IMPORTS ==========
-import { Image } from 'astro:assets';
+import { CldImage } from 'astro-cloudinary';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
 import channelsDataRaw from '../../data/youtube-channels.json';
 import youtubeSeoData from '../../data/seo/pages/youtube-rekomendasi.json';
-import heroImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-rekomendasi-youtube.png';
-import podcastImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-radio-podcast.png';
-import mediaImage from '../../assets/images/pages/rChannelYT-BBJ-Index/gorakudo-tv-media.png';
+// Cloudinary image public IDs
+const heroImage = 'gorakudo-rekomendasi-youtube_oos0gu';
+const podcastImage = 'gorakudo-radio-podcast_lrlfmn';
+const mediaImage = 'gorakudo-tv-media_maayuy';
 import '../../styles/pages/rChannelYT-BBJ/rChannelYT-BBJ-Index.css';
 
 // ========== DATA PROCESSING ==========
@@ -17,10 +18,8 @@ const structuredData = youtubeSeoData.structuredData;
 const breadcrumbData = youtubeSeoData.breadcrumbData;
 
 // ========== IMAGE URL UTILITY ==========
-const getImageUrl = (image: any) => {
-  // 本番環境ではAstroが自動的に最適化されたURLを生成
-  // ローカル環境では開発用パスが返される
-  return image.src;
+const getImageUrl = (publicId: string) => {
+  return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${publicId}`;
 };
 
 // ========== STRUCTURED DATA ==========
@@ -76,14 +75,13 @@ const collectionPageSchema = structuredData.collectionPage;
         <!-- 画像セクション -->
         <div class='rc-content-right'>
           <div class='rc-image-section'>
-            <Image
+            <CldImage
               src={heroImage}
               alt='Japanese Learning Illustration - Person relaxing on beach with Mount Fuji background'
+              quality='auto'
               class='rc-hero-image'
               loading='eager'
               fetchpriority='high'
-              format='webp'
-              quality={85}
             />
           </div>
         </div>
@@ -167,14 +165,13 @@ const collectionPageSchema = structuredData.collectionPage;
                   </div>
                   <div class='rc-section-content-right'>
                     <div class='rc-section-image-section'>
-                      <Image
+                      <CldImage
                         src={podcastImage}
                         alt='Podcast Learning Illustration'
+                        quality='auto'
                         class='rc-section-hero-image'
                         loading='lazy'
                         decoding='async'
-                        format='webp'
-                        quality={85}
                       />
                     </div>
                   </div>
@@ -197,14 +194,13 @@ const collectionPageSchema = structuredData.collectionPage;
                   </div>
                   <div class='rc-section-content-right'>
                     <div class='rc-section-image-section'>
-                      <Image
+                      <CldImage
                         src={mediaImage}
                         alt='Media & TV News Learning Illustration'
+                        quality='auto'
                         class='rc-section-hero-image'
                         loading='lazy'
                         decoding='async'
-                        format='webp'
-                        quality={85}
                       />
                     </div>
                   </div>

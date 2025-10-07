@@ -485,14 +485,10 @@ a {
       }
     }
 
-    .problems-subtitle,
-    .problems-subtitle-text {
-      margin: 0;
-      color: var(--pl-color-text-secondary);
-    }
-
     .problems-subtitle {
       max-width: 800px;
+      margin: 0;
+      color: var(--pl-color-text-secondary);
       text-align: center;
     }
 
@@ -789,8 +785,7 @@ a {
    UNIFIED IMAGE CONTAINER STYLES - DRY Principle Applied
    ======================================== */
 
-.pl-objImages,
-.pl-objImages--right {
+.pl-objImages {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -801,9 +796,52 @@ a {
   }
 
   @media (min-width: 768px) {
+    justify-content: center;
+    grid-area: image;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+.pl-objImages--left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 350px;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    order: 1;
+    min-height: 300px;
+  }
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+    grid-area: image;
+    margin-right: calc(min(var(--pl-space-4xl), 5.33vw) / 2);
+    margin-left: 0;
+    align-self: center;
+  }
+}
+
+.pl-objImages--right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 350px;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    order: 1;
+    min-height: 300px;
+  }
+
+  @media (min-width: 768px) {
     justify-content: flex-end;
     grid-area: image;
+    margin-right: 0;
     margin-left: calc(min(var(--pl-space-4xl), 5.33vw) / 2);
+    align-self: center;
   }
 }
 
@@ -1442,6 +1480,7 @@ a {
     @media (min-width: 768px) {
       justify-content: flex-start;
       margin-right: calc(min(var(--pl-space-4xl), 5.33vw) / 2);
+      margin-left: 0;
     }
   }
 }
@@ -1458,6 +1497,7 @@ a {
   .pl-objImages {
     @media (min-width: 768px) {
       justify-content: flex-end;
+      margin-right: 0;
       margin-left: calc(min(var(--pl-space-4xl), 5.33vw) / 2);
     }
   }

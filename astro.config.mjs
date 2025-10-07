@@ -85,7 +85,7 @@ export default defineConfig({
       alias: {
         '@': './src',
       },
-      dedupe: ['astro'],
+      dedupe: ['astro', 'astro-cloudinary'],
     },
     server: {
       hmr: {
@@ -97,6 +97,9 @@ export default defineConfig({
     },
     define: {
       __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
+    },
+    optimizeDeps: {
+      include: ['astro-cloudinary'],
     },
   },
 });

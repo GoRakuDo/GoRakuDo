@@ -17,6 +17,10 @@ pnpm-debug.log*
 .env.development
 .env.production
 .env.*.local
+.cursor
+.cursor/
+.vscode
+.vscode/
 
 .bmad-core/
 

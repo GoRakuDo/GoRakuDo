@@ -1,6 +1,6 @@
 ---
 // LanguageLearningProblems Component - 言語学習の問題点セクション
-import { Image } from 'astro:assets';
+import { CldImage } from 'astro-cloudinary';
 import '../../styles/pages/pl-obj/pl-objIndex.css';
 
 export interface Props {
@@ -42,24 +42,21 @@ const {
   <div class='problems-container glassmorphism glassmorphism-card'>
     <h2 class='problems-title' id='problems-title'>{title}</h2>
 
-    <div class='problems-subtitle'>
-      <p class='problems-subtitle-text'>{subtitle}</p>
-    </div>
+    <p class='problems-subtitle'>{subtitle}</p>
 
     <!-- Problem 1 -->
     <ol class='problems-list'>
       <li class='problem-item'>
         <div class='problem-image-container'>
-          <Image
+          <CldImage
             src={problem1ImageSrc}
             alt={problem1ImageAlt}
+            quality='auto'
             width={135}
             height={135}
             loading='lazy'
             decoding='async'
             class='problem-image'
-            format='webp'
-            quality={85}
           />
           <div class='problem-icon-overlay'>
             <svg
@@ -88,16 +85,15 @@ const {
       <!-- Problem 2 -->
       <li class='problem-item'>
         <div class='problem-image-container'>
-          <Image
+          <CldImage
             src={problem2ImageSrc}
             alt={problem2ImageAlt}
+            quality='auto'
             width={135}
             height={135}
             loading='lazy'
             decoding='async'
             class='problem-image'
-            format='webp'
-            quality={85}
           />
           <div class='problem-icon-overlay'>
             <svg
@@ -126,16 +122,15 @@ const {
       <!-- Problem 3 -->
       <li class='problem-item'>
         <div class='problem-image-container'>
-          <Image
+          <CldImage
             src={problem3ImageSrc}
             alt={problem3ImageAlt}
+            quality='auto'
             width={135}
             height={135}
             loading='lazy'
             decoding='async'
             class='problem-image'
-            format='webp'
-            quality={85}
           />
           <div class='problem-icon-overlay'>
             <svg
