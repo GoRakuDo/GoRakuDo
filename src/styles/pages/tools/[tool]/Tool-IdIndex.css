@@ -513,6 +513,47 @@
     }
   }
 
+  /* ========== カードメインコンテンツ (アイコン + テキスト) ========== */
+  .card-main-content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      gap: 1.5rem;
+    }
+  }
+
+  /* ========== プラットフォームアイコン ========== */
+  .card-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    background: oklch(from var(--clr-accent) l c h / 0.1);
+    color: var(--clr-text-primary);
+
+    @media (min-width: 768px) {
+      width: 64px;
+      height: 64px;
+      border-radius: 0.75rem;
+    }
+  }
+
+  .card-icon svg {
+    width: 24px;
+    height: 24px;
+
+    @media (min-width: 768px) {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
   .card-image-section {
     overflow: hidden;
     margin-bottom: clamp(0.5rem, 1.25vw, 0.75rem);

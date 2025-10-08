@@ -70,6 +70,7 @@ const toolArticlesCollection = defineCollection({
     author: z.string().max(LIMITS.AUTHOR_MAX).default(DEFAULTS.AUTHOR),
     toolName: z.string().min(1).max(50),
     icon: z.string().regex(/^\/[a-zA-Z0-9/\-_.]+\.(png|jpg|jpeg|svg|webp)$/).optional(),
+    devicePlatform: z.enum(['Android', 'Windows']).default('Windows'),
     categories: z.array(z.string().max(LIMITS.CATEGORY_MAX)).min(1).max(LIMITS.CATEGORIES_MAX).default(['tools']),
     tags: z.array(z.string().max(20)).max(10).default([]),
     keywords: z.array(z.string().max(30)).max(15).default([]),

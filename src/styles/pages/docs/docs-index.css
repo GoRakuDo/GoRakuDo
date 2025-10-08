@@ -417,14 +417,7 @@
   margin-bottom: 0.75rem;
   padding-right: 5rem;
   color: var(--clr-text-dark);
-  font-family:
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica Neue,
-    Arial,
-    sans-serif;
+  font-family: var(--font-primary);
   font-size: var(--title-font);
   font-weight: 800;
   line-height: 1.4;

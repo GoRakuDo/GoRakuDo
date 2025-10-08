@@ -726,12 +726,7 @@
   align-items: center;
   gap: 0.25rem;
   color: var(--clr-text-secondary);
-  font-family:
-    SF Mono,
-    Monaco,
-    Inconsolata,
-    Roboto Mono,
-    monospace;
+  font-family: var(--font-mono);
   font-size: clamp(0.625rem, 0.5rem + 0.5vw, 0.75rem);
   font-weight: 500;
   opacity: var(--opacity-80);

@@ -71,15 +71,6 @@
     "color": "oklch(0.18 0 0)",
     "colorScheme": "dark"
   },
-  "fonts": {
-    "googleFonts": {
-      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Yuji+Syuku:wght@400&family=Noto+Emoji:wght@400&display=swap",
-      "preconnect": [
-        "https://fonts.googleapis.com",
-        "https://fonts.gstatic.com"
-      ]
-    }
-  },
   "security": {
     "referrer": "strict-origin-when-cross-origin",
     "contentTypeOptions": "nosniff",

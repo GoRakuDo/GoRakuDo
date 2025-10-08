@@ -821,10 +821,7 @@
   overflow-wrap: break-word;
   word-break: normal;
   hyphens: auto;
-  font-family:
-    Open Sauce One,
-    system-ui,
-    sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(1.5rem, 5vw, 1.875rem);
   font-weight: 700;
   line-height: 1.15;
@@ -906,8 +903,8 @@
 .tools-stat-number {
   color: var(--header-text-primary);
   font-size: var(--header-stat-number-mobile);
-  font-weight: 700;
-  line-height: 1;
+  font-weight: 550;
+  line-height: 0.75;
 
   @media (min-width: 640px) {
     font-size: var(--header-stat-number-tablet);

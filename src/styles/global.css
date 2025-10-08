@@ -175,16 +175,20 @@
   --clr-glass-border-hover: oklch(50% 0.02 270deg / var(--opacity-30));
   --clr-glass-background-hover: oklch(20% 0.01 270deg / var(--opacity-15));
 
+  /* ===== EASING FUNCTIONS - CENTRALIZED ===== */
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
   /* ===== ANIMATION SYSTEM ===== */
-  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.3s var(--ease-out);
+  --transition-fast: 0.2s var(--ease-out);
   --transition-speed: 0.3s;
-  --transition-bg: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-shadow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-transform: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-opacity: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-border: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bg: 0.3s var(--ease-out);
+  --transition-shadow: 0.3s var(--ease-out);
+  --transition-transform: 0.3s var(--ease-out);
+  --transition-opacity: 0.2s var(--ease-out);
+  --transition-border: 0.3s var(--ease-out);
   --animate-duration-fast: 150ms;
   --animate-duration-normal: 300ms;
   --animate-duration-slow: 500ms;
@@ -210,14 +214,37 @@
   --clr-paper-border: var(--clr-paper-90);
   --clr-paper-lines: var(--clr-paper-88);
 
-  /* ===== TYPOGRAPHY SYSTEM ===== */
+  /* ===== TYPOGRAPHY SYSTEM - CENTRALIZED FONT DEFINITIONS ===== */
+
+  /* Primary fonts - Roboto family as default */
   --font-primary:
-    'Inter', system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', roboto,
-    sans-serif;
-  --font-serif: 'Lora', 'Times New Roman', times, serif;
+    'Roboto Flex Variable', 'Roboto Flex', system-ui, -apple-system,
+    blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;
+  --font-display:
+    'Roboto Flex Variable', 'Roboto Flex', 'Open Sauce One', system-ui,
+    -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
+  --font-serif:
+    'Roboto Serif Variable', 'Roboto Serif', 'Lora', 'Times New Roman', times,
+    serif;
+  --font-heading:
+    'Roboto Serif Variable', 'Roboto Serif', 'Lora', 'Times New Roman', times,
+    serif;
+
+  /* Japanese fonts */
   --font-jp:
     'Yuji Syuku', 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', serif;
+
+  /* Monospace fonts */
+  --font-code: 'Fira Code', 'Courier New', monospace;
+  --font-mono: 'SF Mono', monaco, consolas, 'Courier New', monospace;
+
+  /* Decorative fonts */
   --font-cursive: 'Cedarville Cursive', cursive;
+  --font-emoji:
+    'Noto Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    sans-serif;
+
+  /* Compatibility aliases */
   --font-family-base: var(--font-primary);
 
   /* ===== ORPHAN PREVENTION SYSTEM - TAILWIND TYPOGRAPHY INTEGRATED ===== */
@@ -338,7 +365,7 @@
   /* Critical styles - moved from @layer critical */
   html {
     scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
-    font-family: var(--font-primary);
+    font-family: var(--font-primary) !important;
 
     /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
     font-display: swap; /* Prevent layout shift during font loading */
@@ -351,15 +378,20 @@
     font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
     font-weight: 400;
     text-wrap: pretty !important;
-    line-height: var(--orphan-line-height); /* Orphan prevention */
-    letter-spacing: -0.01em; /* Slightly tighter for modern feel */
-    word-spacing: var(--orphan-word-spacing); /* Orphan prevention */
+
+    /* WebKit tap highlight - apply globally once */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 
   body {
     flex-direction: column;
     background-color: var(--token-black-base);
     color: var(--token-white-base);
+    font-family: var(--font-primary) !important;
+    line-height: var(--orphan-line-height); /* Orphan prevention */
+    letter-spacing: -0.01em; /* Slightly tighter for modern feel */
+    word-spacing: var(--orphan-word-spacing) !important; /* Orphan prevention */
 
     /* padding-top: 76px; Navbar height compensation */
   }
@@ -396,18 +428,21 @@
       color var(--transition-speed) ease;
   }
 
-  .primary-button:hover,
-  .secondary-button:hover,
-  .docs-button:hover,
-  .get-started-btn:hover,
-  .discord-link:hover {
-    transform: translateY(-3px);
-  }
+  /* Hover effects only for devices with hover capability */
+  @media (hover: hover) {
+    .primary-button:hover,
+    .secondary-button:hover,
+    .docs-button:hover,
+    .get-started-btn:hover,
+    .discord-link:hover {
+      transform: translateY(-3px);
+    }
 
-  .feature-card:hover {
-    border-color: var(--clr-accent-glow-strong);
-    box-shadow: 0 10px 30px var(--clr-accent-glow-medium);
-    transform: translateY(-5px);
+    .feature-card:hover {
+      border-color: var(--clr-accent-glow-strong);
+      box-shadow: 0 10px 30px var(--clr-accent-glow-medium);
+      transform: translateY(-5px);
+    }
   }
 
   /* Legacy button base styles - preserved exactly */
@@ -450,35 +485,38 @@
     transform: translateY(0);
   }
 
+  /* ===== SCROLLBAR STYLING - GLOBAL DESIGN ===== */
+
   /* Firefox scrollbar styling */
-  * {
+  :root {
     scrollbar-width: thin;
     scrollbar-color: var(--clr-accent) transparent; /* thumb: accent, track: transparent */
   }
 
-  /* Scrollbar styling */
-  *::-webkit-scrollbar {
+  /* WebKit scrollbar styling - applied at root level for higher specificity */
+  :root::-webkit-scrollbar {
     width: 8px;
-    background: transparent !important; /* スクロールバー全体の背景を透明に */
+    background: transparent;
   }
 
-  *::-webkit-scrollbar-track {
-    border: transparent !important;
-    background: transparent !important; /* トラック背景を透明に */
+  :root::-webkit-scrollbar-track {
+    border: transparent;
+    background: transparent;
   }
 
-  *::-webkit-scrollbar-thumb {
+  :root::-webkit-scrollbar-thumb {
     border-radius: var(--radius-md);
-    background: var(--clr-accent); /* clr accentに設定 */
+    background: var(--clr-accent);
   }
 
-  *::-webkit-scrollbar-thumb:hover {
-    background: var(--clr-accent-dark); /* ホバー時は少し暗く */
+  @media (hover: hover) {
+    :root::-webkit-scrollbar-thumb:hover {
+      background: var(--clr-accent-dark);
+    }
   }
 
-  /* スクロールバーの角を透明に */
-  *::-webkit-scrollbar-corner {
-    background: transparent !important;
+  :root::-webkit-scrollbar-corner {
+    background: transparent;
   }
 
   /* Selection fix for gradient text (background-clip: text) */
@@ -496,12 +534,8 @@
 
   /* Firefox supports ::selection; vendor-prefixed rule removed to satisfy linter */
 
-  /* Android WebView text color fix - prevent black text on tap */
+  /* Orphan Prevention - Based on UX Movement guidelines */
   p {
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-touch-callout: none !important;
-
-    /* Orphan Prevention - Based on UX Movement guidelines */
     orphans: 3; /* Minimum 3 lines at bottom of page */
     widows: 3; /* Minimum 3 lines at top of page */
     text-wrap: pretty; /* Modern CSS for better line breaks */
@@ -511,9 +545,6 @@
 
   .article-content p,
   .prose p {
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-touch-callout: none !important;
-
     /* Enhanced Orphan Prevention for Article Content - Tailwind Typography Integrated */
     orphans: var(--orphan-min-words);
     widows: var(--orphan-min-words);
@@ -524,18 +555,6 @@
     /* Prevent single words on last line */
     hyphens: auto;
     hyphenate-limit-chars: 6 3 3;
-  }
-
-  /* Ensure text color stays white on Android WebView tap */
-  p:active {
-    color: var(--clr-text-primary) !important;
-    -webkit-text-fill-color: var(--clr-text-primary) !important;
-  }
-
-  .article-content p:active,
-  .prose p:active {
-    color: var(--clr-text-primary) !important;
-    -webkit-text-fill-color: var(--clr-text-primary) !important;
   }
 
   /* Smooth transitions for theme switching - but not affecting buttons */
@@ -587,30 +606,6 @@
     }
   }
 
-  /* Active state text-fill fix for WebKit (keep color on tap/click) */
-  :where(
-    p,
-    span,
-    div,
-    li,
-    a,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    small,
-    strong,
-    em,
-    code,
-    pre,
-    td,
-    th
-  ):active {
-    -webkit-text-fill-color: currentColor !important;
-  }
-
   /* Improved form elements */
   button,
   input,
@@ -638,12 +633,10 @@
     transition: color var(--duration-fast) ease;
   }
 
-  a:hover {
-    color: var(--clr-accent-dark);
-  }
-
-  a:active {
-    -webkit-text-fill-color: currentColor !important;
+  @media (hover: hover) {
+    a:hover {
+      color: var(--clr-accent-dark);
+    }
   }
 
   img {
@@ -657,23 +650,12 @@
 
 /* Enhanced font support for Japanese and emoji */
 .emoji {
-  font-family:
-    Noto emoji,
-    Apple Color emoji,
-    Segoe UI emoji,
-    Segoe UI Symbol,
-    sans-serif;
+  font-family: var(--font-emoji);
   font-variant-emoji: emoji;
 }
 
 .japanese {
-  font-family:
-    Yuji Syuku,
-    Noto Sans JP,
-    Hiragino Sans,
-    Yu Gothic,
-    Meiryo,
-    sans-serif;
+  font-family: var(--font-jp);
 }
 
 /* Screen reader only content */
@@ -831,10 +813,7 @@
   padding: 1rem;
   border-radius: 0.5rem;
   background: oklch(10% 0.01 270deg / var(--opacity-8));
-  font-family:
-    Fira Code,
-    Courier New,
-    monospace;
+  font-family: var(--font-code);
   font-size: 0.875rem;
   line-height: 1.5;
 }
@@ -844,10 +823,7 @@
   border-radius: 0.25rem;
   background: oklch(15% 0.02 270deg / var(--opacity-8));
   color: var(--clr-gold-dark);
-  font-family:
-    Fira Code,
-    Courier New,
-    monospace;
+  font-family: var(--font-code);
   font-size: 0.875rem;
 }
 
@@ -874,9 +850,11 @@ button:focus-visible,
   outline-offset: 2px;
 }
 
-.article-content a:hover {
-  text-decoration-thickness: 2px;
-  text-decoration-color: var(--clr-accent);
+@media (hover: hover) {
+  .article-content a:hover {
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--clr-accent);
+  }
 }
 
 /* Tables */
@@ -931,6 +909,7 @@ button:focus-visible,
 .article-content em,
 .article-content i {
   color: var(--clr-text-primary);
+  font-family: var(--font-serif);
   font-style: italic;
 }
 
@@ -1010,11 +989,6 @@ button:focus-visible,
   --duration-slow: 300ms; /* Slower animations */
   --duration-slower: 500ms; /* Slowest animations */
 
-  /* Smooth easing curves for better animation feel */
-  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
-  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
   /* Shadow system - enhanced from legacy */
   --shadow-sm: 0 1px 2px var(--clr-black-05);
   --shadow-md: 0 4px 8px var(--clr-black-15), 0 2px 4px var(--clr-black-1);
@@ -1056,9 +1030,11 @@ button:focus-visible,
     box-shadow: var(--shadow-sm);
   }
 
-  .card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  @media (hover: hover) {
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
   }
 
   .glass-panel {
@@ -1131,6 +1107,7 @@ button:focus-visible,
   }
 
   /* グローバルレベルでデフォルトのテキストカラーを白色に設定 */
+
   body,
   p,
   div,
@@ -1150,32 +1127,6 @@ button:focus-visible,
   input,
   textarea,
   select {
-    color: var(--clr-text-primary);
-  }
-
-  /* 特定の要素のテキストカラーを個別に設定 */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: var(--clr-text-primary);
-  }
-
-  p,
-  span,
-  div,
-  a,
-  li,
-  td,
-  th {
-    color: var(--clr-text-primary);
-  }
-
-  small,
-  .text-muted,
-  .meta {
     color: var(--clr-text-primary);
   }
 
@@ -1423,133 +1374,13 @@ button:focus-visible,
   transform: var(--hover-lift);
 }
 
-/* ===== MOBILE HOVER DISABLE ===== */
+/* ===== HOVER EFFECTS - DESKTOP ONLY ===== */
 
-/* スマートフォンでのホバー効果を無効化 */
-@media (hover: none) and (pointer: coarse) {
-  /* 特定の要素のホバー効果のみ無効化（*:hover は削除） */
-
-  /* 特定の要素のホバー効果を無効化 */
-  button:hover,
-  .button:hover,
-  a:hover,
-  .card:hover,
-  .tool-card:hover,
-  .article-card:hover {
-    background-color: inherit !important;
-    border-color: inherit !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    transform: none !important;
-  }
-
-  /* アニメーション要素のホバー効果を無効化 */
-  .animation-slide:hover,
-  .animation-fade:hover {
-    opacity: inherit !important;
-    transform: none !important;
-  }
-
-  /* アイコンのホバー効果を無効化 */
-  .icon:hover,
-  .tool-icon:hover {
-    box-shadow: none !important;
-    filter: none !important;
-    transform: none !important;
-  }
-
-  /* ナビゲーション要素のホバー効果を無効化 */
-  nav a:hover,
-  .nav-link:hover,
-  .navbar-item:hover {
-    background-color: inherit !important;
-    color: inherit !important;
-    transform: none !important;
-  }
-
-  /* フォーム要素のホバー効果を無効化 */
-  input:hover,
-  textarea:hover,
-  select:hover {
-    border-color: inherit !important;
-    box-shadow: none !important;
-  }
-
-  /* カスタムコンポーネントのホバー効果を無効化 */
-  .hero-button:hover,
-  .primary-button:hover,
-  .secondary-button:hover {
-    background-color: inherit !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-
-  /* フォーカスモード（focus-visible）でのホバー効果を無効化 */
-  *:focus-visible:hover {
-    background-color: inherit !important;
-    border-color: inherit !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    filter: none !important;
-    opacity: inherit !important;
-    transform: none !important;
-  }
-
-  /* 特定の要素のフォーカスモードホバー効果を無効化 */
-  button:focus-visible:hover,
-  .button:focus-visible:hover,
-  a:focus-visible:hover,
-  .card:focus-visible:hover,
-  .tool-card:focus-visible:hover,
-  .article-card:focus-visible:hover {
-    background-color: inherit !important;
-    border-color: inherit !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    transform: none !important;
-  }
-
-  /* ナビゲーション要素のフォーカスモードホバー効果を無効化 */
-  nav a:focus-visible:hover,
-  .nav-link:focus-visible:hover,
-  .navbar-item:focus-visible:hover {
-    background-color: inherit !important;
-    color: inherit !important;
-    transform: none !important;
-  }
-
-  /* フォーム要素のフォーカスモードホバー効果を無効化 */
-  input:focus-visible:hover,
-  textarea:focus-visible:hover,
-  select:focus-visible:hover {
-    border-color: inherit !important;
-    box-shadow: none !important;
-  }
-
-  /* カスタムコンポーネントのフォーカスモードホバー効果を無効化 */
-  .hero-button:focus-visible:hover,
-  .primary-button:focus-visible:hover,
-  .secondary-button:focus-visible:hover {
-    background-color: inherit !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
-
-  /* アイコンのフォーカスモードホバー効果を無効化 */
-  .icon:focus-visible:hover,
-  .tool-icon:focus-visible:hover {
-    box-shadow: none !important;
-    filter: none !important;
-    transform: none !important;
-  }
-
-  /* アニメーション要素のフォーカスモードホバー効果を無効化 */
-  .animation-slide:focus-visible:hover,
-  .animation-fade:focus-visible:hover {
-    opacity: inherit !important;
-    transform: none !important;
-  }
-}
+/* 
+ * REASONING: Define hover effects only for devices that support hover
+ * SOLUTION: Use @media (hover: hover) instead of disabling on mobile
+ * BENEFIT: No !important needed, cleaner CSS, better performance
+ */
 
 /* ===== REMOVED: UNIVERSAL TEXT COLOR FIX =====
    * グローバルな強制上書きは削除。
@@ -1840,10 +1671,12 @@ button:focus-visible,
     backdrop-filter: blur(25px) saturate(150%) brightness(90%);
   }
 
-  .glassmorphism:hover {
-    background: var(--clr-black-95);
-    border-color: var(--clr-accent);
-    backdrop-filter: blur(18px) saturate(150%) brightness(100%);
+  @media (hover: hover) {
+    .glassmorphism:hover {
+      background: var(--clr-black-95);
+      border-color: var(--clr-accent);
+      backdrop-filter: blur(18px) saturate(150%) brightness(100%);
+    }
   }
 }
 
@@ -1859,10 +1692,6 @@ button:focus-visible,
 
   .glassmorphism {
     transition: none;
-  }
-
-  .glassmorphism:hover {
-    transform: none;
   }
 }
 

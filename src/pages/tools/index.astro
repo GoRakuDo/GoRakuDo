@@ -27,13 +27,6 @@ const STATS_CONFIG = {
   access: { label: 'Akses', value: '24/7' },
 } as const;
 
-const TITLE_CONFIG = {
-  main: 'Tutorial Tools & Aplikasi dalam Belajar Bahasa Jepang',
-} as const;
-
-const DESCRIPTION =
-  'Tutorial berdasarkan Aplikasi dan Tools yang membantu kalian dengan mudah dalam Otodidak Bahasa Japang. Setiap tool telah dipilih berdasarkan efektivitas dan kemudahan penggunaan.';
-
 // ========== UTILITY FUNCTIONS ==========
 const getStatsData = (toolsCount: number) => [
   {
@@ -99,14 +92,16 @@ const breadcrumbSchema = generateBreadcrumbSchema({
                 id='tools-header-title'
                 itemprop='headline'
               >
-                {TITLE_CONFIG.main}
+                Tutorial Tools & Aplikasi<wbr /> dalam Belajar Bahasa Jepang
               </h2>
             </header>
 
             <!-- Description and Stats Group -->
             <div class='tools-header-info-group'>
               <p class='tools-header-description' itemprop='description'>
-                {DESCRIPTION}
+                Tutorial berdasarkan Aplikasi dan Tools yang membantu kalian
+                dengan mudah dalam Otodidak Bahasa Japang. Setiap tool telah
+                dipilih berdasarkan efektivitas dan kemudahan penggunaan.
               </p>
 
               <!-- Stats Section -->

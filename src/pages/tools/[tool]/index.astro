@@ -94,7 +94,7 @@ const toolArticles = allToolArticles.filter(
 const toolData = toolsData.find(t => t.id === tool);
 const toolConfig = {
   iconPath: toolData?.iconUrl || '/icon/yomitan-icon-240.webp',
-    description:
+  description:
     toolData?.description ||
     `Comprehensive learning resources and guides for mastering ${tool}. From beginner basics to advanced techniques, everything you need to succeed.`,
 };
@@ -142,6 +142,7 @@ const processedArticles = toolArticles.map(
       publishedDate,
       image: articleImage,
       hasImage,
+      devicePlatform: article.data.devicePlatform || 'Windows',
       originalArticle: article,
       index,
       isDirectToolArticle,
