@@ -284,8 +284,8 @@ const config = {
         this.wavePoints = this.waves.map(() => {
           const points: Array<{ x: number; y: number }> = [];
           for (
-            let x = -20;
-            x <= this.dimensions.width + 20;
+            let x = -50;
+            x <= this.dimensions.width + 50;
             x += this.waveStepSize
           ) {
             points.push({ x: x, y: 0 }); // Yは各フレームで更新される

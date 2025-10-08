@@ -758,11 +758,40 @@ body.modal-open {
 
 /* Hero section layout */
 .hero-section {
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 0 15px;
+  padding: 0 1rem;
+  background: transparent;
+  text-align: center;
+}
+
+/* Hero content container */
+.hero-content {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 80rem;
+  min-height: 100vh;
+  background: transparent;
+  filter: blur(0.25rem);
+  opacity: 0;
+  transform: translateY(4rem) scale(0.8);
+  transition: all 0.7s ease-out;
+}
+
+/* Hero revealed state */
+.hero-content.hero-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
 /* Accessibility utilities removed - following Astro's static-first philosophy */
@@ -827,10 +856,6 @@ section .secondary-button {
     color: var(--clr-gold-dark);
   }
 
-  .secondary-icon {
-    color: var(--clr-gold-dark);
-  }
-
   /* Mobile sizing (320px+) */
   @media (min-width: 320px) {
     justify-content: center;
@@ -889,11 +914,21 @@ section .primary-button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Primary button icon sizing */
-section .primary-button svg {
+/* Button icon styling */
+.button-icon {
   flex-shrink: 0;
   width: 1rem;
   height: 1rem;
+  transition: transform var(--transition-fast);
+}
+
+.primary-button:hover .button-icon {
+  transform: translateX(0.125rem);
+}
+
+/* Secondary icon styling */
+.secondary-icon {
+  color: var(--clr-gold-dark);
 }
 
 /* Secondary button component */
@@ -950,14 +985,6 @@ section .secondary-button {
     opacity var(--transition-opacity),
     transform var(--transition-transform),
     box-shadow var(--transition-shadow);
-}
-
-/* Icon styling for secondary button */
-.secondary-button .btn-icon {
-  flex-shrink: 0;
-  width: 1rem; /* 1rem for consistent icon size */
-  height: 1rem; /* 1rem for consistent icon size */
-  transition: color var(--transition-fast) ease;
 }
 
 .hero-buttons .secondary-button:hover {
@@ -1051,10 +1078,14 @@ section .secondary-button {
 /* Focus styles removed - following Astro's static-first philosophy */
 
 /* Responsive typography scale */
-section .hero-kicker {
-  @media (min-width: 320px) {
-    font-size: 0.875rem;
-  }
+.hero-kicker {
+  color: var(--clr-accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
 
   @media (min-width: 768px) {
     font-size: 1rem;
@@ -1065,10 +1096,13 @@ section .hero-kicker {
   }
 }
 
-section .hero-title {
-  @media (min-width: 320px) {
-    font-size: 1.5rem;
-  }
+.hero-title {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
 
   @media (min-width: 768px) {
     font-size: 1.875rem;
@@ -1079,10 +1113,10 @@ section .hero-title {
   }
 }
 
-section .hero-marker {
-  @media (min-width: 320px) {
-    font-size: 2rem;
-  }
+.hero-marker {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
 
   @media (min-width: 768px) {
     font-size: 2.25rem;
@@ -1093,10 +1127,34 @@ section .hero-marker {
   }
 }
 
-section .hero-description {
-  @media (min-width: 320px) {
-    font-size: 0.875rem;
+.title-line-1 {
+  display: block;
+  margin-top: 0.75rem;
+  font-weight: 800;
+
+  /* Tablet and Desktop: keep as block for 2-line display */
+  @media (min-width: 768px) {
+    display: block;
   }
+}
+
+.title-line-2 {
+  display: block;
+  font-weight: 500;
+
+  /* Tablet and Desktop: keep as block for 2-line display */
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+.hero-description {
+  max-width: 36rem;
+  margin: 1rem auto 1.5rem;
+  color: var(--clr-text-muted);
+  font-size: 0.875rem;
+  font-style: italic;
+  line-height: 1.6;
 
   @media (min-width: 768px) {
     font-size: 1.125rem;
@@ -1169,11 +1227,6 @@ section .hero-description {
 ::view-transition-new(hero-buttons) {
   animation-duration: 0.3s;
   animation-delay: 0.1s;
-}
-
-/* Hero content animations */
-.hero-content {
-  animation: fadeIn 0.6s ease-out;
 }
 
 /* Hero button animations */
