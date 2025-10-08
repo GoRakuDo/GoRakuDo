@@ -47,3 +47,6 @@ config/secrets.json
 
 bmad-core/
 bmad-docs/
+
+# Moat task system
+.moat/

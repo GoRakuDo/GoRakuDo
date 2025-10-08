@@ -32,6 +32,25 @@ const getAnimationClass = (): string => {
 const validateTool = (tool: Tool): boolean =>
   !!(tool.id && tool.name && tool.description && tool.iconUrl && tool.link);
 
+// 説明文を最初のセンテンスのみに分割する関数
+const getFirstSentence = (description: string): string => {
+  // ピリオド、感嘆符、疑問符で分割し、最初のセンテンスを取得
+  const sentences = description.split(/[.!?]+/);
+  const firstSentence = sentences[0]?.trim();
+
+  // センテンスが空でない場合は、適切な句読点を追加
+  if (firstSentence && firstSentence.length > 0) {
+    // 元のテキストがピリオドで終わっている場合はピリオドを追加
+    if (description.includes('.')) {
+      return firstSentence + '.';
+    }
+    return firstSentence;
+  }
+
+  // フォールバック: 元の説明文を返す
+  return description;
+};
+
 // ========== OPTIMIZED DATA PROCESSING ==========
 const { tools = [], className = '' } = Astro.props;
 
@@ -84,7 +103,7 @@ const validTools: Tool[] = tools.filter(validateTool);
                       class='tool-description-card'
                       id={`tool-desc-${tool.id}`}
                     >
-                      {tool.description}
+                      {getFirstSentence(tool.description)}
                     </p>
                   </div>
 

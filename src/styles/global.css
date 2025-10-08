@@ -486,7 +486,6 @@
   .gold-marker::selection,
   .posts-header h1::selection,
   .tools-title-main::selection,
-  .tools-title-accent::selection,
   .error-title::selection {
     background-color: var(--clr-accent);
     color: var(--clr-text-primary);
