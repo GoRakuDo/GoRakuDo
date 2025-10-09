@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
+          cache: 'npm'
       - name: Install dependencies
         run: npm ci
       - name: Fix Rollup native dependencies
@@ -82,12 +82,12 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          content: "Hey <@209310690643673088>"
-          title: "Deploy to GitHub Pages"
+          content: 'Hey <@209310690643673088>'
+          title: 'Deploy to GitHub Pages'
           description: |
             Official Astro deployment completed.
             Triggered by: `${{ github.event_name }}` On Branch: `${{ github.ref_name }}`.
             Environment: GitHub Actions (AI processing disabled for security)
           color: 0x2fa64d
-          url: "https://github.com/sarisia/actions-status-discord"
+          url: 'https://github.com/sarisia/actions-status-discord'
           username: GitHub Actions Deployer
