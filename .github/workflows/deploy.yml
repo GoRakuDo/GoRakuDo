@@ -8,6 +8,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
+# 並行実行制御：同じグループの実行は1つのみ許可し、新しい実行が開始されたら古いものをキャンセル
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
 # Allow this job to clone the repo and create a page deployment
 permissions:
   contents: read
