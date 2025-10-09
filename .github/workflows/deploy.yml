@@ -23,22 +23,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Fix Rollup native dependencies
+      - name: Rebuild native dependencies for Linux
         run: |
           npm rebuild
           npm install @rollup/rollup-linux-x64-gnu --platform=linux --arch=x64
-      - name: Reinstall lightningcss for CI
-        run: |
-          npm uninstall lightningcss
-          npm install lightningcss
-      - name: Reinstall TailwindCSS Oxide for CI
-        run: |
-          npm uninstall @tailwindcss/oxide
-          npm install @tailwindcss/oxide
+          npm install --force lightningcss @tailwindcss/oxide
       - name: Build the site
         run: npm run build
         env:
@@ -54,6 +47,22 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
+      - name: Notify build status to Discord
+        uses: sarisia/actions-status-discord@v1.15.3
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          content: 'Hey <@209310690643673088>'
+          title: 'Build Status'
+          description: |
+            ビルドが完了しました。
+            ステータス: `${{ job.status }}`
+            ブランチ: `${{ github.ref_name }}`
+            コミット: `${{ github.event.head_commit.message }}`
+          color: ${{ job.status == 'success' && 0x00ff00 || 0xff0000 }}
+          url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          username: GitHub Actions - Build Reporter
 
   deploy:
     needs: build
@@ -70,19 +79,21 @@ jobs:
   notify:
     needs: deploy
     runs-on: ubuntu-latest
+    if: always()
     steps:
       - name: Send Discord notification
         uses: sarisia/actions-status-discord@v1.15.3
-        if: always()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
+          status: ${{ needs.deploy.result }}
           content: 'Hey <@209310690643673088>'
-          title: 'Deploy to GitHub Pages'
+          title: 'デプロイメント完了'
           description: |
-            Official Astro deployment completed.
-            Triggered by: `${{ github.event_name }}` On Branch: `${{ github.ref_name }}`.
-            Environment: GitHub Actions (AI processing disabled for security)
-          color: 0x2fa64d
-          url: 'https://github.com/sarisia/actions-status-discord'
-          username: GitHub Actions Deployer
+            GitHub Pagesへのデプロイが完了しました。
+            ステータス: `${{ needs.deploy.result }}`
+            ブランチ: `${{ github.ref_name }}`
+            コミット: `${{ github.event.head_commit.message }}`
+            URL: https://gorakudo.org
+          color: ${{ needs.deploy.result == 'success' && 0x00ff00 || 0xff0000 }}
+          url: https://gorakudo.org
+          username: GitHub Actions - Deploy Reporter
