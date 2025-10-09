@@ -71,7 +71,11 @@ if (redirectTarget) {
         overflow: hidden;
         min-height: 100vh;
         padding: 20px;
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        background: linear-gradient(
+          135deg,
+          oklch(4% 0 0deg) 0%,
+          oklch(10% 0 0deg) 100%
+        );
       }
 
       .error-background {
@@ -81,17 +85,17 @@ if (redirectTarget) {
         background:
           radial-gradient(
             circle at 20% 80%,
-            rgb(139 93 255 / 0.1) 0%,
+            oklch(65% 0.25 280deg / 0.1) 0%,
             transparent 50%
           ),
           radial-gradient(
             circle at 80% 20%,
-            rgb(228 180 59 / 0.1) 0%,
+            oklch(75% 0.12 85deg / 0.1) 0%,
             transparent 50%
           ),
           radial-gradient(
             circle at 40% 40%,
-            rgb(139 93 255 / 0.05) 0%,
+            oklch(65% 0.25 280deg / 0.05) 0%,
             transparent 50%
           );
       }
@@ -101,9 +105,9 @@ if (redirectTarget) {
         z-index: var(--z-index-error-content);
         max-width: 600px;
         padding: 60px 40px;
-        border: 1px solid rgb(139 93 255 / 0.1);
+        border: 1px solid oklch(65% 0.25 280deg / 0.1);
         border-radius: 20px;
-        background: rgb(255 255 255 / 0.03);
+        background: oklch(100% 0 0deg / 0.03);
         text-align: center;
         backdrop-filter: blur(10px);
       }
@@ -116,7 +120,11 @@ if (redirectTarget) {
 
       .error-title {
         margin-bottom: 20px;
-        background: linear-gradient(135deg, #8b5dff 0%, #e4b43b 100%);
+        background: linear-gradient(
+          135deg,
+          oklch(65% 0.25 280deg) 0%,
+          oklch(75% 0.12 85deg) 100%
+        );
         color: var(--clr-text-primary);
         font-size: 48px;
         font-weight: 700;
@@ -161,32 +169,36 @@ if (redirectTarget) {
       }
 
       .error-btn.primary {
-        background: linear-gradient(135deg, #8b5dff 0%, #7b4def 100%);
+        background: linear-gradient(
+          135deg,
+          oklch(65% 0.25 280deg) 0%,
+          oklch(60% 0.25 280deg) 100%
+        );
         color: white;
       }
 
       .error-btn.primary:hover {
-        box-shadow: 0 8px 25px rgb(139 93 255 / 0.3);
+        box-shadow: 0 8px 25px oklch(65% 0.25 280deg / 0.3);
         transform: translateY(-2px);
       }
 
       .error-btn.secondary {
-        border: 1px solid rgb(139 93 255 / 0.2);
-        background: rgb(139 93 255 / 0.1);
+        border: 1px solid oklch(65% 0.25 280deg / 0.2);
+        background: oklch(65% 0.25 280deg / 0.1);
         color: var(--clr-text-primary);
       }
 
       .error-btn.secondary:hover {
-        background: rgb(139 93 255 / 0.2);
+        background: oklch(65% 0.25 280deg / 0.2);
         border-color: var(--clr-accent);
       }
 
       .error-suggestions {
         margin-top: 40px;
         padding: 30px;
-        border: 1px solid rgb(139 93 255 / 0.1);
+        border: 1px solid oklch(65% 0.25 280deg / 0.1);
         border-radius: 12px;
-        background: rgb(139 93 255 / 0.05);
+        background: oklch(65% 0.25 280deg / 0.05);
       }
 
       .suggestions-title {
@@ -215,9 +227,9 @@ if (redirectTarget) {
       .error-path {
         margin: 20px 0;
         padding: 10px 15px;
-        border: 1px solid rgb(139 93 255 / 0.2);
+        border: 1px solid oklch(65% 0.25 280deg / 0.2);
         border-radius: 8px;
-        background: rgb(139 93 255 / 0.1);
+        background: oklch(65% 0.25 280deg / 0.1);
         color: var(--clr-text-secondary);
         font-family: var(--font-code);
         font-size: 14px;

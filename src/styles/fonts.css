@@ -1,0 +1,36 @@
+/* ===== FONTSOURCE PACKAGE IMPORTS ===== */
+
+/* 
+ * Using @fontsource packages for better performance and maintainability
+ * - Variable fonts: @fontsource-variable/roboto-flex, @fontsource-variable/roboto-serif
+ * - Japanese fonts: @fontsource/noto-sans-jp, @fontsource/noto-serif-jp, @fontsource/yuji-syuku
+ * 
+ * Benefits:
+ * - Automatic font-display: swap optimization
+ * - Better versioning and updates via npm
+ * - Reduced manual maintenance
+ */
+
+/* Variable Fonts */
+@import '@fontsource-variable/roboto-flex';
+@import '@fontsource-variable/roboto-serif';
+
+/* Japanese Fonts with unicode-range support */
+@import '@fontsource/yuji-syuku/400.css';
+@import '@fontsource/noto-sans-jp/100.css';
+@import '@fontsource/noto-sans-jp/200.css';
+@import '@fontsource/noto-sans-jp/300.css';
+@import '@fontsource/noto-sans-jp/400.css';
+@import '@fontsource/noto-sans-jp/500.css';
+@import '@fontsource/noto-sans-jp/600.css';
+@import '@fontsource/noto-sans-jp/700.css';
+@import '@fontsource/noto-sans-jp/800.css';
+@import '@fontsource/noto-sans-jp/900.css';
+@import '@fontsource/noto-serif-jp/200.css';
+@import '@fontsource/noto-serif-jp/300.css';
+@import '@fontsource/noto-serif-jp/400.css';
+@import '@fontsource/noto-serif-jp/500.css';
+@import '@fontsource/noto-serif-jp/600.css';
+@import '@fontsource/noto-serif-jp/700.css';
+@import '@fontsource/noto-serif-jp/800.css';
+@import '@fontsource/noto-serif-jp/900.css';

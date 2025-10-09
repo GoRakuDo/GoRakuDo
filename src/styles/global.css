@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './fonts.css';
 
 @plugin '@tailwindcss/typography';
 
@@ -157,13 +158,6 @@
   --global-text-color-muted: var(--token-text-global-muted);
   --global-text-color-accent: var(--clr-white);
 
-  /* ===== SEARCH RESULTS SYSTEM ===== */
-  --search-result-text-color: var(--global-text-color);
-  --search-result-title-color: var(--global-text-color-primary);
-  --search-result-description-color: var(--global-text-color-secondary);
-  --search-result-meta-color: var(--global-text-color-muted);
-  --search-result-badge-color: var(--global-text-color-accent);
-
   /* ===== FALLBACK COLORS ===== */
   --clr-background-fallback: oklch(4% 0.005 270deg);
   --clr-text-primary-fallback: var(--clr-text-primary);
@@ -216,23 +210,21 @@
 
   /* ===== TYPOGRAPHY SYSTEM - CENTRALIZED FONT DEFINITIONS ===== */
 
-  /* Primary fonts - Roboto family as default */
+  /* Primary fonts - Roboto family as default with Japanese support */
   --font-primary:
-    'Roboto Flex Variable', 'Roboto Flex', system-ui, -apple-system,
-    blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;
-  --font-display:
-    'Roboto Flex Variable', 'Roboto Flex', 'Open Sauce One', system-ui,
-    -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
+    'Noto Sans JP', 'Roboto Flex Variable', 'Roboto Flex', system-ui,
+    -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;
   --font-serif:
-    'Roboto Serif Variable', 'Roboto Serif', 'Lora', 'Times New Roman', times,
-    serif;
+    'Noto Serif JP', 'Roboto Serif Variable', 'Roboto Serif', 'Lora',
+    'Times New Roman', times, serif;
   --font-heading:
-    'Roboto Serif Variable', 'Roboto Serif', 'Lora', 'Times New Roman', times,
-    serif;
+    'Noto Serif JP', 'Roboto Serif Variable', 'Roboto Serif', 'Lora',
+    'Times New Roman', times, serif;
 
-  /* Japanese fonts */
-  --font-jp:
-    'Yuji Syuku', 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', serif;
+  /* Japanese fonts - Auto-detection via unicode-range */
+  --font-jp: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  --font-jp-serif: 'Noto Serif JP', 'Hiragino Mincho', 'Yu Mincho', serif;
+  --font-jp-logo: 'Yuji Syuku', 'Noto Serif JP', serif; /* For logo "語楽道" */
 
   /* Monospace fonts */
   --font-code: 'Fira Code', 'Courier New', monospace;
@@ -275,6 +267,16 @@
   --safe-area-bottom: env(safe-area-inset-bottom, 0);
   --safe-area-left: env(safe-area-inset-left, 0);
   --safe-area-right: env(safe-area-inset-right, 0);
+
+  /* ===== BOTTOM NAVIGATION BAR ===== */
+  --bottom-nav-height: 88px;
+  --bottom-nav-height-small: 80px;
+  --bottom-nav-spacing: calc(
+    var(--bottom-nav-height) + var(--safe-area-bottom)
+  );
+  --bottom-nav-spacing-small: calc(
+    var(--bottom-nav-height-small) + var(--safe-area-bottom)
+  );
 
   /* ===== OPTIMIZATION FLAGS ===== */
   --localhost-optimization: true;
@@ -392,7 +394,7 @@
     letter-spacing: -0.01em; /* Slightly tighter for modern feel */
     word-spacing: var(--orphan-word-spacing) !important; /* Orphan prevention */
 
-    /* padding-top: 76px; Navbar height compensation */
+    /* padding-top: 80px; Navbar height compensation */
   }
 
   /* REASONING: Preserving legacy layout structure */
@@ -557,13 +559,7 @@
   }
 
   /* Smooth transitions for theme switching - but not affecting buttons */
-  :not(
-    button,
-    .btn-primary,
-    .btn-secondary,
-    .primary-button,
-    .secondary-button
-  ) {
+  :not(button, .primary-button, .secondary-button) {
     transition:
       background-color var(--duration-normal) ease,
       border-color var(--duration-normal) ease,
@@ -573,13 +569,15 @@
   /* Base typography hierarchy */
   :where(:not([class*='text-'])) {
     h1 {
+      padding-bottom: 0.1em; /* 下部に少し余白を追加 */
       font-size: var(--font-size-3xl);
       font-weight: var(--font-weight-bold);
-      line-height: 1.2;
+      line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
       letter-spacing: -0.02em;
     }
 
     h2 {
+      padding-bottom: 0.1em; /* 下部に少し余白を追加 */
       font-size: var(--font-size-2xl);
       font-weight: var(--font-weight-semibold);
       line-height: 1.3;
@@ -587,6 +585,7 @@
     }
 
     h3 {
+      padding-bottom: 0.1em; /* 下部に少し余白を追加 */
       font-size: var(--font-size-xl);
       font-weight: var(--font-weight-medium);
       line-height: 1.4;
@@ -657,6 +656,12 @@
   font-family: var(--font-jp);
 }
 
+/* Japanese logo font - Always use Yuji Syuku for "語楽道" */
+.logo-japanese {
+  font-family: var(--font-jp-logo) !important;
+  font-weight: 400;
+}
+
 /* Screen reader only content */
 .sr-only {
   position: absolute;
@@ -685,33 +690,89 @@
 
 /* Custom typography for tool articles - mobile-first responsive design */
 .article-content {
-  /* Base text styling using existing color system */
   color: var(--clr-text-primary);
-  line-height: var(--orphan-line-height); /* Orphan prevention */
-
-  /* Advanced Orphan Prevention for Article Content - Tailwind Typography Compatible */
+  line-height: var(--orphan-line-height);
   orphans: var(--orphan-min-words);
   widows: var(--orphan-min-words);
   text-wrap: pretty;
   word-spacing: var(--orphan-word-spacing);
-
-  /* Prevent awkward line breaks */
   hyphens: auto;
   hyphenate-limit-chars: 6 3 3;
   hyphenate-limit-lines: 2;
   hyphenate-limit-last: always;
+
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.125rem;
+    orphans: var(--orphan-min-words);
+    widows: var(--orphan-min-words);
+    text-wrap: pretty;
+    word-spacing: var(--orphan-word-spacing);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 1.1875rem;
+    orphans: var(--orphan-desktop-min-words);
+    widows: var(--orphan-desktop-min-words);
+    text-wrap: pretty;
+    line-height: var(--orphan-desktop-line-height);
+    word-spacing: var(--orphan-word-spacing);
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 1.25rem;
+    orphans: var(--orphan-desktop-min-words);
+    widows: var(--orphan-desktop-min-words);
+    text-wrap: pretty;
+    line-height: var(--orphan-desktop-line-height);
+    word-spacing: var(--orphan-word-spacing);
+    text-justify: inter-word;
+    text-align-last: left;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms;
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+    }
+  }
+
+  @media (prefers-contrast: high) {
+    --clr-foreground: var(--clr-black);
+    --clr-background: var(--clr-text-primary);
+  }
 }
 
 /* ===== TAILWIND TYPOGRAPHY ORPHAN PREVENTION INTEGRATION ===== */
 
 /* Enhanced prose classes with Orphan Prevention */
 .prose {
-  /* Ensure Orphan Prevention is applied to all prose elements */
   orphans: var(--orphan-min-words);
   widows: var(--orphan-min-words);
   text-wrap: pretty;
   line-height: var(--orphan-line-height);
   word-spacing: var(--orphan-word-spacing);
+
+  p,
+  li {
+    @media (max-width: 768px) {
+      orphans: var(--orphan-mobile-min-words);
+      widows: var(--orphan-mobile-min-words);
+      line-height: var(--orphan-mobile-line-height);
+    }
+
+    @media (min-width: 1024px) {
+      orphans: var(--orphan-desktop-min-words);
+      widows: var(--orphan-desktop-min-words);
+      line-height: var(--orphan-desktop-line-height);
+    }
+  }
 }
 
 /* Prose variants with specific Orphan Prevention settings */
@@ -735,35 +796,97 @@
 .article-content h1 {
   margin-bottom: 1.5rem;
   color: var(--clr-text-primary);
-  font-size: 1.5rem; /* 24px */
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.02em;
+
+  @media (min-width: 640px) {
+    font-size: 1.875rem;
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 3rem;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 3.5rem;
+  }
 }
 
 .article-content h2 {
   margin-bottom: 1rem;
+  padding-bottom: 0.1em; /* 下部に少し余白を追加 */
   color: var(--clr-text-primary);
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: -0.01em;
+
+  @media (min-width: 640px) {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: 1.5rem;
+    font-size: 1.875rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 2.25rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 3rem;
+  }
 }
 
 .article-content h3 {
   margin-bottom: 0.75rem;
+  padding-bottom: 0.1em; /* 下部に少し余白を追加 */
   color: var(--clr-text-primary);
-  font-size: 1.125rem; /* 18px */
+  font-size: 1.125rem;
   font-weight: 600;
   line-height: 1.4;
+
+  @media (min-width: 640px) {
+    font-size: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 1.875rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 2.25rem;
+  }
 }
 
 .article-content h4 {
   margin-bottom: 0.5rem;
   color: var(--clr-text-primary);
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
+
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 1.5rem;
+  }
 }
 
 /* Paragraph and text elements */
@@ -771,6 +894,18 @@
   margin-bottom: 1rem;
   color: var(--clr-text-primary);
   line-height: 1.7;
+
+  @media (min-width: 640px) {
+    margin-bottom: 1.25rem;
+    orphans: var(--orphan-mobile-min-words);
+    widows: var(--orphan-mobile-min-words);
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
 }
 
 .article-content blockquote {
@@ -782,6 +917,10 @@
   background: var(--clr-text-muted);
   color: var(--clr-text-secondary);
   font-style: italic;
+
+  @media (min-width: 768px) {
+    padding-left: 1.5rem;
+  }
 }
 
 /* Lists */
@@ -789,12 +928,28 @@
 .article-content ol {
   margin-bottom: 1rem;
   padding-left: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding-left: 2rem;
+  }
 }
 
 .article-content li {
   margin-bottom: 0.5rem;
   color: var(--clr-text-primary);
   line-height: 1.7;
+
+  @media (max-width: 768px) {
+    orphans: var(--orphan-mobile-min-words);
+    widows: var(--orphan-mobile-min-words);
+    line-height: var(--orphan-mobile-line-height);
+  }
+
+  @media (min-width: 1024px) {
+    orphans: var(--orphan-desktop-min-words);
+    widows: var(--orphan-desktop-min-words);
+    line-height: var(--orphan-desktop-line-height);
+  }
 }
 
 .article-content ul > li {
@@ -815,6 +970,10 @@
   font-family: var(--font-code);
   font-size: 0.875rem;
   line-height: 1.5;
+
+  @media (min-width: 1024px) {
+    padding: 1.5rem;
+  }
 }
 
 .article-content code {
@@ -1041,9 +1200,12 @@ button:focus-visible,
     border-radius: var(--radius-xl);
     background: oklch(12% 0.008 270deg / var(--opacity-8));
     box-shadow: var(--shadow-xl);
-
-    /* Reduced backdrop-filter for better Android performance */
     backdrop-filter: blur(6px);
+
+    @media (max-width: 768px) {
+      backdrop-filter: none;
+      background: oklch(12% 0.008 270deg / var(--opacity-12));
+    }
   }
 }
 
@@ -1064,6 +1226,7 @@ button:focus-visible,
       var(--clr-gold-dark) 70%
     );
     background-clip: text;
+    font-family: var(--font-serif);
   }
 
   @supports (background-clip: text) {
@@ -1076,13 +1239,36 @@ button:focus-visible,
   .glassmorphism {
     position: relative;
     overflow: hidden;
-    border: 1px solid rgb(255 255 255 / var(--opacity-20));
+    border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: 16px;
-    background: rgb(255 255 255 / var(--opacity-10));
+    background: oklch(100% 0 0deg / var(--opacity-10));
     backdrop-filter: blur(18px);
     box-shadow:
-      0 8px 32px rgb(0 0 0 / var(--opacity-10)),
-      inset 0 1px 0 rgb(255 255 255 / var(--opacity-20));
+      0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
+      inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
+
+    @media (max-width: 768px) {
+      backdrop-filter: blur(15px);
+      background: oklch(100% 0 0deg / var(--opacity-08));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    @media (prefers-contrast: high) {
+      border: 2px solid var(--clr-text-primary);
+      background: var(--clr-black-85);
+      backdrop-filter: blur(25px) saturate(150%) brightness(90%);
+
+      @media (hover: hover) {
+        &:hover {
+          background: var(--clr-black-95);
+          border-color: var(--clr-accent);
+          backdrop-filter: blur(18px) saturate(150%) brightness(100%);
+        }
+      }
+    }
   }
 
   /* GlassMorphism variants */
@@ -1128,208 +1314,138 @@ button:focus-visible,
   select {
     color: var(--clr-text-primary);
   }
-
-  /* ===== SEARCH RESULTS GLOBAL OVERRIDE ===== */
-
-  /* 検索結果のテキストカラーをグローバルレベルで強制的に白色に設定 */
-  .search-result-item,
-  .search-result-item *,
-  .search-result-title,
-  .search-result-description,
-  .search-result-meta {
-    color: var(--search-result-text-color);
-  }
-
-  .search-result-title {
-    color: var(--search-result-title-color);
-  }
-
-  .search-result-description {
-    color: var(--search-result-description-color);
-  }
-
-  .search-result-meta {
-    color: var(--search-result-meta-color);
-  }
-
-  .search-result-type,
-  .search-result-tool {
-    color: var(--search-result-badge-color);
-  }
 }
 
 /* ========== LIST STYLING - GLOBAL CONSISTENCY ========== */
 
-/* 
- * REASONING: Implementing Google Material Design 3 list standards for site-wide consistency
- * CHANGE: Adding comprehensive list styling that works across all pages and components
- * BENEFIT: Improved readability, accessibility, and visual consistency across the entire site
- */
-
-/* ===== GLOBAL LISTS - W3SCHOOLS STANDARD WITH CUSTOM BULLETS ===== */
+/* Unordered lists with custom bullets */
 .article-content ul,
 .content-description-content ul {
-  width: 100%; /* Full width for better text flow */
-  max-width: 100%; /* Ensure full width utilization */
-  margin: 1rem 0; /* Standard top/bottom margin */
-  padding-left: 0; /* Remove default padding for custom positioning */
+  margin: 1rem 0;
+  padding-left: 0;
+  list-style: none;
 
-  /* REASONING: W3Schools standard list styling with custom bullet */
-  list-style: none; /* Remove default bullets for custom styling */
+  @media (max-width: 768px) {
+    margin: 0.75rem 0;
+  }
 }
 
 .article-content ul li,
 .content-description-content ul li {
-  /* REASONING: Custom bullet with responsive positioning */
   position: relative;
-  width: 100%; /* Full width for better text flow */
-  max-width: 100%; /* Ensure full width utilization */
-  margin-bottom: 0.75rem; /* Increased spacing for better readability */
-  padding-right: 0.5rem; /* Right padding for text balance */
-  padding-left: 1.5rem; /* More space for custom bullet */
-  line-height: 1.7; /* Improved line height for readability */
-  overflow-wrap: break-word; /* Handle long text gracefully */
-  hyphens: auto; /* Better text wrapping */
+  margin-bottom: 0.75rem;
+  padding-inline: 0.5rem 1.5rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  hyphens: auto;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.5rem;
+    padding-inline: 0.25rem 1.25rem;
+    line-height: var(--orphan-mobile-line-height);
+  }
+
+  @media (min-width: 1024px) {
+    margin-bottom: 0.875rem;
+    padding-inline: 0.75rem 1.75rem;
+    line-height: var(--orphan-desktop-line-height);
+  }
 }
 
 .article-content ul li::before,
 .content-description-content ul li::before {
   position: absolute;
-  top: 50%; /* Center vertically */
+  top: 50%;
   left: 0;
-  color: var(--clr-accent); /* Primary purple color */
-  font-size: 1.1rem; /* Slightly larger for better visibility */
-  font-weight: 900; /* Bold weight for visibility */
-  line-height: 1; /* Prevent line height issues */
-  transform: translateY(-50%); /* Perfect vertical centering */
-
-  /* REASONING: Custom bullet "〆" with primary purple color */
+  color: var(--clr-accent);
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 1;
+  transform: translateY(-50%);
   content: '〆';
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 }
 
-/* ===== GLOBAL ORDERED LISTS - W3SCHOOLS STANDARD ===== */
+/* Ordered lists */
 .article-content ol,
 .content-description-content ol {
-  width: 100%; /* Full width for better text flow */
-  max-width: 100%; /* Ensure full width utilization */
-  margin: 1rem 0; /* Standard top/bottom margin */
-  padding-left: 1.5rem; /* Increased left padding for better number spacing */
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  list-style: decimal;
 
-  /* REASONING: W3Schools standard ordered list styling */
-  list-style: decimal; /* Standard decimal numbers */
+  @media (max-width: 768px) {
+    margin: 0.75rem 0;
+  }
 }
 
 .article-content ol li,
 .content-description-content ol li {
-  /* REASONING: W3Schools standard list item styling */
-  width: 100%; /* Full width for better text flow */
-  max-width: 100%; /* Ensure full width utilization */
-  margin-bottom: 0.75rem; /* Increased spacing for better readability */
-  padding-right: 0.5rem; /* Right padding for text balance */
-  line-height: 1.7; /* Improved line height for readability */
-  overflow-wrap: break-word; /* Handle long text gracefully */
-  hyphens: auto; /* Better text wrapping */
-}
+  margin-bottom: 0.75rem;
+  padding-right: 0.5rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  hyphens: auto;
 
-/* ===== MARKER PSEUDO-ELEMENT STYLING ===== */
-.article-content ol li::marker,
-.content-description-content ol li::marker {
-  /* REASONING: Style the ::marker pseudo-element to fix browser console issues */
-  color: var(--clr-accent); /* Primary purple color for numbers */
-  font-size: 1.1rem; /* Slightly larger for better visibility */
-  font-weight: 700; /* Bold weight for visibility */
-}
-
-/* ===== RESPONSIVE ORPHAN PREVENTION SYSTEM ===== */
-
-/* Mobile Orphan Prevention (768px and below) */
-@media (max-width: 768px) {
-  /* Mobile Orphan Prevention for all prose elements */
-  .prose p,
-  .prose li,
-  .article-content p,
-  .article-content li {
-    orphans: var(--orphan-mobile-min-words);
-    widows: var(--orphan-mobile-min-words);
+  @media (max-width: 768px) {
+    margin-bottom: 0.5rem;
+    padding-inline: 0.25rem 1.25rem;
     line-height: var(--orphan-mobile-line-height);
   }
 
-  .article-content ul li,
-  .content-description-content ul li,
-  .article-content ol li,
-  .content-description-content ol li {
-    margin-bottom: 0.5rem; /* Tighter spacing on mobile */
-    padding-right: 0.25rem; /* Reduced right padding on mobile */
-    padding-left: 1.25rem; /* Slightly reduced padding on mobile */
-    line-height: var(
-      --orphan-mobile-line-height
-    ); /* Mobile orphan prevention line height */
-  }
-
-  .article-content ul li::before,
-  .content-description-content ul li::before {
-    font-size: 1rem; /* Standard size on mobile */
-  }
-
-  .article-content ol li::marker,
-  .content-description-content ol li::marker {
-    font-size: 1rem; /* Standard size on mobile */
-  }
-}
-
-/* Desktop Orphan Prevention (1024px and above) */
-@media (min-width: 1024px) {
-  /* Desktop Orphan Prevention for all prose elements */
-  .prose p,
-  .prose li,
-  .article-content p,
-  .article-content li {
-    orphans: var(--orphan-desktop-min-words);
-    widows: var(--orphan-desktop-min-words);
+  @media (min-width: 1024px) {
+    margin-bottom: 0.875rem;
+    padding-inline: 0.75rem 1.75rem;
     line-height: var(--orphan-desktop-line-height);
   }
+}
 
-  .article-content ul li,
-  .content-description-content ul li,
-  .article-content ol li,
-  .content-description-content ol li {
-    margin-bottom: 0.875rem; /* More generous spacing on desktop */
-    padding-right: 0.75rem; /* More generous right padding on desktop */
-    padding-left: 1.75rem; /* More generous padding on desktop */
-    line-height: var(
-      --orphan-desktop-line-height
-    ); /* Desktop orphan prevention line height */
+.article-content ol li::marker,
+.content-description-content ol li::marker {
+  color: var(--clr-accent);
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
   }
 }
 
-/* ===== GLOBAL NESTED LISTS - W3SCHOOLS STANDARD ===== */
+/* Nested lists */
 .article-content ul ul,
 .article-content ol ol,
 .article-content ul ol,
 .article-content ol ul {
-  /* REASONING: W3Schools standard nested list styling */
-  margin: 0.5rem 0; /* Standard spacing for nested lists */
-  padding-left: 0; /* Standard indentation for nesting - shorter */
+  margin: 0.5rem 0;
+  padding-left: 0;
+
+  @media (max-width: 768px) {
+    padding-left: 0.75rem;
+  }
 }
 
 .article-content ul ul {
-  list-style: none; /* Remove default for nested custom bullets */
+  list-style: none;
+}
+
+.article-content ol ol {
+  list-style: lower-alpha;
 }
 
 .article-content .nested-list li::before {
   position: absolute;
   top: 0;
   left: 0;
-  color: var(--clr-accent); /* Primary purple color */
-  font-size: 0.875rem; /* Smaller size for nesting */
-  font-weight: 700; /* Slightly less bold for nesting */
-
-  /* REASONING: Nested custom bullet with smaller size */
+  color: var(--clr-accent);
+  font-size: 0.875rem;
+  font-weight: 700;
   content: '〆';
-}
 
-.article-content ol ol {
-  list-style: lower-alpha; /* Nested ordered lists use lowercase letters */
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 }
 
 /* ========== ANIMATION SYSTEM - OPTIMIZED ========== */
@@ -1413,21 +1529,6 @@ button:focus-visible,
   color: inherit;
 }
 
-/* 検索結果の文字色を強制的に白に設定 */
-.search-result,
-.search-result-item,
-.search-result-title,
-.search-result-description {
-  color: var(--clr-text-primary);
-}
-
-.search-result *,
-.search-result-item *,
-.search-result-title *,
-.search-result-description * {
-  color: inherit;
-}
-
 /* モーダル要素の文字色を強制的に白に設定 */
 .modal,
 .modal-content,
@@ -1443,291 +1544,19 @@ button:focus-visible,
   color: inherit;
 }
 
-/* ========== MEDIA QUERIES - RESPONSIVE DESIGN ========== */
-
-/* ===== RESPONSIVE BREAKPOINT ADJUSTMENTS ===== */
-
-/* Small breakpoint (640px+) */
-@media (min-width: 640px) {
-  .article-content {
-    font-size: 1rem; /* Slightly larger base font */
-  }
-
-  .article-content h1 {
-    font-size: 1.875rem;
-  }
-
-  .article-content h2 {
-    font-size: 1.5rem;
-  }
-
-  .article-content h3 {
-    font-size: 1.25rem;
-  }
-
-  .article-content p {
-    margin-bottom: 1.25rem;
-
-    /* Responsive Orphan Prevention - Tailwind Typography Integrated */
-    orphans: var(--orphan-mobile-min-words); /* Dynamic mobile orphans */
-    widows: var(--orphan-mobile-min-words);
-    text-wrap: pretty;
-  }
-}
-
-/* Medium breakpoint (768px+) */
-@media (min-width: 768px) {
-  .article-content {
-    font-size: 1.125rem; /* Larger base font for tablets */
-
-    /* Enhanced Orphan Prevention for Desktop - Tailwind Typography Integrated */
-    orphans: var(--orphan-min-words);
-    widows: var(--orphan-min-words);
-    text-wrap: pretty;
-    word-spacing: var(--orphan-word-spacing);
-  }
-
-  .article-content h1 {
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
-  }
-
-  .article-content h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.875rem;
-  }
-
-  .article-content h3 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  .article-content h4 {
-    font-size: 1.25rem;
-  }
-
-  .article-content p {
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-  }
-
-  .article-content blockquote {
-    padding-left: 1.5rem;
-  }
-
-  .article-content ul,
-  .article-content ol {
-    padding-left: 2rem;
-  }
-}
-
-/* Large breakpoint (1024px+) */
-@media (min-width: 1024px) {
-  .article-content {
-    font-size: 1.1875rem; /* Optimal reading size */
-
-    /* Maximum Orphan Prevention for Large Screens - Tailwind Typography Integrated */
-    orphans: var(--orphan-desktop-min-words);
-    widows: var(--orphan-desktop-min-words);
-    text-wrap: pretty;
-    line-height: var(--orphan-desktop-line-height);
-    word-spacing: var(--orphan-word-spacing);
-  }
-
-  .article-content h1 {
-    font-size: 3rem;
-    line-height: 1.2;
-  }
-
-  .article-content h2 {
-    font-size: 2.25rem;
-  }
-
-  .article-content h3 {
-    font-size: 1.875rem;
-  }
-
-  .article-content pre {
-    padding: 1.5rem;
-  }
-}
-
-/* Extra large breakpoint (1280px+) */
-@media (min-width: 1280px) {
-  .article-content {
-    font-size: 1.25rem; /* Maximum readability */
-
-    /* Premium Orphan Prevention for Extra Large Screens - Tailwind Typography Integrated */
-    orphans: var(--orphan-desktop-min-words);
-    widows: var(--orphan-desktop-min-words);
-    text-wrap: pretty;
-    line-height: var(--orphan-desktop-line-height);
-    word-spacing: var(--orphan-word-spacing);
-
-    /* Advanced typography for large screens */
-    text-justify: inter-word;
-    text-align-last: left;
-  }
-
-  .article-content h1 {
-    font-size: 3.5rem;
-  }
-
-  .article-content h2 {
-    font-size: 3rem;
-  }
-
-  .article-content h3 {
-    font-size: 2.25rem;
-  }
-
-  .article-content h4 {
-    font-size: 1.5rem;
-  }
-}
-
-/* ===== MOBILE RESPONSIVE STYLES ===== */
-
-/* Mobile (768px and below) */
-@media (max-width: 768px) {
-  /* Button responsive styles */
-  .docs-button {
-    padding: 14px 28px;
-    font-size: 15px;
-  }
-
-  /* Article content responsive styles */
-  .article-content ul,
-  .article-content ol {
-    margin: 0.75rem 0; /* Smaller margins on mobile */
-  }
-
-  .article-content ul li,
-  .article-content ol li {
-    margin-bottom: 0.375rem; /* Smaller spacing on mobile */
-    padding-left: 0.75rem; /* Reduced padding on mobile */
-    font-size: 0.875rem; /* Slightly smaller font on mobile */
-  }
-
-  .article-content ul li::before {
-    font-size: 0.875rem; /* Smaller bullet on mobile */
-  }
-
-  .article-content .nested-list li::before {
-    font-size: 0.75rem; /* Even smaller nested bullet on mobile */
-  }
-
-  .article-content ul ul,
-  .article-content ol ol,
-  .article-content ul ol,
-  .article-content ol ul {
-    padding-left: 0.75rem; /* Less indentation on mobile */
-  }
-
-  /* Glass panel optimization for mobile */
-  .glass-panel {
-    backdrop-filter: none;
-    background: oklch(12% 0.008 270deg / var(--opacity-12));
-  }
-
-  /* Glassmorphism optimization for mobile */
-  .glassmorphism {
-    backdrop-filter: blur(15px);
-    background: rgb(255 255 255 / var(--opacity-08));
-  }
-}
-
-/* Small mobile (480px and below) */
-@media (max-width: 480px) {
-  .primary-button {
-    @apply px-[24px] py-[12px] text-sm;
-  }
-
-  .secondary-button {
-    @apply px-[24px] py-[10px] text-sm;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    gap: calc(var(--spacing-sm) * 0.75);
-    padding: calc(var(--spacing-sm) * 0.75) var(--spacing-md);
-    font-size: var(--font-size-xs);
-  }
-}
-
-/* ===== ACCESSIBILITY MEDIA QUERIES ===== */
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .article-content {
-    --clr-foreground: var(--clr-black);
-    --clr-background: var(--clr-text-primary);
-  }
-
-  .glassmorphism {
-    border: 2px solid var(--clr-text-primary);
-    background: var(--clr-black-85);
-    backdrop-filter: blur(25px) saturate(150%) brightness(90%);
-  }
-
-  @media (hover: hover) {
-    .glassmorphism:hover {
-      background: var(--clr-black-95);
-      border-color: var(--clr-accent);
-      backdrop-filter: blur(18px) saturate(150%) brightness(100%);
-    }
-  }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .article-content *,
-  .article-content *::before,
-  .article-content *::after {
-    transition-duration: 0.01ms;
-    animation-duration: 0.01ms;
-    animation-iteration-count: 1;
-  }
-
-  .glassmorphism {
-    transition: none;
-  }
-}
-
 /* ===== BOTTOM NAVIGATION BAR SPACING ===== */
 
-/* Add bottom margin for mobile devices to account for fixed BottomNavBar */
-
-/* Mobile-first approach: Add bottom spacing for screens below 1024px */
 @media (max-width: 1024px) {
-  /* Base layout content spacing */
-  .layout-content {
-    padding-bottom: calc(88px + env(safe-area-inset-bottom));
-  }
-
-  /* Article layout specific spacing */
-  .article-layout-container {
-    padding-bottom: calc(88px + env(safe-area-inset-bottom));
-  }
-
-  /* Post layout specific spacing */
-  .content-page {
-    padding-bottom: calc(88px + env(safe-area-inset-bottom));
-  }
-
-  /* Main content areas */
-  main {
-    padding-bottom: calc(88px + env(safe-area-inset-bottom));
-  }
-
-  /* Content wrappers */
+  .layout-content,
+  .article-layout-container,
+  .content-page,
+  main,
   .content-wrapper,
   .article-content-wrapper {
-    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+    padding-bottom: var(--bottom-nav-spacing);
   }
 }
 
-/* Small screen adjustments (360px and below) */
 @media (max-width: 360px) {
   .layout-content,
   .article-layout-container,
@@ -1735,6 +1564,6 @@ button:focus-visible,
   main,
   .content-wrapper,
   .article-content-wrapper {
-    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    padding-bottom: var(--bottom-nav-spacing-small);
   }
 }

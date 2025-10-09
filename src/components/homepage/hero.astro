@@ -13,7 +13,7 @@ interface Props {
 }
 
 const {
-  kicker = 'Belajar bahasa Jepang?',
+  kicker = 'Belajar Bahasa Jepang?',
   marker = '#Go-IMMERSE',
   titleLine1 = 'Belajar Secara Alami,',
   titleLine2 = 'Kuasai Layaknya Penutur Asli.',
@@ -63,9 +63,11 @@ const {
       </span>
     </h1>
 
-    <p class='hero-description' transition:name='hero-description'>
-      {description}
-    </p>
+    <p
+      class='hero-description'
+      transition:name='hero-description'
+      set:html={description}
+    />
 
     <div class='hero-buttons' transition:name='hero-buttons'>
       <button

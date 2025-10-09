@@ -212,9 +212,11 @@ const { headings = [] } = Astro.props
       }
     }
 
-    /* Mobile responsiveness */
+    /* Mobile responsiveness - Hide desktop TOC on mobile */
     @media (max-width: 1200px) {
-      display: none;
+      &:not(.mobile-toc) {
+        display: none;
+      }
     }
   }
 
@@ -528,7 +530,7 @@ const { headings = [] } = Astro.props
 
   /* Mobile TOC - show as collapsible at top on mobile */
   @media (max-width: 1200px) {
-    aside.toc-container.mobile-toc {
+    .toc-container.mobile-toc {
       position: relative;
       top: 0;
       right: auto;
@@ -539,7 +541,6 @@ const { headings = [] } = Astro.props
       width: 100%;
       max-width: 100%;
       max-height: none;
-      margin: 0 0 24px;
       padding: 8px 16px;
       border: 1px solid oklch(100% 0 0deg / 0.12);
       border-radius: 16px;
@@ -555,10 +556,7 @@ const { headings = [] } = Astro.props
         0 1px 3px oklch(0% 0 0deg / 0.12),
         inset 0 1px 0 oklch(100% 0 0deg / 0.15);
       touch-action: manipulation;
-    }
 
-
-    .toc-container.mobile-toc {
       .toc-title {
         font-size: 21px;
       font-weight: 600;
@@ -567,7 +565,7 @@ const { headings = [] } = Astro.props
       .toc-header {
         width: 100%;
         max-width: calc(100% - 1rem);
-        margin: 0.5rem auto;
+        margin: 0.5rem auto; /* 上下8px統一 */
         box-sizing: border-box;
       }
 
@@ -604,41 +602,41 @@ const { headings = [] } = Astro.props
       font-size: 14px;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+    }
 
-    /* Mobile indentation levels with smaller fonts */
-      &.toc-level-1 {
+    /* Mobile indentation levels - 特異性を下げたセレクター */
+    .mobile-toc .toc-level-1 {
       padding-left: 12px;
       font-size: 14px;
       font-weight: 600;
     }
 
-      &.toc-level-2 {
-      padding-left: 20px;
+    .mobile-toc .toc-level-2 {
+      padding-left: 24px; /* デスクトップと同じインデント */
       font-size: 13px;
     }
 
-      &.toc-level-3 {
-      padding-left: 28px;
+    .mobile-toc .toc-level-3 {
+      padding-left: 36px; /* デスクトップと同じインデント */
       font-size: 12px;
       opacity: 0.9;
     }
 
-      &.toc-level-4,
-      &.toc-level-5,
-      &.toc-level-6 {
-      padding-left: 36px;
+    .mobile-toc .toc-level-4,
+    .mobile-toc .toc-level-5,
+    .mobile-toc .toc-level-6 {
+      padding-left: 48px; /* デスクトップと同じインデント */
       font-size: 12px;
       opacity: 0.8;
     }
 
-      &.active {
+    .mobile-toc .toc-link.active {
       position: relative;
-        border-left: 4px solid var(--token-purple-base);
-        background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
-        color: var(--token-purple-base);
+      border-left: 4px solid var(--token-purple-base);
+      background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+      color: var(--token-purple-base);
       font-weight: 600;
       animation: mobileActiveGlow 0.3s ease-in-out;
-      }
     }
 
     .toc-mobile-active::before {
@@ -659,7 +657,7 @@ const { headings = [] } = Astro.props
       color: var(--token-purple-base);
       font-size: 8px;
       transform: translateY(-50%);
-      animation: pulse 2s infinite;
+      animation: pulse 3s infinite;
       content: '●';
     }
 
@@ -688,7 +686,6 @@ const { headings = [] } = Astro.props
         overflow-x: hidden;
         width: 100%;
         max-width: 100vw;
-        margin: 0;
         padding: 1rem;
         border: 1px solid oklch(100% 0 0deg / 0.12);
         border-radius: 16px;
@@ -956,7 +953,11 @@ const { headings = [] } = Astro.props
       const existing = document.querySelector('.toc-container.mobile-toc');
       if (window.innerWidth <= 1200) {
         if (!existing) {
-          const contentMain = document.getElementById('main-content');
+          // Try multiple possible IDs for the main content element
+          const contentMain = document.getElementById('contentMain') || 
+                             document.getElementById('main-content') || 
+                             document.querySelector('main') ||
+                             document.querySelector('article');
           if (contentMain && contentMain.parentNode) {
             const clone = tocContainer.cloneNode(true) as HTMLElement;
             clone.classList.add('mobile-toc');

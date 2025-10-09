@@ -45,8 +45,12 @@ const seoData = {
         align-items: center;
         min-height: 100vh;
         padding: 20px;
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-        color: #333;
+        background: linear-gradient(
+          135deg,
+          oklch(4% 0 0deg) 0%,
+          oklch(10% 0 0deg) 100%
+        );
+        color: oklch(20% 0 0deg);
         font-family: Inter, sans-serif;
       }
 
@@ -55,11 +59,11 @@ const seoData = {
         width: 100%;
         max-width: 600px;
         padding: 50px;
-        border: 1px solid rgb(139 93 255 / 0.1);
+        border: 1px solid oklch(65% 0.25 280deg / 0.1);
         border-radius: 12px;
-        background: #fdfdf6;
+        background: oklch(99% 0.01 60deg);
         animation: fadeIn 1s ease-out;
-        box-shadow: 0 20px 60px rgb(139 93 255 / 0.2);
+        box-shadow: 0 20px 60px oklch(65% 0.25 280deg / 0.2);
       }
 
       @keyframes fadeIn {
@@ -86,26 +90,26 @@ const seoData = {
         border: none;
         border-radius: 50%;
         background: none;
-        color: #666;
+        color: oklch(40% 0 0deg);
         font-size: 24px;
         cursor: pointer;
         transition: all 0.3s ease;
       }
 
       .back-button:hover {
-        background: #f0f0f0;
-        color: #333;
+        background: oklch(94% 0 0deg);
+        color: oklch(20% 0 0deg);
       }
 
       .header {
         margin-bottom: 30px;
         padding-bottom: 25px;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid oklch(88% 0 0deg);
         text-align: center;
       }
 
       .japanese-title {
-        color: #333;
+        color: oklch(20% 0 0deg);
         font-family:
           Yuji Syuku,
           serif;
@@ -116,7 +120,7 @@ const seoData = {
       }
 
       .japanese-title rt {
-        color: #666;
+        color: oklch(40% 0 0deg);
         font-family: Inter, sans-serif;
         font-size: 0.9rem;
         font-weight: 600;
@@ -124,7 +128,7 @@ const seoData = {
 
       .content {
         margin-bottom: 30px;
-        color: #3c3c3c;
+        color: oklch(24% 0 0deg);
         font-family: Lora, serif;
         font-size: 1.1rem;
         line-height: 1.8;
@@ -135,7 +139,7 @@ const seoData = {
       }
 
       .content strong {
-        color: #333;
+        color: oklch(20% 0 0deg);
       }
 
       .member-list {
@@ -151,7 +155,7 @@ const seoData = {
 
       .final-pitch {
         margin-top: 30px;
-        color: #333;
+        color: oklch(20% 0 0deg);
         font-size: 1.15rem;
         font-weight: 600;
         text-align: center;
@@ -162,30 +166,30 @@ const seoData = {
         margin-top: 20px;
         margin-bottom: 40px;
         padding: 20px;
-        border: 1px solid #eaeaea;
+        border: 1px solid oklch(92% 0 0deg);
         border-radius: 8px;
-        background-color: #f8f9fa;
-        color: #333;
+        background-color: oklch(98% 0 0deg);
+        color: oklch(20% 0 0deg);
         text-decoration: none;
         cursor: pointer;
         transition: all 0.3s ease;
       }
 
       .discord-link:hover {
-        border-color: #8b5dff;
-        box-shadow: 0 5px 15px rgb(139 93 255 / 0.2);
+        border-color: oklch(65% 0.25 280deg);
+        box-shadow: 0 5px 15px oklch(65% 0.25 280deg / 0.2);
       }
 
       .discord-header {
         margin-bottom: 8px;
-        color: #666;
+        color: oklch(40% 0 0deg);
         font-family: Inter, sans-serif;
         font-size: 0.9rem;
         font-weight: 600;
       }
 
       .discord-url {
-        color: #8b5dff;
+        color: oklch(65% 0.25 280deg);
         font-family: Inter, sans-serif;
         font-size: 1.1rem;
         font-weight: 600;
@@ -216,7 +220,11 @@ const seoData = {
         width: 80px;
         height: 80px;
         border-radius: 12px;
-        background: linear-gradient(135deg, #8b5dff 0%, #7b4def 100%);
+        background: linear-gradient(
+          135deg,
+          oklch(65% 0.25 280deg) 0%,
+          oklch(60% 0.25 280deg) 100%
+        );
         color: white;
         font-size: 32px;
         font-weight: bold;
@@ -236,12 +244,12 @@ const seoData = {
 
       .signature-title {
         margin-bottom: -10px;
-        color: #333;
+        color: oklch(20% 0 0deg);
         text-align: right;
       }
 
       .signature-name {
-        color: #333;
+        color: oklch(20% 0 0deg);
         font-family:
           Cedarville cursive,
           cursive;

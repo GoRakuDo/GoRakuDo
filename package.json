@@ -34,6 +34,8 @@
     "@astrojs/vue": "^5.1.0",
     "@fontsource-variable/roboto-flex": "^5.2.8",
     "@fontsource-variable/roboto-serif": "^5.2.8",
+    "@fontsource/noto-sans-jp": "^5.2.8",
+    "@fontsource/noto-serif-jp": "^5.2.7",
     "@fontsource/yuji-syuku": "^5.2.7",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.0",

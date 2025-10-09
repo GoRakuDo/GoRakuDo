@@ -15,7 +15,7 @@ const navItems = [
   },
   {
     href: '/docs',
-    label: 'Doc Penjelasan',
+    label: 'Dokumentasi',
     icon: 'documentation',
     ariaLabel: 'Dokumentasi - ドキュメント',
   },
@@ -503,7 +503,7 @@ const menuItems = [
     /* UNIFIED GlassMorphism背景効果 - Navbar.astroと同じ */
     background:
       linear-gradient(
-      135deg,
+        135deg,
         oklch(6% 0.008 270deg / 0.15) 0%,
         oklch(8% 0.01 270deg / 0.12) 25%,
         oklch(6% 0.008 270deg / 0.18) 50%,
@@ -643,6 +643,7 @@ const menuItems = [
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      width: 0; /* 強制的に等しい幅を保証 */
       min-height: 48px;
       padding: 0.75rem 0.5rem;
       border: none;
@@ -788,19 +789,36 @@ const menuItems = [
 
     /* ---------- Navigation Label - UNIFIED WITH NAVBAR ---------- */
     .nav-btn__label {
+      overflow: hidden;
+      max-width: 100%;
       color: oklch(98% 0.005 50deg);
       font-size: 0.75rem;
       font-weight: 700;
       line-height: 1.2;
       text-align: center;
       letter-spacing: 0.025em;
+
+      /* 長いテキストの対応 */
+      white-space: nowrap;
       transform: translateZ(0);
       transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: color, transform;
+      text-overflow: ellipsis;
 
       /* 小さな画面での調整 */
       @media (max-width: 360px) {
         font-size: 0.6875rem;
+      }
+
+      /* 非常に小さな画面では2行表示を許可 */
+      @media (max-width: 320px) {
+        display: -webkit-box;
+        overflow: hidden;
+        max-height: 2.2em;
+        line-height: 1.1;
+        white-space: normal;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
     }
 
@@ -989,7 +1007,7 @@ const menuItems = [
   }
 
   .menu-overlay-close:active {
-        transform: scale(0.95);
+    transform: scale(0.95);
     box-shadow:
       0 1px 4px oklch(from var(--token-black-base) l c h / 0.1),
       inset 0 1px 0 oklch(100% 0 0deg / 0.05);

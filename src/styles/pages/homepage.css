@@ -76,6 +76,7 @@ body.modal-open {
 
 .white-gradient-text {
   display: block;
+  padding-bottom: 0.1em; /* 下部に少し余白を追加 */
   background: linear-gradient(
     135deg,
     var(--clr-text-primary) 0%,
@@ -84,6 +85,7 @@ body.modal-open {
   color: var(--clr-text-primary); /* Fallback */
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
 }
 
 /* ===== HOMEPAGE-SPECIFIC ANIMATIONS ===== */
@@ -253,6 +255,7 @@ body.modal-open {
 
 .mission-title {
   margin-bottom: 4rem;
+  font-family: var(--font-serif);
   font-size: var(--font-size-title-sm);
   font-weight: 600;
 }
@@ -327,6 +330,7 @@ body.modal-open {
 
 .features-title {
   margin-bottom: 5rem;
+  font-family: var(--font-serif);
   font-size: var(--font-size-title-sm);
   font-weight: 600;
 }
@@ -448,6 +452,7 @@ body.modal-open {
 
 .docs-title {
   margin-bottom: 2rem;
+  font-family: var(--font-serif);
   font-size: var(--font-size-title-sm);
   font-weight: 600;
 }
@@ -515,12 +520,17 @@ body.modal-open {
   border: 2px solid var(--clr-accent-glow-strong);
   background: transparent;
   color: var(--clr-text-primary);
-}
 
-.docs-button:hover {
-  background: var(--clr-accent-glow-medium);
-  border-color: var(--clr-accent);
-  box-shadow: 0 10px 30px var(--clr-accent-glow-strong);
+  @media (max-width: 768px) {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+
+  &:hover {
+    background: var(--clr-accent-glow-medium);
+    border-color: var(--clr-accent);
+    box-shadow: 0 10px 30px var(--clr-accent-glow-strong);
+  }
 }
 
 /* ===== MODAL COMPONENT ===== */
@@ -628,12 +638,28 @@ body.modal-open {
   }
 }
 
-/* Homepage button overrides */
+/* Homepage button styles - Mobile first */
 .primary-button,
 .secondary-button {
   justify-content: center;
-  padding: 0.75rem 1.5rem;
+  padding-inline: 24px;
   font-size: 0.875rem;
+}
+
+.primary-button {
+  padding-block: 12px;
+}
+
+.secondary-button {
+  padding-block: 10px;
+}
+
+/* Small mobile (480px and up) */
+@media (min-width: 481px) {
+  .primary-button,
+  .secondary-button {
+    padding: 0.75rem 1.5rem;
+  }
 }
 
 /* Section padding utilities */
@@ -1080,6 +1106,7 @@ section .secondary-button {
 /* Responsive typography scale */
 .hero-kicker {
   color: var(--clr-accent);
+  font-family: var(--font-serif);
   font-size: 0.875rem;
   font-weight: 500;
   font-style: italic;
@@ -1130,7 +1157,9 @@ section .secondary-button {
 .title-line-1 {
   display: block;
   margin-top: 0.75rem;
+  padding-bottom: 0.1em; /* 下部に少し余白を追加 */
   font-weight: 800;
+  line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
 
   /* Tablet and Desktop: keep as block for 2-line display */
   @media (min-width: 768px) {
@@ -1140,7 +1169,9 @@ section .secondary-button {
 
 .title-line-2 {
   display: block;
+  padding-bottom: 0.1em; /* 下部に少し余白を追加 */
   font-weight: 500;
+  line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
 
   /* Tablet and Desktop: keep as block for 2-line display */
   @media (min-width: 768px) {

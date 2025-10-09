@@ -340,7 +340,9 @@
 
   /* H1要素 */
   h1 {
-    @apply font-bold mb-8 leading-tight;
+    @apply font-bold mb-8;
+
+    padding-bottom: 0.1em; /* 下部に少し余白を追加 */
 
     /* 紫色→赤色グラデーション */
     background: linear-gradient(
@@ -351,6 +353,7 @@
     background-clip: text;
     color: transparent;
     font-size: 2.25rem; /* 36px - チャレンジページ */
+    line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
 
     @apply max-sm:text-xl max-sm:mb-3;
     @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-accent)] focus:ring-offset-2;

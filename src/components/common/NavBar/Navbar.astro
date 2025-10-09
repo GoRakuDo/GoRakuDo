@@ -16,7 +16,7 @@ const { className = '' } = Astro.props;
 // ========== NAVIGATION CONFIGURATION ==========
 // REASONING: Centralized route management following DRY principle
 const NAV_ROUTES = {
-  'Doc-Penjelasan': { path: '/docs', label: 'Doc-Penjelasan' },
+  Dokumentasi: { path: '/docs', label: 'Dokumentasi' },
 } as const;
 
 // ========== ASTRO-NATIVE NAVIGATION ITEMS ==========
@@ -931,7 +931,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
    * Generic navigation function - simplified for single route
    */
   function navigateTo(routeKey) {
-    if (routeKey === 'Doc-Penjelasan') {
+    if (routeKey === 'Dokumentasi') {
       window.location.href = '/docs';
     }
   }

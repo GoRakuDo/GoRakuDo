@@ -224,8 +224,8 @@ body {
     -webkit-text-fill-color: transparent;
     backdrop-filter: blur(10px);
     box-shadow:
-      0 8px 32px rgb(0 0 0 / 0.1),
-      inset 0 1px 0 rgb(255 255 255 / 0.1);
+      0 8px 32px oklch(0% 0 0deg / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
 
     &::before {
       content: '';
@@ -314,7 +314,7 @@ body {
     border-radius: var(--rc-radius-xl);
     background: transparent;
     backdrop-filter: blur(12px);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+    box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.08);
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
@@ -587,7 +587,7 @@ body {
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
 
   @media (min-width: 768px) {
     flex: 1;
@@ -598,7 +598,7 @@ body {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgb(0 0 0 / 0.15);
+    box-shadow: 0 4px 16px oklch(0% 0 0deg / 0.15);
     border-color: var(--rc-color-primary);
 
     /* GlassMorphism効果を活かすためのホバー調整 */
@@ -614,7 +614,7 @@ body {
 
   &:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.1);
   }
 
   &:focus {

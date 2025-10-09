@@ -44,8 +44,8 @@
   --pl-font-medium: var(--font-weight-medium);
   --pl-font-semibold: var(--font-weight-semibold);
   --pl-font-bold: var(--font-weight-bold);
-  --pl-font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  --pl-font-family-display: 'Open Sauce One', system-ui, sans-serif;
+  --pl-font-family-primary: var(--font-sans);
+  --pl-font-family-display: var(--font-serif);
   --pl-leading-tight: 1.2;
   --pl-leading-snug: 1.3;
   --pl-leading-normal: 1.4;
@@ -91,7 +91,7 @@
 
   /* 共通デザインパターン変数 */
   --pl-color-mix-oklch: in oklch;
-  --pl-color-mix-srgb: in sRGB;
+  --pl-color-mix-srgb: in oklch;
   --pl-scale-hover: 1.02;
   --pl-scale-active: 0.98;
   --pl-scale-zoom: 1.1;
@@ -109,6 +109,30 @@
     var(--pl-color-text-secondary) 50%,
     transparent
   );
+}
+
+body {
+  padding-top: 80px;
+}
+
+/* ========================================
+   UNIFIED UNDERLINE STYLES
+   ======================================== */
+.unified-underline {
+  font-weight: normal;
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--pl-color-text-secondary) 50%,
+    transparent
+  );
+  text-decoration-thickness: var(--pl-text-decoration-thickness);
+  text-underline-offset: var(--pl-text-underline-offset);
+  transition: var(--pl-transition-text-decoration);
+}
+
+.unified-underline:hover {
+  text-decoration-color: var(--pl-color-text-secondary);
 }
 
 /* ========================================
@@ -234,10 +258,6 @@ h3.pl-objTitle {
   min-height: 100vh;
   contain: layout style;
   padding: min(var(--pl-space-5xl), 8vw) min(var(--pl-space-3xl), 6vw);
-  padding-top: calc(
-    min(var(--pl-space-5xl), 8vw) + 5.75rem
-  ); /* Navbar offset */
-
   background: transparent;
 
   @media (max-width: 768px) {
@@ -316,8 +336,9 @@ h3.pl-objTitle {
       text-shadow: none;
     }
 
-    &:active {
-      -webkit-text-fill-color: currentColor;
+    &:active,
+    &:focus {
+      -webkit-text-fill-color: transparent;
     }
   }
 }
@@ -393,8 +414,13 @@ h6:first-child {
 
 a {
   color: var(--pl-color-primary);
+  font-weight: normal;
   text-decoration: underline;
-  text-decoration-color: var(--pl-text-decoration-mix);
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--pl-color-text-secondary) 50%,
+    transparent
+  );
   text-decoration-thickness: var(--pl-text-decoration-thickness);
   text-underline-offset: var(--pl-text-underline-offset);
   transition: var(--pl-transition-text-decoration);
@@ -417,14 +443,24 @@ a {
     max-width: 600px;
     margin: 0;
 
-    @media (min-width: 768px) {
-      padding-left: var(--pl-space-lg);
-      transform: scale(1.5);
+    /* スマホ: 適度な拡大で可読性向上 */
+    @media (max-width: 767px) {
+      transform: scale(1.1);
       transform-origin: left top;
     }
 
-    @media (min-width: 768px) and (max-width: 1024px) {
-      transform: scale(1.2);
+    /* タブレット: 中程度の拡大 */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      padding-left: var(--pl-space-lg);
+      transform: scale(1.3);
+      transform-origin: left top;
+    }
+
+    /* デスクトップ: 最大拡大 */
+    @media (min-width: 1024px) {
+      padding-left: var(--pl-space-lg);
+      transform: scale(1.5);
+      transform-origin: left top;
     }
 
     .price-row {
@@ -436,6 +472,45 @@ a {
 
     .price-discount-message {
       margin-bottom: var(--pl-space-lg);
+    }
+  }
+}
+
+/* 価格関連のネスト構造 */
+.price-container {
+  .price-current-container,
+  .price-original-container {
+    flex: 0 0 auto;
+  }
+
+  .price-current-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-xs);
+    padding: 2px 4px;
+    border: 1px solid var(--pl-color-border-subtle);
+    border-radius: var(--pl-radius-md);
+    background-color: var(--pl-color-background-subtle);
+
+    .discount-icon,
+    .price-current-value {
+      color: var(--pl-color-primary);
+    }
+
+    .discount-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .price-original-value {
+    color: var(--pl-color-text-muted);
+    text-decoration: line-through;
+  }
+
+  .price-discount-message {
+    .discount-text {
+      color: var(--pl-color-warning-orange);
     }
   }
 }
@@ -512,41 +587,6 @@ a {
   }
 }
 
-/* 価格関連の独立セレクター */
-.price-current-container,
-.price-original-container {
-  flex: 0 0 auto;
-}
-
-.price-current-badge {
-  display: flex;
-  align-items: center;
-  gap: var(--pl-space-xs);
-  padding: 2px 4px;
-  border: 1px solid var(--pl-color-border-subtle);
-  border-radius: var(--pl-radius-md);
-  background-color: var(--pl-color-background-subtle);
-}
-
-.discount-icon,
-.price-current-value {
-  color: var(--pl-color-primary);
-}
-
-.discount-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.price-original-value {
-  color: var(--pl-color-text-muted);
-  text-decoration: line-through;
-}
-
-.discount-text {
-  color: var(--pl-color-warning-orange);
-}
-
 /* 問題画像関連の独立セレクター */
 .problem-image-container {
   position: relative;
@@ -616,20 +656,21 @@ a {
   @media (min-width: 768px) {
     max-width: 297px;
   }
-}
 
-.problem-text {
-  margin: 0;
-  color: var(--pl-color-text-primary);
-  font-size: clamp(0.875rem, 2.5vw, 1rem); /* Mobile: 14px, Desktop: 16px */
-  font-weight: bold;
+  .problem-text {
+    margin: 0;
+    color: var(--pl-color-text-primary);
+    font-size: clamp(0.875rem, 2.5vw, 1rem); /* Mobile: 14px, Desktop: 16px */
+    font-weight: bold;
+    line-height: 1.3;
 
-  @media (min-width: 768px) and (max-width: 1024px) {
-    font-size: clamp(1rem, 2vw, 1.125rem); /* Tablet: 16px-18px */
-  }
+    @media (min-width: 768px) and (max-width: 1024px) {
+      font-size: clamp(1rem, 2vw, 1.125rem); /* Tablet: 16px-18px */
+    }
 
-  @media (min-width: 1024px) {
-    font-size: clamp(1.125rem, 1.5vw, 1.25rem); /* Desktop: 18px-20px */
+    @media (min-width: 1024px) {
+      font-size: clamp(1.125rem, 1.5vw, 1.25rem); /* Desktop: 18px-20px */
+    }
   }
 }
 
@@ -681,16 +722,37 @@ a {
     scroll-behavior: auto;
   }
 
-  .problem-image,
-  .hero-image,
+  /* ヒーロー画像のアクセシビリティ対応 */
+  .hero-image {
+    will-change: auto;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-image:hover {
+    filter: none;
+  }
+
+  /* 問題画像のアクセシビリティ対応 */
+  .problem-image {
+    will-change: auto;
+    transform: none;
+    transition: none;
+  }
+
+  .problem-image:hover {
+    filter: none;
+  }
+
+  /* セクション画像のアクセシビリティ対応 */
   .section-image {
     will-change: auto;
     transform: none;
     transition: none;
+  }
 
-    &:hover {
-      filter: none;
-    }
+  .section-image:hover {
+    filter: none;
   }
 }
 
@@ -1360,19 +1422,19 @@ a {
         inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-30));
     }
   }
+}
 
-  /* 統合されたテキストスタイル - 効率化 */
-  .problem-text u {
-    font-weight: normal;
-    text-decoration: underline;
-    text-decoration-color: color-mix(
-      in oklch,
-      var(--pl-color-text-secondary) 50%,
-      transparent
-    );
-    text-decoration-thickness: var(--pl-text-decoration-thickness);
-    text-underline-offset: var(--pl-text-underline-offset);
-  }
+/* 全underline要素の統一スタイル */
+u {
+  font-weight: normal;
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--pl-color-text-secondary) 50%,
+    transparent
+  );
+  text-decoration-thickness: var(--pl-text-decoration-thickness);
+  text-underline-offset: var(--pl-text-underline-offset);
 }
 
 /* 統合されたリンクスタイル - DRY原則適用 */
@@ -1380,8 +1442,13 @@ a {
 .phase-steps-list a,
 .phase-substeps a {
   color: var(--pl-color-primary);
+  font-weight: normal;
   text-decoration: underline;
-  text-decoration-color: var(--pl-text-decoration-mix);
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--pl-color-text-secondary) 50%,
+    transparent
+  );
   text-decoration-thickness: var(--pl-text-decoration-thickness);
   text-underline-offset: var(--pl-text-underline-offset);
   transition: var(--pl-transition-text-decoration);
@@ -1691,23 +1758,6 @@ ol li::marker,
   &:hover {
     transform: scale(var(--pl-scale-hover));
     box-shadow: 0 8px 24px oklch(0% 0 0deg / var(--opacity-15));
-  }
-}
-
-/* 統合されたハイライト下線スタイル - 効率化 */
-.immersion-duration-content .highlight-underline {
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in oklch,
-    var(--pl-color-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: var(--pl-text-decoration-thickness);
-  text-underline-offset: var(--pl-text-underline-offset);
-  transition: var(--pl-transition-text-decoration);
-
-  &:hover {
-    text-decoration-color: var(--pl-color-secondary);
   }
 }
 
