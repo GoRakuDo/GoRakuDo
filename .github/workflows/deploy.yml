@@ -49,6 +49,7 @@ jobs:
           SITE_URL: https://gorakudo.org
           SITE_TITLE: GoRakuDo - Komunitas Immersion Bahasa Jepang
           SITE_DESCRIPTION: Komunitas immersion bahasa Jepang terbesar Indonesia
+          PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v4
         with:
