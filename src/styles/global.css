@@ -241,8 +241,7 @@
   /* Decorative fonts */
   --font-cursive: 'Cedarville Cursive', cursive;
   --font-emoji:
-    'Noto Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    sans-serif;
+    'Fluent Emoji Color', 'Noto Emoji', 'Apple Color Emoji', sans-serif;
 
   /* Compatibility aliases */
   --font-family-base: var(--font-primary);
@@ -1080,7 +1079,7 @@ button:focus-visible,
     border: 1px solid rgb(255 255 255 / var(--opacity-20));
     border-radius: 16px;
     background: rgb(255 255 255 / var(--opacity-10));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(18px);
     box-shadow:
       0 8px 32px rgb(0 0 0 / var(--opacity-10)),
       inset 0 1px 0 rgb(255 255 255 / var(--opacity-20));

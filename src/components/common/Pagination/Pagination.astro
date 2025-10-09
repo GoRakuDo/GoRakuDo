@@ -290,23 +290,36 @@ const structuredData = {
     border-radius: var(--pagination-radius-md);
     contain: layout style paint;
     transform: translateZ(0);
+
+    /* ページ情報エリア */
+    .pagination-info {
+      margin-top: var(--pagination-spacing-lg);
+      text-align: center;
+
+      /* プログレスバー */
+      .pagination-progress {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 0.375rem;
+        border-radius: 0.1875rem;
+        background: oklch(88% 0.08 var(--pagination-primary-hue) / 0.4);
+        box-shadow: inset 0 1px 2px oklch(0% 0 0deg / 0.1);
+      }
+    }
   }
 
-  .pagination-info {
-    margin-top: var(--pagination-spacing-lg);
-    text-align: center;
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
   }
 
-  .pagination-progress {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 0.375rem;
-    border-radius: 0.1875rem;
-    background: oklch(88% 0.08 var(--pagination-primary-hue) / 0.4);
-    box-shadow: inset 0 1px 2px oklch(0% 0 0deg / 0.1);
-  }
-
+  /* プログレスバーのスタイル */
   .pagination-progress-bar {
     position: relative;
     height: 100%;
@@ -321,6 +334,7 @@ const structuredData = {
     box-shadow: 0 1px 3px oklch(0% 0 0deg / 0.2);
   }
 
+  /* プログレスバーのシャイマー効果 */
   .pagination-progress-bar::after {
     content: '';
     position: absolute;
@@ -334,40 +348,32 @@ const structuredData = {
     animation: shimmer 2s infinite;
   }
 
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
   /* ===== レイアウト（モバイルファースト） ===== */
   .pagination-controls {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--pagination-spacing-md);
-  }
 
-  .pagination-numbers {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: var(--pagination-spacing-xs);
-    order: 1;
-  }
+    /* ページ番号エリア */
+    .pagination-numbers {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: var(--pagination-spacing-xs);
+      order: 1;
+    }
 
-  .pagination-nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--pagination-spacing-sm);
-    order: 2;
-    width: 100%;
+    /* ナビゲーションボタンエリア */
+    .pagination-nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--pagination-spacing-sm);
+      order: 2;
+      width: 100%;
+    }
   }
 
   /* ===== ボタンとナンバーの共通スタイル ===== */
@@ -389,86 +395,90 @@ const structuredData = {
     contain: layout style paint;
   }
 
-  .pagination-btn {
-    min-width: var(--pagination-size-lg);
-    min-height: var(--pagination-size-lg);
-  }
-
-  /* モバイルでのナビゲーションボタンの幅調整 */
-  .pagination-nav-buttons .pagination-btn {
-    flex: 1;
-    min-width: 0;
-    max-width: none;
-  }
-
+  /* ===== 状態別スタイル ===== */
   .pagination-number {
     min-width: var(--pagination-size-md);
     min-height: var(--pagination-size-md);
     font-size: var(--pagination-font-size-lg);
+
+    &:hover {
+      color: var(--pagination-primary-hover-color);
+      transform: translateY(-0.1875rem) scale(1.08);
+      box-shadow: 0 0.5rem 1.5625rem oklch(0% 0 0deg / 0.15);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.25rem oklch(60% 0 0deg / 0.4);
+      transform: translateY(-0.125rem) scale(1.05);
+    }
+
+    /* 現在のページ */
+    &.pagination-current {
+      background: linear-gradient(
+        135deg,
+        oklch(45% 0.5 var(--pagination-primary-hue)) 0%,
+        oklch(40% 0.6 300deg) 50%,
+        oklch(35% 0.7 320deg) 100%
+      );
+      color: oklch(100% 0 0deg);
+      font-weight: 800;
+      cursor: default;
+      transform: scale(1.05);
+      box-shadow: 0 0.25rem 0.75rem oklch(0% 0 0deg / 0.2);
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0.25rem 0.9375rem oklch(0% 0 0deg / 0.3);
+      }
+    }
+
+    /* 省略記号 */
+    &.pagination-ellipsis {
+      color: var(--pagination-ellipsis-color);
+      font-weight: 500;
+    }
   }
 
-  /* ===== 状態別スタイル ===== */
-  .pagination-number:hover {
-    color: var(--pagination-primary-hover-color);
-    transform: translateY(-0.1875rem) scale(1.08);
-    box-shadow: 0 0.5rem 1.5625rem oklch(0% 0 0deg / 0.15);
+  .pagination-btn {
+    min-width: var(--pagination-size-lg);
+    min-height: var(--pagination-size-lg);
+
+    /* モバイルでのナビゲーションボタンの幅調整 */
+    .pagination-nav-buttons & {
+      flex: 1;
+      min-width: 0;
+      max-width: none;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.25rem oklch(60% 0 0deg / 0.4);
+    }
+
+    /* ナビゲーションボタンのホバーアニメーションを削除 */
+    &:hover:not(.pagination-disabled) {
+      color: var(--pagination-primary-hover-color);
+    }
+
+    /* 無効状態 */
+    &.pagination-disabled {
+      border: 1px solid oklch(85% 0 0deg / 0.3);
+      background: oklch(92% 0 0deg / 0.3);
+      color: var(--pagination-disabled-color);
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: inset 0 1px 2px oklch(0% 0 0deg / 0.1);
+
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
   }
 
-  .pagination-number:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.25rem oklch(60% 0 0deg / 0.4);
-    transform: translateY(-0.125rem) scale(1.05);
-  }
-
-  .pagination-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.25rem oklch(60% 0 0deg / 0.4);
-  }
-
-  /* ナビゲーションボタンのホバーアニメーションを削除 */
-  .pagination-btn:hover:not(.pagination-disabled) {
-    color: var(--pagination-primary-hover-color);
-  }
-
-  .pagination-number.pagination-current {
-    background: linear-gradient(
-      135deg,
-      oklch(45% 0.5 var(--pagination-primary-hue)) 0%,
-      oklch(40% 0.6 300deg) 50%,
-      oklch(35% 0.7 320deg) 100%
-    );
-    color: oklch(100% 0 0deg);
-    font-weight: 800;
-    cursor: default;
-    transform: scale(1.05);
-    box-shadow: 0 0.25rem 0.75rem oklch(0% 0 0deg / 0.2);
-  }
-
-  .pagination-number.pagination-current:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0.25rem 0.9375rem oklch(0% 0 0deg / 0.3);
-  }
-
-  .pagination-btn.pagination-disabled {
-    border: 1px solid oklch(85% 0 0deg / 0.3);
-    background: oklch(92% 0 0deg / 0.3);
-    color: var(--pagination-disabled-color);
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: inset 0 1px 2px oklch(0% 0 0deg / 0.1);
-  }
-
-  .pagination-btn.pagination-disabled:hover {
-    transform: none;
-    box-shadow: none;
-  }
-
-  .pagination-ellipsis {
-    color: var(--pagination-ellipsis-color);
-    font-weight: 500;
-  }
-
+  /* 省略記号ドット */
   .pagination-ellipsis-dots {
     display: flex;
     justify-content: center;
@@ -482,7 +492,7 @@ const structuredData = {
     letter-spacing: 0.1em;
   }
 
-  /* ===== アイコンとテキスト ===== */
+  /* アイコンとテキスト */
   .pagination-icon {
     width: clamp(1rem, 3vw, 1.25rem);
     height: clamp(1rem, 3vw, 1.25rem);
@@ -494,6 +504,24 @@ const structuredData = {
     font-size: var(--pagination-font-size-sm);
     font-weight: 700;
     letter-spacing: 0.025em;
+  }
+
+  /* タブレット以上でのボタンスタイル */
+  @media (min-width: 48rem) {
+    .pagination-nav-buttons .pagination-btn {
+      flex: none;
+      width: auto;
+      min-width: var(--pagination-size-lg);
+      padding: var(--pagination-spacing-sm) var(--pagination-spacing-lg);
+    }
+
+    .pagination-prev {
+      order: 1;
+    }
+
+    .pagination-next {
+      order: 3;
+    }
   }
 
   /* ===== レスポンシブデザイン（モバイルファースト） ===== */
@@ -522,38 +550,22 @@ const structuredData = {
       max-width: 100%;
       margin: var(--pagination-spacing-xl) 0;
       padding: var(--pagination-spacing-xl) 1rem;
-    }
 
-    .pagination-controls {
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: var(--pagination-spacing-lg);
-    }
+      .pagination-controls {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: var(--pagination-spacing-lg);
 
-    .pagination-numbers {
-      order: 2;
-      flex: 0 0 auto;
-    }
+        .pagination-numbers {
+          order: 2;
+          flex: 0 0 auto;
+        }
 
-    .pagination-nav-buttons {
-      display: contents;
-    }
-
-    /* タブレット以上では適切なサイズに調整 */
-    .pagination-nav-buttons .pagination-btn {
-      flex: none;
-      width: auto;
-      min-width: var(--pagination-size-lg);
-      padding: var(--pagination-spacing-sm) var(--pagination-spacing-lg);
-    }
-
-    .pagination-prev {
-      order: 1;
-    }
-
-    .pagination-next {
-      order: 3;
+        .pagination-nav-buttons {
+          display: contents;
+        }
+      }
     }
   }
 
@@ -581,22 +593,14 @@ const structuredData = {
       max-width: 100%;
       margin: var(--pagination-spacing-xl) 0;
       padding: 2.5rem 1.5rem;
-    }
 
-    .pagination-controls {
-      gap: 2rem;
-    }
+      .pagination-controls {
+        gap: 2rem;
 
-    .pagination-numbers {
-      gap: var(--pagination-spacing-sm);
-    }
-
-    /* デスクトップでも適切なサイズに調整 */
-    .pagination-nav-buttons .pagination-btn {
-      flex: none;
-      width: auto;
-      min-width: var(--pagination-size-lg);
-      padding: var(--pagination-spacing-sm) var(--pagination-spacing-lg);
+        .pagination-numbers {
+          gap: var(--pagination-spacing-sm);
+        }
+      }
     }
   }
 
@@ -607,16 +611,14 @@ const structuredData = {
       min-width: var(--pagination-size-touch);
       min-height: var(--pagination-size-touch);
       font-size: var(--pagination-font-size-lg);
-    }
 
-    .pagination-btn:active,
-    .pagination-number:active {
-      transform: scale(0.92);
-    }
+      &:active {
+        transform: scale(0.92);
+      }
 
-    .pagination-btn:hover,
-    .pagination-number:hover {
-      transform: none;
+      &:hover {
+        transform: none;
+      }
     }
   }
 
@@ -631,12 +633,11 @@ const structuredData = {
       border: 2px solid oklch(0% 0 0deg);
       background: oklch(100% 0 0deg);
       color: oklch(0% 0 0deg);
-    }
 
-    .pagination-btn:hover:not(.pagination-disabled),
-    .pagination-number:hover {
-      background: oklch(0% 0 0deg);
-      color: oklch(100% 0 0deg);
+      &:hover {
+        background: oklch(0% 0 0deg);
+        color: oklch(100% 0 0deg);
+      }
     }
 
     .pagination-number.pagination-current {
@@ -656,15 +657,14 @@ const structuredData = {
     .pagination-progress-bar,
     .pagination-icon {
       transition: none;
+
+      &:hover {
+        transform: none;
+      }
     }
 
     .pagination-progress-bar::after {
       animation: none;
-    }
-
-    .pagination-btn:hover,
-    .pagination-number:hover {
-      transform: none;
     }
   }
 
@@ -679,7 +679,7 @@ const structuredData = {
       --pagination-ellipsis-chroma: 0.1;
     }
 
-    .pagination-progress {
+    .pagination-container .pagination-info .pagination-progress {
       background: oklch(20% 0.05 var(--pagination-primary-hue) / 0.4);
     }
 

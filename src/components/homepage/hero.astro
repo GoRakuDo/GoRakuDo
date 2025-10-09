@@ -63,11 +63,9 @@ const {
       </span>
     </h1>
 
-    <p
-      class='hero-description'
-      transition:name='hero-description'
-      set:html={description}
-    />
+    <p class='hero-description' transition:name='hero-description'>
+      {description}
+    </p>
 
     <div class='hero-buttons' transition:name='hero-buttons'>
       <button

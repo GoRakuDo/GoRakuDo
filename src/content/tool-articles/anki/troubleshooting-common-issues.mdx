@@ -1,0 +1,407 @@
+---
+title: 'Troubleshooting Anki: Solusi untuk Masalah Umum'
+description: 'Panduan lengkap untuk mengatasi masalah-masalah umum yang sering dialami pengguna Anki, dari sync issues hingga performance problems.'
+publishedDate: '2024-09-27T10:00:00.000Z'
+author: 'Tim GoRakuDo'
+toolName: 'Anki'
+tags: ['anki', 'troubleshooting', 'fixes', 'help']
+keywords:
+  - 'anki problems'
+  - 'anki fixes'
+  - 'anki troubleshooting'
+  - 'anki errors'
+relatedTools: []
+status: 'published'
+---
+
+# Troubleshooting Anki: Solusi untuk Masalah Umum
+
+## Sync Problems
+
+### Issue 1: "Sync Failed" Error
+
+**Symptoms**:
+
+- Sync button shows error
+- Changes tidak tersimpan
+- Timeout messages
+
+**Solutions**:
+
+1. **Check Internet Connection**
+
+   ```
+   - Verify connection stable
+   - Try different network
+   - Disable VPN temporarily
+   ```
+
+2. **Force Full Sync**
+
+   ```
+   Tools → Preferences → Network
+   - Click "Force changes in one direction"
+   - Choose upload or download
+   - Confirm sync
+   ```
+
+3. **Check AnkiWeb Status**
+   - Visit ankiweb.net/status
+   - Wait if maintenance
+   - Try again later
+
+### Issue 2: Sync Conflict
+
+**Symptoms**:
+
+- "Modified on both devices" message
+- Don't know which version to keep
+
+**Solutions**:
+
+**Method 1: Choose Newer**
+
+- If desktop has latest: Upload
+- If mobile has latest: Download
+- Backup before choosing
+
+**Method 2: Manual Merge**
+
+1. Export deck from both devices
+2. Compare changes
+3. Keep desktop version
+4. Manually add mobile changes
+
+## Performance Issues
+
+### Issue 3: Anki Slow to Start
+
+**Causes**:
+
+- Large database
+- Too many add-ons
+- Corrupted profile
+
+**Solutions**:
+
+1. **Check Database**
+
+   ```
+   Tools → Check Database
+   - Fixes corruption
+   - Optimizes tables
+   - Removes unused items
+   ```
+
+2. **Disable Add-ons**
+
+   ```
+   Tools → Add-ons
+   - Disable all
+   - Restart Anki
+   - Enable one-by-one
+   - Find culprit
+   ```
+
+3. **Create New Profile**
+   ```
+   File → Switch Profile → Add
+   - Test performance
+   - Import decks if better
+   ```
+
+### Issue 4: Reviews Lag
+
+**Symptoms**:
+
+- Slow card transitions
+- Delayed button response
+- UI freezes
+
+**Solutions**:
+
+**Hardware Acceleration**:
+
+```
+Tools → Preferences → Appearance
+- Try toggle "Hardware acceleration"
+- Restart Anki
+- Test performance
+```
+
+**Reduce Media**:
+
+- Compress images
+- Reduce audio quality
+- Remove unused media
+
+## Display Problems
+
+### Issue 5: Japanese Text Shows Boxes
+
+**Symptoms**:
+
+- � or □ instead of kanji
+- Missing characters
+- Garbled text
+
+**Solutions**:
+
+1. **Install Japanese Support**
+   - Code: `3918629684`
+   - Restart Anki
+   - Verify cards display
+
+2. **Install System Fonts**
+   - Windows: Install Japanese language pack
+   - Mac: Already included
+   - Linux: `sudo apt install fonts-noto-cjk`
+
+3. **Check Card Styling**
+   ```css
+   .card {
+     font-family: 'Yu Gothic', 'MS Gothic', sans-serif;
+   }
+   ```
+
+### Issue 6: Audio Not Playing
+
+**Symptoms**:
+
+- Audio button present but silent
+- Error messages
+- Files missing
+
+**Solutions**:
+
+1. **Check Media**
+
+   ```
+   Tools → Check Media
+   - Shows missing files
+   - Offers to delete unused
+   ```
+
+2. **Re-sync Media**
+
+   ```
+   Tools → Preferences → Network
+   - On next sync, force media sync
+   ```
+
+3. **Verify Format**
+   - Support: MP3, OGG, WAV
+   - Convert if needed
+   - Re-add to cards
+
+## Add-on Issues
+
+### Issue 7: Add-on Not Working
+
+**Symptoms**:
+
+- Feature missing
+- Error on startup
+- Buttons don't appear
+
+**Solutions**:
+
+1. **Check Compatibility**
+   - Verify Anki version
+   - Check add-on page
+   - Update if available
+
+2. **Reinstall Add-on**
+
+   ```
+   Tools → Add-ons
+   - Select add-on
+   - Config → Delete
+   - Reinstall from code
+   ```
+
+3. **Check Conflicts**
+   - Disable other add-ons
+   - Test individually
+   - Find conflicting pair
+
+## Database Issues
+
+### Issue 8: Cards Disappear
+
+**Symptoms**:
+
+- Deck suddenly empty
+- Cards missing
+- Review count zero
+
+**Solutions**:
+
+1. **Check Filter**
+   - Verify no active filtered deck
+   - Browse → Show all cards
+   - Check suspended status
+
+2. **Restore Backup**
+
+   ```
+   File → Switch Profile → Open Backup
+   - Choose recent backup
+   - Test restore
+   - Reimport if successful
+   ```
+
+3. **Check Database**
+   ```
+   Tools → Check Database
+   - May find missing cards
+   - Rebuilds indices
+   ```
+
+### Issue 9: Duplicate Cards
+
+**Symptoms**:
+
+- Same card appears multiple times
+- Duplicate entries in browser
+- Review count inflated
+
+**Solutions**:
+
+1. **Find Duplicates**
+
+   ```
+   Tools → Find Duplicates
+   - Select note type
+   - Review matches
+   - Merge or delete
+   ```
+
+2. **Manual Cleanup**
+   - Browser → Sort by field
+   - Select duplicates
+   - Delete extras
+   - Check database
+
+## Mobile-Specific Issues
+
+### Issue 10: AnkiDroid Won't Sync
+
+**Solutions**:
+
+1. Check app permissions
+2. Clear app cache
+3. Reinstall app
+4. Verify credentials
+
+### Issue 11: AnkiMobile Crash
+
+**Solutions**:
+
+1. Update iOS
+2. Update app
+3. Clear cache
+4. Restore backup
+
+## Preventive Measures
+
+### Regular Maintenance
+
+**Daily**:
+
+- Sync after each session
+- Close Anki properly
+
+**Weekly**:
+
+- Check database
+- Review statistics
+- Clean unused media
+
+**Monthly**:
+
+- Full backup export
+- Update add-ons
+- Clear old backups
+- Optimize database
+
+### Backup Strategy
+
+**Automatic**:
+
+- AnkiWeb sync (cloud)
+- Daily local backups
+- Keep 30 days worth
+
+**Manual**:
+
+- Weekly full export
+- Monthly archive
+- External storage
+- Cloud backup service
+
+## Getting Help
+
+### Resources
+
+1. **Official Forum**
+   - forums.ankiweb.net
+   - Search before posting
+   - Include error details
+
+2. **Reddit**
+   - r/Anki
+   - Active community
+   - Quick responses
+
+3. **Documentation**
+   - docs.ankiweb.net
+   - Comprehensive guides
+   - Regular updates
+
+### Error Reports
+
+When reporting issues, include:
+
+- Anki version
+- Operating system
+- Add-ons installed
+- Steps to reproduce
+- Error messages
+- Screenshots
+
+## Emergency Recovery
+
+### If All Else Fails
+
+1. **Export Everything**
+   - File → Export
+   - Include media
+   - Save externally
+
+2. **Fresh Install**
+   - Uninstall Anki
+   - Delete profile folder
+   - Reinstall latest version
+   - Import backup
+
+3. **Start Clean**
+   - New profile
+   - Import decks one-by-one
+   - Add add-ons gradually
+   - Test each step
+
+## Kesimpulan
+
+Kebanyakan masalah Anki dapat diatasi dengan troubleshooting steps yang sistematis. Backup regular dan maintenance rutin dapat mencegah banyak masalah.
+
+**Prevention Checklist**:
+
+- ✅ Daily sync
+- ✅ Weekly database check
+- ✅ Monthly backups
+- ✅ Update regularly
+- ✅ Monitor performance
+- ✅ Clean unused files
+
+Jika masalah persist, jangan ragu untuk ask for help di community forums. Anki community sangat supportive dan helpful! 🔧

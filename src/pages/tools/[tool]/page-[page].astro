@@ -5,10 +5,12 @@ import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
-import SearchPopover from '../../../components/common/SearchPopover.astro';
 import Pagination from '../../../components/common/Pagination/Pagination.astro';
 import {
   calculatePagination,
+  transformToolArticleData,
+  validatePageNumber,
+  shouldRedirectToFirstPage,
   type PaginationConfig,
 } from '../../../components/common/Pagination/pagination';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
@@ -21,15 +23,21 @@ const ARTICLES_PER_PAGE = 6;
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
+  // Define constant inside function for Astro compatibility
+  const ARTICLES_PER_PAGE = 6;
+
   const getAllToolsFromCollection = async () => {
     try {
       const allArticles = await getCollection('tool-articles');
+      const visibleArticles = getVisibleToolArticles(allArticles);
       const toolNames = new Set<string>();
-      allArticles.forEach((article: CollectionEntry<'tool-articles'>) => {
+
+      visibleArticles.forEach((article: CollectionEntry<'tool-articles'>) => {
         if (article.data.toolName) {
           toolNames.add(article.data.toolName.toLowerCase());
         }
       });
+
       return Array.from(toolNames).sort();
     } catch (error) {
       console.error('Failed to load tools from collection:', error);
@@ -38,47 +46,76 @@ export async function getStaticPaths() {
   };
 
   const allTools = await getAllToolsFromCollection();
-  return allTools.length === 0
-    ? []
-    : allTools.map(tool => ({ params: { tool }, props: { toolName: tool } }));
+  const allArticles = await getCollection('tool-articles');
+  const visibleArticles = getVisibleToolArticles(allArticles);
+
+  const paths: any[] = [];
+
+  for (const tool of allTools) {
+    const directToolArticles = visibleArticles.filter(
+      (article: CollectionEntry<'tool-articles'>) =>
+        article.data.toolName?.toLowerCase() === tool.toLowerCase()
+    );
+
+    const relatedToolArticles = visibleArticles.filter(
+      (article: CollectionEntry<'tool-articles'>) =>
+        article.data.relatedTools?.some(
+          (relatedTool: string) =>
+            relatedTool.toLowerCase() === tool.toLowerCase()
+        )
+    );
+
+    const allToolArticles = [...directToolArticles, ...relatedToolArticles];
+    const toolArticles = allToolArticles.filter(
+      (
+        article: CollectionEntry<'tool-articles'>,
+        index: number,
+        self: CollectionEntry<'tool-articles'>[]
+      ) =>
+        index ===
+        self.findIndex(
+          (a: CollectionEntry<'tool-articles'>) => a.slug === article.slug
+        )
+    );
+
+    const totalPages = Math.ceil(toolArticles.length / ARTICLES_PER_PAGE);
+
+    for (let page = 2; page <= totalPages; page++) {
+      paths.push({
+        params: { tool, page: page.toString() },
+        props: {
+          toolName: tool,
+          totalArticles: toolArticles.length,
+          totalPages,
+        },
+      });
+    }
+  }
+
+  return paths;
 }
 
-// ========== COMPONENT LOGIC ==========
-const { tool } = Astro.params as { tool: string };
+// ========== PAGE PARAMETERS & VALIDATION ==========
+const { tool, page } = Astro.params as { tool: string; page: string };
+const { totalArticles, totalPages } = Astro.props;
+const currentPage = validatePageNumber(page);
 
 if (!tool) return Astro.redirect('/tools', 301);
-
-const getAllToolsFromCollection = async () => {
-  try {
-    const allArticles = await getCollection('tool-articles');
-    const toolNames = new Set<string>();
-    allArticles.forEach((article: CollectionEntry<'tool-articles'>) => {
-      if (article.data.toolName) {
-        toolNames.add(article.data.toolName.toLowerCase());
-      }
-    });
-    return Array.from(toolNames).sort();
-  } catch (error) {
-    console.error('Failed to load tools from collection:', error);
-    return [];
-  }
-};
-
-const allTools = await getAllToolsFromCollection();
-if (allTools.length === 0 || !allTools.includes(tool.toLowerCase())) {
-  return Astro.redirect('/tools', 301);
+if (currentPage === 1) return Astro.redirect(`/tools/${tool}`, 301);
+if (shouldRedirectToFirstPage(currentPage, totalPages)) {
+  return Astro.redirect(`/tools/${tool}/page-${totalPages}`, 301);
 }
 
 // ========== DATA PROCESSING ==========
 const allArticles = await getCollection('tool-articles');
-const articles = getVisibleToolArticles(allArticles);
+const visibleArticles = getVisibleToolArticles(allArticles);
 
-const directToolArticles = articles.filter(
+const directToolArticles = visibleArticles.filter(
   (article: CollectionEntry<'tool-articles'>) =>
     article.data.toolName?.toLowerCase() === tool.toLowerCase()
 );
 
-const relatedToolArticles = articles.filter(
+const relatedToolArticles = visibleArticles.filter(
   (article: CollectionEntry<'tool-articles'>) =>
     article.data.relatedTools?.some(
       (relatedTool: string) => relatedTool.toLowerCase() === tool.toLowerCase()
@@ -86,39 +123,27 @@ const relatedToolArticles = articles.filter(
 );
 
 const allToolArticles = [...directToolArticles, ...relatedToolArticles];
-const toolArticles = allToolArticles
-  .filter(
-    (
-      article: CollectionEntry<'tool-articles'>,
-      index: number,
-      self: CollectionEntry<'tool-articles'>[]
-    ) =>
-      index ===
-      self.findIndex(
-        (a: CollectionEntry<'tool-articles'>) => a.slug === article.slug
-      )
-  )
-  .sort(
-    (
-      a: CollectionEntry<'tool-articles'>,
-      b: CollectionEntry<'tool-articles'>
-    ) => {
-      const dateA = new Date(a.data.publishedDate || a.data.createdDate || 0);
-      const dateB = new Date(b.data.publishedDate || b.data.createdDate || 0);
-      return dateB.getTime() - dateA.getTime();
-    }
-  );
+const toolArticles = allToolArticles.filter(
+  (
+    article: CollectionEntry<'tool-articles'>,
+    index: number,
+    self: CollectionEntry<'tool-articles'>[]
+  ) =>
+    index ===
+    self.findIndex(
+      (a: CollectionEntry<'tool-articles'>) => a.slug === article.slug
+    )
+);
 
 // ========== PAGINATION LOGIC ==========
-const totalPages = Math.ceil(toolArticles.length / ARTICLES_PER_PAGE);
 const paginationConfig: PaginationConfig = {
   postsPerPage: ARTICLES_PER_PAGE,
-  currentPage: 1,
+  currentPage,
   totalPosts: toolArticles.length,
 };
 
 const paginationResult = calculatePagination(toolArticles, paginationConfig);
-const { paginatedItems: paginatedToolArticles } = paginationResult;
+const { paginatedItems } = paginationResult;
 
 // ========== TOOL CONFIGURATION ==========
 const toolData = toolsData.find(t => t.id === tool);
@@ -131,13 +156,9 @@ const toolConfig = {
 
 const formattedToolName =
   toolData?.name || tool.charAt(0).toUpperCase() + tool.slice(1);
-const currentYear = new Date(
-  (toolArticles[0] as CollectionEntry<'tool-articles'>)?.data.publishedDate ||
-    new Date()
-).getFullYear();
 
 // ========== PROCESSED ARTICLE DATA ==========
-const processedArticles = paginatedToolArticles.map(
+const processedArticles = paginatedItems.map(
   (article: CollectionEntry<'tool-articles'>, index: number) => {
     const articleSlug =
       article.slug?.split('/').slice(1).join('/') || article.id;
@@ -190,7 +211,7 @@ const headerData = {
   description: toolConfig.description,
   iconPath: toolConfig.iconPath,
   formattedToolName,
-  currentYear,
+  currentYear: new Date().getFullYear(),
 };
 
 // ========== DISPLAY CONSTANTS ==========
@@ -217,7 +238,7 @@ const META_ITEMS = [
 
 // ========== CONTENT GRID DATA ==========
 const contentGridData = {
-  hasArticles: toolArticles.length > 0,
+  hasArticles: paginatedItems.length > 0,
   toolArticles: processedArticles,
   tool,
   formattedToolName,
@@ -265,6 +286,10 @@ const seoData = replaceTemplateObject(
   templateVariables
 );
 
+// Update SEO data for paginated pages
+seoData.title = `${seoData.title} - Page ${currentPage}`;
+seoData.description = `${seoData.description} Halaman ${currentPage} dari ${totalPages}.`;
+
 // ========== STRUCTURED DATA GENERATION ==========
 const softwareApplicationSchema = replaceTemplateObject(
   toolSeoTemplate.structuredData.softwareApplication,
@@ -278,9 +303,11 @@ const collectionPageTemplate = replaceTemplateObject(
 
 const collectionPageSchema = {
   ...collectionPageTemplate,
+  name: `${collectionPageTemplate.name} - Page ${currentPage}`,
+  url: `/tools/${tool}/page-${currentPage}`,
   mainEntity: {
     ...collectionPageTemplate.mainEntity,
-    itemListElement: toolArticles.map(
+    itemListElement: paginatedItems.map(
       (article: CollectionEntry<'tool-articles'>, index: number) => ({
         '@type': 'ListItem',
         position: index + 1,
@@ -298,18 +325,24 @@ const collectionPageSchema = {
   },
 };
 
-// FAQ Schema is now handled by UnifiedSEO via toolSeoTemplate.structuredData.faq
-
 const breadcrumbData = replaceTemplateObject(
   toolSeoTemplate.breadcrumbData,
   templateVariables
 );
+
 const breadcrumbSchema = generateBreadcrumbSchema({
-  items: breadcrumbData.items.map((item, index) => ({
-    title: item.name || item.title,
-    url: item.url,
-    isActive: index === breadcrumbData.items.length - 1,
-  })),
+  items: [
+    ...breadcrumbData.items.map((item, index) => ({
+      title: item.name || item.title,
+      url: item.url,
+      isActive: false,
+    })),
+    {
+      title: `Page ${currentPage}`,
+      url: `/tools/${tool}/page-${currentPage}`,
+      isActive: true,
+    },
+  ],
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 ---
@@ -393,21 +426,11 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
   <Breadcrumb
     slot='breadcrumb'
-    currentPath={`/tools/${tool}`}
+    currentPath={`/tools/${tool}/page-${currentPage}`}
     showHome={true}
     orientation='horizontal'
     showIcons={true}
     ariaLabel='Tool navigation breadcrumb'
-  />
-
-  <SearchPopover
-    slot='search'
-    buttonStyle='rounded'
-    placeholder={`Search ${formattedToolName} articles...`}
-    searchAction={`/search?tool=${tool}`}
-    className='tool-search-popover'
-    toolFilter={tool}
-    searchCollections='tools'
   />
 
   <ToolIdContentGrid
@@ -421,7 +444,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     totalPages > 1 && (
       <Pagination
         slot='pagination'
-        currentPage={1}
+        currentPage={currentPage}
         totalPages={totalPages}
         baseUrl={`/tools/${tool}`}
         showPageInfo={true}

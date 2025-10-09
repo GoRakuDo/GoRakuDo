@@ -31,6 +31,19 @@ export interface PostData {
   isTool: boolean;
 }
 
+export interface ToolArticleData {
+  slug: string;
+  title: string;
+  description: string;
+  url: string;
+  publishedDate: string;
+  tags: string[];
+  toolName: string;
+  devicePlatform: string;
+  image?: string;
+  hasImage: boolean;
+}
+
 // ========== PAGINATION LOGIC ==========
 export function calculatePagination<T>(
   items: T[],
@@ -70,6 +83,29 @@ export function transformPostData(
     isRecommended: false,
     isBeginner: primaryCategory === 'getting-started',
     isTool: primaryCategory === 'tools',
+  };
+}
+
+// ========== TOOL ARTICLE TRANSFORMATION ==========
+export function transformToolArticleData(
+  article: CollectionEntry<'tool-articles'>,
+  toolName: string
+): ToolArticleData {
+  const articleSlug = article.slug?.split('/').slice(1).join('/') || article.id;
+  const displayTags = article.data.tags?.slice(0, 3) || [];
+  const articleImage = article.data.featuredImage || undefined;
+
+  return {
+    slug: articleSlug,
+    title: article.data.title,
+    description: article.data.description,
+    url: `/tools/${toolName}/${articleSlug}`,
+    publishedDate: article.data.publishedDate,
+    tags: displayTags,
+    toolName: article.data.toolName,
+    devicePlatform: article.data.devicePlatform || 'Windows',
+    image: articleImage,
+    hasImage: Boolean(articleImage?.trim()),
   };
 }
 

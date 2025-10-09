@@ -294,8 +294,9 @@
   padding: 0;
   will-change: transform;
 
-  /* タブレット以上: 2列 */
+  /* タブレット以上: 2列Gridレイアウト */
   @media (min-width: 768px) {
+    align-items: stretch; /* 各行内でカードの高さを統一 */
     gap: var(--tool__spacing-lg);
     grid-template-columns: repeat(2, 1fr);
   }
@@ -320,8 +321,9 @@
 /* ========== MODERN COMPACT ARTICLE CARD STYLES ========== */
 .article-card-optimized {
   position: relative;
+  display: flex; /* Gridアイテム自体をFlexコンテナにする */
+  flex-direction: column; /* 縦方向のFlexレイアウト */
   overflow: hidden;
-  height: fit-content;
   margin: 0;
   padding: 0;
   border: 1px solid oklch(100% 0 0deg / 0.12);
@@ -339,6 +341,11 @@
   contain: layout style paint;
   will-change: transform, box-shadow;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Gridアイテムとしての設定 */
+  @media (min-width: 768px) {
+    /* Gridアイテムは自動的に配置されるため、特別な幅設定は不要 */
+  }
 
   /* Smooth Hover Lift Effect */
   &:hover {
@@ -392,14 +399,54 @@
   }
 }
 
+/* ========== ARTICLE TYPE BADGE STYLES ========== */
+.article-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  color: var(--token-purple-base);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  /* アイコンスタイル */
+  svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  /* デフォルトスタイル（related-article-badge以外） */
+  &:not(.related-article-badge) {
+    border: 1px solid
+      color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+    background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 3px oklch(0% 0 0deg / 0.1);
+  }
+
+  /* 関連記事専用の特別なスタイル */
+  &.related-article-badge {
+    position: absolute;
+    left: 50%;
+    background: transparent;
+    color: var(--clr-text-muted);
+    opacity: 0.8;
+    transform: translateX(-50%);
+  }
+}
+
 /* ========== MODERN COMPACT CARD LINK ========== */
 .card-link {
   position: relative;
   z-index: var(--z-Tool-IdArticle-card-link);
   display: flex;
+  flex: 1; /* 親Flexコンテナの残り空間を全て使用 */
   flex-direction: column;
+  justify-content: space-between; /* コンテンツを均等に分配 */
   overflow: hidden;
-  height: 100%;
   border-radius: inherit;
   color: inherit;
   text-decoration: none;
@@ -486,11 +533,21 @@
     }
   }
 
-  .card-date {
-    color: var(--clr-text-muted);
-    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-    font-weight: 500;
-    opacity: 0.8;
+  /* ========== CARD HEADER TOP FLEXBOX LAYOUT ========== */
+  .card-header-top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .card-date {
+      color: var(--clr-text-muted);
+      font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+      font-weight: 500;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
   }
 
   /* ========== メインコンテンツ (MOBILE PADDING OPTIMIZED) ========== */
@@ -498,6 +555,13 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    justify-content: flex-start; /* コンテンツを上部に配置 */
+    gap: clamp(
+      0.5rem,
+      1vw,
+      0.75rem
+    ); /* コンテンツ内要素間に自然なスペーシング */
+
     min-height: 0; /* Prevents flex item from overflowing */
     padding: clamp(0.5rem, 1.25vw, 0.75rem);
     background: transparent;
@@ -542,15 +606,15 @@
       height: 64px;
       border-radius: 0.75rem;
     }
-  }
 
-  .card-icon svg {
-    width: 24px;
-    height: 24px;
+    svg {
+      width: 24px;
+      height: 24px;
 
-    @media (min-width: 768px) {
-      width: 48px;
-      height: 48px;
+      @media (min-width: 768px) {
+        width: 48px;
+        height: 48px;
+      }
     }
   }
 
@@ -576,11 +640,11 @@
     &:hover {
       transform: scale(1.03);
     }
-  }
 
-  /* 画像読み込み最適化 */
-  .card-image[loading='lazy'] {
-    opacity: 1;
+    /* 画像読み込み最適化 */
+    &[loading='lazy'] {
+      opacity: 1;
+    }
   }
 
   /* ========== テキストコンテンツ (COMPACT DESIGN) ========== */
@@ -588,58 +652,51 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    justify-content: flex-start; /* テキストコンテンツを上部に配置 */
     gap: clamp(0.25rem, 0.75vw, 0.375rem);
     min-height: 0;
-  }
 
-  .card-title {
-    display: -webkit-box;
-    overflow: hidden;
-    margin: 0;
-    color: var(--clr-text-primary);
-    font-size: clamp(1rem, 2.5vw, 1.25rem);
-    font-weight: 700;
-    line-height: 1.3;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    flex-shrink: 0;
-    letter-spacing: -0.01em;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+    .card-title {
+      display: -webkit-box;
+      overflow: hidden;
+      margin: 0;
+      color: var(--clr-text-primary);
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 700;
+      line-height: 1.3;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      flex-shrink: 0;
+      letter-spacing: -0.01em;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-  .card-description {
-    display: -webkit-box;
-    flex: 1;
-    overflow: hidden;
-    margin: 0;
-    color: var(--clr-text-secondary);
-    font-size: clamp(0.875rem, 2vw, 1rem);
-    font-weight: 400;
-    line-height: 1.6;
-    opacity: 0.9;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    .card-description {
+      display: -webkit-box;
+      flex: 1;
+      overflow: hidden;
+      margin: 0;
+      color: var(--clr-text-secondary);
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      font-weight: 400;
+      line-height: 1.6;
+      opacity: 0.9;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
   }
 
   /* ========== MODERN COMPACT CARD FOOTER ========== */
   .card-footer {
     display: flex;
     flex-direction: column;
-    margin-top: auto;
     padding: clamp(0.5rem, 1.25vw, 0.75rem);
     flex-shrink: 0;
-    border-top: 1px solid oklch(100% 0 0deg / 0.08);
-    background: linear-gradient(
-      135deg,
-      oklch(20% 0 0deg / 0.1) 0%,
-      oklch(15% 0 0deg / 0.06) 100%
-    );
-    backdrop-filter: blur(12px) saturate(1.1);
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     /* スマホ画面で上下左右パディングを2倍に */
@@ -651,36 +708,22 @@
     @media (min-width: 768px) {
       padding: 1rem;
     }
-
-    /* Modern Hover Enhancement */
-    &:hover {
-      background: linear-gradient(
-        135deg,
-        oklch(25% 0 0deg / 0.15) 0%,
-        oklch(20% 0 0deg / 0.1) 100%
-      );
-      border-top-color: color-mix(
-        in oklch,
-        var(--token-purple-base) 15%,
-        transparent
-      );
-    }
   }
 
   .card-tags {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: clamp(0.25rem, 0.75vw, 0.375rem);
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     contain: layout;
-  }
 
-  .card-tags::-webkit-scrollbar {
-    display: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .card-tag {
@@ -724,56 +767,21 @@
     align-items: center;
     width: clamp(2rem, 4vw, 2.5rem);
     height: clamp(2rem, 4vw, 2.5rem);
-    border: 1px solid
-      color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+    border: 1px solid oklch(100% 0 0deg / 0.12);
     border-radius: 50%;
-    background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
+    background: transparent;
     opacity: 1;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     flex-shrink: 0;
-    backdrop-filter: blur(10px);
 
-    /* Smooth Hover Effect */
-    &:hover {
-      background: color-mix(
-        in oklch,
-        var(--token-purple-base) 25%,
-        transparent
-      );
-      border-color: color-mix(
-        in oklch,
-        var(--token-purple-base) 40%,
-        transparent
-      );
-      transform: scale(1.15);
-    }
-
-    /* デスクトップ表示ではホバー時にのみ表示 */
-    @media (min-width: 768px) {
-      opacity: 0;
-      transform: scale(0.8);
-
-      &:hover {
-        opacity: 1;
-        transform: scale(1.1);
-      }
-    }
-  }
-
-  .arrow-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: clamp(0.875rem, 2vw, 1rem);
-    height: clamp(0.875rem, 2vw, 1rem);
-    color: var(--token-purple-base);
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    flex-shrink: 0;
-    transform-origin: center;
-
-    /* Smooth Hover Effect - 中央を基準としたアニメーション */
-    &:hover {
-      transform: scale(1.1) translateX(2px);
+    .arrow-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: clamp(0.875rem, 2vw, 1rem);
+      height: clamp(0.875rem, 2vw, 1rem);
+      color: var(--clr-text-muted);
+      opacity: 0.8;
+      flex-shrink: 0;
     }
   }
 

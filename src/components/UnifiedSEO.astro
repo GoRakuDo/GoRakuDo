@@ -558,7 +558,8 @@ addOptionalSchemas(structuredDataSchemas);
 ))}
 
 <!-- ========== FONT LOADING ========== -->
-<!-- Fonts are now loaded via Fontsource in BaseLayout.astro -->
+    <!-- Fluent Emoji Webfont - Must be loaded before other styles -->
+    <link rel='stylesheet' href='https://tetunori.github.io/fluent-emoji-webfont/dist/FluentEmojiColor.css'/>
 
 <!-- ========== ROBOTS & PAGINATION ========== -->
 <meta name="robots" content={noindex ? 'noindex, nofollow' : seoConfig.seo.robots.default} />
