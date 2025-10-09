@@ -210,15 +210,15 @@
 
   /* ===== TYPOGRAPHY SYSTEM - CENTRALIZED FONT DEFINITIONS ===== */
 
-  /* Primary fonts - Roboto family as default with Japanese support */
+  /* Primary fonts - Roboto for Latin, Noto for Japanese (auto via unicode-range) */
   --font-primary:
-    'Noto Sans JP', 'Roboto Flex Variable', 'Roboto Flex', system-ui,
+    'Roboto Flex Variable', 'Roboto Flex', 'Noto Sans JP', system-ui,
     -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, sans-serif;
   --font-serif:
-    'Noto Serif JP', 'Roboto Serif Variable', 'Roboto Serif', 'Lora',
+    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP', 'Lora',
     'Times New Roman', times, serif;
   --font-heading:
-    'Noto Serif JP', 'Roboto Serif Variable', 'Roboto Serif', 'Lora',
+    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP', 'Lora',
     'Times New Roman', times, serif;
 
   /* Japanese fonts - Auto-detection via unicode-range */
