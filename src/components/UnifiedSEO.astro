@@ -587,18 +587,6 @@ addOptionalSchemas(structuredDataSchemas);
   />
 ))}
 
-<!-- ========== FONT LOADING ========== -->
-    <!-- Fluent Emoji Webfont - Non-render-blocking with preload -->
-    <link 
-      rel='preload' 
-      href='https://tetunori.github.io/fluent-emoji-webfont/dist/FluentEmojiColor.css' 
-      as='style'
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link rel='stylesheet' href='https://tetunori.github.io/fluent-emoji-webfont/dist/FluentEmojiColor.css'/>
-    </noscript>
-
 <!-- ========== ROBOTS & PAGINATION ========== -->
 <meta name="robots" content={noindex ? 'noindex, nofollow' : seoConfig.seo.robots.default} />
 

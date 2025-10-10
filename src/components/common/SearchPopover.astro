@@ -274,7 +274,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     box-shadow:
       0 4px 16px var(--sp-black-1),
       inset 0 1px 0 var(--sp-white-2);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(12px);
   }
 
   .search-toggle-btn--circular {
@@ -323,7 +323,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     box-shadow:
       0 8px 24px var(--sp-black-2),
       inset 0 1px 0 var(--sp-white-3);
-    transform: translateY(-2px) scale(1.05);
+
+    /* モバイル: ホバー効果を無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* ホバー無効 */
+    }
   }
 
   .search-toggle-btn:hover::before {
@@ -331,7 +339,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   .search-toggle-btn:active {
-    transform: translateY(-1px) scale(1.02);
+    /* モバイル: アクティブ状態を簡略化 */
+    @media (min-width: 769px) {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      transform: scale(1.02);
+    }
+
     transition: all 0.1s ease;
   }
 
@@ -390,7 +406,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     box-shadow:
       0 4px 16px var(--sp-black-1),
       inset 0 1px 0 var(--sp-white-2);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(12px);
 
     /* Mobile - 320px+ */
     @media (max-width: 768px) {
@@ -420,7 +436,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     box-shadow:
       0 8px 24px var(--sp-black-2),
       inset 0 1px 0 var(--sp-white-3);
-    transform: translateY(-2px) scale(1.05);
+
+    /* モバイル: ホバー効果を無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* ホバー無効 */
+    }
   }
 
   .search-close-btn:hover::before {
@@ -428,7 +452,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   .search-close-btn:active {
-    transform: translateY(-1px) scale(1.02);
+    /* モバイル: アクティブ状態を簡略化 */
+    @media (min-width: 769px) {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      transform: scale(1.02);
+    }
+
     transition: all 0.1s ease;
   }
 
@@ -638,7 +670,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     box-shadow:
       0 8px 20px var(--sp-accent-3),
       inset 0 1px 0 var(--sp-white-3);
-    transform: translateY(-2px) scale(1.05);
+
+    /* モバイル: ホバー効果を無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* ホバー無効 */
+    }
   }
 
   .search-submit-btn:hover::before {
@@ -646,7 +686,15 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   .search-submit-btn:active {
-    transform: translateY(-1px) scale(1.02);
+    /* モバイル: アクティブ状態を簡略化 */
+    @media (min-width: 769px) {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      transform: scale(1.02);
+    }
+
     transition: all 0.1s ease;
   }
 
@@ -705,7 +753,14 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     }
 
     100% {
-      transform: rotate(360deg);
+      /* モバイル: rotateアニメーション削除 */
+      @media (min-width: 769px) {
+        transform: rotate(360deg);
+      }
+
+      @media (max-width: 768px) {
+        transform: none; /* スピナー無効 */
+      }
     }
   }
 

@@ -148,9 +148,9 @@ const config = {
       // 画面幅に応じたFPS制限
       const screenWidth = window.innerWidth;
       if (screenWidth <= 768) {
-        return 1000 / 16; // モバイル: 16 FPS
+        return 1000 / 6; // モバイル: 6 FPS
       } else {
-        return 1000 / 40; // デスクトップ: 40 FPS
+        return 1000 / 48; // デスクトップ: 48 FPS
       }
     }
 

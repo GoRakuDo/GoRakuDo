@@ -262,15 +262,15 @@ const structuredData = {
     --pagination-spacing-xl: 1.5rem; /* 24px */
 
     /* モバイルファースト フォントサイズ */
-    --pagination-font-size-sm: 0.875rem; /* 14px */
-    --pagination-font-size-md: 0.9rem; /* 14.4px */
-    --pagination-font-size-lg: 0.95rem; /* 15.2px */
-    --pagination-font-size-xl: 1rem; /* 16px */
+    --pagination-font-size-sm: 0.9rem; /* 14px → 14.4px に拡大 */
+    --pagination-font-size-md: 0.95rem; /* 14.4px → 15.2px に拡大 */
+    --pagination-font-size-lg: 1rem; /* 15.2px → 16px に拡大 */
+    --pagination-font-size-xl: 1.05rem; /* 16px → 16.8px に拡大 */
 
     /* モバイルファースト サイズ */
-    --pagination-size-sm: 32px;
-    --pagination-size-md: 40px;
-    --pagination-size-lg: 48px;
+    --pagination-size-sm: 36px; /* 32px → 36px に拡大 */
+    --pagination-size-md: 44px; /* 40px → 44px に拡大 */
+    --pagination-size-lg: 52px; /* 48px → 52px に拡大 */
     --pagination-size-touch: 56px;
 
     /* モバイルファースト ボーダー半径 */
@@ -287,9 +287,14 @@ const structuredData = {
     max-width: 100%;
     margin: var(--pagination-spacing-xl) 0;
     padding: var(--pagination-spacing-lg) 0.5rem;
+    border: 1px solid oklch(90% 0.03 var(--pagination-primary-hue) / 0.4);
     border-radius: var(--pagination-radius-md);
-    contain: layout style paint;
+
+    /* モバイルでの可視性を向上 */
+    background: oklch(98% 0.01 var(--pagination-primary-hue) / 0.3);
     transform: translateZ(0);
+    contain: layout style paint;
+    backdrop-filter: blur(12px);
 
     /* ページ情報エリア */
     .pagination-info {
@@ -363,6 +368,9 @@ const structuredData = {
       align-items: center;
       gap: var(--pagination-spacing-xs);
       order: 1;
+      width: 100%;
+      min-height: 60px; /* モバイルで確実に表示される高さを確保 */
+      padding: var(--pagination-spacing-sm) 0;
     }
 
     /* ナビゲーションボタンエリア */
@@ -399,18 +407,39 @@ const structuredData = {
   .pagination-number {
     min-width: var(--pagination-size-md);
     min-height: var(--pagination-size-md);
+    border: 1px solid oklch(85% 0.05 var(--pagination-primary-hue) / 0.6);
+
+    /* モバイルでの可視性を向上 */
     font-size: var(--pagination-font-size-lg);
+    backdrop-filter: blur(8px);
 
     &:hover {
       color: var(--pagination-primary-hover-color);
-      transform: translateY(-0.1875rem) scale(1.08);
+
+      /* モバイル: transformを簡略化 */
+      @media (min-width: 769px) {
+        transform: translateY(-0.1875rem) scale(1.08);
+      }
+
+      @media (max-width: 768px) {
+        transform: scale(1.02);
+      }
+
       box-shadow: 0 0.5rem 1.5625rem oklch(0% 0 0deg / 0.15);
     }
 
     &:focus {
       outline: none;
       box-shadow: 0 0 0 0.25rem oklch(60% 0 0deg / 0.4);
-      transform: translateY(-0.125rem) scale(1.05);
+
+      /* モバイル: transformを簡略化 */
+      @media (min-width: 769px) {
+        transform: translateY(-0.125rem) scale(1.05);
+      }
+
+      @media (max-width: 768px) {
+        transform: scale(1.02);
+      }
     }
 
     /* 現在のページ */
@@ -610,15 +639,26 @@ const structuredData = {
     .pagination-number {
       min-width: var(--pagination-size-touch);
       min-height: var(--pagination-size-touch);
+      border: 2px solid oklch(80% 0.08 var(--pagination-primary-hue) / 0.7);
+
+      /* モバイルでの可視性を向上 */
       font-size: var(--pagination-font-size-lg);
+      backdrop-filter: blur(8px);
 
       &:active {
+        background: oklch(90% 0.05 var(--pagination-primary-hue) / 0.95);
         transform: scale(0.92);
       }
 
       &:hover {
         transform: none;
       }
+    }
+
+    /* モバイルでのページ番号エリアの確保 */
+    .pagination-numbers {
+      min-height: 80px; /* タッチデバイスではさらに高く */
+      padding: var(--pagination-spacing-md) 0;
     }
   }
 

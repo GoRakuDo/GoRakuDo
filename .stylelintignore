@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.astro/
+
+# Cache directories
+.vite/
+.cache/
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+

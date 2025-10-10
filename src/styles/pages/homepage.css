@@ -99,15 +99,36 @@ body.modal-open {
   }
 
   25% {
-    transform: translateY(-8px) translateX(4px);
+    /* モバイル: 浮遊アニメーションを無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-8px) translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* 浮遊アニメーション停止 */
+    }
   }
 
   50% {
-    transform: translateY(-4px) translateX(-6px);
+    /* モバイル: 浮遊アニメーションを無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-4px) translateX(-6px);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* 浮遊アニメーション停止 */
+    }
   }
 
   75% {
-    transform: translateY(-12px) translateX(2px);
+    /* モバイル: 浮遊アニメーションを無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-12px) translateX(2px);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* 浮遊アニメーション停止 */
+    }
   }
 }
 
@@ -118,11 +139,25 @@ body.modal-open {
   }
 
   33% {
-    transform: translateY(-6px) translateX(-3px);
+    /* モバイル: 浮遊アニメーションを無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-6px) translateX(-3px);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* 浮遊アニメーション停止 */
+    }
   }
 
   66% {
-    transform: translateY(-10px) translateX(5px);
+    /* モバイル: 浮遊アニメーションを無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-10px) translateX(5px);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* 浮遊アニメーション停止 */
+    }
   }
 }
 
@@ -133,7 +168,14 @@ body.modal-open {
   }
 
   50% {
-    transform: translateY(-8px) translateX(-2px);
+    /* モバイル: 浮遊アニメーションを無効化 */
+    @media (min-width: 769px) {
+      transform: translateY(-8px) translateX(-2px);
+    }
+
+    @media (max-width: 768px) {
+      transform: none; /* 浮遊アニメーション停止 */
+    }
   }
 }
 

@@ -192,9 +192,12 @@ h3.pl-objTitle {
   backface-visibility: hidden;
   transition: transform var(--pl-transition-normal);
 
+  /* Android Chrome対応: スマホでの画像サイズを最適化 */
   @media (max-width: 768px) {
-    max-width: min(320px, 60vw); /* スマホ画面での最大幅をさらに拡大 */
-    transform: scale(1.75); /* スケールを1.6倍に拡大 */
+    width: auto; /* width: 100%を無効化してコンテンツに応じたサイズに */
+    max-width: min(280px, 50vw); /* より適切な最大幅に調整 */
+    height: auto;
+    transform: none; /* transform: scale()を削除してAndroid Chromeでの表示問題を解決 */
   }
 
   @media (min-width: 768px) and (max-width: 1024px) {
@@ -467,21 +470,47 @@ a {
 
     /* スマホ: 適度な拡大で可読性向上 */
     @media (max-width: 767px) {
-      transform: scale(1.1);
+      /* モバイル: scale値を控えめに */
+      @media (min-width: 769px) {
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 768px) {
+        transform: scale(1.02);
+      }
+
       transform-origin: left top;
     }
 
     /* タブレット: 中程度の拡大 */
     @media (min-width: 768px) and (max-width: 1023px) {
       padding-left: var(--pl-space-lg);
-      transform: scale(1.3);
+
+      /* モバイル: scale値を控えめに */
+      @media (min-width: 769px) {
+        transform: scale(1.3);
+      }
+
+      @media (max-width: 768px) {
+        transform: scale(1.02);
+      }
+
       transform-origin: left top;
     }
 
     /* デスクトップ: 最大拡大 */
     @media (min-width: 1024px) {
       padding-left: var(--pl-space-lg);
-      transform: scale(1.5);
+
+      /* モバイル: scale値を控えめに */
+      @media (min-width: 769px) {
+        transform: scale(1.5);
+      }
+
+      @media (max-width: 768px) {
+        transform: scale(1.02);
+      }
+
       transform-origin: left top;
     }
 
@@ -722,7 +751,14 @@ a {
     transition: transform var(--pl-transition-normal);
 
     &:hover {
-      transform: translateY(-4px);
+      /* モバイル: translateYを削減 */
+      @media (min-width: 769px) {
+        transform: translateY(-4px);
+      }
+
+      @media (max-width: 768px) {
+        transform: translateY(-2px);
+      }
 
       @media (prefers-reduced-motion: reduce) {
         transform: none;
@@ -875,9 +911,12 @@ a {
   justify-content: center;
   align-items: center;
 
+  /* Android Chrome対応: スマホでの画像コンテナサイズを最適化 */
   @media (max-width: 768px) {
     justify-content: center;
     order: 1;
+    max-width: 100%; /* コンテナの最大幅を制限 */
+    padding: 0 var(--pl-space-md); /* 左右に適度なパディング */
   }
 
   @media (min-width: 768px) {
@@ -894,10 +933,13 @@ a {
   align-items: center;
   min-height: 350px;
 
+  /* Android Chrome対応: スマホでの画像コンテナサイズを最適化 */
   @media (max-width: 768px) {
     justify-content: center;
+    max-width: 100%; /* コンテナの最大幅を制限 */
+    min-height: 250px; /* 最小高さを縮小 */
+    padding: 0 var(--pl-space-md); /* 左右に適度なパディング */
     order: 1;
-    min-height: 300px;
   }
 
   @media (min-width: 768px) {
@@ -915,10 +957,13 @@ a {
   align-items: center;
   min-height: 350px;
 
+  /* Android Chrome対応: スマホでの画像コンテナサイズを最適化 */
   @media (max-width: 768px) {
     justify-content: center;
+    max-width: 100%; /* コンテナの最大幅を制限 */
+    min-height: 250px; /* 最小高さを縮小 */
+    padding: 0 var(--pl-space-md); /* 左右に適度なパディング */
     order: 1;
-    min-height: 300px;
   }
 
   @media (min-width: 768px) {
@@ -1195,14 +1240,14 @@ a {
     border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: var(--pl-radius-2xl);
     background: oklch(100% 0 0deg / var(--opacity-10));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
     box-shadow:
       0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
       inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
     text-align: center;
 
     @media (max-width: 768px) {
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(12px);
       background: oklch(100% 0 0deg / var(--opacity-08));
     }
 
@@ -1273,13 +1318,13 @@ a {
     border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: var(--pl-radius-2xl);
     background: oklch(100% 0 0deg / var(--opacity-10));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
     box-shadow:
       0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
       inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
 
     @media (max-width: 768px) {
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(12px);
       background: oklch(100% 0 0deg / var(--opacity-08));
     }
 
@@ -1423,7 +1468,7 @@ a {
     border: 1px solid var(--clr-glass-border);
     border-radius: var(--pl-radius-2xl);
     background: var(--clr-glass-background);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
     box-shadow:
       0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
       inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));

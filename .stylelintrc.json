@@ -6,6 +6,13 @@
     "stylelint-config-tailwindcss"
   ],
   "plugins": ["stylelint-order"],
+  "ignoreFiles": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".astro/**",
+    "coverage/**"
+  ],
   "rules": {
     "order/properties-order": [
       "position",

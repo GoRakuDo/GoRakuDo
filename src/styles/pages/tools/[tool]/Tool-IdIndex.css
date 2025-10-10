@@ -333,7 +333,7 @@
     oklch(20% 0 0deg / 0.15) 0%,
     oklch(15% 0 0deg / 0.1) 100%
   );
-  backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.1);
   box-shadow:
     0 4px 20px oklch(0% 0 0deg / 0.08),
     0 1px 3px oklch(0% 0 0deg / 0.12),
@@ -360,7 +360,7 @@
       var(--token-purple-base) 30%,
       transparent
     );
-    backdrop-filter: blur(24px) saturate(1.2);
+    backdrop-filter: blur(12px) saturate(1.1);
     box-shadow:
       0 20px 60px oklch(0% 0 0deg / 0.18),
       0 8px 25px oklch(0% 0 0deg / 0.12),

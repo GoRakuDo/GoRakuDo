@@ -420,7 +420,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       animation: navbarScrollOpacityEnhanced linear;
 
       /* REASONING: Enhanced backdrop filters for superior glass effect */
-      backdrop-filter: blur(20px) saturate(180%) brightness(1.1) contrast(1.1);
+      backdrop-filter: blur(12px) saturate(120%);
 
       /* REASONING: Enhanced shadow system */
       box-shadow:
@@ -630,12 +630,29 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         0 8px 32px oklch(65% 0.25 280deg / 0.3),
         0 4px 16px oklch(0% 0 0deg / 0.15),
         inset 0 1px 0 oklch(100% 0 0deg / 0.2);
-      transform: translateZ(0) translateY(-2px) scale(1.02);
+
+      /* モバイル: ホバー効果を無効化 */
+      @media (min-width: 1025px) {
+        transform: translateZ(0) translateY(-2px) scale(1.02);
+      }
+
+      @media (max-width: 1024px) {
+        transform: none; /* ホバー無効 */
+      }
+
       filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
     }
 
     .mobile-menu-btn:active {
-      transform: translateZ(0) translateY(0) scale(0.98);
+      /* モバイル: アクティブ状態を簡略化 */
+      @media (min-width: 1025px) {
+        transform: translateZ(0) translateY(0) scale(0.98);
+      }
+
+      @media (max-width: 1024px) {
+        transform: scale(0.98);
+      }
+
       box-shadow:
         0 2px 8px oklch(65% 0.25 280deg / 0.2),
         0 1px 4px oklch(0% 0 0deg / 0.1);
@@ -707,7 +724,15 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       filter: drop-shadow(
         0 0 12px oklch(from var(--token-purple-base) l c h / 0.4)
       );
-      transform: translateZ(0) translateY(-2px) scale(1.02);
+
+      /* モバイル: ホバー効果を無効化 */
+      @media (min-width: 1025px) {
+        transform: translateZ(0) translateY(-2px) scale(1.02);
+      }
+
+      @media (max-width: 1024px) {
+        transform: none; /* ホバー無効 */
+      }
     }
 
     /* ---------- Ruby Text Styling - Japanese Typography with Enhanced Readability ---------- */
@@ -802,12 +827,29 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         0 8px 32px oklch(65% 0.25 280deg / 0.3),
         0 4px 16px oklch(0% 0 0deg / 0.15),
         inset 0 1px 0 oklch(100% 0 0deg / 0.2);
-      transform: translateZ(0) translateY(-2px) scale(1.02);
+
+      /* モバイル: ホバー効果を無効化 */
+      @media (min-width: 1025px) {
+        transform: translateZ(0) translateY(-2px) scale(1.02);
+      }
+
+      @media (max-width: 1024px) {
+        transform: none; /* ホバー無効 */
+      }
+
       filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
     }
 
     .get-started-btn:active {
-      transform: translateZ(0) translateY(0) scale(0.98);
+      /* モバイル: アクティブ状態を簡略化 */
+      @media (min-width: 1025px) {
+        transform: translateZ(0) translateY(0) scale(0.98);
+      }
+
+      @media (max-width: 1024px) {
+        transform: scale(0.98);
+      }
+
       box-shadow:
         0 2px 8px oklch(65% 0.25 280deg / 0.2),
         0 1px 4px oklch(0% 0 0deg / 0.1);
@@ -879,7 +921,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           transparent 50%
         );
       border-color: transparent;
-      backdrop-filter: blur(20px) saturate(180%) brightness(1.1) contrast(1.1);
+      backdrop-filter: blur(12px) saturate(120%);
       box-shadow:
         0 8px 32px oklch(0% 0 0deg / 0.12),
         0 4px 16px oklch(0% 0 0deg / 0.08),
@@ -907,10 +949,10 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       border-color: oklch(
         25% 0.015 270deg / calc(var(--navbar-opacity, 0.12) * 1.25)
       );
-      backdrop-filter: blur(calc(var(--navbar-opacity, 0.12) * 100px))
-        saturate(calc(100% + var(--navbar-opacity, 0.12) * 50%))
-        brightness(calc(1 + var(--navbar-opacity, 0.12) * 0.05))
-        contrast(calc(1 + var(--navbar-opacity, 0.12) * 0.05));
+      backdrop-filter: blur(
+          min(calc(var(--navbar-opacity, 0.12) * 100px), 12px)
+        )
+        saturate(calc(100% + var(--navbar-opacity, 0.12) * 20%));
     }
   }
 </style>

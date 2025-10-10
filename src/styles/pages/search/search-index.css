@@ -215,7 +215,16 @@
 .category-item:hover,
 .category-item:focus-visible {
   border-color: oklch(from var(--clr-accent) l c h / var(--opacity-40));
-  transform: translateY(-2px) scale(1.02);
+
+  /* モバイル: ホバー効果を簡略化 */
+  @media (min-width: 769px) {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    transform: none; /* ホバー無効 */
+  }
+
   box-shadow:
     0 6px 20px oklch(from var(--clr-accent) l c h / var(--opacity-10) 5),
     0 2px 8px oklch(from var(--clr-background) l c h / var(--opacity-10)),
@@ -228,7 +237,15 @@
 }
 
 .category-item:active {
-  transform: translateY(-1px) scale(1.01);
+  /* モバイル: アクティブ状態を簡略化 */
+  @media (min-width: 769px) {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  @media (max-width: 768px) {
+    transform: scale(1.01);
+  }
+
   box-shadow:
     0 3px 12px oklch(from var(--clr-accent) l c h / var(--opacity-10)),
     0 1px 4px oklch(from var(--clr-background) l c h / var(--opacity-08));
@@ -343,7 +360,16 @@
 .tag-item:focus-visible {
   color: white;
   border-color: oklch(from var(--clr-accent) l c h / var(--opacity-40));
-  transform: translateY(-2px) scale(1.05);
+
+  /* モバイル: scale値を控えめに */
+  @media (min-width: 769px) {
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    transform: translateY(-2px) scale(1.02); /* 1.05 → 1.02 */
+  }
+
   box-shadow:
     0 6px 20px oklch(from var(--clr-accent) l c h / var(--opacity-20)),
     0 2px 8px oklch(from var(--clr-background) l c h / var(--opacity-10)),
@@ -356,7 +382,15 @@
 }
 
 .tag-item:active {
-  transform: translateY(-1px) scale(1.02);
+  /* モバイル: アクティブ状態を簡略化 */
+  @media (min-width: 769px) {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    transform: scale(1.02);
+  }
+
   box-shadow:
     0 3px 12px oklch(from var(--clr-accent) l c h / var(--opacity-10) 5),
     0 1px 4px oklch(from var(--clr-background) l c h / var(--opacity-08));

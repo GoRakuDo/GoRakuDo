@@ -576,7 +576,7 @@ body {
       var(--clr-background-light) 0%,
       var(--clr-background-subtle) 100%
     );
-    backdrop-filter: blur(15px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(120%);
   }
 
   font-family: var(--rc-font-family-display);
@@ -603,7 +603,7 @@ body {
 
     /* GlassMorphism効果を活かすためのホバー調整 */
     &.glassmorphism {
-      backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(12px) saturate(120%);
       background: linear-gradient(
         135deg,
         var(--clr-background-light) 0%,

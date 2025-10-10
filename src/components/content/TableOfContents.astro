@@ -196,7 +196,15 @@ const { headings = [] } = Astro.props
         overflow: hidden;
         max-height: 0;
         opacity: 0;
-        transform: translateY(-8px);
+
+        /* モバイル: translateYを削減 */
+        @media (min-width: 769px) {
+          transform: translateY(-8px);
+        }
+        
+        @media (max-width: 768px) {
+          transform: translateY(-4px);
+        }
       }
     }
 
@@ -338,7 +346,14 @@ const { headings = [] } = Astro.props
 
   .toc-toggle:hover .toc-hide-icon,
   .toc-toggle:hover .toc-show-icon {
-    transform: scale(1.1);
+    /* モバイル: scale値を控えめに */
+    @media (min-width: 769px) {
+      transform: scale(1.1);
+    }
+    
+    @media (max-width: 768px) {
+      transform: scale(1.02);
+    }
   }
 
   /* Floating toggle button - hidden since we only collapse now */
@@ -550,7 +565,7 @@ const { headings = [] } = Astro.props
         oklch(15% 0 0deg / 0.1) 100%
       );
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(24px) saturate(1.2);
+      backdrop-filter: blur(12px) saturate(1.1);
       box-shadow:
         0 4px 20px oklch(0% 0 0deg / 0.08),
         0 1px 3px oklch(0% 0 0deg / 0.12),
@@ -695,7 +710,7 @@ const { headings = [] } = Astro.props
           oklch(15% 0 0deg / 0.1) 100%
         );
         box-sizing: border-box;
-        backdrop-filter: blur(24px) saturate(1.2);
+        backdrop-filter: blur(12px) saturate(1.1);
     }
   }
 </style>

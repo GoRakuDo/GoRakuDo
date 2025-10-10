@@ -447,13 +447,29 @@
     box-shadow:
       0 20px 40px -10px oklch(0% 0 0deg / 0.3),
       0 8px 16px -4px oklch(0% 0 0deg / 0.15);
-    transform: translateY(-6px);
+
+    /* モバイル: translateYを削減 */
+    @media (min-width: 769px) {
+      transform: translateY(-6px);
+    }
+
+    @media (max-width: 768px) {
+      transform: translateY(-3px);
+    }
 
     .tool-icon {
       background: transparent;
       box-shadow: none;
       filter: drop-shadow(0 6px 12px oklch(0% 0 0deg / 0.4));
-      transform: scale(1.05);
+
+      /* モバイル: scale値を控えめに */
+      @media (min-width: 769px) {
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 768px) {
+        transform: scale(1.02);
+      }
     }
 
     .tool-name {
