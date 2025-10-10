@@ -111,8 +111,30 @@
   );
 }
 
+/* ========================================
+   SMOOTH SCROLL & ANCHOR OFFSET
+   ======================================== */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   padding-top: 80px;
+}
+
+/* Phase見出しのアンカーリンク用オフセット調整 */
+[id='phase1'],
+[id='phase2'],
+[id='phase3'],
+[id='phase4'],
+[id='phase5'] {
+  scroll-margin-top: calc(80px + var(--pl-space-2xl));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* ========================================

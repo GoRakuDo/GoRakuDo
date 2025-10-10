@@ -17,6 +17,7 @@ export interface Props {
   lang?: 'id' | 'ja';
   author?: string;
   tags?: string[];
+  image?: string;
   currentPage?: number;
   totalPages?: number;
   baseUrl?: string;
@@ -35,6 +36,7 @@ const {
   lang = 'id',
   author,
   tags = [],
+  image,
   currentPage,
   totalPages,
   baseUrl,
@@ -64,6 +66,7 @@ const LAYOUT_CONFIG = {
       keywords={tags}
       lang={lang}
       pageType='article'
+      image={image}
       author={author}
       publishedDate={publishedDate}
       modifiedDate={publishedDate}

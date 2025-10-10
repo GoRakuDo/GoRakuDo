@@ -1,138 +1,15 @@
 {
   "seoOptimization": {
-    "titleTemplates": {
-      "tutorial": "{{toolName}} Panduan Lengkap - Dari Setup hingga Penggunaan | GoRakuDo Tools",
-      "guide": "{{toolName}} Panduan Praktis - Cara Penggunaan Efektif | GoRakuDo Tools",
-      "setup": "{{toolName}} Panduan Setup - Dari Instalasi hingga Konfigurasi | GoRakuDo Tools",
-      "general": "{{toolName}} Panduan - Tools Pembelajaran Bahasa Jepang | GoRakuDo"
-    },
-    "descriptionTemplates": {
-      "tutorial": "Panduan lengkap {{toolName}}. Dari setup hingga cara penggunaan yang efektif, pelajari langkah demi langkah dengan tutorial {{toolName}} {{difficultyText}}. Kuasai {{toolName}} dengan GoRakuDo.",
-      "guide": "Pelajari cara penggunaan praktis {{toolName}}. Tips dan teknik {{toolName}} yang direkomendasikan untuk {{difficultyText}} pembelajaran bahasa Jepang. Manfaatkan {{toolName}} secara efektif dengan GoRakuDo.",
-      "setup": "Panduan setup {{toolName}} yang detail. Dari instalasi hingga konfigurasi awal, panduan setup {{toolName}} {{difficultyText}}. Mulai gunakan {{toolName}} dengan GoRakuDo.",
-      "general": "Pelajari {{toolName}} secara mendalam. Panduan {{toolName}} yang direkomendasikan untuk {{difficultyText}} pembelajaran bahasa Jepang. Pahami {{toolName}} dengan GoRakuDo."
-    },
+    "titleTemplate": "{{articleTitle}} | GoRakuDo",
+    "descriptionTemplate": "{{articleDescription}}",
     "baseKeywords": [
-      "Pembelajaran Bahasa Jepang",
       "GoRakuDo",
-      "Tools",
-      "Alat Pembelajaran"
-    ],
-    "typeKeywords": {
-      "tutorial": ["Tutorial", "Setup", "Instalasi", "Cara Mengatur"],
-      "guide": ["Panduan", "Cara Menggunakan", "Tips", "Teknik"],
-      "setup": ["Setup", "Instalasi", "Konfigurasi", "Pengaturan"],
-      "general": ["Tools", "Pembelajaran", "Cara Menggunakan", "Pengenalan"]
-    },
-    "difficultyKeywords": {
-      "beginner": ["Pemula", "Dasar", "Awal", "Mudah"],
-      "intermediate": ["Menengah", "Praktis", "Lanjutan"],
-      "advanced": ["Mahir", "Expert", "Profesional", "Tingkat Tinggi"]
-    },
-    "toolKeywords": {
-      "anki": [
-        "Anki",
-        "SRS",
-        "Flashcard",
-        "Hafalan",
-        "Review",
-        "Spaced Repetition"
-      ],
-      "yomichan": ["Yomichan", "Kamus", "Cara Baca", "Terjemahan", "Popup"],
-      "migaku": ["Migaku", "Pembelajaran Video", "Subtitle", "Ekstraksi Audio"],
-      "language-reactor": [
-        "Language Reactor",
-        "Netflix",
-        "YouTube",
-        "Pembelajaran Subtitle"
-      ]
-    },
-    "difficultyTexts": {
-      "beginner": "untuk Pemula",
-      "intermediate": "untuk Menengah",
-      "advanced": "untuk Tingkat Lanjut"
-    }
+      "Pembelajaran Bahasa Jepang",
+      "Tutorial Bahasa Jepang",
+      "Tutorial Aplikasi Bahasa Jepang"
+    ]
   },
   "structuredData": {
-    "faq": {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "{{faqQuestion1}}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "{{faqAnswer1}}"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "{{faqQuestion2}}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "{{faqAnswer2}}"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "{{faqQuestion3}}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "{{faqAnswer3}}"
-          }
-        }
-      ]
-    },
-    "howTo": {
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      "name": "{{howToTitle}}",
-      "description": "{{howToDescription}}",
-      "image": "{{howToImage}}",
-      "totalTime": "{{howToTotalTime}}",
-      "estimatedCost": {
-        "@type": "MonetaryAmount",
-        "currency": "IDR",
-        "value": "0"
-      },
-      "supply": [
-        {
-          "@type": "HowToSupply",
-          "name": "{{howToSupply1}}"
-        },
-        {
-          "@type": "HowToSupply",
-          "name": "{{howToSupply2}}"
-        }
-      ],
-      "tool": [
-        {
-          "@type": "HowToTool",
-          "name": "{{howToTool1}}"
-        }
-      ],
-      "step": [
-        {
-          "@type": "HowToStep",
-          "name": "{{howToStep1Name}}",
-          "text": "{{howToStep1Text}}",
-          "url": "{{howToStep1Url}}"
-        },
-        {
-          "@type": "HowToStep",
-          "name": "{{howToStep2Name}}",
-          "text": "{{howToStep2Text}}",
-          "url": "{{howToStep2Url}}"
-        },
-        {
-          "@type": "HowToStep",
-          "name": "{{howToStep3Name}}",
-          "text": "{{howToStep3Text}}",
-          "url": "{{howToStep3Url}}"
-        }
-      ]
-    },
     "softwareApplication": {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -141,11 +18,6 @@
       "url": "{{toolUrl}}",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "{{operatingSystem}}",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "IDR"
-      },
       "author": {
         "@type": "Organization",
         "name": "{{toolAuthor}}"
@@ -186,116 +58,24 @@
       ]
     }
   },
-  "faqTemplates": {
-    "tutorial": {
-      "faqQuestion1": "Apa itu {{toolName}}?",
-      "faqAnswer1": "{{toolName}} adalah {{toolDescription}}. Dalam pembelajaran bahasa Jepang, {{toolPurpose}}.",
-      "faqQuestion2": "Bagaimana cara setup {{toolName}}?",
-      "faqAnswer2": "Setup {{toolName}} sangat mudah. Artikel ini menjelaskan secara detail dari instalasi hingga konfigurasi awal.",
-      "faqQuestion3": "Apakah {{toolName}} bisa digunakan oleh pemula?",
-      "faqAnswer3": "Ya, {{toolName}} adalah tools {{difficultyText}}. Artikel ini juga menjelaskan cara penggunaan untuk pemula secara detail."
-    },
-    "guide": {
-      "faqQuestion1": "Bagaimana cara menggunakan {{toolName}} secara efektif?",
-      "faqAnswer1": "Untuk menggunakan {{toolName}} secara efektif, {{toolUsage}} sangat penting. Artikel ini menjelaskan cara penggunaan praktis secara detail.",
-      "faqQuestion2": "Bisakah belajar bahasa Jepang dengan {{toolName}}?",
-      "faqAnswer2": "Ya, {{toolName}} sangat efektif untuk pembelajaran bahasa Jepang. Menyediakan {{toolBenefits}}.",
-      "faqQuestion3": "Apakah konfigurasi {{toolName}} sulit?",
-      "faqAnswer3": "Konfigurasi {{toolName}} {{difficultyText}}. Artikel ini menjelaskan cara konfigurasi secara detail."
-    },
-    "setup": {
-      "faqQuestion1": "Bagaimana cara instalasi {{toolName}}?",
-      "faqAnswer1": "Instalasi {{toolName}} sangat mudah. Artikel ini menjelaskan cara instalasi langkah demi langkah.",
-      "faqQuestion2": "Apakah konfigurasi awal {{toolName}} diperlukan?",
-      "faqAnswer2": "Ya, konfigurasi awal sangat penting untuk menggunakan {{toolName}} secara efektif. Artikel ini menjelaskan cara konfigurasi secara detail.",
-      "faqQuestion3": "Apa sistem operasi yang didukung {{toolName}}?",
-      "faqAnswer3": "{{toolName}} berjalan di {{operatingSystem}}. Detail sistem operasi yang didukung dapat dilihat di artikel ini."
-    },
-    "general": {
-      "faqQuestion1": "Apa itu {{toolName}}?",
-      "faqAnswer1": "{{toolName}} adalah {{toolDescription}}. Dalam pembelajaran bahasa Jepang, {{toolPurpose}}.",
-      "faqQuestion2": "Apa fitur-fitur {{toolName}}?",
-      "faqAnswer2": "Fitur utama {{toolName}} adalah {{toolFeatures}}. Artikel ini menjelaskan secara detail.",
-      "faqQuestion3": "Apakah {{toolName}} gratis?",
-      "faqAnswer3": "{{toolName}} dapat digunakan dengan {{toolPricing}}. Detail dapat dilihat di artikel ini."
-    }
-  },
-  "howToTemplates": {
-    "tutorial": {
-      "howToTitle": "Cara Setup {{toolName}}",
-      "howToDescription": "Panduan lengkap instalasi dan konfigurasi awal {{toolName}}",
-      "howToImage": "{{toolImage}}",
-      "howToTotalTime": "PT20M",
-      "howToSupply1": "Komputer atau perangkat yang kompatibel",
-      "howToSupply2": "Koneksi internet",
-      "howToTool1": "{{toolName}}",
-      "howToStep1Name": "Download dan Instalasi",
-      "howToStep1Text": "Download dan instal {{toolName}} dari situs resmi",
-      "howToStep1Url": "{{articleUrl}}#download",
-      "howToStep2Name": "Konfigurasi Awal",
-      "howToStep2Text": "Lakukan konfigurasi dasar {{toolName}}",
-      "howToStep2Url": "{{articleUrl}}#setup",
-      "howToStep3Name": "Verifikasi",
-      "howToStep3Text": "Pastikan {{toolName}} berjalan dengan normal",
-      "howToStep3Url": "{{articleUrl}}#verification"
-    },
-    "setup": {
-      "howToTitle": "Langkah Setup {{toolName}}",
-      "howToDescription": "Panduan detail untuk setup {{toolName}} dengan benar",
-      "howToImage": "{{toolImage}}",
-      "howToTotalTime": "PT15M",
-      "howToSupply1": "Perangkat yang kompatibel",
-      "howToSupply2": "Koneksi internet",
-      "howToTool1": "{{toolName}}",
-      "howToStep1Name": "Instalasi",
-      "howToStep1Text": "Install {{toolName}}",
-      "howToStep1Url": "{{articleUrl}}#install",
-      "howToStep2Name": "Konfigurasi",
-      "howToStep2Text": "Lakukan konfigurasi {{toolName}}",
-      "howToStep2Url": "{{articleUrl}}#configuration",
-      "howToStep3Name": "Testing",
-      "howToStep3Text": "Test fungsi {{toolName}}",
-      "howToStep3Url": "{{articleUrl}}#testing"
-    }
-  },
   "toolData": {
     "anki": {
       "description": "Aplikasi flashcard menggunakan Spaced Repetition System (SRS)",
-      "purpose": "Sistem hafalan dan review yang efisien",
-      "usage": "Review berkala dan pembelajaran dengan interval yang tepat",
-      "benefits": "Retensi memori jangka panjang dan pembelajaran efisien",
-      "features": "Kartu yang dapat dikustomisasi, fitur statistik, sinkronisasi",
-      "pricing": "Gratis (Open Source)",
       "operatingSystem": "Windows, macOS, Linux, iOS, Android",
       "author": "Anki Team"
     },
     "yomichan": {
       "description": "Tools kamus bahasa Jepang yang berjalan sebagai ekstensi browser",
-      "purpose": "Pencarian kata dan terjemahan real-time",
-      "usage": "Pilih teks dan lihat arti melalui popup",
-      "benefits": "Pembelajaran kosakata yang efisien saat membaca",
-      "features": "Dukungan multi-kamus, integrasi Anki, text-to-speech",
-      "pricing": "Gratis",
       "operatingSystem": "Chrome, Firefox, Edge",
       "author": "Yomichan Team"
     },
     "migaku": {
       "description": "Tools untuk mengekstrak materi pembelajaran dari konten video",
-      "purpose": "Efisiensi pembelajaran video dan pembuatan materi",
-      "usage": "Ekstrak subtitle dan audio dari video untuk pembelajaran",
-      "benefits": "Pembelajaran dengan konten yang praktis",
-      "features": "Ekstraksi subtitle, ekstraksi audio, integrasi Anki",
-      "pricing": "Berlangganan Berbayar",
       "operatingSystem": "Windows, macOS",
       "author": "Migaku Team"
     },
     "language-reactor": {
       "description": "Tools untuk mendukung pembelajaran subtitle di Netflix dan YouTube",
-      "purpose": "Dukungan pembelajaran bahasa melalui konten video",
-      "usage": "Pembelajaran dua arah menggunakan subtitle",
-      "benefits": "Pembelajaran melalui konten hiburan",
-      "features": "Tampilan subtitle, fitur terjemahan, pembelajaran kosakata",
-      "pricing": "Freemium",
       "operatingSystem": "Chrome, Firefox",
       "author": "Language Reactor Team"
     }

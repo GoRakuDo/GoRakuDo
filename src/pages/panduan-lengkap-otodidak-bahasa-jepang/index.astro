@@ -40,6 +40,40 @@ const MenataIntusi = 'gorakudo-menata-intusi_nrrl6c';
 // ========== SEO DATA ==========
 const seoData = panduanSeoData.seoData;
 
+// テンプレート変数置き換え関数
+const replaceTemplateVars = (
+  template: any,
+  vars: Record<string, string>
+): any => {
+  if (typeof template === 'string') {
+    return template.replace(
+      /\{\{(\w+)\}\}/g,
+      (_, key) => vars[key] || template
+    );
+  }
+  if (Array.isArray(template))
+    return template.map(item => replaceTemplateVars(item, vars));
+  if (template && typeof template === 'object') {
+    const result: any = {};
+    for (const [key, value] of Object.entries(template)) {
+      result[key] = replaceTemplateVars(value, vars);
+    }
+    return result;
+  }
+  return template;
+};
+
+const templateVars = {
+  seoTitle: seoData.title,
+  seoDescription: seoData.description,
+};
+
+// テンプレート変数を置き換えてからstructuredDataを生成
+const baseStructuredData = replaceTemplateVars(
+  panduanSeoData.structuredData,
+  templateVars
+);
+
 // ========== DYNAMIC STRUCTURED DATA ==========
 // Cloudinary画像URLを生成（CldImageコンポーネント用）
 const getImageUrl = (publicId: string) => {
@@ -59,9 +93,9 @@ const stepImages = {
 
 // 動的画像URLを使用して構造化データを生成
 const structuredData = {
-  ...panduanSeoData.structuredData,
+  ...baseStructuredData,
   article: {
-    ...panduanSeoData.structuredData.article,
+    ...baseStructuredData.article,
     image: {
       '@type': 'ImageObject',
       url: getImageUrl(gorakudoImmerisonImage),
@@ -69,13 +103,13 @@ const structuredData = {
     },
   },
   howTo: {
-    ...panduanSeoData.structuredData.howTo,
+    ...baseStructuredData.howTo,
     image: {
       '@type': 'ImageObject',
       url: getImageUrl(gorakudoImmerisonImage),
       width: 630,
     },
-    step: panduanSeoData.structuredData.howTo.step.map((step, index) => {
+    step: baseStructuredData.howTo.step.map((step, index) => {
       // ステップ名から画像を特定
       let imageKey = '';
       if (step.name.includes('Phase 1'))
@@ -127,10 +161,11 @@ const faqSchema = {
 <BaseLayout
   title={seoData.title}
   description={seoData.description}
-  keywords={seoData.keywords}
   lang={seoData.lang}
   pageType={seoData.pageType as 'article' | 'website'}
-  publishedDate='2025-09-30T00:00:00.000Z'
+  author={seoData.author}
+  publishedDate={seoData.publishedDate}
+  articleKeywords={seoData.articleKeywords}
   ogImage={getImageUrl(gorakudoImmerisonImage)}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
@@ -599,7 +634,7 @@ const faqSchema = {
           class='content-section content-section--secondary section--purple-strong'
         >
           <div class='pl-objContainer pl-objContainer--phase1'>
-            <h2 class='pl-objTitle pl-objTitle--secondary'>
+            <h2 id='phase1' class='pl-objTitle pl-objTitle--secondary'>
               Phase 1 ( 幼級 ): Membentuk Pondasi Intuisi Berbahasa Jepang
             </h2>
 
@@ -775,7 +810,7 @@ const faqSchema = {
           class='content-section content-section--secondary section--purple-strong'
         >
           <div class='pl-objContainer pl-objContainer--phase2'>
-            <h3 class='pl-objTitle pl-objTitle--secondary'>
+            <h3 id='phase2' class='pl-objTitle pl-objTitle--secondary'>
               Phase 2 ( 小級 ): Bentuk kerangka Intuisi Active Immersion
             </h3>
 
@@ -870,7 +905,7 @@ const faqSchema = {
           class='content-section content-section--secondary section--purple-strong'
         >
           <div class='pl-objContainer pl-objContainer--phase3'>
-            <h3 class='pl-objTitle pl-objTitle--secondary'>
+            <h3 id='phase3' class='pl-objTitle pl-objTitle--secondary'>
               Phase 3 ( 中級 ): Konsolidasi Intuisi dengan double Reading &
               Listening
             </h3>
@@ -966,7 +1001,7 @@ const faqSchema = {
           class='content-section content-section--secondary section--purple-strong'
         >
           <div class='pl-objContainer pl-objContainer--phase4'>
-            <h3 class='pl-objTitle pl-objTitle--secondary'>
+            <h3 id='phase4' class='pl-objTitle pl-objTitle--secondary'>
               Phase 4 ( 高級 ): Menata Intuisi dengan Output
             </h3>
 
@@ -1063,7 +1098,7 @@ const faqSchema = {
           class='content-section content-section--secondary section--purple-strong'
         >
           <div class='pl-objContainer pl-objContainer--phase5'>
-            <h3 class='pl-objTitle pl-objTitle--secondary'>
+            <h3 id='phase5' class='pl-objTitle pl-objTitle--secondary'>
               Phase 5 ( 大級 ): Optimalisasi dan Memperluas Intuisi
             </h3>
 

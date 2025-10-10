@@ -1,19 +1,7 @@
 {
   "seoData": {
-    "title": "Pencarian Konten - GoRakuDo | Cari Dokumentasi, Tutorial & Alat Belajar Bahasa Jepang",
-    "description": "Temukan semua konten pembelajaran bahasa Jepang di GoRakuDo. Cari dokumentasi, tutorial, alat belajar, dan panduan immersion dengan mudah. Fitur pencarian canggih untuk menemukan konten yang relevan.",
-    "keywords": [
-      "pencarian konten",
-      "cari dokumentasi",
-      "tutorial bahasa jepang",
-      "alat belajar jepang",
-      "panduan immersion",
-      "dokumentasi goRakuDo",
-      "pencarian canggih",
-      "konten pembelajaran",
-      "search functionality",
-      "content discovery"
-    ],
+    "title": "Pencarian Konten Artikel, Dokumentasi, dan Tutorial - GoRakuDo",
+    "description": "Temukan semua konten pembelajaran bahasa Jepang di GoRakuDo. Cari dokumentasi, tutorial, dan panduan immersion dengan mudah. Dengan Fitur pencarian yang canggih untuk membantu kalian menemukan konten yang relevan.",
     "author": "GoRakuDo Team",
     "canonical": "/search"
   },
@@ -22,7 +10,6 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "GoRakuDo Search",
-      "url": "https://gorakudo.org/search",
       "description": "Pencarian konten pembelajaran bahasa Jepang di GoRakuDo",
       "inLanguage": "id",
       "potentialAction": {
@@ -49,36 +36,6 @@
           "position": 2,
           "name": "Pencarian",
           "item": "https://gorakudo.org/search"
-        }
-      ]
-    },
-    "faq": {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Bagaimana cara menggunakan fitur pencarian di GoRakuDo?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Anda dapat menggunakan fitur pencarian dengan mengetik kata kunci di kotak pencarian, memilih kategori yang relevan, atau mengklik tag yang tersedia. Sistem akan menampilkan konten yang sesuai dengan pencarian Anda."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Konten apa saja yang bisa dicari di GoRakuDo?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Anda dapat mencari dokumentasi, tutorial, panduan alat belajar bahasa Jepang, artikel tentang immersion, dan berbagai konten pembelajaran bahasa Jepang lainnya yang tersedia di GoRakuDo."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Apakah pencarian di GoRakuDo mendukung filter kategori dan tag?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ya, fitur pencarian GoRakuDo mendukung filter berdasarkan kategori seperti Anki, immersion, methodology, tools, dan tag seperti #beginner, #anki, #immersion untuk membantu Anda menemukan konten yang lebih spesifik."
-          }
         }
       ]
     }

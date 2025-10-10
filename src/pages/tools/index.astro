@@ -40,7 +40,46 @@ const getStatsData = (toolsCount: number) => [
 // ========== PROCESSED DATA ==========
 const toolsCount = tools.length;
 const statsData = getStatsData(toolsCount);
+
+// ========== IMAGE CONFIG ==========
+const heroImageId = 'gorakudo-tools-tutorials_exzci4';
+const heroImageUrl = `https://res.cloudinary.com/dbvd1cm7u/image/upload/${heroImageId}`;
+
+// ========== SEO DATA WITH TEMPLATE REPLACEMENT ==========
+// テンプレート変数置き換え関数
+const replaceTemplateVars = (
+  template: any,
+  vars: Record<string, string>
+): any => {
+  if (typeof template === 'string') {
+    return template.replace(
+      /\{\{(\w+)\}\}/g,
+      (_, key) => vars[key] || template
+    );
+  }
+  if (Array.isArray(template))
+    return template.map(item => replaceTemplateVars(item, vars));
+  if (template && typeof template === 'object') {
+    const result: any = {};
+    for (const [key, value] of Object.entries(template)) {
+      result[key] = replaceTemplateVars(value, vars);
+    }
+    return result;
+  }
+  return template;
+};
+
 const seoData = toolsSeoData.seoData;
+
+const templateVars = {
+  seoTitle: seoData.title,
+  seoDescription: seoData.description,
+};
+
+const structuredData = replaceTemplateVars(
+  toolsSeoData.structuredData,
+  templateVars
+);
 
 // ========== STRUCTURED DATA ==========
 const breadcrumbSchema = generateBreadcrumbSchema({
@@ -52,18 +91,29 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 
+const collectionPageSchema = {
+  ...structuredData.collectionPage,
+  url: String(Astro.site || 'https://gorakudo.org') + Astro.url.pathname,
+};
+
+const websiteSchema = {
+  ...structuredData.website,
+  url: String(Astro.site || 'https://gorakudo.org') + Astro.url.pathname,
+};
+
 // FAQ Schema is now handled by UnifiedSEO via toolsSeoData.structuredData.faq
 ---
 
 <BaseLayout
   title={seoData.title}
   description={seoData.description}
-  keywords={seoData.keywords}
   pageType={seoData.pageType as 'article' | 'website'}
   lang='id'
+  ogImage={heroImageUrl}
   breadcrumbSchema={breadcrumbSchema}
-  faqSchema={toolsSeoData.structuredData.faq}
-  collectionPageSchema={toolsSeoData.structuredData.collectionPage}
+  faqSchema={structuredData.faq}
+  collectionPageSchema={collectionPageSchema}
+  websiteSchema={websiteSchema}
 >
   <!-- Main Content -->
   <main
@@ -140,7 +190,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
           <div class='tools-header-right'>
             <div class='tools-hero-image-container'>
               <CldImage
-                src='gorakudo-tools-tutorials_exzci4'
+                src={heroImageId}
                 alt='Japanese Learning Tools and Applications - GoRakuDo'
                 class='tools-hero-image'
                 width={350}

@@ -30,7 +30,6 @@ const seoData = {
   ...docsSeoData.seoData,
   title: docsSeoData.seoData.title,
   description: docsSeoData.seoData.description,
-  keywords: docsSeoData.seoData.keywords,
   author: docsSeoData.seoData.author,
   imageSrc: headerImageUrl,
   ogImage: headerImageUrl,
@@ -62,6 +61,7 @@ const faqSchema = {
 
 const collectionPageSchema = {
   ...docsSeoData.structuredData.collectionPage,
+  url: String(Astro.site || 'https://gorakudo.org') + Astro.url.pathname,
   mainEntity: {
     ...docsSeoData.structuredData.collectionPage.mainEntity,
     numberOfItems: totalPosts,
@@ -82,7 +82,6 @@ const collectionPageSchema = {
 <ArticleLayout
   title={seoData.title}
   description={seoData.description}
-  tags={seoData.keywords}
   lang={seoData.lang}
   author={seoData.author}
   publishedDate={new Date().toISOString()}

@@ -6,18 +6,6 @@ const seoData = {
   title: '404 Error - Halaman Tidak Ditemukan | GoRakuDo',
   description:
     'Maaf, halaman yang Anda cari tidak ditemukan. Kembali ke GoRakuDo untuk sumber daya pembelajaran bahasa Jepang efektif dan dukungan komunitas',
-  keywords: [
-    '404',
-    'error',
-    'halaman',
-    'tidak',
-    'ditemukan',
-    'bahasa',
-    'jepang',
-    'belajar',
-    'pembelajaran',
-    'learning',
-  ],
   pageType: 'website' as const,
 };
 
@@ -56,7 +44,6 @@ if (redirectTarget) {
     <UnifiedSEO
       title={seoData.title}
       description={seoData.description}
-      keywords={seoData.keywords}
       pageType={seoData.pageType}
       lang='id'
       noindex={true}

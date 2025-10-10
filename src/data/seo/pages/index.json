@@ -1,24 +1,7 @@
 {
   "seoData": {
-    "title": "GoRakuDo - Platform Belajar Bahasa Jepang Terbaik di Indonesia | Metode Immersion",
-    "description": "Platform belajar bahasa Jepang terdepan di Indonesia dengan metode immersion yang terbukti efektif. Bergabunglah dengan 10,000+ pembelajar yang telah menguasai bahasa Jepang secara alami. Gratis, komprehensif, dan didukung komunitas aktif.",
-    "keywords": [
-      "belajar bahasa jepang",
-      "kursus bahasa jepang online",
-      "metode immersion bahasa jepang",
-      "otodidak bahasa jepang",
-      "komunitas bahasa jepang indonesia",
-      "platform belajar jepang gratis",
-      "panduan bahasa jepang pemula",
-      "nihongo indonesia",
-      "japanese learning indonesia",
-      "immersion learning method",
-      "bahasa jepang untuk pemula",
-      "kursus jepang online gratis",
-      "komunitas belajar jepang",
-      "tutorial bahasa jepang",
-      "materi belajar jepang"
-    ],
+    "title": "GoRakuDo - Komunitas & Platform Belajar Bahasa Jepang Terbesar di Indonesia",
+    "description": "Kumunitas belajar bahasa Jepang terdepan di Indonesia, yang berdasarkan dengan metode Lingusikik Modern (Immerison) yang terbukti efektif. Bergabunglah dengan kami 10,000+ anggota yang telah menguasai bahasa Jepang secara alami. Gratis, komprehensif, dan didukung komunitas aktif.",
     "pageType": "website",
     "author": "GoRakuDo Team",
     "lang": "id"
@@ -56,8 +39,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "GoRakuDo",
-      "description": "Platform belajar bahasa Jepang terdepan di Indonesia dengan metode immersion",
-      "url": "https://gorakudo.org",
+      "description": "{{seoDescription}}",
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://gorakudo.org/search?q={search_term_string}",
@@ -73,18 +55,12 @@
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "GoRakuDo",
-      "description": "Platform belajar bahasa Jepang dengan metode immersion yang terbukti efektif",
-      "url": "https://gorakudo.org",
-      "logo": "https://gorakudo.org/img/FullDC Logo.webp",
-      "sameAs": [
-        "https://discord.gg/gorakudo",
-        "https://twitter.com/gorakudo_id",
-        "https://instagram.com/gorakudo_id"
-      ],
+      "description": "{{seoDescription}}",
+      "logo": "https://gorakudo.org/img/gorakudo-immerison.png",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
-        "availableLanguage": ["Indonesian", "English"]
+        "availableLanguage": ["Indonesian", "Japanese"]
       }
     },
     "faq": {

@@ -1,6 +1,7 @@
 ---
 // ========== IMPORTS ==========
 import seoConfig from '../data/seo/unifiedSeo-config.json';
+import toolsData from '../data/tools.json';
 
 // ========== TYPE DEFINITIONS ==========
 interface ContactAddress {
@@ -110,6 +111,7 @@ export interface Props {
   title?: string;
   description?: string;
   keywords?: string[];
+  articleKeywords?: string;
   canonical?: string;
   lang?: string;
   pageType?: 'website' | 'article';
@@ -141,6 +143,7 @@ export interface Props {
   collectionPageSchema?: CollectionPageSchema | null;
   softwareApplicationSchema?: SoftwareApplicationSchema | null;
   websiteSchema?: WebsiteSchema | null;
+  preconnect?: string[];
   dnsPrefetch?: string[];
   prefetch?: string[];
   preload?: PreloadResource[];
@@ -153,10 +156,11 @@ const {
   title = seoConfig.site.name,
   description = seoConfig.site.description,
   keywords = [],
+  articleKeywords,
   canonical,
   lang = seoConfig.site.language,
   pageType = seoConfig.seo.defaultPageType,
-  image = seoConfig.site.defaultImage,
+  image,
   author,
   publishedDate,
   modifiedDate,
@@ -184,7 +188,8 @@ const {
   collectionPageSchema,
   softwareApplicationSchema,
   websiteSchema,
-  dnsPrefetch = [],
+  preconnect = seoConfig.seo.resourceHints?.preconnect || [],
+  dnsPrefetch = seoConfig.seo.resourceHints?.dnsPrefetch || [],
   prefetch = [],
   preload = [],
   sitemapUrl = seoConfig.sitemap.url,
@@ -220,9 +225,28 @@ const removeTrailingSlashIfNeeded = (url: string): string => {
   return hasTrailingSlash && !isRootUrl ? url.slice(0, -1) : url;
 };
 
-const createFullImageUrl = (imagePath: string): string => {
-  // 空文字列やnull/undefinedの場合はデフォルト画像を使用
+// ツールページのOG Image自動判定
+const getToolImageFromPath = (): string | null => {
+  const path = getCurrentPath();
+  const toolMatch = path.match(/^\/tools\/([^\/]+)/);
+  if (toolMatch) {
+    const toolId = toolMatch[1].replace(/^page-\d+$/, ''); // page-[page]を除外
+    const tool = toolsData.find((t: any) => t.id === toolId);
+    return tool?.iconUrl || null;
+  }
+  return null;
+};
+
+const createFullImageUrl = (imagePath?: string): string => {
+  // 空文字列やnull/undefinedの場合は自動判定
   if (!imagePath || imagePath.trim() === '') {
+    // ツールページの場合は自動でiconUrlを使用
+    const toolImage = getToolImageFromPath();
+    if (toolImage) {
+      const siteUrl = getSiteUrl();
+      return joinUrl(siteUrl, toolImage);
+    }
+    
     const siteUrl = getSiteUrl();
     const defaultImage = seoConfig.site.defaultImage;
     return joinUrl(siteUrl, defaultImage);
@@ -281,6 +305,7 @@ const createCrossoriginAttribute = (crossorigin?: boolean): string | undefined =
   return crossorigin ? 'anonymous' : undefined;
 };
 
+const generatePreconnect = (urls: string[]): string[] => urls.map(convertToFullUrl);
 const generateDnsPrefetch = (urls: string[]): string[] => urls.map(extractOriginFromUrl);
 const generatePrefetch = (urls: string[]): string[] => urls.map(convertToFullUrl);
 const generatePreload = (resources: PreloadResource[]) => {
@@ -293,6 +318,7 @@ const generatePreload = (resources: PreloadResource[]) => {
 };
 
 // ========== RESOURCE HINTS GENERATION ==========
+const preconnectUrls = generatePreconnect(preconnect);
 const dnsPrefetchUrls = generateDnsPrefetch(dnsPrefetch);
 const prefetchUrls = generatePrefetch(prefetch);
 const preloadResources = generatePreload(preload);
@@ -363,7 +389,7 @@ const articleSchema = pageType === 'article' ? {
   publisher: baseOrganization,
   image: createImageObject(fullImageUrl),
   mainEntityOfPage: createMainEntityOfPage(),
-  keywords: keywords.join(', '),
+  keywords: articleKeywords || keywords.join(', '),
   inLanguage: lang,
   articleSection: 'Japanese Learning',
   wordCount: estimateWordCount(description)
@@ -539,6 +565,10 @@ addOptionalSchemas(structuredDataSchemas);
 <link rel="manifest" href="/favicon/site.webmanifest" />
 
 <!-- ========== RESOURCE HINTS ========== -->
+{preconnectUrls.map(url => (
+  <link rel="preconnect" href={url} crossorigin />
+))}
+
 {dnsPrefetchUrls.map(url => (
   <link rel="dns-prefetch" href={url} />
 ))}
@@ -583,94 +613,9 @@ addOptionalSchemas(structuredDataSchemas);
   <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
 ))}
 
-<!-- ========== IMAGE FALLBACK SCRIPT ========== -->
+<!-- ========== IMAGE FALLBACK - ASTRO NATIVE MINIMAL ========== -->
 <script is:inline>
-  // ========== IMAGE FALLBACK FUNCTIONALITY ==========
-  (function() {
-    'use strict';
-    
-    // デフォルト画像の設定
-    const DEFAULT_IMAGE = '/img/FullDC Logo.webp';
-    const SITE_URL = window.location.origin;
-    const FULL_DEFAULT_IMAGE = SITE_URL + DEFAULT_IMAGE;
-    
-    // 画像読み込み失敗時のFallback処理
-    function handleImageError(img) {
-      if (img.src !== FULL_DEFAULT_IMAGE) {
-        console.warn('Image failed to load, using fallback:', img.src);
-        img.src = FULL_DEFAULT_IMAGE;
-        img.alt = img.alt || 'GoRakuDo Logo';
-      }
-    }
-    
-    // 画像要素の監視とFallback設定
-    function setupImageFallbacks() {
-      // 既存の画像要素にerrorイベントリスナーを追加
-      const images = document.querySelectorAll('img');
-      images.forEach(img => {
-        if (!img.hasAttribute('data-fallback-setup')) {
-          img.addEventListener('error', () => handleImageError(img));
-          img.setAttribute('data-fallback-setup', 'true');
-        }
-      });
-      
-      // 新しく追加される画像要素を監視
-      const observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-          mutation.addedNodes.forEach(node => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              if (node.tagName === 'IMG') {
-                node.addEventListener('error', () => handleImageError(node));
-                node.setAttribute('data-fallback-setup', 'true');
-              } else if (node.querySelectorAll) {
-                const newImages = node.querySelectorAll('img');
-                newImages.forEach(img => {
-                  if (!img.hasAttribute('data-fallback-setup')) {
-                    img.addEventListener('error', () => handleImageError(img));
-                    img.setAttribute('data-fallback-setup', 'true');
-                  }
-                });
-              }
-            }
-          });
-        });
-      });
-      
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    }
-    
-    // OG:IMAGEの動的更新
-    function updateOGImage(imageUrl) {
-      if (!imageUrl || imageUrl.trim() === '') {
-        imageUrl = FULL_DEFAULT_IMAGE;
-      }
-      
-      // meta要素の更新
-      const ogImageMeta = document.querySelector('meta[property="og:image"]');
-      const twitterImageMeta = document.querySelector('meta[name="twitter:image"]');
-      
-      if (ogImageMeta) {
-        ogImageMeta.setAttribute('content', imageUrl);
-      }
-      if (twitterImageMeta) {
-        twitterImageMeta.setAttribute('content', imageUrl);
-      }
-    }
-    
-    // DOM読み込み完了後に実行
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', setupImageFallbacks);
-    } else {
-      setupImageFallbacks();
-    }
-    
-    // グローバル関数として公開
-    window.updateOGImage = updateOGImage;
-    window.handleImageError = handleImageError;
-  })();
+  window.handleImgError=function(e){e.onerror=null;e.src=e.src===location.origin+'/img/gorakudo-immerison.png'?'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3C/svg%3E':'/img/gorakudo-immerison.png';e.alt=e.alt||'GoRakuDo Logo'}
 </script>
 
 <!-- ========== GOOGLE ANALYTICS ========== -->

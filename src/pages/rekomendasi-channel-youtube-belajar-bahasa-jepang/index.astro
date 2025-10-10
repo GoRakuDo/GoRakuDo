@@ -15,7 +15,29 @@ import '../../styles/pages/youtube-rekomendasi/youtube-rekomendasi-index.css';
 // ========== DATA PROCESSING ==========
 const { sections } = channelsDataRaw;
 const seoData = youtubeSeoData.seoData;
-const structuredData = youtubeSeoData.structuredData;
+
+// テンプレート変数置き換え関数
+const replaceTemplateVars = (template: any, vars: Record<string, string>): any => {
+  if (typeof template === 'string') {
+    return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] || template);
+  }
+  if (Array.isArray(template)) return template.map(item => replaceTemplateVars(item, vars));
+  if (template && typeof template === 'object') {
+    const result: any = {};
+    for (const [key, value] of Object.entries(template)) {
+      result[key] = replaceTemplateVars(value, vars);
+    }
+    return result;
+  }
+  return template;
+};
+
+const templateVars = {
+  seoTitle: seoData.title,
+  seoDescription: seoData.description,
+};
+
+const structuredData = replaceTemplateVars(youtubeSeoData.structuredData, templateVars);
 const breadcrumbData = youtubeSeoData.breadcrumbData;
 
 // ========== HEADER IMAGE CONFIG ==========
@@ -47,15 +69,20 @@ const faqSchema = {
   })),
 } as const;
 
-const collectionPageSchema = structuredData.collectionPage;
+const collectionPageSchema = {
+  ...structuredData.collectionPage,
+  url: String(Astro.site || 'https://gorakudo.org') + Astro.url.pathname,
+};
 ---
 
 <BaseLayout
   title={seoData.title}
   description={seoData.description}
-  keywords={seoData.keywords}
   lang={seoData.lang}
   pageType={seoData.pageType as 'article' | 'website'}
+  author={seoData.author}
+  publishedDate={seoData.publishedDate}
+  articleKeywords={seoData.articleKeywords}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
   collectionPageSchema={collectionPageSchema}
@@ -65,7 +92,7 @@ const collectionPageSchema = structuredData.collectionPage;
     <!-- ページヘッダー -->
     <PageHeader
       title="Rekomendasi Channel YouTube Belajar Bahasa Jepang Terbaik"
-      description="Temukan channel YouTube terbaik untuk belajar bahasa Jepang dengan konten berkualitas tinggi dan metode pembelajaran yang efektif."
+      description="Kumpulan channel YouTube terbaik untuk belajar bahasa Jepang yang disesuaikan berdasarkan kemampuan pembelajar. Berdasrakan Metodologi Lingustik Modern 'Comprehensible Input'."
       imageSrc={headerImageId}
       imageAlt="Japanese Learning Illustration - Person relaxing on beach with Mount Fuji background"
       imageWidth={350}

@@ -2,23 +2,6 @@
   "seoData": {
     "title": "Tools Belajar Bahasa Jepang Terbaik | Anki, Yomitan, Asb Player - GoRakuDo",
     "description": "Koleksi lengkap tools dan aplikasi terbaik untuk belajar bahasa Jepang dengan metode immersion. Dari Anki untuk spaced repetition hingga Yomitan untuk reading, temukan tools yang akan mempercepat pembelajaran Anda.",
-    "keywords": [
-      "tools belajar bahasa jepang",
-      "aplikasi belajar jepang",
-      "anki bahasa jepang",
-      "yomitan japanese",
-      "asb player japanese",
-      "spaced repetition japanese",
-      "japanese learning tools",
-      "immersion tools japanese",
-      "japanese reading tools",
-      "kanji learning apps",
-      "japanese dictionary apps",
-      "japanese listening tools",
-      "japanese study apps",
-      "japanese learning software",
-      "japanese immersion tools"
-    ],
     "pageType": "website",
     "author": "GoRakuDo Team",
     "lang": "id"
@@ -27,9 +10,8 @@
     "website": {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Tools Belajar Bahasa Jepang - GoRakuDo",
-      "description": "Koleksi lengkap tools dan aplikasi terbaik untuk belajar bahasa Jepang dengan metode immersion",
-      "url": "https://gorakudo.org/tools",
+      "name": "{{seoTitle}}",
+      "description": "{{seoDescription}}",
       "publisher": {
         "@type": "Organization",
         "name": "GoRakuDo"
@@ -38,14 +20,13 @@
     "collectionPage": {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Tools Belajar Bahasa Jepang",
-      "description": "Koleksi tools dan aplikasi terbaik untuk pembelajaran bahasa Jepang",
-      "url": "https://gorakudo.org/tools",
+      "name": "{{seoTitle}}",
+      "description": "{{seoDescription}}",
       "mainEntity": {
         "@type": "ItemList",
         "name": "Tools Belajar Bahasa Jepang",
         "description": "Daftar tools dan aplikasi terbaik untuk belajar bahasa Jepang",
-        "numberOfItems": 8
+        "numberOfItems": 3
       }
     },
     "faq": {

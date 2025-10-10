@@ -1,55 +1,18 @@
 {
   "seoData": {
-    "title": "Panduan Lengkap Otodidak Bahasa Jepang | Metode Immersion 2025 - GoRakuDo",
-    "description": "Panduan komprehensif menguasai bahasa Jepang secara otodidak dengan metode immersion yang terbukti efektif. Dari pemula hingga mahir, 5 fase pembelajaran yang sistematis dan berbasis linguistik modern.",
-    "keywords": [
-      "panduan belajar bahasa jepang",
-      "otodidak bahasa jepang",
-      "metode immersion bahasa jepang",
-      "belajar bahasa jepang pemula",
-      "comprehensible input bahasa jepang",
-      "JLPT N5 N4 N3 N2 N1",
-      "sentence mining bahasa jepang",
-      "anki bahasa jepang",
-      "spaced repetition system",
-      "second language acquisition",
-      "linguistik modern bahasa jepang",
-      "native speaker bahasa jepang",
-      "kosa kata bahasa jepang",
-      "kanji bahasa jepang",
-      "hiragana katakana"
-    ],
+    "title": "Panduan Lengkap Belajar Bahasa Jepang Otodidak dengan Metode Immersion | GoRakuDo",
+    "description": "Panduan komprehensif bahasa Jepang secara otodidak dari JLPT N5 sampai N1 dengan metode immersion yang terbukti efektif. Dengan Metodologi yang sistematis dan berdasarkan linguistik modern.",
     "pageType": "article",
     "author": "Tim GoRakuDo",
-    "lang": "id"
+    "publishedDate": "2025-10-07T21:54:11.000Z",
+    "lang": "id",
+    "articleKeywords": "otodidak bahasa jepang, metode immersion, comprehensible input, linguistik modern, JLPT, JLPT N5, JLPT N4, JLPT N3, JLPT N2, JLPT N1, JFT"
   },
   "structuredData": {
-    "article": {
-      "@type": "Article",
-      "headline": "Panduan Lengkap Otodidak Bahasa Jepang dengan Metode Immersion",
-      "description": "Panduan komprehensif menguasai bahasa Jepang secara otodidak dengan metode immersion yang terbukti efektif berdasarkan linguistik modern.",
-      "author": {
-        "@type": "Organization",
-        "name": "GoRakuDo Team"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GoRakuDo"
-      },
-      "datePublished": "2025-09-28T00:00:00.000Z",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "/panduan-lengkap-otodidak-bahasa-jepang"
-      },
-      "articleSection": "Japanese Learning Guide",
-      "wordCount": 8500,
-      "inLanguage": "id",
-      "keywords": "panduan belajar bahasa jepang, otodidak, metode immersion, comprehensible input, JLPT"
-    },
     "howTo": {
       "@type": "HowTo",
-      "name": "Cara Belajar Bahasa Jepang Secara Otodidak dengan Metode Immersion",
-      "description": "Langkah-langkah sistematis untuk menguasai bahasa Jepang secara otodidak menggunakan metode immersion berbasis linguistik modern",
+      "name": "{{seoTitle}}",
+      "description": "{{seoDescription}}",
       "totalTime": "P2Y",
       "estimatedCost": {
         "@type": "MonetaryAmount",
@@ -82,10 +45,6 @@
         {
           "@type": "HowToTool",
           "name": "Yomitan"
-        },
-        {
-          "@type": "HowToTool",
-          "name": "Asb Player"
         }
       ],
       "step": [
@@ -93,31 +52,31 @@
           "@type": "HowToStep",
           "name": "Phase 1: Membentuk Pondasi Intuisi",
           "text": "Pelajari 2000 kosa kata pertama menggunakan Anki dan biasakan active listening dari YouTube Comprehensible Japanese",
-          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-1"
+          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase1"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 2: Bentuk Kerangka Intuisi Active Immersion",
           "text": "Pahami 7500 kosa kata pertama dan mulai membaca Light Novel dengan difficulty di bawah 50%",
-          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-2"
+          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase2"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 3: Konsolidasi Intuisi dengan Double Reading & Listening",
           "text": "Pahami 12500 kosa kata dan gunakan kamus monolingual untuk memahami dari perspektif penutur asli",
-          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-3"
+          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase3"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 4: Menata Intuisi dengan Output",
           "text": "Perdalam 20000 kosa kata dan mulai praktik berbicara dengan native speaker Jepang",
-          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-4"
+          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase4"
         },
         {
           "@type": "HowToStep",
           "name": "Phase 5: Optimalisasi dan Memperluas Intuisi",
           "text": "Optimalisasi 30000 kosa kata dan capai near native level dengan perfect pitch accent",
-          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase-5"
+          "url": "https://gorakudo.org/panduan-lengkap-otodidak-bahasa-jepang#phase5"
         }
       ]
     },

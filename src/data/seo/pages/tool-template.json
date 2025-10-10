@@ -1,27 +1,7 @@
 {
   "seoData": {
-    "title": "{{toolName}} - Panduan Lengkap & Tutorial 2025 | GoRakuDo",
-    "description": "Panduan lengkap {{toolName}} untuk belajar bahasa Jepang. Tutorial, tips, dan best practices {{toolName}} yang terbukti efektif untuk metode immersion learning.",
-    "keywords": [
-      "tutorial {{tool}}",
-      "panduan {{tool}}",
-      "{{tool}} bahasa jepang",
-      "belajar {{tool}}",
-      "guide {{tool}}",
-      "tips {{tool}}",
-      "{{tool}} best practices",
-      "immersion learning {{tool}}",
-      "{{tool}} japanese learning",
-      "{{tool}} nihongo",
-      "{{tool}} tools",
-      "software {{tool}}",
-      "aplikasi {{tool}}",
-      "cara menggunakan {{tool}}",
-      "setup {{tool}}",
-      "cara setting {{tool}}",
-      "optimization {{tool}}",
-      "pemula {{tool}}"
-    ],
+    "title": "Tutorial {{toolName}} 2025 | GoRakuDo",
+    "description": "Panduan dan Tutorial lengkap {{toolName}} untuk belajar bahasa Jepang. Tutorial, tips {{toolName}} yang terbukti efektif membantu kalian dalam belajar bahasa Jepang dengan metode immersion.",
     "author": "GoRakuDo Team",
     "lang": "id"
   },
@@ -32,7 +12,6 @@
       "name": "{{formattedToolName}}",
       "description": "{{toolDescription}}",
       "applicationCategory": "EducationalApplication",
-      "url": "/tools/{{tool}}",
       "author": {
         "@type": "Organization",
         "name": "GoRakuDo Team"
@@ -55,12 +34,11 @@
     "collectionPage": {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "{{formattedToolName}} - Panduan & Tutorial",
-      "description": "Koleksi lengkap panduan dan tutorial {{formattedToolName}} untuk pembelajaran bahasa Jepang",
-      "url": "/tools/{{tool}}",
+      "name": "{{seoTitle}}",
+      "description": "{{seoDescription}}",
       "mainEntity": {
         "@type": "ItemList",
-        "name": "Panduan {{formattedToolName}}",
+        "name": "Tutorial {{formattedToolName}}",
         "description": "Daftar panduan dan tutorial {{formattedToolName}} yang terorganisir",
         "numberOfItems": "{{articleCount}}",
         "itemListElement": []
@@ -83,7 +61,7 @@
           "name": "Bagaimana cara menggunakan {{formattedToolName}}?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Anda dapat mempelajari cara menggunakan {{formattedToolName}} melalui panduan lengkap yang tersedia di halaman ini. Mulai dari setup dasar hingga teknik advanced."
+            "text": "Kalian dapat mempelajari cara menggunakan {{formattedToolName}} melalui panduan lengkap yang kami tulis sebagai Artikel Tutorial di halaman ini. Mulai dari setup dasar hingga teknik advanced."
           }
         },
         {
@@ -91,7 +69,7 @@
           "name": "Apakah {{formattedToolName}} gratis?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ya, {{formattedToolName}} adalah tool gratis dan open source yang dapat digunakan untuk pembelajaran bahasa Jepang."
+            "text": "Ya, {{formattedToolName}} adalah tool gratis dan open source yang kaliandapat gunakan untuk pembelajaran bahasa Jepang."
           }
         },
         {
@@ -99,7 +77,7 @@
           "name": "Apakah {{formattedToolName}} cocok untuk pemula?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ya, {{formattedToolName}} cocok untuk semua level, mulai dari pemula hingga advanced. Panduan yang tersedia akan membantu Anda memulai dengan mudah."
+            "text": "Ya, {{formattedToolName}} cocok untuk semua level, mulai dari pemula hingga advanced. Panduan yang telah kami tulis sebagai Artikel Tutorial akan membantu kalian memulai dengan mudah."
           }
         }
       ]

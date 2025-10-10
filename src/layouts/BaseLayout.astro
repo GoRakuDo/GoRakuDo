@@ -14,7 +14,9 @@ export interface Props {
   description?: string;
   ogImage?: string;
   pageType?: 'website' | 'article';
+  author?: string;
   publishedDate?: string;
+  articleKeywords?: string;
   lang?: string;
   keywords?: string[];
   currentPage?: number;
@@ -33,7 +35,9 @@ const {
   description,
   ogImage,
   pageType,
+  author,
   publishedDate,
+  articleKeywords,
   lang,
   keywords,
   currentPage,
@@ -58,8 +62,10 @@ const processedOgImage = ogImage && ogImage.trim() !== '' ? ogImage : undefined;
       title={title}
       description={description}
       keywords={keywords}
+      articleKeywords={articleKeywords}
       pageType={pageType}
       image={processedOgImage}
+      author={author}
       publishedDate={publishedDate}
       lang={lang}
       currentPage={currentPage}

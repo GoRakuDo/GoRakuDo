@@ -59,11 +59,6 @@ const seoData = {
   ...docsSeoData.seoData,
   title: `${docsSeoData.seoData.title} - Page ${currentPage}`,
   description: `${docsSeoData.seoData.description} Halaman ${currentPage} dari dokumentasi lengkap.`,
-  keywords: [
-    ...docsSeoData.seoData.keywords,
-    `halaman ${currentPage}`,
-    `page ${currentPage}`,
-  ],
   author: docsSeoData.seoData.author,
   imageSrc: headerImageUrl,
   ogImage: headerImageUrl,
@@ -100,7 +95,7 @@ const faqSchema = {
 const collectionPageSchema = {
   ...docsSeoData.structuredData.collectionPage,
   name: `${docsSeoData.structuredData.collectionPage.name} - Page ${currentPage}`,
-  url: `/docs/page-${currentPage}`,
+  url: String(Astro.site || 'https://gorakudo.org') + Astro.url.pathname,
   mainEntity: {
     ...docsSeoData.structuredData.collectionPage.mainEntity,
     numberOfItems: transformedPosts.length,
@@ -121,7 +116,6 @@ const collectionPageSchema = {
 <ArticleLayout
   title={seoData.title}
   description={seoData.description}
-  tags={seoData.keywords}
   lang={seoData.lang}
   author={seoData.author}
   publishedDate={new Date().toISOString()}

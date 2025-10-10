@@ -1,134 +1,15 @@
 {
   "seoOptimization": {
-    "titleTemplates": {
-      "tutorial": "{{articleTitle}} - Panduan Lengkap | GoRakuDo Pembelajaran Bahasa Jepang",
-      "guide": "{{articleTitle}} - Panduan Praktis | GoRakuDo Pembelajaran Bahasa Jepang",
-      "setup": "{{articleTitle}} - Panduan Setup | GoRakuDo Pembelajaran Bahasa Jepang",
-      "general": "{{articleTitle}} - Panduan Pembelajaran Bahasa Jepang | GoRakuDo"
-    },
-    "descriptionTemplates": {
-      "tutorial": "Pelajari {{tagKeywords}} langkah demi langkah. {{articleDescription}} yang direkomendasikan untuk {{difficultyText}} pembelajaran bahasa Jepang. Kuasai bahasa Jepang secara efisien dengan GoRakuDo.",
-      "guide": "Pelajari {{tagKeywords}} dengan metode praktis. {{articleDescription}} yang direkomendasikan untuk {{difficultyText}} pembelajaran bahasa Jepang. Kuasai bahasa Jepang secara efisien dengan GoRakuDo.",
-      "setup": "Setup dan mulai dengan mudah {{tagKeywords}}. {{articleDescription}} yang direkomendasikan untuk {{difficultyText}} pembelajaran bahasa Jepang. Kuasai bahasa Jepang secara efisien dengan GoRakuDo.",
-      "general": "Pelajari {{tagKeywords}} secara efektif. {{articleDescription}} yang direkomendasikan untuk {{difficultyText}} pembelajaran bahasa Jepang. Kuasai bahasa Jepang secara efisien dengan GoRakuDo."
-    },
+    "titleTemplate": "{{articleTitle}} | GoRakuDo",
+    "descriptionTemplate": "{{articleDescription}}",
     "baseKeywords": [
       "Pembelajaran Bahasa Jepang",
       "GoRakuDo",
       "Bahasa Jepang",
       "Panduan Pembelajaran"
-    ],
-    "typeKeywords": {
-      "tutorial": [
-        "Tutorial",
-        "Langkah Demi Langkah",
-        "untuk Pemula",
-        "Panduan Lengkap"
-      ],
-      "guide": ["Panduan", "Praktis", "Metode", "Teknik"],
-      "setup": ["Setup", "Instalasi", "Konfigurasi", "Konfigurasi Awal"],
-      "general": ["Pembelajaran", "Belajar", "Peningkatan", "Tips"]
-    },
-    "difficultyKeywords": {
-      "beginner": ["Pemula", "Dasar", "Awal", "Mudah"],
-      "intermediate": ["Menengah", "Praktis", "Lanjutan"],
-      "advanced": ["Mahir", "Expert", "Profesional", "Tingkat Tinggi"]
-    },
-    "categoryKeywords": {
-      "grammar": ["文法", "語法", "文型"],
-      "vocabulary": ["語彙", "単語", "ボキャブラリー"],
-      "kanji": ["漢字", "文字", "読み方"],
-      "listening": ["リスニング", "聞き取り", "音声"],
-      "speaking": ["スピーキング", "会話", "発音"],
-      "reading": ["リーディング", "読解", "読書"],
-      "writing": ["ライティング", "作文", "文字"]
-    },
-    "difficultyTexts": {
-      "beginner": "untuk Pemula",
-      "intermediate": "untuk Menengah",
-      "advanced": "untuk Tingkat Lanjut"
-    }
+    ]
   },
   "structuredData": {
-    "faq": {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "{{faqQuestion1}}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "{{faqAnswer1}}"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "{{faqQuestion2}}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "{{faqAnswer2}}"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "{{faqQuestion3}}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "{{faqAnswer3}}"
-          }
-        }
-      ]
-    },
-    "howTo": {
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      "name": "{{howToTitle}}",
-      "description": "{{howToDescription}}",
-      "image": "{{howToImage}}",
-      "totalTime": "{{howToTotalTime}}",
-      "estimatedCost": {
-        "@type": "MonetaryAmount",
-        "currency": "IDR",
-        "value": "0"
-      },
-      "supply": [
-        {
-          "@type": "HowToSupply",
-          "name": "{{howToSupply1}}"
-        },
-        {
-          "@type": "HowToSupply",
-          "name": "{{howToSupply2}}"
-        }
-      ],
-      "tool": [
-        {
-          "@type": "HowToTool",
-          "name": "{{howToTool1}}"
-        }
-      ],
-      "step": [
-        {
-          "@type": "HowToStep",
-          "name": "{{howToStep1Name}}",
-          "text": "{{howToStep1Text}}",
-          "url": "{{howToStep1Url}}"
-        },
-        {
-          "@type": "HowToStep",
-          "name": "{{howToStep2Name}}",
-          "text": "{{howToStep2Text}}",
-          "url": "{{howToStep2Url}}"
-        },
-        {
-          "@type": "HowToStep",
-          "name": "{{howToStep3Name}}",
-          "text": "{{howToStep3Text}}",
-          "url": "{{howToStep3Url}}"
-        }
-      ]
-    },
     "breadcrumb": {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -152,70 +33,6 @@
           "item": "{{articleUrl}}"
         }
       ]
-    }
-  },
-  "faqTemplates": {
-    "general": {
-      "faqQuestion1": "Apa itu {{articleTitle}}?",
-      "faqAnswer1": "{{articleTitle}} adalah {{articleDescription}}",
-      "faqQuestion2": "Bagaimana cara menggunakan {{articleTitle}}?",
-      "faqAnswer2": "Anda dapat mempelajari cara menggunakan {{articleTitle}} melalui panduan lengkap yang tersedia di artikel ini.",
-      "faqQuestion3": "Apakah {{articleTitle}} cocok untuk pemula?",
-      "faqAnswer3": "Ya, artikel ini dirancang untuk membantu semua level, mulai dari pemula hingga advanced."
-    },
-    "tutorial": {
-      "faqQuestion1": "Langkah-langkah apa saja yang diperlukan untuk {{articleTitle}}?",
-      "faqAnswer1": "Artikel ini menyediakan panduan langkah demi langkah yang mudah diikuti untuk {{articleTitle}}.",
-      "faqQuestion2": "Berapa lama waktu yang dibutuhkan untuk menyelesaikan {{articleTitle}}?",
-      "faqAnswer2": "Waktu yang dibutuhkan bervariasi tergantung pada kompleksitas dan pengalaman Anda, namun artikel ini memberikan estimasi waktu yang realistis.",
-      "faqQuestion3": "Alat apa saja yang diperlukan untuk {{articleTitle}}?",
-      "faqAnswer3": "Artikel ini mencantumkan semua alat dan persyaratan yang diperlukan untuk menyelesaikan {{articleTitle}}."
-    },
-    "guide": {
-      "faqQuestion1": "Apa yang akan saya pelajari dari {{articleTitle}}?",
-      "faqAnswer1": "Dari artikel ini, Anda akan mempelajari konsep-konsep penting dan praktik terbaik terkait {{articleTitle}}.",
-      "faqQuestion2": "Apakah ada prasyarat untuk memahami {{articleTitle}}?",
-      "faqAnswer2": "Artikel ini dirancang agar dapat dipahami oleh berbagai level, dengan penjelasan yang jelas dan contoh yang mudah dipahami.",
-      "faqQuestion3": "Bagaimana cara menerapkan pengetahuan dari {{articleTitle}}?",
-      "faqAnswer3": "Artikel ini menyediakan contoh praktis dan tips implementasi yang dapat Anda terapkan langsung."
-    }
-  },
-  "howToTemplates": {
-    "tutorial": {
-      "howToTitle": "Cara {{articleTitle}}",
-      "howToDescription": "Panduan lengkap untuk {{articleTitle}} dengan langkah-langkah yang mudah diikuti",
-      "howToImage": "{{articleImage}}",
-      "howToTotalTime": "PT30M",
-      "howToSupply1": "Komputer atau perangkat yang sesuai",
-      "howToSupply2": "Koneksi internet",
-      "howToTool1": "Browser web",
-      "howToStep1Name": "Persiapan",
-      "howToStep1Text": "Persiapkan semua alat dan persyaratan yang diperlukan",
-      "howToStep1Url": "{{articleUrl}}#persiapan",
-      "howToStep2Name": "Implementasi",
-      "howToStep2Text": "Ikuti langkah-langkah implementasi yang dijelaskan",
-      "howToStep2Url": "{{articleUrl}}#implementasi",
-      "howToStep3Name": "Verifikasi",
-      "howToStep3Text": "Verifikasi hasil dan pastikan semuanya berfungsi dengan baik",
-      "howToStep3Url": "{{articleUrl}}#verifikasi"
-    },
-    "setup": {
-      "howToTitle": "Cara Setup {{articleTitle}}",
-      "howToDescription": "Panduan setup lengkap untuk {{articleTitle}}",
-      "howToImage": "{{articleImage}}",
-      "howToTotalTime": "PT15M",
-      "howToSupply1": "Perangkat yang sesuai",
-      "howToSupply2": "Koneksi internet",
-      "howToTool1": "Terminal atau command prompt",
-      "howToStep1Name": "Download",
-      "howToStep1Text": "Download dan install {{articleTitle}}",
-      "howToStep1Url": "{{articleUrl}}#download",
-      "howToStep2Name": "Konfigurasi",
-      "howToStep2Text": "Konfigurasi {{articleTitle}} sesuai kebutuhan",
-      "howToStep2Url": "{{articleUrl}}#konfigurasi",
-      "howToStep3Name": "Testing",
-      "howToStep3Text": "Test {{articleTitle}} untuk memastikan berfungsi",
-      "howToStep3Url": "{{articleUrl}}#testing"
     }
   }
 }

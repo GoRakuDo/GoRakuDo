@@ -26,7 +26,7 @@ const { slug } = Astro.params;
 // Redirect pagination slugs
 if (slug && String(slug).startsWith('page-')) {
   const pageNumber = String(slug).replace('page-', '');
-    return Astro.redirect(`/docs/page-${pageNumber}`, 301);
+  return Astro.redirect(`/docs/page-${pageNumber}`, 301);
 }
 
 // Error handling
@@ -79,177 +79,30 @@ const replaceTemplateVariables = (template, variables) => {
   return template;
 };
 
-// テンプレートベースのタイトル生成
-const generateTemplateBasedTitle = (post, articleType) => {
-  // フォールバック用のタイトル生成
-  if (!docsArticleTemplate || !docsArticleTemplate.seoOptimization) {
-    const baseTitle = post.data.title || post.slug;
-    switch (articleType) {
-      case 'tutorial':
-        return `${baseTitle} - Panduan Lengkap | GoRakuDo Pembelajaran Bahasa Jepang`;
-      case 'guide':
-        return `${baseTitle} - Panduan Praktis | GoRakuDo Pembelajaran Bahasa Jepang`;
-      case 'setup':
-        return `${baseTitle} - Panduan Setup | GoRakuDo Pembelajaran Bahasa Jepang`;
-      default:
-        return `${baseTitle} - Panduan Pembelajaran Bahasa Jepang | GoRakuDo`;
-    }
-  }
-
-  const titleTemplate =
-    docsArticleTemplate.seoOptimization.titleTemplates[articleType] ||
-    docsArticleTemplate.seoOptimization.titleTemplates.general;
-
-  return replaceTemplateVariables(titleTemplate, {
-    articleTitle: post.data.title || post.slug,
-  });
+// シンプルなタイトル生成: MDXフロントマターのまま
+const generateTemplateBasedTitle = post => {
+  const articleTitle = post.data.title || post.slug;
+  return `${articleTitle} | GoRakuDo`;
 };
 
-// テンプレートベースの説明文生成
-const generateTemplateBasedDescription = (post, articleType) => {
-  // フォールバック用の説明文生成
-  if (!docsArticleTemplate || !docsArticleTemplate.seoOptimization) {
-    const baseDescription = post.data.description || '';
-    const difficulty = post.data.difficulty || 'intermediate';
-    const tags = post.data.tags || [];
+// シンプルな説明文生成: MDXフロントマターのまま
+const generateTemplateBasedDescription = post => post.data.description || '';
 
-    const tagKeywords = tags.slice(0, 3).join(', ');
-    const difficultyText =
-      difficulty === 'beginner'
-        ? 'untuk Pemula'
-        : difficulty === 'advanced'
-          ? 'untuk Tingkat Lanjut'
-          : 'untuk Menengah';
-
-    return `Pelajari ${tagKeywords} secara efektif. ${baseDescription || 'Panduan komprehensif'} yang direkomendasikan untuk ${difficultyText} pembelajaran bahasa Jepang. Kuasai bahasa Jepang secara efisien dengan GoRakuDo.`;
-  }
-
-  const descriptionTemplate =
-    docsArticleTemplate.seoOptimization.descriptionTemplates[articleType] ||
-    docsArticleTemplate.seoOptimization.descriptionTemplates.general;
-
-  const tags = post.data.tags || [];
-  const difficulty = post.data.difficulty || 'intermediate';
-
-  // タグに基づく追加キーワード
-  const tagKeywords = tags.slice(0, 3).join(', ');
-
-  // 難易度テキストを取得
-  const difficultyText =
-    docsArticleTemplate.seoOptimization.difficultyTexts[difficulty] ||
-    docsArticleTemplate.seoOptimization.difficultyTexts.intermediate;
-
-  return replaceTemplateVariables(descriptionTemplate, {
-    tagKeywords: tagKeywords,
-    difficultyText: difficultyText,
-    articleDescription: post.data.description || 'Panduan komprehensif',
-  });
-};
-
-// テンプレートベースのキーワード生成
-const generateTemplateBasedKeywords = (post, articleType) => {
+// シンプルなキーワード生成: baseKeywords + mdxKeywords + baseTags
+const generateTemplateBasedKeywords = post => {
+  const mdxKeywords = post.data.keywords || [];
   const baseTags = post.data.tags || [];
-  const difficulty = post.data.difficulty || 'intermediate';
-  const categories = post.data.categories || [];
-
-  // フォールバック用のキーワード生成
-  if (!docsArticleTemplate || !docsArticleTemplate.seoOptimization) {
-    const baseKeywords = [
-      'Pembelajaran Bahasa Jepang',
-      'GoRakuDo',
-      'Bahasa Jepang',
-      'Panduan Pembelajaran',
-    ];
-    const typeKeywords = {
-      tutorial: [
-        'Tutorial',
-        'Langkah Demi Langkah',
-        'untuk Pemula',
-        'Panduan Lengkap',
-      ],
-      guide: ['Panduan', 'Praktis', 'Metode', 'Teknik'],
-      setup: ['Setup', 'Instalasi', 'Konfigurasi', 'Konfigurasi Awal'],
-      general: ['Pembelajaran', 'Belajar', 'Peningkatan', 'Tips'],
-    };
-    const difficultyKeywords = {
-      beginner: ['Pemula', 'Dasar', 'Awal', 'Mudah'],
-      intermediate: ['Menengah', 'Praktis', 'Lanjutan'],
-      advanced: ['Mahir', 'Expert', 'Profesional', 'Tingkat Tinggi'],
-    };
-
-    return [
-      ...baseKeywords,
-      ...(typeKeywords[articleType] || typeKeywords.general),
-      ...(difficultyKeywords[difficulty] || []),
-      ...baseTags,
-    ]
-      .filter((keyword, index, array) => array.indexOf(keyword) === index)
-      .slice(0, 15);
-  }
-
-  // テンプレートからキーワードを取得
-  const baseKeywords = docsArticleTemplate.seoOptimization.baseKeywords;
-  const typeKeywords =
-    docsArticleTemplate.seoOptimization.typeKeywords[articleType] ||
-    docsArticleTemplate.seoOptimization.typeKeywords.general;
-  const difficultyKeywords =
-    docsArticleTemplate.seoOptimization.difficultyKeywords[difficulty] || [];
-
-  // カテゴリ別キーワード
-  const categoryKeywords = categories
-    .map(cat => {
-      const categoryKey = cat.toLowerCase();
-      return (
-        docsArticleTemplate.seoOptimization.categoryKeywords[categoryKey] || [
-          cat,
-        ]
-      );
-    })
-    .flat();
-
-  // すべてのキーワードを統合
-  return [
-    ...baseKeywords,
-    ...typeKeywords,
-    ...difficultyKeywords,
-    ...categoryKeywords,
-    ...baseTags,
-  ]
-    .filter((keyword, index, array) => array.indexOf(keyword) === index) // 重複削除
-    .slice(0, 15); // 最大15個のキーワード
+  const baseKeywords = docsArticleTemplate?.seoOptimization?.baseKeywords || [];
+  return [...baseKeywords, ...mdxKeywords, ...baseTags]
+    .filter((kw, i, arr) => arr.indexOf(kw) === i)
+    .slice(0, 15);
 };
 
-// 記事の種類を判定（SEO最適化用）
-const getArticleType = (tags, categories) => {
-  if (
-    tags.some(tag => ['tutorial', 'setup', 'guide'].includes(tag.toLowerCase()))
-  ) {
-    return 'tutorial';
-  }
-  if (categories.some(cat => cat.toLowerCase().includes('tutorial'))) {
-    return 'tutorial';
-  }
-  if (tags.some(tag => ['guide', 'howto'].includes(tag.toLowerCase()))) {
-    return 'guide';
-  }
-  return 'general';
-};
-
-// 記事タイプを取得（SEO最適化用）
-const seoArticleType = getArticleType(
-  post.data.tags || [],
-  post.data.categories || []
-);
-
-// テンプレートベースの最適化されたSEOデータ
+// シンプルなSEOデータ生成
 const seoData = {
-  title: generateTemplateBasedTitle(post, seoArticleType),
-  description: generateTemplateBasedDescription(post, seoArticleType),
-  keywords: generateTemplateBasedKeywords(post, seoArticleType),
-  articleType: seoArticleType,
-  learningStage: post.data.difficulty || 'intermediate',
-  searchIntent:
-    seoArticleType === 'tutorial' ? 'instructional' : 'informational',
+  title: generateTemplateBasedTitle(post),
+  description: generateTemplateBasedDescription(post),
+  keywords: generateTemplateBasedKeywords(post),
   publishedDate: post.data.publishedDate,
   modifiedDate: post.data.publishedDate,
   isDraft: post.data.isDraft || false,
@@ -277,7 +130,7 @@ const breadcrumbConfig = {
 articleContent.headings = tocHeadings;
 const articleUrl = `https://gorakudo.org${resolvedPath.path}`;
 const articleImage =
-  post.data.featuredImage || 'https://gorakudo.org/img/FullDC Logo.webp';
+  post.data.featuredImage || 'https://gorakudo.org/img/gorakudo-immerison.png';
 
 // テンプレート変数の準備
 const templateVariables = {
@@ -286,140 +139,6 @@ const templateVariables = {
   articleUrl,
   articleImage,
 };
-
-// テンプレートベースの動的FAQ生成
-const generateTemplateBasedFAQ = (content, articleType) => {
-  // テンプレートからFAQテンプレートを取得
-  const faqTemplate =
-    docsArticleTemplate.faqTemplates[articleType] ||
-    docsArticleTemplate.faqTemplates.general;
-
-  // テンプレート変数を準備（まず基本変数で置換）
-  const baseVariables = {
-    ...templateVariables,
-  };
-
-  // FAQテンプレートの質問と回答を基本変数で置換
-  const processedFaqTemplate = {
-    faqQuestion1: replaceTemplateVariables(
-      faqTemplate.faqQuestion1,
-      baseVariables
-    ),
-    faqAnswer1: replaceTemplateVariables(faqTemplate.faqAnswer1, baseVariables),
-    faqQuestion2: replaceTemplateVariables(
-      faqTemplate.faqQuestion2,
-      baseVariables
-    ),
-    faqAnswer2: replaceTemplateVariables(faqTemplate.faqAnswer2, baseVariables),
-    faqQuestion3: replaceTemplateVariables(
-      faqTemplate.faqQuestion3,
-      baseVariables
-    ),
-    faqAnswer3: replaceTemplateVariables(faqTemplate.faqAnswer3, baseVariables),
-  };
-
-  // 最終的なFAQ変数を準備
-  const faqVariables = {
-    ...baseVariables,
-    ...processedFaqTemplate,
-  };
-
-  // テンプレートを置換してFAQ Schemaを生成
-  const faqSchema = replaceTemplateVariables(
-    docsArticleTemplate.structuredData.faq,
-    faqVariables
-  );
-
-  return faqSchema.mainEntity;
-};
-
-// テンプレートベースの動的HowTo生成
-const generateTemplateBasedHowTo = (content, articleType) => {
-  // チュートリアル記事でない場合はnullを返す
-  const isTutorial =
-    content.categories.some(
-      cat =>
-        cat.toLowerCase().includes('tutorial') ||
-        cat.toLowerCase().includes('guide')
-    ) ||
-    content.tags.some(tag =>
-      ['tutorial', 'guide', 'howto', 'setup'].includes(tag.toLowerCase())
-    );
-
-  if (!isTutorial) return null;
-
-  // テンプレートからHowToテンプレートを取得
-  const howToTemplate =
-    docsArticleTemplate.howToTemplates[articleType] ||
-    docsArticleTemplate.howToTemplates.tutorial;
-
-  // 基本変数を準備
-  const baseVariables = {
-    ...templateVariables,
-  };
-
-  // HowToテンプレートの各項目を基本変数で置換
-  const processedHowToTemplate = {
-    howToTitle: replaceTemplateVariables(
-      howToTemplate.howToTitle,
-      baseVariables
-    ),
-    howToDescription: replaceTemplateVariables(
-      howToTemplate.howToDescription,
-      baseVariables
-    ),
-    howToImage: replaceTemplateVariables(
-      howToTemplate.howToImage,
-      baseVariables
-    ),
-    howToTotalTime: howToTemplate.howToTotalTime,
-    howToSupply1: howToTemplate.howToSupply1,
-    howToSupply2: howToTemplate.howToSupply2,
-    howToTool1: howToTemplate.howToTool1,
-    howToStep1Name: howToTemplate.howToStep1Name,
-    howToStep1Text: howToTemplate.howToStep1Text,
-    howToStep1Url: replaceTemplateVariables(
-      howToTemplate.howToStep1Url,
-      baseVariables
-    ),
-    howToStep2Name: howToTemplate.howToStep2Name,
-    howToStep2Text: howToTemplate.howToStep2Text,
-    howToStep2Url: replaceTemplateVariables(
-      howToTemplate.howToStep2Url,
-      baseVariables
-    ),
-    howToStep3Name: howToTemplate.howToStep3Name,
-    howToStep3Text: howToTemplate.howToStep3Text,
-    howToStep3Url: replaceTemplateVariables(
-      howToTemplate.howToStep3Url,
-      baseVariables
-    ),
-  };
-
-  // 最終的なHowTo変数を準備
-  const howToVariables = {
-    ...baseVariables,
-    ...processedHowToTemplate,
-  };
-
-  // テンプレートを置換してHowTo Schemaを生成
-  const howToSchema = replaceTemplateVariables(
-    docsArticleTemplate.structuredData.howTo,
-    howToVariables
-  );
-
-  return howToSchema;
-};
-
-// テンプレートベースのSchema生成
-const faqSchema = {
-  '@context': 'https://schema.org' as const,
-  '@type': 'FAQPage' as const,
-  mainEntity: generateTemplateBasedFAQ(articleContent, seoArticleType),
-};
-
-// HowTo Schema生成（チュートリアル記事の場合）
-const howToSchema = generateTemplateBasedHowTo(articleContent, seoArticleType);
 
 // テンプレートベースのBreadcrumb Schema生成
 const breadcrumbSchema = replaceTemplateVariables(
@@ -441,8 +160,6 @@ const breadcrumbSchema = replaceTemplateVariables(
   postActions={true}
   breadcrumbConfig={breadcrumbConfig}
   breadcrumbSchema={breadcrumbSchema as any}
-  faqSchema={faqSchema}
-  howToSchema={howToSchema}
   featuredImage={post.data.featuredImage}
 >
   <!-- Breadcrumb Slot -->

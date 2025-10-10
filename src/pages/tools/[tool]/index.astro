@@ -126,7 +126,7 @@ const toolConfig = {
   iconPath: toolData?.iconUrl || '/icon/yomitan-icon-240.webp',
   description:
     toolData?.description ||
-    `Comprehensive learning resources and guides for mastering ${tool}. From beginner basics to advanced techniques, everything you need to succeed.`,
+    `Tutorial Aplikasi ${tool}. Dari dasar pemula hingga teknik lanjutan, semua yang kalian butuhkan untuk belajar bahasa Jepang.`,
 };
 
 const formattedToolName =
@@ -147,10 +147,10 @@ const processedArticles = paginatedToolArticles.map(
       (relatedTool: string) => relatedTool.toLowerCase() === tool.toLowerCase()
     );
     const articleTitle =
-      article.data.title || `Complete ${formattedToolName} Guide`;
+      article.data.title || `Tutorial Aplikasi ${formattedToolName}`;
     const articleDescription =
       article.data.description ||
-      `Master ${tool} with our comprehensive guide. Learn essential techniques, best practices, and advanced tips.`;
+      `Artikel Tutorial dari Aplikasi ${tool}. Dari dasar pemula hingga teknik lanjutan, semua yang kalian butuhkan untuk belajar bahasa Jepang.`;
     const DEFAULT_TAGS = ['guide', 'tutorial'];
     const articleTags = article.data.tags?.length
       ? article.data.tags
@@ -265,19 +265,30 @@ const seoData = replaceTemplateObject(
   templateVariables
 );
 
+// seoDataが生成された後にテンプレート変数を更新
+const templateVariablesWithSeo = {
+  ...templateVariables,
+  seoTitle: seoData.title,
+  seoDescription: seoData.description,
+};
+
 // ========== STRUCTURED DATA GENERATION ==========
-const softwareApplicationSchema = replaceTemplateObject(
-  toolSeoTemplate.structuredData.softwareApplication,
-  templateVariables
-);
+const softwareApplicationSchema = {
+  ...replaceTemplateObject(
+    toolSeoTemplate.structuredData.softwareApplication,
+    templateVariablesWithSeo
+  ),
+  url: String(Astro.site || 'https://gorakudo.org') + Astro.url.pathname,
+};
 
 const collectionPageTemplate = replaceTemplateObject(
   toolSeoTemplate.structuredData.collectionPage,
-  templateVariables
+  templateVariablesWithSeo
 );
 
 const collectionPageSchema = {
   ...collectionPageTemplate,
+  url: String(Astro.site || 'https://gorakudo.org') + Astro.url.pathname,
   mainEntity: {
     ...collectionPageTemplate.mainEntity,
     itemListElement: toolArticles.map(
@@ -302,7 +313,7 @@ const collectionPageSchema = {
 
 const breadcrumbData = replaceTemplateObject(
   toolSeoTemplate.breadcrumbData,
-  templateVariables
+  templateVariablesWithSeo
 );
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: breadcrumbData.items.map((item, index) => ({
@@ -319,10 +330,13 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   description={seoData.description}
   lang='id'
   author={seoData.author}
+  currentPage={1}
+  totalPages={totalPages}
+  baseUrl={`/tools/${tool}`}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={replaceTemplateObject(
     toolSeoTemplate.structuredData.faq,
-    templateVariables
+    templateVariablesWithSeo
   )}
   collectionPageSchema={collectionPageSchema}
   softwareApplicationSchema={softwareApplicationSchema}

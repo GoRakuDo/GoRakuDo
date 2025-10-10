@@ -6,7 +6,6 @@ import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
-import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
 import '../../../styles/layouts/PostLayout.css';
 
@@ -135,31 +134,14 @@ const articleType = getArticleType(
   post.data.categories || []
 );
 
-// 記事コンテンツの準備
-const articleContent = {
-  title: post.data.title || '',
-  description: post.data.description || '',
-  tags: post.data.tags || [],
-  categories: post.data.categories || [],
-  headings: tocHeadings || [],
-  content: post.body || '',
-  publishedDate: post.data.publishedDate || '',
-  author: post.data.author || 'GoRakuDo Team',
-};
-
-// ツール情報を取得（テンプレートベース）
+// ツール情報を取得（テンプレートベース・ミニマリスト原則：3行以内）
 const toolInfo = toolArticleTemplate.toolData[toolName.toLowerCase()] || {
   description: `Tools ${toolName}`,
-  purpose: 'Pembelajaran Bahasa Jepang',
-  usage: 'Metode Pembelajaran Efektif',
-  benefits: 'Peningkatan Efisiensi Belajar',
-  features: 'Tools Pembelajaran Multifungsi',
-  pricing: 'Gratis',
   operatingSystem: 'Windows, macOS, Linux',
   author: 'GoRakuDo Team',
 };
 
-// テンプレート変数の準備
+// テンプレート変数の準備（ミニマリスト原則：使用中の変数のみ）
 const templateVariables = {
   toolName: toolName.charAt(0).toUpperCase() + toolName.slice(1),
   toolSlug: toolName,
@@ -170,157 +152,9 @@ const templateVariables = {
     post.data.featuredImage ||
     `https://gorakudo.org/icon/${toolName}-icon-240.webp`,
   toolDescription: toolInfo.description,
-  toolPurpose: toolInfo.purpose,
-  toolUsage: toolInfo.usage,
-  toolBenefits: toolInfo.benefits,
-  toolFeatures: toolInfo.features,
-  toolPricing: toolInfo.pricing,
   operatingSystem: toolInfo.operatingSystem,
   toolAuthor: toolInfo.author,
   toolUrl: `https://gorakudo.org/tools/${toolName}`,
-  difficultyText:
-    post.data.difficulty === 'beginner'
-      ? 'untuk Pemula'
-      : post.data.difficulty === 'advanced'
-        ? 'untuk Tingkat Lanjut'
-        : 'untuk Menengah',
-};
-
-// テンプレートベースの動的FAQ生成
-const generateTemplateBasedFAQ = (content, articleType) => {
-  // フォールバック用のFAQ生成
-  if (!toolArticleTemplate || !toolArticleTemplate.faqTemplates) {
-    return [
-      {
-        '@type': 'Question',
-        name: `Apa itu ${toolName}?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `${toolName} adalah tools yang berguna untuk pembelajaran bahasa Jepang.`,
-        },
-      },
-    ];
-  }
-
-  const faqTemplate =
-    toolArticleTemplate.faqTemplates[articleType] ||
-    toolArticleTemplate.faqTemplates.general;
-
-  const processedFaqTemplate = {
-    faqQuestion1: replaceTemplateVariables(
-      faqTemplate.faqQuestion1,
-      templateVariables
-    ),
-    faqAnswer1: replaceTemplateVariables(
-      faqTemplate.faqAnswer1,
-      templateVariables
-    ),
-    faqQuestion2: replaceTemplateVariables(
-      faqTemplate.faqQuestion2,
-      templateVariables
-    ),
-    faqAnswer2: replaceTemplateVariables(
-      faqTemplate.faqAnswer2,
-      templateVariables
-    ),
-    faqQuestion3: replaceTemplateVariables(
-      faqTemplate.faqQuestion3,
-      templateVariables
-    ),
-    faqAnswer3: replaceTemplateVariables(
-      faqTemplate.faqAnswer3,
-      templateVariables
-    ),
-  };
-
-  const faqVariables = {
-    ...templateVariables,
-    ...processedFaqTemplate,
-  };
-
-  const faqSchema = replaceTemplateVariables(
-    toolArticleTemplate.structuredData.faq,
-    faqVariables
-  );
-
-  return faqSchema.mainEntity;
-};
-
-// テンプレートベースの動的HowTo生成
-const generateTemplateBasedHowTo = (content, articleType) => {
-  // チュートリアル記事でない場合はnullを返す
-  const isTutorial = articleType === 'tutorial' || articleType === 'setup';
-  if (!isTutorial) return null;
-
-  // フォールバック用のHowTo生成
-  if (!toolArticleTemplate || !toolArticleTemplate.howToTemplates) {
-    return null;
-  }
-
-  const howToTemplate =
-    toolArticleTemplate.howToTemplates[articleType] ||
-    toolArticleTemplate.howToTemplates.tutorial;
-
-  const processedHowToTemplate = {
-    howToTitle: replaceTemplateVariables(
-      howToTemplate.howToTitle,
-      templateVariables
-    ),
-    howToDescription: replaceTemplateVariables(
-      howToTemplate.howToDescription,
-      templateVariables
-    ),
-    howToImage: replaceTemplateVariables(
-      howToTemplate.howToImage,
-      templateVariables
-    ),
-    howToTotalTime: howToTemplate.howToTotalTime,
-    howToSupply1: howToTemplate.howToSupply1,
-    howToSupply2: howToTemplate.howToSupply2,
-    howToTool1: replaceTemplateVariables(
-      howToTemplate.howToTool1,
-      templateVariables
-    ),
-    howToStep1Name: howToTemplate.howToStep1Name,
-    howToStep1Text: replaceTemplateVariables(
-      howToTemplate.howToStep1Text,
-      templateVariables
-    ),
-    howToStep1Url: replaceTemplateVariables(
-      howToTemplate.howToStep1Url,
-      templateVariables
-    ),
-    howToStep2Name: howToTemplate.howToStep2Name,
-    howToStep2Text: replaceTemplateVariables(
-      howToTemplate.howToStep2Text,
-      templateVariables
-    ),
-    howToStep2Url: replaceTemplateVariables(
-      howToTemplate.howToStep2Url,
-      templateVariables
-    ),
-    howToStep3Name: howToTemplate.howToStep3Name,
-    howToStep3Text: replaceTemplateVariables(
-      howToTemplate.howToStep3Text,
-      templateVariables
-    ),
-    howToStep3Url: replaceTemplateVariables(
-      howToTemplate.howToStep3Url,
-      templateVariables
-    ),
-  };
-
-  const howToVariables = {
-    ...templateVariables,
-    ...processedHowToTemplate,
-  };
-
-  const howToSchema = replaceTemplateVariables(
-    toolArticleTemplate.structuredData.howTo,
-    howToVariables
-  );
-
-  return howToSchema;
 };
 
 // テンプレートベースのSoftwareApplication生成
@@ -335,11 +169,6 @@ const generateSoftwareApplicationSchema = () => {
       url: `https://gorakudo.org/tools/${templateVariables.toolSlug}`,
       applicationCategory: 'EducationalApplication',
       operatingSystem: templateVariables.operatingSystem,
-      offers: {
-        '@type': 'Offer',
-        price: '0',
-        priceCurrency: 'IDR',
-      },
       author: {
         '@type': 'Organization',
         name: templateVariables.toolAuthor,
@@ -359,8 +188,6 @@ const generateSoftwareApplicationSchema = () => {
 
 // 構造化データの生成 - FAQ Schema is now handled by UnifiedSEO
 
-const howToSchema = generateTemplateBasedHowTo(articleContent, articleType);
-
 const softwareApplicationSchema = generateSoftwareApplicationSchema();
 
 // テンプレートベースのBreadcrumb Schema生成
@@ -371,145 +198,35 @@ const breadcrumbSchema = replaceTemplateVariables(
 
 // Phase 2: メタタグの最適化 - 検索意図に合わせたタイトル・説明文・キーワード
 
-// テンプレートベースのタイトル生成
-const generateTemplateBasedTitle = (post, articleType) => {
-  // フォールバック用のタイトル生成
-  if (!toolArticleTemplate || !toolArticleTemplate.seoOptimization) {
-    const baseTitle = post.data.title || post.slug;
-    switch (articleType) {
-      case 'tutorial':
-        return `${baseTitle} - Panduan Lengkap | GoRakuDo Tools`;
-      case 'guide':
-        return `${baseTitle} - Panduan Praktis | GoRakuDo Tools`;
-      case 'setup':
-        return `${baseTitle} - Panduan Setup | GoRakuDo Tools`;
-      default:
-        return `${baseTitle} - Tools Pembelajaran Bahasa Jepang | GoRakuDo`;
-    }
-  }
-
-  const titleTemplate =
-    toolArticleTemplate.seoOptimization.titleTemplates[articleType] ||
-    toolArticleTemplate.seoOptimization.titleTemplates.general;
-
-  return replaceTemplateVariables(titleTemplate, {
-    toolName: templateVariables.toolName,
-  });
+// シンプルなタイトル生成: MDXフロントマターのまま
+const generateTemplateBasedTitle = post => {
+  const articleTitle = post.data.title || post.slug;
+  return `${articleTitle} | GoRakuDo`;
 };
 
-// テンプレートベースの説明文生成
-const generateTemplateBasedDescription = (post, articleType) => {
-  // フォールバック用の説明文生成
-  if (!toolArticleTemplate || !toolArticleTemplate.seoOptimization) {
-    const baseDescription = post.data.description || '';
-    const difficulty = post.data.difficulty || 'intermediate';
-    const tags = post.data.tags || [];
+// シンプルな説明文生成: MDXフロントマターのまま
+const generateTemplateBasedDescription = post => post.data.description || '';
 
-    const tagKeywords = tags.slice(0, 3).join(', ');
-    const difficultyText =
-      difficulty === 'beginner'
-        ? 'untuk Pemula'
-        : difficulty === 'advanced'
-          ? 'untuk Tingkat Lanjut'
-          : 'untuk Menengah';
-
-    return `Panduan lengkap ${toolName}. Dari setup hingga cara penggunaan yang efektif, pelajari langkah demi langkah dengan tutorial ${toolName} ${difficultyText}. Kuasai ${toolName} dengan GoRakuDo.`;
-  }
-
-  const descriptionTemplate =
-    toolArticleTemplate.seoOptimization.descriptionTemplates[articleType] ||
-    toolArticleTemplate.seoOptimization.descriptionTemplates.general;
-
-  const tags = post.data.tags || [];
-  const difficulty = post.data.difficulty || 'intermediate';
-
-  // タグに基づく追加キーワード
-  const tagKeywords = tags.slice(0, 3).join('、');
-
-  // 難易度テキストを取得
-  const difficultyText =
-    toolArticleTemplate.seoOptimization.difficultyTexts[difficulty] ||
-    toolArticleTemplate.seoOptimization.difficultyTexts.intermediate;
-
-  return replaceTemplateVariables(descriptionTemplate, {
-    toolName: templateVariables.toolName,
-    tagKeywords: tagKeywords,
-    difficultyText: difficultyText,
-    articleDescription: post.data.description || '包括的なガイド',
-  });
-};
-
-// テンプレートベースのキーワード生成
-const generateTemplateBasedKeywords = (post, articleType) => {
+// シンプルなキーワード生成: baseKeywords + mdxKeywords + baseTags
+const generateTemplateBasedKeywords = post => {
+  const mdxKeywords = post.data.keywords || [];
   const baseTags = post.data.tags || [];
-  const difficulty = post.data.difficulty || 'intermediate';
-
-  // フォールバック用のキーワード生成
-  if (!toolArticleTemplate || !toolArticleTemplate.seoOptimization) {
-    const baseKeywords = [
-      'Pembelajaran Bahasa Jepang',
-      'GoRakuDo',
-      'Tools',
-      'Alat Pembelajaran',
-    ];
-    const typeKeywords = {
-      tutorial: ['Tutorial', 'Setup', 'Instalasi', 'Cara Mengatur'],
-      guide: ['Panduan', 'Cara Menggunakan', 'Tips', 'Teknik'],
-      setup: ['Setup', 'Instalasi', 'Konfigurasi', 'Pengaturan'],
-      general: ['Tools', 'Pembelajaran', 'Cara Menggunakan', 'Pengenalan'],
-    };
-    const difficultyKeywords = {
-      beginner: ['Pemula', 'Dasar', 'Awal', 'Mudah'],
-      intermediate: ['Menengah', 'Praktis', 'Lanjutan'],
-      advanced: ['Mahir', 'Expert', 'Profesional', 'Tingkat Tinggi'],
-    };
-
-    return [
-      ...baseKeywords,
-      ...(typeKeywords[articleType] || typeKeywords.general),
-      ...(difficultyKeywords[difficulty] || []),
-      ...baseTags,
-    ]
-      .filter((keyword, index, array) => array.indexOf(keyword) === index)
-      .slice(0, 15);
-  }
-
-  // テンプレートからキーワードを取得
-  const baseKeywords = toolArticleTemplate.seoOptimization.baseKeywords;
-  const typeKeywords =
-    toolArticleTemplate.seoOptimization.typeKeywords[articleType] ||
-    toolArticleTemplate.seoOptimization.typeKeywords.general;
-  const difficultyKeywords =
-    toolArticleTemplate.seoOptimization.difficultyKeywords[difficulty] || [];
-
-  // ツール固有のキーワード
-  const toolKeywords =
-    toolArticleTemplate.seoOptimization.toolKeywords[toolName.toLowerCase()] ||
-    [];
-
-  // すべてのキーワードを統合
-  return [
-    ...baseKeywords,
-    ...typeKeywords,
-    ...difficultyKeywords,
-    ...toolKeywords,
-    ...baseTags,
-  ]
-    .filter((keyword, index, array) => array.indexOf(keyword) === index) // 重複削除
-    .slice(0, 15); // 最大15個のキーワード
+  const baseKeywords = toolArticleTemplate?.seoOptimization?.baseKeywords || [];
+  return [...baseKeywords, ...mdxKeywords, ...baseTags]
+    .filter((kw, i, arr) => arr.indexOf(kw) === i)
+    .slice(0, 15);
 };
 
 // 最適化されたSEOデータ
 const seoData = {
-  title: generateTemplateBasedTitle(post, articleType),
-  description: generateTemplateBasedDescription(post, articleType),
-  keywords: generateTemplateBasedKeywords(post, articleType),
+  title: generateTemplateBasedTitle(post),
+  description: generateTemplateBasedDescription(post),
+  keywords: generateTemplateBasedKeywords(post),
   articleType: 'tool-guide',
-  learningStage: post.data.difficulty || 'intermediate',
   searchIntent: 'informational',
   publishedDate: post.data.publishedDate,
   modifiedDate: post.data.publishedDate,
-  isDraft: post.data.isDraft || false,
+  isDraft: post.data.status !== 'published',
 };
 
 // ========== CLIENT DATA ==========
@@ -546,12 +263,6 @@ const breadcrumbConfig = {
   }}
   breadcrumbConfig={breadcrumbConfig}
   breadcrumbSchema={breadcrumbSchema as any}
-  faqSchema={{
-    '@context': 'https://schema.org' as const,
-    '@type': 'FAQPage' as const,
-    mainEntity: generateTemplateBasedFAQ(articleContent, articleType),
-  } as any}
-  howToSchema={howToSchema}
   softwareApplicationSchema={softwareApplicationSchema}
   featuredImage={post.data.featuredImage}
 >
@@ -780,37 +491,37 @@ const breadcrumbConfig = {
 
   window.sharePost = sharePost;
 
-    // Accessibility enhancements
+  // Accessibility enhancements
   const initAccessibility = () => {
     const articleContent = document.querySelector('.content-main');
     if (!articleContent) return;
 
     // Add skip link
-      const skipLink = document.createElement('a');
-      skipLink.href = '#main-content';
-      skipLink.className =
-        'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50';
-      skipLink.textContent = 'Skip to main content';
-      document.body.insertBefore(skipLink, document.body.firstChild);
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main-content';
+    skipLink.className =
+      'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50';
+    skipLink.textContent = 'Skip to main content';
+    document.body.insertBefore(skipLink, document.body.firstChild);
 
     // Add alt text to images
-      const images = articleContent.querySelectorAll('img:not([alt])');
-      images.forEach(img => {
-        img.alt = `${toolName} tool illustration`;
-      });
+    const images = articleContent.querySelectorAll('img:not([alt])');
+    images.forEach(img => {
+      img.alt = `${toolName} tool illustration`;
+    });
 
-      // Validate heading hierarchy
+    // Validate heading hierarchy
     const headings = articleContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      let lastLevel = 0;
-      headings.forEach(heading => {
-        const level = parseInt(heading.tagName.charAt(1));
-        if (level - lastLevel > 1) {
-          console.warn(
-            `⚠️ Accessibility: Heading level skipped from h${lastLevel} to h${level}`
-          );
-        }
-        lastLevel = level;
-      });
+    let lastLevel = 0;
+    headings.forEach(heading => {
+      const level = parseInt(heading.tagName.charAt(1));
+      if (level - lastLevel > 1) {
+        console.warn(
+          `⚠️ Accessibility: Heading level skipped from h${lastLevel} to h${level}`
+        );
+      }
+      lastLevel = level;
+    });
   };
 
   // Initialize

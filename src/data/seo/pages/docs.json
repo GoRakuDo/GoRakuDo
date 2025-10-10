@@ -1,24 +1,7 @@
 {
   "seoData": {
-    "title": "Dokumentasi Metodologi Immersion - GoRakuDo",
+    "title": "Dokumentasi Metodologi Immersion | GoRakuDo",
     "description": "Dokumentasi yang kami buat untuk membantu kalian untuk menguasai Bahasa Jepang, secara natural layaknya Penutur Asli Jepang. Yang berdasarkan 'Linguistik Modern'.",
-    "keywords": [
-      "dokumentasi bahasa jepang",
-      "panduan belajar jepang",
-      "metode immersion jepang",
-      "dokumentasi nihongo",
-      "japanese learning documentation",
-      "immersion method guide",
-      "japanese study materials",
-      "japanese learning resources",
-      "japanese immersion guide",
-      "japanese learning documentation",
-      "japanese study guide",
-      "japanese learning materials",
-      "japanese immersion resources",
-      "japanese learning tips",
-      "japanese study documentation"
-    ],
     "pageType": "website",
     "author": "GoRakuDo Team",
     "lang": "id"
@@ -27,9 +10,8 @@
     "website": {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Dokumentasi Belajar Bahasa Jepang - GoRakuDo",
-      "description": "Dokumentasi lengkap dan panduan belajar bahasa Jepang dengan metode immersion",
-      "url": "https://gorakudo.org/docs",
+      "name": "{{seoTitle}}",
+      "description": "{{seoDescription}}",
       "publisher": {
         "@type": "Organization",
         "name": "GoRakuDo"
@@ -38,14 +20,13 @@
     "collectionPage": {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Dokumentasi Belajar Bahasa Jepang",
-      "description": "Koleksi dokumentasi dan panduan pembelajaran bahasa Jepang",
-      "url": "https://gorakudo.org/docs",
+      "name": "{{seoTitle}}",
+      "description": "{{seoDescription}}",
       "mainEntity": {
         "@type": "ItemList",
         "name": "Dokumentasi Belajar Bahasa Jepang",
         "description": "Daftar dokumentasi dan panduan belajar bahasa Jepang",
-        "numberOfItems": 20
+        "numberOfItems": "{{articleCount}}"
       }
     },
     "faq": {
