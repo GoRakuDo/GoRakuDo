@@ -74,6 +74,7 @@
     "stylelint-config-standard": "^39.0.0",
     "stylelint-config-tailwindcss": "^1.0.0",
     "tsx": "^4.20.6",
+    "vite-plugin-compression": "^0.5.1",
     "vitest": "^3.2.4",
     "vue-eslint-parser": "^10.2.0"
   }

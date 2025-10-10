@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import mcp from 'astro-mcp';
 import sitemap from '@astrojs/sitemap';
+import compress from 'vite-plugin-compression';
 
 import mdx from '@astrojs/mdx';
 
@@ -48,7 +49,21 @@ export default defineConfig({
 
   // Vite optimization - Astro Native Best Practice
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      compress({
+        algorithm: 'gzip',
+        ext: '.gz',
+        threshold: 1024,
+        deleteOriginFile: false,
+      }),
+      compress({
+        algorithm: 'brotliCompress',
+        ext: '.br',
+        threshold: 1024,
+        deleteOriginFile: false,
+      }),
+    ],
     // MIME type configuration for XSL files
     server: {
       fs: {

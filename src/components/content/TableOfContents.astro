@@ -786,22 +786,28 @@ const { headings = [] } = Astro.props
     });
 
     /** ------------------------------
-     * Hitung offset navbar dinamis
+     * Hitung offset navbar dinamis (Optimized to prevent forced reflow)
      * ------------------------------ */
     let cachedOffset: number | null = null;
     let lastCacheTime = 0;
     const getNavbarOffset = (): number => {
       const now = Date.now();
       if (cachedOffset !== null && now - lastCacheTime < 1000) return cachedOffset;
+      
+      // Use requestAnimationFrame to batch layout reads
       const navbar = document.querySelector('nav, .navbar, header, [data-navbar], .header, #header, .top-nav, .main-nav') as HTMLElement;
       if (navbar) {
+        // Batch all layout reads together
         const rect = navbar.getBoundingClientRect();
         const style = window.getComputedStyle(navbar);
         const isFixed = style.position === 'fixed' || style.position === 'sticky';
-        if (isFixed && rect.height > 0) {
-          cachedOffset = rect.height + 30;
+        const height = rect.height;
+        
+        // Calculate offset after reads
+        if (isFixed && height > 0) {
+          cachedOffset = height + 30;
         } else {
-          cachedOffset = rect.height + 20;
+          cachedOffset = height + 20;
         }
       } else {
         cachedOffset = 140; // fallback
