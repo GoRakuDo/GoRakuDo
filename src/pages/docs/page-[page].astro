@@ -1,22 +1,25 @@
 ---
 // ========== IMPORTS ==========
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
 import Pagination from '../../components/common/Pagination/Pagination.astro';
-import { getDocsPageData, POSTS_PER_PAGE } from '../../utils/docs-config';
 import {
+  calculatePagination,
+  transformPostData,
   validatePageNumber,
   shouldRedirectToFirstPage,
 } from '../../components/common/Pagination/pagination';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsSeoData from '../../data/seo/pages/docs.json';
 import '../../styles/pages/docs/docs-index.css';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
+  const POSTS_PER_PAGE = 6;
   const allPosts = await getCollection(
     'docs',
     ({ data }) =>
@@ -43,9 +46,31 @@ if (shouldRedirectToFirstPage(currentPage, totalPages)) {
   return Astro.redirect(`/docs/page-${totalPages}`, 301);
 }
 
-// ========== GET PAGE DATA ==========
-const { transformedPosts, seoConfig, structuredData } =
-  await getDocsPageData(currentPage);
+// ========== GET PAGE DATA (Inlined) ==========
+const POSTS_PER_PAGE = 6;
+
+const allPosts = await getCollection('docs');
+const visiblePosts = getVisibleDocs(allPosts);
+const sortedPosts = visiblePosts
+  .filter(
+    (post: CollectionEntry<'docs'>) =>
+      post.data.publishedDate && new Date(post.data.publishedDate) <= new Date()
+  )
+  .sort(
+    (a: CollectionEntry<'docs'>, b: CollectionEntry<'docs'>) =>
+      new Date(b.data.publishedDate).getTime() -
+      new Date(a.data.publishedDate).getTime()
+  );
+
+const { paginatedItems } = calculatePagination(sortedPosts, {
+  postsPerPage: POSTS_PER_PAGE,
+  currentPage,
+  totalPosts: sortedPosts.length,
+});
+
+const transformedPosts = paginatedItems.map(post =>
+  transformPostData(post, '/docs')
+);
 
 // ========== SEO DATA ==========
 // SEOデータはJSONファイルから読み込み

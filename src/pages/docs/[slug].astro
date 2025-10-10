@@ -5,6 +5,7 @@ import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
 import '../../styles/layouts/PostLayout.css';
 
@@ -128,7 +129,7 @@ const breadcrumbConfig = {
 
 // articleContentのheadingsを更新
 articleContent.headings = tocHeadings;
-const articleUrl = `https://gorakudo.org${resolvedPath.path}`;
+const articleUrl = resolvedPath.path; // 相対パス（breadcrumb用）
 const articleImage =
   post.data.featuredImage || 'https://gorakudo.org/img/gorakudo-immerison.png';
 
@@ -141,10 +142,19 @@ const templateVariables = {
 };
 
 // テンプレートベースのBreadcrumb Schema生成
-const breadcrumbSchema = replaceTemplateVariables(
-  docsArticleTemplate.structuredData.breadcrumb,
+const breadcrumbData = replaceTemplateVariables(
+  docsArticleTemplate.breadcrumbData,
   templateVariables
 );
+
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: breadcrumbData.items.map((item: any, index: number) => ({
+    title: item.name,
+    url: item.url,
+    isActive: index === breadcrumbData.items.length - 1,
+  })),
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 ---
 
 <PostLayout

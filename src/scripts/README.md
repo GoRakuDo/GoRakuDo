@@ -7,7 +7,6 @@ src/scripts/
 ├── ui/                   # User interface and interaction scripts
 │   └── settings-manager.js
 ├── core/                 # Core functionality and page-specific scripts
-│   ├── hompage-script.js
 │   ├── post-script.js
 │   └── upgrade-browsermu.js
 └── index.js             # Main entry point and exports
@@ -21,16 +20,17 @@ src/scripts/
 
 ### **Core Scripts** (`core/`)
 
-- **hompage-script.js**: Homepage-specific functionality (wave animations, modals)
 - **post-script.js**: Post page functionality (markdown rendering, navigation)
 - **upgrade-browsermu.js**: Browser compatibility checker and upgrade prompts
+
+**Note**: Homepage functionality is now handled by inline scripts in `src/pages/index.astro` for better performance and maintainability.
 
 ## 🚀 Usage
 
 ### **Import from Index**
 
 ```javascript
-import { SettingsManager, HomepageScript } from '@/scripts';
+import { UpgradeBrowser } from '@/scripts';
 ```
 
 ### **Dynamic Loading**
@@ -81,7 +81,7 @@ Scripts are integrated with Astro's build system for optimal bundling:
 // Manual chunk splitting for performance
 manualChunks: {
   "scripts-ui": ["./src/scripts/ui/settings-manager.js"],
-  "scripts-core": ["./src/scripts/core/hompage-script.js", "./src/scripts/core/post-script.js"],
+  "scripts-core": ["./src/scripts/core/post-script.js"],
 }
 ```
 

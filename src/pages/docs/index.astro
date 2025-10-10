@@ -1,12 +1,17 @@
 ---
 // ========== IMPORTS ==========
+import { getCollection, type CollectionEntry } from 'astro:content';
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
 import Pagination from '../../components/common/Pagination/Pagination.astro';
 import SearchPopover from '../../components/common/SearchPopover.astro';
-import { getDocsPageData } from '../../utils/docs-config';
+import {
+  calculatePagination,
+  transformPostData,
+} from '../../components/common/Pagination/pagination';
+import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsSeoData from '../../data/seo/pages/docs.json';
 import '../../styles/pages/docs/docs-index.css';
@@ -17,9 +22,34 @@ if (queryPage && parseInt(queryPage) > 1) {
   return Astro.redirect(`/docs/page-${queryPage}`, 301);
 }
 
-// ========== GET PAGE DATA ==========
-const { transformedPosts, totalPages, totalPosts, seoConfig, structuredData } =
-  await getDocsPageData(1);
+// ========== GET PAGE DATA (Inlined) ==========
+const POSTS_PER_PAGE = 6;
+const currentPage = 1;
+
+const allPosts = await getCollection('docs');
+const visiblePosts = getVisibleDocs(allPosts);
+const sortedPosts = visiblePosts
+  .filter(
+    (post: CollectionEntry<'docs'>) =>
+      post.data.publishedDate && new Date(post.data.publishedDate) <= new Date()
+  )
+  .sort(
+    (a: CollectionEntry<'docs'>, b: CollectionEntry<'docs'>) =>
+      new Date(b.data.publishedDate).getTime() -
+      new Date(a.data.publishedDate).getTime()
+  );
+
+const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+const { paginatedItems } = calculatePagination(sortedPosts, {
+  postsPerPage: POSTS_PER_PAGE,
+  currentPage,
+  totalPosts: sortedPosts.length,
+});
+
+const transformedPosts = paginatedItems.map(post =>
+  transformPostData(post, '/docs')
+);
+const totalPosts = sortedPosts.length;
 
 // ========== HEADER IMAGE CONFIG ==========
 const headerImageId = 'gorakudo-docs_nmobpw';

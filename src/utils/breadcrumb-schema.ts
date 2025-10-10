@@ -73,38 +73,3 @@ export function generateBreadcrumbSchema(
  };
 }
 
-/**
- * AstroのBreadcrumbItemからBreadcrumbSchemaItemに変換する関数
- * 
- * @param astroItems - AstroのBreadcrumbItem配列
- * @returns BreadcrumbSchemaItem配列
- */
-export function convertAstroBreadcrumbItems(
- astroItems: Array<{
-  readonly title: string;
-  readonly url: string;
-  readonly isActive: boolean;
-  readonly icon?: string;
- }>
-): BreadcrumbSchemaItem[] {
- return astroItems.map(item => ({
-  title: item.title,
-  url: item.url,
-  isActive: item.isActive,
- }));
-}
-
-/**
- * デフォルトのBreadcrumb構造化データを生成する関数
- * 
- * @param siteUrl - サイトのベースURL
- * @returns デフォルトのBreadcrumbList構造化データ
- */
-export function generateDefaultBreadcrumbSchema(siteUrl: string): BreadcrumbSchemaData {
- return generateBreadcrumbSchema({
-  items: [
-   { title: 'Home', url: '/', isActive: true }
-  ],
-  siteUrl,
- });
-}

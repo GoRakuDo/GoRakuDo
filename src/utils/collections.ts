@@ -55,20 +55,6 @@ export function resolvePath(
   return `${info.basePath}/${slug}`;
 }
 
-/**
- * Get all available collections
- * @returns Array of all collection configurations
- */
-export function getAllCollections(): Array<{
-  name: CollectionName;
-  info: CollectionInfo;
-}> {
-  return Object.entries(COLLECTIONS).map(([name, info]) => ({
-    name: name as CollectionName,
-    info,
-  }));
-}
-
 // ========== MIGRATION COMPLETED ==========
 // All legacy functions have been successfully migrated to Astro-native patterns
 // This implementation is now fully optimized and follows Astro best practices

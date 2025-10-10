@@ -157,17 +157,7 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
           hasImages: fullContent.includes('!['),
 
           // URL
-          url: (() => {
-            try {
-              return resolvePath('tool-articles', article.slug);
-            } catch (error) {
-              logger.log(
-                `Failed to resolve tool-articles path for ${article.slug}: ${(error as Error).message}`,
-                'warning'
-              );
-              return `/tools/${toolName}/${article.slug}`;
-            }
-          })(),
+          url: resolvePath('tool-articles', article.slug),
         };
       }
     );

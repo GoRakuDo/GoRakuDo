@@ -9,30 +9,23 @@
       "Panduan Pembelajaran"
     ]
   },
-  "structuredData": {
-    "breadcrumb": {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Beranda",
-          "item": "https://gorakudo.org"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Dokumentasi",
-          "item": "https://gorakudo.org/docs"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "{{articleTitle}}",
-          "item": "{{articleUrl}}"
-        }
-      ]
-    }
+  "breadcrumbData": {
+    "items": [
+      {
+        "name": "Beranda",
+        "url": "/",
+        "isActive": false
+      },
+      {
+        "name": "Dokumentasi",
+        "url": "/docs",
+        "isActive": false
+      },
+      {
+        "name": "{{articleTitle}}",
+        "url": "{{articleUrl}}",
+        "isActive": true
+      }
+    ]
   }
 }

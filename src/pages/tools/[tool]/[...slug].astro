@@ -6,6 +6,7 @@ import Breadcrumb from '../../../components/common/Breadcrumb.astro';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
+import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
 import '../../../styles/layouts/PostLayout.css';
 
@@ -147,7 +148,7 @@ const templateVariables = {
   toolSlug: toolName,
   articleTitle: post.data.title || '',
   articleDescription: post.data.description || '',
-  articleUrl: `https://gorakudo.org${resolvedPath.path}`,
+  articleUrl: resolvedPath.path, // 相対パス（breadcrumb用）
   toolImage:
     post.data.featuredImage ||
     `https://gorakudo.org/icon/${toolName}-icon-240.webp`,
@@ -191,10 +192,19 @@ const generateSoftwareApplicationSchema = () => {
 const softwareApplicationSchema = generateSoftwareApplicationSchema();
 
 // テンプレートベースのBreadcrumb Schema生成
-const breadcrumbSchema = replaceTemplateVariables(
-  toolArticleTemplate.structuredData.breadcrumb,
+const breadcrumbData = replaceTemplateVariables(
+  toolArticleTemplate.breadcrumbData,
   templateVariables
 );
+
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: breadcrumbData.items.map((item: any, index: number) => ({
+    title: item.name,
+    url: item.url,
+    isActive: index === breadcrumbData.items.length - 1,
+  })),
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
 
 // Phase 2: メタタグの最適化 - 検索意図に合わせたタイトル・説明文・キーワード
 

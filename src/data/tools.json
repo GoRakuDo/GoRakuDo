@@ -9,7 +9,7 @@
   },
   {
     "id": "yomitan",
-    "name": "Yomichan",
+    "name": "Yomitan",
     "description": "Yomitan adalah browser extension yang memudahkan membaca teks bahasa Jepang. Dengan hover dictionary dan furigana generation, Yomitan membuat proses pembelajaran menjadi lebih interaktif dan menyenangkan.",
     "iconUrl": "/icon/yomitan-icon-240.webp",
     "color": "var(--clr-accent-dark)",

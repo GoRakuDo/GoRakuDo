@@ -26,37 +26,31 @@
         "@type": "Organization",
         "name": "GoRakuDo"
       }
-    },
-    "breadcrumb": {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Beranda",
-          "item": "https://gorakudo.org"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Tools",
-          "item": "https://gorakudo.org/tools"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "{{toolName}}",
-          "item": "https://gorakudo.org/tools/{{toolSlug}}"
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "name": "{{articleTitle}}",
-          "item": "{{articleUrl}}"
-        }
-      ]
     }
+  },
+  "breadcrumbData": {
+    "items": [
+      {
+        "name": "Beranda",
+        "url": "/",
+        "isActive": false
+      },
+      {
+        "name": "Tools",
+        "url": "/tools",
+        "isActive": false
+      },
+      {
+        "name": "{{toolName}}",
+        "url": "/tools/{{toolSlug}}",
+        "isActive": false
+      },
+      {
+        "name": "{{articleTitle}}",
+        "url": "{{articleUrl}}",
+        "isActive": true
+      }
+    ]
   },
   "toolData": {
     "anki": {
@@ -64,10 +58,10 @@
       "operatingSystem": "Windows, macOS, Linux, iOS, Android",
       "author": "Anki Team"
     },
-    "yomichan": {
+    "yomitan": {
       "description": "Tools kamus bahasa Jepang yang berjalan sebagai ekstensi browser",
       "operatingSystem": "Chrome, Firefox, Edge",
-      "author": "Yomichan Team"
+      "author": "Yomitan Team"
     },
     "migaku": {
       "description": "Tools untuk mengekstrak materi pembelajaran dari konten video",

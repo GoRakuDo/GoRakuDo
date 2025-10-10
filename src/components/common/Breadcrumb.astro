@@ -4,10 +4,7 @@
 
 import type { CollectionEntry } from 'astro:content';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
-import {
-  generateBreadcrumbSchema,
-  convertAstroBreadcrumbItems,
-} from '../../utils/breadcrumb-schema';
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 
 // ========== TYPE DEFINITIONS ==========
 export interface BreadcrumbItem {
@@ -269,7 +266,11 @@ try {
 // ========== SEO STRUCTURED DATA ==========
 // UnifiedSEO.astroで使用するための構造化データ生成
 const breadcrumbSchema = generateBreadcrumbSchema({
-  items: convertAstroBreadcrumbItems([...breadcrumbData.items]),
+  items: breadcrumbData.items.map(item => ({
+    title: item.title,
+    url: item.url,
+    isActive: item.isActive,
+  })),
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 
