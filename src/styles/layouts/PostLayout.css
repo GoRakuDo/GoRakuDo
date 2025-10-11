@@ -165,20 +165,26 @@
     .breadcrumb-container {
       @apply w-full max-w-full overflow-hidden relative;
 
-      /* Global CSS GlassMorphism効果 */
+      /* Mobile Optimized: シンプルなスタイル - 影なし */
       border: 1px solid oklch(100% 0 0deg / 0.12);
       border-radius: 16px;
-      background: linear-gradient(
-        135deg,
-        oklch(20% 0 0deg / 0.15) 0%,
-        oklch(15% 0 0deg / 0.1) 100%
-      );
-      backdrop-filter: blur(12px) saturate(1.1);
-      box-shadow:
-        0 4px 20px oklch(0% 0 0deg / 0.08),
-        0 1px 3px oklch(0% 0 0deg / 0.12),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+      background: oklch(18% 0 0deg / 0.95); /* モバイル: 不透明な背景 */
+      box-shadow: none; /* モバイル: 影完全無効化 */
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Desktop: GlassMorphism効果 */
+      @media (min-width: 769px) {
+        background: linear-gradient(
+          135deg,
+          oklch(20% 0 0deg / 0.15) 0%,
+          oklch(15% 0 0deg / 0.1) 100%
+        );
+        backdrop-filter: blur(12px) saturate(1.1);
+        box-shadow:
+          0 4px 20px oklch(0% 0 0deg / 0.08),
+          0 1px 3px oklch(0% 0 0deg / 0.12),
+          inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+      }
 
       /* スマホ画面でのマージンとパディング */
       @media (max-width: 767px) {
@@ -257,18 +263,24 @@
   }
 }
 
-/* Breadcrumb Container Hover Effect */
-.content-container .breadcrumb-container:hover {
-  background: linear-gradient(
-    135deg,
-    oklch(25% 0 0deg / 0.2) 0%,
-    oklch(20% 0 0deg / 0.15) 100%
-  );
-  border-color: color-mix(in oklch, var(--token-purple-base) 30%, transparent);
-  box-shadow:
-    0 8px 32px oklch(0% 0 0deg / 0.12),
-    0 2px 8px oklch(0% 0 0deg / 0.08),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+/* Breadcrumb Container Hover Effect - Desktop Only */
+@media (min-width: 769px) {
+  .content-container .breadcrumb-container:hover {
+    background: linear-gradient(
+      135deg,
+      oklch(25% 0 0deg / 0.2) 0%,
+      oklch(20% 0 0deg / 0.15) 100%
+    );
+    border-color: color-mix(
+      in oklch,
+      var(--token-purple-base) 30%,
+      transparent
+    );
+    box-shadow:
+      0 8px 32px oklch(0% 0 0deg / 0.12),
+      0 2px 8px oklch(0% 0 0deg / 0.08),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+  }
 }
 
 /* Breadcrumb Scrollable States */
@@ -278,11 +290,14 @@
 }
 
 .breadcrumb-container.scrolling {
-  box-shadow:
-    0 4px 20px oklch(0% 0 0deg / 0.08),
-    0 1px 3px oklch(0% 0 0deg / 0.12),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.15),
-    0 0 0 1px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+  /* Desktop Only */
+  @media (min-width: 769px) {
+    box-shadow:
+      0 4px 20px oklch(0% 0 0deg / 0.08),
+      0 1px 3px oklch(0% 0 0deg / 0.12),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.15),
+      0 0 0 1px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+  }
 }
 
 /* ========== BUTTONS ========== */
@@ -330,28 +345,34 @@
   @apply md:mx-1 md:p-5 md:min-h-50;
   @apply max-sm:mx-0 max-sm:p-4 max-sm:min-h-40;
 
-  /* Global CSS GlassMorphism効果 */
+  /* Mobile Optimized: シンプルなスタイル - 影なし */
   border: 1px solid oklch(100% 0 0deg / 0.12);
   border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    oklch(20% 0 0deg / 0.15) 0%,
-    oklch(15% 0 0deg / 0.1) 100%
-  );
-  backdrop-filter: blur(12px) saturate(1.1);
-  box-shadow:
-    0 4px 20px oklch(0% 0 0deg / 0.08),
-    0 1px 3px oklch(0% 0 0deg / 0.12),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+  background: oklch(18% 0 0deg / 0.95); /* モバイル: 不透明な背景 */
+  box-shadow: none; /* モバイル: 影完全無効化 */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* H1要素 */
+  /* Desktop: GlassMorphism効果 */
+  @media (min-width: 769px) {
+    background: linear-gradient(
+      135deg,
+      oklch(20% 0 0deg / 0.15) 0%,
+      oklch(15% 0 0deg / 0.1) 100%
+    );
+    backdrop-filter: blur(12px) saturate(1.1);
+    box-shadow:
+      0 4px 20px oklch(0% 0 0deg / 0.08),
+      0 1px 3px oklch(0% 0 0deg / 0.12),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+  }
+
+  /* H1要素 - グラデーション維持 */
   h1 {
     @apply font-bold mb-8;
 
     padding-bottom: 0.1em; /* 下部に少し余白を追加 */
 
-    /* 紫色→赤色グラデーション */
+    /* 紫色→赤色グラデーション - 全デバイスで維持 */
     background: linear-gradient(
       135deg,
       oklch(65% 0.25 280deg) 30%,
@@ -423,18 +444,24 @@
   }
 }
 
-/* Content Header Hover Effect */
-.content-header:hover {
-  background: linear-gradient(
-    135deg,
-    oklch(25% 0 0deg / 0.2) 0%,
-    oklch(20% 0 0deg / 0.15) 100%
-  );
-  border-color: color-mix(in oklch, var(--token-purple-base) 30%, transparent);
-  box-shadow:
-    0 8px 32px oklch(0% 0 0deg / 0.12),
-    0 2px 8px oklch(0% 0 0deg / 0.08),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+/* Content Header Hover Effect - Desktop Only */
+@media (min-width: 769px) {
+  .content-header:hover {
+    background: linear-gradient(
+      135deg,
+      oklch(25% 0 0deg / 0.2) 0%,
+      oklch(20% 0 0deg / 0.15) 100%
+    );
+    border-color: color-mix(
+      in oklch,
+      var(--token-purple-base) 30%,
+      transparent
+    );
+    box-shadow:
+      0 8px 32px oklch(0% 0 0deg / 0.12),
+      0 2px 8px oklch(0% 0 0deg / 0.08),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+  }
 }
 
 /* ========== CONTENT MAIN ========== */
@@ -710,9 +737,15 @@
     border: 2px solid oklch(50% 0.01 270deg);
   }
 
-  /* Android Performance Optimization */
+  /* Mobile Performance Optimization - 影完全無効化 */
   @media screen and (max-width: 768px) {
+    background: oklch(18% 0 0deg / 0.95);
     box-shadow: none;
+  }
+
+  /* Desktop: Enhanced styling */
+  @media (min-width: 769px) {
+    backdrop-filter: blur(2px);
   }
 }
 
@@ -728,6 +761,17 @@
   /* High Contrast Mode */
   @media (prefers-contrast: high) {
     border: 2px solid oklch(50% 0.01 270deg);
+  }
+
+  /* Mobile Performance Optimization - 影完全無効化 */
+  @media screen and (max-width: 768px) {
+    background: oklch(18% 0 0deg / 0.95);
+    box-shadow: none;
+  }
+
+  /* Desktop: Enhanced styling */
+  @media (min-width: 769px) {
+    backdrop-filter: blur(2px);
   }
 }
 
