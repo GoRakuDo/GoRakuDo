@@ -236,7 +236,7 @@
 .meta-icon {
   width: var(--spacing-md);
   height: var(--spacing-md);
-  color: var(--clr-accent);
+  color: var(--clr-purple);
 }
 
 /* ========== HEADER CONTAINER LAYOUT ========== */
@@ -598,7 +598,7 @@
     width: 48px;
     height: 48px;
     border-radius: 0.5rem;
-    background: oklch(from var(--clr-accent) l c h / 0.1);
+    background: oklch(from var(--clr-purple) l c h / 0.1);
     color: var(--clr-text-primary);
 
     @media (min-width: 768px) {

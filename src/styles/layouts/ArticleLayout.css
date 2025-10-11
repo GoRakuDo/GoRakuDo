@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 /* ========== ARTICLE LAYOUT STYLES ========== */
 
 /* Enhanced article layout with modern design and accessibility */
@@ -135,7 +137,7 @@
 .article-content-enhanced h2 {
   padding-bottom: var(--tool-spacing-sm);
   border-bottom: 2px solid
-    oklch(from var(--clr-accent) l c h / var(--opacity-20));
+    oklch(from var(--clr-purple) l c h / var(--opacity-20));
   font-size: var(--tool-font-size-xl);
 }
 
@@ -165,7 +167,7 @@
   margin: calc(-1 * var(--tool-spacing-xs));
   padding: var(--tool-spacing-xs);
   border-radius: var(--tool-radius-sm);
-  background: oklch(from var(--clr-accent) l c h / var(--opacity-05));
+  background: oklch(from var(--clr-purple) l c h / var(--opacity-05));
   color: var(--tool-color-primary-hover);
   border-bottom-color: var(--tool-color-primary);
 }
@@ -504,7 +506,7 @@
 }
 
 .nav-action-btn:hover {
-  background: oklch(from var(--clr-accent) l c h / var(--opacity-10));
+  background: oklch(from var(--clr-purple) l c h / var(--opacity-10));
   color: var(--tool-color-primary);
   border-color: var(--tool-color-border-hover);
 }

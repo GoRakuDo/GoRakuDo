@@ -520,7 +520,7 @@ const { initialCategory = '', initialQuery = '' } = Astro.props;
   }
 
   .category-item:hover {
-    border-color: var(--clr-accent);
+    border-color: var(--clr-purple);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
@@ -643,14 +643,14 @@ const { initialTag = '', initialQuery = '' } = Astro.props;
   }
 
   .tag-item:hover {
-    background: var(--clr-accent);
+    background: var(--clr-purple);
     color: white;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .tag-item.active {
-    background: var(--clr-accent);
+    background: var(--clr-purple);
     color: white;
   }
 
@@ -790,7 +790,7 @@ const { initialQuery = '', initialCategory = '', initialTag = '' } = Astro.props
 
   .search-input:focus {
     outline: none;
-    border-color: var(--clr-accent);
+    border-color: var(--clr-purple);
     box-shadow: 0 0 0 3px rgba(139, 93, 255, 0.1);
   }
 
@@ -798,7 +798,7 @@ const { initialQuery = '', initialCategory = '', initialTag = '' } = Astro.props
     position: absolute;
     right: 0.5rem;
     padding: 0.5rem;
-    background: var(--clr-accent);
+    background: var(--clr-purple);
     border: none;
     border-radius: 0.375rem;
     color: white;
@@ -834,7 +834,7 @@ const { initialQuery = '', initialCategory = '', initialTag = '' } = Astro.props
   }
 
   .search-result-item:hover {
-    border-color: var(--clr-accent);
+    border-color: var(--clr-purple);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
@@ -872,7 +872,7 @@ const { initialQuery = '', initialCategory = '', initialTag = '' } = Astro.props
   }
 
   .result-badge--tool {
-    background: var(--clr-accent);
+    background: var(--clr-purple);
     color: white;
   }
 

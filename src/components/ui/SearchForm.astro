@@ -151,7 +151,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     overflow: hidden;
     min-height: var(--input-height, 48px);
     padding: var(--input-padding, var(--sf-space-sm) var(--sf-space-lg));
-    border: 3px solid oklch(from var(--clr-accent) l c h / 0.4);
+    border: 3px solid oklch(from var(--clr-purple) l c h / 0.4);
     border-radius: var(--sf-radius-lg);
     background: linear-gradient(
       135deg,
@@ -168,7 +168,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     box-shadow:
       0 12px 48px oklch(from var(--clr-background) l c h / 0.25),
       0 4px 16px oklch(from var(--clr-background) l c h / 0.15),
-      0 0 0 1px oklch(from var(--clr-accent) l c h / 0.3),
+      0 0 0 1px oklch(from var(--clr-purple) l c h / 0.3),
       inset 0 2px 4px oklch(from var(--clr-background) l c h / 0.3),
       inset 0 -1px 2px oklch(from var(--clr-background) l c h / 0.1);
   }
@@ -179,10 +179,10 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     border-radius: inherit;
     background: linear-gradient(
       135deg,
-      oklch(from var(--clr-accent) l c h / 0.2) 0%,
-      oklch(from var(--clr-accent) l c h / 0.1) 30%,
+      oklch(from var(--clr-purple) l c h / 0.2) 0%,
+      oklch(from var(--clr-purple) l c h / 0.1) 30%,
       transparent 60%,
-      oklch(from var(--clr-accent) l c h / 0.08) 100%
+      oklch(from var(--clr-purple) l c h / 0.08) 100%
     );
     opacity: 0;
     pointer-events: none;
@@ -201,7 +201,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   /* 再デザイン: 超高可視性フォーカス状態 */
   .search-input:focus {
     outline: none;
-    border: 3px solid var(--clr-accent);
+    border: 3px solid var(--clr-purple);
     background: linear-gradient(
       135deg,
       oklch(from var(--clr-background) l c h / 1) 0%,
@@ -210,9 +210,9 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     box-shadow:
       0 24px 72px oklch(from var(--clr-background) l c h / 0.4),
       0 12px 32px oklch(from var(--clr-background) l c h / 0.25),
-      0 0 0 4px oklch(from var(--clr-accent) l c h / 0.3),
-      0 0 48px oklch(from var(--clr-accent) l c h / 0.5),
-      0 0 96px oklch(from var(--clr-accent) l c h / 0.3),
+      0 0 0 4px oklch(from var(--clr-purple) l c h / 0.3),
+      0 0 48px oklch(from var(--clr-purple) l c h / 0.5),
+      0 0 96px oklch(from var(--clr-purple) l c h / 0.3),
       inset 0 3px 6px oklch(from var(--clr-background) l c h / 0.5),
       inset 0 -2px 4px oklch(from var(--clr-background) l c h / 0.2);
 
@@ -240,11 +240,11 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   .search-input:focus::before {
     background: linear-gradient(
       135deg,
-      oklch(from var(--clr-accent) l c h / 0.3) 0%,
-      oklch(from var(--clr-accent) l c h / 0.2) 25%,
-      oklch(from var(--clr-accent) l c h / 0.1) 50%,
-      oklch(from var(--clr-accent) l c h / 0.15) 75%,
-      oklch(from var(--clr-accent) l c h / 0.25) 100%
+      oklch(from var(--clr-purple) l c h / 0.3) 0%,
+      oklch(from var(--clr-purple) l c h / 0.2) 25%,
+      oklch(from var(--clr-purple) l c h / 0.1) 50%,
+      oklch(from var(--clr-purple) l c h / 0.15) 75%,
+      oklch(from var(--clr-purple) l c h / 0.25) 100%
     );
     opacity: 1;
   }
@@ -265,7 +265,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     padding: var(--sf-space-sm);
     border: none;
     border-radius: var(--sf-radius-lg);
-    background: var(--clr-accent);
+    background: var(--clr-purple);
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -285,7 +285,7 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
   }
 
   .search-submit-btn:focus-visible {
-    outline: 2px solid var(--clr-accent);
+    outline: 2px solid var(--clr-purple);
     outline-offset: 2px;
   }
 
@@ -360,12 +360,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     }
 
     .search-form-container .search-input:focus {
-      border-color: var(--clr-accent);
-      box-shadow: 0 0 0 4px oklch(from var(--clr-accent) l c h / 0.2);
+      border-color: var(--clr-purple);
+      box-shadow: 0 0 0 4px oklch(from var(--clr-purple) l c h / 0.2);
     }
 
     .search-submit-btn {
-      border: 2px solid var(--clr-accent);
+      border: 2px solid var(--clr-purple);
     }
   }
 </style>

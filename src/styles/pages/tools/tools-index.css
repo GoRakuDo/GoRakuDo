@@ -493,7 +493,7 @@
 
   /* ========== アクセシビリティ ========== */
   &:focus-visible {
-    outline: 2px solid oklch(from var(--clr-accent) l c h / 0.5);
+    outline: 2px solid oklch(from var(--clr-purple) l c h / 0.5);
     outline-offset: 2px;
   }
 }
@@ -658,7 +658,7 @@
 /* ========== TOOLS GRID SECTION COMPONENT STYLES ========== */
 
 .tool-icon-anki {
-  background-color: var(--clr-accent);
+  background-color: var(--clr-purple);
 }
 
 .tool-icon-yomitan {

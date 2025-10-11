@@ -83,7 +83,7 @@
   --pl-color-brand-primary-hover: var(--token-purple-hover);
   --pl-filter-grayscale: grayscale(0.75);
   --pl-text-decoration-thickness: 2px;
-  --pl-text-underline-offset: 0.1em;
+  --pl-text-underline-offset: 0.2em;
   --pl-font-weight-bold: var(--pl-font-bold);
   --pl-font-size-marker: 1.2em;
   --pl-transition-text-decoration: text-decoration-color

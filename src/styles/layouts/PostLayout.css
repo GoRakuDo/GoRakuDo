@@ -1,37 +1,16 @@
-/* ========== CONTENT PAGE STYLES ========== */
-
-/* Custom styles for content pages that cannot be handled by Tailwind Typography */
-
-/* 
- * VARIABLE ORGANIZATION:
- * - High-frequency variables (3+ uses): Moved to global.css for better maintainability
- * - Low-frequency variables (1-2 uses): Kept local for component-specific styling
- * 
- * High-frequency variables in global.css:
- * - --clr-content-border (4 uses)
- * - --clr-content-background-card (3 uses) 
- * - --shadow-content-card (4 uses)
- * - --clr-content-meta (4 uses)
- * - --clr-accent-glow-medium (3 uses)
- * - --clr-accent (3 uses)
- * - --clr-accent-dark (3 uses)
- */
-
-@import '../global.css';
+@import 'tailwindcss';
 
 /* ========== CONTENT PAGE LAYOUT ========== */
 
 .content-page {
   @apply min-h-screen w-full relative z-[var(--z-content-main)] m-0;
-  @apply bg-[var(--clr-content-background-light)] bg-[length:30px_30px];
+  @apply bg-[length:30px_30px];
   @apply pt-20 pb-8 backdrop-blur-[1px];
   @apply md:pt-16 md:pb-6;
   @apply max-sm:pt-12 max-sm:pb-4;
 
-  /* Android optimization - remove backdrop-filter on mobile for better performance */
-  @media screen and (max-width: 768px) {
-    @apply backdrop-blur-none;
-  }
+  /* 75%透明度の背景色を適用 */
+  background-color: oklch(from var(--token-black-base) l c h / 0.75);
 
   /* Content Container */
   .content-container {
@@ -39,6 +18,20 @@
     @apply md:pt-6;
     @apply max-sm:pt-4;
     @apply w-dvw max-w-full;
+
+    /* Android Performance Optimization */
+    @media screen and (max-width: 768px) {
+      * {
+        animation-duration: 0.2s; /* Faster animations for mobile */
+      }
+    }
+  }
+
+  /* Android Performance Optimization */
+  @media screen and (max-width: 768px) {
+    * {
+      animation-duration: 0.2s; /* Faster animations for mobile */
+    }
   }
 }
 
@@ -49,7 +42,7 @@
   /* スクロールバーのスタイリング */
   @media (max-width: 767px) {
     &::-webkit-scrollbar {
-      height: 4px;
+      height: 3px;
     }
 
     &::-webkit-scrollbar-track {
@@ -300,18 +293,32 @@
 .back-to-tools,
 .share-btn {
   @apply inline-flex items-center gap-2 no-underline mb-0 outline-none h-10 box-border whitespace-nowrap;
-  @apply text-sm font-medium text-[var(--clr-accent)];
+  @apply text-sm font-medium text-[var(--clr-purple)];
   @apply bg-[var(--clr-accent-glow-faint)] px-4 py-2 rounded-lg;
   @apply border border-[var(--clr-accent-glow-medium)];
   @apply transition-all duration-300 ease-in-out;
   @apply hover:text-[var(--clr-accent-dark)] hover:bg-[var(--clr-accent-glow-medium)];
   @apply hover:border-[var(--clr-accent-glow-strong)] hover:-translate-y-px;
   @apply hover:shadow-[0_4px_12px_var(--clr-accent-glow-medium)];
-  @apply focus-visible:outline-2 focus-visible:outline-[var(--clr-accent)] focus-visible:outline-offset-2;
+  @apply focus-visible:outline-2 focus-visible:outline-[var(--clr-purple)] focus-visible:outline-offset-2;
   @apply focus-visible:shadow-[0_0_0_2px_var(--clr-accent-glow-medium)];
   @apply active:scale-95 active:transition-transform;
   @apply max-[480px]:px-3 max-[480px]:py-1.5 max-[480px]:text-[0.8rem] max-[480px]:h-9;
   @apply min-h-[44px] min-w-[44px]; /* Touch target accessibility */
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    border: 2px solid var(--clr-purple);
+  }
+
+  /* Android Performance Optimization */
+  @media screen and (max-width: 768px) {
+    animation-duration: 0.2s; /* Faster animations for mobile */
+
+    &:hover {
+      transform: none; /* Remove transform on Android hover (touch devices) */
+    }
+  }
 }
 
 /* ========== CONTENT HEADER ========== */
@@ -356,7 +363,7 @@
     line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
 
     @apply max-sm:text-xl max-sm:mb-3;
-    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-accent)] focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-purple)] focus:ring-offset-2;
     @apply focus:ring-offset-[var(--clr-content-background-card)];
 
     /* タブレットサイズでのフォントサイズ調整 */
@@ -370,12 +377,22 @@
     @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
     @apply text-[var(--clr-content-meta)];
     @apply max-sm:gap-3 max-sm:text-[0.8rem];
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      color: oklch(100% 0 0deg / var(--opacity-95));
+    }
   }
 
   .content-date,
   .content-author,
   .content-read-time {
     @apply text-[var(--clr-content-meta)];
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      color: oklch(100% 0 0deg / var(--opacity-95));
+    }
   }
 
   /* Content Tags */
@@ -398,6 +415,11 @@
     &.difficulty-advanced {
       @apply bg-[oklch(60%_0.15_25deg/0.2)] text-red-300 border border-[oklch(60%_0.15_25deg/0.3)];
     }
+  }
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    border: 2px solid oklch(50% 0.01 270deg);
   }
 }
 
@@ -451,7 +473,7 @@
     font-size: 2.25rem; /* 36px - チャレンジページ */
 
     @apply max-sm:text-xl max-sm:mb-3;
-    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-accent)] focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-purple)] focus:ring-offset-2;
     @apply focus:ring-offset-[var(--clr-content-background-card)];
 
     /* タブレットサイズでのフォントサイズ調整 */
@@ -460,74 +482,74 @@
     }
   }
 
-  /* H2要素 - 紫色→赤色グラデーション */
+  /* 個別のスペーシング設定 */
   h2 {
     @apply relative mb-5 leading-tight; /* 20px bottom margin */
 
-    /* 紫色→赤色グラデーション */
-    background: linear-gradient(
-      135deg,
-      oklch(65% 0.25 280deg) 5%,
-      var(--token-white-base) 100%
-    );
-    background-clip: text;
-    color: transparent;
+    /* H2の左側に装飾線を追加 */
+    &::before {
+      position: absolute;
+      top: 0;
+      left: -1.25rem;
+      width: 4px;
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(
+        135deg,
+        var(--clr-purple),
+        var(--clr-accent-dark)
+      );
+      opacity: var(--opacity-80);
+      content: '';
+      transition: opacity 0.2s ease;
+    }
   }
 
-  /* H3要素 - 紫色→赤色グラデーション */
-  h3 {
-    @apply mb-4 mt-6 leading-snug; /* 16px bottom, 24px top margin */
-
-    /* 紫色→赤色グラデーション */
-    background: linear-gradient(
-      135deg,
-      oklch(65% 0.25 280deg) 5%,
-      var(--token-white-base) 100%
-    );
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* H4要素 - 紫色→赤色グラデーション */
-  h4 {
-    @apply mb-3 mt-5 leading-snug; /* 12px bottom, 20px top margin */
-
-    /* 紫色→赤色グラデーション */
-    background: linear-gradient(
-      135deg,
-      oklch(65% 0.25 280deg) 5%,
-      var(--token-white-base) 100%
-    );
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* H5要素 - 紫色→赤色グラデーション */
-  h5 {
-    @apply mb-2 mt-4 leading-snug; /* 8px bottom, 16px top margin */
-
-    /* 紫色→赤色グラデーション */
-    background: linear-gradient(
-      135deg,
-      oklch(65% 0.25 280deg) 5%,
-      var(--token-white-base) 100%
-    );
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* H6要素 - 紫色→赤色グラデーション */
+  /* H2-H6共通 - 紫色→赤色グラデーション */
+  h2,
+  h3,
+  h4,
+  h5,
   h6 {
-    @apply mb-2 mt-3 leading-snug; /* 8px bottom, 12px top margin */
-
-    /* 紫色→赤色グラデーション */
     background: linear-gradient(
       135deg,
       oklch(65% 0.25 280deg) 5%,
       var(--token-white-base) 100%
     );
+
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* 全見出し（H2-H6）のEmoji専用wrapper - グラデーションの影響を除外 */
+  h2 .emoji,
+  h3 .emoji,
+  h4 .emoji,
+  h5 .emoji,
+  h6 .emoji {
+    background: none;
+
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-background-clip: initial;
+    background-clip: initial;
+
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-text-fill-color: initial;
+    color: initial;
+  }
+
+  /* Prose underline styling - アンダーラインスタイル */
+  .content-main u,
+  .article-content u,
+  .prose u {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: oklch(from var(--token-text-muted) l c h / 0.85);
   }
 
   /* Prose list styling */
@@ -550,6 +572,23 @@
 
   &.prose hr {
     @apply my-4;
+  }
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    :where(h1, h2, h3, h4, h5) {
+      color: oklch(100% 0 0deg);
+    }
+
+    :where(p, li, blockquote) {
+      color: oklch(100% 0 0deg);
+    }
+  }
+
+  /* Android Performance Optimization */
+  @media screen and (max-width: 768px) {
+    contain: layout style; /* Remove paint containment for better Android compatibility */
+    will-change: auto;
   }
 }
 
@@ -577,24 +616,6 @@
   @apply mb-0; /* Remove bottom margin from last paragraph */
 }
 
-/* Content Main H2 Before Pseudo-element */
-.content-main h2::before {
-  position: absolute;
-  top: 0;
-  left: -1.25rem;
-  width: 4px;
-  height: 100%;
-  border-radius: 2px;
-  background: linear-gradient(
-    135deg,
-    var(--clr-accent),
-    var(--clr-accent-dark)
-  );
-  opacity: var(--opacity-80);
-  content: '';
-  transition: opacity 0.2s ease;
-}
-
 /* ========== LEGACY SUPPORT ========== */
 
 /* Consolidated legacy selectors for backward compatibility */
@@ -611,12 +632,22 @@
     @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
     @apply text-[var(--clr-content-meta)];
     @apply max-sm:gap-3 max-sm:text-[0.8rem];
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      color: oklch(100% 0 0deg / var(--opacity-95));
+    }
   }
 
   .post-date,
   .post-author,
   .post-read-time {
     @apply text-[var(--clr-content-meta)];
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      color: oklch(100% 0 0deg / var(--opacity-95));
+    }
   }
 
   .post-title {
@@ -626,6 +657,11 @@
   .post-tags {
     @apply flex items-center justify-center gap-3;
   }
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    border: 2px solid oklch(50% 0.01 270deg);
+  }
 }
 
 .post-content {
@@ -633,6 +669,17 @@
   @apply text-[var(--clr-content-text)];
   @apply md:p-5 md:px-3;
   @apply max-sm:p-4 max-sm:px-2;
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    :where(h1, h2, h3, h4, h5) {
+      color: oklch(100% 0 0deg);
+    }
+
+    :where(p, li, blockquote) {
+      color: oklch(100% 0 0deg);
+    }
+  }
 }
 
 /* ========== ACTION BUTTONS ========== */
@@ -657,6 +704,16 @@
     @apply flex gap-3 items-center;
     @apply max-[480px]:gap-2;
   }
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    border: 2px solid oklch(50% 0.01 270deg);
+  }
+
+  /* Android Performance Optimization */
+  @media screen and (max-width: 768px) {
+    box-shadow: none;
+  }
 }
 
 .post-actions {
@@ -667,6 +724,11 @@
   @apply sm:flex-row;
   @apply md:my-6 md:p-5;
   @apply max-sm:my-4 max-sm:p-4 max-sm:gap-3;
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    border: 2px solid oklch(50% 0.01 270deg);
+  }
 }
 
 /* ========== READING PROGRESS ========== */
@@ -674,7 +736,7 @@
   @apply fixed top-0 left-0 w-0 h-[3px] z-[var(--z-content-progress)];
   @apply transition-[width] duration-100 ease-linear;
 
-  background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent-dark));
+  background: linear-gradient(90deg, var(--clr-purple), var(--clr-accent-dark));
 }
 
 /* ========== CODE BLOCKS ========== */
@@ -689,76 +751,29 @@ pre {
   @apply overflow-x-auto;
 }
 
-/* ========== ACCESSIBILITY & RESPONSIVE ========== */
+/* ========== ASTRO-CLOUDINARY CLDIMAGE ========== */
 
-/* ========== HIGH CONTRAST MODE ========== */
-@media (prefers-contrast: high) {
-  .content-header,
-  .content-actions,
-  .post-header,
-  .post-actions {
-    border: 2px solid oklch(50% 0.01 270deg);
-  }
+/* CldImage component styling - always rounded corners and centered */
+.content-main img[src*='cloudinary'],
+.prose img[src*='cloudinary'],
+.article-content img[src*='cloudinary'],
+img[data-cloudinary] {
+  @apply rounded-lg mx-auto block;
 
-  .back-to-content,
-  .back-to-docs,
-  .back-to-tools,
-  .share-btn {
-    border: 2px solid var(--clr-accent);
-  }
-
-  .content-main :where(h1, h2, h3, h4, h5),
-  .post-content :where(h1, h2, h3, h4, h5) {
-    color: oklch(100% 0 0deg);
-  }
-
-  .content-main :where(p, li, blockquote),
-  .post-content :where(p, li, blockquote) {
-    color: oklch(100% 0 0deg);
-  }
-
-  .content-meta,
-  .content-date,
-  .content-author,
-  .content-read-time,
-  .post-meta,
-  .post-date,
-  .post-author,
-  .post-read-time {
-    color: oklch(100% 0 0deg / var(--opacity-95));
-  }
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 0.5rem;
 }
 
-/* ========== ANDROID PERFORMANCE OPTIMIZATIONS ========== */
+/* Additional styling for CldImage components */
+.content-main img,
+.prose img,
+.article-content img {
+  @apply rounded-lg mx-auto block;
 
-/* Reduce expensive CSS effects on Android devices for better performance */
-@media screen and (max-width: 768px) {
-  /* Disable complex animations on Android */
-  .content-page *,
-  .content-container *,
-  .back-to-content,
-  .back-to-docs,
-  .back-to-tools,
-  .share-btn {
-    animation-duration: 0.2s; /* Faster animations for mobile */
-  }
-
-  /* Simplify transforms for better Android performance */
-  .back-to-content:hover,
-  .back-to-docs:hover,
-  .back-to-tools:hover,
-  .share-btn:hover {
-    transform: none; /* Remove transform on Android hover (touch devices) */
-  }
-
-  /* Optimize content rendering on Android */
-  .content-main {
-    contain: layout style; /* Remove paint containment for better Android compatibility */
-    will-change: auto;
-  }
-
-  /* Reduce box-shadow complexity on Android */
-  .content-actions {
-    box-shadow: none;
-  }
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 0.5rem;
 }

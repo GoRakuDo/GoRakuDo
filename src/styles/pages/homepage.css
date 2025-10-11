@@ -547,7 +547,7 @@ body.modal-open {
 .cta-button {
   background: linear-gradient(
     135deg,
-    var(--clr-accent) 0%,
+    var(--clr-purple) 0%,
     var(--clr-accent-dark) 100%
   );
   color: var(--clr-text-primary);
@@ -570,7 +570,7 @@ body.modal-open {
 
   &:hover {
     background: var(--clr-accent-glow-medium);
-    border-color: var(--clr-accent);
+    border-color: var(--clr-purple);
     box-shadow: 0 10px 30px var(--clr-accent-glow-strong);
   }
 }
@@ -963,7 +963,7 @@ section .primary-button {
   border-radius: var(--border-radius-pill);
   background-image: linear-gradient(
     135deg,
-    var(--clr-accent) 0%,
+    var(--clr-purple) 0%,
     var(--clr-accent-dark) 100%
   );
   color: var(--clr-text-primary);
@@ -1126,7 +1126,7 @@ section .secondary-button {
 
 /* Responsive typography scale */
 .hero-kicker {
-  color: var(--clr-accent);
+  color: var(--clr-purple);
   font-family: var(--font-serif);
   font-size: 0.875rem;
   font-weight: 500;

@@ -185,7 +185,7 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
   }
 
   .faq-button:focus-visible {
-    outline: 2px solid var(--clr-accent);
+    outline: 2px solid var(--clr-purple);
     outline-offset: 2px;
   }
 
@@ -268,10 +268,11 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
   }
 
   .faq-answer-content a {
-    color: var(--clr-accent);
+    color: var(--clr-purple);
     text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    text-decoration-color: oklch(from var(--token-text-muted) l c h / 0.85);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
     transition: color var(--transition-fast);
   }
 

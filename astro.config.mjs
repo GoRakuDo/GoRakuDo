@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import compress from 'vite-plugin-compression';
 
 import mdx from '@astrojs/mdx';
+import rehypeWrapEmoji from './src/plugins/rehype-wrap-emoji.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -38,7 +39,9 @@ export default defineConfig({
 
   // MDX support and Sitemap generation
   integrations: [
-    mdx(),
+    mdx({
+      rehypePlugins: [rehypeWrapEmoji],
+    }),
     sitemap({
       filter: page => !page.includes('404'),
       changefreq: 'weekly',

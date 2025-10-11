@@ -324,7 +324,7 @@ const maxRetryAttempts = 3;
 ```css
 /* ✅ Good - Using custom CSS variables with clr- prefix */
 .navbar {
-  color: var(--clr-accent);
+  color: var(--clr-purple);
   background: var(--clr-accent-dark);
 }
 
@@ -583,7 +583,7 @@ CSS is like the styling rules for your website (colors, fonts, layout). Tailwind
 }
 
 .navbar {
-  color: var(--clr-accent);
+  color: var(--clr-purple);
   background: var(--clr-accent-dark);
 }
 

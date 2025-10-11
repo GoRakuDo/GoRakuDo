@@ -2,6 +2,7 @@
 // ========== IMPORTS ==========
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
+import Button from '../../components/ui/Button.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import panduanSeoData from '../../data/seo/pages/panduan-lengkap.json';
 // Cloudinary image public IDs
@@ -251,6 +252,14 @@ const faqSchema = {
                   >meresap dan membentuk Intuisi Bahasa Jepang</strong
                 >.
               </p>
+              <div style='margin: 2rem 0; text-align: center;'>
+                <Button
+                  text='Pemabahasan Lebih Lanjut'
+                  href='/docs/kenapa-belajar-bahasa-jepang-susah'
+                  variant='primary'
+                  size='sm'
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -405,6 +414,7 @@ const faqSchema = {
 
         <!-- ========== Comprehensible Inputセクション ========== -->
         <div
+          id='comprehensible-input'
           class='content-section content-section--secondary section--purple-strong'
         >
           <div class='pl-objContainer pl-objContainer--image-right'>

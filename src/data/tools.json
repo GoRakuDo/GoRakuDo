@@ -4,7 +4,7 @@
     "name": "Anki",
     "description": "Anki adalah aplikasi flashcard yang sangat powerful untuk menghafal kosakata bahasa Jepang. Dengan sistem spaced repetition, Anki membantu Anda mengingat kata-kata dengan lebih efektif dan efisien.",
     "iconUrl": "/icon/anki-icon-240.webp",
-    "color": "var(--clr-accent)",
+    "color": "var(--clr-purple)",
     "link": "/tools/anki"
   },
   {

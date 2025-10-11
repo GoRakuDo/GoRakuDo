@@ -803,7 +803,7 @@ CSSの特異性を理解し、保守可能で予測可能なスタイルシー�
 **統合内容**:
 ```css
 /* 削除 */
---clr-primary: var(--clr-accent);
+--clr-primary: var(--clr-purple);
 --clr-primary-dark: var(--clr-accent-dark);
 
 /* 全ファイルで--clr-accentに統一 */

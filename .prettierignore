@@ -1,0 +1,12 @@
+# MDXファイルをPrettierの対象から除外
+*.mdx
+**/*.mdx
+
+# その他の除外ファイル
+node_modules/
+dist/
+.astro/
+.bmad-core/
+bmad-docs/
+public/
+

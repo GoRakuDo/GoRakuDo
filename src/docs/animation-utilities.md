@@ -78,7 +78,7 @@
   
   /* カスタムのホバー効果 */
   &:hover {
-    background-color: var(--clr-accent);
+    background-color: var(--clr-purple);
     box-shadow: var(--shadow-hover);
     transform: var(--hover-lift);
   }
