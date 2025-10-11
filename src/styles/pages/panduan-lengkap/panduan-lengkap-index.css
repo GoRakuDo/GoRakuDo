@@ -155,10 +155,6 @@ body {
    PERFORMANCE OPTIMIZATIONS
    ======================================== */
 
-.pl-objTitle {
-  will-change: background-position;
-}
-
 h2.pl-objTitle,
 h3.pl-objTitle {
   @media (max-width: 768px) {
@@ -180,24 +176,15 @@ h3.pl-objTitle {
   max-width: min(350px, 35vw);
   height: auto;
   object-fit: contain;
-  will-change: transform;
   margin: 0;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  transition: transform var(--pl-transition-normal);
 
-  /* Android Chrome対応: スマホでの画像サイズを最適化 */
+  /* モバイル: サイズ最適化 */
   @media (max-width: 768px) {
-    width: auto; /* width: 100%を無効化してコンテンツに応じたサイズに */
-    max-width: min(280px, 50vw); /* より適切な最大幅に調整 */
-    height: auto;
-    transform: none; /* transform: scale()を削除してAndroid Chromeでの表示問題を解決 */
+    width: auto;
+    max-width: min(280px, 50vw);
   }
 
-  @media (min-width: 768px) and (max-width: 1024px) {
-    transform: scale(var(--pl-scale-modal-open));
-  }
-
+  /* デスクトップ: 拡大効果 */
   @media (min-width: 1024px) {
     transform: scale(1.05);
   }
@@ -464,47 +451,21 @@ a {
 
     /* スマホ: 適度な拡大で可読性向上 */
     @media (max-width: 767px) {
-      /* モバイル: scale値を控えめに */
-      @media (min-width: 769px) {
-        transform: scale(1.1);
-      }
-
-      @media (max-width: 768px) {
-        transform: scale(1.02);
-      }
-
+      transform: scale(1.02);
       transform-origin: left top;
     }
 
     /* タブレット: 中程度の拡大 */
     @media (min-width: 768px) and (max-width: 1023px) {
       padding-left: var(--pl-space-lg);
-
-      /* モバイル: scale値を控えめに */
-      @media (min-width: 769px) {
-        transform: scale(1.3);
-      }
-
-      @media (max-width: 768px) {
-        transform: scale(1.02);
-      }
-
+      transform: scale(1.3);
       transform-origin: left top;
     }
 
     /* デスクトップ: 最大拡大 */
     @media (min-width: 1024px) {
       padding-left: var(--pl-space-lg);
-
-      /* モバイル: scale値を控えめに */
-      @media (min-width: 769px) {
-        transform: scale(1.5);
-      }
-
-      @media (max-width: 768px) {
-        transform: scale(1.02);
-      }
-
+      transform: scale(1.5);
       transform-origin: left top;
     }
 
@@ -652,12 +613,14 @@ a {
   height: 100%;
   object-fit: contain;
   filter: var(--pl-filter-grayscale);
-  will-change: filter;
-  transform: translateZ(0);
-  transition: filter var(--pl-transition-normal);
 
-  &:hover {
-    filter: none;
+  /* Desktop: ホバー効果 */
+  @media (min-width: 768px) {
+    transition: filter var(--pl-transition-normal);
+
+    &:hover {
+      filter: none;
+    }
   }
 
   @media (prefers-contrast: high) {
@@ -740,18 +703,13 @@ a {
     object-fit: contain;
     filter: drop-shadow(var(--pl-shadow-lg));
     opacity: var(--opacity-90);
-    will-change: transform;
-    transform: translateZ(0);
-    transition: transform var(--pl-transition-normal);
 
-    &:hover {
-      /* モバイル: translateYを削減 */
-      @media (min-width: 769px) {
+    /* Desktop: ホバー効果 */
+    @media (min-width: 768px) {
+      transition: transform var(--pl-transition-normal);
+
+      &:hover {
         transform: translateY(-4px);
-      }
-
-      @media (max-width: 768px) {
-        transform: translateY(-2px);
       }
     }
   }
@@ -947,28 +905,32 @@ a {
   overflow: hidden;
   border-radius: var(--pl-radius-lg);
   cursor: default;
-  transition:
-    transform var(--pl-transition-normal),
-    box-shadow var(--pl-transition-normal);
 }
 
 /* pl-objImages--special内でのみ有効化 */
 .pl-objImages--special .image-zoom-trigger {
   cursor: pointer;
-  transform-origin: center center; /* 中心から拡大して左右の切れを防ぐ */
+  transform-origin: center center;
 
-  &:hover {
-    transform: scale(var(--pl-scale-hover));
-    box-shadow: var(--pl-shadow-lg);
+  /* Desktop: ホバー効果 */
+  @media (min-width: 768px) {
+    transition:
+      transform var(--pl-transition-normal),
+      box-shadow var(--pl-transition-normal);
+
+    &:hover {
+      transform: scale(var(--pl-scale-hover));
+      box-shadow: var(--pl-shadow-lg);
+    }
+
+    &:active {
+      transform: scale(var(--pl-scale-active));
+    }
   }
 
   &:focus-visible {
     outline: 2px solid var(--pl-color-primary);
     outline-offset: 4px;
-  }
-
-  &:active {
-    transform: scale(var(--pl-scale-active));
   }
 }
 
@@ -1172,16 +1134,20 @@ a {
       min(var(--pl-gap-responsive-mobile), 4vw);
     border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: var(--pl-radius-2xl);
-    background: oklch(100% 0 0deg / var(--opacity-10));
-    backdrop-filter: blur(12px);
     box-shadow:
       0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
       inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
     text-align: center;
 
+    /* Mobile: シンプルな背景 */
     @media (max-width: 768px) {
-      backdrop-filter: blur(12px);
       background: oklch(100% 0 0deg / var(--opacity-08));
+    }
+
+    /* Desktop: backdrop-filter */
+    @media (min-width: 769px) {
+      background: oklch(100% 0 0deg / var(--opacity-10));
+      backdrop-filter: blur(12px);
     }
 
     .learning-method-content {
@@ -1250,20 +1216,21 @@ a {
       min(var(--pl-gap-responsive-mobile), 4vw);
     border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: var(--pl-radius-2xl);
-    background: oklch(100% 0 0deg / var(--opacity-10));
-    backdrop-filter: blur(12px);
     box-shadow:
       0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
       inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
 
+    /* Mobile: シンプルな背景 */
     @media (max-width: 768px) {
-      backdrop-filter: blur(12px);
       background: oklch(100% 0 0deg / var(--opacity-08));
     }
 
+    /* Desktop: backdrop-filter */
     @media (min-width: 768px) {
       padding: min(var(--pl-gap-responsive-tablet), 6vw)
         min(calc(var(--pl-gap-responsive-mobile) * 2), 6vw);
+      background: oklch(100% 0 0deg / var(--opacity-10));
+      backdrop-filter: blur(12px);
     }
 
     .methodology-summary-content {
@@ -1401,7 +1368,6 @@ a {
     border: 1px solid var(--clr-glass-border);
     border-radius: var(--pl-radius-2xl);
     background: var(--clr-glass-background);
-    backdrop-filter: blur(12px);
     box-shadow:
       0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
       inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
@@ -1410,16 +1376,19 @@ a {
     color: var(--pl-color-secondary);
     text-align: center;
 
-    /* Animation */
-    transition: all 0.3s ease;
+    /* Desktop: backdrop-filter & ホバー効果 */
+    @media (min-width: 768px) {
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
 
-    &:hover {
-      border-color: var(--clr-glass-border-hover);
-      background: var(--clr-glass-background-hover);
-      transform: translateY(-2px);
-      box-shadow:
-        0 12px 40px oklch(0% 0 0deg / var(--opacity-15)),
-        inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-30));
+      &:hover {
+        border-color: var(--clr-glass-border-hover);
+        background: var(--clr-glass-background-hover);
+        transform: translateY(-2px);
+        box-shadow:
+          0 12px 40px oklch(0% 0 0deg / var(--opacity-15)),
+          inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-30));
+      }
     }
   }
 }
@@ -1679,7 +1648,6 @@ u {
 
   .image-zoom-trigger {
     cursor: default;
-    transition: transform 0.2s ease;
   }
 }
 
@@ -1742,22 +1710,18 @@ ol li::marker,
   overflow: hidden;
   border-radius: var(--pl-radius-xl);
   box-shadow: 0 4px 16px oklch(0% 0 0deg / var(--opacity-10));
-
-  /* 高解像度ディスプレイでの画像品質向上 */
   image-rendering: auto;
 
-  /* 高DPIディスプレイ対応 */
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  /* Desktop: ホバー効果 */
+  @media (min-width: 768px) {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
 
-  /* アニメーション */
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  &:hover {
-    transform: scale(var(--pl-scale-hover));
-    box-shadow: 0 8px 24px oklch(0% 0 0deg / var(--opacity-15));
+    &:hover {
+      transform: scale(var(--pl-scale-hover));
+      box-shadow: 0 8px 24px oklch(0% 0 0deg / var(--opacity-15));
+    }
   }
 }
 

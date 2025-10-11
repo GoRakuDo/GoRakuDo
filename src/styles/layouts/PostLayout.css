@@ -3,34 +3,43 @@
 /* ========== CONTENT PAGE LAYOUT ========== */
 
 .content-page {
-  @apply min-h-screen w-full relative z-[var(--z-content-main)] m-0;
-  @apply bg-[length:30px_30px];
-  @apply pt-20 pb-8 backdrop-blur-[1px];
-  @apply md:pt-16 md:pb-6;
-  @apply max-sm:pt-12 max-sm:pb-4;
-
-  /* 75%透明度の背景色を適用 */
+  position: relative;
+  z-index: var(--z-content-main);
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding-top: 5rem;
+  padding-bottom: 2rem;
   background-color: oklch(from var(--token-black-base) l c h / 0.75);
+  background-size: 30px 30px;
+
+  @media (min-width: 768px) {
+    padding-top: 4rem;
+    padding-bottom: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Desktop: backdrop-filter（モバイルでは重すぎるため無効化） */
+  @media (min-width: 769px) {
+    backdrop-filter: blur(1px);
+  }
 
   /* Content Container */
   .content-container {
-    @apply max-w-4xl pt-8 px-0 pb-0 box-border;
-    @apply md:pt-6;
-    @apply max-sm:pt-4;
-    @apply w-dvw max-w-full;
-
-    /* Android Performance Optimization */
-    @media screen and (max-width: 768px) {
-      * {
-        animation-duration: 0.2s; /* Faster animations for mobile */
-      }
-    }
+    width: 100dvw;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: clamp(1rem, 3vw, 2rem) 0 0;
   }
 
-  /* Android Performance Optimization */
+  /* Mobile Performance Optimization */
   @media screen and (max-width: 768px) {
-    * {
-      animation-duration: 0.2s; /* Faster animations for mobile */
+    .content-container * {
+      animation-duration: 0.2s;
     }
   }
 }
@@ -38,20 +47,36 @@
 /* ========== FEATURED IMAGE STYLING ========== */
 
 .featured-image-container {
-  @apply w-full flex justify-center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .featured-image-thumbnail {
-  @apply w-full max-w-4xl h-auto rounded-lg shadow-lg;
-  @apply transition-transform duration-300 ease-in-out;
-  @apply hover:scale-[1.02];
+  width: 100%;
+  max-width: 56rem;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-  /* レスポンシブサイズ調整 */
-  @apply max-sm:rounded-md;
+  @media (max-width: 640px) {
+    border-radius: 0.375rem;
+  }
 
   /* 16:9の表示領域を維持し、画像全体を自動調整 */
   object-fit: contain;
   aspect-ratio: 16/9;
+
+  /* Desktop: Transition効果 */
+  @media (min-width: 768px) {
+    transition: transform 300ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
 }
 
 /* CldImageの内部スタイルを上書き */
@@ -65,8 +90,6 @@
     0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
 
-  transition: transform 300ms ease-in-out;
-
   /* @unpic/astroの内部スタイルを上書きするため!importantが必要 */
   /* stylelint-disable-next-line declaration-no-important */
   object-fit: contain !important;
@@ -74,13 +97,14 @@
   aspect-ratio: 16/9 !important;
 }
 
-/* デスクトップサイズのみhover効果を適用 */
+/* Desktop: Transition & Hover効果 */
 @media (min-width: 768px) {
-  /* stylelint-disable-next-line selector-max-specificity */
-  .featured-image-container
-    .astro-cloudinary-cldimage.featured-image-thumbnail:hover,
-  .featured-image-thumbnail.astro-cloudinary-cldimage:hover {
-    transform: scale(1.02);
+  .astro-cloudinary-cldimage.featured-image-thumbnail {
+    transition: transform 300ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 }
 
@@ -178,20 +202,36 @@
 
 /* ========== LAYOUT SUPPORT ========== */
 .content-wrapper {
-  @apply grid gap-0 px-0 max-w-full;
-
-  /* スマホ: 1列レイアウト */
+  display: grid;
+  gap: 0;
   grid-template-areas:
     'content'
     'toc';
   grid-template-columns: 1fr;
+  max-width: 100%;
+  padding-right: 0;
+  padding-left: 0;
 
   /* タブレット以上: 2列レイアウト */
-  @apply sm:gap-4;
-  @apply md:gap-5;
-  @apply lg:gap-6;
-  @apply xl:gap-8;
-  @apply 2xl:gap-8;
+  @media (min-width: 640px) {
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    gap: 2rem;
+  }
+
+  @media (min-width: 1536px) {
+    gap: 2rem;
+  }
 
   /* スマホでのオーバーフロー防止 */
   @media (max-width: 767px) {
@@ -219,48 +259,38 @@
 
   /* Content Container - Grid Area: content */
   .content-container {
-    @apply min-w-0 max-w-full;
-
-    /* Flexboxフレーム箱 */
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
     grid-area: content;
-    padding: 0.9375rem; /* 15px (12px × 1.25) */
+    min-width: 0;
+    max-width: 100%;
+    padding: clamp(1rem, 2.5vw, 2.5rem);
 
-    @apply sm:p-4;
-    @apply md:p-6;
-    @apply lg:p-7;
-    @apply xl:p-8;
-    @apply 2xl:p-10 2xl:max-w-4xl;
-
-    /* レスポンシブギャップ */
-    @media (min-width: 768px) {
-      gap: 1rem;
-    }
-
-    @media (min-width: 1024px) {
-      gap: 1.25rem;
+    @media (min-width: 1536px) {
+      max-width: 56rem;
     }
 
     /* Breadcrumb Container - Inside content-container */
     .breadcrumb-container {
-      @apply w-full max-w-full overflow-hidden relative;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
 
-      /* GlassMorphism効果 - 全デバイス共通 */
+      /* GlassMorphism効果 */
       border: 1px solid oklch(65% 0.15 280deg / 0.2);
       border-radius: 16px;
       background: oklch(50% 0 0deg / 0.15);
-      backdrop-filter: blur(6px) saturate(1.1);
-      box-shadow: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-      /* Desktop: 追加の影効果 */
+      /* Desktop: backdrop-filter、影効果、トランジション */
       @media (min-width: 769px) {
+        backdrop-filter: blur(6px) saturate(1.1);
         box-shadow:
           0 4px 20px oklch(0% 0 0deg / 0.08),
           0 1px 3px oklch(0% 0 0deg / 0.12),
           inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       /* スマホ画面でのマージンとパディング */
@@ -285,42 +315,19 @@
         padding: 0.625rem 1rem;
       }
     }
-
-    /* Modern Breadcrumb Navigation */
-
-    .modern-breadcrumb-nav {
-      @apply w-full max-w-full m-0 p-0 overflow-hidden;
-    }
-
-    .breadcrumb-list {
-      @apply w-full max-w-full overflow-x-auto overflow-y-hidden p-0 m-0;
-    }
-
-    .breadcrumb-item {
-      @apply flex-shrink-0 max-w-fit gap-1 items-center;
-    }
-
-    .breadcrumb-icon {
-      @apply flex-shrink-0 text-base leading-none;
-    }
-
-    .breadcrumb-separator {
-      @apply flex-shrink-0 mx-1;
-    }
-  }
-
-  /* Sidebar Container - Grid Area: toc */
-  .sidebar-container {
-    @apply w-full;
-
-    grid-area: toc;
   }
 }
 
 /* ========== BREADCRUMB ========== */
 
 .breadcrumb-nav {
-  @apply bg-transparent backdrop-filter-none border-none shadow-none;
+  /* 左寄せを強制（Breadcrumbコンポーネントのデフォルトスタイルを上書き） */
+  /* stylelint-disable-next-line declaration-no-important */
+  justify-content: flex-start !important;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 
   /* スマホでのbreadcrumb-navのオーバーフロー防止 */
   @media (max-width: 767px) {
@@ -376,35 +383,62 @@
 /* ========== BUTTONS ========== */
 
 /* Using high-frequency variables from global.css: --clr-accent, --clr-accent-glow-medium */
-.back-to-content,
 .back-to-docs,
-.back-to-tools,
 .share-btn {
-  @apply inline-flex items-center gap-2 no-underline mb-0 outline-none h-10 box-border whitespace-nowrap;
-  @apply text-sm font-medium text-[var(--clr-purple)];
-  @apply bg-[var(--clr-accent-glow-faint)] px-4 py-2 rounded-lg;
-  @apply border border-[var(--clr-accent-glow-medium)];
-  @apply transition-all duration-300 ease-in-out;
-  @apply hover:text-[var(--clr-accent-dark)] hover:bg-[var(--clr-accent-glow-medium)];
-  @apply hover:border-[var(--clr-accent-glow-strong)] hover:-translate-y-px;
-  @apply hover:shadow-[0_4px_12px_var(--clr-accent-glow-medium)];
-  @apply focus-visible:outline-2 focus-visible:outline-[var(--clr-purple)] focus-visible:outline-offset-2;
-  @apply focus-visible:shadow-[0_0_0_2px_var(--clr-accent-glow-medium)];
-  @apply active:scale-95 active:transition-transform;
-  @apply max-[480px]:px-3 max-[480px]:py-1.5 max-[480px]:text-[0.8rem] max-[480px]:h-9;
-  @apply min-h-[44px] min-w-[44px]; /* Touch target accessibility */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  min-width: 44px;
+  height: 2.5rem;
+  min-height: 44px;
+  margin-bottom: 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--clr-accent-glow-medium);
+  border-radius: 0.5rem;
+  background-color: var(--clr-accent-glow-faint);
+  color: var(--clr-purple);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  outline: none;
+  transition: all 300ms ease-in-out;
+
+  &:hover {
+    border-color: var(--clr-accent-glow-strong);
+    background-color: var(--clr-accent-glow-medium);
+    color: var(--clr-accent-dark);
+    box-shadow: 0 4px 12px var(--clr-accent-glow-medium);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--clr-purple);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--clr-accent-glow-medium);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    transition: transform;
+  }
+
+  @media (max-width: 480px) {
+    height: 2.25rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8rem;
+  }
 
   /* High Contrast Mode */
   @media (prefers-contrast: high) {
     border: 2px solid var(--clr-purple);
   }
 
-  /* Android Performance Optimization */
-  @media screen and (max-width: 768px) {
-    animation-duration: 0.2s; /* Faster animations for mobile */
-
+  /* Mobile: transform無効化（タッチデバイス） */
+  @media (max-width: 768px) {
     &:hover {
-      transform: none; /* Remove transform on Android hover (touch devices) */
+      transform: none;
     }
   }
 }
@@ -413,34 +447,33 @@
 
 /* Using high-frequency variables from global.css: --clr-content-border, --clr-content-background-card, --shadow-content-card */
 .content-header {
-  @apply text-center mx-2 p-6 min-h-60;
-  @apply flex flex-col justify-center items-center;
-  @apply md:mx-1 md:p-5 md:min-h-50;
-  @apply max-sm:mx-0 max-sm:p-4 max-sm:min-h-40;
-
-  /* GlassMorphism効果 - 全デバイス共通 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: clamp(10rem, 20vw, 15rem);
+  margin: 0 clamp(0rem, 0.5vw, 0.5rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
   border: 1px solid oklch(65% 0.15 280deg / 0.2);
   border-radius: 16px;
   background: oklch(50% 0 0deg / 0.15);
-  backdrop-filter: blur(6px) saturate(1.1);
-  box-shadow: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
 
-  /* Desktop: 追加の影効果 */
+  /* Desktop: backdrop-filter、影効果、トランジション */
   @media (min-width: 769px) {
+    backdrop-filter: blur(6px) saturate(1.1);
     box-shadow:
       0 4px 20px oklch(0% 0 0deg / 0.08),
       0 1px 3px oklch(0% 0 0deg / 0.12),
       inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* H1要素 - グラデーション維持 */
   h1 {
-    @apply font-bold mb-8;
-
-    padding-bottom: 0.1em; /* 下部に少し余白を追加 */
-
-    /* 紫色→赤色グラデーション - 全デバイスで維持 */
+    margin-bottom: 2rem;
+    padding-bottom: 0.1em;
+    border: none;
     background: linear-gradient(
       135deg,
       oklch(65% 0.25 280deg) 30%,
@@ -448,24 +481,38 @@
     );
     background-clip: text;
     color: transparent;
-    font-size: 2.25rem; /* 36px - チャレンジページ */
-    line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
 
-    @apply max-sm:text-xl max-sm:mb-3;
-    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-purple)] focus:ring-offset-2;
-    @apply focus:ring-offset-[var(--clr-content-background-card)];
+    @media (max-width: 640px) {
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+    }
 
-    /* タブレットサイズでのフォントサイズ調整 */
     @media (min-width: 768px) and (max-width: 1023px) {
-      font-size: 1.5rem; /* 24px - タブレット */
+      font-size: 1.5rem;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--clr-purple),
+        0 0 0 4px var(--clr-content-background-card);
     }
   }
 
   /* Content Meta */
   .content-meta {
-    @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
-    @apply text-[var(--clr-content-meta)];
-    @apply max-sm:gap-3 max-sm:text-[0.8rem];
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    margin-bottom: 0.75rem;
+    color: var(--clr-content-meta);
+    font-size: clamp(0.8rem, 1vw, 0.875rem);
 
     /* High Contrast Mode */
     @media (prefers-contrast: high) {
@@ -474,35 +521,12 @@
   }
 
   .content-date,
-  .content-author,
-  .content-read-time {
-    @apply text-[var(--clr-content-meta)];
+  .content-author {
+    color: var(--clr-content-meta);
 
     /* High Contrast Mode */
     @media (prefers-contrast: high) {
       color: oklch(100% 0 0deg / var(--opacity-95));
-    }
-  }
-
-  /* Content Tags */
-  .content-tags {
-    @apply flex items-center justify-center gap-3;
-  }
-
-  /* Difficulty Badges */
-  .difficulty-badge {
-    @apply py-1.5 px-3 rounded-full text-xs font-semibold inline-block mx-auto text-center;
-
-    &.difficulty-beginner {
-      @apply bg-[oklch(60%_0.15_145deg/0.2)] text-green-300 border border-[oklch(60%_0.15_145deg/0.3)];
-    }
-
-    &.difficulty-intermediate {
-      @apply bg-[oklch(70%_0.15_85deg/0.2)] text-yellow-300 border border-[oklch(70%_0.15_85deg/0.3)];
-    }
-
-    &.difficulty-advanced {
-      @apply bg-[oklch(60%_0.15_25deg/0.2)] text-red-300 border border-[oklch(60%_0.15_25deg/0.3)];
     }
   }
 
@@ -530,30 +554,35 @@
 
 /* ========== CONTENT MAIN ========== */
 .content-main {
-  @apply p-6 px-4 max-w-none bg-transparent rounded-lg w-full relative block;
-  @apply md:p-5 md:px-4;
-  @apply max-sm:p-4;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: none;
+  padding: clamp(1rem, 1.5vw, 1.5rem) 1rem;
+  border-radius: 0.5rem;
+  background-color: transparent;
 
   /* Prose paragraph styling */
   &.prose p {
-    @apply mb-8 leading-relaxed; /* 32px bottom margin + relaxed line height */
+    margin-bottom: 2rem;
+    line-height: 1.625;
   }
 
   /* Prose heading scroll margin */
   &.prose :where(h1, h2, h3, h4, h5) {
-    @apply scroll-mt-8;
+    scroll-margin-top: 2rem;
   }
 
   /* Prose H1 styling */
   &.prose h1 {
-    @apply mb-6 leading-tight; /* 24px bottom margin */
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
   }
 
   /* H1要素 - 紫色→赤色グラデーション */
+  /* stylelint-disable-next-line no-descending-specificity */
   h1 {
-    @apply font-bold mb-8 leading-tight;
-
-    /* 紫色→赤色グラデーション */
+    margin-bottom: 2rem;
     background: linear-gradient(
       135deg,
       oklch(65% 0.25 280deg) 30%,
@@ -561,21 +590,32 @@
     );
     background-clip: text;
     color: transparent;
-    font-size: 2.25rem; /* 36px - チャレンジページ */
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.25;
 
-    @apply max-sm:text-xl max-sm:mb-3;
-    @apply focus:outline-none focus:ring-2 focus:ring-[var(--clr-purple)] focus:ring-offset-2;
-    @apply focus:ring-offset-[var(--clr-content-background-card)];
+    @media (max-width: 640px) {
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+    }
 
-    /* タブレットサイズでのフォントサイズ調整 */
     @media (min-width: 768px) and (max-width: 1023px) {
-      font-size: 1.5rem; /* 24px - タブレット */
+      font-size: 1.5rem;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--clr-purple),
+        0 0 0 4px var(--clr-content-background-card);
     }
   }
 
   /* 個別のスペーシング設定 */
   h2 {
-    @apply relative mb-5 leading-tight; /* 20px bottom margin */
+    position: relative;
+    margin-bottom: 1.25rem;
+    line-height: 1.25;
 
     /* H2の左側に装飾線を追加 */
     &::before {
@@ -644,25 +684,21 @@
   }
 
   /* Prose list styling */
-
   &.prose ul {
-    @apply my-4;
-
+    margin: 1rem 0;
     padding-left: 1.5rem;
     list-style-type: disc;
   }
 
   &.prose ol {
-    @apply my-4;
-
+    margin: 1rem 0;
     padding-left: 1.5rem;
     list-style-type: decimal;
   }
 
   /* Prose horizontal rule */
-
   &.prose hr {
-    @apply my-4;
+    margin: 1rem 0;
   }
 
   /* High Contrast Mode */
@@ -676,124 +712,70 @@
     }
   }
 
-  /* Android Performance Optimization */
-  @media screen and (max-width: 768px) {
-    contain: layout style; /* Remove paint containment for better Android compatibility */
-    will-change: auto;
+  /* Mobile Performance Optimization */
+  @media (max-width: 768px) {
+    contain: layout style;
   }
 }
 
 /* Content Main Prose List Items */
-
 .content-main.prose ul li {
-  @apply relative pl-2 mb-2;
-
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
   list-style-type: disc;
 }
 
 .content-main.prose ul li::before {
-  display: none; /* Disable custom bullet to show default disc */
+  display: none;
 }
 
 .content-main.prose ol li {
-  @apply relative pl-2 mb-2;
-
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
   list-style-type: decimal;
 }
 
 /* Content Main Prose Last Child */
-
 .prose p:last-child {
-  @apply mb-0; /* Remove bottom margin from last paragraph */
-}
-
-/* ========== LEGACY SUPPORT ========== */
-
-/* Consolidated legacy selectors for backward compatibility */
-.post-header {
-  @apply text-center mx-2 my-8 p-6 rounded-2xl min-h-60;
-  @apply border border-[var(--clr-content-border)];
-  @apply bg-[var(--clr-content-background-card)] backdrop-blur-[5px];
-  @apply shadow-[var(--shadow-content-card)];
-  @apply flex flex-col justify-center items-center;
-  @apply md:mx-1 md:my-6 md:p-5 md:min-h-50;
-  @apply max-sm:mx-0 max-sm:my-4 max-sm:p-4 max-sm:min-h-40;
-
-  .post-meta {
-    @apply flex items-center justify-center gap-5 mb-3 text-sm flex-wrap;
-    @apply text-[var(--clr-content-meta)];
-    @apply max-sm:gap-3 max-sm:text-[0.8rem];
-
-    /* High Contrast Mode */
-    @media (prefers-contrast: high) {
-      color: oklch(100% 0 0deg / var(--opacity-95));
-    }
-  }
-
-  .post-date,
-  .post-author,
-  .post-read-time {
-    @apply text-[var(--clr-content-meta)];
-
-    /* High Contrast Mode */
-    @media (prefers-contrast: high) {
-      color: oklch(100% 0 0deg / var(--opacity-95));
-    }
-  }
-
-  .post-title {
-    @apply text-inherit;
-  }
-
-  .post-tags {
-    @apply flex items-center justify-center gap-3;
-  }
-
-  /* High Contrast Mode */
-  @media (prefers-contrast: high) {
-    border: 2px solid oklch(50% 0.01 270deg);
-  }
-}
-
-.post-content {
-  @apply p-6 px-4 max-w-none bg-transparent rounded-lg w-full relative block;
-  @apply text-[var(--clr-content-text)];
-  @apply md:p-5 md:px-3;
-  @apply max-sm:p-4 max-sm:px-2;
-
-  /* High Contrast Mode */
-  @media (prefers-contrast: high) {
-    :where(h1, h2, h3, h4, h5) {
-      color: oklch(100% 0 0deg);
-    }
-
-    :where(p, li, blockquote) {
-      color: oklch(100% 0 0deg);
-    }
-  }
+  margin-bottom: 0;
 }
 
 /* ========== ACTION BUTTONS ========== */
 
 /* Using high-frequency variables from global.css: --clr-content-border, --clr-content-background-card-hover, --shadow-content-card */
 .content-actions {
-  @apply flex flex-col justify-between items-center gap-4 p-6 my-8 rounded-2xl;
-  @apply border border-[var(--clr-content-border)];
-  @apply bg-[var(--clr-content-background-card-hover)] backdrop-blur-[2px];
-  @apply shadow-[var(--shadow-content-card)];
-  @apply sm:flex-row;
-  @apply md:my-6 md:p-5;
-  @apply max-sm:my-4 max-sm:p-4 max-sm:gap-3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+  margin: clamp(1rem, 2.5vw, 2rem) 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--clr-content-border);
+  border-radius: 1rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
 
   .action-buttons {
-    @apply flex items-center gap-4 w-full justify-between;
-    @apply max-sm:flex-col max-sm:gap-3;
-    @apply max-[480px]:gap-2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    width: 100%;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+    }
   }
 
   .share-buttons {
-    @apply flex gap-3 items-center;
-    @apply max-[480px]:gap-2;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1vw, 0.75rem);
   }
 
   /* High Contrast Mode */
@@ -801,50 +783,17 @@
     border: 2px solid oklch(50% 0.01 270deg);
   }
 
-  /* Mobile Performance Optimization - 影完全無効化 */
-  @media screen and (max-width: 768px) {
+  /* Mobile: シンプルな背景 */
+  @media (max-width: 768px) {
     background: oklch(18% 0 0deg / 0.95);
-    box-shadow: none;
   }
 
   /* Desktop: Enhanced styling */
   @media (min-width: 769px) {
+    background: var(--clr-content-background-card-hover);
     backdrop-filter: blur(2px);
+    box-shadow: var(--shadow-content-card);
   }
-}
-
-.post-actions {
-  @apply flex flex-col justify-between items-center gap-4 p-6 my-8 rounded-2xl;
-  @apply border border-[var(--clr-content-border)];
-  @apply bg-[var(--clr-content-background-card-hover)] backdrop-blur-[2px];
-  @apply shadow-[var(--shadow-content-card)];
-  @apply sm:flex-row;
-  @apply md:my-6 md:p-5;
-  @apply max-sm:my-4 max-sm:p-4 max-sm:gap-3;
-
-  /* High Contrast Mode */
-  @media (prefers-contrast: high) {
-    border: 2px solid oklch(50% 0.01 270deg);
-  }
-
-  /* Mobile Performance Optimization - 影完全無効化 */
-  @media screen and (max-width: 768px) {
-    background: oklch(18% 0 0deg / 0.95);
-    box-shadow: none;
-  }
-
-  /* Desktop: Enhanced styling */
-  @media (min-width: 769px) {
-    backdrop-filter: blur(2px);
-  }
-}
-
-/* ========== READING PROGRESS ========== */
-.reading-progress {
-  @apply fixed top-0 left-0 w-0 h-[3px] z-[var(--z-content-progress)];
-  @apply transition-[width] duration-100 ease-linear;
-
-  background: linear-gradient(90deg, var(--clr-purple), var(--clr-accent-dark));
 }
 
 /* ========== CODE BLOCKS ========== */
@@ -854,9 +803,13 @@ code {
 }
 
 pre {
-  @apply my-4 p-4 border border-[var(--clr-accent-glow-faint)] rounded-lg;
-  @apply bg-none shadow-[var(--shadow-content-card)];
-  @apply overflow-x-auto;
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--clr-accent-glow-faint);
+  border-radius: 0.5rem;
+  background: none;
+  box-shadow: var(--shadow-content-card);
 }
 
 /* ========== ASTRO-CLOUDINARY CLDIMAGE ========== */
@@ -866,8 +819,6 @@ pre {
 .prose img[src*='cloudinary'],
 .article-content img[src*='cloudinary'],
 img[data-cloudinary] {
-  @apply rounded-lg mx-auto block;
-
   display: block;
   margin-right: auto;
   margin-left: auto;
@@ -878,8 +829,6 @@ img[data-cloudinary] {
 .content-main img,
 .prose img,
 .article-content img {
-  @apply rounded-lg mx-auto block;
-
   display: block;
   margin-right: auto;
   margin-left: auto;
