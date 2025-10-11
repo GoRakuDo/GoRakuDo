@@ -1,13 +1,14 @@
-/*  Docs Page Styles - Mobile-First Approach with Tailwind v4 */
 @import 'tailwindcss';
+
+/*  Docs Page Styles - Mobile-First Approach */
 
 /* ===== DESIGN TOKENS & CSS VARIABLES ===== */
 :root {
-  /* Spacing & Layout */
-  --card-padding: 1rem;
-  --grid-gap: 1.25rem;
-  --emoji-size: 5.25rem;
-  --title-font: 1.375rem;
+  /* Spacing & Layout - clamp()で自動レスポンシブ化 */
+  --card-padding: clamp(1rem, 2vw, 1.5rem);
+  --grid-gap: clamp(1.25rem, 3vw, 2.5rem);
+  --emoji-size: clamp(4.5rem, 6vw, 5.25rem);
+  --title-font: clamp(1.125rem, 1.5vw, 1.375rem);
   --description-lines: 3;
 
   /* Transitions & Animations */
@@ -76,20 +77,7 @@
 /* ===== RESPONSIVE DESIGN TOKENS ===== */
 @media (min-width: 768px) {
   :root {
-    --card-padding: 1.25rem;
-    --grid-gap: 2rem;
-    --emoji-size: 4.5rem;
-    --title-font: 1.25rem;
     --description-lines: 2;
-  }
-}
-
-@media (min-width: 1280px) {
-  :root {
-    --card-padding: 1.5rem;
-    --grid-gap: 2.5rem;
-    --emoji-size: 5rem;
-    --title-font: 1.125rem;
   }
 }
 
@@ -97,12 +85,13 @@
 
 /* Posts/Documentation page styles */
 .posts-page {
-  @apply relative z-10 min-h-screen text-white;
-
-  /* Prevent horizontal overflow */
+  position: relative;
+  z-index: 10;
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+  min-height: 100vh;
+  color: white;
 }
 
 /* メインコンテンツのパフォーマンス最適化 */
@@ -141,12 +130,9 @@
 
 /* Posts Container */
 .posts-container {
-  @apply mx-auto;
-
   overflow: hidden visible; /* emoji表示のためY軸はvisible許可 */
-
-  /* Mobile-first container with clamp-based responsive padding */
   max-width: 100%;
+  margin: 0 auto;
   padding: 0 clamp(1rem, 4vw, 1.5rem);
 }
 
@@ -234,7 +220,7 @@
   height: 100%;
   margin: 0;
   padding: var(--card-padding);
-  border-radius: 0.875rem;
+  border-radius: clamp(0.875rem, 1.5vw, 1.125rem);
   cursor: pointer;
   transform: none;
   transition: var(--transition-smooth);
@@ -243,24 +229,10 @@
   contain: layout style; /* paint制約を削除してemoji表示を許可 */
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
-}
 
-/* Card Responsive Adjustments */
-@media (min-width: 768px) {
-  .post-card {
+  @media (min-width: 768px) {
     height: auto;
-    min-height: 18rem;
-    padding: var(--card-padding);
-    border-radius: 1rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .post-card {
-    height: auto;
-    min-height: 16rem;
-    padding: var(--card-padding);
-    border-radius: 1.125rem;
+    min-height: clamp(16rem, 20vw, 18rem);
   }
 }
 
@@ -326,8 +298,8 @@
 /* Base Emoji Styles */
 .post-emoji {
   position: absolute;
-  top: -0.5rem;
-  right: -0.5rem;
+  top: clamp(-0.5rem, -1.5vw, -1.25rem);
+  right: clamp(-0.5rem, -1.2vw, -1rem);
   z-index: var(--z-docs-index-post-emoji);
   overflow: visible;
   min-width: var(--emoji-size);
@@ -347,23 +319,6 @@
   clip-path: none; /* clip-path制約を無効化 */
 }
 
-/* Emoji Responsive Adjustments */
-@media (min-width: 768px) {
-  .post-emoji {
-    top: -1rem;
-    right: -0.75rem;
-    font-size: var(--emoji-size);
-  }
-}
-
-@media (min-width: 1280px) {
-  .post-emoji {
-    top: -1.25rem;
-    right: -1rem;
-    font-size: var(--emoji-size);
-  }
-}
-
 /* Emoji Hover Effects */
 .post-card:hover .post-emoji {
   opacity: 1;
@@ -379,32 +334,14 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: clamp(0.625rem, 1vw, 0.75rem);
   width: 100%;
   height: 100%;
-  padding: 0.25rem;
+  padding: clamp(0.125rem, 0.3vw, 0.25rem);
 }
 
 .post-header {
-  margin-bottom: 0.75rem;
-}
-
-@media (min-width: 768px) {
-  .post-card-container {
-    gap: 0.625rem;
-    padding: 0.125rem;
-  }
-
-  .post-header {
-    margin-bottom: 0.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .post-card-container {
-    gap: 0.625rem;
-    padding: 0.125rem;
-  }
+  margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
 }
 
 /* ===== TYPOGRAPHY ===== */
@@ -413,9 +350,9 @@
 .post-title {
   position: relative;
   z-index: var(--z-docs-index-post-title);
-  min-height: 4rem;
-  margin-bottom: 0.75rem;
-  padding-right: 5rem;
+  min-height: clamp(3.5rem, 5vw, 4rem);
+  margin-bottom: clamp(0.75rem, 1.2vw, 1rem);
+  padding-right: clamp(3.125rem, 6vw, 5rem);
   color: var(--clr-text-dark);
   font-family: var(--font-primary);
   font-size: var(--title-font);
@@ -428,28 +365,6 @@
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility; /* テキストレンダリング最適化 */
-}
-
-@media (min-width: 768px) {
-  .post-title {
-    min-height: 3.5rem;
-    margin-bottom: 1rem;
-    padding-right: 3.125rem; /* 2.5rem + 0.625rem = 3.125rem */
-    font-size: var(--title-font);
-    font-weight: 800;
-    overflow-wrap: break-word;
-  }
-}
-
-@media (min-width: 1280px) {
-  .post-title {
-    min-height: 3.5rem;
-    margin-bottom: 1rem;
-    padding-right: 3.125rem; /* 2.5rem + 0.625rem = 3.125rem */
-    font-size: var(--title-font);
-    font-weight: 800;
-    overflow-wrap: break-word;
-  }
 }
 
 /* Title Link */
@@ -498,10 +413,10 @@
   z-index: var(--z-docs-index-post-description);
   display: -webkit-box;
   overflow: hidden;
-  height: 4.2rem;
-  margin-bottom: 0.75rem;
+  max-height: calc(1.4em * var(--description-lines));
+  margin-bottom: clamp(0.625rem, 1vw, 0.75rem);
   color: var(--clr-text-medium);
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.2vw, 1rem);
   font-weight: 500;
   line-height: 1.4;
   flex-grow: 1;
@@ -510,26 +425,6 @@
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility; /* テキストレンダリング最適化 */
-}
-
-@media (min-width: 768px) {
-  .post-description {
-    max-height: calc(1.4em * var(--description-lines));
-    margin-bottom: 0.625rem;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    -webkit-line-clamp: var(--description-lines);
-  }
-}
-
-@media (min-width: 1280px) {
-  .post-description {
-    max-height: calc(1.4em * var(--description-lines));
-    margin-bottom: 0.625rem;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    -webkit-line-clamp: var(--description-lines);
-  }
 }
 
 /* ===== TAGS COMPONENT ===== */
@@ -542,20 +437,12 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 0.375rem;
+  gap: clamp(0.375rem, 0.8vw, 0.5rem);
   width: 100%;
   margin-top: auto;
-  margin-bottom: 1rem;
-  padding: 0 0.25rem;
+  margin-bottom: clamp(0.875rem, 1.5vw, 1rem);
+  padding: 0 clamp(0.25rem, 0.6vw, 0.5rem);
   box-sizing: border-box;
-}
-
-@media (min-width: 768px) {
-  .post-tags {
-    gap: 0.5rem;
-    margin-bottom: 0.875rem;
-    padding: 0 0.5rem;
-  }
 }
 
 /* Tag Styles */
@@ -564,25 +451,16 @@
   position: relative;
   overflow: hidden;
   min-width: fit-content;
-  padding: 0.375rem 0.75rem;
+  padding: clamp(0.375rem, 0.8vw, 0.5rem) clamp(0.75rem, 1.2vw, 0.875rem);
   border: 1px solid var(--clr-primary);
   border-radius: 0.875rem;
   color: var(--clr-primary);
-  font-size: 0.75rem;
+  font-size: clamp(0.75rem, 1vw, 0.8rem);
   font-weight: 450;
   white-space: nowrap;
   transition: var(--transition-smooth);
   box-shadow: var(--shadow-tag);
   flex-shrink: 0;
-}
-
-@media (min-width: 768px) {
-  .post-tag,
-  .post-tag-more {
-    padding: 0.5rem 0.875rem;
-    font-size: 0.8rem;
-    font-weight: 450;
-  }
 }
 
 .post-tag {
@@ -652,7 +530,7 @@
   width: 100%;
   padding: 0.875rem 1.5rem;
   border: 2px solid var(--clr-primary-40);
-  border-radius: 1.25rem;
+  border-radius: clamp(0.75rem, 1.5vw, 1.25rem);
   background: linear-gradient(
     135deg,
     var(--clr-primary-15) 0%,
@@ -665,13 +543,6 @@
   transform: none;
   transition: var(--transition-smooth);
   box-shadow: var(--shadow-button);
-}
-
-@media (min-width: 768px) {
-  .read-more-btn {
-    border-radius: 0.75rem;
-    font-weight: 600;
-  }
 }
 
 /* Button Hover Effects */
@@ -699,14 +570,9 @@
     var(--clr-primary-20) 100%
   );
   color: var(--clr-primary-darker);
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(clamp(-2px, -0.4vw, -3px))
+    scale(clamp(1.01, 1.015, 1.02));
   box-shadow: var(--shadow-button-hover);
-}
-
-@media (min-width: 768px) {
-  .read-more-btn:hover {
-    transform: translateY(-2px) scale(1.01);
-  }
 }
 
 .read-more-btn:hover::before {

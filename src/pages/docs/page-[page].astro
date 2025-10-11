@@ -6,6 +6,7 @@ import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
 import Pagination from '../../components/common/Pagination/Pagination.astro';
+import SearchPopover from '../../components/common/SearchPopover.astro';
 import {
   calculatePagination,
   transformPostData,
@@ -172,10 +173,15 @@ const collectionPageSchema = {
     ariaLabel='Navigasi breadcrumb untuk halaman dokumentasi'
   />
 
-  <!-- 検索セクション（将来の拡張用） -->
-  <div slot='search'>
-    <!-- Search component can be added here if needed -->
-  </div>
+  <!-- 検索セクション -->
+  <SearchPopover
+    slot='search'
+    buttonStyle='rounded'
+    placeholder='Search documentation...'
+    searchAction='/search'
+    className='docs-search-popover'
+    searchCollections='docs'
+  />
 
   <!-- メインコンテンツ -->
   {

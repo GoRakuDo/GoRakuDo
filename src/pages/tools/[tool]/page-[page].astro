@@ -5,6 +5,7 @@ import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
+import SearchPopover from '../../../components/common/SearchPopover.astro';
 import Pagination from '../../../components/common/Pagination/Pagination.astro';
 import {
   calculatePagination,
@@ -444,6 +445,16 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     orientation='horizontal'
     showIcons={true}
     ariaLabel='Tool navigation breadcrumb'
+  />
+
+  <SearchPopover
+    slot='search'
+    buttonStyle='rounded'
+    placeholder={`Search ${formattedToolName} articles...`}
+    searchAction={`/search?tool=${tool}`}
+    className='tool-search-popover'
+    toolFilter={tool}
+    searchCollections='tools'
   />
 
   <ToolIdContentGrid
