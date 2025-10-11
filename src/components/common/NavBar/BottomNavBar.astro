@@ -672,6 +672,13 @@ const menuItems = [
       will-change: transform, background, box-shadow, filter;
       -webkit-tap-highlight-color: transparent;
       filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
+
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+        transition-duration: 0.01ms;
+        will-change: auto;
+      }
     }
 
     .nav-btn::before {
@@ -687,6 +694,11 @@ const menuItems = [
       transition: opacity 0.4s ease;
       content: '';
       inset: 0;
+
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transition-duration: 0.01ms;
+      }
     }
 
     /* Moved hover::before to reduce specificity */
@@ -710,17 +722,16 @@ const menuItems = [
         0 8px 32px oklch(65% 0.25 280deg / 0.25),
         0 4px 16px oklch(0% 0 0deg / 0.1),
         inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
 
-      /* モバイル: transformを簡略化 */
+      /* モバイル: transformを完全無効化 */
       @media (min-width: 769px) {
         transform: translateZ(0) translateY(-2px) scale(1.02);
       }
 
       @media (max-width: 768px) {
-        transform: scale(1.02);
+        transform: none;
       }
-
-      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
     }
 
     .nav-btn--hover::before {
@@ -736,7 +747,7 @@ const menuItems = [
       }
 
       @media (max-width: 768px) {
-        transform: scale(0.98);
+        transform: none;
       }
 
       box-shadow:
@@ -765,6 +776,13 @@ const menuItems = [
       transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform, filter;
 
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+        transition-duration: 0.01ms;
+        will-change: auto;
+      }
+
       svg {
         width: 1.25em;
         max-width: 100%;
@@ -782,6 +800,13 @@ const menuItems = [
         stroke-width: 2.5;
         vertical-align: middle;
         will-change: transform;
+
+        /* モバイル: アニメーション無効化 */
+        @media (max-width: 768px) {
+          transform: none;
+          transition-duration: 0.01ms;
+          will-change: auto;
+        }
       }
     }
 
@@ -813,6 +838,13 @@ const menuItems = [
       will-change: color, transform;
       text-overflow: ellipsis;
 
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+        transition-duration: 0.01ms;
+        will-change: auto;
+      }
+
       /* 小さな画面での調整 */
       @media (max-width: 360px) {
         font-size: 0.6875rem;
@@ -832,13 +864,26 @@ const menuItems = [
 
     /* ---------- Active State Styling - BEM Method ---------- */
     .nav-btn--active .nav-btn__icon {
-      transform: scale(0.95);
+      @media (min-width: 769px) {
+        transform: scale(0.95);
+      }
+
+      @media (max-width: 768px) {
+        transform: none;
+      }
     }
 
     .nav-btn--active svg {
       color: oklch(92% 0.008 55deg);
       opacity: 0.8;
-      transform: translateZ(0) scale(0.95);
+
+      @media (min-width: 769px) {
+        transform: translateZ(0) scale(0.95);
+      }
+
+      @media (max-width: 768px) {
+        transform: none;
+      }
     }
 
     .nav-btn--active .nav-btn__label {
@@ -851,8 +896,8 @@ const menuItems = [
     /* ---------- Touch Device Optimization - UNIFIED WITH NAVBAR ---------- */
     @media (hover: none) and (pointer: coarse) {
       .nav-btn--active {
-        /* UNIFIED active effect for touch - Navbar.astroと同じ */
-        transform: translateZ(0) translateY(0) scale(0.98);
+        /* モバイル: タップ時の縮小効果を無効化 */
+        transform: none;
         box-shadow:
           0 1px 4px oklch(from var(--token-black-base) l c h / 0.08),
           0 1px 2px oklch(from var(--token-black-base) l c h / 0.06),
@@ -862,11 +907,7 @@ const menuItems = [
           0 1px 4px oklch(from var(--token-black-base) l c h / 0.08)
         );
       }
-
-      /* Removed duplicate active state selectors */
     }
-
-    /* Removed duplicate .nav-btn__icon svg selector */
   }
 
   /* ========== MENU OVERLAY STYLES - UNIFIED WITH NAVBAR DESIGN ========== */
@@ -917,8 +958,8 @@ const menuItems = [
 
     /* モバイル最適化: シンプルな背景 */
     @media (max-width: 768px) {
-      max-height: 70vh;
-      background: oklch(6% 0.008 270deg / 0.95);
+      max-height: 80dvh;
+      background: oklch(6% 0.008 270deg / 0.5);
     }
 
     /* デスクトップ: 簡素化された効果 */
@@ -943,7 +984,7 @@ const menuItems = [
     }
 
     @media (max-width: 768px) {
-      transform: translateY(10px); /* scaleは削除 */
+      transform: none;
     }
 
     /* 最適化: 具体的なプロパティのみアニメーション */
@@ -977,7 +1018,7 @@ const menuItems = [
     }
 
     @media (max-width: 768px) {
-      transform: translateY(0); /* scaleは削除 */
+      transform: none;
     }
   }
 
@@ -1210,7 +1251,7 @@ const menuItems = [
         var(--bottom-nav-primary-light) 0%,
         var(--bottom-nav-primary) 100%
       );
-      transform: scale(1.05);
+      transform: none;
       box-shadow:
         0 4px 12px oklch(from var(--token-black-base) l c h / 0.2),
         inset 0 1px 0 oklch(100% 0 0deg / 0.15);

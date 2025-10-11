@@ -1572,3 +1572,82 @@ button:focus-visible,
     padding-bottom: var(--bottom-nav-spacing-small);
   }
 }
+
+/* ===== MOBILE PERFORMANCE OPTIMIZATION ===== */
+
+/* モバイルデバイス（768px以下）でアニメーション・transformを無効化 */
+
+/* 目的: パフォーマンス向上、バッテリー消費削減 */
+
+/* 例外: WaveAnimation.astro、hero.astro、backdrop-filter */
+
+@media (max-width: 768px) {
+  * {
+    /* パフォーマンス最適化プロパティの削除 */
+    will-change: auto !important;
+
+    /* Transformの無効化 */
+    transform: none !important;
+
+    /* トランジションの完全無効化 */
+    transition: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+
+    /* アニメーションの完全無効化 */
+    animation: none !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+  }
+
+  *::before,
+  *::after {
+    /* パフォーマンス最適化プロパティの削除 */
+    will-change: auto !important;
+
+    /* Transformの無効化 */
+    transform: none !important;
+
+    /* トランジションの完全無効化 */
+    transition: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+
+    /* アニメーションの完全無効化 */
+    animation: none !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+  }
+
+  /* WaveAnimation.astroのコンポーネントは例外として維持 */
+  .wave-animation-container,
+  .wave-animation-container *,
+  .wave-animation-container *::before,
+  .wave-animation-container *::after,
+  .wave-canvas,
+  .transparent-layer {
+    will-change: revert !important;
+    transform: revert !important;
+    transition: revert !important;
+    transition-duration: revert !important;
+    transition-delay: revert !important;
+    animation: revert !important;
+    animation-duration: revert !important;
+    animation-delay: revert !important;
+  }
+
+  /* hero.astroのコンポーネントは例外として維持 */
+  .hero-section,
+  .hero-section *,
+  .hero-section *::before,
+  .hero-section *::after {
+    will-change: revert !important;
+    transform: revert !important;
+    transition: revert !important;
+    transition-duration: revert !important;
+    transition-delay: revert !important;
+    animation: revert !important;
+    animation-duration: revert !important;
+    animation-delay: revert !important;
+  }
+}
