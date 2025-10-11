@@ -96,12 +96,6 @@ const {
       padding: clamp(1.75rem, 3.75vw, 2.5rem);
     }
 
-    /* アクセシビリティ対応 */
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-      will-change: auto;
-    }
-
     /* 高コントラスト対応 */
     @media (prefers-contrast: high) {
       border: 2px solid oklch(80% 0 0deg);
@@ -310,12 +304,6 @@ const {
           box-shadow: 0 8px 20px oklch(0% 0 0deg / 0.12);
         }
 
-        /* アクセシビリティ対応 */
-        @media (prefers-reduced-motion: reduce) {
-          transition: none;
-          will-change: auto;
-        }
-
         /* 高コントラスト対応 */
         @media (prefers-contrast: high) {
           box-shadow: 0 0 0 2px currentColor;
@@ -338,14 +326,6 @@ const {
       outline: 2px solid oklch(65% 0.18 15deg);
       outline-offset: 4px;
       border-radius: 4px;
-    }
-
-    /* アクセシビリティ対応 - ホバー無効化 */
-    @media (prefers-reduced-motion: reduce) {
-      .rc-hero-image:hover {
-        transform: none;
-        filter: none;
-      }
     }
 
     /* 高コントラスト対応 - ホバー効果調整 */

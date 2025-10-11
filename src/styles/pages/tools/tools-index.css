@@ -231,8 +231,10 @@
     filter: drop-shadow(var(--shadow-icon));
     will-change: auto;
 
-    &:hover {
-      will-change: transform;
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        will-change: transform;
+      }
     }
 
     @media (min-width: 640px) {
@@ -609,19 +611,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .tool-card,
-  .tool-card:hover .tool-icon-image,
-  .animation-scale:hover,
-  .animation-slide:hover,
-  .animation-fade:hover,
-  .group:hover .tool-arrow {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
 /* ========== ANIMATIONS & REDUCED MOTION ========== */
 
 /* Animation System Documentation:
@@ -639,13 +628,6 @@
 .stagger-animation {
   animation: stagger-fade-in 0.4s ease-out forwards;
   animation-delay: calc(var(--stagger-delay, 0) * 100ms);
-
-  @media (prefers-reduced-motion: reduce) {
-    opacity: 1;
-    transform: none;
-    transition: none;
-    animation: none;
-  }
 }
 
 /* Micro-interaction utilities */
@@ -658,13 +640,6 @@
 
   &:active {
     transform: scale(0.98);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    opacity: 1;
-    transform: none;
-    transition: none;
-    animation: none;
   }
 }
 

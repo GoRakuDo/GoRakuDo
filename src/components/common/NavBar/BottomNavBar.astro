@@ -816,8 +816,6 @@ const menuItems = [
       height: 20px;
       stroke-width: 2.5;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-      /* Moved to reduce specificity */
     }
 
     /* ---------- Navigation Label - UNIFIED WITH NAVBAR ---------- */
@@ -1318,37 +1316,47 @@ const menuItems = [
     const menuButton = document.querySelector('[data-menu-button="true"]');
     const closeButton = document.querySelector('.menu-overlay-close');
 
+    // モバイル判定関数
+    const isMobile = () => window.innerWidth <= 768;
+
     // BEM hover and active state management
     const navButtons = document.querySelectorAll('.nav-btn');
     navButtons.forEach(button => {
-      // Hover state management
+      // Hover state management - モバイルではスキップ
       button.addEventListener('mouseenter', function () {
+        if (isMobile()) return;
         this.classList.add('nav-btn--hover');
       });
 
       button.addEventListener('mouseleave', function () {
+        if (isMobile()) return;
         this.classList.remove('nav-btn--hover');
       });
 
-      // Active state management
+      // Active state management - モバイルではスキップ
       button.addEventListener('mousedown', function () {
+        if (isMobile()) return;
         this.classList.add('nav-btn--active');
       });
 
       button.addEventListener('mouseup', function () {
+        if (isMobile()) return;
         this.classList.remove('nav-btn--active');
       });
 
       button.addEventListener('mouseleave', function () {
+        if (isMobile()) return;
         this.classList.remove('nav-btn--active');
       });
 
-      // Touch device support
+      // Touch device support - モバイルではスキップ
       button.addEventListener('touchstart', function () {
+        if (isMobile()) return;
         this.classList.add('nav-btn--active');
       });
 
       button.addEventListener('touchend', function () {
+        if (isMobile()) return;
         this.classList.remove('nav-btn--active');
       });
     });

@@ -228,24 +228,6 @@ const { channelCover, channelName, channelProfile, channelURL } = Astro.props;
         outline-offset: 2px;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        transition: none;
-
-        &:hover {
-          transform: none;
-
-          .channel-cover {
-            filter: none;
-          }
-
-          .channel-profile {
-            filter: none;
-            transform: none;
-            box-shadow: var(--shadow-lg);
-          }
-        }
-      }
-
       @media (prefers-contrast: high) {
         border: 2px solid var(--color-text-primary);
       }

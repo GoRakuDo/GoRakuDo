@@ -1,6 +1,7 @@
 @import url('https://tetunori.github.io/fluent-emoji-webfont/dist/FluentEmojiColor.css');
-@import 'tailwindcss';
+@import './mobile-performance.css';
 @import './fonts.css';
+@import 'tailwindcss';
 
 @plugin '@tailwindcss/typography';
 
@@ -563,14 +564,6 @@
     hyphenate-limit-chars: 6 3 3;
   }
 
-  /* Smooth transitions for theme switching - but not affecting buttons */
-  :not(button, .primary-button, .secondary-button) {
-    transition:
-      background-color var(--duration-normal) ease,
-      border-color var(--duration-normal) ease,
-      color var(--duration-normal) ease;
-  }
-
   /* Base typography hierarchy */
   :where(:not([class*='text-'])) {
     h1 {
@@ -736,16 +729,6 @@
     word-spacing: var(--orphan-word-spacing);
     text-justify: inter-word;
     text-align-last: left;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      transition-duration: 0.01ms;
-      animation-duration: 0.01ms;
-      animation-iteration-count: 1;
-    }
   }
 
   @media (prefers-contrast: high) {
@@ -1257,10 +1240,6 @@ button:focus-visible,
       background: oklch(100% 0 0deg / var(--opacity-08));
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-
     @media (prefers-contrast: high) {
       border: 2px solid var(--clr-text-primary);
       background: var(--clr-black-85);
@@ -1570,84 +1549,5 @@ button:focus-visible,
   .content-wrapper,
   .article-content-wrapper {
     padding-bottom: var(--bottom-nav-spacing-small);
-  }
-}
-
-/* ===== MOBILE PERFORMANCE OPTIMIZATION ===== */
-
-/* モバイルデバイス（768px以下）でアニメーション・transformを無効化 */
-
-/* 目的: パフォーマンス向上、バッテリー消費削減 */
-
-/* 例外: WaveAnimation.astro、hero.astro、backdrop-filter */
-
-@media (max-width: 768px) {
-  * {
-    /* パフォーマンス最適化プロパティの削除 */
-    will-change: auto !important;
-
-    /* Transformの無効化 */
-    transform: none !important;
-
-    /* トランジションの完全無効化 */
-    transition: none !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0s !important;
-
-    /* アニメーションの完全無効化 */
-    animation: none !important;
-    animation-duration: 0.01ms !important;
-    animation-delay: 0s !important;
-  }
-
-  *::before,
-  *::after {
-    /* パフォーマンス最適化プロパティの削除 */
-    will-change: auto !important;
-
-    /* Transformの無効化 */
-    transform: none !important;
-
-    /* トランジションの完全無効化 */
-    transition: none !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0s !important;
-
-    /* アニメーションの完全無効化 */
-    animation: none !important;
-    animation-duration: 0.01ms !important;
-    animation-delay: 0s !important;
-  }
-
-  /* WaveAnimation.astroのコンポーネントは例外として維持 */
-  .wave-animation-container,
-  .wave-animation-container *,
-  .wave-animation-container *::before,
-  .wave-animation-container *::after,
-  .wave-canvas,
-  .transparent-layer {
-    will-change: revert !important;
-    transform: revert !important;
-    transition: revert !important;
-    transition-duration: revert !important;
-    transition-delay: revert !important;
-    animation: revert !important;
-    animation-duration: revert !important;
-    animation-delay: revert !important;
-  }
-
-  /* hero.astroのコンポーネントは例外として維持 */
-  .hero-section,
-  .hero-section *,
-  .hero-section *::before,
-  .hero-section *::after {
-    will-change: revert !important;
-    transform: revert !important;
-    transition: revert !important;
-    transition-duration: revert !important;
-    transition-delay: revert !important;
-    animation: revert !important;
-    animation-duration: revert !important;
-    animation-delay: revert !important;
   }
 }

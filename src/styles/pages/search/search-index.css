@@ -1072,41 +1072,6 @@
 
 /* ===== ACCESSIBILITY & PERFORMANCE ===== */
 
-/* アクセシビリティ向上 */
-@media (prefers-reduced-motion: reduce) {
-  .category-item,
-  .tag-item,
-  .search-input,
-  .search-button,
-  .search-result-item,
-  .filter-chip {
-    transition: none;
-  }
-
-  .category-item:hover,
-  .category-item:active,
-  .tag-item:hover,
-  .tag-item:active,
-  .search-input:focus,
-  .search-button:hover,
-  .search-button:active,
-  .search-result-item:hover,
-  .search-result-item:active,
-  .filter-chip:hover,
-  .filter-chip:active {
-    transform: none;
-  }
-
-  .skeleton-card {
-    animation: none;
-  }
-
-  .category-section::after,
-  .tag-section::after {
-    animation: none;
-  }
-}
-
 /* タッチデバイス最適化 */
 @media (hover: none) and (pointer: coarse) {
   .search-page {

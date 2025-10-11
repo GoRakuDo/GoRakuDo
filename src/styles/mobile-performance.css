@@ -1,0 +1,48 @@
+/* stylelint-disable declaration-no-important */
+
+/* ===== MOBILE PERFORMANCE OPTIMIZATION ===== */
+
+/* 
+ * モバイルデバイス（768px以下）でアニメーション・transform・hover/activeを無効化
+ * 目的: パフォーマンス向上、バッテリー消費削減、ユーザー体験改善
+ * 例外: WaveAnimation.astro、hero.astro、post-emoji
+ * 注意: !important は他のスタイルを確実に上書きするため必須
+ */
+
+@media (max-width: 768px) {
+  /* モバイル用アニメーション無効化 - パフォーマンス最適化 */
+  *,
+  *::before,
+  *::after {
+    will-change: auto !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* post-emoji例外 - モバイルでも回転を維持 */
+  .post-emoji {
+    transform: rotate(15deg) !important;
+    transition: transform 0.3s ease-in-out !important;
+  }
+
+  /* WaveAnimation例外 - アニメーションを有効化 */
+  .wave-animation-container,
+  .wave-animation-container *,
+  .wave-canvas,
+  .transparent-layer {
+    will-change: unset !important;
+    transform: unset !important;
+    transition: unset !important;
+    animation: unset !important;
+  }
+
+  /* hero例外 - アニメーションを有効化 */
+  .hero-section,
+  .hero-section * {
+    will-change: unset !important;
+    transform: unset !important;
+    transition: unset !important;
+    animation: unset !important;
+  }
+}

@@ -329,22 +329,6 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
       );
     }
   }
-
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    .faq-item,
-    .faq-button,
-    .faq-icon,
-    .faq-icon-horizontal,
-    .faq-icon-vertical,
-    .faq-content-wrapper {
-      transition: none;
-    }
-
-    .faq-item:hover {
-      transform: none;
-    }
-  }
 </style>
 
 <script>

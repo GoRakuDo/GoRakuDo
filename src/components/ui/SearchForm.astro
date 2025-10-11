@@ -353,20 +353,6 @@ const sanitizedPlaceholder = placeholder.trim() || 'Search...';
     }
   }
 
-  /* 最適化: アクセシビリティ */
-  @media (prefers-reduced-motion: reduce) {
-    .search-input,
-    .search-submit-btn {
-      transition: none;
-    }
-
-    .search-input:focus,
-    .search-submit-btn:hover,
-    .search-submit-btn:active {
-      transform: none;
-    }
-  }
-
   @media (prefers-contrast: high) {
     .search-form-container .search-input {
       border: 2px solid var(--clr-text-primary);

@@ -131,12 +131,6 @@ body {
   scroll-margin-top: calc(80px + var(--pl-space-2xl));
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
 /* ========================================
    UNIFIED UNDERLINE STYLES
    ======================================== */
@@ -759,10 +753,6 @@ a {
       @media (max-width: 768px) {
         transform: translateY(-2px);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        transform: none;
-      }
     }
   }
 }
@@ -770,49 +760,6 @@ a {
 /* ========================================
    ACCESSIBILITY IMPROVEMENTS - Enhanced
    ======================================== */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms;
-    animation-iteration-count: 1;
-    transition-duration: 0.01ms;
-    scroll-behavior: auto;
-  }
-
-  /* ヒーロー画像のアクセシビリティ対応 */
-  .hero-image {
-    will-change: auto;
-    transform: none;
-    transition: none;
-  }
-
-  .hero-image:hover {
-    filter: none;
-  }
-
-  /* 問題画像のアクセシビリティ対応 */
-  .problem-image {
-    will-change: auto;
-    transform: none;
-    transition: none;
-  }
-
-  .problem-image:hover {
-    filter: none;
-  }
-
-  /* セクション画像のアクセシビリティ対応 */
-  .section-image {
-    will-change: auto;
-    transform: none;
-    transition: none;
-  }
-
-  .section-image:hover {
-    filter: none;
-  }
-}
 
 *:focus-visible {
   outline: 2px solid var(--pl-color-primary);
@@ -1183,20 +1130,6 @@ a {
   border-radius: var(--pl-radius-2xl); /* より大きな角丸を適用 */
   box-shadow: var(--pl-shadow-xl);
   flex-shrink: 1;
-}
-
-/* アクセシビリティ対応 */
-@media (prefers-reduced-motion: reduce) {
-  .image-zoom-trigger,
-  .image-zoom-modal,
-  .image-zoom-content,
-  .image-zoom-close {
-    transition: none;
-
-    &:hover {
-      transform: none;
-    }
-  }
 }
 
 /* ========================================

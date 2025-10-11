@@ -690,18 +690,6 @@ pre {
 }
 
 /* ========== ACCESSIBILITY & RESPONSIVE ========== */
-@media (prefers-reduced-motion: reduce) {
-  .back-to-content,
-  .back-to-docs,
-  .back-to-tools,
-  .share-btn,
-  .reading-progress,
-  .internal-link,
-  .internal-link::before {
-    transition: none;
-    animation: none;
-  }
-}
 
 /* ========== HIGH CONTRAST MODE ========== */
 @media (prefers-contrast: high) {

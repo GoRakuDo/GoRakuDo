@@ -1091,27 +1091,6 @@ section .secondary-button {
   }
 }
 
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  section .primary-button,
-  section .secondary-button {
-    transform: none;
-    transition: none;
-    animation: none;
-  }
-
-  section .primary-button:hover,
-  section .secondary-button:hover {
-    transform: none;
-    box-shadow: 0 4px 12px var(--clr-accent-shadow);
-  }
-
-  section .primary-button::before,
-  section .secondary-button::after {
-    display: none;
-  }
-}
-
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   section .primary-button {

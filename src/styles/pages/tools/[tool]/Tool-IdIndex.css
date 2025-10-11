@@ -752,11 +752,6 @@
         transparent
       );
     }
-
-    /* モーション軽減対応 */
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
   }
 
   /* ========== アクションインジケーター (REDESIGNED) ========== */

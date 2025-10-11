@@ -277,13 +277,6 @@ body {
       color: var(--rc-color-text-primary);
       -webkit-text-fill-color: var(--rc-color-text-primary);
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      &::before,
-      &::after {
-        animation: none;
-      }
-    }
   }
 
   .rc-channels-grid {
@@ -315,10 +308,6 @@ body {
     background: transparent;
     backdrop-filter: blur(12px);
     box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.08);
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
   }
 
   @media (min-width: 768px) {
@@ -339,12 +328,6 @@ body {
 /* ========================================
    アクセシビリティ対応
    ======================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .rc-channel-item {
-    transition: none;
-  }
-}
 
 /* ========================================
    Unified Section Header Styles (Podcast & Media)

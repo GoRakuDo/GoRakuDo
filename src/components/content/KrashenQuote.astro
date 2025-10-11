@@ -122,23 +122,6 @@ const {
       background: oklch(0% 0 0deg / 0.8);
     }
 
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-
-      .quote-icon {
-        transition: none;
-      }
-
-      &:hover .quote-icon {
-        transform: none;
-      }
-
-      p strong {
-        transition: none;
-      }
-    }
-
     /* Quote Icon Styles - Nested */
     .quote-icon {
       position: absolute;
@@ -240,11 +223,6 @@ const {
         @media (min-width: 768px) {
           width: var(--image-size-tablet);
           height: var(--image-size-tablet);
-        }
-
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-          transition: none;
         }
       }
     }

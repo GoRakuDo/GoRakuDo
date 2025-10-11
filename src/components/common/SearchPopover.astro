@@ -837,20 +837,6 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       border-radius: var(--sp-radius-2xl);
     }
 
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-      animation: none;
-
-      &:hover {
-        transform: none;
-      }
-
-      &:active {
-        transform: none;
-      }
-    }
-
     /* High contrast mode support */
     @media (prefers-contrast: high) {
       border: 2px solid var(--sp-white-8);
@@ -977,22 +963,12 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     opacity: 0.7;
     transition: all 0.2s ease;
     filter: drop-shadow(0 1px 1px var(--sp-black-1));
-
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
   }
 
   .search-result-card:hover .content-match-indicator {
     opacity: 1;
     transform: scale(1.1);
     filter: drop-shadow(0 1px 2px var(--sp-black-2));
-
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      transform: none;
-    }
   }
 
   .search-result-description {
@@ -1067,11 +1043,6 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     letter-spacing: 0.05em;
     box-shadow: 0 1px 2px var(--sp-black-1);
     transition: all 0.2s ease;
-
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
   }
 
   .search-result-badge--tool {
@@ -1097,11 +1068,6 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   .search-result-card:hover .search-result-badge {
     transform: translateY(-1px);
     box-shadow: 0 2px 4px var(--sp-black-2);
-
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      transform: none;
-    }
   }
 
   .search-result-path {
