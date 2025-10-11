@@ -35,6 +35,88 @@
   }
 }
 
+/* ========== FEATURED IMAGE STYLING ========== */
+
+.featured-image-container {
+  @apply w-full flex justify-center;
+}
+
+.featured-image-thumbnail {
+  @apply w-full max-w-4xl h-auto rounded-lg shadow-lg;
+  @apply transition-transform duration-300 ease-in-out;
+  @apply hover:scale-[1.02];
+
+  /* レスポンシブサイズ調整 */
+  @apply max-sm:rounded-md;
+
+  /* 16:9の表示領域を維持し、画像全体を自動調整 */
+  object-fit: contain;
+  aspect-ratio: 16/9;
+}
+
+/* CldImageの内部スタイルを上書き */
+.featured-image-container .astro-cloudinary-cldimage.featured-image-thumbnail,
+.featured-image-thumbnail.astro-cloudinary-cldimage {
+  width: 100%;
+  max-width: 64rem; /* max-w-4xl */
+  height: auto;
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
+
+  transition: transform 300ms ease-in-out;
+
+  /* @unpic/astroの内部スタイルを上書きするため!importantが必要 */
+  /* stylelint-disable-next-line declaration-no-important */
+  object-fit: contain !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  aspect-ratio: 16/9 !important;
+}
+
+/* デスクトップサイズのみhover効果を適用 */
+@media (min-width: 768px) {
+  /* stylelint-disable-next-line selector-max-specificity */
+  .featured-image-container
+    .astro-cloudinary-cldimage.featured-image-thumbnail:hover,
+  .featured-image-thumbnail.astro-cloudinary-cldimage:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* 最初の段落の上マージンを削除 */
+.content-main p:first-child {
+  margin-top: 0;
+}
+
+/* スマホサイズでfeaturedImageをTOCの後に移動 */
+@media (max-width: 767px) {
+  .content-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-header {
+    order: 1;
+  }
+
+  .mobile-toc {
+    order: 2;
+  }
+
+  .featured-image-container {
+    order: 3;
+  }
+
+  .content-main {
+    order: 4;
+  }
+
+  .content-actions {
+    order: 5;
+  }
+}
+
 /* ========== BREADCRUMB CONTAINER STYLING (Must come before nested selectors) ========== */
 
 /* Breadcrumb Container Scrollbar Styling */
@@ -165,21 +247,16 @@
     .breadcrumb-container {
       @apply w-full max-w-full overflow-hidden relative;
 
-      /* Mobile Optimized: シンプルなスタイル - 影なし */
-      border: 1px solid oklch(100% 0 0deg / 0.12);
+      /* GlassMorphism効果 - 全デバイス共通 */
+      border: 1px solid oklch(65% 0.15 280deg / 0.2);
       border-radius: 16px;
-      background: oklch(18% 0 0deg / 0.95); /* モバイル: 不透明な背景 */
-      box-shadow: none; /* モバイル: 影完全無効化 */
+      background: oklch(50% 0 0deg / 0.15);
+      backdrop-filter: blur(6px) saturate(1.1);
+      box-shadow: none;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-      /* Desktop: GlassMorphism効果 */
+      /* Desktop: 追加の影効果 */
       @media (min-width: 769px) {
-        background: linear-gradient(
-          135deg,
-          oklch(20% 0 0deg / 0.15) 0%,
-          oklch(15% 0 0deg / 0.1) 100%
-        );
-        backdrop-filter: blur(12px) saturate(1.1);
         box-shadow:
           0 4px 20px oklch(0% 0 0deg / 0.08),
           0 1px 3px oklch(0% 0 0deg / 0.12),
@@ -266,11 +343,7 @@
 /* Breadcrumb Container Hover Effect - Desktop Only */
 @media (min-width: 769px) {
   .content-container .breadcrumb-container:hover {
-    background: linear-gradient(
-      135deg,
-      oklch(25% 0 0deg / 0.2) 0%,
-      oklch(20% 0 0deg / 0.15) 100%
-    );
+    background: oklch(50% 0 0deg / 0.2);
     border-color: color-mix(
       in oklch,
       var(--token-purple-base) 30%,
@@ -345,21 +418,16 @@
   @apply md:mx-1 md:p-5 md:min-h-50;
   @apply max-sm:mx-0 max-sm:p-4 max-sm:min-h-40;
 
-  /* Mobile Optimized: シンプルなスタイル - 影なし */
-  border: 1px solid oklch(100% 0 0deg / 0.12);
+  /* GlassMorphism効果 - 全デバイス共通 */
+  border: 1px solid oklch(65% 0.15 280deg / 0.2);
   border-radius: 16px;
-  background: oklch(18% 0 0deg / 0.95); /* モバイル: 不透明な背景 */
-  box-shadow: none; /* モバイル: 影完全無効化 */
+  background: oklch(50% 0 0deg / 0.15);
+  backdrop-filter: blur(6px) saturate(1.1);
+  box-shadow: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Desktop: GlassMorphism効果 */
+  /* Desktop: 追加の影効果 */
   @media (min-width: 769px) {
-    background: linear-gradient(
-      135deg,
-      oklch(20% 0 0deg / 0.15) 0%,
-      oklch(15% 0 0deg / 0.1) 100%
-    );
-    backdrop-filter: blur(12px) saturate(1.1);
     box-shadow:
       0 4px 20px oklch(0% 0 0deg / 0.08),
       0 1px 3px oklch(0% 0 0deg / 0.12),
@@ -447,11 +515,7 @@
 /* Content Header Hover Effect - Desktop Only */
 @media (min-width: 769px) {
   .content-header:hover {
-    background: linear-gradient(
-      135deg,
-      oklch(25% 0 0deg / 0.2) 0%,
-      oklch(20% 0 0deg / 0.15) 100%
-    );
+    background: oklch(50% 0 0deg / 0.2);
     border-color: color-mix(
       in oklch,
       var(--token-purple-base) 30%,

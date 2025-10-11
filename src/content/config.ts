@@ -29,23 +29,8 @@ const docsCollection = defineCollection({
     categories: z.array(z.string().max(LIMITS.CATEGORY_MAX)).min(1).max(LIMITS.CATEGORIES_MAX).default(['general']),
     tags: z.array(z.string().max(LIMITS.TAG_MAX)).max(LIMITS.TAGS_MAX).default([]),
     status: z.enum(['published', 'draft', 'archived']).default(DEFAULTS.STATUS),
-    // 自動認識画像フィールド
-    autoImages: z.array(z.object({
-      src: z.string(),
-      alt: z.string().optional(),
-      title: z.string().optional(),
-      order: z.number().optional(),
-    })).optional(),
     featuredImage: z.string().optional(),
-  }).transform((data) => ({
-    ...data,
-    // autoImagesのaltとtitleに記事タイトルをデフォルト設定
-    autoImages: data.autoImages?.map(image => ({
-      ...image,
-      alt: image.alt || data.title,
-      title: image.title || data.title,
-    })),
-  })),
+  }),
 });
 
 // ページコレクション（MDX対応）
@@ -76,23 +61,8 @@ const toolArticlesCollection = defineCollection({
     keywords: z.array(z.string().max(30)).max(15).default([]),
     relatedTools: z.array(z.string().max(50)).max(10).default([]),
     status: z.enum(['published', 'draft', 'archived']).default(DEFAULTS.STATUS),
-    // 自動認識画像フィールド
-    autoImages: z.array(z.object({
-      src: z.string(),
-      alt: z.string().optional(),
-      title: z.string().optional(),
-      order: z.number().optional(),
-    })).optional(),
     featuredImage: z.string().optional(),
-  }).transform((data) => ({
-    ...data,
-    // autoImagesのaltとtitleに記事タイトルをデフォルト設定
-    autoImages: data.autoImages?.map(image => ({
-      ...image,
-      alt: image.alt || data.title,
-      title: image.title || data.title,
-    })),
-  })),
+  }),
 });
 
 // コレクションのエクスポート

@@ -7,6 +7,7 @@ import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
+import { CldImage } from 'astro-cloudinary';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -223,6 +224,23 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       )
     }
   </header>
+
+  <!-- Featured Image Slot -->
+  {
+    post.data.featuredImage && (
+      <div slot='featured-image' class='featured-image-container mt-6'>
+        <CldImage
+          src={post.data.featuredImage}
+          alt={post.data.title}
+          class='featured-image-thumbnail'
+          loading='eager'
+          width={800}
+          quality='auto'
+          format='auto'
+        />
+      </div>
+    )
+  }
 
   <!-- Content Slot -->
   <div slot='content'>

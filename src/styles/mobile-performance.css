@@ -45,4 +45,16 @@
     transition: unset !important;
     animation: unset !important;
   }
+
+  /* TOC expand icon例外 - 回転アニメーションを有効化 */
+  .toc-expand-icon {
+    will-change: unset !important;
+    transform: unset !important;
+    transition: unset !important;
+  }
+
+  .toc-expand-icon.rotated {
+    transform: rotate(180deg) !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
 }

@@ -8,6 +8,7 @@ import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
+import { CldImage } from 'astro-cloudinary';
 
 // ========== UTILITY FUNCTIONS ==========
 export async function getVisibleToolArticlesData() {
@@ -326,6 +327,23 @@ const breadcrumbConfig = {
       )
     }
   </header>
+
+  <!-- Featured Image Slot -->
+  {
+    post.data.featuredImage && (
+      <div slot='featured-image' class='featured-image-container mt-6'>
+        <CldImage
+          src={post.data.featuredImage}
+          alt={post.data.title}
+          class='featured-image-thumbnail'
+          loading='eager'
+          width={800}
+          quality='auto'
+          format='auto'
+        />
+      </div>
+    )
+  }
 
   <!-- Content Slot -->
   <div slot='content'>

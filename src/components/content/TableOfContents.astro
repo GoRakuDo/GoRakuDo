@@ -271,7 +271,11 @@ const { headings = [] } = Astro.props
     border-radius: 4px;
     background: none;
     color: var(--token-white-base);
-    cursor: pointer;
+    opacity: 0.3;
+    cursor: default;
+
+    /* Toggle button functionality disabled - SVGは表示 */
+    pointer-events: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform, background-color, color;
 
@@ -295,25 +299,19 @@ const { headings = [] } = Astro.props
   }
 
     &:hover {
-      background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
-      color: var(--token-purple-base);
+      background: none;
+      color: var(--token-white-base);
 
       &::after {
-    opacity: 1;
+        opacity: 0;
       }
-  }
-
-    /* Hide toggle button on desktop - only allow collapse on mobile */
-    @media (min-width: 1201px) {
-    display: none;
-  }
+    }
   }
 
   /* TOC Footer - Mobile only */
   .toc-footer {
     display: none;
     margin-top: 12px;
-    padding-top: 12px;
     border-top: none;
   }
 
@@ -361,11 +359,6 @@ const { headings = [] } = Astro.props
     display: none;
   }
 
-  .toc-expand-icon {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-  }
-
   .toc-expand-toggle {
     display: flex;
     justify-content: center;
@@ -393,10 +386,6 @@ const { headings = [] } = Astro.props
     &:active {
       transform: translateY(0);
       transition-duration: 0.1s;
-    }
-
-    &[aria-expanded="true"] .toc-expand-icon {
-      transform: rotate(180deg);
     }
   }
 
@@ -557,15 +546,11 @@ const { headings = [] } = Astro.props
       max-width: 100%;
       max-height: none;
       padding: 8px 16px;
-      border: 1px solid oklch(100% 0 0deg / 0.12);
+      border: 1px solid oklch(65% 0.15 280deg / 0.2);
       border-radius: 16px;
-      background: linear-gradient(
-        135deg,
-        oklch(20% 0 0deg / 0.15) 0%,
-        oklch(15% 0 0deg / 0.1) 100%
-      );
+        background: oklch(50% 0 0deg / 0.15);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(12px) saturate(1.1);
+      backdrop-filter: blur(6px) saturate(1.1);
       box-shadow:
         0 4px 20px oklch(0% 0 0deg / 0.08),
         0 1px 3px oklch(0% 0 0deg / 0.12),
@@ -580,7 +565,7 @@ const { headings = [] } = Astro.props
       .toc-header {
         width: 100%;
         max-width: calc(100% - 1rem);
-        margin: 0.5rem auto; /* 上下8px統一 */
+        margin: 0 0.25rem; /* 左右8px (0.5rem)、下12px (0.75rem) */
         box-sizing: border-box;
       }
 
@@ -589,21 +574,52 @@ const { headings = [] } = Astro.props
         display: block;
       }
 
+      /* モバイルTOCのtoc-navはデフォルトで表示 */
       .toc-nav {
         max-height: 300px;
         transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         will-change: max-height, opacity, transform;
       }
 
+      /* スマホサイズでデフォルトでtoc-listを非表示 */
+      .toc-list {
+        display: none;
+        overflow: visible;
+        max-height: none;
+      }
+
       .toc-toggle {
-        color: var(--token-white-base);
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform, background-color, color;
+        opacity: 0.3;
+        cursor: default;
+        pointer-events: none;
       }
     }
-    
+
+    /* toc-footerボタンがタップされた時の状態 */
+    .mobile-toc.toc-expanded {
+      .toc-list {
+        display: block;
+      }
+
+      .toc-nav {
+        overflow: visible;
+        max-height: none;
+      }
+    }
+  }
+
+  /* モバイルTOC Expand icon animation */
+  .toc-expand-icon {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .toc-expand-icon.rotated {
+    transform: rotate(180deg);
+  }
+
+  /* Mobile TOC collapsed state */
+  @media (max-width: 1200px) {
     .mobile-toc.toc-collapsed .toc-nav {
       overflow: hidden;
       max-height: 0;
@@ -627,12 +643,12 @@ const { headings = [] } = Astro.props
     }
 
     .mobile-toc .toc-level-2 {
-      padding-left: 24px; /* デスクトップと同じインデント */
+      padding-left: 0;
       font-size: 13px;
     }
 
     .mobile-toc .toc-level-3 {
-      padding-left: 36px; /* デスクトップと同じインデント */
+      padding-left: 18px;
       font-size: 12px;
       opacity: 0.9;
     }
@@ -702,15 +718,11 @@ const { headings = [] } = Astro.props
         width: 100%;
         max-width: 100vw;
         padding: 1rem;
-        border: 1px solid oklch(100% 0 0deg / 0.12);
+        border: 1px solid oklch(65% 0.15 280deg / 0.2);
         border-radius: 16px;
-        background: linear-gradient(
-          135deg,
-          oklch(20% 0 0deg / 0.15) 0%,
-          oklch(15% 0 0deg / 0.1) 100%
-        );
+      background: oklch(50% 0 0deg / 0.15);
         box-sizing: border-box;
-        backdrop-filter: blur(12px) saturate(1.1);
+        backdrop-filter: blur(6px) saturate(1.1);
     }
   }
 </style>
@@ -718,87 +730,14 @@ const { headings = [] } = Astro.props
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const tocContainer = document.querySelector('.toc-container') as HTMLElement;
-    const tocToggle = tocContainer?.querySelector('.toc-toggle') as HTMLButtonElement;
-    const floatingToggle = document.querySelector('.toc-floating-toggle') as HTMLButtonElement;
     const tocLinks = tocContainer?.querySelectorAll('.toc-link') as NodeListOf<HTMLAnchorElement>;
 
-    if (!tocContainer || !tocToggle || !floatingToggle || !tocLinks) {
+    if (!tocContainer || !tocLinks) {
       console.warn('TableOfContents: Missing required elements');
       return;
     }
 
-    let isCollapsed = false;
-
-    /** ------------------------------
-     * Collapse/Expand TOC
-     * ------------------------------ */
-    const updateToggleState = (toggle: HTMLButtonElement, collapsed: boolean) => {
-      if (collapsed) {
-        toggle.setAttribute('aria-label', 'Expand table of contents');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('data-state', 'collapsed');
-      } else {
-        toggle.setAttribute('aria-label', 'Collapse table of contents');
-        toggle.setAttribute('aria-expanded', 'true');
-        toggle.setAttribute('data-state', 'expanded');
-      }
-    };
-
-    // Initialize button states
-    updateToggleState(tocToggle, false);
-
-    const collapseToc = () => {
-      isCollapsed = true;
-      tocContainer.classList.add('toc-collapsed');
-      updateToggleState(tocToggle, true);
-    };
-
-    const expandToc = () => {
-      isCollapsed = false;
-      tocContainer.classList.remove('toc-collapsed');
-      updateToggleState(tocToggle, false);
-    };
-
-    const toggleToc = () => {
-      if (isCollapsed) {
-        expandToc();
-      } else {
-        collapseToc();
-      }
-    };
-
-    // Toggle button in TOC - simple collapse/expand
-    tocToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleToc();
-    });
-
-    // Keyboard support for toggle
-    tocToggle.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleToc();
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        collapseToc();
-      }
-    });
-
-    // Show button (floating) - now expands TOC
-    floatingToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      expandToc();
-    });
-
-    // Keyboard support for floating toggle
-    floatingToggle.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        expandToc();
-      }
-    });
+    // toc-toggle機能は無効化されているため、関連スクリプトを削除
 
     /** ------------------------------
      * Hitung offset navbar dinamis (Optimized to prevent forced reflow)
@@ -890,7 +829,7 @@ const { headings = [] } = Astro.props
         }
         
         // Auto-scroll TOC to keep current link visible
-        if (tocNav && !isCollapsed) {
+        if (tocNav) {
           const linkRect = link.getBoundingClientRect();
           const navRect = tocNav.getBoundingClientRect();
           if (linkRect.top < navRect.top || linkRect.bottom > navRect.bottom) {
@@ -955,7 +894,7 @@ const { headings = [] } = Astro.props
           if (link) {
             setActiveLink(link);
             // Scroll TOC to show current section
-            if (tocNav && !isCollapsed) {
+            if (tocNav) {
               tocNav.scrollTo({
                 top: (link as HTMLElement).offsetTop - tocNav.offsetTop - tocNav.offsetHeight / 2,
                 behavior: 'smooth'
@@ -984,104 +923,36 @@ const { headings = [] } = Astro.props
             clone.classList.add('mobile-toc');
             
             // Re-attach event listeners to mobile TOC
-            const mobileToggle = clone.querySelector('.toc-toggle') as HTMLButtonElement;
             const mobileLinks = clone.querySelectorAll('.toc-link') as NodeListOf<HTMLAnchorElement>;
             const mobileExpandToggle = clone.querySelector('.toc-expand-toggle') as HTMLButtonElement;
             
-            // Shared state for mobile TOC
-              let mobileCollapsed = false;
+            // toc-toggle機能は無効化されているため、関連スクリプトを削除
             
-            if (mobileToggle) {
-              
-              const updateMobileToggleState = (collapsed: boolean) => {
-                if (collapsed) {
-                  mobileToggle.setAttribute('aria-label', 'Expand table of contents');
-                  mobileToggle.setAttribute('aria-expanded', 'false');
-                } else {
-                  mobileToggle.setAttribute('aria-label', 'Collapse table of contents');
-                  mobileToggle.setAttribute('aria-expanded', 'true');
-                }
-              };
-              
-              mobileToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                 
-                mobileCollapsed = !mobileCollapsed;
-                if (mobileCollapsed) {
-                  clone.classList.add('toc-collapsed');
-                } else {
-                  clone.classList.remove('toc-collapsed');
-                }
-                updateMobileToggleState(mobileCollapsed);
-                 
-                 // Reset expand toggle state when TOC is collapsed/expanded by toggle
-                 const mobileExpandToggle = clone.querySelector('.toc-expand-toggle') as HTMLButtonElement;
-                 if (mobileExpandToggle) {
-                   if (mobileCollapsed) {
-                     // When collapsed by toggle, reset expand toggle to normal state
-                     mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
-                     mobileExpandToggle.setAttribute('aria-expanded', 'false');
-                   } else {
-                     // When expanded by toggle, reset expand toggle to normal state
-                     mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
-                     mobileExpandToggle.setAttribute('aria-expanded', 'false');
-                   }
-                 }
-              });
-              
-              // Initialize mobile toggle state
-              updateMobileToggleState(mobileCollapsed);
-            }
-            
-            // Mobile expand toggle functionality
+            // Mobile expand toggle - シンプルなクラスベース実装
             if (mobileExpandToggle) {
-              let isExpanded = false;
-              const mobileTocNav = clone.querySelector('.toc-nav') as HTMLElement;
-              
-              const updateExpandToggleState = (expanded: boolean) => {
-                isExpanded = expanded;
-                if (expanded) {
-                  mobileExpandToggle.setAttribute('aria-label', 'Collapse table of contents');
-                  mobileExpandToggle.setAttribute('aria-expanded', 'true');
-                  if (mobileTocNav) {
-                    mobileTocNav.style.maxHeight = 'none';
-                    mobileTocNav.style.overflow = 'visible';
-                  }
-                } else {
-                  mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
-                  mobileExpandToggle.setAttribute('aria-expanded', 'false');
-                  if (mobileTocNav) {
-                    mobileTocNav.style.maxHeight = '300px';
-                    mobileTocNav.style.overflow = 'hidden auto';
-                  }
-                }
-              };
+              const mobileExpandIcon = mobileExpandToggle.querySelector('.toc-expand-icon') as SVGElement;
               
               mobileExpandToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Check if TOC is collapsed by toggle button
-                if (mobileCollapsed) {
-                  // State 2: TOC is collapsed by toggle, expand it back
-                  clone.classList.remove('toc-collapsed');
-                  mobileCollapsed = false;
-                  
-                  // Update mobile toggle state
-                  const mobileToggle = clone.querySelector('.toc-toggle') as HTMLButtonElement;
-                  if (mobileToggle) {
-                    mobileToggle.setAttribute('aria-label', 'Collapse table of contents');
-                    mobileToggle.setAttribute('aria-expanded', 'true');
-                  }
+                // toc-expanded クラスをトグル
+                const isExpanded = clone.classList.toggle('toc-expanded');
+                
+                // SVGアイコンの回転クラスをトグル
+                mobileExpandIcon?.classList.toggle('rotated', isExpanded);
+                
+                // ARIA属性を更新
+                if (isExpanded) {
+                  mobileExpandToggle.setAttribute('aria-expanded', 'true');
+                  mobileExpandToggle.setAttribute('aria-label', 'Tutup daftar isi');
+                  mobileExpandToggle.querySelector('.toc-expand-text')!.textContent = 'Tutup Daftar isi';
                 } else {
-                  // State 1: Normal state, toggle expand/collapse of nav content
-                  updateExpandToggleState(!isExpanded);
+                  mobileExpandToggle.setAttribute('aria-expanded', 'false');
+                  mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
+                  mobileExpandToggle.querySelector('.toc-expand-text')!.textContent = 'Tampilkan Daftar isi';
                 }
               });
-              
-              // Initialize expand toggle state
-              updateExpandToggleState(isExpanded);
             }
             
             mobileLinks.forEach(link => {
