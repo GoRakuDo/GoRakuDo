@@ -143,6 +143,19 @@ export interface Props {
   collectionPageSchema?: CollectionPageSchema | null;
   softwareApplicationSchema?: SoftwareApplicationSchema | null;
   websiteSchema?: WebsiteSchema | null;
+  learningResourceType?: string | string[];
+  educationalLevel?: string | string[];
+  about?: string | Array<{
+    type: string;
+    name: string;
+    description?: string;
+    sameAs?: string;
+  }>;
+  mentions?: string[] | Array<{
+    type: string;
+    name: string;
+    sameAs?: string;
+  }>;
   preconnect?: string[];
   dnsPrefetch?: string[];
   prefetch?: string[];
@@ -188,6 +201,10 @@ const {
   collectionPageSchema,
   softwareApplicationSchema,
   websiteSchema,
+  learningResourceType,
+  educationalLevel,
+  about,
+  mentions,
   preconnect = seoConfig.seo.resourceHints?.preconnect || [],
   dnsPrefetch = seoConfig.seo.resourceHints?.dnsPrefetch || [],
   prefetch = [],
@@ -376,6 +393,27 @@ const createAuthorObject = () => {
 const createMainEntityOfPage = () => ({ '@type': 'WebPage', '@id': normalizedCanonical });
 const estimateWordCount = (text: string): number => text.length * 2;
 
+const processAbout = (aboutData: any) => {
+  if (!aboutData) return null;
+  if (typeof aboutData === 'string') return aboutData;
+  return aboutData.map((item: any) => ({
+    '@type': item.type || 'DefinedTerm',
+    name: item.name,
+    ...(item.description && { description: item.description }),
+    ...(item.sameAs && { sameAs: item.sameAs })
+  }));
+};
+
+const processMentions = (mentionsData: any) => {
+  if (!mentionsData || mentionsData.length === 0) return null;
+  if (typeof mentionsData[0] === 'string') return mentionsData;
+  return mentionsData.map((item: any) => ({
+    '@type': item.type || 'Person',
+    name: item.name,
+    ...(item.sameAs && { sameAs: item.sameAs })
+  }));
+};
+
 const articleSchema = pageType === 'article' ? {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -392,7 +430,11 @@ const articleSchema = pageType === 'article' ? {
   keywords: articleKeywords || keywords.join(', '),
   inLanguage: lang,
   articleSection: 'Japanese Learning',
-  wordCount: estimateWordCount(description)
+  wordCount: estimateWordCount(description),
+  ...(learningResourceType && { learningResourceType }),
+  ...(educationalLevel && { educationalLevel }),
+  ...(processAbout(about) && { about: processAbout(about) }),
+  ...(processMentions(mentions) && { mentions: processMentions(mentions) })
 } : null;
 
 // ========== LOCAL BUSINESS SCHEMA ==========

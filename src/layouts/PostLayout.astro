@@ -38,6 +38,10 @@ export interface Props {
   faqSchema?: UnifiedSEOProps['faqSchema'];
   howToSchema?: UnifiedSEOProps['howToSchema'];
   softwareApplicationSchema?: UnifiedSEOProps['softwareApplicationSchema'];
+  learningResourceType?: UnifiedSEOProps['learningResourceType'];
+  educationalLevel?: UnifiedSEOProps['educationalLevel'];
+  about?: UnifiedSEOProps['about'];
+  mentions?: UnifiedSEOProps['mentions'];
 }
 
 // ========== PROPS DESTRUCTURING ==========
@@ -54,6 +58,10 @@ const {
   faqSchema,
   howToSchema,
   softwareApplicationSchema,
+  learningResourceType,
+  educationalLevel,
+  about,
+  mentions,
   featuredImage,
 } = Astro.props;
 ---
@@ -75,6 +83,10 @@ const {
       faqSchema={faqSchema}
       howToSchema={howToSchema}
       softwareApplicationSchema={softwareApplicationSchema}
+      learningResourceType={learningResourceType}
+      educationalLevel={educationalLevel}
+      about={about}
+      mentions={mentions}
     />
   </head>
   <body>
