@@ -358,7 +358,7 @@ const prefetchUrls = generatePrefetch(prefetch);
 const preloadResources = generatePreload(preload);
 
 // ========== SCHEMA HELPER FUNCTIONS ==========
-const createImageObject = (imageUrl: string, width = 512, height = 512) => ({
+const createImageObject = (imageUrl: string, width = 1024, height = 1024) => ({
   '@type': 'ImageObject',
   url: createFullImageUrl(imageUrl),
   width,

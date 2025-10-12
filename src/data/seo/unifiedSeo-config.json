@@ -100,8 +100,8 @@
       "logo": {
         "@type": "ImageObject",
         "url": "https://gorakudo.org/img/gorakudo-immerison.png",
-        "width": 630,
-        "height": 630
+        "width": 1024,
+        "height": 1024
       },
       "description": "Platform belajar bahasa Jepang terdepan di Indonesia dengan metode immersion yang terbukti efektif",
       "foundingDate": "2024",
