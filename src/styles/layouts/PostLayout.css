@@ -675,15 +675,21 @@
 
   /* Blockquote styling - 引用スタイル */
   blockquote {
-    margin: 1rem 0;
     padding: 0.625rem 0.75rem;
-    border-left: 2.5px solid oklch(from var(--token-text-muted) l c h / 0.5);
     border-radius: 0 0.5rem 0.5rem 0;
     background: oklch(from var(--token-black-base) l c h / 0.5);
     color: var(--clr-text-secondary);
-    font-family: var(--font-serif);
     font-weight: 400;
     font-style: italic;
+  }
+
+  /* Prose link styling - リンクスタイル */
+  a {
+    color: var(--clr-purple);
+    text-decoration: underline;
+    text-decoration-color: oklch(from var(--token-text-muted) l c h / 0.5);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
   }
 
   /* Prose underline styling - アンダーラインスタイル */

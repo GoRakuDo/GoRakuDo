@@ -42,6 +42,7 @@ export interface Props {
   educationalLevel?: UnifiedSEOProps['educationalLevel'];
   about?: UnifiedSEOProps['about'];
   mentions?: UnifiedSEOProps['mentions'];
+  citation?: UnifiedSEOProps['citation'];
 }
 
 // ========== PROPS DESTRUCTURING ==========
@@ -62,6 +63,7 @@ const {
   educationalLevel,
   about,
   mentions,
+  citation,
   featuredImage,
 } = Astro.props;
 ---
@@ -87,6 +89,7 @@ const {
       educationalLevel={educationalLevel}
       about={about}
       mentions={mentions}
+      citation={citation}
     />
   </head>
   <body>

@@ -156,6 +156,17 @@ export interface Props {
     name: string;
     sameAs?: string;
   }>;
+  citation?: Array<{
+    type: string;
+    author: string | string[];
+    datePublished: string;
+    name: string;
+    url?: string;
+    isPartOf?: {
+      type: string;
+      name: string;
+    };
+  }>;
   preconnect?: string[];
   dnsPrefetch?: string[];
   prefetch?: string[];
@@ -205,6 +216,7 @@ const {
   educationalLevel,
   about,
   mentions,
+  citation,
   preconnect = seoConfig.seo.resourceHints?.preconnect || [],
   dnsPrefetch = seoConfig.seo.resourceHints?.dnsPrefetch || [],
   prefetch = [],
@@ -414,6 +426,18 @@ const processMentions = (mentionsData: any) => {
   }));
 };
 
+const processCitation = (citationData: any) => {
+  if (!citationData || citationData.length === 0) return null;
+  return citationData.map((item: any) => ({
+    '@type': item.type || 'ScholarlyArticle',
+    author: item.author,
+    datePublished: item.datePublished,
+    name: item.name,
+    ...(item.url && { url: item.url }),
+    ...(item.isPartOf && { isPartOf: { '@type': item.isPartOf.type, name: item.isPartOf.name } })
+  }));
+};
+
 const articleSchema = pageType === 'article' ? {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -434,7 +458,8 @@ const articleSchema = pageType === 'article' ? {
   ...(learningResourceType && { learningResourceType }),
   ...(educationalLevel && { educationalLevel }),
   ...(processAbout(about) && { about: processAbout(about) }),
-  ...(processMentions(mentions) && { mentions: processMentions(mentions) })
+  ...(processMentions(mentions) && { mentions: processMentions(mentions) }),
+  ...(processCitation(citation) && { citation: processCitation(citation) })
 } : null;
 
 // ========== LOCAL BUSINESS SCHEMA ==========

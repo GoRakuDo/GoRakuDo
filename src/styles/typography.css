@@ -421,19 +421,6 @@ button:focus-visible,
 
 /* ========== DISCORD-STYLE MARKDOWN FORMATTING ========== */
 
-/* stylelint-disable declaration-no-important */
-
-/* _text_ or *text* = italic */
-.article-content em,
-.article-content i,
-.prose em,
-.prose i,
-.content-main em,
-.content-main i {
-  color: var(--clr-text-primary);
-  font-style: italic !important;
-}
-
 /* underline style */
 .article-content u,
 .prose u,
@@ -445,8 +432,6 @@ button:focus-visible,
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
 }
-
-/* stylelint-enable declaration-no-important */
 
 /* ========== LIST STYLING - GLOBAL CONSISTENCY ========== */
 

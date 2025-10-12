@@ -50,6 +50,17 @@ const docsCollection = defineCollection({
         sameAs: z.string().url().optional(),
       }))
     ]).optional(),
+    citation: z.array(z.object({
+      type: z.string().max(50),
+      author: z.union([z.string().max(100), z.array(z.string().max(100))]),
+      datePublished: z.string().max(20),
+      name: z.string().max(300),
+      url: z.string().url().optional(),
+      isPartOf: z.object({
+        type: z.string().max(50),
+        name: z.string().max(200),
+      }).optional(),
+    })).max(20).optional(),
     status: z.enum(['published', 'draft', 'archived']).default(DEFAULTS.STATUS),
     featuredImage: z.string().optional(),
   }),
