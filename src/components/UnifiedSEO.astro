@@ -284,6 +284,11 @@ const createFullImageUrl = (imagePath?: string): string => {
   // 既に完全なURLの場合はそのまま返す
   if (imagePath.startsWith('http')) return imagePath;
   
+  // Cloudinary public_idの場合 (パス区切りなし、拡張子なし)
+  if (!imagePath.includes('/') && !imagePath.match(/\.(jpg|jpeg|png|webp|svg|gif)$/i)) {
+    return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${imagePath}`;
+  }
+  
   // 相対パスの場合は完全なURLに変換
   const siteUrl = getSiteUrl();
   return joinUrl(siteUrl, imagePath);
