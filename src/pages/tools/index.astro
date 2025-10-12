@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolsGridSection from '../../components/tools/Tools-GridSection.astro';
 import { CldImage } from 'astro-cloudinary';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import { buildCloudinaryUrl } from '../../utils/cloudinary';
 import toolsData from '../../data/tools.json';
 import toolsSeoData from '../../data/seo/pages/tools.json';
 import '../../styles/pages/tools/tools-index.css';
@@ -43,7 +44,7 @@ const statsData = getStatsData(toolsCount);
 
 // ========== IMAGE CONFIG ==========
 const heroImageId = 'gorakudo-tools-tutorials_exzci4';
-const heroImageUrl = `https://res.cloudinary.com/dbvd1cm7u/image/upload/${heroImageId}`;
+const heroImageUrl = buildCloudinaryUrl(heroImageId);
 
 // ========== SEO DATA WITH TEMPLATE REPLACEMENT ==========
 // テンプレート変数置き換え関数

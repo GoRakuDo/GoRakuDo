@@ -8,6 +8,7 @@ import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
 import { CldImage } from 'astro-cloudinary';
+import { buildCloudinaryUrl } from '../../utils/cloudinary';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -130,8 +131,9 @@ const breadcrumbConfig = {
 // articleContentのheadingsを更新
 articleContent.headings = tocHeadings;
 const articleUrl = resolvedPath.path; // 相対パス（breadcrumb用）
-const articleImage =
-  post.data.featuredImage || 'https://gorakudo.org/img/gorakudo-immerison.png';
+const articleImage = post.data.featuredImage
+  ? buildCloudinaryUrl(post.data.featuredImage)
+  : 'https://gorakudo.org/img/gorakudo-immerison.png';
 
 // テンプレート変数の準備
 const templateVariables = {

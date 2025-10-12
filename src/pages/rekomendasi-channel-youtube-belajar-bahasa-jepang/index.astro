@@ -6,6 +6,7 @@ import PageHeader from '../../components/ui/PageHeader.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
 import channelsDataRaw from '../../data/youtube-channels.json';
 import youtubeSeoData from '../../data/seo/pages/youtube-rekomendasi.json';
+import { buildCloudinaryUrl } from '../../utils/cloudinary';
 // Cloudinary image public IDs
 const heroImage = 'gorakudo-rekomendasi-youtube_oos0gu';
 const podcastImage = 'gorakudo-radio-podcast_lrlfmn';
@@ -42,7 +43,7 @@ const breadcrumbData = youtubeSeoData.breadcrumbData;
 
 // ========== HEADER IMAGE CONFIG ==========
 const headerImageId = heroImage; // PageHeaderで使用されている画像ID
-const headerImageUrl = `https://res.cloudinary.com/dbvd1cm7u/image/upload/${headerImageId}`;
+const headerImageUrl = buildCloudinaryUrl(headerImageId);
 
 // ========== STRUCTURED DATA ==========
 const breadcrumbSchema = {

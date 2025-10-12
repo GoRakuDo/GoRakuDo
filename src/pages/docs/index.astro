@@ -13,6 +13,7 @@ import {
 } from '../../components/common/Pagination/pagination';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import { buildCloudinaryUrl } from '../../utils/cloudinary';
 import docsSeoData from '../../data/seo/pages/docs.json';
 import '../../styles/pages/docs/docs-index.css';
 
@@ -53,7 +54,7 @@ const totalPosts = sortedPosts.length;
 
 // ========== HEADER IMAGE CONFIG ==========
 const headerImageId = 'gorakudo-docs_nmobpw';
-const headerImageUrl = `https://res.cloudinary.com/dbvd1cm7u/image/upload/${headerImageId}`;
+const headerImageUrl = buildCloudinaryUrl(headerImageId);
 
 // ========== SEO DATA ==========
 const seoData = {

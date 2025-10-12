@@ -20,6 +20,7 @@ import LanguageLearningProblems from '../../components/content/LanguageLearningP
 import KrashenQuote from '../../components/content/KrashenQuote.astro';
 import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 import { CldImage } from 'astro-cloudinary';
+import { buildCloudinaryUrl } from '../../utils/cloudinary';
 
 // ========== ASSETS ==========
 import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.png';
@@ -76,20 +77,15 @@ const baseStructuredData = replaceTemplateVars(
 );
 
 // ========== DYNAMIC STRUCTURED DATA ==========
-// Cloudinary画像URLを生成（CldImageコンポーネント用）
-const getImageUrl = (publicId: string) => {
-  return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${publicId}`;
-};
-
 // ステップ画像のマッピング
 const stepImages = {
-  'gorakudo-membentuk-pondasi-intuisi': getImageUrl(
+  'gorakudo-membentuk-pondasi-intuisi': buildCloudinaryUrl(
     gorakudoMembentukPondasiImage
   ),
-  'gorakudo-kerangka-active': getImageUrl(gorakudoKerangkaActiveImage),
-  'gorakudo-konsolidasi-intuisi': getImageUrl(gorakudoKonsolidasiImage),
-  'gorakudo-menata-intusi': getImageUrl(gorakudoMenataIntuisiImage),
-  'gorakudo-immerison': getImageUrl(gorakudoImmerisonImage),
+  'gorakudo-kerangka-active': buildCloudinaryUrl(gorakudoKerangkaActiveImage),
+  'gorakudo-konsolidasi-intuisi': buildCloudinaryUrl(gorakudoKonsolidasiImage),
+  'gorakudo-menata-intusi': buildCloudinaryUrl(gorakudoMenataIntuisiImage),
+  'gorakudo-immerison': buildCloudinaryUrl(gorakudoImmerisonImage),
 };
 
 // 動的画像URLを使用して構造化データを生成
@@ -99,7 +95,7 @@ const structuredData = {
     ...baseStructuredData.article,
     image: {
       '@type': 'ImageObject',
-      url: getImageUrl(gorakudoImmerisonImage),
+      url: buildCloudinaryUrl(gorakudoImmerisonImage),
       width: 630,
     },
   },
@@ -107,7 +103,7 @@ const structuredData = {
     ...baseStructuredData.howTo,
     image: {
       '@type': 'ImageObject',
-      url: getImageUrl(gorakudoImmerisonImage),
+      url: buildCloudinaryUrl(gorakudoImmerisonImage),
       width: 630,
     },
     step: baseStructuredData.howTo.step.map((step, index) => {
@@ -127,7 +123,8 @@ const structuredData = {
         ...step,
         image: {
           '@type': 'ImageObject',
-          url: stepImages[imageKey] || getImageUrl(gorakudoImmerisonImage),
+          url:
+            stepImages[imageKey] || buildCloudinaryUrl(gorakudoImmerisonImage),
           width: 630,
         },
       };
@@ -167,7 +164,7 @@ const faqSchema = {
   author={seoData.author}
   publishedDate={seoData.publishedDate}
   articleKeywords={seoData.articleKeywords}
-  ogImage={getImageUrl(gorakudoImmerisonImage)}
+  ogImage={buildCloudinaryUrl(gorakudoImmerisonImage)}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
 >
@@ -509,7 +506,7 @@ const faqSchema = {
                 alt='Data Kosakata Penutur Asli Bahasa Jepang'
                 quality='auto'
                 class='section-image image-zoom-trigger'
-                data-zoom-src={getImageUrl(japaneseNativeVocabulary)}
+                data-zoom-src={buildCloudinaryUrl(japaneseNativeVocabulary)}
                 data-zoom-alt='Data Kosakata Penutur Asli Bahasa Jepang'
                 tabindex='0'
                 role='button'

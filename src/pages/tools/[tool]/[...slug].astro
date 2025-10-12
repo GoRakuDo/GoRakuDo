@@ -9,6 +9,7 @@ import { logger } from '../../../utils/logging/console-logger';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
 import { CldImage } from 'astro-cloudinary';
+import { buildCloudinaryUrl } from '../../../utils/cloudinary';
 
 // ========== UTILITY FUNCTIONS ==========
 export async function getVisibleToolArticlesData() {
@@ -149,9 +150,9 @@ const templateVariables = {
   articleTitle: post.data.title || '',
   articleDescription: post.data.description || '',
   articleUrl: resolvedPath.path, // 相対パス（breadcrumb用）
-  toolImage:
-    post.data.featuredImage ||
-    `https://gorakudo.org/icon/${toolName}-icon-240.webp`,
+  toolImage: post.data.featuredImage
+    ? buildCloudinaryUrl(post.data.featuredImage)
+    : `https://gorakudo.org/icon/${toolName}-icon-240.webp`,
   toolDescription: toolInfo.description,
   operatingSystem: toolInfo.operatingSystem,
   toolAuthor: toolInfo.author,
