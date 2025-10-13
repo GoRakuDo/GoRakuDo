@@ -240,28 +240,138 @@ const menuItems = [
   <div class='menu-overlay-content'>
     <div class='menu-overlay-header'>
       <h2 class='menu-overlay-title'>Menu</h2>
-      <button class='menu-overlay-close' aria-label='Close menu'>
-        <svg
-          width='24'
-          height='24'
-          viewBox='0 0 24 24'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
+      <div class='menu-overlay-controls'>
+        <button
+          class='menu-overlay-view-toggle'
+          aria-label='Toggle view mode'
+          title='表示モード切り替え'
         >
-          <path
-            d='M18 6L6 18'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'></path>
-          <path
-            d='M6 6L18 18'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'></path>
-        </svg>
-      </button>
+          <svg
+            class='view-icon view-icon--list'
+            width='20'
+            height='20'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <line
+              x1='8'
+              y1='6'
+              x2='21'
+              y2='6'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'></line>
+            <line
+              x1='8'
+              y1='12'
+              x2='21'
+              y2='12'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'></line>
+            <line
+              x1='8'
+              y1='18'
+              x2='21'
+              y2='18'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'></line>
+            <line
+              x1='3'
+              y1='6'
+              x2='4'
+              y2='6'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'></line>
+            <line
+              x1='3'
+              y1='12'
+              x2='4'
+              y2='12'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'></line>
+            <line
+              x1='3'
+              y1='18'
+              x2='4'
+              y2='18'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'></line>
+          </svg>
+          <svg
+            class='view-icon view-icon--grid'
+            width='20'
+            height='20'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <rect
+              x='3'
+              y='3'
+              width='7'
+              height='7'
+              rx='1'
+              stroke='currentColor'
+              stroke-width='2'></rect>
+            <rect
+              x='14'
+              y='3'
+              width='7'
+              height='7'
+              rx='1'
+              stroke='currentColor'
+              stroke-width='2'></rect>
+            <rect
+              x='3'
+              y='14'
+              width='7'
+              height='7'
+              rx='1'
+              stroke='currentColor'
+              stroke-width='2'></rect>
+            <rect
+              x='14'
+              y='14'
+              width='7'
+              height='7'
+              rx='1'
+              stroke='currentColor'
+              stroke-width='2'></rect>
+          </svg>
+        </button>
+        <button
+          class='menu-overlay-close'
+          aria-label='Close menu'
+          title='閉じる'
+        >
+          <svg
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              d='M18 6L6 18'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+            <path
+              d='M6 6L18 18'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+          </svg>
+        </button>
+      </div>
     </div>
     <div class='menu-overlay-items'>
       {
@@ -1036,6 +1146,94 @@ const menuItems = [
     flex-shrink: 0;
   }
 
+  .menu-overlay-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .menu-overlay-view-toggle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.1) 0%,
+      oklch(100% 0 0deg / 0.05) 100%
+    );
+    color: oklch(from var(--token-white-base) l c h);
+    cursor: pointer;
+    transition:
+      background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow:
+      0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+  }
+
+  .view-icon {
+    position: absolute;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  /* デフォルトはグリッドビュー */
+  .view-icon--list {
+    opacity: 0;
+  }
+
+  .view-icon--grid {
+    opacity: 1;
+  }
+
+  /* List view active state */
+  .menu-overlay-content:not(.view-grid) .view-icon--list {
+    opacity: 1;
+  }
+
+  .menu-overlay-content:not(.view-grid) .view-icon--grid {
+    opacity: 0;
+  }
+
+  /* Grid view active state */
+  .menu-overlay-content.view-grid .view-icon--list {
+    opacity: 0;
+  }
+
+  .menu-overlay-content.view-grid .view-icon--grid {
+    opacity: 1;
+  }
+
+  /* Desktop hover effects */
+  @media (hover: hover) and (pointer: fine) {
+    .menu-overlay-view-toggle:hover {
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.2) 0%,
+        oklch(100% 0 0deg / 0.1) 100%
+      );
+      border-color: oklch(100% 0 0deg / 0.25);
+      transform: scale(1.05);
+      box-shadow:
+        0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+    }
+  }
+
+  .menu-overlay-view-toggle:active {
+    transform: scale(0.95);
+    box-shadow:
+      0 1px 4px oklch(from var(--token-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+  }
+
   .menu-overlay-title {
     margin: 0;
     color: oklch(from var(--token-white-base) l c h);
@@ -1114,6 +1312,9 @@ const menuItems = [
     /* スクロールバーのカスタマイズ */
     scrollbar-width: thin;
     scrollbar-color: oklch(100% 0 0deg / 0.3) transparent;
+
+    /* スムーズなトランジション */
+    transition: gap 0.3s ease;
   }
 
   /* モバイル最適化: ボタンサイズとスペーシングの調整 */
@@ -1143,6 +1344,19 @@ const menuItems = [
     );
   }
 
+  /* Grid view mode */
+  .menu-overlay-content.view-grid .menu-overlay-items {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Grid view時にdividerを2列にまたがせる */
+  .menu-overlay-content.view-grid .menu-overlay-divider {
+    grid-column: 1 / -1;
+    margin: 0.25rem 0;
+  }
+
   .menu-overlay-item {
     display: flex;
     align-items: center;
@@ -1165,20 +1379,14 @@ const menuItems = [
     transition:
       background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      flex-direction 0.3s ease,
+      padding 0.3s ease;
 
     /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.08),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-  }
-
-  /* モバイル最適化: ボタンサイズの調整 */
-  @media (max-width: 768px) {
-    .menu-overlay-item {
-      gap: 0.75rem; /* アイコンとテキストの間隔を削減 */
-      padding: 0.75rem; /* パディングを25%削減 */
-    }
   }
 
   /* デスクトップのみホバー効果 */
@@ -1203,6 +1411,32 @@ const menuItems = [
     box-shadow:
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
       inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+  }
+
+  /* Grid view mode - アイコンビュー */
+  .menu-overlay-content.view-grid .menu-overlay-item {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.25rem 0.75rem;
+    text-align: center;
+  }
+
+  /* モバイル最適化: ボタンサイズの調整 */
+  @media (max-width: 768px) {
+    .menu-overlay-item {
+      gap: 0.75rem; /* アイコンとテキストの間隔を削減 */
+      padding: 0.75rem; /* パディングを25%削減 */
+    }
+
+    /* グリッドビュー時のモバイル最適化 */
+    .menu-overlay-content.view-grid .menu-overlay-item {
+      padding: 1rem 0.5rem;
+    }
+
+    .menu-overlay-content.view-grid .menu-overlay-items {
+      gap: 0.5rem;
+    }
   }
 
   .menu-overlay-icon {
@@ -1265,12 +1499,20 @@ const menuItems = [
     letter-spacing: 0.02em;
 
     /* 最適化: 具体的なプロパティのみアニメーション */
-    transition: color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition:
+      color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      font-size 0.3s ease;
 
     /* UNIFIED text shadow - Navbar.astroと同じ */
     text-shadow:
       0 1px 2px oklch(from var(--token-black-base) l c h / 0.3),
       0 0 4px oklch(from var(--token-black-base) l c h / 0.2);
+  }
+
+  /* Grid view mode - ラベルサイズ調整 */
+  .menu-overlay-content.view-grid .menu-overlay-label {
+    font-size: 0.875rem;
+    line-height: 1.3;
   }
 
   /* モバイル最適化: テキストサイズの調整 */
@@ -1315,9 +1557,43 @@ const menuItems = [
     const menuOverlay = document.getElementById('menu-overlay');
     const menuButton = document.querySelector('[data-menu-button="true"]');
     const closeButton = document.querySelector('.menu-overlay-close');
+    const viewToggleButton = document.querySelector(
+      '.menu-overlay-view-toggle'
+    );
+    const menuOverlayContent = document.querySelector('.menu-overlay-content');
 
     // モバイル判定関数
     const isMobile = () => window.innerWidth <= 768;
+
+    // View mode management with localStorage
+    const VIEW_MODE_KEY = 'menu-overlay-view-mode';
+    const getViewMode = () => localStorage.getItem(VIEW_MODE_KEY) || 'grid';
+    const setViewMode = mode => {
+      localStorage.setItem(VIEW_MODE_KEY, mode);
+      updateViewMode(mode);
+    };
+
+    const updateViewMode = mode => {
+      if (menuOverlayContent) {
+        if (mode === 'grid') {
+          menuOverlayContent.classList.add('view-grid');
+        } else {
+          menuOverlayContent.classList.remove('view-grid');
+        }
+      }
+    };
+
+    // Initialize view mode
+    updateViewMode(getViewMode());
+
+    // Toggle view mode
+    if (viewToggleButton) {
+      viewToggleButton.addEventListener('click', function () {
+        const currentMode = getViewMode();
+        const newMode = currentMode === 'list' ? 'grid' : 'list';
+        setViewMode(newMode);
+      });
+    }
 
     // BEM hover and active state management
     const navButtons = document.querySelectorAll('.nav-btn');

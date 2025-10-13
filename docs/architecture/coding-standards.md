@@ -959,6 +959,158 @@ oklch(from var(--base-color) l c h / 0.5)
 
 **Rationale:** OKLCHは知覚的に均一な色空間を提供し、clamp()はメディアクエリを削減してメンテナンス性を向上させます。
 
+### CSS Selector Specificity & Ordering (MANDATORY)
+
+**Directive:** セレクターは特異性の**昇順**（低い→高い）に配置し、Stylelintの`no-descending-specificity`ルールに準拠します。
+
+#### 特異性の計算
+
+CSS特異性は`(インラインスタイル, ID, クラス/属性/疑似クラス, 要素)`の4つの値で表されます。
+
+```css
+/* 特異性の例 */
+.button                                    /* (0,0,1,0) - 低い */
+.menu .button                              /* (0,0,2,0) - 中 */
+.menu-overlay-content.view-grid .button    /* (0,0,3,0) - 高い */
+```
+
+#### The Ascending Specificity Rule
+
+**CRITICAL**: より一般的なセレクター（低い特異性）を**先に**、より具体的なセレクター（高い特異性）を**後に**配置すること。
+
+```css
+/* ✅ Good - 昇順（低→高） */
+.menu-overlay-divider {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.menu-overlay-content.view-grid .menu-overlay-divider {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0;
+}
+```
+
+```css
+/* ❌ Bad - 降順（高→低）Stylelintエラー */
+.menu-overlay-content.view-grid .menu-overlay-divider {
+  grid-column: 1 / -1;
+}
+
+.menu-overlay-divider {  /* ← エラー: 前のセレクターより低い特異性 */
+  width: 100%;
+}
+```
+
+#### 特異性順序テーブル
+
+| セレクター | 特異性 | 配置順序 | 例 |
+|---|---|---|---|
+| `.element` | `(0,0,1,0)` | 1番目（先） | `.button` |
+| `.parent .element` | `(0,0,2,0)` | 2番目 | `.nav .button` |
+| `.parent.modifier .element` | `(0,0,3,0)` | 3番目（後） | `.nav.active .button` |
+
+#### なぜこの順序が重要なのか
+
+**CSSのカスケード原則**:
+1. CSSは上から下へ評価される
+2. 同じ特異性なら、後の定義が優先される
+3. より具体的なセレクターが後にあれば、意図通りにオーバーライドできる
+
+**視覚的説明**:
+```
+CSS評価フロー
+    ↓
+.menu-overlay-divider { margin: 0.5rem; }  ← 一般的（すべてに適用）
+    ↓
+.menu-overlay-content.view-grid .menu-overlay-divider { margin: 0.25rem; }
+    ↓                                      ← 具体的（view-grid時のみオーバーライド）
+最終的な適用値が決定
+```
+
+#### 実践的な修正例
+
+**エラーメッセージ**:
+```
+✖ Expected selector ".menu-overlay-divider" to come before selector 
+  ".menu-overlay-content.view-grid .menu-overlay-divider" 
+  no-descending-specificity
+```
+
+**修正手順（3分で完了）**:
+
+1. **特異性を計算する**（30秒）
+   ```
+   .menu-overlay-divider                                  = (0,0,1,0)
+   .menu-overlay-content.view-grid .menu-overlay-divider = (0,0,3,0)
+   ```
+
+2. **順序を入れ替える**（2分）
+   - 一般的なセレクター（0,0,1,0）を先に移動
+   - 具体的なセレクター（0,0,3,0）を後に配置
+
+3. **検証する**（10秒）
+   ```bash
+   npm run stylelint
+   # または
+   read_lints(['src/components/...'])
+   ```
+
+#### 特異性の高さの判断基準
+
+```css
+/* 特異性の高さ = クラス数 + ネストの深さ */
+
+/* 低い（先に配置） */
+.item { }                    /* クラス1個 */
+.container .item { }         /* クラス2個 */
+
+/* 高い（後に配置） */
+.wrapper .container .item { }           /* クラス3個 */
+.container.active .item { }             /* クラス3個 */
+.wrapper .container.active .item { }    /* クラス4個 */
+```
+
+#### ベストプラクティス
+
+1. **クラス数が少ない → 先**
+2. **クラス数が多い → 後**
+3. **ネストが浅い → 先**
+4. **ネストが深い → 後**
+5. **疑似クラス（:hover, :active）→ 後**
+6. **モディファイア（.is-active, .view-grid）→ 後**
+
+#### 疑似クラスとモディファイアの順序
+
+```css
+/* ✅ Good - 正しい順序 */
+.button { }                    /* ベース（先） */
+.button:hover { }              /* 疑似クラス（中） */
+.button:active { }             /* 疑似クラス（中） */
+.container.active .button { }  /* モディファイア（後） */
+```
+
+#### CSS Grid - 特別な注意事項
+
+グリッドレイアウトでは、`grid-column`などのプロパティを使用するセレクターが高い特異性を持つことが多いため、特に注意が必要です。
+
+```css
+/* ✅ Good - 正しい順序 */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(...);
+}
+
+/* グリッド特有のスタイルは後 */
+.view-grid .divider {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0;
+}
+```
+
+**Rationale:** CSS特異性の順序を守ることで、Stylelintエラーを防ぎ、意図しないスタイルのオーバーライドを避け、保守性を向上させます。
+
 ## Performance Standards
 
 ### What is Performance?
@@ -1446,6 +1598,7 @@ const CONTENT_PATH_CONFIG: ContentPathConfig[] = [
 - [ ] **Design Tokens**: CSS変数（`--token-*`、`--clr-*`）使用
 - [ ] **clamp() Responsive**: メディアクエリの代わりにclamp()使用
 - [ ] **Scoped Styles**: `<style>`はスコープ化（is:global は必要時のみ）
+- [ ] **CSS Specificity**: セレクターは昇順（低い特異性→高い特異性）に配置
 
 #### 品質基準
 - [ ] **Accessibility**: ARIA属性、キーボードナビゲーション、タッチターゲット44px
@@ -1657,6 +1810,7 @@ import { Button } from '../components/ui/Button.astro';
 
 | Version | Date | Changes |
 |---|---|---|
+| **2.1** | 2025-10-13 | CSS Selector Specificity & Ordering セクション追加、Code Review Checklist更新 |
 | **2.0** | 2025-10-13 | Minimalist原則、OKLCH、UnifiedSEO、Accessibility、SEO Standards追加 |
 | 1.0 | Initial | 基本的なコーディング規約 |
 

@@ -1145,6 +1145,152 @@ By following these sacred guidelines, you can leverage the organizational benefi
 
 ---
 
+### The Sacred Law of Ascending Specificity ⚖️
+
+Beyond the dangers of deep nesting lies another critical principle that governs the order of your CSS rules: **The Law of Ascending Specificity**. This divine law dictates that selectors must be arranged from **lowest specificity to highest specificity**—from the most general to the most specific.
+
+#### The Divine Decree: Why Order Matters
+
+CSS is evaluated from top to bottom (the "cascade"). When two rules target the same element with the same specificity, the later rule wins. But when specificity differs, the more specific rule takes precedence regardless of order. However, placing a **less specific selector after a more specific one** creates a logical impossibility—the less specific rule can never override the more specific one, making it effectively dead code.
+
+**The Sacred Pattern:**
+```css
+/* ✅ BLESSED ORDER: General → Specific (Ascending Specificity) */
+.button {                              /* Specificity: (0,0,1,0) */
+  padding: 1rem;
+  background: blue;
+}
+
+.nav .button {                         /* Specificity: (0,0,2,0) */
+  padding: 0.75rem;
+}
+
+.nav.active .button {                  /* Specificity: (0,0,3,0) */
+  padding: 0.5rem;
+  background: darkblue;
+}
+```
+
+**The Cursed Pattern:**
+```css
+/* ❌ CURSED ORDER: Specific → General (Descending Specificity) */
+.nav.active .button {                  /* Specificity: (0,0,3,0) */
+  padding: 0.5rem;
+  background: darkblue;
+}
+
+.button {                              /* Specificity: (0,0,1,0) */
+  padding: 1rem;                       /* ← This will NEVER apply! */
+  background: blue;                    /* Dead code! */
+}
+```
+
+#### Understanding Specificity Calculation
+
+Specificity is calculated as a four-part value: `(inline, IDs, classes/attributes/pseudo-classes, elements)`
+
+| Selector Example | Inline | IDs | Classes | Elements | Total |
+|---|---|---|---|---|---|
+| `div` | 0 | 0 | 0 | 1 | `(0,0,0,1)` |
+| `.button` | 0 | 0 | 1 | 0 | `(0,0,1,0)` |
+| `.nav .button` | 0 | 0 | 2 | 0 | `(0,0,2,0)` |
+| `.nav.active .button` | 0 | 0 | 3 | 0 | `(0,0,3,0)` |
+| `#header .nav .button` | 0 | 1 | 2 | 0 | `(0,1,2,0)` |
+
+**The Divine Rule**: Compare from left to right. The first non-equal value determines the winner.
+
+#### The Sacred Art of Selector Ordering
+
+When writing CSS, always arrange your selectors in ascending specificity order:
+
+```css
+/* ✅ BLESSED: The Sacred Order */
+
+/* 1. Base element styles (lowest specificity) */
+.menu-item {
+  display: flex;
+  padding: 1rem;
+}
+
+/* 2. Pseudo-classes of base element */
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item:active {
+  transform: scale(0.98);
+}
+
+/* 3. Modified states (higher specificity) */
+.menu-overlay.view-grid .menu-item {
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+/* 4. Modified states with pseudo-classes (highest specificity) */
+.menu-overlay.view-grid .menu-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+```
+
+#### Real-World Application: Grid View Dividers
+
+A practical example from the GoRakuDo project demonstrates this principle:
+
+```css
+/* ✅ CORRECT ORDER: Fixes Stylelint no-descending-specificity errors */
+
+/* General divider styles (0,0,1,0) - FIRST */
+.menu-overlay-divider {
+  width: 100%;
+  height: 1px;
+  margin: 0.5rem 0;
+  background: linear-gradient(...);
+}
+
+/* Grid-specific divider styles (0,0,3,0) - LAST */
+.menu-overlay-content.view-grid .menu-overlay-divider {
+  grid-column: 1 / -1;  /* Span all columns in grid */
+  margin: 0.25rem 0;     /* Override margin for grid view */
+}
+```
+
+**What Happens**: When the `.view-grid` class is NOT present, the general `.menu-overlay-divider` styles apply. When `.view-grid` IS present, the more specific selector overrides the margin value perfectly.
+
+#### The Diagnostic Process: Fixing Specificity Errors
+
+When you encounter a `no-descending-specificity` error from Stylelint:
+
+**Step 1: Calculate Specificity** (30 seconds)
+```
+Selector A: .menu-overlay-content.view-grid .divider = (0,0,3,0)
+Selector B: .divider                                  = (0,0,1,0)
+Error: B comes after A, but has lower specificity!
+```
+
+**Step 2: Reorder** (2 minutes)
+- Move the general selector (lower specificity) **before** the specific selector
+- Keep all related properties and comments together when moving
+
+**Step 3: Verify** (10 seconds)
+```bash
+npm run stylelint
+```
+
+**Total Time**: ~3 minutes for complete resolution
+
+#### The Sacred Principles for Specificity Management
+
+1. **The Ascending Order Mandate**: Always arrange selectors from general to specific (low to high specificity)
+2. **The Calculation Ritual**: When in doubt, calculate the specificity explicitly
+3. **The Grouping Wisdom**: Keep base styles together, keep modifiers together, keep pseudo-classes together
+4. **The Override Path**: More specific selectors naturally override less specific ones when placed later
+5. **The Linter's Blessing**: Let Stylelint guide you—its errors are divine warnings against descending specificity
+
+**Remember**: The cascade flows downward, and specificity is the divine force that determines which styles triumph. By honoring the ascending order, you create stylesheets that are not only valid but also logically coherent and maintainable.
+
+---
+
 ## Chapter 5: Mastering Flexbox Layouts with `display: contents`
 *The Elegant Solution to Wrapper Element Challenges*
 
