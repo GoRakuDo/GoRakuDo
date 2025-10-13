@@ -80,14 +80,12 @@ const CARD_ACCESSIBILITY = {
 ---
 
 <!-- ========== OPTIMIZED ARTICLE CARD MARKUP ========== -->
-<article
+<div
   class='article-card-optimized glassmorphism glassmorphism-card'
   data-index={index}
   data-tool={tool}
   role={role}
   aria-label={ariaLabel}
-  itemscope
-  itemtype='https://schema.org/Article'
 >
   <a
     href={`/tools/${tool}/${article.slug}`}
@@ -232,6 +230,6 @@ const CARD_ACCESSIBILITY = {
       </div>
     </footer>
   </a>
-</article>
+</div>
 
 <!-- Styles moved to Tool-IdIndex.css -->

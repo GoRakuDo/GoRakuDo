@@ -159,47 +159,85 @@ const structuredData = {
       role='group'
       aria-label='Tombol navigasi'
     >
-      <a
-        href={prevPageUrl || '#'}
-        class={`glassmorphism pagination-btn pagination-prev ${!prevPageUrl ? 'pagination-disabled' : ''}`}
-        aria-label={prevPageUrl
-          ? 'Pindah ke halaman sebelumnya'
-          : 'Halaman sebelumnya (tidak tersedia)'}
-        aria-disabled={!prevPageUrl}
-        rel={prevPageUrl ? 'prev' : undefined}
-      >
-        <svg
-          class='pagination-icon'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          stroke-width='2'
-        >
-          <path d='M15 18l-6-6 6-6'></path>
-        </svg>
-        <span class='pagination-btn-text'>Sebelumnya</span>
-      </a>
+      {
+        prevPageUrl ? (
+          <a
+            href={prevPageUrl}
+            class='glassmorphism pagination-btn pagination-prev'
+            aria-label='Pindah ke halaman sebelumnya'
+            rel='prev'
+          >
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M15 18l-6-6 6-6' />
+            </svg>
+            <span class='pagination-btn-text'>Sebelumnya</span>
+          </a>
+        ) : (
+          <button
+            class='glassmorphism pagination-btn pagination-prev pagination-disabled'
+            aria-label='Halaman sebelumnya (tidak tersedia)'
+            disabled
+            type='button'
+          >
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M15 18l-6-6 6-6' />
+            </svg>
+            <span class='pagination-btn-text'>Sebelumnya</span>
+          </button>
+        )
+      }
 
-      <a
-        href={nextPageUrl || '#'}
-        class={`glassmorphism pagination-btn pagination-next ${!nextPageUrl ? 'pagination-disabled' : ''}`}
-        aria-label={nextPageUrl
-          ? 'Pindah ke halaman berikutnya'
-          : 'Halaman berikutnya (tidak tersedia)'}
-        aria-disabled={!nextPageUrl}
-        rel={nextPageUrl ? 'next' : undefined}
-      >
-        <span class='pagination-btn-text'>Selanjutnya</span>
-        <svg
-          class='pagination-icon'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          stroke-width='2'
-        >
-          <path d='M9 18l6-6-6-6'></path>
-        </svg>
-      </a>
+      {
+        nextPageUrl ? (
+          <a
+            href={nextPageUrl}
+            class='glassmorphism pagination-btn pagination-next'
+            aria-label='Pindah ke halaman berikutnya'
+            rel='next'
+          >
+            <span class='pagination-btn-text'>Selanjutnya</span>
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M9 18l6-6-6-6' />
+            </svg>
+          </a>
+        ) : (
+          <button
+            class='glassmorphism pagination-btn pagination-next pagination-disabled'
+            aria-label='Halaman berikutnya (tidak tersedia)'
+            disabled
+            type='button'
+          >
+            <span class='pagination-btn-text'>Selanjutnya</span>
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M9 18l6-6-6-6' />
+            </svg>
+          </button>
+        )
+      }
     </div>
   </div>
 

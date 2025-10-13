@@ -1257,6 +1257,68 @@ A practical example from the GoRakuDo project demonstrates this principle:
 
 **What Happens**: When the `.view-grid` class is NOT present, the general `.menu-overlay-divider` styles apply. When `.view-grid` IS present, the more specific selector overrides the margin value perfectly.
 
+#### Real-World Application: Navigation Button Child Elements
+
+Another critical example from the BottomNavBar component demonstrates the importance of placing parent modifiers AFTER their base child selectors:
+
+```css
+/* ✅ CORRECT ORDER: Base elements first, then parent modifiers */
+
+/* 1. Base icon styles (0,0,1,0) - FIRST */
+.nav-btn__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.375rem;
+}
+
+/* 2. Base label styles (0,0,1,0) - SECOND */
+.nav-btn__label {
+  overflow: hidden;
+  max-width: 100%;
+  color: oklch(98% 0.005 50deg);
+  font-size: 0.75rem;
+}
+
+/* 3. Active state parent (0,0,2,0) - LAST */
+.nav-btn--active {
+  box-shadow: 0 3px 12px oklch(0% 0 0deg / 0.06);
+  
+  /* Nested child modifications */
+  .nav-btn__icon {
+    transform: scale(0.95);
+  }
+  
+  .nav-btn__label {
+    transform: none;
+    text-shadow: none;
+  }
+}
+```
+
+**The Error Pattern** (before fix):
+```css
+/* ❌ WRONG ORDER: Parent modifier before base children */
+
+.nav-btn--active {
+  /* ... */
+  .nav-btn__icon {  /* This creates: .nav-btn--active .nav-btn__icon (0,0,2,0) */
+    transform: scale(0.95);
+  }
+}
+
+.nav-btn__icon {  /* Specificity: (0,0,1,0) - LOWER than above! */
+  display: flex;  /* ← ERROR: This comes AFTER a more specific selector */
+}
+```
+
+**Why This Matters**:
+- The nested `.nav-btn--active .nav-btn__icon` has specificity `(0,0,2,0)`
+- The base `.nav-btn__icon` has specificity `(0,0,1,0)`
+- If base comes after nested, Stylelint rightfully complains: `no-descending-specificity`
+
+**The Fix**: Move the entire `.nav-btn--active` block AFTER all base child selectors (`.nav-btn__icon`, `.nav-btn__label`). This ensures ascending specificity order throughout the stylesheet.
+
 #### The Diagnostic Process: Fixing Specificity Errors
 
 When you encounter a `no-descending-specificity` error from Stylelint:

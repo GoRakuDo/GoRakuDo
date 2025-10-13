@@ -552,6 +552,7 @@ npm run test:coverage # テストカバレッジ付き実行
 8. **画像グレースケール**: `prefers-reduced-motion`設定での意図しない効果
 9. **ズーム機能の誤適用**: `image-zoom-trigger`の適用範囲の問題
 10. **画像読み込み失敗**: 404エラーやネットワークエラーによる画像表示問題
+11. **Astro Dev Toolbar Audit エラー**: セマンティックHTML、ARIAロール、無効リンク（2025年10月追加）
 
 ### 解決方法
 - **Chrome DevTools**: リアルタイムデバッグ
@@ -563,6 +564,9 @@ npm run test:coverage # テストカバレッジ付き実行
 - **フィルター効果の無効化**: `filter: none`でグレースケールを無効化
 - **段階的有効化システム**: デフォルト無効→特定条件下で有効化
 - **画像Fallback機能**: UnifiedSEOコンポーネントの自動Fallback機能を活用
+- **Astro Dev Toolbar Audit**: 開発環境での自動Accessibility/Performance検証（2025年10月追加）
+- **セマンティックHTML修正**: `<article role="gridcell">` → `<div role="gridcell">`
+- **無効リンク修正**: `href="#"` → 条件分岐で`<button disabled>`使用
 
 ---
 
@@ -696,6 +700,13 @@ CSSの特異性を理解し、保守可能で予測可能なスタイルシー�
    - フィルター効果は意図的に制御し、意図しない効果を防ぐ
    - 画像Fallback機能を活用し、ユーザーエクスペリエンスを向上させる
 
+5. **Accessibility（2025年10月追加）**
+   - **セマンティックHTML優先**: ネイティブHTML要素を優先し、ARIAは補完的に使用
+   - **正しい要素選択**: リンクは`<a>`、ボタンは`<button>`、無効化は`<button disabled>`
+   - **`href="#"`禁止**: 無効なリンクは絶対に使用しない
+   - **ARIAロールの適切な使用**: インタラクティブロールは`<div>`と組み合わせる
+   - **Astro Dev Toolbar Audit**: 全ページで開発環境でのAudit実行とエラー0確認を徹底
+
 #### 🧠 思考のルール
 
 1. **学習者の立場で考える**
@@ -761,6 +772,15 @@ CSSの特異性を理解し、保守可能で予測可能なスタイルシー�
 - **JavaScript動的監視機能**: MutationObserverによる新規画像要素の自動監視
 - **ChromeDevTool検証システム**: 包括的な機能検証とテストプロセスの確立
 - **ユーザーエクスペリエンスの向上**: 画像読み込みエラーによるUX低下の完全解決
+
+**2025年10月追加成果:**
+- **Astro Dev Toolbar Audit統合**: 開発ワークフローへのAccessibility/Performance自動検証
+- **Semantic HTML vs ARIA Roles**: セマンティック要素とARIAロールの適切な使い分けガイドライン
+- **Invalid Links対策**: `href="#"`禁止、`<button disabled>`使用の標準化
+- **Article Card Refactoring**: `<article role="gridcell">` → `<div role="gridcell">`に修正
+- **Pagination Accessibility**: 無効化されたナビゲーションの適切な実装
+- **BottomNavBar Menu Button**: JavaScriptボタンのセマンティック化（`<a>` → `<button>`）
+- **包括的ドキュメント作成**: `astro-dev-toolbar-audit.md`の追加
 
 **2024年12月CSS変数システム最適化成果:**
 - **段階的CSS変数最適化プロセスの確立**: 6段階の体系的な最適化アプローチ

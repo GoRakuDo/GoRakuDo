@@ -73,164 +73,181 @@ const menuItems = [
 
 <nav class={`bottom-nav ${className}`}>
   {
-    navItems.map(item => (
-      <a
-        href={item.href}
-        class='nav-btn'
-        data-icon={item.icon}
-        data-menu-button={item.isMenuButton ? 'true' : 'false'}
-        aria-label={item.ariaLabel}
-      >
-        <div class='nav-btn__icon'>
-          {item.icon === 'panduan' && (
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              aria-hidden='true'
-            >
-              <path
-                d='M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-            </svg>
-          )}
-          {item.icon === 'menu' && (
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              aria-hidden='true'
-            >
-              <rect
-                width='18'
-                height='18'
-                x='3'
-                y='3'
-                rx='2'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M3 9h18'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='m9 16 3-3 3 3'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-            </svg>
-          )}
-          {item.icon === 'tutorial' && (
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              aria-hidden='true'
-            >
-              <path
-                d='M12 2L2 7L12 12L22 7L12 2Z'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M2 17L12 22L22 17'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M2 12L12 17L22 12'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-            </svg>
-          )}
-          {item.icon === 'documentation' && (
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              aria-hidden='true'
-            >
-              <path
-                d='M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <circle
-                cx='12'
-                cy='8'
-                r='2'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M8.714 14h-3.71a1 1 0 0 0-.948.683l-2.004 6A1 1 0 0 0 3 22h18a1 1 0 0 0 .948-1.316l-2-6a1 1 0 0 0-.949-.684h-3.712'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-            </svg>
-          )}
-          {item.icon === 'home' && (
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              aria-hidden='true'
-            >
-              <path
-                d='M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-              <path
-                d='M9 22V12H15V22'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              />
-            </svg>
-          )}
-        </div>
-        <span class='nav-btn__label'>{item.label}</span>
-      </a>
-    ))
+    navItems.map(item => {
+      const content = (
+        <>
+          <div class='nav-btn__icon'>
+            {item.icon === 'panduan' && (
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                aria-hidden='true'
+              >
+                <path
+                  d='M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
+            )}
+            {item.icon === 'menu' && (
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                aria-hidden='true'
+              >
+                <rect
+                  width='18'
+                  height='18'
+                  x='3'
+                  y='3'
+                  rx='2'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M3 9h18'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='m9 16 3-3 3 3'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
+            )}
+            {item.icon === 'tutorial' && (
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                aria-hidden='true'
+              >
+                <path
+                  d='M12 2L2 7L12 12L22 7L12 2Z'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M2 17L12 22L22 17'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M2 12L12 17L22 12'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
+            )}
+            {item.icon === 'documentation' && (
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                aria-hidden='true'
+              >
+                <path
+                  d='M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <circle
+                  cx='12'
+                  cy='8'
+                  r='2'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M8.714 14h-3.71a1 1 0 0 0-.948.683l-2.004 6A1 1 0 0 0 3 22h18a1 1 0 0 0 .948-1.316l-2-6a1 1 0 0 0-.949-.684h-3.712'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
+            )}
+            {item.icon === 'home' && (
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                aria-hidden='true'
+              >
+                <path
+                  d='M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M9 22V12H15V22'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
+            )}
+          </div>
+          <span class='nav-btn__label'>{item.label}</span>
+        </>
+      );
+
+      return item.isMenuButton ? (
+        <button
+          class='nav-btn'
+          data-icon={item.icon}
+          data-menu-button='true'
+          aria-label={item.ariaLabel}
+          type='button'
+        >
+          {content}
+        </button>
+      ) : (
+        <a
+          href={item.href}
+          class='nav-btn'
+          data-icon={item.icon}
+          aria-label={item.ariaLabel}
+        >
+          {content}
+        </a>
+      );
+    })
   }
 </nav>
 
@@ -239,7 +256,7 @@ const menuItems = [
   <div class='menu-overlay-backdrop'></div>
   <div class='menu-overlay-content'>
     <div class='menu-overlay-header'>
-      <h2 class='menu-overlay-title'>Menu</h2>
+      <div class='menu-overlay-title' role='heading' aria-level='2'>Menu</div>
       <div class='menu-overlay-controls'>
         <button
           class='menu-overlay-view-toggle'
@@ -624,11 +641,6 @@ const menuItems = [
         transparent 70%
       );
 
-    /* GPU acceleration - モバイルでは削除 */
-    @media (min-width: 769px) {
-      transform: translateZ(0);
-    }
-
     /* UNIFIED backdrop filters - Navbar.astroと同じ */
     backdrop-filter: blur(12px) saturate(120%);
 
@@ -648,11 +660,6 @@ const menuItems = [
     /* GPU acceleration - 最適化: 必要な時のみ */
     will-change: transform, box-shadow;
 
-    /* デスクトップでは非表示 */
-    @media (min-width: 1024px) {
-      display: none;
-    }
-
     /* 小さな画面での調整 */
     @media (max-width: 360px) {
       gap: var(--bottom-nav-gap-small);
@@ -661,6 +668,16 @@ const menuItems = [
         var(--bottom-nav-margin-small) + var(--safe-area-bottom)
       );
       padding: var(--bottom-nav-padding-small);
+    }
+
+    /* GPU acceleration - モバイルでは削除 */
+    @media (min-width: 769px) {
+      transform: translateZ(0);
+    }
+
+    /* デスクトップでは非表示 */
+    @media (min-width: 1024px) {
+      display: none;
     }
 
     /* UNIFIED Color Tokens - Navbar.astroと同じ */
@@ -835,46 +852,19 @@ const menuItems = [
       filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
 
       /* モバイル: transformを完全無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+      }
+
+      /* デスクトップ: transformアニメーション */
       @media (min-width: 769px) {
         transform: translateZ(0) translateY(-2px) scale(1.02);
       }
 
-      @media (max-width: 768px) {
-        transform: none;
+      &::before {
+        opacity: 1;
       }
     }
-
-    .nav-btn--hover::before {
-      opacity: 1;
-    }
-
-    /* Removed duplicate .nav-btn::before selector */
-
-    .nav-btn--active {
-      /* モバイル: アクティブ状態を簡略化 */
-      @media (min-width: 769px) {
-        transform: translateZ(0) translateY(0) scale(0.98);
-      }
-
-      @media (max-width: 768px) {
-        transform: none;
-      }
-
-      box-shadow:
-        0 3px 12px oklch(0% 0 0deg / 0.06),
-        0 2px 8px oklch(65% 0.25 280deg / 0.15),
-        0 1px 4px oklch(0% 0 0deg / 0.05),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
-
-      /* 小さな画面での調整 */
-      @media (max-width: 360px) {
-        min-height: 44px;
-        padding: 0.625rem 0.375rem;
-      }
-    }
-
-    /* Focus styles removed - following Astro's static-first philosophy */
 
     /* ---------- SVG Icon System - UNIFIED WITH NAVBAR ---------- */
     .nav-btn__icon {
@@ -970,40 +960,33 @@ const menuItems = [
       }
     }
 
-    /* ---------- Active State Styling - BEM Method ---------- */
-    .nav-btn--active .nav-btn__icon {
-      @media (min-width: 769px) {
-        transform: scale(0.95);
+    /* ---------- Active State Styling - MOVED for correct specificity order ---------- */
+    .nav-btn--active {
+      box-shadow:
+        0 3px 12px oklch(0% 0 0deg / 0.06),
+        0 2px 8px oklch(65% 0.25 280deg / 0.15),
+        0 1px 4px oklch(0% 0 0deg / 0.05),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
+
+      /* 小さな画面での調整 */
+      @media (max-width: 360px) {
+        min-height: 44px;
+        padding: 0.625rem 0.375rem;
       }
 
+      /* モバイル: アクティブ状態を簡略化 */
       @media (max-width: 768px) {
         transform: none;
       }
-    }
 
-    .nav-btn--active svg {
-      color: oklch(92% 0.008 55deg);
-      opacity: 0.8;
-
+      /* デスクトップ: transformアニメーション */
       @media (min-width: 769px) {
-        transform: translateZ(0) scale(0.95);
+        transform: translateZ(0) translateY(0) scale(0.98);
       }
 
-      @media (max-width: 768px) {
-        transform: none;
-      }
-    }
-
-    .nav-btn--active .nav-btn__label {
-      transform: none;
-      text-shadow: none;
-    }
-
-    /* Active state styling removed - following Astro's static-first philosophy */
-
-    /* ---------- Touch Device Optimization - UNIFIED WITH NAVBAR ---------- */
-    @media (hover: none) and (pointer: coarse) {
-      .nav-btn--active {
+      /* Touch Device Optimization */
+      @media (hover: none) and (pointer: coarse) {
         /* モバイル: タップ時の縮小効果を無効化 */
         transform: none;
         box-shadow:
@@ -1014,6 +997,35 @@ const menuItems = [
         filter: drop-shadow(
           0 1px 4px oklch(from var(--token-black-base) l c h / 0.08)
         );
+      }
+
+      /* 子要素のスタイリング */
+      .nav-btn__icon {
+        @media (max-width: 768px) {
+          transform: none;
+        }
+
+        @media (min-width: 769px) {
+          transform: scale(0.95);
+        }
+      }
+
+      svg {
+        color: oklch(92% 0.008 55deg);
+        opacity: 0.8;
+
+        @media (max-width: 768px) {
+          transform: none;
+        }
+
+        @media (min-width: 769px) {
+          transform: translateZ(0) scale(0.95);
+        }
+      }
+
+      .nav-btn__label {
+        transform: none;
+        text-shadow: none;
       }
     }
   }
@@ -1048,6 +1060,7 @@ const menuItems = [
       backdrop-filter: blur(8px);
     }
 
+    /* デスクトップ: 強力な効果 */
     @media (min-width: 769px) {
       backdrop-filter: blur(12px) saturate(120%);
     }
@@ -1064,13 +1077,24 @@ const menuItems = [
     border: 1px solid oklch(25% 0.015 270deg / 0.15);
     border-radius: 1.5rem;
 
-    /* モバイル最適化: シンプルな背景 */
+    /* 最適化: 具体的なプロパティのみアニメーション */
+    transition:
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* モバイル最適化 */
     @media (max-width: 768px) {
       max-height: 80dvh;
       background: oklch(6% 0.008 270deg / 0.5);
+      backdrop-filter: blur(8px);
+      box-shadow:
+        0 10px 30px oklch(from var(--token-black-base) l c h / 0.3),
+        0 4px 12px oklch(from var(--token-black-base) l c h / 0.15);
+      transform: none;
+      will-change: transform;
     }
 
-    /* デスクトップ: 簡素化された効果 */
+    /* デスクトップ最適化 */
     @media (min-width: 769px) {
       background:
         linear-gradient(
@@ -1084,43 +1108,16 @@ const menuItems = [
           oklch(65% 0.18 280deg / 0.1) 0%,
           transparent 70%
         );
-    }
-
-    /* モバイル: アニメーションを簡略化 */
-    @media (min-width: 769px) {
-      transform: scale(0.95) translateY(10px);
-    }
-
-    @media (max-width: 768px) {
-      transform: none;
-    }
-
-    /* 最適化: 具体的なプロパティのみアニメーション */
-    transition:
-      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-    /* モバイル最適化: backdrop-filterを簡略化 */
-    @media (max-width: 768px) {
-      backdrop-filter: blur(8px);
-      box-shadow:
-        0 10px 30px oklch(from var(--token-black-base) l c h / 0.3),
-        0 4px 12px oklch(from var(--token-black-base) l c h / 0.15);
-      will-change: transform;
-    }
-
-    /* デスクトップ: フル効果 */
-    @media (min-width: 769px) {
       backdrop-filter: blur(12px) saturate(120%);
       box-shadow:
         0 8px 32px oklch(from var(--token-black-base) l c h / 0.25),
         0 4px 16px oklch(from var(--token-black-base) l c h / 0.15),
         inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      transform: scale(0.95) translateY(10px);
     }
   }
 
   .menu-overlay.active .menu-overlay-content {
-    /* モバイル: アニメーション完了状態を簡略化 */
     @media (min-width: 769px) {
       transform: scale(1) translateY(0);
     }
@@ -1315,17 +1312,41 @@ const menuItems = [
 
     /* スムーズなトランジション */
     transition: gap 0.3s ease;
-  }
 
-  /* モバイル最適化: ボタンサイズとスペーシングの調整 */
-  @media (max-width: 768px) {
-    .menu-overlay-items {
+    /* モバイル最適化: ボタンサイズとスペーシングの調整 */
+    @media (max-width: 768px) {
       gap: 0.5rem; /* ボタン間のスペースを25%削減 */
       padding: 0.75rem 1rem 1rem; /* パディングも削減 */
 
       /* WebKit系ブラウザのスクロールバーカスタマイズ */
       scrollbar-width: thin;
       scrollbar-color: oklch(100% 0 0deg / 0.3) transparent;
+    }
+
+    /* WebKit系ブラウザのスクロールバーカスタマイズ */
+    &::-webkit-scrollbar {
+      @media (max-width: 768px) {
+        width: 4px;
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      @media (max-width: 768px) {
+        background: transparent;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @media (max-width: 768px) {
+        border-radius: 2px;
+        background: oklch(100% 0 0deg / 0.3);
+      }
+
+      &:hover {
+        @media (max-width: 768px) {
+          background: oklch(100% 0 0deg / 0.5);
+        }
+      }
     }
   }
 
@@ -1349,6 +1370,11 @@ const menuItems = [
     display: grid;
     gap: 0.75rem;
     grid-template-columns: repeat(2, 1fr);
+
+    /* モバイル最適化 */
+    @media (max-width: 768px) {
+      gap: 0.5rem;
+    }
   }
 
   /* Grid view時にdividerを2列にまたがせる */
@@ -1387,30 +1413,36 @@ const menuItems = [
     box-shadow:
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.08),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-  }
 
-  /* デスクトップのみホバー効果 */
-  @media (hover: hover) and (pointer: fine) {
-    .menu-overlay-item:hover {
-      background: linear-gradient(
-        135deg,
-        oklch(100% 0 0deg / 0.15) 0%,
-        oklch(100% 0 0deg / 0.1) 100%
-      );
-      border-color: oklch(100% 0 0deg / 0.25);
-      transform: translateY(-2px);
-      box-shadow:
-        0 8px 24px oklch(from var(--token-black-base) l c h / 0.15),
-        0 4px 12px oklch(from var(--token-black-base) l c h / 0.1),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+    /* デスクトップのみホバー効果 */
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background: linear-gradient(
+          135deg,
+          oklch(100% 0 0deg / 0.15) 0%,
+          oklch(100% 0 0deg / 0.1) 100%
+        );
+        border-color: oklch(100% 0 0deg / 0.25);
+        transform: translateY(-2px);
+        box-shadow:
+          0 8px 24px oklch(from var(--token-black-base) l c h / 0.15),
+          0 4px 12px oklch(from var(--token-black-base) l c h / 0.1),
+          inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+      }
     }
-  }
 
-  .menu-overlay-item:active {
-    transform: translateY(0);
-    box-shadow:
-      0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+    &:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+    }
+
+    /* モバイル最適化: ボタンサイズの調整 */
+    @media (max-width: 768px) {
+      gap: 0.75rem; /* アイコンとテキストの間隔を削減 */
+      padding: 0.75rem; /* パディングを25%削減 */
+    }
   }
 
   /* Grid view mode - アイコンビュー */
@@ -1420,22 +1452,10 @@ const menuItems = [
     gap: 0.5rem;
     padding: 1.25rem 0.75rem;
     text-align: center;
-  }
-
-  /* モバイル最適化: ボタンサイズの調整 */
-  @media (max-width: 768px) {
-    .menu-overlay-item {
-      gap: 0.75rem; /* アイコンとテキストの間隔を削減 */
-      padding: 0.75rem; /* パディングを25%削減 */
-    }
 
     /* グリッドビュー時のモバイル最適化 */
-    .menu-overlay-content.view-grid .menu-overlay-item {
+    @media (max-width: 768px) {
       padding: 1rem 0.5rem;
-    }
-
-    .menu-overlay-content.view-grid .menu-overlay-items {
-      gap: 0.5rem;
     }
   }
 
@@ -1465,11 +1485,9 @@ const menuItems = [
     box-shadow:
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.15),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-  }
 
-  /* モバイル最適化: アイコンサイズの調整 */
-  @media (max-width: 768px) {
-    .menu-overlay-icon {
+    /* モバイル最適化: アイコンサイズの調整 */
+    @media (max-width: 768px) {
       width: 36px; /* アイコンサイズを10%削減 */
       height: 36px;
     }
@@ -1507,37 +1525,17 @@ const menuItems = [
     text-shadow:
       0 1px 2px oklch(from var(--token-black-base) l c h / 0.3),
       0 0 4px oklch(from var(--token-black-base) l c h / 0.2);
+
+    /* モバイル最適化: テキストサイズの調整 */
+    @media (max-width: 768px) {
+      font-size: 0.9rem; /* フォントサイズを10%削減 */
+    }
   }
 
   /* Grid view mode - ラベルサイズ調整 */
   .menu-overlay-content.view-grid .menu-overlay-label {
     font-size: 0.875rem;
     line-height: 1.3;
-  }
-
-  /* モバイル最適化: テキストサイズの調整 */
-  @media (max-width: 768px) {
-    .menu-overlay-label {
-      font-size: 0.9rem; /* フォントサイズを10%削減 */
-    }
-
-    /* WebKit系ブラウザのスクロールバーカスタマイズ */
-    .menu-overlay-items::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .menu-overlay-items::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .menu-overlay-items::-webkit-scrollbar-thumb {
-      border-radius: 2px;
-      background: oklch(100% 0 0deg / 0.3);
-    }
-
-    .menu-overlay-items::-webkit-scrollbar-thumb:hover {
-      background: oklch(100% 0 0deg / 0.5);
-    }
   }
 
   /* デスクトップのみホバー効果 */

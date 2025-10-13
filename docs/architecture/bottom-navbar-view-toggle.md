@@ -5,7 +5,8 @@
 BottomNavBarコンポーネントのメニューオーバーレイに、リストビューとグリッドビュー（2列アイコンレイアウト）の切り替え機能を実装。ユーザーの表示設定をLocalStorageで永続化し、モダンで使いやすいメニューインターフェースを提供。
 
 **実装日**: 2025-10-13  
-**バージョン**: 1.0  
+**バージョン**: 1.1  
+**最終更新**: 2025-10-13  
 **実装ファイル**: `src/components/common/NavBar/BottomNavBar.astro`  
 **コード追加**: 約105行（HTML: 20行、CSS: 60行、JavaScript: 25行）
 
@@ -929,6 +930,61 @@ try {
 
 ---
 
+### 問題4: Stylelint特異性エラー（`no-descending-specificity`）
+
+**症状**: Stylelintで特異性降順エラーが発生する
+
+```
+✖ Expected selector ".nav-btn__icon" to come before selector 
+  ".bottom-nav .nav-btn--active .nav-btn__icon"
+  no-descending-specificity
+```
+
+**原因**: CSS特異性の順序違反（高い特異性のセレクターの後に低い特異性のセレクターが配置されている）
+
+**理解するための図解**:
+```
+❌ 間違った順序:
+  .nav-btn--active .nav-btn__icon { }  ← 特異性: (0,0,2,0)
+  .nav-btn__icon { }                   ← 特異性: (0,0,1,0) エラー！
+
+✅ 正しい順序:
+  .nav-btn__icon { }                   ← 特異性: (0,0,1,0)
+  .nav-btn--active .nav-btn__icon { }  ← 特異性: (0,0,2,0)
+```
+
+**解決手順**（3分で完了）:
+
+1. **特異性を計算する**（30秒）
+   ```
+   セレクターA: .nav-btn--active .nav-btn__icon = (0,0,2,0)
+   セレクターB: .nav-btn__icon                  = (0,0,1,0)
+   問題: Bの特異性がAより低いのに、Bが後に配置されている
+   ```
+
+2. **セレクターを並び替える**（2分）
+   - ベースセレクター（低い特異性）を先に配置
+   - モディファイアセレクター（高い特異性）を後に配置
+   - ネストしたセレクターを含む親ブロック全体を移動
+
+3. **検証する**（30秒）
+   ```bash
+   npm run stylelint
+   # または
+   read_lints(['src/components/common/NavBar/BottomNavBar.astro'])
+   ```
+
+**黄金ルール**: 
+- **一般的なセレクター（低い特異性）→ 先**
+- **具体的なセレクター（高い特異性）→ 後**
+- **ネストされた子セレクターを持つ親ブロック → 最後**
+
+**参考ドキュメント**: 
+- `docs/architecture/coding-bible/coding-bible.md` - 「The Sacred Law of Ascending Specificity」セクション
+- `docs/architecture/coding-standards.md` - 「CSS Selector Specificity & Ordering」セクション
+
+---
+
 ## 📚 関連ドキュメント
 
 ### プロジェクト内
@@ -1020,7 +1076,15 @@ try {
 **作成日**: 2025-10-13  
 **作成者**: Winston (Architect)  
 **最終更新**: 2025-10-13  
+**バージョン**: 1.1  
 **ステータス**: ✅ 実装完了・検証済み
+
+### 📝 更新履歴
+
+| Version | Date | Changes |
+|---|---|---|
+| **1.1** | 2025-10-13 | CSS特異性エラー（`no-descending-specificity`）トラブルシューティング追加 |
+| **1.0** | 2025-10-13 | 初版作成（グリッドビュー、区切り線、LocalStorage永続化） |
 
 ---
 

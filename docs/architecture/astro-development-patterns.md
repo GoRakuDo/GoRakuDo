@@ -958,6 +958,103 @@ const formatDate = (date: string) => new Date(date).toLocaleDateString('id-ID');
 </script>
 ```
 
+### Astro Dev Toolbar Audit (MANDATORY)
+
+**Directive:** すべてのページは、開発環境でAstro Dev Toolbar Auditを実行し、エラー0を確認してからコミットします。
+
+#### Audit実行方法
+
+```bash
+# 1. 開発サーバー起動
+npm run dev
+
+# 2. ブラウザで対象ページを開く
+http://localhost:4321/your-page
+
+# 3. 画面下部のAstro Dev Toolbarから「Audit」をクリック
+
+# 4. エラー0を確認
+# ✅ "No accessibility or performance issues detected."
+```
+
+#### よくある Audit エラーと解決方法
+
+##### エラー1: `article - Interactive ARIA role used on non-interactive HTML element`
+
+**原因**: セマンティックHTML要素（`<article>`、`<section>`など）にインタラクティブARIAロール（`gridcell`、`button`など）を使用
+
+**解決策**: `<div>`に変更してARIAロールで意味を付与
+
+```astro
+<!-- ❌ Before -->
+<article role="gridcell" aria-label="Article: ...">
+  <a href="/article">Content</a>
+</article>
+
+<!-- ✅ After -->
+<div role="gridcell" aria-label="Article: ...">
+  <a href="/article">Content</a>
+</div>
+```
+
+##### エラー2: `a - Invalid 'href' attribute`
+
+**原因**: `href="#"`の使用（無効なリンク）
+
+**解決策**: 条件分岐で`<a>`と`<button disabled>`を使い分け
+
+```astro
+<!-- ❌ Before -->
+<a href={url || '#'} aria-disabled={!url}>Link</a>
+
+<!-- ✅ After -->
+{
+  url ? (
+    <a href={url}>Link</a>
+  ) : (
+    <button disabled type="button">Link</button>
+  )
+}
+```
+
+##### エラー3: `h2 - Missing content`
+
+**原因**: 非表示の見出し要素に実際のテキストコンテンツがない
+
+**解決策**: `<div>`に変更してARIAロールで見出しレベルを指定
+
+```astro
+<!-- ❌ Before -->
+<h2 class="menu-overlay-title">Menu</h2>
+
+<!-- ✅ After -->
+<div class="menu-overlay-title" role="heading" aria-level="2">Menu</div>
+```
+
+#### Audit対応フロー（3分で完了）
+
+```
+1. Auditでエラー検出（30秒）
+    ↓
+2. エラータイプを特定（30秒）
+    ↓
+3. 上記パターンに従って修正（1.5分）
+    ↓
+4. Audit再実行で確認（30秒）
+    ↓
+✅ エラー0確認
+```
+
+#### 重要な原則
+
+1. **セマンティックHTML優先**: ネイティブHTML要素を優先し、ARIAは補完的に使用
+2. **正しい要素選択**: リンクは`<a>`、ボタンは`<button>`、無効化は`<button disabled>`
+3. **Audit統合**: 開発ワークフローにAuditを組み込み、早期発見・早期修正
+
+**参考**: `docs/architecture/coding-standards.md` - Accessibility Standards セクション
+
+---
+
 ### Code Review Checklist
 
 #### Before Committing
@@ -969,6 +1066,7 @@ const formatDate = (date: string) => new Date(date).toLocaleDateString('id-ID');
 - [ ] TypeScriptの型エラーがないか？
 - [ ] 不要なJavaScriptバンドルを追加していないか？
 - [ ] SEO metadataは UnifiedSEO.astro 経由か？
+- [ ] **Astro Dev Toolbar Auditでエラー0を確認したか？**
 
 ---
 
@@ -1086,6 +1184,12 @@ Performance Score: 95+
 ---
 
 ## 17. Version History
+
+### v2.1 (2025-10-13)
+- **Astro Dev Toolbar Audit統合**: 開発ワークフローへのAudit組み込み
+- **Semantic HTML vs ARIA Roles**: セマンティック要素とARIAロールの適切な使い分け
+- **Invalid Links対策**: `href="#"`禁止、`<button disabled>`使用ガイドライン
+- Code Review Checklistに Audit確認追加
 
 ### v2.0 (2025-10-13)
 - SEO管理パターン追加（UnifiedSEO + JSON設定）

@@ -1090,6 +1090,62 @@ CSS評価フロー
 .container.active .button { }  /* モディファイア（後） */
 ```
 
+#### ネストされた子要素を持つ親モディファイアの配置
+
+**重要**: 親モディファイア（`.nav-btn--active`）内に子要素のネストセレクターがある場合、親モディファイアブロック全体をベース子要素セレクターの**後**に配置すること。
+
+```css
+/* ✅ Good - ベース要素を先に、親モディファイアを後に */
+
+/* 1. ベースアイコン (0,0,1,0) - 先 */
+.nav-btn__icon {
+  display: flex;
+  margin-bottom: 0.375rem;
+}
+
+/* 2. ベースラベル (0,0,1,0) - 先 */
+.nav-btn__label {
+  font-size: 0.75rem;
+  color: oklch(98% 0.005 50deg);
+}
+
+/* 3. 親モディファイア全体 (0,0,2,0) - 後 */
+.nav-btn--active {
+  box-shadow: 0 3px 12px oklch(0% 0 0deg / 0.06);
+  
+  /* ネストされた子要素 */
+  .nav-btn__icon {    /* 特異性: (0,0,2,0) */
+    transform: scale(0.95);
+  }
+  
+  .nav-btn__label {   /* 特異性: (0,0,2,0) */
+    transform: none;
+  }
+}
+```
+
+```css
+/* ❌ Bad - 親モディファイアがベース要素より先 */
+
+.nav-btn--active {
+  /* ... */
+  .nav-btn__icon {    /* (0,0,2,0) */
+    transform: scale(0.95);
+  }
+}
+
+.nav-btn__icon {      /* (0,0,1,0) - エラー！後なのに特異性が低い */
+  display: flex;
+}
+```
+
+**エラーが発生する理由**:
+- `.nav-btn--active .nav-btn__icon`の特異性は`(0,0,2,0)`
+- `.nav-btn__icon`の特異性は`(0,0,1,0)`
+- より低い特異性のセレクターが後に配置されているため、Stylelintが`no-descending-specificity`エラーを出す
+
+**修正方法**: 親モディファイアブロック全体を、すべてのベース子要素セレクターの後に移動する
+
 #### CSS Grid - 特別な注意事項
 
 グリッドレイアウトでは、`grid-column`などのプロパティを使用するセレクターが高い特異性を持つことが多いため、特に注意が必要です。
@@ -1225,6 +1281,84 @@ console.log("⚠️ Slow Resource:", entry.name, "-", entry.duration.toFixed(2),
 
 **Directive:** すべてのコンポーネントとページは、WCAG 2.1 AA基準に準拠し、キーボードナビゲーションとスクリーンリーダーをサポートします。
 
+### Semantic HTML vs ARIA Roles (MANDATORY)
+
+**Directive:** セマンティックHTML要素とインタラクティブARIAロールを混在させないこと。
+
+#### The Golden Rule: セマンティックHTML優先
+
+**原則**: ネイティブHTML要素が存在する場合は、ARIAロールよりも優先します。
+
+```html
+<!-- ❌ Bad - セマンティック要素にインタラクティブロール -->
+<article role="gridcell" aria-label="Article: ...">
+  <a href="/article">Read more</a>
+</article>
+
+<!-- ✅ Good - セマンティック要素を`<div>`に変更 -->
+<div role="gridcell" aria-label="Article: ...">
+  <a href="/article">Read more</a>
+</div>
+
+<!-- ❌ Bad - ボタンなのに<a>タグ -->
+<a href="#" onclick="openMenu()">Menu</a>
+
+<!-- ✅ Good - セマンティックな<button> -->
+<button type="button" onclick="openMenu()">Menu</button>
+```
+
+#### インタラクティブARIAロールのガイドライン
+
+インタラクティブARIAロール（`button`, `link`, `gridcell`, `tab`, `menuitem`など）は、**意味的なHTML要素（`<article>`, `<section>`, `<header>`など）とは組み合わせない**。
+
+**理由**:
+1. セマンティック要素は**コンテンツの意味**を表現
+2. インタラクティブロールは**インタラクション動作**を表現
+3. 両者の混在は、スクリーンリーダーや支援技術に混乱を与える
+
+**適切な使い分け**:
+
+| 用途 | 使用する要素 | ARIAロール | 例 |
+|---|---|---|---|
+| **意味的グループ** | `<article>`, `<section>` | なし or `region` | 記事カード全体 |
+| **インタラクティブコンテナ** | `<div>` | `gridcell`, `tab`, `button` | グリッドアイテム |
+| **ボタン動作** | `<button>` | なし（暗黙的） | メニューボタン |
+| **リンク動作** | `<a href="...">` | なし（暗黙的） | ナビゲーションリンク |
+
+#### 実例: Article Card Refactoring
+
+**問題**: Astro Dev Toolbar Auditで検出
+```
+article - Interactive ARIA role used on non-interactive HTML element
+```
+
+**Before (エラーあり):**
+```astro
+<article role="gridcell" aria-label="Article: ...">
+  <a href="/article" class="card-link">
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </a>
+</article>
+```
+
+**After (修正後):**
+```astro
+<div role="gridcell" aria-label="Article: ...">
+  <a href="/article" class="card-link">
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </a>
+</div>
+```
+
+**修正理由**:
+- `<article>`はコンテンツの意味的グループ（非インタラクティブ）
+- `role="gridcell"`はインタラクティブなグリッドシステムの一部
+- 両者の混在を避けるため、`<div>`に変更してARIAロールで意味を付与
+
+---
+
 ### ARIA Attributes (MANDATORY)
 
 #### 必須ARIA属性
@@ -1293,6 +1427,129 @@ console.log("⚠️ Slow Resource:", entry.name, "-", entry.duration.toFixed(2),
 </style>
 ```
 
+### Invalid Links and Disabled Navigation (MANDATORY)
+
+**Directive:** `href="#"`を使用せず、無効化されたナビゲーションには`<button disabled>`を使用します。
+
+#### The Golden Rule: 正しいHTML要素を選択
+
+**原則**: リンク動作には`<a>`、ボタン動作には`<button>`、無効化されたナビゲーションには`<button disabled>`を使用。
+
+```html
+<!-- ❌ Bad - 無効なリンク -->
+<a href="#" aria-disabled="true">Disabled Link</a>
+
+<!-- ❌ Bad - JavaScriptボタンなのに<a> -->
+<a href="#" onclick="doSomething()">Click Me</a>
+
+<!-- ✅ Good - ボタン動作には<button> -->
+<button type="button" onclick="doSomething()">Click Me</button>
+
+<!-- ✅ Good - 無効化されたナビゲーションには<button disabled> -->
+<button disabled type="button" aria-label="Previous page (not available)">
+  Previous
+</button>
+```
+
+#### 実例: Pagination Disabled States
+
+**問題**: Astro Dev Toolbar Auditで検出
+```
+a - Invalid `href` attribute (href="#")
+```
+
+**Before (エラーあり):**
+```astro
+<a
+  href={prevPageUrl || '#'}
+  class={`pagination-btn ${!prevPageUrl ? 'pagination-disabled' : ''}`}
+  aria-disabled={!prevPageUrl}
+>
+  Sebelumnya
+</a>
+```
+
+**After (修正後):**
+```astro
+{
+  prevPageUrl ? (
+    <a
+      href={prevPageUrl}
+      class='pagination-btn pagination-prev'
+      aria-label='Pindah ke halaman sebelumnya'
+      rel='prev'
+    >
+      Sebelumnya
+    </a>
+  ) : (
+    <button
+      class='pagination-btn pagination-prev pagination-disabled'
+      aria-label='Halaman sebelumnya (tidak tersedia)'
+      disabled
+      type='button'
+    >
+      Sebelumnya
+    </button>
+  )
+}
+```
+
+**修正理由**:
+- `href="#"`は無効なリンクで、Accessibilityツールがエラーとして検出
+- 無効化されたナビゲーションは、ネイティブの`<button disabled>`を使用すべき
+- 条件分岐で適切なHTML要素を選択（リンクなら`<a>`、無効なら`<button>`）
+
+#### セマンティックHTML選択フローチャート
+
+```
+要素の動作は？
+    ↓
+┌────────────────┬────────────────┬────────────────┐
+│ ページ遷移     │ JavaScript動作 │ 無効化された   │
+│ (navigation)   │ (action)       │ ナビゲーション │
+└────────────────┴────────────────┴────────────────┘
+    ↓               ↓               ↓
+<a href="...">  <button>       <button disabled>
+rel="..."       type="button"  aria-label="..."
+```
+
+#### `href="#"`の代替パターン
+
+```astro
+<!-- ❌ Bad - `href="#"`を使用 -->
+<a href="#" class="disabled-link">Disabled</a>
+
+<!-- ✅ Good - 条件分岐で適切な要素 -->
+{
+  isEnabled ? (
+    <a href={url} class="link">Link</a>
+  ) : (
+    <button disabled type="button" class="link disabled">Disabled</button>
+  )
+}
+
+<!-- ✅ Good - aria-disabledとpointer-eventsで無効化 -->
+<a 
+  href={url} 
+  class={isEnabled ? '' : 'disabled'}
+  aria-disabled={!isEnabled}
+  {onclick={isEnabled ? handleClick : (e) => e.preventDefault()}}
+>
+  Link
+</a>
+
+<style>
+  a[aria-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+</style>
+```
+
+**推奨**: 最初のパターン（条件分岐）がAccessibilityツールとの互換性が最も高い
+
+---
+
 ### Touch Target Sizes
 
 ```css
@@ -1312,12 +1569,16 @@ console.log("⚠️ Slow Resource:", entry.name, "-", entry.duration.toFixed(2),
 ### Accessibility Checklist
 
 - [ ] すべてのインタラクティブ要素に適切なARIA属性があるか？
+- [ ] **セマンティックHTML要素とインタラクティブARIAロールを混在させていないか？**
+- [ ] **`href="#"`を使用せず、無効化されたナビゲーションには`<button disabled>`を使用しているか？**
+- [ ] ボタン動作には`<button>`、リンク動作には`<a>`を使用しているか？
 - [ ] キーボードで完全にナビゲート可能か？
 - [ ] フォーカス表示は明確か（:focus-visible）？
 - [ ] タッチターゲットは最低44pxか？
 - [ ] 画像にalt属性があるか？
 - [ ] 色のコントラスト比は4.5:1以上か？
 - [ ] スクリーンリーダーで読み上げテストを実施したか？
+- [ ] **Astro Dev Toolbar Auditでエラーがないか確認したか？**
 
 ---
 
@@ -1602,6 +1863,9 @@ const CONTENT_PATH_CONFIG: ContentPathConfig[] = [
 
 #### 品質基準
 - [ ] **Accessibility**: ARIA属性、キーボードナビゲーション、タッチターゲット44px
+- [ ] **Semantic HTML**: セマンティック要素とARIAロールの混在なし
+- [ ] **Invalid Links**: `href="#"`禁止、無効化ナビゲーションは`<button disabled>`
+- [ ] **Astro Dev Toolbar Audit**: 開発環境でエラー0確認
 - [ ] **SEO**: OG Image 1200x630px、keywords 60文字以内・15個以内
 - [ ] **Performance**: 画像Cloudinary経由、Resource Hints設定
 - [ ] **Images**: Cloudinary public_id使用（Upload推奨、Fetchは一時的のみ）
@@ -1810,6 +2074,8 @@ import { Button } from '../components/ui/Button.astro';
 
 | Version | Date | Changes |
 |---|---|---|
+| **2.3** | 2025-10-13 | Semantic HTML vs ARIA Roles、Invalid Links & Disabled Navigation、Astro Dev Toolbar Audit統合 |
+| **2.2** | 2025-10-13 | ネストされた子要素を持つ親モディファイアの配置ルール追加、BottomNavBar実例追加 |
 | **2.1** | 2025-10-13 | CSS Selector Specificity & Ordering セクション追加、Code Review Checklist更新 |
 | **2.0** | 2025-10-13 | Minimalist原則、OKLCH、UnifiedSEO、Accessibility、SEO Standards追加 |
 | 1.0 | Initial | 基本的なコーディング規約 |
