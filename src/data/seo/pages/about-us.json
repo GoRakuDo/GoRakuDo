@@ -1,0 +1,70 @@
+{
+  "seoData": {
+    "title": "Tentang Kami - Perjalanan GoRakuDo: Rumah untuk 10.000 Mimpi",
+    "description": "Kenali perjalanan GoRakuDo dan komunitas pembelajar bahasa Jepang terbesar di Indonesia dengan metodologi Immersion yang terbukti efektif. Dari mimpi sederhana hingga komunitas 10.000+ member.",
+    "pageType": "article",
+    "author": "Tim GoRakuDo",
+    "publishedDate": "2025-09-30T18:45:16.276Z",
+    "lang": "id",
+    "keywords": [
+      "tentang gorakudo",
+      "komunitas bahasa jepang",
+      "metode immersion",
+      "belajar bahasa jepang",
+      "discord gorakudo",
+      "open source"
+    ]
+  },
+  "faqSchema": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Apa itu GoRakuDo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GoRakuDo adalah komunitas dan platform pembelajaran bahasa Jepang terbesar di Indonesia dengan 10.000+ member yang menggunakan metode Immersion berdasarkan teori Linguistik Modern dari Prof. Stephen Krashen."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Siapa pendiri GoRakuDo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GoRakuDo didirikan oleh Yosia Kefas yang berhasil mencapai near-native level bahasa Jepang melalui metode Immersion tanpa pernah ke Jepang. Perjalanannya dimulai dari kursus tradisional yang menghabiskan 20 juta rupiah hingga menemukan metode Immersion yang lebih efektif."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Bagaimana cara mendukung GoRakuDo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kalian dapat mendukung GoRakuDo melalui donasi di Trakteer, kontribusi kode di GitHub, membantu dokumentasi, testing, atau aktif di komunitas Discord. Semua bentuk kontribusi sangat berarti untuk pengembangan platform ini."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Apakah GoRakuDo gratis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ya, GoRakuDo adalah platform open-source yang 100% gratis untuk publik tanpa syarat. Kami percaya bahwa pengetahuan tidak boleh menjadi barang mewah."
+        }
+      }
+    ]
+  },
+  "breadcrumbData": {
+    "items": [
+      {
+        "name": "Beranda",
+        "url": "/",
+        "isActive": false
+      },
+      {
+        "name": "Tentang Kami",
+        "url": "/about-us",
+        "isActive": true
+      }
+    ]
+  }
+}

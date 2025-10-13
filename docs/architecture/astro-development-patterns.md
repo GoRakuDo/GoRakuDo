@@ -1,10 +1,40 @@
-
 # Astro Development Patterns & Architectural Decisions
 
 **CRITICAL DOCUMENT:** This is a living document and the single source of truth for all Astro implementation patterns in this project. All agents, especially `dev-astro` and `architect`, MUST adhere to these guidelines. These rules override any generic best practices.
 
 **Mandatory:** Always Consult Astro Documentation ( search_astro_docs on mcp tools or @web ). Recall the most idiomatic, performant, and "Astro-native" way to achieve that goal.
+
 **Purpose:** To ensure consistency, performance, and maintainability across the entire Astro codebase.
+
+**Last Updated**: 2025-10-13  
+**Version**: 2.0
+
+---
+
+## 目次
+
+### 基本パターン
+1. [Component Architecture](#1-component-architecture)
+2. [Content Collections](#2-content-collections)
+3. [Layout System & Slots](#3-layout-system--slots)
+4. [SEO & Metadata Management](#4-seo--metadata-management)
+5. [Image Optimization](#5-image-optimization)
+6. [Interactivity & Client-Side JavaScript](#6-interactivity--client-side-javascript)
+7. [Styling](#7-styling)
+8. [API Endpoints](#8-api-endpoints)
+9. [Performance Optimization](#9-performance-optimization)
+10. [TypeScript Patterns](#10-typescript-patterns)
+
+### 応用パターン
+11. [Project-Specific Patterns](#11-project-specific-patterns)
+12. [Development Guidelines](#12-development-guidelines)
+13. [Migration from Old Patterns](#13-migration-from-old-patterns)
+14. [Performance Metrics & Goals](#14-performance-metrics--goals)
+15. [Best Practices Summary](#15-best-practices-summary)
+
+### 参考資料
+16. [References](#16-references)
+17. [Version History](#17-version-history)
 
 ---
 
@@ -12,124 +42,1067 @@
 
 ### Principle: A Clear Hierarchy of Components
 
-**Directive:** Components MUST be organized into one of three directories based on their purpose: `src/layouts/`, `src/components/`, or locally within a `src/pages/` subdirectory.
+**Directive:** Components MUST be organized into categorized directories based on their purpose and reusability scope.
 
--   **`src/layouts/`:** For top-level page shells. A layout defines the surrounding structure of a page (e.g., `<html>`, `<head>`, `<body>`, header, footer).
--   **`src/components/`:** For reusable, general-purpose UI components that will be used on two or more distinct pages (e.g., `Button.astro`, `Card.astro`, `Header.astro`).
--   **`src/pages/some-page/components/`:** For single-use components that are tightly coupled to a specific page and are not intended for reuse elsewhere.
+#### Component Directory Structure
 
-**Rationale:** This separation makes it clear where to find components and what their intended scope of use is, preventing accidental tight coupling.
+```
+src/components/
+├── animations/        # アニメーション関連コンポーネント
+├── common/           # 汎用共通コンポーネント（Navbar, Breadcrumb, Pagination等）
+├── content/          # コンテンツ表示コンポーネント（FAQ, TableOfContents等）
+├── docs/             # ドキュメントページ専用コンポーネント
+├── homepage/         # ホームページ専用コンポーネント
+├── search/           # 検索機能コンポーネント
+├── tools/            # ツールページ専用コンポーネント
+├── ui/               # 汎用UIコンポーネント（Button, PageHeader等）
+└── UnifiedSEO.astro  # SEO/メタデータ管理コンポーネント（全ページ共通）
+```
 
----
+#### コンポーネント分類ルール
 
-## 2. Content Fetching
+| ディレクトリ | 用途 | 再利用性 | 例 |
+|---|---|---|---|
+| **`common/`** | 全ページで使用 | ✅ 高 | Navbar, Breadcrumb, Pagination |
+| **`ui/`** | 汎用UIパーツ | ✅ 高 | Button, PageHeader, SearchForm |
+| **`content/`** | コンテンツ表示 | ✅ 中 | FAQ, TableOfContents, KrashenQuote |
+| **`homepage/`** | ホームページのみ | ❌ 低 | Hero, MissionSection, FeatureCard |
+| **`docs/`** | ドキュメントページのみ | ❌ 低 | PostsGrid |
+| **`tools/`** | ツールページのみ | ❌ 低 | Tools-GridSection |
+| **`animations/`** | アニメーション | ✅ 中 | WaveAnimation |
+| **`search/`** | 検索機能 | ✅ 中 | SearchSection, CategorySection |
 
-### Principle: Use the Right Tool for the Job
+**Rationale:** この分類により、コンポーネントの用途と再利用範囲が明確になり、適切なコンポーネント選択が容易になります。
 
-**Directive:** Astro's Content Collections are the **default and mandatory** method for managing and querying structured content (e.g., blog posts, documentation, authors). The `Astro.glob()` function should only be used for simple, unstructured file listings where type safety is not a primary concern.
+#### ✅ Good Example
 
--   **Use Content Collections (`getCollection`, `getEntry`) when:**
-    -   Content has a defined schema (e.g., `title`, `pubDate`, `author`).
-    -   You need type-safety and autocompletion in your code.
-    -   You need to query relationships between different content types.
--   **Use `Astro.glob()` when:**
-    -   You are simply listing files from a directory (e.g., an image gallery).
-    -   The files have no shared schema or frontmatter.
-
-**Rationale:** Content Collections prevent runtime errors by enforcing a data schema at build time, making the codebase more robust and easier to maintain.
-
-**Example (Correct `getCollection` Usage):**
 ```astro
----
-// src/pages/blog.astro
-import { getCollection } from 'astro:content';
-const posts = await getCollection('blog');
----
-<ul>
-  {posts.map(post => (
-    <li><a href={`/blog/${post.slug}/`}>{post.data.title}</a></li>
-  ))}
-</ul>
+// ✅ 汎用ボタン → ui/
+src/components/ui/Button.astro
+
+// ✅ ホームページ専用ヒーロー → homepage/
+src/components/homepage/hero.astro
+
+// ✅ 全ページで使うナビゲーション → common/
+src/components/common/NavBar/Navbar.astro
+```
+
+#### ❌ Bad Example
+
+```astro
+// ❌ すべてをcomponents/直下に配置
+src/components/Button.astro
+src/components/Hero.astro
+src/components/Navbar.astro  // 分類が不明確
 ```
 
 ---
 
-## 3. Interactivity (Client-Side JavaScript)
+## 2. Content Collections
 
-### Principle: Zero-JavaScript by Default (The Astro Way)
+### Principle: Type-Safe Content Management with Zod Schema
 
-**Directive:** Interactivity is an **exception**, not the rule. An `.astro` component that renders static HTML is always the default. A UI Framework component (React, Svelte, Vue, etc.) MUST only be used when stateful, client-side interactivity is absolutely unavoidable.
+**Directive:** All structured content MUST be managed through Astro Content Collections with strict Zod schema validation. This is **mandatory** for all blog posts, documentation, tool articles, and pages.
 
-**The Decision Process:**
-1.  Can this be pure, static HTML and CSS? **If yes, use an `.astro` component.**
-2.  If not, is the interactivity simple enough for a standard `<script>` tag in an `.astro` component? **If yes, use that.**
-3.  Only if the interactivity requires complex state management, hooks, or a component lifecycle, you may use a UI Framework component as an "island".
+#### Content Collections Structure
 
-**Directive:** When a UI Framework component is used, it MUST use a specific `client:*` directive to control its hydration. AVOID `client:load` unless the component must be interactive immediately. Prefer `client:idle` or `client:visible`.
-
-**Rationale:** This is the core performance philosophy of Astro. Shipping zero JavaScript by default results in the fastest possible load times.
-
-**Example (Correct Usage of an Interactive Island):**
-```astro
----
-// src/pages/index.astro
-import Counter from '../components/Counter.jsx'; // A React component
----
-<h1>My Page</h1>
-<p>This part is static HTML.</p>
-
-<!-- This is the ONLY interactive part of the page -->
-<Counter client:visible />
+```
+src/content/
+├── docs/              # ドキュメント記事（MDX）
+├── pages/             # 静的ページ（MDX）
+├── tool-articles/     # ツール記事（MDX）
+└── config.ts          # Collection schemas（Zod）
 ```
 
----
+#### Schema Definition Pattern
 
-## 4. Styling
+**場所**: `src/content/config.ts`
 
-### Principle: Scoped by Default, Global When Necessary
-
-**Directive:** All component-specific styles MUST be placed within a `<style is:global>` tag inside the `.astro` component file. This ensures styles are scoped and do not leak globally. Global styles (e.g., fonts, CSS variables, resets) are ONLY permitted in a central file, `src/styles/global.css`, which is imported into the main layout.
-
-**Rationale:** Scoped styles prevent CSS conflicts and make components truly modular and portable.
-
----
-
-## 5. API Endpoints (Server-Side Logic)
-
-### Principle: Endpoints for Data, Not Pages
-
-**Directive:** API routes (files in `src/pages/api/`) are to be used for serving data (JSON) to interactive client-side islands or external services. They MUST NOT be used to render HTML pages. All API responses MUST follow a consistent JSON structure.
-
-**Rationale:** This maintains a clear separation between the data layer and the presentation layer, aligning with modern web architecture.
-
-**Example (Standard API Response):**
 ```typescript
-// src/pages/api/posts.json.ts
-import { getCollection } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 
-export async function GET() {
-  const posts = await getCollection('blog');
+// ✅ 設定定数を一元管理
+const LIMITS = {
+  TITLE_MAX: 180,
+  DESCRIPTION_MAX: 280,
+  KEYWORD_MAX: 60,
+  KEYWORDS_MAX: 15,
+} as const;
+
+const DEFAULTS = {
+  AUTHOR: 'Tim GoRakuDo',
+  STATUS: 'draft' as const,
+} as const;
+
+// ✅ 厳密なスキーマ定義
+const docsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string().min(1).max(LIMITS.TITLE_MAX),
+    description: z.string().min(10).max(LIMITS.DESCRIPTION_MAX),
+    publishedDate: z.string(),
+    author: z.string().default(DEFAULTS.AUTHOR),
+    categories: z.array(z.string()).min(1).max(5),
+    tags: z.array(z.string()).optional(),
+    keywords: z.array(z.string().max(LIMITS.KEYWORD_MAX)).max(LIMITS.KEYWORDS_MAX),
+    status: z.enum(['published', 'draft', 'archived']).default('draft'),
+    featuredImage: z.string().optional(),
+    // Schema.org Educational Metadata
+    learningResourceType: z.union([z.string(), z.array(z.string())]).optional(),
+    educationalLevel: z.union([z.string(), z.array(z.string())]).optional(),
+    citation: z.array(z.object({...})).optional(),
+  }),
+});
+
+export const collections = {
+  docs: docsCollection,
+  pages: pagesCollection,
+  'tool-articles': toolArticlesCollection,
+};
+```
+
+#### Content Fetching Patterns
+
+```typescript
+// ✅ Good - getCollection for all entries
+import { getCollection } from 'astro:content';
+const docs = await getCollection('docs', ({ data }) => data.status === 'published');
+
+// ✅ Good - getEntry for single entry
+import { getEntry } from 'astro:content';
+const post = await getEntry('docs', 'getting-started');
+
+// ❌ Bad - Astro.glob() for structured content
+const posts = await Astro.glob('../content/docs/*.mdx');  // 型安全性なし
+```
+
+#### Key Features in This Project
+
+1. **Flexible Schema.org Metadata**: `z.union()` for flexible string/array types
+2. **Strict Validation**: Character limits, regex patterns for data quality
+3. **SEO-Optimized**: Keywords, citations, educational metadata
+4. **Status Management**: Draft/Published/Archived workflow
+
+**Rationale:** Content Collections provide build-time validation, preventing runtime errors and ensuring data consistency across all content.
+
+---
+
+## 3. Layout System & Slots
+
+### Principle: Flexible Composition through Named Slots
+
+**Directive:** Layouts MUST use named slots for maximum flexibility. Each slot serves a specific purpose and allows parent components to inject custom content.
+
+#### PostLayout Slot Architecture
+
+**場所**: `src/layouts/PostLayout.astro`
+
+```astro
+<PostLayout ...props>
+  <!-- 7つの名前付きスロット -->
+  <slot name="breadcrumb" />     <!-- パンくずリスト -->
+  <slot name="header" />          <!-- ページヘッダー -->
+  <slot name="featured-image" />  <!-- アイキャッチ画像 -->
+  <slot name="content" />         <!-- メインコンテンツ（必須） -->
+  <slot name="actions" />         <!-- アクションボタン -->
+  <slot name="footer" />          <!-- フッター -->
+  <slot name="sidebar">           <!-- サイドバー（デフォルトTOC） -->
+    <!-- デフォルト実装 -->
+  </slot>
+  <slot name="additional-sidebar" /> <!-- 追加サイドバー -->
+</PostLayout>
+```
+
+#### Usage Pattern
+
+```astro
+---
+// src/pages/docs/[slug].astro
+import PostLayout from '../../layouts/PostLayout.astro';
+import Breadcrumb from '../../components/common/Breadcrumb.astro';
+---
+
+<PostLayout {...seoData}>
+  <!-- Breadcrumb Slot -->
+  <Breadcrumb 
+    slot='breadcrumb'
+    {post}
+    currentPath={resolvedPath}
+  />
+
+  <!-- Header Slot -->
+  <header slot='header'>
+    <h1>{post.data.title}</h1>
+  </header>
+
+  <!-- Content Slot (必須) -->
+  <div slot='content'>
+    <Content />
+  </div>
+</PostLayout>
+```
+
+#### Slot Benefits
+
+| メリット | 説明 |
+|---|---|
+| **柔軟性** | ページごとにカスタマイズ可能 |
+| **再利用性** | 同じレイアウトで異なるコンテンツ |
+| **保守性** | レイアウト変更が全ページに反映 |
+| **型安全性** | Props interfaceで型チェック |
+
+**Rationale:** Named slotsにより、レイアウトの構造を維持しながら、各ページが独自のコンテンツを注入できます。
+
+---
+
+## 4. SEO & Metadata Management
+
+### Principle: Centralized, JSON-Driven SEO Configuration
+
+**Directive:** All SEO metadata MUST be managed through the `UnifiedSEO.astro` component with JSON configuration files for consistency and maintainability.
+
+#### SEO Architecture
+
+```
+src/
+├── components/
+│   └── UnifiedSEO.astro           # 統一SEOコンポーネント（720行）
+├── data/
+│   └── seo/
+│       ├── unifiedSeo-config.json # グローバルSEO設定
+│       └── pages/
+│           ├── index.json         # ホームページSEO
+│           ├── docs.json          # ドキュメント一覧SEO
+│           ├── about-us.json      # About UsSEO
+│           └── tools.json         # ツール一覧SEO
+```
+
+#### UnifiedSEO Component Features
+
+**場所**: `src/components/UnifiedSEO.astro`
+
+```typescript
+interface Props {
+  // 基本SEO
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  canonical?: string;
+  lang?: 'id' | 'ja';
+  pageType?: 'website' | 'article';
+  image?: string;
+  author?: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+  
+  // Schema.org Structured Data
+  breadcrumbSchema?: BreadcrumbSchema;
+  faqSchema?: FAQSchema;
+  howToSchema?: HowToSchema;
+  collectionPageSchema?: CollectionPageSchema;
+  softwareApplicationSchema?: SoftwareApplicationSchema;
+  websiteSchema?: WebsiteSchema;
+  
+  // Educational Metadata（Schema.org）
+  learningResourceType?: string | string[];
+  educationalLevel?: string | string[];
+  about?: string | Array<{type: string; name: string; ...}>;
+  mentions?: string[] | Array<{type: string; name: string; ...}>;
+  citation?: Array<{type: string; author: string|string[]; ...}>;
+  
+  // Resource Hints
+  preconnect?: string[];
+  dnsPrefetch?: string[];
+  prefetch?: string[];
+  preload?: PreloadResource[];
+}
+```
+
+#### JSON Configuration Pattern
+
+```json
+{
+  "seoData": {
+    "title": "...",
+    "description": "...",
+    "pageType": "article",
+    "author": "Tim GoRakuDo",
+    "publishedDate": "2025-09-30T18:45:16.276Z",
+    "lang": "id",
+    "keywords": [...]
+  },
+  "faqSchema": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [...]
+  },
+  "breadcrumbData": {
+    "items": [...]
+  }
+}
+```
+
+#### Implementation Pattern
+
+```astro
+---
+import UnifiedSEO from '../components/UnifiedSEO.astro';
+import seoConfig from '../data/seo/pages/about-us.json';
+
+const seoData = {
+  ...seoConfig.seoData,
+  lang: seoConfig.seoData.lang as 'id' | 'ja',  // 型アサーション
+};
+---
+
+<html lang={seoData.lang}>
+  <head>
+    <UnifiedSEO 
+      {...seoData}
+      faqSchema={seoConfig.faqSchema}
+    />
+  </head>
+</html>
+```
+
+#### Key Features
+
+1. **統一されたメタタグ管理**: OG, Twitter Card, Schema.org JSON-LD
+2. **画像自動最適化**: Cloudinary変換（1200x630px、1.91:1）
+3. **Resource Hints**: preconnect, dns-prefetch, prefetch, preload
+4. **Structured Data**: Organization, Article, FAQ, HowTo, etc.
+5. **Educational Metadata**: learningResourceType, educationalLevel, citation
+
+**Rationale:** 一元管理により、SEO設定の一貫性を保ち、重複を排除し、保守性を向上させます。
+
+---
+
+## 5. Image Optimization
+
+### Principle: All Images Must Be Optimized for Web Delivery
+
+**Directive:** This project uses **Cloudinary** as the primary image optimization and delivery solution. All images MUST follow the optimization patterns defined below.
+
+#### Image Handling Patterns
+
+| 画像タイプ | 推奨方法 | 例 | 用途 |
+|---|---|---|---|
+| **Cloudinary Public ID** | `featuredImage: 'public-id'` | `gorakudo-tired-study_zhhh2b` | OG Image, Featured Image |
+| **Cloudinary CldImage** | `<CldImage src="..." />` | コンポーネント内画像 | ページコンテンツ内の画像 |
+| **Static Assets** | `public/` folder | favicon, manifest | 処理不要な静的ファイル |
+
+#### OG Image自動変換システム
+
+**実装**: `src/components/UnifiedSEO.astro` (269-302行目)
+
+```typescript
+const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
+  // Cloudinary public_idの場合
+  if (isCloudinaryId) {
+    const transform = forOgImage ? 'c_pad,w_1200,h_630,b_auto,f_auto,q_auto' : '';
+    return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${transform}/${imagePath}`;
+  }
+  
+  // ローカル/外部URLの場合（Cloudinary Fetch）
+  if (forOgImage) {
+    const fullUrl = imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
+    return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/c_pad,w_1200,h_630,b_auto,f_auto,q_auto/${fullUrl}`;
+  }
+  
+  return normalizeUrl(imagePath);
+};
+```
+
+#### Key Features
+
+| 機能 | パラメータ | 効果 |
+|---|---|---|
+| **Padding Mode** | `c_pad` | 画像を切らずに余白追加 |
+| **Size Optimization** | `w_1200,h_630` | 1.91:1 (FB/Twitter推奨) |
+| **Background Auto** | `b_auto` | 背景色を画像に合わせて自動選択 |
+| **Format Auto** | `f_auto` | WebP対応ブラウザに自動配信 |
+| **Quality Auto** | `q_auto` | ファイルサイズと品質を自動最適化 |
+
+#### ✅ Best Practices
+
+```yaml
+# MDX Frontmatter
+---
+# ✅ Good - Cloudinary public_id（推奨）
+featuredImage: 'gorakudo-tired-study_zhhh2b'
+
+# ⚠️ OK - ローカル画像（Fetch使用、コスト注意）
+featuredImage: '/img/local-image.png'
+
+# ⚠️ OK - 外部URL（一時的な用途のみ）
+featuredImage: 'https://external-cdn.com/temp-banner.jpg'
+---
+```
+
+**詳細**: `docs/architecture/og-image-optimization.md` を参照
+
+---
+
+## 6. Interactivity & Client-Side JavaScript
+
+### Principle: Zero-JavaScript by Default, Minimal When Needed
+
+**Directive:** Interactivity is an **exception**, not the rule. Client-side JavaScriptは必要最小限に留め、主に`is:inline`と`define:vars`を使用します。
+
+#### Current Usage in Project
+
+```
+総ファイル数: 33 Astroファイル
+client:* 使用: 0ファイル（UIフレームワークアイランドなし）
+is:inline 使用: 16ファイル（軽量インラインスクリプト）
+```
+
+#### Interactivity Patterns
+
+##### 1. **インラインスクリプト（is:inline）**
+
+```astro
+<!-- ✅ Good - Minimal inline script -->
+<script is:inline>
+  window.handleImgError = function(e) {
+    e.onerror = null;
+    e.src = '/img/fallback.png';
+  }
+</script>
+```
+
+**用途**: 
+- 画像フォールバック
+- グローバル関数定義
+- 即時実行が必要な処理
+
+##### 2. **変数受け渡し（define:vars）**
+
+```astro
+<script is:inline define:vars={{ postData }}>
+  const sharePost = () => {
+    navigator.share({
+      title: postData?.title,
+      url: window.location.href
+    });
+  };
+  window.sharePost = sharePost;
+</script>
+```
+
+**用途**:
+- サーバーサイドデータをクライアントに渡す
+- 動的な設定値をスクリプトで使用
+
+##### 3. **標準スクリプト（モジュール化）**
+
+```astro
+<script>
+  // ✅ モジュールスコープ（ページ間で独立）
+  const initAnimation = () => {
+    // アニメーション初期化
+  };
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimation);
+  } else {
+    initAnimation();
+  }
+</script>
+```
+
+#### Decision Tree for Interactivity
+
+```
+インタラクティブ機能が必要？
+    ↓
+NO → Static HTMLとCSSのみ（✅ 推奨）
+YES → ↓
+
+単純なDOM操作？
+    ↓
+YES → <script is:inline>（✅ 推奨）
+NO → ↓
+
+状態管理が必要？
+    ↓
+NO → 標準<script>タグ（✅ 推奨）
+YES → ↓
+
+複雑なUIロジック？
+    ↓
+YES → UIフレームワーク検討（⚠️ 最終手段）
+```
+
+#### ❌ Avoid
+
+```astro
+<!-- ❌ Bad - 不要なReact/Vueアイランド -->
+<Counter client:load />  <!-- すべてのページでJSバンドル -->
+
+<!-- ✅ Good - 純粋なAstro + minimal JS -->
+<button onclick="count++">Click</button>
+<script is:inline>
+  let count = 0;
+</script>
+```
+
+**Rationale:** このプロジェクトは**完全にUIフレームワーク不使用**で構築されており、優れたパフォーマンスを達成しています。この方針を継続します。
+
+---
+
+## 7. Styling
+
+### Principle: Scoped Styles by Default, Global When Necessary
+
+**Directive:** All component styles MUST use scoped `<style>` tags unless explicitly marked as global with `is:global`.
+
+#### Styling Architecture
+
+```
+src/styles/
+├── global.css                # グローバルスタイル（CSS変数、リセット）
+├── layouts/
+│   ├── PostLayout.css       # PostLayout専用スタイル
+│   └── ArticleLayout.css    # 記事レイアウト専用
+└── pages/
+    ├── homepage.css         # ホームページ専用
+    └── docs/
+        └── docs-index.css   # ドキュメント一覧専用
+```
+
+#### Scoped vs Global
+
+##### ✅ Scoped Styles（推奨）
+
+```astro
+<style>
+  /* コンポーネント内でのみ適用 */
+  .button {
+    padding: 1rem;
+    background: var(--clr-primary);
+  }
+</style>
+```
+
+##### ✅ Global Styles（必要な場合のみ）
+
+```astro
+<style is:global>
+  /* プロースコンテンツ内の<blockquote>スタイル */
+  article blockquote {
+    font-family: var(--font-serif);
+    font-weight: 500;
+  }
+</style>
+```
+
+#### CSS Organization Pattern
+
+```css
+/* コンポーネントCSS構造 */
+
+/* 1. CSS変数定義 */
+:root {
+  --card-padding: clamp(1rem, 2vw, 1.5rem);
+  --grid-gap: clamp(1rem, 3vw, 2rem);
+}
+
+/* 2. ベーススタイル */
+.component-base {
+  /* 基本スタイル */
+}
+
+/* 3. バリアント */
+.component--variant {
+  /* バリエーション */
+}
+
+/* 4. 状態 */
+.component:hover,
+.component:focus-visible {
+  /* インタラクション */
+}
+
+/* 5. レスポンシブ（clamp()推奨） */
+@media (max-width: 768px) {
+  /* モバイル調整 */
+}
+```
+
+#### ✅ Responsive Design with clamp()
+
+```css
+/* ✅ Good - fluid, responsive values */
+.card {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  gap: clamp(0.5rem, 1vw, 1rem);
+}
+
+/* ❌ Bad - multiple media queries */
+.card { padding: 1rem; }
+@media (min-width: 640px) { .card { padding: 1.25rem; } }
+@media (min-width: 1024px) { .card { padding: 1.5rem; } }
+```
+
+**Rationale:** `clamp()`により、メディアクエリを大幅に削減し、メンテナンス性とパフォーマンスを向上させます（実績: `docs-index.css`で23%削減）。
+
+---
+
+## 8. API Endpoints
+
+### Principle: Type-Safe JSON APIs for Search and Data
+
+**Directive:** API routes MUST follow a consistent JSON response structure and use TypeScript for type safety.
+
+#### API Structure
+
+```
+src/pages/
+├── search/
+│   └── Search.json.ts        # 検索API
+├── docs/
+│   └── DocsSearch.json.ts    # ドキュメント検索API
+└── tools/
+    └── ToolsSearch.json.ts   # ツール検索API
+```
+
+#### Standard API Pattern
+
+```typescript
+// ✅ Good - Type-safe API endpoint
+import { getCollection } from 'astro:content';
+import type { APIRoute } from 'astro';
+
+export const GET: APIRoute = async () => {
+  const docs = await getCollection('docs', ({ data }) => data.status === 'published');
+  
   return new Response(JSON.stringify({
     success: true,
-    data: posts.map(post => ({
-      title: post.data.title,
-      slug: post.slug
+    data: docs.map(doc => ({
+      title: doc.data.title,
+      slug: doc.slug,
+      description: doc.data.description
     }))
   }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
   });
+};
+```
+
+#### Response Structure
+
+```typescript
+// 成功レスポンス
+{
+  "success": true,
+  "data": T[]  // 型安全なデータ
+}
+
+// エラーレスポンス
+{
+  "success": false,
+  "error": {
+    "code": string,
+    "message": string
+  }
 }
 ```
 
 ---
 
-## 6. Image Handling
+## 9. Performance Optimization
 
-### Principle: Performance is Non-Negotiable
+### Principle: Every Millisecond Counts
 
-**Directive:** All local images (`src/assets/`) that are part of the content MUST be handled by Astro's built-in `<Image />` component to ensure automatic optimization (resizing, format conversion, etc.). Static assets in the `public/` folder should only be used for files that must not be processed, like `favicon.svg`.
+**Directive:** Performance optimization is **mandatory**, not optional. All implementation decisions must consider their performance impact.
 
-**Rationale:** Using the `<Image />` component is one of the most significant performance optimizations available in Astro. Bypassing it leads to unoptimized, slow-loading images.
+#### Optimization Techniques in This Project
+
+##### 1. **CSS Optimization**
+
+```css
+/* ✅ clamp()による responsive values */
+--card-padding: clamp(1rem, 2vw, 1.5rem);
+
+/* 削減効果 */
+Before: ~100 lines of media queries
+After:  ~1 line with clamp()
+削減率: 23%
+```
+
+##### 2. **Image Optimization**
+
+```typescript
+// Cloudinary自動最適化
+- Format: f_auto (WebP自動配信)
+- Quality: q_auto (ファイルサイズ最適化)
+- Responsive: sizes属性による適切なサイズ配信
+```
+
+##### 3. **Resource Hints**
+
+```html
+<!-- DNS Prefetch -->
+<link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+
+<!-- Prefetch -->
+<link rel="prefetch" href="/docs" />
+```
+
+##### 4. **Script Optimization**
+
+```astro
+<!-- ✅ is:inline - No bundling overhead -->
+<script is:inline>
+  window.utilityFunction = () => {...}
+</script>
+
+<!-- ❌ 通常のscript - Viteバンドル処理 -->
+<script>
+  import { heavy } from './heavy-lib';  // バンドルサイズ増加
+</script>
+```
+
+#### Performance Checklist
+
+- [ ] 画像はCloudinary経由で配信されているか？
+- [ ] CSS は clamp() を活用しているか？
+- [ ] 不要なJavaScriptバンドルはないか？
+- [ ] Resource Hintsは適切に設定されているか？
+- [ ] OG Imageは1200x630pxに最適化されているか？
 
 ---
+
+## 10. TypeScript Patterns
+
+### Principle: Type Safety Without Complexity
+
+**Directive:** TypeScript is mandatory for all `.ts` and `.astro` files. Type definitions MUST be clear, minimal, and maintainable.
+
+#### Component Props Pattern
+
+```typescript
+// ✅ Good - Export interface for reusability
+export interface Props {
+  title: string;
+  description: string;
+  publishedDate?: string;
+  lang?: 'id' | 'ja';  // Literal types for strict typing
+  tags?: string[];
+}
+
+// Props destructuring with defaults
+const {
+  title,
+  description,
+  publishedDate,
+  lang = 'id',
+  tags = [],
+} = Astro.props;
+```
+
+#### Type Assertion Pattern
+
+```typescript
+// ✅ Good - Type assertion for JSON imports
+const seoData = {
+  ...config.seoData,
+  lang: config.seoData.lang as 'id' | 'ja',  // JSON string → literal type
+};
+```
+
+#### Union Types for Flexibility
+
+```typescript
+// ✅ Good - Flexible schema.org metadata
+learningResourceType?: string | string[];
+about?: string | Array<{
+  type: string;
+  name: string;
+  description?: string;
+  sameAs?: string;
+}>;
+```
+
+#### Type Reuse Pattern
+
+```typescript
+// ✅ Good - Import and reuse types
+import type { Props as UnifiedSEOProps } from '../components/UnifiedSEO.astro';
+
+interface LayoutProps {
+  breadcrumbSchema?: UnifiedSEOProps['breadcrumbSchema'];
+  faqSchema?: UnifiedSEOProps['faqSchema'];
+}
+```
+
+---
+
+## 11. Project-Specific Patterns
+
+### Pattern 1: Unified SEO + JSON Config
+
+**Problem:** SEO設定が各ページにハードコードされ、一貫性がない
+
+**Solution:** UnifiedSEO.astro + JSON設定ファイル
+
+```
+1. グローバル設定 → unifiedSeo-config.json
+2. ページ別設定 → src/data/seo/pages/[page].json
+3. 記事メタデータ → MDX frontmatter
+4. 統合 → UnifiedSEO.astro
+```
+
+### Pattern 2: Content Collection + Zod Validation
+
+**Problem:** コンテンツデータの不整合、ランタイムエラー
+
+**Solution:** Zod schemaによるビルド時バリデーション
+
+```typescript
+// 厳密な型定義
+title: z.string().min(1).max(180)
+keywords: z.array(z.string().max(60)).max(15)
+status: z.enum(['published', 'draft', 'archived'])
+```
+
+### Pattern 3: Cloudinary Hybrid Approach
+
+**Problem:** 画像サイズ・形式がバラバラ、OG Imageが最適化されていない
+
+**Solution:** 
+- **頻繁に使う画像**: Cloudinary Upload（public_id）
+- **一時的な画像**: Cloudinary Fetch
+- **OG Image**: 自動で1200x630pxに変換
+
+### Pattern 4: Slot-Based Layouts
+
+**Problem:** レイアウトの柔軟性がない
+
+**Solution:** 7つの名前付きスロットで高い柔軟性
+
+```astro
+<PostLayout>
+  <Breadcrumb slot="breadcrumb" />
+  <Header slot="header" />
+  <Content slot="content" />
+</PostLayout>
+```
+
+---
+
+## 12. Development Guidelines
+
+### File Naming Conventions
+
+| タイプ | 形式 | 例 |
+|---|---|---|
+| **Astro Components** | PascalCase | `Navbar.astro`, `PostLayout.astro` |
+| **Pages** | kebab-case | `index.astro`, `[slug].astro` |
+| **Utilities** | camelCase | `collections.ts`, `breadcrumb-schema.ts` |
+| **Styles** | kebab-case | `PostLayout.css`, `docs-index.css` |
+| **JSON Config** | kebab-case | `about-us.json`, `unifiedSeo-config.json` |
+
+### Component Structure Template
+
+```astro
+---
+// ========== IMPORTS ==========
+import Layout from '../layouts/Layout.astro';
+import Component from '../components/Component.astro';
+
+// ========== TYPE DEFINITIONS ==========
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+// ========== PROPS DESTRUCTURING ==========
+const {
+  title,
+  description = 'Default description',
+} = Astro.props;
+
+// ========== DATA FETCHING ==========
+const data = await getCollection('docs');
+
+// ========== UTILITY FUNCTIONS ==========
+const formatDate = (date: string) => new Date(date).toLocaleDateString('id-ID');
+---
+
+<!-- ========== TEMPLATE ========== -->
+<Layout {title}>
+  <main>
+    <h1>{title}</h1>
+    <p>{description}</p>
+  </main>
+</Layout>
+
+<!-- ========== STYLES ========== -->
+<style>
+  /* Scoped styles */
+  main {
+    padding: 2rem;
+  }
+</style>
+
+<!-- ========== SCRIPTS ========== -->
+<script is:inline>
+  // Minimal client-side logic
+</script>
+```
+
+### Code Review Checklist
+
+#### Before Committing
+
+- [ ] Props interfaceが`export`されているか？
+- [ ] スタイルは`<style>`（scoped）を使用しているか？
+- [ ] 画像はCloudinary経由か？
+- [ ] Content Collectionsを使用しているか（構造化コンテンツの場合）？
+- [ ] TypeScriptの型エラーがないか？
+- [ ] 不要なJavaScriptバンドルを追加していないか？
+- [ ] SEO metadataは UnifiedSEO.astro 経由か？
+
+---
+
+## 13. Migration from Old Patterns
+
+### Deprecated Patterns
+
+| ❌ 旧パターン | ✅ 新パターン | 理由 |
+|---|---|---|
+| `Astro.glob()` | `getCollection()` | 型安全性 |
+| ハードコードSEO | UnifiedSEO + JSON | 一元管理 |
+| `<img>` タグ | `<CldImage>` | 自動最適化 |
+| 個別media queries | `clamp()` | メンテナンス性 |
+| Inline image paths | Cloudinary public_id | CDN配信 |
+
+### Migration Example
+
+```astro
+<!-- ❌ Before -->
+---
+const posts = await Astro.glob('../content/docs/*.mdx');
+---
+<head>
+  <title>My Page</title>
+  <meta name="description" content="Description" />
+</head>
+<img src="/img/photo.png" />
+
+<!-- ✅ After -->
+---
+import { getCollection } from 'astro:content';
+import UnifiedSEO from '../components/UnifiedSEO.astro';
+import { CldImage } from 'astro-cloudinary';
+import seoConfig from '../data/seo/pages/my-page.json';
+
+const posts = await getCollection('docs');
+---
+<head>
+  <UnifiedSEO {...seoConfig.seoData} />
+</head>
+<CldImage src="photo-public-id" width={600} />
+```
+
+---
+
+## 14. Performance Metrics & Goals
+
+### Current Performance
+
+| Metric | Value | Target | Status |
+|---|---|---|---|
+| **Lighthouse Score** | 95+ | 90+ | ✅ |
+| **JavaScript Bundle** | ~20KB | <50KB | ✅ |
+| **CSS Size** | ~45KB | <100KB | ✅ |
+| **OG Image Size** | ~100KB | <200KB | ✅ |
+| **Time to Interactive** | <1s | <2s | ✅ |
+
+### Zero-JS Philosophy Results
+
+```
+Total Components: 33 Astro files
+UI Framework Islands: 0
+Bundle Size: Minimal (~20KB compressed)
+Performance Score: 95+
+```
+
+---
+
+## 15. Best Practices Summary
+
+### ✅ DO
+
+1. **Use Content Collections** for all structured content
+2. **Use UnifiedSEO.astro** for all SEO metadata
+3. **Use Cloudinary** for all images (public_id preferred)
+4. **Use named slots** in layouts for flexibility
+5. **Use `clamp()`** for responsive CSS values
+6. **Use `is:inline`** for minimal client-side scripts
+7. **Use Zod validation** for content schemas
+8. **Export Props interfaces** for type reusability
+9. **Organize components** by purpose (common, content, ui, etc.)
+10. **Test on real devices** for performance validation
+
+### ❌ DON'T
+
+1. **Don't use Astro.glob()** for structured content
+2. **Don't hardcode SEO tags** in pages
+3. **Don't use UI framework islands** unless absolutely necessary
+4. **Don't skip image optimization**
+5. **Don't use inline styles** (use scoped `<style>`)
+6. **Don't exceed media query limits** (use `clamp()` instead)
+7. **Don't bundle heavy JavaScript**
+8. **Don't use unvalidated content data**
+9. **Don't mix component categories**
+10. **Don't ignore TypeScript errors**
+
+---
+
+## 16. References
+
+### Internal Documentation
+
+- [OG Image Optimization](./og-image-optimization.md) - 画像最適化の詳細
+- [Tech Stack](./tech-stack.md) - 技術スタック詳細
+- [Source Tree](./source-tree.md) - プロジェクト構造
+- [Coding Standards](./coding-standards.md) - コーディング規約
+
+### External Resources
+
+- [Astro Documentation](https://docs.astro.build/)
+- [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/)
+- [Cloudinary Documentation](https://cloudinary.com/documentation)
+- [Schema.org](https://schema.org/)
+
+---
+
+## 17. Version History
+
+### v2.0 (2025-10-13)
+- SEO管理パターン追加（UnifiedSEO + JSON設定）
+- OG Image自動変換システム追加
+- Content Collections スキーマ詳細追加
+- Slot-based layoutsパターン追加
+- Performance最適化ガイドライン追加
+- TypeScriptパターン追加
+- Project-specific patternsセクション追加
+
+### v1.0 (Initial)
+- 基本的なAstro開発パターン
+- Component階層
+- Content Collections基本
+
+---
+
+**Maintained by**: Winston (Architect)  
+**Review Frequency**: 四半期ごと、または重要な実装変更時  
+**Status**: ✅ Active & Enforced

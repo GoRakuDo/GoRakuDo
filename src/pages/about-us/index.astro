@@ -5,9 +5,10 @@ import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import aboutUsSeoConfig from '../../data/seo/pages/about-us.json';
 
 // ========== CONTENT LOADING ==========
-const post = await getEntry('pages', 'support-us');
+const post = await getEntry('pages', 'about-us');
 
 if (!post) return Astro.redirect('/pages?error=post-not-found');
 if (post.data.status !== 'published') return Astro.redirect('/404');
@@ -20,19 +21,11 @@ const tocHeadings = headings.filter(
 const resolvedPath = { path: resolvePath('pages', post.slug) };
 const collectionMetadata = getCollectionInfo('pages');
 
-// ========== SEO DATA ==========
+// ========== SEO DATA FROM JSON ==========
 const seoData = {
-  title: post.data.title || `Dukung Kami - GoRakuDo`,
-  description:
-    post.data.description ||
-    `Dukung pengembangan GoRakuDo dan dapatkan apresiasi untuk kontribusi Anda dalam komunitas open-source ini.`,
-  keywords: ['dukungan', 'kontributor', 'komunitas', 'open-source'],
-  articleType: 'guide',
-  learningStage: 'beginner',
-  searchIntent: 'informational',
-  publishedDate: post.data.publishedDate,
-  modifiedDate: post.data.publishedDate,
-  isDraft: false,
+  ...aboutUsSeoConfig.seoData,
+  modifiedDate: aboutUsSeoConfig.seoData.publishedDate,
+  lang: aboutUsSeoConfig.seoData.lang as 'id' | 'ja',
 };
 
 // ========== CLIENT DATA ==========
@@ -42,19 +35,20 @@ const postData = {
   resolvedPath: resolvedPath.path,
 };
 
-// ========== BREADCRUMB CONFIGURATION ==========
+// ========== BREADCRUMB CONFIGURATION FROM JSON ==========
 const breadcrumbConfig = {
   currentPath: resolvedPath.path,
   showHome: true,
   showIcons: true,
-  ariaLabel: 'Support us page navigation breadcrumb',
+  ariaLabel: 'About us page navigation breadcrumb',
 };
 
 const breadcrumbSchema = generateBreadcrumbSchema({
-  items: [
-    { title: 'Home', url: '/', isActive: false },
-    { title: 'Support Us', url: '/support-us', isActive: true },
-  ],
+  items: aboutUsSeoConfig.breadcrumbData.items.map((item: any) => ({
+    title: item.name,
+    url: item.url,
+    isActive: item.isActive,
+  })),
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
 ---
@@ -63,8 +57,8 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
-  lang='id'
-  author={post.data.author || 'Tim GoRakuDo'}
+  lang={seoData.lang}
+  author={seoData.author}
   tags={seoData.keywords}
   post={post}
   collectionMetadata={collectionMetadata}
@@ -72,6 +66,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   postActions={false}
   breadcrumbConfig={breadcrumbConfig}
   breadcrumbSchema={breadcrumbSchema}
+  faqSchema={aboutUsSeoConfig.faqSchema}
 >
   <!-- Breadcrumb Slot -->
   <Breadcrumb
@@ -128,7 +123,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
   <!-- Content Slot -->
   <div slot='content'>
-    <div class='support-content'>
+    <div class='about-content'>
       <Content />
     </div>
   </div>
@@ -143,10 +138,10 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     if (navigator.share) {
       navigator.share({
-        title: postData?.title || 'Dukung Kami - GoRakuDo',
+        title: postData?.title || 'Tentang Kami - GoRakuDo',
         text:
           postData?.description ||
-          'Dukung pengembangan GoRakuDo dan komunitas open-source ini',
+          'Kenali perjalanan GoRakuDo dan komunitas pembelajar bahasa Jepang terbesar di Indonesia',
         url: shareUrl,
       });
     } else {

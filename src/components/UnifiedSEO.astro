@@ -266,32 +266,36 @@ const getToolImageFromPath = (): string | null => {
   return null;
 };
 
-const createFullImageUrl = (imagePath?: string): string => {
+const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
   // 空文字列やnull/undefinedの場合は自動判定
   if (!imagePath || imagePath.trim() === '') {
     // ツールページの場合は自動でiconUrlを使用
     const toolImage = getToolImageFromPath();
     if (toolImage) {
-      const siteUrl = getSiteUrl();
-      return joinUrl(siteUrl, toolImage);
+      imagePath = toolImage;
+    } else {
+      imagePath = seoConfig.site.defaultImage;
     }
-    
-    const siteUrl = getSiteUrl();
-    const defaultImage = seoConfig.site.defaultImage;
-    return joinUrl(siteUrl, defaultImage);
   }
-  
-  // 既に完全なURLの場合はそのまま返す
-  if (imagePath.startsWith('http')) return imagePath;
   
   // Cloudinary public_idの場合 (パス区切りなし、拡張子なし)
-  if (!imagePath.includes('/') && !imagePath.match(/\.(jpg|jpeg|png|webp|svg|gif)$/i)) {
-    return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${imagePath}`;
+  const isCloudinaryId = !imagePath.includes('/') && !imagePath.match(/\.(jpg|jpeg|png|webp|svg|gif)$/i);
+  
+  if (isCloudinaryId) {
+    const baseUrl = 'https://res.cloudinary.com/dbvd1cm7u/image/upload';
+    const ogTransform = forOgImage ? 'c_pad,w_1200,h_630,b_auto,f_auto,q_auto' : '';
+    return ogTransform ? `${baseUrl}/${ogTransform}/${imagePath}` : `${baseUrl}/${imagePath}`;
   }
   
-  // 相対パスの場合は完全なURLに変換
-  const siteUrl = getSiteUrl();
-  return joinUrl(siteUrl, imagePath);
+  // OG Image用の場合はすべての画像をCloudinary fetchで変換
+  if (forOgImage) {
+    const fullUrl = imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
+    return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/c_pad,w_1200,h_630,b_auto,f_auto,q_auto/${fullUrl}`;
+  }
+  
+  // 通常表示用は完全なURLを返す
+  if (imagePath.startsWith('http')) return imagePath;
+  return joinUrl(getSiteUrl(), imagePath);
 };
 
 const createFullSitemapUrl = (sitemapPath: string): string => {
@@ -308,6 +312,7 @@ const createFullRobotsTxtUrl = (robotsPath: string): string => {
 const autoCanonical = canonical || generateCanonicalUrl();
 const normalizedCanonical = removeTrailingSlashIfNeeded(autoCanonical);
 const fullImageUrl = createFullImageUrl(image);
+const ogImageUrl = createFullImageUrl(image, true);
 const fullSitemapUrl = createFullSitemapUrl(sitemapUrl);
 const fullRobotsTxtUrl = createFullRobotsTxtUrl(robotsTxtUrl);
 
@@ -358,9 +363,9 @@ const prefetchUrls = generatePrefetch(prefetch);
 const preloadResources = generatePreload(preload);
 
 // ========== SCHEMA HELPER FUNCTIONS ==========
-const createImageObject = (imageUrl: string, width = 1024, height = 1024) => ({
+const createImageObject = (imageUrl: string, width = 1200, height = 630) => ({
   '@type': 'ImageObject',
-  url: createFullImageUrl(imageUrl),
+  url: createFullImageUrl(imageUrl, true),
   width,
   height
 });
@@ -593,7 +598,9 @@ addOptionalSchemas(structuredDataSchemas);
 <meta property="og:description" content={description} />
 <meta property="og:type" content={pageType} />
 <meta property="og:url" content={normalizedCanonical} />
-<meta property="og:image" content={fullImageUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta property="og:image:type" content="image/webp" />
 <meta property="og:image:alt" content={title} />
 <meta property="og:logo" content={joinUrl(getSiteUrl(), seoConfig.site.defaultImage)} />
@@ -602,10 +609,10 @@ addOptionalSchemas(structuredDataSchemas);
 <meta property="og:updated_time" content={new Date().toISOString()} />
 
 <!-- ========== TWITTER CARDS ========== -->
-<meta name="twitter:card" content={defaultConfig.twitterCard} />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={fullImageUrl} />
+<meta name="twitter:image" content={ogImageUrl} />
 <meta name="twitter:image:alt" content={title} />
 <meta name="twitter:site" content="@yosiakefas" />
 <meta name="twitter:creator" content="@yosiakefas" />
