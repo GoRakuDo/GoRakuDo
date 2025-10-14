@@ -3,6 +3,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
+import FAQ from '../../components/content/FAQ.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
@@ -157,6 +158,25 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   })),
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
+
+// ========== FAQ SCHEMA GENERATION ==========
+const faqSchema =
+  post.data.faq && post.data.faq.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: post.data.faq.map(
+          (item: { question: string; answer: string }) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer.replace(/<[^>]*>/g, ''), // Strip HTML untuk schema
+            },
+          })
+        ),
+      }
+    : null;
 ---
 
 <PostLayout
@@ -172,6 +192,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   postActions={true}
   breadcrumbConfig={breadcrumbConfig}
   breadcrumbSchema={breadcrumbSchema as any}
+  faqSchema={faqSchema as any}
   featuredImage={post.data.featuredImage}
   learningResourceType={post.data.learningResourceType}
   educationalLevel={post.data.educationalLevel}
@@ -252,6 +273,19 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   <!-- Content Slot -->
   <div slot='content'>
     <Content />
+
+    <!-- FAQ Section (if exists) - 記事コンテンツ内に配置 -->
+    {
+      post.data.faq && post.data.faq.length > 0 && (
+        <div class='article-faq-section'>
+          <FAQ
+            items={post.data.faq}
+            title='❓ FAQ: Pertanyaan yang Sering Muncul'
+            className='article-faq'
+          />
+        </div>
+      )
+    }
   </div>
 
   <!-- Actions Slot -->

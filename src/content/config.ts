@@ -33,6 +33,10 @@ const docsCollection = defineCollection({
     keywords: z.array(z.string().max(LIMITS.KEYWORD_MAX)).max(LIMITS.KEYWORDS_MAX).default([]),
     learningResourceType: z.union([z.string().max(50), z.array(z.string().max(50))]).optional(),
     educationalLevel: z.union([z.string().max(50), z.array(z.string().max(50))]).optional(),
+    faq: z.array(z.object({
+      question: z.string().max(200),
+      answer: z.string().max(1000),
+    })).max(20).optional(),
     about: z.union([
       z.string().max(200),
       z.array(z.object({

@@ -853,3 +853,33 @@ img[data-cloudinary] {
   margin-left: auto;
   border-radius: 0.5rem;
 }
+
+/* ========== ARTICLE FAQ SECTION ========== */
+
+.article-faq-section {
+  width: 100%;
+  max-width: 56rem;
+  margin: 3rem auto 2rem;
+  padding: 0 1.5rem;
+
+  @media (max-width: 768px) {
+    margin: 2rem auto 1.5rem;
+    padding: 0;
+  }
+}
+
+.article-faq-section .faq-container {
+  max-width: 100%;
+}
+
+/* FAQ Title customization untuk article context */
+.article-faq .faq-title {
+  margin-bottom: 1.5rem;
+  color: var(--clr-text-primary);
+  font-size: clamp(1.5rem, 1rem + 2vw, 2rem);
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+    font-size: 1.375rem;
+  }
+}
