@@ -71,21 +71,17 @@
   --clr-white-95: oklch(100% 0 0deg / var(--opacity-95));
   --clr-white-30: oklch(100% 0 0deg / var(--opacity-30));
   --clr-white-20: oklch(100% 0 0deg / var(--opacity-20));
-}
 
-/* ===== RESPONSIVE DESIGN TOKENS ===== */
-@media (min-width: 768px) {
-  :root {
+  /* ===== RESPONSIVE DESIGN TOKENS ===== */
+  @media (min-width: 768px) {
     --card-padding: 1.25rem;
     --grid-gap: 2rem;
     --emoji-size: 4.5rem;
     --title-font: 1.25rem;
     --description-lines: 2;
   }
-}
 
-@media (min-width: 1280px) {
-  :root {
+  @media (min-width: 1280px) {
     --card-padding: 1.5rem;
     --grid-gap: 2.5rem;
     --emoji-size: 5rem;
@@ -99,19 +95,37 @@
 .posts-page {
   @apply relative z-10 min-h-screen text-white;
 
-  /* Prevent horizontal overflow */
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+
+  @media (min-width: 768px) {
+    padding: clamp(1.5rem, 3vw, 2rem) 0;
+  }
+
+  @media (min-width: 1280px) {
+    padding: 2rem 0;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* メインコンテンツのパフォーマンス最適化 */
 .main-content {
   contain: layout style; /* paint制約を削除してemoji表示を許可 */
   will-change: auto;
-
-  /* Mobile-first padding with clamp */
   padding: 0 clamp(1rem, 3vw, 1.5rem);
+
+  @media (min-width: 768px) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* 空の状態のスタイリング - パフォーマンス最適化 */
@@ -144,10 +158,18 @@
   @apply mx-auto;
 
   overflow: hidden visible; /* emoji表示のためY軸はvisible許可 */
-
-  /* Mobile-first container with clamp-based responsive padding */
   max-width: 100%;
   padding: 0 clamp(1rem, 4vw, 1.5rem);
+
+  @media (min-width: 768px) {
+    max-width: min(80rem, 95vw);
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  @media (min-width: 1280px) {
+    max-width: 80rem;
+  }
 }
 
 /* Posts Grid */
@@ -162,63 +184,16 @@
   opacity: 1;
   transform: translateY(0);
   animation: fadeInUp 0.6s ease-out;
-}
 
-/* ===== RESPONSIVE LAYOUTS ===== */
-
-/* Tablet Breakpoint (768px+) */
-@media (min-width: 768px) {
-  .posts-container {
-    /* Container max-width with responsive scaling */
-    max-width: min(80rem, 95vw);
-
-    /* Remove side padding on tablet and up */
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .main-content {
-    /* Remove side padding on tablet and up */
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .posts-page {
-    padding: clamp(1.5rem, 3vw, 2rem) 0;
-  }
-
-  .posts-grid {
+  @media (min-width: 768px) {
     gap: var(--grid-gap);
     grid-template-columns: repeat(2, 1fr);
     margin: 0 auto 4rem;
   }
-}
 
-/* Desktop Breakpoint (1280px+) */
-@media (min-width: 1280px) {
-  .posts-container {
-    /* Full desktop container width */
-    max-width: 80rem;
-  }
-
-  .posts-page {
-    padding: 2rem 0;
-  }
-
-  .posts-grid {
+  @media (min-width: 1280px) {
     gap: var(--grid-gap);
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Touch Device Optimization */
-@media (hover: none) and (pointer: coarse) {
-  .main-content {
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .posts-page {
-    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -243,20 +218,15 @@
   contain: layout style; /* paint制約を削除してemoji表示を許可 */
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
-}
 
-/* Card Responsive Adjustments */
-@media (min-width: 768px) {
-  .post-card {
+  @media (min-width: 768px) {
     height: auto;
     min-height: 18rem;
     padding: var(--card-padding);
     border-radius: 1rem;
   }
-}
 
-@media (min-width: 1280px) {
-  .post-card {
+  @media (min-width: 1280px) {
     height: auto;
     min-height: 16rem;
     padding: var(--card-padding);
@@ -345,19 +315,14 @@
   contain: none; /* contain制約を無効化 */
   isolation: auto; /* isolation制約を無効化 */
   clip-path: none; /* clip-path制約を無効化 */
-}
 
-/* Emoji Responsive Adjustments */
-@media (min-width: 768px) {
-  .post-emoji {
+  @media (min-width: 768px) {
     top: -1rem;
     right: -0.75rem;
     font-size: var(--emoji-size);
   }
-}
 
-@media (min-width: 1280px) {
-  .post-emoji {
+  @media (min-width: 1280px) {
     top: -1.25rem;
     right: -1rem;
     font-size: var(--emoji-size);
@@ -383,27 +348,23 @@
   width: 100%;
   height: 100%;
   padding: 0.25rem;
+
+  @media (min-width: 768px) {
+    gap: 0.625rem;
+    padding: 0.125rem;
+  }
+
+  @media (min-width: 1280px) {
+    gap: 0.625rem;
+    padding: 0.125rem;
+  }
 }
 
 .post-header {
   margin-bottom: 0.75rem;
-}
 
-@media (min-width: 768px) {
-  .post-card-container {
-    gap: 0.625rem;
-    padding: 0.125rem;
-  }
-
-  .post-header {
+  @media (min-width: 768px) {
     margin-bottom: 0.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .post-card-container {
-    gap: 0.625rem;
-    padding: 0.125rem;
   }
 }
 
@@ -428,24 +389,20 @@
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility; /* テキストレンダリング最適化 */
-}
 
-@media (min-width: 768px) {
-  .post-title {
+  @media (min-width: 768px) {
     min-height: 3.5rem;
     margin-bottom: 1rem;
-    padding-right: 3.125rem; /* 2.5rem + 0.625rem = 3.125rem */
+    padding-right: 3.125rem;
     font-size: var(--title-font);
     font-weight: 800;
     overflow-wrap: break-word;
   }
-}
 
-@media (min-width: 1280px) {
-  .post-title {
+  @media (min-width: 1280px) {
     min-height: 3.5rem;
     margin-bottom: 1rem;
-    padding-right: 3.125rem; /* 2.5rem + 0.625rem = 3.125rem */
+    padding-right: 3.125rem;
     font-size: var(--title-font);
     font-weight: 800;
     overflow-wrap: break-word;
@@ -510,20 +467,16 @@
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility; /* テキストレンダリング最適化 */
-}
 
-@media (min-width: 768px) {
-  .post-description {
+  @media (min-width: 768px) {
     max-height: calc(1.4em * var(--description-lines));
     margin-bottom: 0.625rem;
     font-size: 0.95rem;
     line-height: 1.4;
     -webkit-line-clamp: var(--description-lines);
   }
-}
 
-@media (min-width: 1280px) {
-  .post-description {
+  @media (min-width: 1280px) {
     max-height: calc(1.4em * var(--description-lines));
     margin-bottom: 0.625rem;
     font-size: 0.95rem;
@@ -548,10 +501,8 @@
   margin-bottom: 1rem;
   padding: 0 0.25rem;
   box-sizing: border-box;
-}
 
-@media (min-width: 768px) {
-  .post-tags {
+  @media (min-width: 768px) {
     gap: 0.5rem;
     margin-bottom: 0.875rem;
     padding: 0 0.5rem;
@@ -574,11 +525,8 @@
   transition: var(--transition-smooth);
   box-shadow: var(--shadow-tag);
   flex-shrink: 0;
-}
 
-@media (min-width: 768px) {
-  .post-tag,
-  .post-tag-more {
+  @media (min-width: 768px) {
     padding: 0.5rem 0.875rem;
     font-size: 0.8rem;
     font-weight: 450;
@@ -665,10 +613,8 @@
   transform: none;
   transition: var(--transition-smooth);
   box-shadow: var(--shadow-button);
-}
 
-@media (min-width: 768px) {
-  .read-more-btn {
+  @media (min-width: 768px) {
     border-radius: 0.75rem;
     font-weight: 600;
   }
@@ -701,10 +647,8 @@
   color: var(--clr-primary-darker);
   transform: translateY(-3px) scale(1.02);
   box-shadow: var(--shadow-button-hover);
-}
 
-@media (min-width: 768px) {
-  .read-more-btn:hover {
+  @media (min-width: 768px) {
     transform: translateY(-2px) scale(1.01);
   }
 }
