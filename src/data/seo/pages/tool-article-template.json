@@ -1,6 +1,6 @@
 {
   "seoOptimization": {
-    "titleTemplate": "{{articleTitle}} | GoRakuDo",
+    "titleTemplate": "{{articleTitle}} ・ GoRakuDo",
     "descriptionTemplate": "{{articleDescription}}",
     "baseKeywords": [
       "GoRakuDo",
