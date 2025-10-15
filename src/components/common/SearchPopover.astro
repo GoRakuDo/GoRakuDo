@@ -150,20 +150,20 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
     --sp-accent: oklch(60% 0.15 296.9deg);
     --sp-success: oklch(60% 0.15 160deg);
 
-    /* White Opacity Scale */
-    --sp-white-1: oklch(100% 0 0deg / 0.1);
-    --sp-white-2: oklch(100% 0 0deg / 0.2);
-    --sp-white-3: oklch(100% 0 0deg / 0.3);
-    --sp-white-4: oklch(100% 0 0deg / 0.4);
-    --sp-white-5: oklch(100% 0 0deg / 0.5);
-    --sp-white-7: oklch(100% 0 0deg / 0.7);
-    --sp-white-8: oklch(100% 0 0deg / 0.8);
+    /* White Opacity Scale - 修正: より薄い透明度で視認性向上 */
+    --sp-white-1: oklch(100% 0 0deg / 0.05);
+    --sp-white-2: oklch(100% 0 0deg / 0.1);
+    --sp-white-3: oklch(100% 0 0deg / 0.15);
+    --sp-white-4: oklch(100% 0 0deg / 0.2);
+    --sp-white-5: oklch(100% 0 0deg / 0.25);
+    --sp-white-7: oklch(100% 0 0deg / 0.35);
+    --sp-white-8: oklch(100% 0 0deg / 0.4);
     --sp-white-9: oklch(100% 0 0deg / 0.9);
 
-    /* Black Opacity Scale */
-    --sp-black-1: oklch(0% 0 0deg / 0.1);
-    --sp-black-2: oklch(0% 0 0deg / 0.2);
-    --sp-black-5: oklch(0% 0 0deg / 0.5);
+    /* Black Opacity Scale - 修正: より薄い透明度で視認性向上 */
+    --sp-black-1: oklch(0% 0 0deg / 0.05);
+    --sp-black-2: oklch(0% 0 0deg / 0.1);
+    --sp-black-5: oklch(0% 0 0deg / 0.25);
 
     /* Accent Color Variants */
     --sp-accent-1: oklch(60% 0.15 296.9deg / 0.1);
@@ -255,26 +255,30 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
 
   /* Search Popover Container - 既に上記でCSS変数を定義済み */
 
-  /* Search Toggle Button - Optimized */
+  /* Search Toggle Button - Optimized with Fallbacks */
   .search-toggle-btn {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    border: 1px solid var(--sp-white-2);
+
+    /* フォールバック用の基本スタイル */
+
+    /* CSS変数が利用可能な場合の上書き */
+    border: 1px solid var(--sp-white-2, rgb(255 255 255 / 0.1));
     background: linear-gradient(
       135deg,
-      var(--sp-white-1) 0%,
-      var(--sp-white-2) 100%
+      var(--sp-white-1, rgb(255 255 255 / 0.05)) 0%,
+      var(--sp-white-2, rgb(255 255 255 / 0.1)) 100%
     );
-    color: var(--sp-white-9);
+    color: var(--sp-white-9, rgb(255 255 255 / 0.9));
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow:
-      0 4px 16px var(--sp-black-1),
-      inset 0 1px 0 var(--sp-white-2);
     backdrop-filter: blur(12px);
+    box-shadow:
+      0 4px 16px var(--sp-black-1, rgb(0 0 0 / 0.05)),
+      inset 0 1px 0 var(--sp-white-2, rgb(255 255 255 / 0.1));
   }
 
   .search-toggle-btn--circular {
@@ -314,15 +318,18 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
   }
 
   .search-toggle-btn:hover {
+    /* フォールバック用のホバースタイル */
+
+    /* CSS変数が利用可能な場合の上書き */
     background: linear-gradient(
       135deg,
-      var(--sp-white-2) 0%,
-      var(--sp-white-3) 100%
+      var(--sp-white-2, rgb(255 255 255 / 0.1)) 0%,
+      var(--sp-white-3, rgb(255 255 255 / 0.15)) 100%
     );
-    border-color: var(--sp-white-3);
+    border-color: var(--sp-white-3, rgb(255 255 255 / 0.15));
     box-shadow:
-      0 8px 24px var(--sp-black-2),
-      inset 0 1px 0 var(--sp-white-3);
+      0 8px 24px var(--sp-black-2, rgb(0 0 0 / 0.1)),
+      inset 0 1px 0 var(--sp-white-3, rgb(255 255 255 / 0.15));
 
     /* モバイル: ホバー効果を無効化 */
     @media (min-width: 769px) {
@@ -371,7 +378,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       inset 0 1px 0 var(--sp-white-3);
   }
 
-  .search-icon {
+  /* SVG icon inside search toggle button - より具体的なセレクタで競合を防ぐ */
+  .search-toggle-btn .search-icon {
     flex-shrink: 0;
     width: var(--sp-size-lg);
     height: var(--sp-size-lg);
@@ -472,7 +480,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       0 4px 16px var(--sp-black-1);
   }
 
-  .close-icon {
+  /* Close icon - より具体的なセレクタで競合を防ぐ */
+  .search-close-btn .close-icon {
     flex-shrink: 0;
     width: var(--sp-size-lg);
     height: var(--sp-size-lg);
