@@ -56,9 +56,11 @@ const docsCollection = defineCollection({
     ]).optional(),
     citation: z.array(z.object({
       type: z.string().max(50),
-      author: z.union([z.string().max(100), z.array(z.string().max(100))]),
-      datePublished: z.string().max(20),
-      name: z.string().max(300),
+      author: z.union([z.string().max(100), z.array(z.string().max(100))]).optional(),
+      datePublished: z.string().max(20).optional(),
+      name: z.string().max(300).optional(),
+      headline: z.string().max(300).optional(),
+      description: z.string().max(500).optional(),
       url: z.string().url().optional(),
       isPartOf: z.object({
         type: z.string().max(50),

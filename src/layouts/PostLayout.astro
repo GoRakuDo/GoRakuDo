@@ -221,14 +221,72 @@ const {
         });
       };
 
+      // Code block copy functionality
+      const initCodeBlockCopy = () => {
+        const codeBlocks = document.querySelectorAll('pre');
+
+        codeBlocks.forEach(pre => {
+          // コピーボタンを作成
+          const button = document.createElement('button');
+          button.className = 'copy-code-button';
+          button.setAttribute('data-tooltip', 'コピー');
+          button.setAttribute('aria-label', 'コードをコピー');
+          button.innerHTML = `
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          `;
+
+          // クリックイベント
+          button.addEventListener('click', async () => {
+            const code = pre.querySelector('code');
+            const text = code ? code.textContent || '' : pre.textContent || '';
+
+            try {
+              await navigator.clipboard.writeText(text);
+
+              // 成功フィードバック
+              button.classList.add('copied');
+              button.setAttribute('data-tooltip', 'コピーしました！');
+              button.innerHTML = `
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              `;
+
+              // 2秒後に元に戻す
+              setTimeout(() => {
+                button.classList.remove('copied');
+                button.setAttribute('data-tooltip', 'コピー');
+                button.innerHTML = `
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                `;
+              }, 2000);
+            } catch (err) {
+              console.error('コピーに失敗しました:', err);
+              button.setAttribute('data-tooltip', 'コピー失敗');
+            }
+          });
+
+          // ボタンをpreに追加
+          pre.style.position = 'relative';
+          pre.appendChild(button);
+        });
+      };
+
       // Initialize
       if (document.readyState === 'loading') {
-        document.addEventListener(
-          'DOMContentLoaded',
-          initBreadcrumbScrollAnimation
-        );
+        document.addEventListener('DOMContentLoaded', () => {
+          initBreadcrumbScrollAnimation();
+          initCodeBlockCopy();
+        });
       } else {
         initBreadcrumbScrollAnimation();
+        initCodeBlockCopy();
       }
     </script>
   </body>

@@ -62,15 +62,13 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
             </button>
 
             <div
-              class='faq-content-wrapper'
+              class='faq-content'
               id={contentId}
               aria-labelledby={buttonId}
               role='region'
               data-faq-content
             >
-              <div class='faq-answer'>
-                <div class='faq-answer-content' set:html={item.answer} />
-              </div>
+              <div class='faq-answer-content' set:html={item.answer} />
             </div>
           </div>
         );
@@ -80,6 +78,7 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
 </div>
 
 <style is:global>
+  /* ========== FAQ CONTAINER ========== */
   .faq-container {
     width: 100%;
     max-width: 680px;
@@ -87,6 +86,14 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
     font-family: var(--font-primary);
   }
 
+  @media (max-width: 768px) {
+    .faq-container {
+      max-width: 100%;
+      padding: 0;
+    }
+  }
+
+  /* ========== FAQ TITLE ========== */
   .faq-title {
     margin-bottom: 2rem;
     color: var(--clr-text-primary);
@@ -97,14 +104,15 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
     letter-spacing: -0.02em;
   }
 
+  /* ========== FAQ LIST ========== */
   .faq-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
 
+  /* ========== FAQ ITEM ========== */
   .faq-item {
-    /* GlassMorphism background */
     position: relative;
     overflow: hidden;
     border: 1px solid var(--clr-white-15);
@@ -165,6 +173,29 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
     opacity: 0.8;
   }
 
+  @media (max-width: 768px) {
+    .faq-item {
+      backdrop-filter: none;
+      background: linear-gradient(
+        135deg,
+        var(--clr-white-12) 0%,
+        var(--clr-white-08) 50%,
+        var(--clr-white-10) 100%
+      );
+    }
+
+    .faq-item:hover {
+      backdrop-filter: none;
+      background: linear-gradient(
+        135deg,
+        var(--clr-white-15) 0%,
+        var(--clr-white-12) 50%,
+        var(--clr-white-12) 100%
+      );
+    }
+  }
+
+  /* ========== FAQ BUTTON ========== */
   .faq-button {
     position: relative;
     z-index: var(--z-FAQ-faq-button);
@@ -189,6 +220,13 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
     outline-offset: 2px;
   }
 
+  @media (max-width: 768px) {
+    .faq-button {
+      padding: 1rem;
+    }
+  }
+
+  /* ========== FAQ QUESTION ========== */
   .faq-question {
     flex: 1;
     margin: 0;
@@ -200,6 +238,14 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
     letter-spacing: -0.02em;
   }
 
+  @media (max-width: 768px) {
+    .faq-question {
+      padding-right: 0.75rem;
+      font-size: 1rem;
+    }
+  }
+
+  /* ========== FAQ ICON ========== */
   .faq-icon {
     flex-shrink: 0;
     stroke: var(--clr-text-primary);
@@ -213,16 +259,15 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
       opacity var(--transition-smooth);
   }
 
-  .faq-item[data-expanded='true'] .faq-icon {
-    transform: rotate(45deg);
+  @media (max-width: 768px) {
+    .faq-icon {
+      width: 40px;
+      height: 40px;
+    }
   }
 
-  .faq-item[data-expanded='true'] .faq-icon-vertical {
-    opacity: 0;
-    transform: rotate(45deg);
-  }
-
-  .faq-content-wrapper {
+  /* ========== FAQ CONTENT ========== */
+  .faq-content {
     overflow: hidden;
     max-height: 0;
     opacity: 0;
@@ -231,18 +276,11 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
       opacity var(--transition-smooth);
   }
 
-  .faq-item[data-expanded='true'] .faq-content-wrapper {
-    max-height: 1000px;
-    opacity: 1;
-  }
-
-  .faq-answer {
+  /* ========== FAQ ANSWER CONTENT ========== */
+  .faq-answer-content {
     position: relative;
     z-index: var(--z-FAQ-faq-answer);
     padding: 0 1.5rem 1.5rem;
-  }
-
-  .faq-answer-content {
     color: var(--clr-text-secondary);
     font-size: 1rem;
     line-height: 1.5;
@@ -295,51 +333,25 @@ const { items, title = 'よくある質問', className = '' } = Astro.props;
     font-weight: 700;
   }
 
-  /* Responsive Design */
   @media (max-width: 768px) {
-    .faq-container {
-      max-width: 100%;
-      padding: 0;
-    }
-
-    .faq-button {
-      padding: 1rem;
-    }
-
-    .faq-question {
-      padding-right: 0.75rem;
-      font-size: 1rem;
-    }
-
-    .faq-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    .faq-answer {
+    .faq-answer-content {
       padding: 0 1rem 1rem;
     }
+  }
 
-    /* Mobile GlassMorphism optimization */
-    .faq-item {
-      backdrop-filter: none;
-      background: linear-gradient(
-        135deg,
-        var(--clr-white-12) 0%,
-        var(--clr-white-08) 50%,
-        var(--clr-white-10) 100%
-      );
-    }
+  /* ========== EXPANDED STATE ========== */
+  .faq-item[data-expanded='true'] .faq-icon {
+    transform: rotate(45deg);
+  }
 
-    .faq-item:hover {
-      backdrop-filter: none;
-      background: linear-gradient(
-        135deg,
-        var(--clr-white-15) 0%,
-        var(--clr-white-12) 50%,
-        var(--clr-white-12) 100%
-      );
-    }
+  .faq-item[data-expanded='true'] .faq-icon-vertical {
+    opacity: 0;
+    transform: rotate(45deg);
+  }
+
+  .faq-item[data-expanded='true'] .faq-content {
+    max-height: 1000px;
+    opacity: 1;
   }
 </style>
 

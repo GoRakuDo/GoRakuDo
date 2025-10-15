@@ -3,7 +3,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
-import FAQ from '../../components/content/FAQ.astro';
+import FAQ from '../../components/ui/FAQ.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
@@ -85,7 +85,7 @@ const replaceTemplateVariables = (template, variables) => {
 // シンプルなタイトル生成: MDXフロントマターのまま
 const generateTemplateBasedTitle = post => {
   const articleTitle = post.data.title || post.slug;
-  return `${articleTitle} | GoRakuDo`;
+  return `${articleTitle} ・ GoRakuDo`;
 };
 
 // シンプルな説明文生成: MDXフロントマターのまま

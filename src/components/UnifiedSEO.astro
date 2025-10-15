@@ -440,9 +440,11 @@ const processCitation = (citationData: any) => {
   if (!citationData || citationData.length === 0) return null;
   return citationData.map((item: any) => ({
     '@type': item.type || 'ScholarlyArticle',
-    author: item.author,
-    datePublished: item.datePublished,
-    name: item.name,
+    ...(item.author && { author: item.author }),
+    ...(item.datePublished && { datePublished: item.datePublished }),
+    ...(item.name && { name: item.name }),
+    ...(item.headline && { headline: item.headline }),
+    ...(item.description && { description: item.description }),
     ...(item.url && { url: item.url }),
     ...(item.isPartOf && { isPartOf: { '@type': item.isPartOf.type, name: item.isPartOf.name } })
   }));
