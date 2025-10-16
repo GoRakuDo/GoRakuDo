@@ -8,6 +8,7 @@ import Navbar from '../components/common/NavBar/Navbar.astro';
 import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
 import Prose from '../components/Prose.astro';
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
+import { CldImage } from 'astro-cloudinary';
 import '../styles/layouts/PostLayout.css';
 import '../styles/global.css';
 
@@ -114,8 +115,22 @@ const {
           <!-- Article Header Slot -->
           <slot name='header' />
 
-          <!-- Featured Image Slot -->
-          <slot name='featured-image' />
+          <!-- Featured Image -->
+          {
+            featuredImage && (
+              <div class='featured-image-container mt-6'>
+                <CldImage
+                  src={featuredImage}
+                  alt={title}
+                  class='featured-image-thumbnail'
+                  loading='eager'
+                  width={800}
+                  quality='auto'
+                  format='auto'
+                />
+              </div>
+            )
+          }
 
           <!-- Article Content Slot -->
           <article

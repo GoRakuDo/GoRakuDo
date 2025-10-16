@@ -263,6 +263,7 @@ const breadcrumbConfig = {
   publishedDate={seoData.publishedDate}
   lang='id'
   author={post.data.author || 'GoRakuDo Team'}
+  featuredImage={post.data.featuredImage}
   tags={seoData.keywords}
   post={post}
   collectionMetadata={collectionMetadata}
@@ -328,23 +329,6 @@ const breadcrumbConfig = {
       )
     }
   </header>
-
-  <!-- Featured Image Slot -->
-  {
-    post.data.featuredImage && (
-      <div slot='featured-image' class='featured-image-container mt-6'>
-        <CldImage
-          src={post.data.featuredImage}
-          alt={post.data.title}
-          class='featured-image-thumbnail'
-          loading='eager'
-          width={800}
-          quality='auto'
-          format='auto'
-        />
-      </div>
-    )
-  }
 
   <!-- Content Slot -->
   <div slot='content'>

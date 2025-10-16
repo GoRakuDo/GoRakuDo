@@ -1001,3 +1001,16 @@
     padding-bottom: var(--bottom-nav-spacing-small);
   }
 }
+
+/* ===== BLOCKQUOTE QUOTES OVERRIDE ===== */
+
+/* TailwindTypography blockquote quotes を無効化 */
+blockquote {
+  quotes: none !important;
+}
+
+blockquote::before,
+blockquote::after {
+  display: none !important;
+  content: none !important;
+}
