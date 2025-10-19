@@ -35,7 +35,7 @@ const docsCollection = defineCollection({
     educationalLevel: z.union([z.string().max(50), z.array(z.string().max(50))]).optional(),
     faq: z.array(z.object({
       question: z.string().max(200),
-      answer: z.string().max(1000),
+      answer: z.string().max(5000),
     })).max(20).optional(),
     about: z.union([
       z.string().max(200),
