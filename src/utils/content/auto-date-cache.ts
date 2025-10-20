@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, statSync, existsSync, readdirSync, mkdirSync, unlinkSync } from 'fs';
-import { join, dirname } from 'path';
+import { join, dirname, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
 
@@ -13,6 +13,17 @@ export interface CacheEntry {
  lastProcessed: string;
  fileHash: string;
  publishedDate: string;
+}
+
+/**
+ * 絶対パスをプロジェクトルートからの相対パスに変換（POSIXスタイル）
+ * クロスプラットフォーム互換性のため、常に "/" を使用
+ */
+function toRelativePath(absolutePath: string): string {
+ const projectRoot = process.cwd();
+ const relativePath = relative(projectRoot, absolutePath);
+ // Windowsのバックスラッシュをスラッシュに変換（POSIXスタイル）
+ return relativePath.replace(/\\/g, '/');
 }
 
 export interface ProcessResult {
@@ -45,7 +56,7 @@ function getCacheFilePath(): string {
 }
 
 /**
- * キャッシュを読み込み
+ * キャッシュを読み込み（絶対パスを相対パスに自動変換）
  */
 function loadCache(): Map<string, CacheEntry> {
  const cachePath = getCacheFilePath();
@@ -57,7 +68,21 @@ function loadCache(): Map<string, CacheEntry> {
  try {
   const cacheData = readFileSync(cachePath, 'utf-8');
   const cacheObject = JSON.parse(cacheData);
-  return new Map(Object.entries(cacheObject));
+  const cache = new Map<string, CacheEntry>();
+
+  // 既存のキャッシュエントリを相対パス（POSIXスタイル）に変換
+  for (const [key, entry] of Object.entries(cacheObject)) {
+   const typedEntry = entry as CacheEntry;
+   // キーが絶対パスの場合は相対パスに変換、Windowsスタイルの場合は正規化
+   const normalizedKey = key.includes(':') ? toRelativePath(key) : key.replace(/\\/g, '/');
+
+   cache.set(normalizedKey, {
+    ...typedEntry,
+    filePath: normalizedKey, // filePathも正規化された相対パスに変換
+   });
+  }
+
+  return cache;
  } catch (error) {
   console.warn('Failed to load cache, starting fresh:', error);
   return new Map();
@@ -103,7 +128,7 @@ function getFileCreationDate(filePath: string): string {
 function processMdxFile(filePath: string, cache: Map<string, CacheEntry>): boolean {
  try {
   const currentHash = calculateFileHash(filePath);
-  const cacheKey = filePath;
+  const cacheKey = toRelativePath(filePath);
   const cachedEntry = cache.get(cacheKey);
 
   // キャッシュに存在し、ハッシュが同じ場合はスキップ
@@ -123,15 +148,15 @@ function processMdxFile(filePath: string, cache: Map<string, CacheEntry>): boole
 
    writeFileSync(filePath, updatedContent, 'utf-8');
 
-   // キャッシュを更新
+   // キャッシュを更新（相対パスで保存）
    cache.set(cacheKey, {
-    filePath,
+    filePath: cacheKey, // 相対パスで保存
     lastProcessed: new Date().toISOString(),
     fileHash: currentHash,
     publishedDate: creationDate,
    });
 
-   console.log(`✅ Updated publishedDate for ${filePath} to ${creationDate}`);
+   console.log(`✅ Updated publishedDate for ${cacheKey} to ${creationDate}`);
    return true; // 処理済み
   }
 
