@@ -287,8 +287,13 @@ const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
     return ogTransform ? `${baseUrl}/${ogTransform}/${imagePath}` : `${baseUrl}/${imagePath}`;
   }
   
-  // OG Image用の場合はすべての画像をCloudinary fetchで変換
+  // OG Image用の場合
   if (forOgImage) {
+    // 既にCloudinary URLの場合は重複を避けてそのまま使用
+    if (imagePath.startsWith('https://res.cloudinary.com/')) {
+      return imagePath;
+    }
+    // 他のURLはCloudinary fetchで変換
     const fullUrl = imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
     return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/c_pad,w_1200,h_630,b_auto,f_auto,q_auto/${fullUrl}`;
   }

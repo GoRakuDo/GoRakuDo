@@ -316,6 +316,247 @@
   min-height: auto;
 }
 
+/* ========== EMPTY STATE COMPREHENSIVE REDESIGN ========== */
+
+/* Empty State Container */
+.tool__empty-state-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--tool__spacing-xl);
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--tool__spacing-2xl) var(--tool__spacing-lg);
+  text-align: center;
+
+  @media (min-width: 768px) {
+    gap: var(--tool__spacing-2xl);
+    padding: var(--tool__spacing-3xl) var(--tool__spacing-xl);
+  }
+}
+
+/* Main Icon */
+.tool__empty-state-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(3rem, 8vw, 6rem);
+  height: clamp(3rem, 8vw, 6rem);
+  margin: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    color: var(--clr-text-muted);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
+}
+
+/* Title */
+.tool__empty-state-title {
+  margin: 0;
+  color: var(--clr-text-primary);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Description */
+.tool__empty-state-description {
+  max-width: 40rem;
+  margin: 0;
+  color: var(--clr-text-secondary);
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Action Buttons Container */
+.tool__empty-state-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--tool__spacing-md);
+  width: 100%;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    gap: var(--tool__spacing-lg);
+  }
+}
+
+/* Action Buttons */
+.tool__empty-state-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--tool__spacing-sm);
+  width: 100%;
+  min-height: 3rem;
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (min-width: 640px) {
+    width: auto;
+    min-width: 12rem;
+  }
+
+  svg {
+    width: clamp(1rem, 2.5vw, 1.25rem);
+    height: clamp(1rem, 2.5vw, 1.25rem);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(-2px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Primary Button */
+.tool__empty-state-btn--primary {
+  border-color: color-mix(in oklch, var(--token-purple-base) 50%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, var(--token-purple-base) 20%, transparent) 0%,
+    color-mix(in oklch, var(--token-purple-base) 10%, transparent) 100%
+  );
+  color: var(--clr-text-primary);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.1);
+
+  &:hover {
+    border-color: color-mix(
+      in oklch,
+      var(--token-purple-base) 70%,
+      transparent
+    );
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--token-purple-base) 30%, transparent) 0%,
+      color-mix(in oklch, var(--token-purple-base) 15%, transparent) 100%
+    );
+    box-shadow: 0 8px 24px oklch(0% 0 0deg / 0.15);
+  }
+}
+
+/* Secondary Button */
+.tool__empty-state-btn--secondary {
+  border-color: oklch(100% 0 0deg / 0.2);
+  background: oklch(100% 0 0deg / 0.05);
+  color: var(--clr-text-primary);
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    border-color: oklch(100% 0 0deg / 0.3);
+    background: oklch(100% 0 0deg / 0.1);
+    box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.08);
+  }
+}
+
+/* Suggestions Section */
+.tool__empty-state-suggestions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tool__spacing-lg);
+  width: 100%;
+  margin-top: var(--tool__spacing-md);
+}
+
+/* Suggestions Title */
+.tool__suggestions-title {
+  margin: 0;
+  color: var(--clr-text-secondary);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Suggestions List */
+.tool__suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--tool__spacing-md);
+  width: 100%;
+}
+
+/* Individual Suggestion Tool */
+.tool__suggestion-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tool__spacing-sm);
+  padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid oklch(100% 0 0deg / 0.12);
+  border-radius: 0.625rem;
+  background: linear-gradient(
+    135deg,
+    oklch(20% 0 0deg / 0.15) 0%,
+    oklch(15% 0 0deg / 0.1) 100%
+  );
+  color: var(--clr-text-primary);
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 500;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    border-color: color-mix(
+      in oklch,
+      var(--token-purple-base) 40%,
+      transparent
+    );
+    background: linear-gradient(
+      135deg,
+      oklch(25% 0 0deg / 0.2) 0%,
+      oklch(20% 0 0deg / 0.15) 100%
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px oklch(0% 0 0deg / 0.12);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+/* Suggestion Tool Icon */
+.tool__suggestion-tool-icon {
+  display: block;
+  width: clamp(1.5rem, 3vw, 2rem);
+  height: clamp(1.5rem, 3vw, 2rem);
+  border-radius: 0.375rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Suggestion Tool Name */
+.tool__suggestion-tool-name {
+  font-weight: 500;
+}
+
 /* ========== TOOL-IdArticle.astro INTEGRATED STYLES ========== */
 
 /* ========== MODERN COMPACT ARTICLE CARD STYLES ========== */
@@ -411,13 +652,6 @@
   font-weight: 600;
   white-space: nowrap;
 
-  /* アイコンスタイル */
-  svg {
-    width: 0.75rem;
-    height: 0.75rem;
-    flex-shrink: 0;
-  }
-
   /* デフォルトスタイル（related-article-badge以外） */
   &:not(.related-article-badge) {
     border: 1px solid
@@ -425,6 +659,12 @@
     background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
     backdrop-filter: blur(8px);
     box-shadow: 0 1px 3px oklch(0% 0 0deg / 0.1);
+
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+      flex-shrink: 0;
+    }
   }
 
   /* 関連記事専用の特別なスタイル */

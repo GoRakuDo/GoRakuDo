@@ -4,6 +4,7 @@
 // All data processing is done in the parent index.astro
 
 import ToolIdArticle from "./Tool-IdArticle.astro";
+import toolsData from "../../data/tools.json";
 
 export interface Props {
   hasArticles: boolean;
@@ -14,15 +15,16 @@ export interface Props {
 
 const { hasArticles, toolArticles, tool, formattedToolName } = Astro.props;
 
+// Auto-generate suggestions from tools.json (exclude current tool, show all)
+const suggestions = toolsData
+  .filter(t => t.id !== tool)
+  .map(t => ({ name: t.name, iconUrl: t.iconUrl, href: t.link }));
+
 // Optimized constants for better performance
 const EMPTY_STATE_CONFIG = {
-  title: `Artikel ${formattedToolName} Sedang Disiapkan`,
-  description: `Artikel tentang ${formattedToolName} sedang dalam tahap penyusunan. Akan segera dipublikasikan, mohon tunggu sebentar.`,
-  suggestions: [
-    { name: 'Anki', icon: '📚', href: '/tools/anki' },
-    { name: 'Yomitan', icon: '🔍', href: '/tools/yomitan' },
-    { name: 'Language Reactor', icon: '🎬', href: '/tools/language-reactor' },
-  ] as const,
+  title: `Tutorial ${formattedToolName} Sedang Disiapkan`,
+  description: `Tutorial tentang ${formattedToolName} sedang dalam tahap penyusunan. Akan segera dipublikasikan, mohon tunggu sebentar.`,
+  suggestions,
 } as const;
 ---
 
@@ -70,11 +72,18 @@ const EMPTY_STATE_CONFIG = {
           </a>
         </div>
         <div class="tool__empty-state-suggestions">
-          <h3 class="tool__suggestions-title">Alat yang Direkomendasikan</h3>
+          <h3 class="tool__suggestions-title">Tutotrial lain-nya yang kami Rekomendasikan</h3>
           <div class="tool__suggestions-list" role="list" aria-label="Recommended tools">
             {EMPTY_STATE_CONFIG.suggestions.map((suggestion) => (
               <a href={suggestion.href} class="tool__suggestion-tool" role="listitem" aria-label={`Visit ${suggestion.name} tool page`}>
-                <span class="tool__suggestion-tool-icon" aria-hidden="true">{suggestion.icon}</span>
+                <img 
+                  src={suggestion.iconUrl} 
+                  alt={`${suggestion.name} icon`}
+                  class="tool__suggestion-tool-icon"
+                  loading="lazy"
+                  width="32"
+                  height="32"
+                />
                 <span class="tool__suggestion-tool-name">{suggestion.name}</span>
               </a>
             ))}
