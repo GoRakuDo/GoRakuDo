@@ -14,13 +14,5 @@
     "iconUrl": "/icon/yomitan-icon-240.webp",
     "color": "var(--clr-accent-dark)",
     "link": "/tools/yomitan"
-  },
-  {
-    "id": "migaku",
-    "name": "Migaku",
-    "description": "Migaku adalah platform pembelajaran bahasa Jepang yang komprehensif dengan fokus pada immersion learning. Pelajari bahasa Jepang melalui konten asli seperti anime, manga, dan drama dengan bantuan AI.",
-    "iconUrl": "/icon/migaku-icon-240.webp",
-    "color": "var(--clr-accent-glow-strong)",
-    "link": "/tools/migaku"
   }
 ]
