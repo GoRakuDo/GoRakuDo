@@ -287,15 +287,42 @@ const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
     return ogTransform ? `${baseUrl}/${ogTransform}/${imagePath}` : `${baseUrl}/${imagePath}`;
   }
   
-  // OG Image用の場合
+  // OG Image用の場合は画像をCloudinaryで最適化
   if (forOgImage) {
-    // 既にCloudinary URLの場合は重複を避けてそのまま使用
-    if (imagePath.startsWith('https://res.cloudinary.com/')) {
-      return imagePath;
+    const cloudinaryBaseUrl = 'https://res.cloudinary.com/dbvd1cm7u/image/upload';
+    const ogTransform = 'c_pad,w_1200,h_630,b_auto,f_auto,q_auto';
+    
+    // 既にCloudinary upload URLの場合は直接トランスフォーメーションを適用
+    if (imagePath.startsWith(cloudinaryBaseUrl)) {
+      // URLを解析: https://res.cloudinary.com/.../upload/[transforms]/public_id
+      const uploadIndex = imagePath.indexOf('/upload/');
+      if (uploadIndex !== -1) {
+        const beforeUpload = imagePath.substring(0, uploadIndex + 8); // '/upload/' を含む
+        const afterUpload = imagePath.substring(uploadIndex + 8);
+        
+        // 既存のトランスフォーメーションを削除してpublic_idのみ抽出
+        // パターン: [transforms]/public_id または public_id
+        const parts = afterUpload.split('/');
+        let publicId = '';
+        
+        // 最後の部分がpublic_id（ファイル名または拡張子なしID）
+        // トランスフォーメーション（f_auto, q_auto等）をスキップ
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const part = parts[i];
+          // トランスフォーメーションパラメータでない場合（_, . を含まない場合）
+          if (!part.includes('_') || part.includes('.') || !part.match(/^[a-z]_/)) {
+            publicId = parts.slice(i).join('/');
+            break;
+          }
+        }
+        
+        return `${beforeUpload}${ogTransform}/${publicId}`;
+      }
     }
-    // 他のURLはCloudinary fetchで変換
+    
+    // その他の場合はCloudinary fetchで変換
     const fullUrl = imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
-    return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/c_pad,w_1200,h_630,b_auto,f_auto,q_auto/${fullUrl}`;
+    return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/${ogTransform}/${fullUrl}`;
   }
   
   // 通常表示用は完全なURLを返す
