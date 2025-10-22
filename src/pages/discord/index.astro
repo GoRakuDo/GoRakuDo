@@ -1,24 +1,11 @@
 ---
-import UnifiedSEO from '../../components/UnifiedSEO.astro';
-
-// SEO data - Astroネイティブアプローチ（設定ファイル不要）
-const seoData = {
-  title: 'Komunitas Pembelajaran Bahasa Jepang - Discord GoRakuDo',
-  description:
-    'Bergabung dengan komunitas pembelajaran bahasa Jepang terbesar Indonesia. Berbagi pengalaman, dapatkan bantuan, dan pelajari bahasa Jepang bersama-sama',
-  pageType: 'website' as const,
-};
+import '../../styles/fonts.css';
 ---
 
 <html lang='id'>
   <head>
+    <meta charset='UTF-8' />
     <!-- UnifiedSEO - Astroネイティブアプローチ（設定ファイル不要） -->
-    <UnifiedSEO
-      title={seoData.title}
-      description={seoData.description}
-      pageType={seoData.pageType}
-      lang='id'
-    />
     <style is:global>
       * {
         margin: 0;
@@ -38,7 +25,8 @@ const seoData = {
           oklch(10% 0 0deg) 100%
         );
         color: oklch(20% 0 0deg);
-        font-family: Inter, sans-serif;
+        font-family:
+          'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
       }
 
       .invitation-container {
@@ -98,8 +86,7 @@ const seoData = {
       .japanese-title {
         color: oklch(20% 0 0deg);
         font-family:
-          Yuji Syuku,
-          serif;
+          'Yuji Syuku', 'Hiragino Mincho ProN', 'Yu Mincho', 'Meiryo', serif;
         font-size: 4.5rem;
         font-weight: 400;
         line-height: 1;
@@ -108,7 +95,8 @@ const seoData = {
 
       .japanese-title rt {
         color: oklch(40% 0 0deg);
-        font-family: Inter, sans-serif;
+        font-family:
+          'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
         font-size: 0.9rem;
         font-weight: 600;
       }
@@ -116,7 +104,8 @@ const seoData = {
       .content {
         margin-bottom: 30px;
         color: oklch(24% 0 0deg);
-        font-family: Lora, serif;
+        font-family:
+          'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', 'Meiryo', serif;
         font-size: 1.1rem;
         line-height: 1.8;
       }
@@ -137,7 +126,8 @@ const seoData = {
 
       .member-list li {
         margin-bottom: 10px;
-        font-family: Inter, sans-serif;
+        font-family:
+          'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
       }
 
       .final-pitch {
@@ -170,14 +160,16 @@ const seoData = {
       .discord-header {
         margin-bottom: 8px;
         color: oklch(40% 0 0deg);
-        font-family: Inter, sans-serif;
+        font-family:
+          'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
         font-size: 0.9rem;
         font-weight: 600;
       }
 
       .discord-url {
         color: oklch(65% 0.25 280deg);
-        font-family: Inter, sans-serif;
+        font-family:
+          'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
         font-size: 1.1rem;
         font-weight: 600;
         overflow-wrap: break-word;
@@ -238,8 +230,7 @@ const seoData = {
       .signature-name {
         color: oklch(20% 0 0deg);
         font-family:
-          Cedarville cursive,
-          cursive;
+          'Yuji Syuku', 'Hiragino Mincho ProN', 'Yu Mincho', 'Meiryo', serif;
         font-size: 1.9rem;
         text-align: right;
       }
@@ -297,7 +288,9 @@ const seoData = {
   </head>
   <body>
     <div class='invitation-container'>
-      <button class='back-button' onclick='goBack()'>←</button>
+      <a href='/'>
+        <button class='back-button'>←</button>
+      </a>
 
       <div class='header'>
         <ruby class='japanese-title'>
@@ -324,8 +317,8 @@ const seoData = {
         </ul>
 
         <p class='final-pitch'>
-          Semua 100% GRATIS. Yang kamu butuhkan hanya NIAT.<br />Ayo bergabung!
-          👍
+          Semua 100% GRATIS.<br />Yang kamu butuhkan hanya NIAT.<br />Ayo
+          bergabung! 👍
         </p>
       </div>
 
