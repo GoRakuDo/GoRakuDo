@@ -75,6 +75,20 @@ export default defineConfig({
     },
     build: {
       rollupOptions: {
+        onwarn(warning, warn) {
+          // Astro内部モジュールの未使用インポート警告を抑制
+          if (
+            warning.message?.includes('@astrojs/internal-helpers/remote') ||
+            warning.message?.includes('matchHostname') ||
+            warning.message?.includes('matchPathname') ||
+            warning.message?.includes('matchPort') ||
+            warning.message?.includes('matchProtocol')
+          ) {
+            return;
+          }
+          // その他の警告は通常通り表示
+          warn(warning);
+        },
         output: {
           chunkFileNames: 'assets/[name]-[hash].js',
           entryFileNames: 'assets/[name]-[hash].js',

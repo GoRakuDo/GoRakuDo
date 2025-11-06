@@ -30,7 +30,7 @@
 
   /* Content Container */
   .content-container {
-    width: 100dvw;
+    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     padding: clamp(1rem, 3vw, 2rem) 0 0;
@@ -141,6 +141,17 @@
   }
 }
 
+/* blockquote内のp要素のみに改行を保持 */
+blockquote p {
+  margin: 0;
+  line-height: 1.7;
+  white-space: pre-line;
+
+  @media (min-width: 768px) {
+    line-height: 1.8;
+  }
+}
+
 /* 最初の段落の上マージンを削除 */
 .content-main p:first-child {
   margin-top: 0;
@@ -229,9 +240,11 @@
     'content'
     'toc';
   grid-template-columns: 1fr;
+  width: 100%;
   max-width: 100%;
   padding-right: 0;
   padding-left: 0;
+  box-sizing: border-box;
 
   /* タブレット以上: 2列レイアウト */
   @media (min-width: 640px) {
@@ -261,20 +274,43 @@
     max-width: 100%;
   }
 
-  /* タブレット以上で2列Gridレイアウト */
-  @media (min-width: 768px) {
+  /* デスクトップTOCが使用される1200px以上で2列Gridレイアウト */
+  @media (min-width: 1200px) {
     gap: 1.5rem;
     grid-template: 'content toc' 1fr / 1fr 300px;
+    max-width: min(1600px, 95vw);
+    margin: 0 auto;
+    padding-right: clamp(1rem, 2.5vw, 2rem);
+    padding-left: clamp(1rem, 2.5vw, 2rem);
 
-    /* デスクトップでサイドバー幅調整 */
-    @media (min-width: 1024px) {
+    /* 1280pxで最適な幅を維持（1600px以降も広がりすぎないように） */
+    @media (min-width: 1280px) {
       gap: 2rem;
       grid-template: 'content toc' 1fr / 1fr 320px;
+      max-width: min(1400px, 95vw);
     }
 
-    @media (min-width: 1280px) {
-      gap: 2.5rem;
-      grid-template: 'content toc' 1fr / 1fr 350px;
+    /* 1600px以上でも1280pxの最適な幅を維持 */
+    @media (min-width: 1600px) {
+      gap: 2rem;
+      grid-template: 'content toc' 1fr / 1fr 320px;
+      max-width: min(1400px, 95vw);
+    }
+  }
+
+  /* Sidebar Container - Grid Area: toc */
+  .sidebar-container {
+    grid-area: toc;
+    min-width: 0;
+
+    /* モバイルTOCが使用される1200px未満では非表示 */
+    @media (max-width: 1199px) {
+      display: none;
+    }
+
+    /* デスクトップTOCが使用される1200px以上で表示 */
+    @media (min-width: 1200px) {
+      display: block;
     }
   }
 
@@ -288,8 +324,9 @@
     max-width: 100%;
     padding: clamp(1rem, 2.5vw, 2.5rem);
 
-    @media (min-width: 1536px) {
-      max-width: 56rem;
+    /* デスクトップで最大幅制限を解除（Gridレイアウトで自動調整される） */
+    @media (min-width: 1200px) {
+      max-width: none;
     }
 
     /* Breadcrumb Container - Inside content-container */
@@ -680,12 +717,19 @@
 
   /* Blockquote styling - 引用スタイル */
   blockquote {
+    display: flex;
+    flex-direction: column;
     padding: 0.625rem 0.75rem;
     border-radius: 0 0.5rem 0.5rem 0;
     background: oklch(from var(--token-black-base) l c h / 0.5);
     color: var(--clr-text-secondary);
     font-weight: 400;
     font-style: italic;
+    line-height: 1.7;
+
+    @media (min-width: 768px) {
+      line-height: 1.8;
+    }
   }
 
   /* Prose link styling - リンクスタイル */

@@ -43,7 +43,7 @@ config/secrets.json
 .vscode
 .vscode/
 
-.bmad-core/
+.bmad-core
 
-bmad-core/
-bmad-docs/
+bmad-core
+bmad-docs

@@ -261,6 +261,8 @@
 }
 
 .article-content blockquote {
+  display: flex;
+  flex-direction: column;
   margin: 1rem 0;
   padding: 1rem;
   padding-left: 1rem;
@@ -272,6 +274,17 @@
 
   @media (min-width: 768px) {
     padding-left: 1.5rem;
+  }
+
+  /* blockquote内のp要素のみに改行を保持 */
+  p {
+    margin: 0;
+    line-height: 1.7;
+    white-space: pre-line;
+
+    @media (min-width: 768px) {
+      line-height: 1.8;
+    }
   }
 }
 

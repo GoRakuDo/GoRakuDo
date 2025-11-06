@@ -1,0 +1,1 @@
+document.querySelectorAll('blockquote').forEach((bq, i) => { console.log('Blockquote', i, ':', bq.textContent.substring(0, 100)); console.log('Computed styles:', window.getComputedStyle(bq).whiteSpace, window.getComputedStyle(bq).display); });
