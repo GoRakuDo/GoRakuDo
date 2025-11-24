@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 import UnifiedSEO from '../../components/UnifiedSEO.astro';
 
 // SEO data - Astroネイティブアプローチ（設定ファイル不要）
@@ -465,9 +464,25 @@ const seoData = {
       ];
 
       // Function to select and update random Discord link
-      function selectRandomDiscordLink() {
-        const randomLink =
-          discordLinks[Math.floor(Math.random() * discordLinks.length)];
+      function selectRandomDiscordLink(forceRefresh = false) {
+        let randomLink;
+        const storageKey = 'gorakudo_discord_link';
+
+        // Try to get from storage first unless forcing refresh
+        if (!forceRefresh) {
+          const storedLink = sessionStorage.getItem(storageKey);
+          if (storedLink && discordLinks.includes(storedLink)) {
+            randomLink = storedLink;
+          }
+        }
+
+        // If no stored link or forced refresh, pick new one
+        if (!randomLink) {
+          randomLink =
+            discordLinks[Math.floor(Math.random() * discordLinks.length)];
+          sessionStorage.setItem(storageKey, randomLink);
+        }
+
         const linkCode = randomLink.split('/').pop() || '';
 
         const discordLink = document.querySelector(
@@ -560,15 +575,15 @@ const seoData = {
             }
 
             // Select new random link
-            selectRandomDiscordLink();
+            selectRandomDiscordLink(true);
           });
         }
       }
 
-      // Execute on initial load
+      // Execute on initial load (for MPA behavior)
       document.addEventListener('DOMContentLoaded', initPage);
 
-      // Execute on View Transitions navigation
+      // Execute on View Transitions navigation (for SPA behavior if navigated from other pages)
       document.addEventListener('astro:page-load', initPage);
 
       // Keyboard navigation
