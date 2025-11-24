@@ -499,7 +499,15 @@ const seoData = {
       }
 
       // Function to initialize all interactive elements
+      let isInitializing = false;
       function initPage() {
+        // Prevent double execution (e.g. DOMContentLoaded + astro:page-load firing together)
+        if (isInitializing) return;
+        isInitializing = true;
+        setTimeout(() => {
+          isInitializing = false;
+        }, 100);
+
         // Animate the content elements
         const elements = document.querySelectorAll(
           '.content p, .member-list li'
@@ -581,7 +589,14 @@ const seoData = {
       }
 
       // Execute on initial load (for MPA behavior)
-      document.addEventListener('DOMContentLoaded', initPage);
+      // Check if DOMContentLoaded has already fired
+      if (document.readyState === 'loading') {
+        // DOM is still loading, wait for DOMContentLoaded event
+        document.addEventListener('DOMContentLoaded', initPage);
+      } else {
+        // DOM is already loaded (complete or interactive), execute immediately
+        initPage();
+      }
 
       // Execute on View Transitions navigation (for SPA behavior if navigated from other pages)
       document.addEventListener('astro:page-load', initPage);
