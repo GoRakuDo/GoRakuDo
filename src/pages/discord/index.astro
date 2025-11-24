@@ -200,7 +200,6 @@ const seoData = {
         font-size: 1.1rem;
         font-weight: 600;
         overflow-wrap: break-word;
-        overflow-wrap: break-word;
       }
 
       .arrow {
@@ -484,14 +483,15 @@ const seoData = {
         }
       }
 
-      // Add some subtle animations on load
-      document.addEventListener('DOMContentLoaded', function () {
+      // Function to initialize all interactive elements
+      function initPage() {
         // Animate the content elements
         const elements = document.querySelectorAll(
           '.content p, .member-list li'
         );
         elements.forEach((el, index) => {
           const element = el as HTMLElement;
+          // Reset style for re-animation
           element.style.opacity = '0';
           element.style.transform = 'translateY(20px)';
           element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -513,10 +513,16 @@ const seoData = {
           '.discord-link'
         ) as HTMLElement;
         if (discordLink) {
-          discordLink.addEventListener('mouseenter', function () {
+          // Remove existing listeners to prevent duplication (optional but good practice)
+          const newDiscordLink = discordLink.cloneNode(true) as HTMLElement;
+          if (discordLink.parentNode) {
+            discordLink.parentNode.replaceChild(newDiscordLink, discordLink);
+          }
+
+          newDiscordLink.addEventListener('mouseenter', function () {
             this.style.transform = 'scale(1.02)';
           });
-          discordLink.addEventListener('mouseleave', function () {
+          newDiscordLink.addEventListener('mouseleave', function () {
             this.style.transform = 'scale(1)';
           });
         }
@@ -525,25 +531,45 @@ const seoData = {
         const refreshButton = document.querySelector(
           '.discord-refresh-button'
         ) as HTMLButtonElement;
-        const refreshIcon = document.querySelector(
-          '.discord-refresh-icon'
-        ) as SVGElement;
 
-        if (refreshButton && refreshIcon) {
-          refreshButton.addEventListener('click', function () {
+        if (refreshButton) {
+          // Clone to remove existing listeners
+          const newRefreshButton = refreshButton.cloneNode(
+            true
+          ) as HTMLButtonElement;
+          if (refreshButton.parentNode) {
+            refreshButton.parentNode.replaceChild(
+              newRefreshButton,
+              refreshButton
+            );
+          }
+
+          const refreshIcon = newRefreshButton.querySelector(
+            '.discord-refresh-icon'
+          ) as SVGElement;
+
+          newRefreshButton.addEventListener('click', function () {
             // Add refreshing animation
-            refreshIcon.classList.add('refreshing');
+            if (refreshIcon) {
+              refreshIcon.classList.add('refreshing');
+
+              // Remove animation class after animation completes
+              setTimeout(() => {
+                refreshIcon.classList.remove('refreshing');
+              }, 600);
+            }
 
             // Select new random link
             selectRandomDiscordLink();
-
-            // Remove animation class after animation completes
-            setTimeout(() => {
-              refreshIcon.classList.remove('refreshing');
-            }, 600);
           });
         }
-      });
+      }
+
+      // Execute on initial load
+      document.addEventListener('DOMContentLoaded', initPage);
+
+      // Execute on View Transitions navigation
+      document.addEventListener('astro:page-load', initPage);
 
       // Keyboard navigation
       document.addEventListener('keydown', function (e) {
