@@ -446,7 +446,7 @@
 
 .post-date::before {
   font-size: 0.875rem;
-  content: '📅';
+  content: '\1F4C5';
 }
 
 /* Post Description */
@@ -463,6 +463,7 @@
   line-height: 1.4;
   flex-grow: 1;
   -webkit-line-clamp: var(--description-lines);
+  line-clamp: var(--description-lines);
   -webkit-box-orient: vertical;
   -webkit-font-smoothing: antialiased; /* フォントレンダリング改善 */
   -moz-osx-font-smoothing: grayscale;

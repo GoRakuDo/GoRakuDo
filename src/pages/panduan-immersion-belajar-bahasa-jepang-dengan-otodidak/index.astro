@@ -1,0 +1,241 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Prose from '../../components/Prose.astro';
+import { CldImage } from 'astro-cloudinary';
+
+const empathyBridgeImage = 'Empathy_Bridge_Image_ikv9d4ikv9d4ikv9_ck8fch';
+
+const currentYear = new Date().getFullYear();
+const pageTitle = `Panduan Immersion Belajar Bahasa Jepang ${currentYear} dengan OTODIDAK`;
+const pageDescription =
+  'Panduan lengkap belajar bahasa Jepang secara otodidak dengan metode Immersion. Validasi skeptisisme dan solusi modern untuk kefasihan.';
+
+const commonImageProps = {
+  src: empathyBridgeImage,
+  alt: 'Illustrasi Empathy Bridge: Belajar dari pengalaman pahit',
+  width: 800,
+  height: 800,
+  quality: 'auto',
+  format: 'auto',
+  loading: 'eager' as const,
+  class: 'block w-full h-auto object-cover rounded-2xl',
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang='id'
+  pageType='article'
+>
+  <!-- Main Container:
+       - min-h-screen for full height feel
+       - lg:flex lg:items-center to vertically center on desktop only (avoid mobile clipping)
+       - bg-transparent to let global wave animation show through
+  -->
+  <main
+    class='page-container min-h-[calc(100vh-var(--navbar-height))] lg:flex lg:items-center'
+  >
+    <div class='container mx-auto w-full'>
+      <!-- Hero / Empathy Bridge Section -->
+      <section class='empathy-bridge-section'>
+        <!-- Layout:
+             - Mobile: flex-col (Natural DOM order: Image Top, Text Bottom)
+             - Desktop: grid-cols-12
+        -->
+        <div
+          class='flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-20 lg:items-center'
+        >
+          <!-- Left Column (Text Content) - FIRST IN DOM
+               - Mobile: First (Top)
+               - Desktop: order-1 (Left), Span 7
+          -->
+          <div class='w-full lg:order-1 lg:col-span-7 flex flex-col gap-6'>
+            <div class='hero-header'>
+              <span
+                class='inline-block py-1 px-3 rounded-full bg-[var(--token-purple-base)]/10 border border-[var(--token-purple-base)]/20 text-[var(--token-purple-base)] text-sm font-medium mb-4'
+              >
+                Edisi {currentYear}
+              </span>
+              <h1
+                class='text-3xl lg:text-6xl font-extrabold tracking-tight leading-tighter text-left'
+              >
+                Panduan Immersion Belajar Bahasa Jepang <br
+                  class='hidden lg:block'
+                />
+                <span
+                  class='text-transparent bg-clip-text bg-gradient-to-r from-[var(--token-purple-base)] to-[var(--token-secondary-gold-base)]'
+                  >OTODIDAK</span
+                >
+              </h1>
+            </div>
+
+            <Prose class='prose-lg prose-invert max-w-none'>
+              <p class='lead text-xl text-[var(--token-text-secondary)]'>
+                Kamu Tidak Bodoh. Kamu Hanya Korban Metode yang Salah.
+              </p>
+
+              <p>
+                Kalau kamu lagi baca halaman ini, pasti kamu sudah pernah
+                ngerasain yang namanya "capek banget tapi kok nggak maju-maju".
+                Kamu rajin banget hafal bunpou dari Genki, Tae Kim, atau buku
+                apa pun itu, ngerjain ribuan soal JLPT, sampe akhirnya lulus N3
+                atau bahkan N2. Kamu bangga dong, sertifikatnya udah di tangan.
+                Tapi pas ditanya orang Jepang di jalan, atau coba nonton anime
+                tanpa subtitle, atau sekadar mau reply chat teman Jepang...
+                tiba-tiba otak blank. Mulut terkunci. Cuma bisa senyum kaku
+                sambil bilang "Eee... chotto..." dalam hati.
+              </p>
+
+              <!-- Inner Voice / Empathy Quote Section -->
+              <!-- Inner Voice / Empathy Quote Section (Decorated Split) -->
+              <div class='flex flex-col gap-3 my-8'>
+                <!-- Block 1: Despair (Rose Accent) -->
+                <div
+                  class='flex items-center justify-between gap-4 p-4 rounded-xl bg-[var(--token-bg-light)]/5 border border-white/5 backdrop-blur-md border-l-4 border-l-rose-500/50 hover:bg-[var(--token-bg-light)]/10 transition-colors'
+                >
+                  <p class='italic text-[var(--token-text-secondary)]'>
+                    "Ah, aku emang nggak berbakat bahasa."
+                  </p>
+                  <div class='text-rose-400/80 shrink-0'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='32'
+                      height='32'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-frown'
+                      ><circle cx='12' cy='12' r='10'></circle><path
+                        d='M16 16s-1.5-2-4-2-4 2-4 2'></path><line
+                        x1='9'
+                        x2='9.01'
+                        y1='9'
+                        y2='9'></line><line x1='15' x2='15.01' y1='9' y2='9'
+                      ></line></svg
+                    >
+                  </div>
+                </div>
+
+                <!-- Block 2: Guilt (Amber Accent) -->
+                <div
+                  class='flex items-center justify-between gap-4 p-4 rounded-xl bg-[var(--token-bg-light)]/5 border border-white/5 backdrop-blur-md border-l-4 border-l-amber-500/50 hover:bg-[var(--token-bg-light)]/10 transition-colors'
+                >
+                  <p class='italic text-[var(--token-text-secondary)]'>
+                    "Pasti aku kurang disiplin."
+                  </p>
+                  <div class='text-amber-400/80 shrink-0'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='32'
+                      height='32'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-triangle-alert'
+                      ><path
+                        d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'
+                      ></path><path d='M12 9v4'></path><path d='M12 17h.01'
+                      ></path></svg
+                    >
+                  </div>
+                </div>
+
+                <!-- Block 3: Comparison (Violet Accent) -->
+                <div
+                  class='flex items-center justify-between gap-4 p-4 rounded-xl bg-[var(--token-bg-light)]/5 border border-white/5 backdrop-blur-md border-l-4 border-l-violet-500/50 hover:bg-[var(--token-bg-light)]/10 transition-colors'
+                >
+                  <p class='italic text-[var(--token-text-secondary)]'>
+                    "Orang lain bisa, kok aku nggak ya?"
+                  </p>
+                  <div class='text-violet-400/80 shrink-0'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='32'
+                      height='32'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-help-circle'
+                      ><circle cx='12' cy='12' r='10'></circle><path
+                        d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'></path><path
+                        d='M12 17h.01'></path></svg
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <p class='font-bold text-lg mb-4'>
+                Dengerin baik-baik ya:<br />
+                <span class='text-[var(--token-purple-base)]'
+                  >Itu bukan salahmu. Bukan sama sekali.</span
+                >
+              </p>
+
+              <p>
+                Yang salah adalah metode tradisional yang selama ini kamu
+                pakai—hafal rumus, terjemahin kata per kata di kepala, latihan
+                soal berulang-ulang. Metode ini sebenarnya dirancang ratusan
+                tahun lalu buat belajar bahasa mati kayak Latin atau Yunani
+                Kuno, yang tujuannya cuma buat baca teks kuno, bukan buat
+                ngobrol sama orang hidup.
+              </p>
+
+              <!-- Mobile-Only Interleaved Image -->
+              <div class='w-full my-8 lg:hidden'>
+                <CldImage {...commonImageProps} />
+              </div>
+
+              <p>
+                Kamu nggak gagal. Kamu cuma dipaksa lari maraton sambil kaki
+                dibelenggu besi oleh sistem yang udah usang itu. Wajar kalau
+                capek. Wajar kalau lelah. Wajar kalau kamu sekarang skeptis sama
+                semua janji "metode baru" atau "rahasia cepat lancar". Malah
+                bagus kalau kamu skeptis—itu artinya kamu udah belajar dari
+                pengalaman pahit, bukan orang bodoh yang gampang ketipu.
+              </p>
+
+              <p>
+                Kami nggak akan bilang "metode kami ajaib" atau "dijamin lancar
+                dalam 3 bulan". Kami cuma mau bilang: belenggu besi itu bisa
+                dilepas. Dan begitu dilepas, kamu bakal kaget sendiri betapa
+                ringannya langkahmu—karena sebenarnya kamu sudah punya semua
+                yang dibutuhkan untuk bisa bahasa Jepang. Cuma selama ini
+                tertutup oleh cara belajar yang salah.
+              </p>
+            </Prose>
+          </div>
+
+          <!-- Right Column (Image) - DESKTOP ONLY
+               - Mobile: Hidden (shown interleaved above)
+               - Desktop: Visible, order-2, Span 5
+          -->
+          <div
+            class='hidden lg:block w-full lg:order-2 lg:col-span-5 mt-8 lg:mt-0'
+          >
+            <div class='image-wrapper w-full'>
+              <CldImage {...commonImageProps} />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Local Scoped Styles */
+  .page-container {
+    /* Safe minimum height */
+    min-height: 80vh;
+  }
+</style>

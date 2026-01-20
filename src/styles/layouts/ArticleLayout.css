@@ -47,19 +47,21 @@
 }
 
 /* ========== MAIN CONTENT AREA ========== */
-.article-main-content {
+
+/* ========== MAIN CONTENT AREA ========== */
+.article-main-container {
   max-width: var(--tool-container-max-width);
   margin: 0 auto;
   padding: 0;
+
+  @media (min-width: 1280px) {
+    padding: var(--tool-spacing-md) var(--tool-spacing-2xl)
+      var(--tool-spacing-2xl);
+  }
 }
 
-.article-content-wrapper {
-  padding: 0;
-  background: transparent;
-}
-
-/* ========== PAGE CONTENT - MOBILE FIRST ========== */
-.page-content {
+/* ========== ARTICLE BODY - MOBILE FIRST ========== */
+.article-body {
   margin: 0 clamp(0rem, 1vw, 0.5rem);
 
   @media (min-width: 768px) {
@@ -68,7 +70,7 @@
 }
 
 /* ========== PAGINATION WRAPPER - MOBILE FIRST ========== */
-.pagination-wrapper {
+.pagination-container {
   max-width: clamp(100%, 90vw, 50rem);
   margin: 0 clamp(0.5rem, 2vw, auto);
   padding: 0;
@@ -337,17 +339,6 @@
 
 /* ========== RESPONSIVE BREAKPOINTS ========== */
 
-/* デスクトップ (1280px+) */
-@media (min-width: 1280px) {
-  .article-main-content {
-    padding: var(--tool-spacing-2xl);
-  }
-
-  .article-content-wrapper {
-    padding: var(--tool-spacing-xl);
-  }
-}
-
 /* ========== ACCESSIBILITY ENHANCEMENTS ========== */
 
 @media (prefers-contrast: high) {
@@ -361,7 +352,7 @@
 /* ========== NAVIGATION - 完全リセット & 段階的適用 ========== */
 
 /* デフォルト: モバイル (320px+) - 完全リセット */
-.tool-navigation-wrapper {
+.article-navigation {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -380,7 +371,7 @@
   }
 }
 
-.tool-navigation-wrapper .breadcrumb-section {
+.article-navigation .breadcrumb-section {
   display: flex;
   justify-content: center;
   width: fit-content;
@@ -395,7 +386,7 @@
   }
 }
 
-.tool-navigation-wrapper .search-section {
+.article-navigation .search-section {
   display: flex;
   justify-content: center;
   align-items: center;

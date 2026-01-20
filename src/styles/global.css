@@ -283,6 +283,17 @@
     var(--bottom-nav-height-small) + var(--safe-area-bottom)
   );
 
+  /* ===== NAVBAR CONFIGURATION ===== */
+  --navbar-height: 70px; /* Mobile Default */
+
+  @media (min-width: 768px) {
+    --navbar-height: 75px;
+  }
+
+  @media (min-width: 1024px) {
+    --navbar-height: 80px;
+  }
+
   /* ===== OPTIMIZATION FLAGS ===== */
   --localhost-optimization: true;
   --oklch-cache: true;
@@ -372,6 +383,7 @@
   html {
     scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
     font-family: var(--font-primary) !important;
+    scroll-padding-top: var(--navbar-height); /* Anchor link offset */
 
     /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
     font-display: swap; /* Prevent layout shift during font loading */
@@ -392,6 +404,12 @@
 
   body {
     flex-direction: column;
+
+    /* Global Layout Logic: Reserve space for fixed navbar */
+    padding: var(--navbar-height) 1.5rem 2rem 1.5rem;
+
+    /* Dynamic Global Padding as requested */
+
     background-color: var(--token-black-base);
     color: var(--token-white-base);
     font-family: var(--font-primary) !important;
@@ -399,7 +417,17 @@
     letter-spacing: -0.01em; /* Slightly tighter for modern feel */
     word-spacing: var(--orphan-word-spacing) !important; /* Orphan prevention */
 
-    /* padding-top: 80px; Navbar height compensation */
+    @media (min-width: 768px) {
+      padding-right: 2rem;
+      padding-bottom: 3rem;
+      padding-left: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      padding-right: 3rem;
+      padding-bottom: 4rem;
+      padding-left: 3rem;
+    }
   }
 
   /* REASONING: Preserving legacy layout structure */

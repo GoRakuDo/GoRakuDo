@@ -308,6 +308,7 @@
     flex-shrink: 1;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
 
     @media (min-width: 640px) {
       font-size: var(--fs-base);
@@ -403,6 +404,7 @@
 
     .tool-description-card {
       -webkit-line-clamp: 3;
+      line-clamp: 3;
       font-size: 0.875rem;
     }
   }
@@ -571,6 +573,7 @@
 
   .tool-grid-item .tool-description-card {
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     font-size: 0.875rem; /* ルート要素に相対 - REM単位 */
   }
 }
@@ -675,9 +678,9 @@
   --header-text-secondary: oklch(90% 0 0deg / 0.8);
   --header-text-muted: oklch(85% 0 0deg / 0.7);
   --header-border-divider: oklch(90% 0 0deg / 0.2);
-  --header-padding-mobile: 4.5rem 0 1rem;
-  --header-padding-tablet: 4rem 0 1rem;
-  --header-padding-desktop: 5rem 0 2rem;
+  --header-padding-mobile: 1rem 0 1rem;
+  --header-padding-tablet: 1.5rem 0 1rem;
+  --header-padding-desktop: 2rem 0 2rem;
   --header-container-padding: 0 1rem;
   --header-content-padding: 1rem 0;
   --header-content-padding-mobile: 1rem 0.75rem 1.5rem;

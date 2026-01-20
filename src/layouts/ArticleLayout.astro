@@ -87,38 +87,39 @@ const LAYOUT_CONFIG = {
 
     <div class='article-layout-container'>
       <main
-        class='article-main-content'
-        style={`padding-top: ${LAYOUT_CONFIG.navbarSpacing};`}
+        class='article-main-container'
         role='main'
         aria-label='Main content'
       >
-        <div class='article-content-wrapper'>
-          <slot name='articles-header' />
+        <!-- Header Slot -->
+        <slot name='articles-header' />
 
-          <nav
-            class='tool-navigation-wrapper'
-            role='navigation'
-            aria-label='Tool navigation'
-          >
-            <div class='breadcrumb-section glassmorphism'>
-              <slot name='breadcrumb' />
-            </div>
-            <div class='search-section'>
-              <slot name='search' />
-            </div>
-          </nav>
-
-          <div class='page-content' role='region' aria-label='Page content'>
-            <slot />
+        <!-- Navigation Wrapper -->
+        <nav
+          class='article-navigation'
+          role='navigation'
+          aria-label='Tool navigation'
+        >
+          <div class='breadcrumb-section glassmorphism'>
+            <slot name='breadcrumb' />
           </div>
-
-          <div
-            class='pagination-wrapper'
-            role='navigation'
-            aria-label='Pagination'
-          >
-            <slot name='pagination' />
+          <div class='search-section'>
+            <slot name='search' />
           </div>
+        </nav>
+
+        <!-- Article Body -->
+        <article class='article-body' role='article'>
+          <slot />
+        </article>
+
+        <!-- Pagination -->
+        <div
+          class='pagination-container'
+          role='navigation'
+          aria-label='Pagination'
+        >
+          <slot name='pagination' />
         </div>
       </main>
     </div>

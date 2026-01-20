@@ -728,7 +728,7 @@ body.modal-open {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100svh - var(--navbar-height));
   padding: 0 1rem;
   background: transparent;
   text-align: center;
@@ -744,7 +744,7 @@ body.modal-open {
   align-items: center;
   width: 100%;
   max-width: 80rem;
-  min-height: 100vh;
+  min-height: calc(100svh - var(--navbar-height));
   background: transparent;
   filter: blur(0.25rem);
   opacity: 0;

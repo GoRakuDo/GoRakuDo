@@ -8,18 +8,15 @@
   width: 100%;
   min-height: 100vh;
   margin: 0;
-  padding-top: 5rem;
   padding-bottom: 2rem;
   background-color: oklch(from var(--token-black-base) l c h / 0.75);
   background-size: 30px 30px;
 
   @media (min-width: 768px) {
-    padding-top: 4rem;
     padding-bottom: 1.5rem;
   }
 
   @media (max-width: 640px) {
-    padding-top: 3rem;
     padding-bottom: 1rem;
   }
 
