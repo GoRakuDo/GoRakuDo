@@ -1,0 +1,445 @@
+---
+// WaveAnimation.astro - 最適化された波アニメーション
+export interface Props {
+  className?: string;
+  style?: string;
+  backgroundLayer?: 'normal' | 'darker';
+}
+
+const config = {
+  className: '',
+  style: '',
+  backgroundLayer: 'normal',
+  ...Astro.props,
+};
+---
+
+<div
+  class={`wave-animation-container ${config.className}`}
+  style={config.style}
+  data-background-layer={config.backgroundLayer}
+>
+  <canvas id='waveCanvas' class='wave-canvas' aria-hidden='true'></canvas>
+
+  <!-- WCAG 2.1準拠の読みやすさ向上オーバーレイ -->
+  <div class='transparent-layer'></div>
+</div>
+
+<style is:global>
+  .transparent-layer {
+    --bg-normal: linear-gradient(
+      180deg,
+      oklch(1% 0.01 280deg / 0.7) 0%,
+      oklch(2% 0.01 290deg / 0.4) 100%
+    );
+    --bg-darker: linear-gradient(
+      180deg,
+      oklch(2.5% 0.01 295deg / 0.4) 0%,
+      oklch(1% 0.01 280deg / 0.8) 100%
+    );
+
+    position: fixed;
+    z-index: var(--z-WaveAnimation-transparent-layer);
+    width: 100lvw;
+    height: 100lvh;
+    background: var(--bg-normal);
+    pointer-events: none;
+    inset: 0;
+    mix-blend-mode: multiply;
+  }
+
+  [data-background-layer='darker'] .transparent-layer {
+    background: var(--bg-darker);
+  }
+
+  .wave-animation-container {
+    position: fixed;
+    z-index: var(--z-WaveAnimation-wave-animation-container);
+    width: 100lvw;
+    height: 100lvh;
+    pointer-events: none;
+    inset: 0;
+  }
+
+  .wave-canvas {
+    position: fixed;
+    z-index: var(--z-WaveAnimation-wave-canvas);
+    display: block;
+    width: 100vw;
+    min-width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    pointer-events: none;
+    inset: 0;
+  }
+</style>
+
+<script>
+  // --- 型定義 ---
+  interface Wave {
+    amplitude: number;
+    frequency: number;
+    phase: number;
+    speed: number;
+    yOffset: number;
+  }
+
+  // --- ユーティリティ関数 ---
+  function debounce(func: Function, wait: number) {
+    let timeout: NodeJS.Timeout;
+    return function executedFunction(...args: any[]) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  // --- メインアニメーションクラス ---
+  class WaveAnimation {
+    private canvas: HTMLCanvasElement | null;
+    private ctx: CanvasRenderingContext2D | null;
+    private animationId: number | null = null;
+    private time: number = 0;
+    private dimensions = { width: 0, height: 0 };
+
+    // アニメーションコンポーネント
+    private waves: Wave[] = [];
+
+    // パフォーマンス制限
+    private lastFrameTime: number = 0;
+    private frameInterval: number; // FPS制限用（例：1000 / 40 = 40 FPS）
+
+    // 波の描画最適化
+    private readonly waveStepSize: number = 25; // 20pxから25pxに変更（約20%の計算削減）
+
+    // --- 波の深さに応じたViolet（紫）のグラデーション ---
+    private readonly waveColors: string[] = [
+      'oklch(0.65 0.35 280 / 0.8)', // 前面の波: 明るいViolet
+      'oklch(0.60 0.32 285 / 0.7)', // 2番目の波
+      'oklch(0.55 0.29 290 / 0.6)', // 中間の波
+      'oklch(0.50 0.26 295 / 0.5)', // 4番目の波
+      'oklch(0.45 0.23 300 / 0.4)', // 背面の波: 深いViolet
+    ];
+
+    // --- 最適化: GC圧力軽減のための事前割り当て配列 ---
+    private wavePoints: Array<Array<{ x: number; y: number }>> = [];
+
+    constructor() {
+      this.canvas = document.getElementById('waveCanvas') as HTMLCanvasElement;
+      if (!this.canvas) {
+        this.ctx = null;
+        this.animationId = null;
+        this.frameInterval = 1000 / 60;
+        return;
+      }
+
+      this.ctx = this.canvas.getContext('2d');
+
+      // 画面サイズに応じたFPS制限
+      this.frameInterval = this.getOptimalFrameInterval();
+
+      this.init();
+    }
+
+    private getOptimalFrameInterval(): number {
+      // 画面幅に応じたFPS制限
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 768) {
+        return 1000 / 6; // モバイル: 6 FPS
+      } else {
+        return 1000 / 48; // デスクトップ: 48 FPS
+      }
+    }
+
+    private createWaves(): Wave[] {
+      // 小さな画面では、パフォーマンス向上のため波の数を減らす
+      const isMobile = this.dimensions.width < 768;
+      const waveCount = isMobile ? 3 : 5;
+      const speedMultiplier = 1.618; // 波の速度を黄金比（1.618）に設定
+      const allWaves = [
+        {
+          amplitude: 60,
+          frequency: 0.008,
+          phase: 0,
+          speed: 0.01 * speedMultiplier, // 0.01618
+          yOffset: 0.7,
+        },
+        {
+          amplitude: 40,
+          frequency: 0.012,
+          phase: Math.PI / 3,
+          speed: 0.0075 * speedMultiplier, // 0.012135
+          yOffset: 0.75,
+        },
+        {
+          amplitude: 80,
+          frequency: 0.006,
+          phase: Math.PI / 2,
+          speed: 0.0125 * speedMultiplier, // 0.020225
+          yOffset: 0.65,
+        },
+        {
+          amplitude: 35,
+          frequency: 0.015,
+          phase: Math.PI,
+          speed: 0.009 * speedMultiplier, // 0.014562
+          yOffset: 0.8,
+        },
+        {
+          amplitude: 100,
+          frequency: 0.004,
+          phase: Math.PI * 1.5,
+          speed: 0.015 * speedMultiplier, // 0.02427
+          yOffset: 0.6,
+        },
+      ];
+      // yOffsetでソートして色割り当てのための適切なレイヤリングを確保
+      allWaves.sort((a, b) => b.yOffset - a.yOffset);
+      return allWaves.slice(0, waveCount);
+    }
+
+    private createStars() {
+      // 星を削除（波のみ残す）
+      return;
+    }
+
+    init() {
+      this.setupResizeHandler(); // これがupdateDimensionsを呼び出す
+
+      // GitHub Pages対応: DOMContentLoadedを待ってから初期化
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => this.startAnimation(), 100);
+        });
+      } else {
+        // DOMが既に読み込まれている場合
+        setTimeout(() => this.startAnimation(), 100);
+      }
+    }
+
+    private setupResizeHandler() {
+      // --- 最適化: リサイズハンドラーをデバウンスして急激な再計算を回避 ---
+      const handleResize = debounce(() => this.updateDimensions(), 250);
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('orientationchange', () =>
+        this.updateDimensions()
+      );
+    }
+
+    private updateDimensions() {
+      if (!this.canvas) return;
+
+      // GitHub Pages対応: 複数の方法でサイズを取得
+      let newWidth = this.canvas.clientWidth;
+      let newHeight = this.canvas.clientHeight;
+
+      // フォールバック1: computed style
+      if (newWidth === 0 || newHeight === 0) {
+        const computedStyle = window.getComputedStyle(this.canvas);
+        newWidth = parseInt(computedStyle.width) || window.innerWidth;
+        newHeight = parseInt(computedStyle.height) || window.innerHeight;
+        console.log(
+          'Canvas dimensions fallback to computed style:',
+          newWidth,
+          'x',
+          newHeight
+        );
+      }
+
+      // フォールバック2: window size
+      if (newWidth === 0 || newHeight === 0) {
+        newWidth = window.innerWidth;
+        newHeight = window.innerHeight;
+        console.log(
+          'Canvas dimensions fallback to window size:',
+          newWidth,
+          'x',
+          newHeight
+        );
+      }
+
+      if (
+        this.dimensions.width !== newWidth ||
+        this.dimensions.height !== newHeight
+      ) {
+        this.dimensions = { width: newWidth, height: newHeight };
+        console.log('WaveAnimation dimensions updated:', this.dimensions);
+
+        // --- パフォーマンス最適化: ピクセル比制御 ---
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // DPRを1.5に制限
+        this.canvas.width = this.dimensions.width * dpr;
+        this.canvas.height = this.dimensions.height * dpr;
+        this.ctx?.scale(dpr, dpr);
+
+        // 寸法に依存するアニメーションコンポーネントを再初期化
+        this.waves = this.createWaves();
+
+        // 画面サイズ変更時にFPSを再計算
+        this.frameInterval = this.getOptimalFrameInterval();
+
+        // --- 最適化: 波の点配列を事前割り当てしてGC圧力を軽減 ---
+        this.wavePoints = this.waves.map(() => {
+          const points: Array<{ x: number; y: number }> = [];
+          for (
+            let x = -50;
+            x <= this.dimensions.width + 50;
+            x += this.waveStepSize
+          ) {
+            points.push({ x: x, y: 0 }); // Yは各フレームで更新される
+          }
+          return points;
+        });
+      }
+    }
+
+    private startAnimation() {
+      if (this.animationId) return; // 既に実行中
+      this.updateDimensions(); // 初期セットアップ
+
+      const animate = (timestamp: number) => {
+        // --- パフォーマンス最適化: FPS制限 ---
+        const elapsed = timestamp - this.lastFrameTime;
+        if (elapsed > this.frameInterval) {
+          this.lastFrameTime = timestamp - (elapsed % this.frameInterval);
+          this.updateFrame();
+        }
+        this.animationId = requestAnimationFrame(animate);
+      };
+      this.animationId = requestAnimationFrame(animate);
+    }
+
+    private updateFrame() {
+      if (!this.ctx || !this.canvas) return;
+
+      this.time += 1;
+
+      // キャンバスクリア
+      this.ctx.fillStyle = 'oklch(20% 0.005 285)';
+      this.ctx.fillRect(0, 0, this.dimensions.width, this.dimensions.height);
+
+      // 波を描画
+      this.drawWaves();
+    }
+
+    private drawStars() {
+      // 星を削除（波のみ残す）
+      return;
+    }
+
+    private drawWaves() {
+      if (!this.ctx) return;
+
+      // 波の描画用の共通設定を事前に準備（Canvas操作の最適化）
+      const canvasWidth = this.dimensions.width;
+      const canvasHeight = this.dimensions.height;
+
+      // forEachからfor文に変更してパフォーマンス向上
+      for (let index = 0; index < this.waves.length; index++) {
+        const wave = this.waves[index];
+        const points = this.wavePoints[index]; // 事前割り当て配列を使用
+
+        // 既存の点配列のY値を更新（GC圧力軽減）
+        for (let j = 0; j < points.length; j++) {
+          const point = points[j];
+          point.y =
+            canvasHeight * wave.yOffset +
+            wave.amplitude *
+              Math.sin(
+                point.x * wave.frequency + wave.phase + this.time * wave.speed
+              );
+        }
+
+        // 波のパスを描画（最小限のCanvas操作）
+        this.ctx.beginPath();
+        this.ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length - 1; i++) {
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          this.ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        }
+        this.ctx.lineTo(canvasWidth, canvasHeight);
+        this.ctx.lineTo(0, canvasHeight);
+        this.ctx.closePath();
+
+        // --- 修正: 事前定義された色パレットを使用 ---
+        // 波のインデックスに基づいて配列から色文字列を直接選択
+        this.ctx.fillStyle =
+          this.waveColors[index] || this.waveColors[this.waveColors.length - 1];
+        this.ctx.fill();
+      }
+    }
+
+    private generateFoamParticles(wave: Wave) {
+      // パーティクルを削除（波のみ残す）
+      return;
+    }
+
+    private createParticle(x: number, y: number) {
+      // パーティクルを削除（波のみ残す）
+      return;
+    }
+
+    private updateParticles() {
+      // パーティクルを削除（波のみ残す）
+      return;
+    }
+
+    destroy() {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+        this.animationId = null;
+      }
+    }
+  }
+
+  // --- 初期化スクリプト ---
+  let waveAnimationInstance;
+
+  const initAnimation = () => {
+    if (waveAnimationInstance) waveAnimationInstance.destroy();
+
+    const container = document.querySelector('.wave-animation-container');
+    if (!container) {
+      console.log('WaveAnimation container not found, retrying...');
+      setTimeout(initAnimation, 100);
+      return;
+    }
+
+    console.log('Initializing WaveAnimation...');
+    waveAnimationInstance = new WaveAnimation();
+    (window as any).waveAnimation = waveAnimationInstance; // デバッグ用
+  };
+
+  // GitHub Pages対応: 複数の初期化方法を試行
+  const tryInit = () => {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAnimation);
+    } else {
+      initAnimation();
+    }
+  };
+
+  // 即座に初期化を試行
+  tryInit();
+
+  // フォールバック: 少し遅れて再試行
+  setTimeout(() => {
+    if (!waveAnimationInstance) {
+      console.log('WaveAnimation fallback initialization...');
+      initAnimation();
+    }
+  }, 500);
+
+  // タブが非アクティブの時に電力を節約するため可視性を処理
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      waveAnimationInstance?.destroy();
+    } else {
+      initAnimation();
+    }
+  });
+</script>
+

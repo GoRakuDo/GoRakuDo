@@ -1,12 +1,43 @@
 ---
-import '../../styles/fonts.css';
+import UnifiedSEO from '../../components/UnifiedSEO.astro';
+
+// SEO data - Astroネイティブアプローチ（設定ファイル不要）
+const seoData = {
+  title: 'Komunitas Pembelajaran Bahasa Jepang - Discord GoRakuDo',
+  description:
+    'Bergabung dengan komunitas pembelajaran bahasa Jepang terbesar Indonesia. Berbagi pengalaman, dapatkan bantuan, dan pelajari bahasa Jepang bersama-sama',
+  keywords: [
+    'komunitas',
+    'discord',
+    'bahasa',
+    'jepang',
+    'belajar',
+    'pembelajaran',
+    'bersama',
+    'pengalaman',
+    'bantuan',
+    'learning',
+  ],
+  pageType: 'website' as const,
+};
 ---
 
 <html lang='id'>
   <head>
-    <meta charset='UTF-8' />
     <!-- UnifiedSEO - Astroネイティブアプローチ（設定ファイル不要） -->
-    <style is:global>
+    <UnifiedSEO
+      title={seoData.title}
+      description={seoData.description}
+      keywords={seoData.keywords}
+      pageType={seoData.pageType}
+      lang='id'
+      gtag={import.meta.env.PUBLIC_GA_ID}
+    />
+    <link
+      href='https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;600&family=Cedarville+Cursive&display=swap'
+      rel='stylesheet'
+    />
+    <style>
       * {
         margin: 0;
         padding: 0;
@@ -21,12 +52,11 @@ import '../../styles/fonts.css';
         padding: 20px;
         background: linear-gradient(
           135deg,
-          oklch(4% 0 0deg) 0%,
-          oklch(10% 0 0deg) 100%
+          oklch(8% 0 0deg) 0%,
+          oklch(12% 0 0deg) 100%
         );
-        color: oklch(20% 0 0deg);
-        font-family:
-          Noto Sans JP, Hiragino Sans, Yu Gothic, Meiryo, sans-serif;
+        color: oklch(25% 0 0deg);
+        font-family: Inter, sans-serif;
       }
 
       .invitation-container {
@@ -65,15 +95,16 @@ import '../../styles/fonts.css';
         border: none;
         border-radius: 50%;
         background: none;
-        color: oklch(40% 0 0deg);
+        color: oklch(45% 0 0deg);
         font-size: 24px;
+        text-decoration: none;
         cursor: pointer;
         transition: all 0.3s ease;
       }
 
       .back-button:hover {
         background: oklch(94% 0 0deg);
-        color: oklch(20% 0 0deg);
+        color: oklch(25% 0 0deg);
       }
 
       .header {
@@ -84,9 +115,10 @@ import '../../styles/fonts.css';
       }
 
       .japanese-title {
-        color: oklch(20% 0 0deg);
+        color: oklch(25% 0 0deg);
         font-family:
-          Yuji Syuku, Hiragino Mincho ProN, Yu Mincho, Meiryo, serif;
+          Yuji Syuku,
+          serif;
         font-size: 4.5rem;
         font-weight: 400;
         line-height: 1;
@@ -94,18 +126,16 @@ import '../../styles/fonts.css';
       }
 
       .japanese-title rt {
-        color: oklch(40% 0 0deg);
-        font-family:
-          Noto Sans JP, Hiragino Sans, Yu Gothic, Meiryo, sans-serif;
+        color: oklch(45% 0 0deg);
+        font-family: Inter, sans-serif;
         font-size: 0.9rem;
         font-weight: 600;
       }
 
       .content {
         margin-bottom: 30px;
-        color: oklch(24% 0 0deg);
-        font-family:
-          Noto serif JP, Hiragino Mincho ProN, Yu Mincho, Meiryo, serif;
+        color: oklch(28% 0 0deg);
+        font-family: Lora, serif;
         font-size: 1.1rem;
         line-height: 1.8;
       }
@@ -115,7 +145,7 @@ import '../../styles/fonts.css';
       }
 
       .content strong {
-        color: oklch(20% 0 0deg);
+        color: oklch(25% 0 0deg);
       }
 
       .member-list {
@@ -126,13 +156,12 @@ import '../../styles/fonts.css';
 
       .member-list li {
         margin-bottom: 10px;
-        font-family:
-          Noto Sans JP, Hiragino Sans, Yu Gothic, Meiryo, sans-serif;
+        font-family: Inter, sans-serif;
       }
 
       .final-pitch {
         margin-top: 30px;
-        color: oklch(20% 0 0deg);
+        color: oklch(25% 0 0deg);
         font-size: 1.15rem;
         font-weight: 600;
         text-align: center;
@@ -140,13 +169,12 @@ import '../../styles/fonts.css';
 
       .discord-link {
         display: block;
-        margin-top: 20px;
-        margin-bottom: 40px;
+        margin: 20px;
         padding: 20px;
         border: 1px solid oklch(92% 0 0deg);
         border-radius: 8px;
-        background-color: oklch(98% 0 0deg);
-        color: oklch(20% 0 0deg);
+        background-color: oklch(97% 0 0deg);
+        color: oklch(25% 0 0deg);
         text-decoration: none;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -159,17 +187,15 @@ import '../../styles/fonts.css';
 
       .discord-header {
         margin-bottom: 8px;
-        color: oklch(40% 0 0deg);
-        font-family:
-          Noto Sans JP, Hiragino Sans, Yu Gothic, Meiryo, sans-serif;
+        color: oklch(45% 0 0deg);
+        font-family: Inter, sans-serif;
         font-size: 0.9rem;
         font-weight: 600;
       }
 
       .discord-url {
         color: oklch(65% 0.25 280deg);
-        font-family:
-          Noto Sans JP, Hiragino Sans, Yu Gothic, Meiryo, sans-serif;
+        font-family: Inter, sans-serif;
         font-size: 1.1rem;
         font-weight: 600;
         overflow-wrap: break-word;
@@ -183,6 +209,67 @@ import '../../styles/fonts.css';
 
       .discord-link:hover .arrow {
         transform: translateX(5px);
+      }
+
+      .discord-refresh-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        margin-bottom: 40px;
+      }
+
+      .discord-refresh-text {
+        color: oklch(45% 0 0deg);
+        font-family: Inter, sans-serif;
+        font-size: 0.85rem;
+      }
+
+      .discord-refresh-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4px;
+        border: none;
+        border-radius: 4px;
+        background: none;
+        color: oklch(45% 0 0deg);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .discord-refresh-button:hover {
+        background: oklch(94% 0 0deg);
+        color: oklch(65% 0.25 280deg);
+      }
+
+      .discord-refresh-button:active {
+        transform: scale(0.95);
+      }
+
+      .discord-refresh-icon {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.3s ease;
+      }
+
+      .discord-refresh-button:hover .discord-refresh-icon {
+        transform: rotate(90deg);
+      }
+
+      .discord-refresh-icon.refreshing {
+        animation: rotate 0.6s ease-in-out;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
       }
 
       .signature {
@@ -204,17 +291,17 @@ import '../../styles/fonts.css';
           oklch(65% 0.25 280deg) 0%,
           oklch(60% 0.25 280deg) 100%
         );
-        color: white;
+        color: oklch(100% 0 0deg);
         font-size: 32px;
         font-weight: bold;
         flex-shrink: 0;
       }
 
       .logo-stamp {
-        flex-shrink: 0;
         width: 80px;
         height: 80px;
-        opacity: 0.85; /* Memberi efek stempel */
+        opacity: 0.5; /* Memberi efek stempel */
+        flex-shrink: 0;
       }
 
       .signature-text {
@@ -223,35 +310,17 @@ import '../../styles/fonts.css';
 
       .signature-title {
         margin-bottom: -10px;
-        color: oklch(20% 0 0deg);
+        color: oklch(25% 0 0deg);
         text-align: right;
       }
 
       .signature-name {
-        color: oklch(20% 0 0deg);
+        color: oklch(25% 0 0deg);
         font-family:
-          Yuji Syuku, Hiragino Mincho ProN, Yu Mincho, Meiryo, serif;
+          Cedarville cursive,
+          cursive;
         font-size: 1.9rem;
         text-align: right;
-      }
-
-      /* Floating animation for background elements */
-      .floating-particle {
-        position: fixed;
-        z-index: var(--z-index-floating-particle);
-        opacity: 0.15;
-        pointer-events: none;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0) rotate(0deg);
-        }
-
-        50% {
-          transform: translateY(-20px) rotate(180deg);
-        }
       }
 
       /* Responsive design */
@@ -288,9 +357,7 @@ import '../../styles/fonts.css';
   </head>
   <body>
     <div class='invitation-container'>
-      <a href='/'>
-        <button class='back-button'>←</button>
-      </a>
+      <a href='/' class='back-button'>←</a>
 
       <div class='header'>
         <ruby class='japanese-title'>
@@ -317,8 +384,8 @@ import '../../styles/fonts.css';
         </ul>
 
         <p class='final-pitch'>
-          Semua 100% GRATIS.<br />Yang kamu butuhkan hanya NIAT.<br />Ayo
-          bergabung! 👍
+          Semua 100% GRATIS. Yang kamu butuhkan hanya NIAT.<br />Ayo bergabung!
+          👍
         </p>
       </div>
 
@@ -334,6 +401,34 @@ import '../../styles/fonts.css';
         </div>
       </a>
 
+      <div class='discord-refresh-container'>
+        <span class='discord-refresh-text'>Link Join Invalid/Error?</span>
+        <button
+          class='discord-refresh-button'
+          type='button'
+          aria-label='Refresh Discord link'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='discord-refresh-icon lucide-refresh-ccw'
+          >
+            <path d='M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'></path>
+            <path d='M3 3v5h5'></path>
+            <path d='M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16'
+            ></path>
+            <path d='M16 16h5v5'></path>
+          </svg>
+        </button>
+      </div>
+
       <div class='signature'>
         <img
           src='/img/Logo%20Discord%2080px.webp'
@@ -345,32 +440,6 @@ import '../../styles/fonts.css';
           <p class='signature-name'>Tim GoRakuDo</p>
         </div>
       </div>
-    </div>
-
-    <!-- Floating background elements -->
-    <div
-      class='floating-particle'
-      style='top: 10%; left: 10%; animation: float 6s ease-in-out infinite;'
-    >
-      🌸
-    </div>
-    <div
-      class='floating-particle'
-      style='top: 20%; right: 10%; animation: float 8s ease-in-out infinite 2s;'
-    >
-      ⭐
-    </div>
-    <div
-      class='floating-particle'
-      style='bottom: 20%; left: 20%; animation: float 7s ease-in-out infinite 1s;'
-    >
-      🎌
-    </div>
-    <div
-      class='floating-particle'
-      style=' right: 20%;bottom: 30%; animation: float 9s ease-in-out infinite 3s;'
-    >
-      🌊
     </div>
 
     <script>
@@ -387,14 +456,65 @@ import '../../styles/fonts.css';
         }
       }
 
-      // Add some subtle animations on load
-      document.addEventListener('DOMContentLoaded', function () {
+      // Discord links array
+      const discordLinks = [
+        'https://discord.gg/j8qmYPAGQh',
+        'https://discord.gg/teFHUfTRZF',
+        'https://discord.gg/M9gcJT8xYx',
+      ];
+
+      // Function to select and update random Discord link
+      function selectRandomDiscordLink(forceRefresh = false) {
+        let randomLink;
+        const storageKey = 'gorakudo_discord_link';
+
+        // Try to get from storage first unless forcing refresh
+        if (!forceRefresh) {
+          const storedLink = sessionStorage.getItem(storageKey);
+          if (storedLink && discordLinks.includes(storedLink)) {
+            randomLink = storedLink;
+          }
+        }
+
+        // If no stored link or forced refresh, pick new one
+        if (!randomLink) {
+          randomLink =
+            discordLinks[Math.floor(Math.random() * discordLinks.length)];
+          sessionStorage.setItem(storageKey, randomLink);
+        }
+
+        const linkCode = randomLink.split('/').pop() || '';
+
+        const discordLink = document.querySelector(
+          '.discord-link'
+        ) as HTMLAnchorElement;
+        const discordUrl = document.querySelector(
+          '.discord-url'
+        ) as HTMLElement;
+
+        if (discordLink && discordUrl) {
+          discordLink.href = randomLink;
+          discordUrl.innerHTML = `discord.gg/${linkCode} <span class='arrow'>→</span>`;
+        }
+      }
+
+      // Function to initialize all interactive elements
+      let isInitializing = false;
+      function initPage() {
+        // Prevent double execution (e.g. DOMContentLoaded + astro:page-load firing together)
+        if (isInitializing) return;
+        isInitializing = true;
+        setTimeout(() => {
+          isInitializing = false;
+        }, 100);
+
         // Animate the content elements
         const elements = document.querySelectorAll(
           '.content p, .member-list li'
         );
         elements.forEach((el, index) => {
           const element = el as HTMLElement;
+          // Reset style for re-animation
           element.style.opacity = '0';
           element.style.transform = 'translateY(20px)';
           element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -408,19 +528,78 @@ import '../../styles/fonts.css';
           );
         });
 
+        // Initial random Discord link selection
+        selectRandomDiscordLink();
+
         // Add hover effect to discord link
         const discordLink = document.querySelector(
           '.discord-link'
         ) as HTMLElement;
         if (discordLink) {
-          discordLink.addEventListener('mouseenter', function () {
+          // Remove existing listeners to prevent duplication (optional but good practice)
+          const newDiscordLink = discordLink.cloneNode(true) as HTMLElement;
+          if (discordLink.parentNode) {
+            discordLink.parentNode.replaceChild(newDiscordLink, discordLink);
+          }
+
+          newDiscordLink.addEventListener('mouseenter', function () {
             this.style.transform = 'scale(1.02)';
           });
-          discordLink.addEventListener('mouseleave', function () {
+          newDiscordLink.addEventListener('mouseleave', function () {
             this.style.transform = 'scale(1)';
           });
         }
-      });
+
+        // Refresh button handler
+        const refreshButton = document.querySelector(
+          '.discord-refresh-button'
+        ) as HTMLButtonElement;
+
+        if (refreshButton) {
+          // Clone to remove existing listeners
+          const newRefreshButton = refreshButton.cloneNode(
+            true
+          ) as HTMLButtonElement;
+          if (refreshButton.parentNode) {
+            refreshButton.parentNode.replaceChild(
+              newRefreshButton,
+              refreshButton
+            );
+          }
+
+          const refreshIcon = newRefreshButton.querySelector(
+            '.discord-refresh-icon'
+          ) as SVGElement;
+
+          newRefreshButton.addEventListener('click', function () {
+            // Add refreshing animation
+            if (refreshIcon) {
+              refreshIcon.classList.add('refreshing');
+
+              // Remove animation class after animation completes
+              setTimeout(() => {
+                refreshIcon.classList.remove('refreshing');
+              }, 600);
+            }
+
+            // Select new random link
+            selectRandomDiscordLink(true);
+          });
+        }
+      }
+
+      // Execute on initial load (for MPA behavior)
+      // Check if DOMContentLoaded has already fired
+      if (document.readyState === 'loading') {
+        // DOM is still loading, wait for DOMContentLoaded event
+        document.addEventListener('DOMContentLoaded', initPage);
+      } else {
+        // DOM is already loaded (complete or interactive), execute immediately
+        initPage();
+      }
+
+      // Execute on View Transitions navigation (for SPA behavior if navigated from other pages)
+      document.addEventListener('astro:page-load', initPage);
 
       // Keyboard navigation
       document.addEventListener('keydown', function (e) {
