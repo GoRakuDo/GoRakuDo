@@ -1,0 +1,125 @@
+---
+
+
+// Data from JLPT Can-do Self-Evaluation List (N2 Speaking)
+// Source: https://www.jlpt.jp/about/candolist.html
+const chartData = [
+  {
+    category: 'Berdebat / Diskusi Isu Abstrak',
+    percentage: 15,
+    label: '< 25%',
+    color: 'bg-red-500',
+    description: 'Menyatakan pendapat logis dalam diskusi kompleks.',
+  },
+  {
+    category: 'Menjelaskan Alur Cerita / Isu Sosial',
+    percentage: 35,
+    label: '25-50%',
+    color: 'bg-orange-500',
+    description: 'Menjelaskan detail film, drama, atau berita.',
+  },
+  {
+    category: 'Presentasi Kerja / Sekolah',
+    percentage: 45,
+    label: '25-50%',
+    color: 'bg-yellow-500',
+    description: 'Presentasi tentang bidang keahlian sendiri.',
+  },
+  {
+    category: 'Perkenalan Diri / Salam',
+    percentage: 85,
+    label: '> 75%',
+    color: 'bg-emerald-500',
+    description: 'Hal-hal dasar yang sudah dihafal.',
+  },
+];
+---
+
+<div
+  class='not-prose my-8 p-6 lg:p-8 rounded-3xl bg-[var(--token-bg-light)]/5 border border-white/5 shadow-2xl overflow-hidden relative group/chart'
+>
+  <!-- Background Glow -->
+  <div
+    class='absolute -right-20 -top-20 w-64 h-64 bg-red-500/10 rounded-full blur-3xl group-hover/chart:bg-red-500/20 transition-all duration-1000'
+  >
+  </div>
+
+  <div class='relative z-10'>
+    <div class='mb-8'>
+      <div class='flex items-center gap-3 mb-2 text-red-400'>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='24'
+          height='24'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          class='lucide lucide-bar-chart-big'
+          ><path d='M3 3v18h18'></path><rect width='4' height='7' x='7' y='10' rx='1'
+          ></rect><rect width='4' height='12' x='15' y='5' rx='1'></rect></svg
+        >
+        <span class='font-bold uppercase tracking-wider text-sm'
+          >Data Resmi JLPT</span
+        >
+      </div>
+      <h3 class='text-xl lg:text-2xl font-bold text-white'>
+        Realita Pahit Lulusan N2
+      </h3>
+      <p class='text-sm text-[var(--token-text-secondary)] mt-1'>
+        Persentase lulusan N2 yang merasa "BISA" melakukan hal ini.
+      </p>
+    </div>
+
+    <div class='space-y-5'>
+      {
+        chartData.map((item, index) => (
+          <div 
+            class='group cursor-pointer relative'
+            onclick="this.classList.toggle('revealed')"
+          >
+            <div class='flex justify-between text-sm mb-2'>
+              <span class='font-medium text-gray-300 group-hover:text-white group-[.revealed]:text-white transition-colors'>
+                {item.category}
+              </span>
+              <span class='font-bold text-white opacity-0 group-hover:opacity-100 group-[.revealed]:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0 group-[.revealed]:translate-x-0'>
+                {item.label}
+              </span>
+            </div>
+            
+            <div class='h-4 bg-white/5 rounded-full overflow-hidden relative'>
+              <!-- Reveal Overlay (Click/Hover hint) -->
+              <div class='absolute inset-0 bg-white/5 z-20 flex items-center justify-center text-[10px] uppercase tracking-widest text-white/30 font-bold group-hover:opacity-0 group-[.revealed]:opacity-0 transition-opacity duration-500'>
+                <span class="hidden lg:inline">Hover to Reveal</span>
+                <span class="lg:hidden">Tap to Reveal</span>
+              </div>
+              
+              <!-- The Bar -->
+              <div
+                class={`h-full ${item.color} rounded-full transform -translate-x-full group-hover:translate-x-0 group-[.revealed]:translate-x-0 transition-transform duration-1000 ease-out will-change-transform`}
+                style={{ width: `${item.percentage}%`, transitionDelay: `${index * 100}ms` }}
+              />
+            </div>
+            
+            <div class='grid grid-rows-[0fr] group-hover:grid-rows-[1fr] group-[.revealed]:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out'>
+              <div class='overflow-hidden'>
+                <p class='text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 group-[.revealed]:opacity-100 transition-opacity duration-500 delay-100'>
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class='mt-8 pt-6 border-t border-white/5 text-xs text-gray-500 flex justify-between items-center'>
+      <span>Sumber: JLPT Can-do Self-Evaluation List</span>
+      <a href="https://www.jlpt.jp/about/candolist.html" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors underline decoration-dotted">
+        Lihat Data Asli
+      </a>
+    </div>
+  </div>
+</div>
