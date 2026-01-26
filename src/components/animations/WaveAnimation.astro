@@ -79,7 +79,7 @@ const config = {
     position: absolute;
     inset: 0;
     background: oklch(50% 0 0deg);
-    filter: url("#grainyNoise");
+    filter: url('#grainyNoise');
   }
 
   /* --- SVGフィルター（非表示） --- */
@@ -124,7 +124,7 @@ const config = {
   // --- 設定オブジェクト ---
   const WAVE_CONFIG = {
     breakpoint: 768,
-    mobile: { fps: 6, waveCount: 3 },
+    mobile: { fps: 24, waveCount: 3 }, // Optimized to 24fps as requested
     desktop: { fps: 48, waveCount: 5 },
     canvas: { stepSize: 25, dprLimit: 1.5 },
     timing: { debounceMs: 250, initDelayMs: 100, fallbackDelayMs: 500 },
@@ -218,8 +218,10 @@ const config = {
     // パフォーマンス制限
     private lastFrameTime: number = 0;
     private frameInterval: number;
+    private prefersReducedMotion: boolean = false;
 
     // イベントリスナー管理
+    private resizeObserver: ResizeObserver | null = null;
     private abortController: AbortController = new AbortController();
 
     // --- 最適化: GC圧力軽減のための事前割り当て配列 ---
@@ -235,6 +237,11 @@ const config = {
       }
 
       this.ctx = this.canvas.getContext('2d');
+
+      // Accessibility Check: Reduced Motion
+      this.prefersReducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
 
       // 画面サイズに応じたFPS制限
       this.frameInterval = this.getOptimalFrameInterval();
@@ -259,29 +266,45 @@ const config = {
     }
 
     init() {
-      this.setupResizeHandler();
+      // ResizeObserverを使用 (Modern Standard)
+      this.setupResizeObserver();
+
       const delay = WAVE_CONFIG.timing.initDelayMs;
+
+      const start = () => {
+        if (this.prefersReducedMotion) {
+          log('Reduced motion detected. Rendering single static frame.');
+          this.updateDimensions();
+          this.updateFrame(); // Render once
+          return; // Do not start loop
+        }
+        this.startAnimation();
+      };
+
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-          setTimeout(() => this.startAnimation(), delay);
+          setTimeout(start, delay);
         });
       } else {
-        setTimeout(() => this.startAnimation(), delay);
+        setTimeout(start, delay);
       }
     }
 
-    private setupResizeHandler() {
+    private setupResizeObserver() {
+      if (!this.canvas) return;
+
       const handleResize = debounce(
         () => this.updateDimensions(),
         WAVE_CONFIG.timing.debounceMs
       );
-      const options = { signal: this.abortController.signal };
-      window.addEventListener('resize', handleResize, options);
-      window.addEventListener(
-        'orientationchange',
-        () => this.updateDimensions(),
-        options
-      );
+
+      this.resizeObserver = new ResizeObserver(() => {
+        handleResize();
+      });
+
+      // コンテナまたはbodyを監視 (Canvas自体や親コンテナ)
+      const container = this.canvas.parentElement || document.body;
+      this.resizeObserver.observe(container);
     }
 
     private getDimensions = (): { width: number; height: number } => {
@@ -338,10 +361,16 @@ const config = {
       this.waves = this.createWaves();
       this.frameInterval = this.getOptimalFrameInterval();
       this.initWavePoints();
+
+      // Static render for reduced motion on resize
+      if (this.prefersReducedMotion) {
+        this.updateFrame();
+      }
     }
 
     private startAnimation() {
       if (this.animationId) return; // 既に実行中
+
       this.updateDimensions(); // 初期セットアップ
 
       const animate = (timestamp: number) => {
@@ -416,6 +445,10 @@ const config = {
       if (this.animationId) {
         cancelAnimationFrame(this.animationId);
         this.animationId = null;
+      }
+      if (this.resizeObserver) {
+        this.resizeObserver.disconnect();
+        this.resizeObserver = null;
       }
       this.abortController = new AbortController();
     }

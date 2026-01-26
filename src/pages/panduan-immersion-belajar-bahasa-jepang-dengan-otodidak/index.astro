@@ -4,6 +4,7 @@ import Prose from '../../components/Prose.astro';
 import { CldImage } from 'astro-cloudinary';
 import JlptCanDoChart from '../../components/features/JlptCanDoChart.astro';
 import LADExperiment from '../../components/features/LADExperiment.astro';
+import HistoryBiome from '../../components/features/HistoryBiome.astro';
 
 const empathyBridgeImage = 'Empathy_Bridge_Image_ikv9d4ikv9d4ikv9_ck8fch';
 
@@ -395,27 +396,29 @@ const commonImageProps = {
               <div
                 class='group p-6 rounded-2xl bg-[var(--token-bg-light)]/5 border border-white/5 hover:bg-[var(--token-bg-light)]/10 transition-all hover:-translate-y-1'
               >
-                <div
-                  class='w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform'
-                >
-                  <!-- Bed Icon -->
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='28'
-                    height='28'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    stroke-width='2'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    class='lucide lucide-bed'
-                    ><path d='M2 4v16'></path><path d='M2 8h18a2 2 0 0 1 2 2v10'
-                    ></path><path d='M2 17h20'></path><path d='M6 8v9'
-                    ></path></svg
+                <div class='flex items-center gap-4 mb-4'>
+                  <div
+                    class='w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform'
                   >
+                    <!-- Bed Icon -->
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-bed'
+                      ><path d='M2 4v16'></path><path
+                        d='M2 8h18a2 2 0 0 1 2 2v10'></path><path d='M2 17h20'
+                      ></path><path d='M6 8v9'></path></svg
+                    >
+                  </div>
+                  <h5 class='text-lg font-bold'>Lagi Capek? 😫</h5>
                 </div>
-                <h5 class='text-lg font-bold mb-3'>Lagi Capek? 😫</h5>
                 <p class='text-sm text-gray-400 leading-relaxed'>
                   Otak udah ngebul? Cukup putar audio podcast Jepang sambil
                   rebahan 15 menit. Nggak usah mikir.
@@ -426,30 +429,32 @@ const commonImageProps = {
               <div
                 class='group p-6 rounded-2xl bg-[var(--token-bg-light)]/5 border border-white/5 hover:bg-[var(--token-bg-light)]/10 transition-all hover:-translate-y-1'
               >
-                <div
-                  class='w-14 h-14 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 mb-6 group-hover:scale-110 transition-transform'
-                >
-                  <!-- Headphones Icon -->
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='28'
-                    height='28'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    stroke-width='2'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    class='lucide lucide-headphones'
-                    ><path d='M3 14v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3'
-                    ></path><path d='M3 14h6'></path><path
-                      d='M21 14v3a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-3'
-                    ></path><path d='M15 14h6'></path><path
-                      d='M21 12c0-3.3-2.7-6-6-6h-6c-3.3 0-6 2.7-6 6'
-                    ></path></svg
+                <div class='flex items-center gap-4 mb-4'>
+                  <div
+                    class='w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 shrink-0 group-hover:scale-110 transition-transform'
                   >
+                    <!-- Headphones Icon -->
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-headphones'
+                      ><path d='M3 14v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3'
+                      ></path><path d='M3 14h6'></path><path
+                        d='M21 14v3a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-3'
+                      ></path><path d='M15 14h6'></path><path
+                        d='M21 12c0-3.3-2.7-6-6-6h-6c-3.3 0-6 2.7-6 6'
+                      ></path></svg
+                    >
+                  </div>
+                  <h5 class='text-lg font-bold'>Lagi Sibuk? 🏃</h5>
                 </div>
-                <h5 class='text-lg font-bold mb-3'>Lagi Sibuk? 🏃</h5>
                 <p class='text-sm text-gray-400 leading-relaxed'>
                   Dengar pas di jalan, di kereta, atau pas lagi masak.
                   Manfaatkan "waktu mati" mu tanpa mengganggu jadwal.
@@ -460,26 +465,28 @@ const commonImageProps = {
               <div
                 class='group p-6 rounded-2xl bg-[var(--token-bg-light)]/5 border border-white/5 hover:bg-[var(--token-bg-light)]/10 transition-all hover:-translate-y-1'
               >
-                <div
-                  class='w-14 h-14 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform'
-                >
-                  <!-- TV Icon -->
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='28'
-                    height='28'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    stroke-width='2'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    class='lucide lucide-tv'
-                    ><rect width='20' height='15' x='2' y='7' rx='2' ry='2'
-                    ></rect><polyline points='17 2 12 7 7 2'></polyline></svg
+                <div class='flex items-center gap-4 mb-4'>
+                  <div
+                    class='w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform'
                   >
+                    <!-- TV Icon -->
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-tv'
+                      ><rect width='20' height='15' x='2' y='7' rx='2' ry='2'
+                      ></rect><polyline points='17 2 12 7 7 2'></polyline></svg
+                    >
+                  </div>
+                  <h5 class='text-lg font-bold'>Lagi Males? 🦥</h5>
                 </div>
-                <h5 class='text-lg font-bold mb-3'>Lagi Males? 🦥</h5>
                 <p class='text-sm text-gray-400 leading-relaxed'>
                   Tonton anime dengan subtitle Jepang aja. Nikmati ceritanya,
                   nggak usah dipaksa paham 100%. No pressure.
@@ -763,7 +770,9 @@ const commonImageProps = {
 
           <!-- 4. The Deep Dive (Grid) -->
           <div class='grid lg:grid-cols-12 gap-12 lg:gap-20 items-start mb-24'>
-            <div class='lg:col-span-5 order-2 lg:order-1 sticky top-32'>
+            <div
+              class='lg:col-span-5 order-2 lg:order-1 sticky top-32 hidden lg:block'
+            >
               <div
                 class='relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group'
               >
@@ -810,6 +819,37 @@ const commonImageProps = {
                     yang aktif sejak lahir untuk menyerap bahasa secara intuitif
                     lewat paparan terus-menerus.
                   </p>
+
+                  <!-- Mobile-only LAD Image -->
+                  <div class='lg:hidden my-6'>
+                    <div
+                      class='relative rounded-2xl overflow-hidden shadow-xl border border-white/10'
+                    >
+                      <CldImage
+                        src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
+                        alt='Visualisasi Language Acquisition Device (LAD)'
+                        width={800}
+                        height={800}
+                        crop='fill'
+                        class='w-full h-auto'
+                      />
+                      <div
+                        class='absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60'
+                      >
+                      </div>
+                      <div class='absolute bottom-4 left-4 right-4'>
+                        <div
+                          class='text-xs font-bold tracking-widest text-white/70 uppercase mb-1'
+                        >
+                          Konsep
+                        </div>
+                        <div class='text-base font-bold text-white'>
+                          The Language Acquisition Device
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <p>
                     LAD ini yang bikin kamu otomatis "merasa" mana kalimat yang
                     natural dan mana yang pincang, tanpa perlu analisa rumus.
@@ -925,6 +965,178 @@ const commonImageProps = {
                   pas, sampai LAD-mu bangun intuisi nativenya sendiri secara alami.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- History Deviation Section (Biome + Narrative) -->
+      <section class='py-20 lg:py-32 relative overflow-hidden'>
+        <!-- Background Decor -->
+        <div
+          class='absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent pointer-events-none'
+        >
+        </div>
+
+        <div class='flex flex-col gap-16 lg:gap-24'>
+          <!-- 1. Header & Biome Visual -->
+          <div class='text-center space-y-12'>
+            <div class='max-w-4xl mx-auto px-4'>
+              <span
+                class='inline-block py-1 px-4 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-bold tracking-wider mb-6 uppercase'
+              >
+                Korupsi Pembelajaran Bahasa
+              </span>
+              <h2
+                class='text-3xl lg:text-5xl font-black text-white leading-tight'
+              >
+                Kamu adalah "Korban" dari <br />
+                <span
+                  class='text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500'
+                  >Penyimpangan Sejarah Manusia.</span
+                >
+              </h2>
+            </div>
+
+            <!-- Interactive History Biome -->
+            <div class='w-full'>
+              <HistoryBiome />
+            </div>
+          </div>
+
+          <!-- 2. Dual Column Narrative -->
+          <div
+            class='grid lg:grid-cols-2 gap-12 lg:gap-24 items-start max-w-6xl mx-auto px-4'
+          >
+            <!-- Left Column: The Problem -->
+            <div
+              class='lg:bg-gradient-to-br lg:from-white/[0.03] lg:to-transparent lg:backdrop-blur-md lg:border lg:border-white/10 lg:rounded-3xl p-0 lg:p-10 lg:shadow-xl lg:hover:border-white/20 transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-purple-500/10'
+            >
+              <h3
+                class='text-2xl font-bold text-white mb-6 flex items-center gap-3'
+              >
+                <svg
+                  class='w-8 h-8 text-purple-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z'
+                  ></path>
+                </svg>
+                Metode yang Terlupakan
+              </h3>
+              <Prose
+                class='prose-lg prose-invert text-[var(--token-text-secondary)]'
+              >
+                <p>
+                  Pernah nggak sih kamu mikir dalam hati: <em
+                    >"Orang-orang zaman dulu kok bisa jago banyak bahasa tanpa
+                    les, tanpa buku tebal, tanpa takut salah? Tapi aku udah
+                    bertahun-tahun hafal bunpou, kok masih gagap aja?"</em
+                  >
+                </p>
+                <p>
+                  Jawabannya ada di sejarah, bro. Selama hampir 1.800 tahun—dari
+                  jaman Santo Agustinus di Roma kuno, sampe era Renaisans,
+                  bahkan sampe Henry Sweet di abad ke-19—manusia belajar bahasa
+                  dengan cara yang paling alami: lewat interaksi langsung,
+                  ngobrol sama penutur asli, baca cerita, dengerin orang-orang
+                  sekitar.
+                </p>
+                <p>
+                  Nggak ada buku tata bahasa tebal, nggak ada hafalan rumus,
+                  nggak ada rasa takut salah. Mereka langsung "nyemplung" ke
+                  bahasa itu dan lama-lama bisa.
+                </p>
+              </Prose>
+            </div>
+
+            <!-- Right Column: The Betrayal -->
+            <div
+              class='lg:bg-gradient-to-br lg:from-red-500/[0.02] lg:to-transparent lg:backdrop-blur-md lg:border lg:border-white/10 lg:rounded-3xl p-0 lg:p-10 relative overflow-hidden group lg:shadow-xl lg:hover:border-red-500/20 transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-red-500/10'
+            >
+              <!-- Decorative warning background -->
+              <div
+                class='absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2 group-hover:bg-red-500/20 transition-colors'
+              >
+              </div>
+
+              <h3
+                class='text-2xl font-bold text-white mb-6 flex items-center gap-3 relative z-10'
+              >
+                <svg
+                  class='w-8 h-8 text-red-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+                  ></path>
+                </svg>
+                Pengkhianatan Besar
+              </h3>
+              <Prose
+                class='prose-lg prose-invert text-[var(--token-text-secondary)] relative z-10'
+              >
+                <p>
+                  Tapi tiba-tiba di abad ke-18, semuanya berubah drastis. Ada
+                  dua orang: <strong>Johann Meidinger</strong> dan <strong
+                    >Karl Plötz</strong
+                  >. Mereka berdua melakukan "pengkhianatan besar" yang efeknya
+                  kamu rasain banget sampai hari ini.
+                </p>
+                <p>
+                  Mereka ambil metode yang aslinya <strong
+                    >khusus buat bahasa mati</strong
+                  >—kayak Latin dan Yunani Kuno, bahasa yang udah nggak ada
+                  penutur aslinya lagi—dan dipaksa diterapin ke bahasa hidup
+                  kayak Jepang, Inggris, Perancis.
+                </p>
+                <p>
+                  Metode itu namanya <strong>Grammar Translation Method</strong>
+                  (GTM). Dari awalnya, metode ini <strong>bukan</strong> buat bikin
+                  orang bisa ngomong. Dia dibuat cuma buat <strong
+                    >membedah teks kuno</strong
+                  >. Nggak ada native speaker yang bisa diajak ngobrol, jadi ya
+                  terpaksa lewat analisa kertas doang.
+                </p>
+              </Prose>
+            </div>
+          </div>
+
+          <!-- 3. Bottom Conclusion (Centered) -->
+          <div class='max-w-4xl mx-auto px-4'>
+            <div
+              class='p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl bg-gradient-to-r from-red-900/20 to-orange-900/20 border border-red-500/20 text-left lg:text-center'
+            >
+              <Prose class='prose-base sm:prose-lg prose-invert max-w-none'>
+                <p
+                  class='lead text-white font-medium text-sm sm:text-base md:text-lg !leading-relaxed'
+                >
+                  Bayangin gini: kamu pengen belajar berenang ke laut lepas.
+                  Tapi instruktur kamu malah suruh kamu duduk di kelas, hafal
+                  rumus fisika tentang gerakan air. Pas dilempar ke air beneran,
+                  ya tenggelam dong.
+                </p>
+                <p
+                  class='text-xs sm:text-sm text-[var(--token-text-muted)] mt-3 sm:mt-4'
+                >
+                  Itu persis yang terjadi sama kamu sekarang. Kamu nggak bodoh.
+                  Kamu nggak kurang bakat. Kamu cuma korban sistem usang berusia
+                  200 tahun lebih yang aslinya buat membedah "mayat bahasa".
+                </p>
+              </Prose>
             </div>
           </div>
         </div>

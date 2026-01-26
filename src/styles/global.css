@@ -410,7 +410,7 @@
 
     /* Dynamic Global Padding as requested */
 
-    background-color: var(--token-black-base);
+    background-color: var(--token-bg-dark);
     color: var(--token-white-base);
     font-family: var(--font-primary) !important;
     line-height: var(--orphan-line-height); /* Orphan prevention */
