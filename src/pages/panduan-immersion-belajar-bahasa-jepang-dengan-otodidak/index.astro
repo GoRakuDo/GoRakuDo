@@ -51,144 +51,172 @@ const commonImageProps = {
                - Mobile: First (Top)
                - Desktop: order-1 (Left), Span 7
           -->
-          <div class='w-full lg:order-1 lg:col-span-7 flex flex-col gap-6'>
-            <div class='hero-header'>
-              <span
-                class='inline-block py-1 px-3 rounded-full bg-[var(--token-purple-base)]/10 border border-[var(--token-purple-base)]/20 text-[var(--token-purple-base)] text-sm font-medium mb-4'
+          <div class='w-full lg:order-1 lg:col-span-7 flex flex-col gap-8'>
+            <div class='hero-header space-y-6'>
+              <!-- BADGE: Capsule Style (Google Vibe) -->
+              <div
+                class='inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--token-purple-base)]/10 border border-[var(--token-purple-base)]/20 text-[var(--token-purple-base)] text-xs font-bold tracking-wide uppercase'
               >
-                Edisi {currentYear}
-              </span>
-              <h1
-                class='text-3xl lg:text-6xl font-extrabold tracking-tight leading-tighter text-left'
-              >
-                Panduan Immersion Belajar Bahasa Jepang <br
-                  class='hidden lg:block'
-                />
                 <span
-                  class='text-transparent bg-clip-text bg-gradient-to-r from-[var(--token-purple-base)] to-[var(--token-secondary-gold-base)]'
+                  class='w-2 h-2 rounded-full bg-[var(--token-purple-base)] animate-pulse'
+                ></span>
+                Edisi {currentYear} • Updated
+              </div>
+
+              <!-- HEADLINE: Massive Authorithy (Tracking Tight) -->
+              <h1
+                class='text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-left text-white'
+              >
+                Panduan Immersion <br class='hidden lg:block' />
+                <span
+                  class='text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500'
+                  >Bahasa Jepang</span
+                >
+                <br />
+                <span
+                  class='text-transparent bg-clip-text bg-gradient-to-r from-[var(--token-purple-base)] via-fuchsia-400 to-[var(--token-secondary-gold-base)] animate-gradient-x'
                   >OTODIDAK</span
                 >
               </h1>
             </div>
 
             <Prose class='prose-lg prose-invert max-w-none'>
-              <p class='lead text-xl text-[var(--token-text-secondary)]'>
-                Kamu Tidak Bodoh. Kamu Hanya Korban Metode yang Salah.
-              </p>
-
-              <p>
-                Kalau kamu lagi baca halaman ini, pasti kamu sudah pernah
-                ngerasain yang namanya "capek banget tapi kok nggak maju-maju".
-                Kamu rajin banget hafal bunpou dari Genki, Tae Kim, atau buku
-                apa pun itu, ngerjain ribuan soal JLPT, sampe akhirnya lulus N3
-                atau bahkan N2. Kamu bangga dong, sertifikatnya udah di tangan.
-                Tapi pas ditanya orang Jepang di jalan, atau coba nonton anime
-                tanpa subtitle, atau sekadar mau reply chat teman Jepang...
-                tiba-tiba otak blank. Mulut terkunci. Cuma bisa senyum kaku
-                sambil bilang "Eee... chotto..." dalam hati.
-              </p>
-
-              <!-- Inner Voice / Empathy Quote Section -->
-              <!-- Inner Voice / Empathy Quote Section (Decorated Split) -->
-              <div class='flex flex-col gap-3 my-8'>
-                <!-- Block 1: Despair (Rose Accent) -->
+              <!-- FEATURED SNIPPET: The "Truth Bomb" -->
+              <div
+                class='p-6 md:p-8 rounded-3xl bg-[var(--token-bg-light)]/5 border border-white/10 backdrop-blur-md shadow-2xl my-6 relative overflow-hidden group'
+              >
                 <div
-                  class='flex items-center justify-between gap-4 p-4 rounded-xl bg-[var(--token-bg-light)]/5 border border-white/5 backdrop-blur-md border-l-4 border-l-rose-500/50 hover:bg-[var(--token-bg-light)]/10 transition-colors'
+                  class='absolute top-0 right-0 w-32 h-32 bg-[var(--token-purple-base)]/10 rounded-full blur-[50px] pointer-events-none group-hover:bg-[var(--token-purple-base)]/20 transition-colors duration-500'
                 >
-                  <p class='italic text-[var(--token-text-secondary)]'>
-                    "Ah, aku emang nggak berbakat bahasa."
-                  </p>
-                  <div class='text-rose-400/80 shrink-0'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      width='32'
-                      height='32'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      stroke-width='2'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      class='lucide lucide-frown'
-                      ><circle cx='12' cy='12' r='10'></circle><path
-                        d='M16 16s-1.5-2-4-2-4 2-4 2'></path><line
-                        x1='9'
-                        x2='9.01'
-                        y1='9'
-                        y2='9'></line><line x1='15' x2='15.01' y1='9' y2='9'
-                      ></line></svg
-                    >
-                  </div>
                 </div>
 
-                <!-- Block 2: Guilt (Amber Accent) -->
-                <div
-                  class='flex items-center justify-between gap-4 p-4 rounded-xl bg-[var(--token-bg-light)]/5 border border-white/5 backdrop-blur-md border-l-4 border-l-amber-500/50 hover:bg-[var(--token-bg-light)]/10 transition-colors'
+                <p
+                  class='text-xl md:text-2xl font-bold text-white leading-relaxed relative z-10'
                 >
-                  <p class='italic text-[var(--token-text-secondary)]'>
-                    "Pasti aku kurang disiplin."
-                  </p>
-                  <div class='text-amber-400/80 shrink-0'>
+                  <span class='text-[var(--token-purple-base)]'
+                    >Kamu Tidak Bodoh.</span
+                  >
+                  <br />
+                  Kamu Hanya Korban "Metode Pabrik" yang Salah.
+                </p>
+              </div>
+
+              <p class='text-[var(--token-text-secondary)]'>
+                Kalau kamu lagi baca halaman ini, pasti kamu pernah ngerasain: <strong
+                  >capek banget tapi nggak maju-maju</strong
+                >. Hafal ribuan bunpou, lulus N3/N2, punya sertifikat... tapi
+                pas mau ngomong? <em>Blank.</em> Mulut terkunci.
+              </p>
+
+              <!-- GAMIFIED STATUS: Mental Debuffs (HUD Style) -->
+              <div class='grid grid-cols-1 md:grid-cols-3 gap-4 my-8'>
+                <!-- Debuff 1: Imposter Syndrome (Rose) -->
+                <div
+                  class='group relative bg-[#1a1515] hover:bg-[#251a1a] border border-white/5 hover:border-rose-500/30 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1'
+                >
+                  <div
+                    class='w-10 h-10 rounded-full bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform'
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      width='32'
-                      height='32'
-                      viewBox='0 0 24 24'
+                      class='w-5 h-5 text-rose-400'
                       fill='none'
+                      viewBox='0 0 24 24'
                       stroke='currentColor'
-                      stroke-width='2'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      class='lucide lucide-triangle-alert'
                       ><path
-                        d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'
-                      ></path><path d='M12 9v4'></path><path d='M12 17h.01'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
                       ></path></svg
                     >
                   </div>
+                  <h4
+                    class='text-rose-400 font-bold text-sm uppercase tracking-wider mb-1'
+                  >
+                    Status: Doubt
+                  </h4>
+                  <p class='text-gray-400 text-sm italic'>
+                    "Aku nggak berbakat..."
+                  </p>
                 </div>
 
-                <!-- Block 3: Comparison (Violet Accent) -->
+                <!-- Debuff 2: Guilt (Amber) -->
                 <div
-                  class='flex items-center justify-between gap-4 p-4 rounded-xl bg-[var(--token-bg-light)]/5 border border-white/5 backdrop-blur-md border-l-4 border-l-violet-500/50 hover:bg-[var(--token-bg-light)]/10 transition-colors'
+                  class='group relative bg-[#1a1712] hover:bg-[#261f15] border border-white/5 hover:border-amber-500/30 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 delay-[50ms]'
                 >
-                  <p class='italic text-[var(--token-text-secondary)]'>
-                    "Orang lain bisa, kok aku nggak ya?"
-                  </p>
-                  <div class='text-violet-400/80 shrink-0'>
+                  <div
+                    class='w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform'
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      width='32'
-                      height='32'
-                      viewBox='0 0 24 24'
+                      class='w-5 h-5 text-amber-400'
                       fill='none'
+                      viewBox='0 0 24 24'
                       stroke='currentColor'
-                      stroke-width='2'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      class='lucide lucide-help-circle'
-                      ><circle cx='12' cy='12' r='10'></circle><path
-                        d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'></path><path
-                        d='M12 17h.01'></path></svg
+                      ><path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+                      ></path></svg
                     >
                   </div>
+                  <h4
+                    class='text-amber-400 font-bold text-sm uppercase tracking-wider mb-1'
+                  >
+                    Status: Guilt
+                  </h4>
+                  <p class='text-gray-400 text-sm italic'>
+                    "Aku kurang disiplin..."
+                  </p>
+                </div>
+
+                <!-- Debuff 3: Envy/Confusion (Violet) -->
+                <div
+                  class='group relative bg-[#16151a] hover:bg-[#1d1a25] border border-white/5 hover:border-violet-500/30 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 delay-[100ms]'
+                >
+                  <div
+                    class='w-10 h-10 rounded-full bg-violet-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      class='w-5 h-5 text-violet-400'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                      ><path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                      ></path></svg
+                    >
+                  </div>
+                  <h4
+                    class='text-violet-400 font-bold text-sm uppercase tracking-wider mb-1'
+                  >
+                    Status: Confused
+                  </h4>
+                  <p class='text-gray-400 text-sm italic'>
+                    "Kok orang lain bisa?"
+                  </p>
                 </div>
               </div>
 
-              <p class='font-bold text-lg mb-4'>
-                Dengerin baik-baik ya:<br />
-                <span class='text-[var(--token-purple-base)]'
-                  >Itu bukan salahmu. Bukan sama sekali.</span
+              <p
+                class='font-bold text-lg mb-4 text-white pl-4 border-l-4 border-[var(--token-purple-base)]'
+              >
+                Dengerin baik-baik: <span
+                  class='text-[var(--token-purple-base)]'
+                  >Itu bukan salahmu.</span
                 >
               </p>
 
               <p>
                 Yang salah adalah metode tradisional yang selama ini kamu
-                pakai—hafal rumus, terjemahin kata per kata di kepala, latihan
-                soal berulang-ulang. Metode ini sebenarnya dirancang ratusan
-                tahun lalu buat belajar bahasa mati kayak Latin atau Yunani
-                Kuno, yang tujuannya cuma buat baca teks kuno, bukan buat
-                ngobrol sama orang hidup.
+                pakai—hafal rumus, terjemahin kata per kata. Itu metode buat
+                bahasa mati (Latin/Yunani), bukan buat manusia hidup.
               </p>
 
               <!-- Mobile-Only Interleaved Image -->
@@ -198,20 +226,8 @@ const commonImageProps = {
 
               <p>
                 Kamu nggak gagal. Kamu cuma dipaksa lari maraton sambil kaki
-                dibelenggu besi oleh sistem yang udah usang itu. Wajar kalau
-                capek. Wajar kalau lelah. Wajar kalau kamu sekarang skeptis sama
-                semua janji "metode baru" atau "rahasia cepat lancar". Malah
-                bagus kalau kamu skeptis—itu artinya kamu udah belajar dari
-                pengalaman pahit, bukan orang bodoh yang gampang ketipu.
-              </p>
-
-              <p>
-                Kami nggak akan bilang "metode kami ajaib" atau "dijamin lancar
-                dalam 3 bulan". Kami cuma mau bilang: belenggu besi itu bisa
-                dilepas. Dan begitu dilepas, kamu bakal kaget sendiri betapa
-                ringannya langkahmu—karena sebenarnya kamu sudah punya semua
-                yang dibutuhkan untuk bisa bahasa Jepang. Cuma selama ini
-                tertutup oleh cara belajar yang salah.
+                dibelenggu besi. Wajar kalau capek. Wajar kalau skeptis. Malah
+                bagus kalau skeptis—artinya kamu udah pinter.
               </p>
             </Prose>
           </div>
@@ -889,7 +905,7 @@ const commonImageProps = {
                 class='relative flex flex-col md:flex-row gap-8 items-center'
               >
                 <div class='shrink-0 p-4 rounded-full bg-white/10 text-4xl'>
-                  🚀
+                  🌱
                 </div>
                 <div>
                   <h4 class='text-2xl font-bold text-white mb-4'>
@@ -1118,26 +1134,589 @@ const commonImageProps = {
           <!-- 3. Bottom Conclusion (Centered) -->
           <div class='max-w-4xl mx-auto px-4'>
             <div
-              class='p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl bg-gradient-to-r from-red-900/20 to-orange-900/20 border border-red-500/20 text-left lg:text-center'
+              class='relative p-6 sm:p-8 md:p-10 rounded-3xl bg-gradient-to-br from-red-900/30 to-orange-900/30 border border-red-500/30 overflow-hidden'
             >
-              <Prose class='prose-base sm:prose-lg prose-invert max-w-none'>
-                <p
-                  class='lead text-white font-medium text-sm sm:text-base md:text-lg !leading-relaxed'
-                >
-                  Bayangin gini: kamu pengen belajar berenang ke laut lepas.
-                  Tapi instruktur kamu malah suruh kamu duduk di kelas, hafal
-                  rumus fisika tentang gerakan air. Pas dilempar ke air beneran,
-                  ya tenggelam dong.
-                </p>
-                <p
-                  class='text-xs sm:text-sm text-[var(--token-text-muted)] mt-3 sm:mt-4'
-                >
-                  Itu persis yang terjadi sama kamu sekarang. Kamu nggak bodoh.
-                  Kamu nggak kurang bakat. Kamu cuma korban sistem usang berusia
-                  200 tahun lebih yang aslinya buat membedah "mayat bahasa".
-                </p>
-              </Prose>
+              <!-- Background Decor -->
+              <div
+                class='absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none'
+              >
+              </div>
+
+              <div
+                class='relative z-10 flex flex-col md:flex-row gap-8 items-center md:items-start text-left'
+              >
+                <div class='space-y-6 flex-1'>
+                  <!-- The Analogy -->
+                  <div>
+                    <h4
+                      class='text-red-400 font-bold uppercase tracking-widest text-xs mb-3'
+                    >
+                      Analogi Simpel
+                    </h4>
+                    <p
+                      class='text-lg sm:text-xl text-white font-medium leading-relaxed'
+                    >
+                      Bayangin kamu mau belajar renang biar bisa nyebur ke laut
+                      lepas, tapi instruktur-mu malah suruh kamu<span
+                        class='text-red-300 bg-red-500/10 px-1 rounded'
+                        >hafal rumus fisika tentang gerakan air, kimia ombak,
+                        dan anatomi otot renang</span
+                      > dari buku tebal. Pas kamu dilempar ke air beneran? <br
+                        class='hidden sm:block'
+                      />
+                      <span class='text-white border-b-2 border-red-500/50'
+                        >Ya pasti tenggelam.</span
+                      >
+                    </p>
+                  </div>
+
+                  <!-- The Reality Check -->
+                  <div class='bg-black/20 p-4 rounded-xl'>
+                    <p
+                      class='text-sm sm:text-base text-[var(--token-text-secondary)] leading-relaxed'
+                    >
+                      Itu persis yang terjadi sekarang. <strong
+                        class='text-white'
+                        >Kamu nggak bodoh. Kamu nggak kurang bakat.</strong
+                      >
+                      Kamu cuma korban sistem usang berusia 200 tahun yang aslinya
+                      dibuat untuk membedah "mayat bahasa", tapi dipaksa dipake buat
+                      bahasa hidup yang butuh interaksi nyata.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW SECTION 1: THE SECRET (Krashen) - "Declassified File" Aesthetic -->
+      <section class='py-24 relative overflow-hidden' id='krashen-secret'>
+        <div class='container mx-auto px-4 max-w-7xl'>
+          <!-- Section Header "Top Secret" -->
+          <div class='mb-16 text-center'>
+            <div
+              class='inline-flex items-center gap-2 px-4 py-1.5 rounded bg-red-500/10 border border-red-500/30 text-red-500 font-mono text-xs tracking-[0.2em] uppercase mb-4 animate-pulse'
+            >
+              ⚠ Top Secret // Declassified
+            </div>
+            <h2
+              class='text-3xl md:text-6xl font-black text-white tracking-tighter mb-4 break-words'
+            >
+              Rahasia yang Ingin <br />
+              <span class='relative inline-block'>
+                <span
+                  class='absolute inset-0 bg-white transform -skew-x-12 translate-y-2 opacity-10'
+                ></span>
+                <span
+                  class='relative text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500'
+                  >Dikubur Industri.</span
+                >
+              </span>
+            </h2>
+          </div>
+
+          <div class='grid lg:grid-cols-2 gap-12 lg:gap-20 items-start'>
+            <!-- Left: The Visual Evidence -->
+            <div class='relative group perspective-1000'>
+              <!-- Polariod/File styling -->
+              <div
+                class='relative bg-white/5 border border-white/10 p-3 rounded-xl backdrop-blur-md transform transition-transform duration-700 group-hover:rotate-1 shadow-2xl'
+              >
+                <div
+                  class='relative rounded-lg overflow-hidden aspect-[9/16] md:aspect-[3/4] lg:aspect-[9/16]'
+                >
+                  <CldImage
+                    src='Krashen_Ukio_Image_1u58f51u58f51u58_fyyfpe'
+                    alt='Prof. Stephen Krashen'
+                    width={1505}
+                    height={2697}
+                    crop='fill'
+                    gravity='center'
+                    class='w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700'
+                  />
+                  <!-- Overlay Text -->
+                  <div
+                    class='absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent'
+                  >
+                    <h3 class='text-white font-bold text-xl'>
+                      Prof. Stephen Krashen
+                    </h3>
+                    <p class='text-white/60 font-mono text-xs mt-1'>
+                      THE ORIGINATOR // LINGUIST // THREAT TO STATUS QUO
+                    </p>
+                  </div>
+                </div>
+                <!-- Paperclip decoration -->
+                <div
+                  class='absolute -top-4 right-10 w-4 h-12 border-2 border-gray-400 rounded-full z-20 bg-gray-800/50'
+                >
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: The Briefing -->
+            <div class='space-y-8 relative'>
+              <!-- Decorative line -->
+              <div
+                class='absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent -ml-6 hidden lg:block'
+              >
+              </div>
+
+              <div
+                class='prose-lg prose-invert text-[var(--token-text-secondary)] font-light leading-relaxed'
+              >
+                <p>
+                  Sementara Meidinger dan Plötz lagi sibuk bikin "pabrik
+                  hafalan" penuh tabel bunpou yang bikin pusing, ada satu orang
+                  yang nemuin <strong class='text-white font-bold'
+                    >kebenaran biologis sejati</strong
+                  > tentang cara otak manusia belajar bahasa.
+                </p>
+                <p>
+                  Dia bukan ahli bahasa biasa. Dia orang yang bikin industri
+                  buku pelajaran dan LPK ketar-ketir. Dalam wawancara, dia
+                  pernah bilang terus terang: kalau metode alami ini diterima
+                  semua orang, bakal jadi <span
+                    class='bg-red-500/20 text-red-300 px-1 py-0.5 rounded font-mono text-sm'
+                    >"kiamat finansial"</span
+                  > buat bisnis pendidikan global yang nilainya triliunan rupiah.
+                </p>
+              </div>
+
+              <!-- EVIDENCE CARD: Twitter Embed -->
+              <div
+                class='relative rounded-xl overflow-hidden border border-[var(--token-purple-base)]/30 bg-[var(--token-bg-light)]/5 backdrop-blur-sm shadow-[0_0_30px_rgba(168,85,247,0.1)]'
+              >
+                <!-- Scanline effect -->
+                <div
+                  class='absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 pointer-events-none bg-[length:100%_2px,3px_100%]'
+                >
+                </div>
+
+                <div class='p-4 relative z-20'>
+                  <div
+                    class='flex items-center justify-between mb-4 border-b border-white/5 pb-2'
+                  >
+                    <span
+                      class='text-[10px] font-mono text-purple-400 uppercase tracking-widest'
+                      >EVIDENCE #2026-X</span
+                    >
+                    <span
+                      class='flex h-2 w-2 rounded-full bg-red-500 animate-pulse'
+                    ></span>
+                  </div>
+
+                  <div
+                    class='twitter-embed-container w-full max-w-full overflow-hidden'
+                  >
+                    <blockquote
+                      class='twitter-tweet'
+                      data-media-max-width='560'
+                      data-theme='dark'
+                    >
+                      <p lang='in' dir='ltr'>
+                        Ini Kata Prof. Krashen:<br />Sebenarnya kalian kalau
+                        benar² suka, dan menikmati media Jepang bisa Otodidak
+                        IMMERSE. Tanpa Minna no Ningo &amp; buku Bunpou Bull5h!t<br
+                        /><br />KAREN KALIAN SEMUA MALAS &amp; Tidak mau
+                        SpendTime dlm Bahasa Jepang, jadi beli buku ikut LPK /
+                        Kursus / Kelas Online yg S3S4D! <a
+                          href='https://t.co/rVGCLM9xvE'
+                          >pic.twitter.com/rVGCLM9xvE</a
+                        >
+                      </p>&mdash; Yoshia Kefasu (@YKefasu) <a
+                        href='https://twitter.com/YKefasu/status/2015852855257915520?ref_src=twsrc%5Etfw'
+                        >January 26, 2026</a
+                      >
+                    </blockquote>
+                    <style>
+                      /* stylelint-disable declaration-no-important */
+
+                      /* Force Twitter Embed to be responsive */
+                      html body .twitter-tweet,
+                      html body .twitter-tweet-rendered {
+                        width: 100% !important;
+                        min-width: 0 !important;
+                        max-width: 100% !important;
+                      }
+
+                      /* Ensure iframe specifically scales down */
+                      html body iframe[id^='twitter-widget-'] {
+                        width: 100% !important;
+                        min-width: 0 !important;
+                        max-width: 100% !important;
+                      }
+                      /* stylelint-enable declaration-no-important */
+                    </style>
+                    <script
+                      async
+                      src='https://platform.twitter.com/widgets.js'
+                      charset='utf-8'></script>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class='prose-lg prose-invert text-[var(--token-text-secondary)]'
+              >
+                <p class='font-bold text-white text-xl'>Kenapa?</p>
+                <p>
+                  Karena kalau semua orang tahu rahasia ini, mereka nggak perlu
+                  lagi beli buku tebal mahal, ikut kursus berbayar, atau hafal
+                  ribuan rumus—mereka bisa fasih gratis, cuma dengan cara yang
+                  otaknya memang dirancang.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW SECTION 2: BATTLE CARDS (Learning vs Acquisition) - "Gamified Selection" -->
+      <section class='py-24 relative'>
+        <div class='container mx-auto px-4 max-w-7xl'>
+          <div class='text-center mb-16'>
+            <h3 class='text-3xl md:text-5xl font-black text-white mb-6'>
+              Pilih Mode Operasimu
+            </h3>
+            <p class='text-xl text-[var(--token-text-secondary)]'>
+              Otak manusia punya dua jalan berbeda. Satu jalan rusak, satu jalan
+              tol.
+            </p>
+          </div>
+
+          <div class='grid md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto'>
+            <!-- CARD 1: LEARNING (The Bad Way) -->
+            <div class='relative group cursor-default'>
+              <div
+                class='absolute inset-0 bg-red-600/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+              >
+              </div>
+              <div
+                class='relative h-full bg-[#0f0f11] border border-red-900/30 rounded-3xl p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:border-red-500/50'
+              >
+                <!-- Background Grid -->
+                <div
+                  class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"
+                >
+                </div>
+                <div
+                  class='absolute inset-0'
+                  style='background-image: radial-gradient(#3f1515 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3;'
+                >
+                </div>
+
+                <div class='relative z-10 flex flex-col h-full'>
+                  <div
+                    class='w-16 h-16 rounded-2xl bg-red-900/20 border border-red-500/20 flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-300'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      class='w-8 h-8 text-red-500'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                      stroke-width='2'
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        d='M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+                      ></path>
+                    </svg>
+                  </div>
+
+                  <h4
+                    class='text-3xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors'
+                  >
+                    Learning
+                  </h4>
+                  <p
+                    class='text-red-400/80 font-mono text-xs uppercase tracking-wider mb-6'
+                  >
+                    Jalan Sekolah (Sadar)
+                  </p>
+
+                  <div
+                    class='space-y-4 text-[var(--token-text-secondary)] leading-relaxed flex-grow'
+                  >
+                    <p>
+                      Ini yang kamu jalani selama ini. Hafal rumus bunpou,
+                      latihan soal JLPT, dikoreksi terus kalau salah.
+                    </p>
+                    <ul class='space-y-3 mt-6'>
+                      <li class='flex items-center gap-3 text-sm'>
+                        <span class='w-2 h-2 rounded-full bg-red-500'></span>
+                        <span>Proses capek & gampang lupa</span>
+                      </li>
+                      <li class='flex items-center gap-3 text-sm'>
+                        <span class='w-2 h-2 rounded-full bg-red-500'></span>
+                        <span>Ngomong "loading" lama & gagap</span>
+                      </li>
+                      <li class='flex items-center gap-3 text-sm'>
+                        <span class='w-2 h-2 rounded-full bg-red-500'></span>
+                        <span>Bahasa penuh "kotoran" & anomali</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class='mt-8 pt-8 border-t border-red-900/30'>
+                    <div
+                      class='inline-flex items-center gap-2 text-red-500 font-bold text-sm'
+                    >
+                      <span class='uppercase'>Status:</span>
+                      <span class='animate-pulse'>Fossilized 💀</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 2: ACQUISITION (The Good Way) -->
+            <div class='relative group cursor-default'>
+              <div
+                class='absolute inset-0 bg-emerald-500/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+              >
+              </div>
+              <div
+                class='relative h-full bg-gradient-to-br from-[#131f17] to-[#0f0f11] border border-emerald-500/30 rounded-3xl p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_50px_rgba(16,185,129,0.15)]'
+              >
+                <!-- Organic Background -->
+                <div
+                  class='absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors duration-700'
+                >
+                </div>
+
+                <div class='relative z-10 flex flex-col h-full'>
+                  <div
+                    class='w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center mb-8 group-hover:-rotate-12 transition-transform duration-300'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      class='w-8 h-8 text-emerald-400'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                      stroke-width='2'
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        d='M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                      ></path>
+                    </svg>
+                  </div>
+
+                  <h4
+                    class='text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors'
+                  >
+                    Acquisition
+                  </h4>
+                  <p
+                    class='text-emerald-400/80 font-mono text-xs uppercase tracking-wider mb-6'
+                  >
+                    Jalan Alami (Bawah Sadar)
+                  </p>
+
+                  <div
+                    class='space-y-4 text-[var(--token-text-secondary)] leading-relaxed flex-grow'
+                  >
+                    <p>
+                      Ini cara kamu jago Bahasa Indonesia. Nggak pernah hafal
+                      S-P-O-K, tapi lama-lama kamu "ngerasa" mana yang benar
+                      sendiri.
+                    </p>
+                    <ul class='space-y-3 mt-6'>
+                      <li class='flex items-center gap-3 text-sm'>
+                        <svg
+                          class='w-5 h-5 text-emerald-400'
+                          fill='none'
+                          viewBox='0 0 24 24'
+                          stroke='currentColor'
+                          ><path
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                            stroke-width='2'
+                            d='M5 13l4 4L19 7'></path></svg
+                        >
+                        <span class='text-white'>Tanpa paksaan & hafalan</span>
+                      </li>
+                      <li class='flex items-center gap-3 text-sm'>
+                        <svg
+                          class='w-5 h-5 text-emerald-400'
+                          fill='none'
+                          viewBox='0 0 24 24'
+                          stroke='currentColor'
+                          ><path
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                            stroke-width='2'
+                            d='M5 13l4 4L19 7'></path></svg
+                        >
+                        <span class='text-white'
+                          >Otak nyerap sendiri (Native Feeling)</span
+                        >
+                      </li>
+                      <li class='flex items-center gap-3 text-sm'>
+                        <svg
+                          class='w-5 h-5 text-emerald-400'
+                          fill='none'
+                          viewBox='0 0 24 24'
+                          stroke='currentColor'
+                          ><path
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                            stroke-width='2'
+                            d='M5 13l4 4L19 7'></path></svg
+                        >
+                        <span class='text-white'>Jalan pintas fasih sejati</span
+                        >
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class='mt-8 pt-8 border-t border-emerald-900/30'>
+                    <a
+                      href='#rumus-ajaib'
+                      class='w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 hover:shadow-emerald-500/30 flex items-center justify-center gap-2 group/btn'
+                    >
+                      <span>Aktifkan Mode Ini</span>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        class='w-4 h-4 group-hover/btn:translate-x-1 transition-transform'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        stroke='currentColor'
+                        ><path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          stroke-width='2'
+                          d='M13 7l5 5m0 0l-5 5m5-5H6'></path></svg
+                      >
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW SECTION 3: LEVEL UP (i+1) - "Visualized Formula" -->
+      <section id='rumus-ajaib' class='py-24 relative overflow-hidden'>
+        <div
+          class='absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent'
+        >
+        </div>
+
+        <div class='container mx-auto px-4 max-w-5xl text-center'>
+          <h2 class='text-4xl md:text-5xl font-black text-white mb-2'>
+            Rumus Ajaib
+          </h2>
+          <p class='text-[var(--token-purple-base)] font-bold text-lg mb-12'>
+            The Comprehensible Input Formula
+          </p>
+
+          <!-- The Formula Visualization -->
+          <div
+            class='flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mb-16 select-none'
+          >
+            <!-- Variable i -->
+            <div class='group relative'>
+              <div
+                class='w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-gray-800 border border-white/10 flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-white/30 transition-colors'
+              >
+                <span
+                  class='text-6xl md:text-8xl font-black text-gray-500 group-hover:text-white transition-colors duration-500'
+                  >i</span
+                >
+                <div
+                  class='absolute bottom-4 text-xs font-mono text-gray-500 uppercase tracking-widest'
+                >
+                  Current Level
+                </div>
+              </div>
+            </div>
+
+            <!-- Plus Sign -->
+            <div class='text-5xl md:text-6xl text-white/20 font-light'>+</div>
+
+            <!-- Variable 1 -->
+            <div class='group relative'>
+              <div
+                class='w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-[var(--token-purple-base)]/10 border border-[var(--token-purple-base)]/30 flex items-center justify-center shadow-[0_0_40px_rgba(168,85,247,0.15)] relative overflow-hidden group-hover:scale-110 transition-transform duration-300'
+              >
+                <div
+                  class='absolute inset-0 bg-[var(--token-purple-base)]/20 blur-xl animate-pulse'
+                >
+                </div>
+                <span
+                  class='relative text-6xl md:text-8xl font-black text-[var(--token-purple-base)]'
+                  >1</span
+                >
+                <div
+                  class='absolute bottom-4 text-xs font-mono text-[var(--token-purple-base)] uppercase tracking-widest'
+                >
+                  Challenge
+                </div>
+              </div>
+            </div>
+
+            <!-- Equals -->
+            <div class='text-5xl md:text-6xl text-white/20 font-light'>=</div>
+
+            <!-- Result -->
+            <div class='relative'>
+              <div class='text-6xl md:text-8xl animate-bounce'>🌱</div>
+              <div
+                class='absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm font-bold text-white whitespace-nowrap'
+              >
+                Growth
+              </div>
+            </div>
+          </div>
+
+          <!-- Explanation Text -->
+          <div
+            class='w-full max-w-[48rem] mx-auto prose-lg prose-invert text-[var(--token-text-secondary)]'
+          >
+            <p>
+              Terus, gimana cara nyalain mode Acquisition ini? Nggak perlu otak
+              jenius. Cukup pakai satu rumus sederhana: <strong
+                >Input yang Bisa Dipahami (i+1)</strong
+              >.
+            </p>
+            <div class='grid md:grid-cols-2 gap-8 my-10 text-left'>
+              <div class='p-6 rounded-2xl bg-white/5 border border-white/5'>
+                <div class='text-4xl font-black text-gray-500 mb-2'>i</div>
+                <p class='text-sm text-gray-400'>
+                  <strong>Level kamu sekarang.</strong> Apa yang udah kamu paham.
+                  Foundation yang udah ada di otakmu.
+                </p>
+              </div>
+              <div
+                class='p-6 rounded-2xl bg-[var(--token-purple-base)]/10 border border-[var(--token-purple-base)]/20'
+              >
+                <div
+                  class='text-4xl font-black text-[var(--token-purple-base)] mb-2'
+                >
+                  +1
+                </div>
+                <p class='text-sm text-gray-300'>
+                  <strong>Sedikit tantangan baru.</strong> Beberapa kata atau pola
+                  yang belum tau, tapi bisa ditebak dari konteks.
+                </p>
+              </div>
+            </div>
+            <p>
+              Contohnya: kamu lagi nonton anime. Kamu paham alurnya (i), tapi
+              ada kata baru (+1). Karena konteksnya jelas, otakmu otomatis <strong
+                >memprediksi</strong
+              > celah itu dan "download" pola baru langsung ke bawah sadar. Tanpa
+              sakit kepala.
+            </p>
           </div>
         </div>
       </section>
