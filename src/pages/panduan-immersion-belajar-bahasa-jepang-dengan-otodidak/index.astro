@@ -37,7 +37,7 @@ const commonImageProps = {
        - bg-transparent to let global wave animation show through
   -->
   <main class='page-container min-h-[calc(100vh-var(--navbar-height))]'>
-    <div class='container mx-auto w-full'>
+    <div class='container mx-auto w-full px-4 md:px-0'>
       <!-- Hero / Empathy Bridge Section -->
       <section class='empathy-bridge-section'>
         <!-- Layout:
@@ -91,7 +91,7 @@ const commonImageProps = {
                 </div>
 
                 <p
-                  class='text-xl md:text-2xl font-bold text-white leading-relaxed relative z-10'
+                  class='text-lg md:text-2xl font-bold text-white leading-relaxed relative z-10'
                 >
                   <span class='text-[var(--token-purple-base)]'
                     >Kamu Tidak Bodoh.</span
@@ -249,7 +249,7 @@ const commonImageProps = {
       <!-- Stop Learning, Start Absorbing Section -->
       <section class='py-16 lg:py-24 space-y-24'>
         <!-- Design: Google x Duolingo Redesign -->
-        <div class='flex flex-col gap-16'>
+        <div class='flex flex-col gap-10 lg:gap-16'>
           <!-- 1. Hero Headline & Problem/Solution Split -->
           <div class='space-y-12'>
             <div class='text-center space-y-4 max-w-4xl mx-auto'>
@@ -263,7 +263,9 @@ const commonImageProps = {
                   Mulailah "Menyerap" Aja.
                 </span>
               </h3>
-              <p class='text-xl text-[var(--token-text-secondary)]'>
+              <p
+                class='text-base md:text-xl text-[var(--token-text-secondary)]'
+              >
                 Metode tradisional minta kamu jadi robot. Kami minta kamu jadi
                 manusia.
               </p>
@@ -272,7 +274,7 @@ const commonImageProps = {
             <div class='grid md:grid-cols-2 gap-6'>
               <!-- Card A: Old Way -->
               <div
-                class='p-8 rounded-3xl bg-[#1a1a1a] border border-white/5 relative overflow-hidden group'
+                class='p-6 md:p-8 rounded-3xl bg-[#1a1a1a] border border-white/5 relative overflow-hidden group'
               >
                 <div
                   class='absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-50'
@@ -300,7 +302,7 @@ const commonImageProps = {
                       >Old Way</span
                     >
                   </div>
-                  <h4 class='text-2xl font-bold mb-4 text-white'>
+                  <h4 class='text-xl md:text-2xl font-bold mb-4 text-white'>
                     Belajar Keras
                   </h4>
                   <ul class='space-y-3 text-gray-400'>
@@ -322,7 +324,7 @@ const commonImageProps = {
 
               <!-- Card B: New Way -->
               <div
-                class='p-8 rounded-3xl bg-gradient-to-br from-[var(--token-purple-base)]/10 to-[var(--token-secondary-gold-base)]/10 border border-[var(--token-purple-base)]/20 relative overflow-hidden group'
+                class='p-6 md:p-8 rounded-3xl bg-gradient-to-br from-[var(--token-purple-base)]/10 to-[var(--token-secondary-gold-base)]/10 border border-[var(--token-purple-base)]/20 relative overflow-hidden group'
               >
                 <div
                   class='absolute inset-0 bg-[var(--token-purple-base)]/5 blur-3xl'
@@ -351,7 +353,7 @@ const commonImageProps = {
                       >Immersion Way</span
                     >
                   </div>
-                  <h4 class='text-2xl font-bold mb-4 text-white'>
+                  <h4 class='text-xl md:text-2xl font-bold mb-4 text-white'>
                     Menyerap Alami; Immersion
                   </h4>
                   <ul class='space-y-3 text-[var(--token-text-secondary)]'>
@@ -515,7 +517,7 @@ const commonImageProps = {
           <div
             class='p-6 md:p-8 rounded-2xl bg-[var(--token-bg-light)]/5 border-l-4 border-[var(--token-secondary-gold-base)] backdrop-blur-sm'
           >
-            <div class='flex gap-5 items-start'>
+            <div class='flex gap-3 md:gap-5 items-start'>
               <div
                 class='shrink-0 text-[var(--token-secondary-gold-base)] mt-1'
               >
@@ -555,7 +557,7 @@ const commonImageProps = {
         <!-- Feature 1: No Grammar -->
         <!-- Feature 1: No Grammar -->
         <div
-          class='flex flex-col gap-8 lg:grid lg:grid-cols-2 lg:gap-20 items-center'
+          class='flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-20 items-center'
         >
           <!-- Image (Mobile Order 2, Desktop Left) -->
           <div
@@ -598,7 +600,9 @@ const commonImageProps = {
                 >
               </div>
               <div>
-                <h4 class='text-2xl font-bold text-white mb-2 leading-tight'>
+                <h4
+                  class='text-xl md:text-2xl font-bold text-white mb-2 leading-tight'
+                >
                   Kenapa Hafal Bunpou (Grammar) Nggak Bikin Kamu Lancar?
                 </h4>
                 <div
@@ -642,7 +646,7 @@ const commonImageProps = {
         <!-- Feature 2: No Translation -->
         <!-- Feature 2: No Translation -->
         <div
-          class='flex flex-col gap-8 lg:grid lg:grid-cols-2 lg:gap-20 items-center'
+          class='flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-20 items-center'
         >
           <!-- Image (Mobile Order 2, Desktop Left) -->
           <div
@@ -688,7 +692,9 @@ const commonImageProps = {
                 >
               </div>
               <div>
-                <h4 class='text-2xl font-bold text-white mb-2 leading-tight'>
+                <h4
+                  class='text-xl md:text-2xl font-bold text-white mb-2 leading-tight'
+                >
                   Kenapa Terjemahin Langsung di Kepala Itu Bikin Makin Gagap?
                 </h4>
                 <div
@@ -785,7 +791,7 @@ const commonImageProps = {
           </div>
 
           <!-- 4. The Deep Dive (Grid) -->
-          <div class='grid lg:grid-cols-12 gap-12 lg:gap-20 items-start mb-24'>
+          <div class='grid lg:grid-cols-12 gap-8 lg:gap-20 items-start mb-24'>
             <div
               class='lg:col-span-5 order-2 lg:order-1 sticky top-32 hidden lg:block'
             >
@@ -902,13 +908,13 @@ const commonImageProps = {
               >
               </div>
               <div
-                class='relative flex flex-col md:flex-row gap-8 items-center'
+                class='relative flex flex-col md:flex-row gap-6 md:gap-8 items-center'
               >
                 <div class='shrink-0 p-4 rounded-full bg-white/10 text-4xl'>
                   🌱
                 </div>
                 <div>
-                  <h4 class='text-2xl font-bold text-white mb-4'>
+                  <h4 class='text-xl md:text-2xl font-bold text-white mb-4'>
                     Selamat! Kamu baru saja buktiin sendiri.
                   </h4>
                   <p
@@ -923,7 +929,7 @@ const commonImageProps = {
             </div>
 
             <!-- The Problem & Solution -->
-            <div class='grid md:grid-cols-2 gap-8 lg:gap-12'>
+            <div class='grid md:grid-cols-2 gap-6 lg:gap-12'>
               <div class='space-y-4'>
                 <h4
                   class='text-xl font-bold text-red-400 flex items-center gap-2'
@@ -994,7 +1000,7 @@ const commonImageProps = {
         >
         </div>
 
-        <div class='flex flex-col gap-16 lg:gap-24'>
+        <div class='flex flex-col gap-10 lg:gap-24'>
           <!-- 1. Header & Biome Visual -->
           <div class='text-center space-y-12'>
             <div class='max-w-4xl mx-auto px-4'>
@@ -1022,14 +1028,14 @@ const commonImageProps = {
 
           <!-- 2. Dual Column Narrative -->
           <div
-            class='grid lg:grid-cols-2 gap-12 lg:gap-24 items-start max-w-6xl mx-auto px-4'
+            class='grid lg:grid-cols-2 gap-8 lg:gap-24 items-start max-w-6xl mx-auto px-4'
           >
             <!-- Left Column: The Problem -->
             <div
               class='lg:bg-gradient-to-br lg:from-white/[0.03] lg:to-transparent lg:backdrop-blur-md lg:border lg:border-white/10 lg:rounded-3xl p-0 lg:p-10 lg:shadow-xl lg:hover:border-white/20 transition-all duration-300 lg:hover:-translate-y-1 lg:hover:shadow-purple-500/10'
             >
               <h3
-                class='text-2xl font-bold text-white mb-6 flex items-center gap-3'
+                class='text-xl md:text-2xl font-bold text-white mb-6 flex items-center gap-3'
               >
                 <svg
                   class='w-8 h-8 text-purple-400'
@@ -1084,7 +1090,7 @@ const commonImageProps = {
               </div>
 
               <h3
-                class='text-2xl font-bold text-white mb-6 flex items-center gap-3 relative z-10'
+                class='text-xl md:text-2xl font-bold text-white mb-6 flex items-center gap-3 relative z-10'
               >
                 <svg
                   class='w-8 h-8 text-red-400'
@@ -1143,7 +1149,7 @@ const commonImageProps = {
               </div>
 
               <div
-                class='relative z-10 flex flex-col md:flex-row gap-8 items-center md:items-start text-left'
+                class='relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start text-left'
               >
                 <div class='space-y-6 flex-1'>
                   <!-- The Analogy -->
@@ -1217,7 +1223,7 @@ const commonImageProps = {
             </h2>
           </div>
 
-          <div class='grid lg:grid-cols-2 gap-12 lg:gap-20 items-start'>
+          <div class='grid lg:grid-cols-2 gap-8 lg:gap-20 items-start'>
             <!-- Left: The Visual Evidence -->
             <div class='relative group perspective-1000'>
               <!-- Polariod/File styling -->
@@ -1387,7 +1393,7 @@ const commonImageProps = {
             </p>
           </div>
 
-          <div class='grid md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto'>
+          <div class='grid md:grid-cols-2 gap-6 lg:gap-12 max-w-6xl mx-auto'>
             <!-- CARD 1: LEARNING (The Bad Way) -->
             <div class='relative group cursor-default'>
               <div
@@ -1395,7 +1401,7 @@ const commonImageProps = {
               >
               </div>
               <div
-                class='relative h-full bg-[#0f0f11] border border-red-900/30 rounded-3xl p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:border-red-500/50'
+                class='relative h-full bg-[#0f0f11] border border-red-900/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:border-red-500/50'
               >
                 <!-- Background Grid -->
                 <div
@@ -1481,7 +1487,7 @@ const commonImageProps = {
               >
               </div>
               <div
-                class='relative h-full bg-gradient-to-br from-[#131f17] to-[#0f0f11] border border-emerald-500/30 rounded-3xl p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_50px_rgba(16,185,129,0.15)]'
+                class='relative h-full bg-gradient-to-br from-[#131f17] to-[#0f0f11] border border-emerald-500/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_50px_rgba(16,185,129,0.15)]'
               >
                 <!-- Organic Background -->
                 <div
@@ -1621,7 +1627,7 @@ const commonImageProps = {
 
           <!-- The Formula Visualization -->
           <div
-            class='flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mb-16 select-none'
+            class='flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16 mb-16 select-none'
           >
             <!-- Variable i -->
             <div class='group relative'>
@@ -1669,7 +1675,7 @@ const commonImageProps = {
 
             <!-- Result -->
             <div class='relative'>
-              <div class='text-6xl md:text-8xl animate-bounce'>🌱</div>
+              <div class='text-6xl md:text-8xl animate-bounce'>🪴</div>
               <div
                 class='absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm font-bold text-white whitespace-nowrap'
               >
@@ -1688,7 +1694,8 @@ const commonImageProps = {
                 >Input yang Bisa Dipahami (i+1)</strong
               >.
             </p>
-            <div class='grid md:grid-cols-2 gap-8 my-10 text-left'>
+
+            <div class='grid md:grid-cols-2 gap-6 md:gap-8 my-10 text-left'>
               <div class='p-6 rounded-2xl bg-white/5 border border-white/5'>
                 <div class='text-4xl font-black text-gray-500 mb-2'>i</div>
                 <p class='text-sm text-gray-400'>
@@ -1721,13 +1728,377 @@ const commonImageProps = {
         </div>
       </section>
     </div>
-  </main>
-</BaseLayout>
 
-<style>
-  /* Local Scoped Styles */
-  .page-container {
-    /* Safe minimum height */
-    min-height: 80vh;
-  }
-</style>
+    <!-- NEW SECTION 4: KAIWA TRAP / FOSSILIZATION (Biohazard Theme) -->
+    <section class='py-8 md:py-12 relative'>
+      <div class='max-w-[90rem] mx-auto px-4 md:px-8 relative z-10'>
+        <div
+          class='relative md:bg-[#0d0d0d] md:rounded-[2.5rem] overflow-hidden md:border md:border-orange-500/20 md:shadow-2xl transition-all md:hover:border-orange-500/40'
+        >
+          <!-- Background Hazard Stripes -->
+          <div
+            class='absolute inset-0 opacity-5 pointer-events-none hidden md:block'
+            style='background-image: repeating-linear-gradient(45deg, #000 0, #000 10px, #ffd700 10px, #ffd700 20px);'
+          >
+          </div>
+
+          <div class='py-10 md:px-20 md:py-24 relative z-10'>
+            <!-- Header: WARNING -->
+            <div class='text-center mb-16'>
+              <div
+                class='inline-flex items-center gap-2 px-4 py-1.5 rounded bg-orange-500/10 border border-orange-500/30 text-orange-500 font-mono text-xs tracking-[0.2em] uppercase mb-4 animate-pulse'
+              >
+                ⚠ BIOHAZARD // COGNITIVE DAMAGE
+              </div>
+              <h2
+                class='text-4xl md:text-6xl font-black text-white tracking-tighter mb-4'
+              >
+                Gimana Latihan KAIWA? <br />
+                <span
+                  class='text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600'
+                  >Toxic untuk Pemula.</span
+                >
+              </h2>
+            </div>
+
+            <div class='grid lg:grid-cols-2 gap-8 lg:gap-20 items-start p-4'>
+              <!-- Left Column: The Specimen (Vertical Manga) -->
+              <div class='relative group'>
+                <!-- Glass Containment Unit Frame -->
+                <div
+                  class='absolute -inset-2 md:-inset-4 bg-orange-500/5 border border-orange-500/20 rounded-2xl backdrop-blur-sm -z-10'
+                >
+                </div>
+                <!-- Caution Tape Decorations -->
+                <div
+                  class='absolute -top-1 -left-1 md:-top-2 md:-left-2 w-12 md:w-16 h-12 md:h-16 border-t-2 border-l-2 border-orange-500/50 rounded-tl-xl pointer-events-none'
+                >
+                </div>
+                <div
+                  class='absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 w-12 md:w-16 h-12 md:h-16 border-b-2 border-r-2 border-orange-500/50 rounded-br-xl pointer-events-none'
+                >
+                </div>
+
+                <div
+                  class='rounded-lg overflow-hidden border border-white/10 shadow-2xl relative'
+                >
+                  <CldImage
+                    src='Manga_Fosilisasi_Kaiwa_Generated_Image_5psn085psn085psn_btvslb'
+                    width={1792}
+                    height={2400}
+                    alt='Ilustrasi Fosilisasi Kaiwa'
+                    class='w-full h-auto object-cover filter contrast-125 hover:scale-105 transition-transform duration-700'
+                  />
+                  <!-- Overlay Text -->
+                  <div
+                    class='absolute bottom-4 right-4 text-orange-500/50 font-mono text-xs rotate-90 origin-bottom-right'
+                  >
+                    FIG 1.0: PREMATURE OUTPUT
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: The Diagnosis -->
+              <div
+                class='prose-lg prose-invert text-[var(--token-text-secondary)]'
+              >
+                <p class='lead text-lg md:text-xl text-white font-bold'>
+                  Mungkin guru les atau temen kamu pernah bilang: <span
+                    class='text-orange-400'
+                    ><i
+                      >"Ayo, latihan kaiwa! Ngomong aja dulu, jangan takut
+                      salah!"</i
+                    ></span
+                  >
+                </p>
+
+                <p>
+                  Kedengarannya motivasi banget, ya? Tapi sebenarnya, nasihat
+                  kayak gitu bisa bikin lebih banyak mudarat daripada manfaat,
+                  terutama kalau kamu masih pemula.
+                </p>
+
+                <p>
+                  Kenapa? Karena kalau kamu dipaksa ngomong (output) sebelum
+                  otakmu dapet cukup input—yaitu nyerap bahasa lewat dengerin
+                  dan baca banyak—kamu nggak lagi "ngomong bahasa Jepang"
+                  beneran.
+                </p>
+
+                <p class='font-bold text-white mb-2'>
+                  Kamu lagi main <span class='text-red-500'>sirkus</span> di otak
+                  sendiri:
+                </p>
+
+                <!-- SYSTEM OVERLOAD VISUALIZATION -->
+                <div
+                  class='my-6 p-4 md:p-6 rounded-xl bg-black border border-red-900/30 font-mono text-xs md:text-sm shadow-inner relative overflow-hidden'
+                >
+                  <div
+                    class='absolute top-0 right-0 p-2 text-red-700 text-xs animate-pulse'
+                  >
+                    ● CPU OVERLOAD
+                  </div>
+                  <div class='space-y-2 md:space-y-3'>
+                    <div class='flex items-start gap-2 md:gap-4 text-gray-500'>
+                      <span class='text-red-500'>[STEP 0]</span>
+                      <span>Mikir ide dulu dalam Bahasa Indonesia...</span>
+                    </div>
+                    <div
+                      class='flex items-start gap-2 md:gap-4 text-orange-400'
+                    >
+                      <span class='text-red-500'>[STEP 1]</span>
+                      <span
+                        >Nerjemahin ke rumus bunpou yang dihafal... <span
+                          class='animate-pulse'>_</span
+                        ></span
+                      >
+                    </div>
+                    <div
+                      class='flex items-start gap-2 md:gap-4 text-orange-400'
+                    >
+                      <span class='text-red-500'>[STEP 2]</span>
+                      <span>Cari-cari kosakata yang pas...</span>
+                    </div>
+                    <div
+                      class='flex items-start gap-2 md:gap-4 text-red-500 font-bold'
+                    >
+                      <span class='text-red-500'>[STEP 3]</span>
+                      <span>Baru keluar dari mulut (Sering kacau).</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p>
+                  Proses ini bikin otakmu kerja **4 kali lipat** lebih berat
+                  dibanding native speaker, yang langsung ngomong tanpa mikir
+                  rumus. Hasilnya? Ngomongmu jadi kaku, lambat, penuh jeda, dan
+                  aksennya medok Indonesia banget.
+                </p>
+              </div>
+            </div>
+
+            <!-- FULL WIDTH CONTENT: Manga & Risk Assessment -->
+            <div class='mt-20 max-w-5xl mx-auto space-y-20'>
+              <!-- RISK ASSESSMENT MODULE -->
+              <div class='border-t border-dashed border-stone-800 pt-10'>
+                <div class='flex items-center gap-4 mb-8 justify-center'>
+                  <div
+                    class='h-px w-12 bg-gradient-to-r from-transparent to-stone-700'
+                  >
+                  </div>
+                  <h3
+                    class='text-3xl font-black text-white tracking-widest uppercase flex items-center gap-3'
+                  >
+                    <span class='text-red-600 animate-pulse text-4xl'>⚠</span>
+                    Risk Assessment
+                  </h3>
+                  <div
+                    class='h-px w-12 bg-gradient-to-l from-transparent to-stone-700'
+                  >
+                  </div>
+                </div>
+
+                <div class='grid md:grid-cols-2 gap-6 md:gap-8 mb-8'>
+                  <!-- DANGER DATA: FOSSILIZATION -->
+                  <div
+                    class='relative p-6 bg-white/5 rounded-xl border border-stone-800 hover:border-red-600 transition-colors group/danger'
+                  >
+                    <h4
+                      class='font-mono text-xs text-stone-500 mb-2 uppercase tracking-wider flex items-center gap-2'
+                    >
+                      <span class='w-2 h-2 bg-red-600 rounded-full'></span> Subject:
+                      Fossilization
+                    </h4>
+                    <p class='text-lg mb-4 text-stone-200'>
+                      Kesalahan yang dipaksa keluar mengeras jadi kebiasaan
+                      permanen.
+                    </p>
+
+                    <div
+                      class='bg-black/50 p-3 rounded border border-white/5 font-mono text-xs text-stone-400 mb-4'
+                    >
+                      <span class='text-red-500 font-bold'>STAT:</span> 95% learner
+                      failure rate detected.
+                    </div>
+
+                    <!-- Research Quote Block -->
+                    <div
+                      class='bg-black/40 border-l-2 border-red-900/50 p-4 rounded-r font-mono text-xs text-stone-400 leading-relaxed relative overflow-hidden group-hover/danger:border-red-600/50 transition-colors'
+                    >
+                      <div
+                        class='absolute top-0 right-0 p-2 opacity-30 text-red-500 text-[10px] tracking-widest'
+                      >
+                        [EXTRACT]
+                      </div>
+                      <p class='italic mb-3'>
+                        "Temporary fossilization refers to the stagnant process
+                        in which non-target factors are fixed in the target
+                        language... <span
+                          class='text-red-400 font-bold bg-red-900/20 px-1'
+                          >Research shows only 5% can reach the target language
+                          while 95% can’t.</span
+                        >"
+                      </p>
+                      <div
+                        class='mt-3 pt-3 border-t border-white/5 flex flex-col gap-3'
+                      >
+                        <div
+                          class='text-[10px] text-stone-600 uppercase flex items-center justify-between'
+                        >
+                          <span>Source: Qian, M., & Xiao, Z. (2010)</span>
+                          <span>Vol. 3, No. 1</span>
+                        </div>
+                        <a
+                          href='https://www.researchgate.net/publication/42386451_Strategies_for_Preventing_and_Resolving_Temporary_Fossilization_in_Second_Language_Acquisition'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          class='inline-block opacity-50 hover:opacity-100 transition-opacity'
+                        >
+                          <img
+                            src='https://www.researchgate.net/images/icons/svgicons/researchgate-logo-white.svg'
+                            alt='Read on ResearchGate'
+                            class='h-4'
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- MECHANISM: NEGATIVE TRANSFER -->
+                  <div
+                    class='relative p-6 bg-white/5 rounded-xl border border-stone-800 hover:border-orange-500 transition-colors group/mech flex flex-col justify-between'
+                  >
+                    <div>
+                      <h4
+                        class='font-mono text-xs text-stone-500 mb-4 uppercase tracking-wider flex items-center gap-2'
+                      >
+                        <span class='w-2 h-2 bg-orange-500 rounded-full'></span>
+                        Mechanism: Negative Transfer
+                      </h4>
+                      <div
+                        class='rounded-lg overflow-hidden border border-white/10 mb-4 w-full'
+                      >
+                        <CldImage
+                          src='Manga_Fosilisasi_Kaiwa_v2_Generated_Image_5psn085psn085psn_zgmtlj'
+                          width={1635}
+                          height={1129}
+                          alt='Ilustrasi Kerusakan Otak'
+                          class='w-full h-auto object-contain opacity-80 group-hover/mech:opacity-100 transition-opacity duration-500'
+                        />
+                      </div>
+                      <p>
+                        Otak mencampur struktur Indonesia ke Jepang. Bahasa
+                        Jepang jadi <span
+                          class='line-through decoration-red-500/50 text-stone-500'
+                          >distorsi</span
+                        >.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- COMPARATIVE ANALYSIS: WITNESS LOG -->
+                <div
+                  class='bg-white/5 rounded-xl p-6 md:p-8 border border-white/10 relative overflow-hidden mb-8'
+                >
+                  <div class='absolute top-0 right-0 p-4 opacity-20'>
+                    <svg
+                      class='w-24 h-24 text-white'
+                      fill='currentColor'
+                      viewBox='0 0 24 24'
+                      ><path
+                        d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z'
+                      ></path></svg
+                    >
+                  </div>
+                  <h4
+                    class='font-mono text-xs text-blue-400 mb-6 uppercase tracking-wider border-b border-blue-400/20 pb-2 inline-block'
+                  >
+                    Comparative Analysis // Witness Log
+                  </h4>
+                  <div class='grid gap-6 text-base'>
+                    <div class='flex gap-4 items-start'>
+                      <div
+                        class='text-emerald-400 font-bold w-20 shrink-0 tracking-wider'
+                      >
+                        NATIVE
+                      </div>
+                      <div class='text-stone-300'>
+                        Kalau ragu, mereka <i>paraphrase</i> atau tolak halus ("Ano
+                        ne..."). Mereka menjaga <i>flow</i>.
+                      </div>
+                    </div>
+                    <div class='flex gap-4 items-start'>
+                      <div
+                        class='text-red-400 font-bold w-20 shrink-0 tracking-wider'
+                      >
+                        YOU
+                      </div>
+                      <div class='text-stone-300'>
+                        Maksa pakai logika dewasa. Langsung tebas apa yang ada
+                        di kepala meski <i>invalid syntax</i>.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SOLUTION: PROTOCOL UPDATE -->
+                <div
+                  class='bg-emerald-900/10 border border-emerald-500/20 p-6 md:p-8 rounded-2xl relative overflow-hidden'
+                >
+                  <div
+                    class='absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl -mr-10 -mt-10'
+                  >
+                  </div>
+                  <h3
+                    class='text-emerald-400 font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-2 relative z-10'
+                  >
+                    <span
+                      class='w-2 h-2 rounded-full bg-emerald-500 animate-pulse'
+                    ></span>
+                    Recommended Protocol
+                  </h3>
+                  <div class='grid md:grid-cols-2 gap-6 md:gap-8 relative z-10'>
+                    <div>
+                      <p class='mb-4 text-xl text-white font-bold'>
+                        Peluk <span class='text-emerald-400'>Silent Period</span
+                        >.
+                      </p>
+                      <p class='text-stone-400 text-sm leading-relaxed'>
+                        Jangan paksa output. Biarkan otakmu mengumpulkan data
+                        pola bahasa secara alami lewat input masif.
+                      </p>
+                    </div>
+                    <ul class='space-y-3 text-sm text-stone-300'>
+                      <li class='flex items-start gap-2'>
+                        <span class='text-emerald-500 mt-1'>✓</span> Fokus input
+                        massal (Podcast, Anime, Manga)
+                      </li>
+                      <li class='flex items-start gap-2'>
+                        <span class='text-emerald-500 mt-1'>✓</span> Batasi kosakata
+                        aktif ~3.000 kata dasar
+                      </li>
+                      <li class='flex items-start gap-2'>
+                        <span class='text-emerald-500 mt-1'>✓</span> Biarkan grammar
+                        tumbuh sendiri tanpa rumus
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      /* Local Scoped Styles */
+      .page-container {
+        /* Safe minimum height */
+        min-height: 80vh;
+      }
+    </style>
+  </main></BaseLayout
+>
