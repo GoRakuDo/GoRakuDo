@@ -2170,15 +2170,16 @@ const commonImageProps = {
                 class='text-xl md:text-2xl text-stone-100 leading-relaxed font-medium'
               >
                 Metode tradisional bikin kamu ngerasa belajar bahasa Jepang
-                kayak naik gunung tanpa puncak—selalu ada bab baru, rumus baru,
-                tapi nggak pernah sampe.
+                kayak menyiram tanah kering tandus tanpa bibit benih
+                pohonnya—selalu ada bab baru, rumus baru, tapi sama sekali tidak
+                ada tanaman atau pohon yang tumbuh.
               </p>
               <div
                 class='space-y-4 text-base md:text-lg text-stone-400 leading-relaxed'
               >
                 <p>
-                  Di sini, kami rangkum ulang 7 fase rumit dari metode Refold
-                  jadi cuma <strong class='text-stone-200'
+                  Di sini, kami menyusun ulang fase belajar bahasa Jepang yang
+                  rumit jadi cuma <strong class='text-stone-200'
                     >4 tahap biologis yang masuk akal buat otak manusia</strong
                   >. Ini bukan kurikulum sekolah yang kaku; ini proses
                   penyembuhan alami buat bangun intuisi nativeness kamu.
@@ -2211,58 +2212,146 @@ const commonImageProps = {
               <div
                 class='relative rounded-[2rem] overflow-hidden border border-emerald-900/30 shadow-2xl bg-[#080a08]'
               >
+                <!-- Quest Card Overlay -->
+                <div
+                  class='relative w-full rounded-t-[2rem] rounded-b-none border-b border-emerald-500/30 p-6 z-20 bg-white/5 backdrop-blur-2xl shadow-2xl 2xl:absolute 2xl:w-auto 2xl:top-6 2xl:left-6 2xl:right-6 2xl:rounded-xl 2xl:border 2xl:border-emerald-500/30 2xl:p-5'
+                >
+                  <!-- Header -->
+                  <div class='flex items-center justify-between gap-2 mb-2'>
+                    <div class='flex items-center gap-2'>
+                      <span class='flex h-2 w-2 relative'>
+                        <span
+                          class='animate-ping absolute inline-flex h-2 w-2 rounded-full bg-emerald-400 opacity-75'
+                        ></span>
+                        <span
+                          class='relative inline-flex rounded-full h-2 w-2 bg-emerald-500'
+                        ></span>
+                      </span>
+                      <span
+                        class='text-[10px] md:text-xs font-bold text-emerald-400 tracking-[0.15em] uppercase'
+                      >
+                        Fase 1 [Bibit Intuisi]
+                      </span>
+                    </div>
+                    <span
+                      class='text-[10px] font-mono text-emerald-400 hidden md:block'
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+
+                  <!-- Content -->
+                  <h4 class='text-sm md:text-base font-bold text-white mb-1'>
+                    Mission: Absorption
+                  </h4>
+                  <p
+                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
+                  >
+                    Pahami <strong>2.000 kosakata pertama</strong> beserta penggunaannya
+                    di kehidupan sehari-hari. Pastiin kamu udah bisa baca hiragana
+                    dan katakana.
+                  </p>
+
+                  <!-- Progress Bar -->
+                  <div class='mt-3 pt-2 border-t border-white/10'>
+                    <div
+                      class='h-1 w-full bg-white/10 rounded-full overflow-hidden'
+                    >
+                      <div
+                        class='h-full bg-emerald-500 w-full origin-left animate-progress-bar'
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <CldImage
                   src={The_Seed_Image}
                   width={800}
                   height={1000}
                   alt='The Seed - Tahap 1'
-                  class='w-full h-auto object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 group-hover:scale-105 transform'
+                  class='w-full h-auto object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700'
                 />
-                <!-- Overlay Badge -->
-                <div
-                  class='absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-widest'
-                >
-                  Phase 1: Foundation
+              </div>
+
+              <!-- Floating Insight (Glassmorphism Card) -->
+              <div
+                class='relative -mt-16 ml-auto mr-4 w-[90%] md:w-[80%] p-5 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl z-20 group-hover:translate-y-[-10px] transition-transform duration-700 mb-4'
+              >
+                <div class='flex items-center gap-3 mb-3'>
+                  <div
+                    class='w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      ><path
+                        d='M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z'
+                      ></path><path
+                        d='M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z'
+                      ></path><path
+                        d='M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4'
+                      ></path><path d='M17.599 6.5a3 3 0 0 0 .399-1.375'
+                      ></path><path d='M6.003 5.125A3 3 0 0 0 6.401 6.5'
+                      ></path><path d='M3.477 10.896a4 4 0 0 1 .585-.396'
+                      ></path><path d='M19.938 10.5a4 4 0 0 1 .585.396'
+                      ></path><path d='M6 18a4 4 0 0 1-1.967-.516'></path><path
+                        d='M19.967 17.484A4 4 0 0 1 18 18'></path></svg
+                    >
+                  </div>
+                  <h4
+                    class='text-emerald-100 font-bold text-sm uppercase tracking-wider'
+                  >
+                    Mindset Benih Intuisi
+                  </h4>
                 </div>
+                <p class='text-stone-300 text-sm leading-relaxed'>
+                  Di tahap ini, kalau kedengeran kayak suara bising,
+                  bagus—otakmu lagi dekoding. Kamu lagi isi "ember" memori tanpa
+                  tekanan output prematur atau takut salah.
+                </p>
               </div>
             </div>
 
             <!-- Content Column -->
             <div class='relative overflow-hidden'>
               <h3 class='text-3xl md:text-5xl font-black text-emerald-100 mb-2'>
-                Tahap 1: The Silent Sponge
+                Tahap 1: Bibit Intuisi
               </h3>
               <p
                 class='text-emerald-500 font-mono text-sm tracking-widest uppercase mb-8'
               >
-                (Si Spons Diam - Phase Pemula)
+                (Bibit Intuisi yang Polos - Phase Pemula)
               </p>
 
               <div class='prose prose-invert prose-lg text-stone-300 mb-10'>
                 <p>
-                  <strong class='text-white'
+                  Bayangin intuisi bahasa Jepang kamu lagi kayak benih Sakura
+                  bonsai yang baru ditanam—masih rapuh, butuh nutrisi dasar dulu
+                  sebelum bisa bertunas. <strong class='text-white'
                     >Lupakan dulu soal ngomong atau nulis.</strong
                   > Tugas utama di tahap ini: <strong
                     >tutup mulut dan nyerap aja</strong
-                  >. Kebanyakan orang gagal karena langsung maksa lari marathon
-                  sebelum bisa jalan. Di sini, berbicara dilarang dulu—karena
-                  kamu lagi bangun pondasi intuisi dasar (deep structure).
+                  >.
                 </p>
                 <p>
+                  Kebanyakan orang gagal karena langsung maksa lari marathon
+                  sebelum bisa jalan. Di sini, berbicara dilarang dulu—karena
+                  kamu lagi bangun pondasi intuisi dasar (deep structure).
                   Otakmu butuh waktu buat nyerap pola bahasa secara bawah sadar,
                   kayak bayi yang cuma dengerin dulu sebelum bisa bilang "mama".
                 </p>
-                <div class='pl-4 border-l-2 border-emerald-800/50 my-6'>
-                  <p class='text-stone-400 text-base italic'>
-                    Goal: Pahami 2.000 kosakata pertama beserta penggunaannya di
-                    kehidupan sehari-hari. Pastiin kamu udah bisa baca hiragana
-                    dan katakana.
-                  </p>
-                </div>
+                <!-- Quest Card moved to image overlay -->
               </div>
 
               <div
-                class='absolute -top-20 -right-20 text-[15rem] leading-none opacity-5 font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
+                class='absolute top-0 right-0 text-[12rem] leading-none opacity-[0.08] font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
               >
                 幼級
               </div>
@@ -2501,6 +2590,8 @@ const commonImageProps = {
                   </p>
                 </div>
               </div>
+
+              <!-- Closing insight moved to visual column -->
             </div>
           </div>
 
@@ -2511,36 +2602,33 @@ const commonImageProps = {
             <!-- Content Column (Order 2 on Mobile, 1 on Desktop) -->
             <div class='relative order-2 lg:order-1 overflow-hidden'>
               <h3 class='text-3xl md:text-5xl font-black text-lime-100 mb-2'>
-                Tahap 2: The Awakening
+                Tahap 2: Kecambah Intuisi
               </h3>
               <p
                 class='text-lime-400 font-mono text-sm tracking-widest uppercase mb-8'
               >
-                (Kebangkitan Intuisi - Phase Dasar/小級)
+                (Permulaan Intuisi - Phase Dasar)
               </p>
 
               <div class='prose prose-invert prose-lg text-stone-300 mb-10'>
                 <p>
-                  Tiba-tiba, "klik!"—suara bising berubah jadi makna yang
-                  nyambung. Di tahap ini, kabut di otak hilang; kamu nggak lagi
-                  nerjemahin kata per kata (dari 0 ke 1 ke 2), tapi <strong
-                    >langsung paham intuitif</strong
+                  Sekarang, benihmu mulai bertunas jadi kecambah kecil—masih
+                  lemah, tapi udah mulai nunjukin tanda-tanda hidup. Tiba-tiba,
+                  "klik!"—suara bising berubah jadi makna yang nyambung. Di
+                  tahap ini, kabut di otak hilang; kamu nggak lagi nerjemahin
+                  kata per kata (dari 0 ke 1 ke 2), tapi <strong
+                    >mulai bisa paham intuitif</strong
                   > (0 langsung ke 1).
                 </p>
                 <p>
                   Kamu mulai bisa ikutin percakapan Jepang, meski belum
-                  100%—cukup dapet konteks sehari-hari.
+                  100%—cukup dapet konteks sehari-hari secara abstrak.
                 </p>
-                <div class='pl-4 border-l-2 border-lime-500/30 my-6'>
-                  <p class='text-stone-400 text-base italic'>
-                    Goal: Pahami 7.500 kosakata pertama, dengan definisi dari
-                    "kacamata penutur asli Jepang".
-                  </p>
-                </div>
+                <!-- Quest Card moved to image overlay -->
               </div>
 
               <div
-                class='absolute -top-20 -right-20 text-[15rem] leading-none opacity-5 font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
+                class='absolute top-0 right-0 text-[12rem] leading-none opacity-[0.08] font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
               >
                 小級
               </div>
@@ -2687,6 +2775,8 @@ const commonImageProps = {
                   </p>
                 </div>
               </div>
+
+              <!-- Closing insight moved to visual column -->
             </div>
 
             <!-- Visual Column -->
@@ -2698,6 +2788,57 @@ const commonImageProps = {
               <div
                 class='relative rounded-[2rem] overflow-hidden border border-lime-500/20 shadow-2xl bg-[#0a0c0a]'
               >
+                <!-- Quest Card Overlay -->
+                <div
+                  class='relative w-full rounded-t-[2rem] rounded-b-none border-b border-lime-500/30 p-6 z-20 bg-white/5 backdrop-blur-2xl shadow-2xl 2xl:absolute 2xl:w-auto 2xl:top-6 2xl:left-6 2xl:right-6 2xl:rounded-xl 2xl:border 2xl:border-lime-500/30 2xl:p-5'
+                >
+                  <!-- Header -->
+                  <div class='flex items-center justify-between gap-2 mb-2'>
+                    <div class='flex items-center gap-2'>
+                      <span class='flex h-2 w-2 relative'>
+                        <span
+                          class='animate-ping absolute inline-flex h-2 w-2 rounded-full bg-lime-400 opacity-75'
+                        ></span>
+                        <span
+                          class='relative inline-flex rounded-full h-2 w-2 bg-lime-500'
+                        ></span>
+                      </span>
+                      <span
+                        class='text-[10px] md:text-xs font-bold text-lime-400 tracking-[0.15em] uppercase'
+                      >
+                        Fase 2 [Kecambah Intuisi]
+                      </span>
+                    </div>
+                    <span
+                      class='text-[10px] font-mono text-lime-400 hidden md:block'
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+
+                  <!-- Content -->
+                  <h4 class='text-sm md:text-base font-bold text-white mb-1'>
+                    Mission: Breakthrough
+                  </h4>
+                  <p
+                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
+                  >
+                    Pahami <strong>7.500 kosakata pertama</strong>, dengan
+                    definisi dari "kacamata penutur asli Jepang".
+                  </p>
+
+                  <!-- Progress Bar -->
+                  <div class='mt-3 pt-2 border-t border-white/10'>
+                    <div
+                      class='h-1 w-full bg-white/10 rounded-full overflow-hidden'
+                    >
+                      <div
+                        class='h-full bg-lime-500 w-full origin-left animate-progress-bar'
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <CldImage
                   src={The_Sprout_Image}
                   width={800}
@@ -2705,11 +2846,45 @@ const commonImageProps = {
                   alt='The Sprout - Tahap 2'
                   class='w-full h-auto object-cover opacity-90 group-hover:scale-105 transition-transform duration-700'
                 />
-                <div
-                  class='absolute top-6 right-6 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur border border-lime-500/30 text-lime-400 text-xs font-bold uppercase tracking-widest'
-                >
-                  Phase 2: Awakening
+              </div>
+
+              <!-- Floating Insight (Glassmorphism Card) -->
+              <div
+                class='relative -mt-16 mr-auto ml-4 w-[90%] md:w-[80%] p-5 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl z-20 group-hover:translate-y-[-10px] transition-transform duration-700 mb-4'
+              >
+                <div class='flex items-center gap-3 mb-3'>
+                  <div
+                    class='w-8 h-8 rounded-full bg-lime-500/20 flex items-center justify-center text-lime-400'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      ><path d='M7 20h10'></path><path
+                        d='M10 20c5.5-2.5.8-6.4 3-10'></path><path
+                        d='M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z'
+                      ></path><path
+                        d='M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z'
+                      ></path></svg
+                    >
+                  </div>
+                  <h4
+                    class='text-lime-100 font-bold text-sm uppercase tracking-wider'
+                  >
+                    Tunas Mindset
+                  </h4>
                 </div>
+                <p class='text-stone-300 text-sm leading-relaxed'>
+                  Sertifikat bukan segalanya—fokus bentuk intuisi alami. Di
+                  tahap ini, "belajar" berubah jadi "ketagihan", kayak kecambah
+                  yang menjulang mencari cahaya.
+                </p>
               </div>
             </div>
           </div>
@@ -2727,6 +2902,57 @@ const commonImageProps = {
               <div
                 class='relative rounded-[2rem] overflow-hidden border border-orange-700/30 shadow-2xl bg-[#0c0a08]'
               >
+                <!-- Quest Card Overlay -->
+                <div
+                  class='relative w-full rounded-t-[2rem] rounded-b-none border-b border-orange-500/30 p-6 z-20 bg-white/5 backdrop-blur-2xl shadow-2xl 2xl:absolute 2xl:w-auto 2xl:top-6 2xl:left-6 2xl:right-6 2xl:rounded-xl 2xl:border 2xl:border-orange-500/30 2xl:p-5'
+                >
+                  <!-- Header -->
+                  <div class='flex items-center justify-between gap-2 mb-2'>
+                    <div class='flex items-center gap-2'>
+                      <span class='flex h-2 w-2 relative'>
+                        <span
+                          class='animate-ping absolute inline-flex h-2 w-2 rounded-full bg-orange-400 opacity-75'
+                        ></span>
+                        <span
+                          class='relative inline-flex rounded-full h-2 w-2 bg-orange-500'
+                        ></span>
+                      </span>
+                      <span
+                        class='text-[10px] md:text-xs font-bold text-orange-400 tracking-[0.15em] uppercase'
+                      >
+                        Fase 3 [Tunas Intuisi]
+                      </span>
+                    </div>
+                    <span
+                      class='text-[10px] font-mono text-orange-400 hidden md:block'
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+
+                  <!-- Content -->
+                  <h4 class='text-sm md:text-base font-bold text-white mb-1'>
+                    Mission: Endurance
+                  </h4>
+                  <p
+                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
+                  >
+                    Perdalam <strong>12.500-20.000 kosakata</strong>, pahami
+                    "cara orang Jepang berpikir dan bicara".
+                  </p>
+
+                  <!-- Progress Bar -->
+                  <div class='mt-3 pt-2 border-t border-white/10'>
+                    <div
+                      class='h-1 w-full bg-white/10 rounded-full overflow-hidden'
+                    >
+                      <div
+                        class='h-full bg-orange-500 w-full origin-left animate-progress-bar'
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <CldImage
                   src={Adolescent_Sapling_Image}
                   width={800}
@@ -2734,18 +2960,50 @@ const commonImageProps = {
                   alt='The Sapling - Tahap 3'
                   class='w-full h-auto object-cover opacity-90 group-hover:scale-105 transition-transform duration-700'
                 />
-                <div
-                  class='absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-widest'
-                >
-                  Phase 3: Eruption
+              </div>
+
+              <!-- Floating Insight (Glassmorphism Card) -->
+              <div
+                class='relative -mt-16 ml-auto mr-4 w-[90%] md:w-[80%] p-5 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl z-20 group-hover:translate-y-[-10px] transition-transform duration-700 mb-4'
+              >
+                <div class='flex items-center gap-3 mb-3'>
+                  <div
+                    class='w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      ><path
+                        d='M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5'
+                      ></path><path d='M9 18h6'></path><path d='M10 22h4'
+                      ></path></svg
+                    >
+                  </div>
+                  <h4
+                    class='text-orange-100 font-bold text-sm uppercase tracking-wider'
+                  >
+                    Intuisi Tumbuh
+                  </h4>
                 </div>
+                <p class='text-stone-300 text-sm leading-relaxed'>
+                  Otakmu mulai bisa nyadarin kesalahan sendiri via intuisi.
+                  Tunggu sedikit lagi karena "Bibit remaja" ini lagi tumbuh
+                  kuat, dan siap bercabang lebih lebar.
+                </p>
               </div>
             </div>
 
             <!-- Content Column -->
             <div class='relative overflow-hidden'>
               <div
-                class='absolute -top-20 -right-20 text-[15rem] leading-none opacity-5 font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
+                class='absolute top-0 right-0 text-[12rem] leading-none opacity-[0.08] font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
               >
                 中級
               </div>
@@ -2753,30 +3011,36 @@ const commonImageProps = {
               <h3
                 class='text-3xl md:text-5xl font-black text-orange-100 mb-2 relative z-10'
               >
-                Tahap 3: The Natural Eruption
+                Tahap 3: Tunas Intuisi
               </h3>
               <p
                 class='text-orange-400 font-mono text-sm tracking-widest uppercase mb-8 relative z-10'
               >
-                (Ledakan Alami - Phase Menengah)
+                (Dilema Intuisi Remaja - Phase Menengah)
               </p>
 
               <div
                 class='prose prose-invert prose-lg text-stone-300 mb-10 relative z-10'
               >
                 <p>
-                  Ngomong nggak lagi dipaksa; kata-kata tumpah sendiri kayak air
-                  ember yang penuh. Karena input berkualitas udah banjir, output
-                  mulai keluar otomatis. Awalnya kikuk kayak anak kecil belajar
-                  ngomong—bikin kesalahan wajar, tapi terdengar asli, bukan
-                  robot dari rumus.
+                  Kecambahmu udah jadi bibit remaja—masih muda, tapi akarnya
+                  kuat dan mulai cabang. Kata-kata bahasa Jepang mulai meluap
+                  tumpah sendiri dalam pikiran kayak air ember yang penuh.
+                  Mungkin tahap ini terasa paling panjang dan bikin frustasi,
+                  kayak lagi nyangkut di labirin: kamu sudah paham banyak hal,
+                  tapi masih sering ketemu ambiguitas, merasa stagnan, dan kayak
+                  kemampuanmu nggak naik-naik.
                 </p>
-                <div class='pl-4 border-l-2 border-orange-500/30 my-6'>
-                  <p class='text-stone-400 text-base italic'>
-                    Goal: Perdalam 12.500-20.000 kosakata, pahami "cara orang
-                    Jepang berpikir dan bicara".
-                  </p>
-                </div>
+                <p>
+                  Tenang, ini sangat wajar. Semua yang kamu serap mulai
+                  terinternalisasi mendalam di pikiran sadar dan bawah sadarmu.
+                  Proses ini memang lambat terasa, tapi justru di sinilah
+                  intuisi nativemu benar-benar menguat. Tetap jaga jam immersion
+                  harianmu dengan konsisten, dan coba tantang diri dengan materi
+                  yang sedikit lebih sulit—tapi tetap comprehensible input,
+                  jangan sampai terlalu berat hingga bikin stres.
+                </p>
+                <!-- Quest Card moved to image overlay -->
               </div>
 
               <div class='space-y-4 relative z-10'>
@@ -2872,6 +3136,8 @@ const commonImageProps = {
                   </p>
                 </div>
               </div>
+
+              <!-- Closing insight moved to visual column -->
             </div>
           </div>
 
@@ -2882,7 +3148,7 @@ const commonImageProps = {
             <!-- Content Column -->
             <div class='relative order-2 lg:order-1 overflow-hidden'>
               <div
-                class='absolute -top-20 -left-20 text-[15rem] leading-none opacity-5 font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
+                class='absolute top-0 left-0 text-[12rem] leading-none opacity-[0.08] font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
               >
                 高級
               </div>
@@ -2890,7 +3156,7 @@ const commonImageProps = {
               <h3
                 class='text-3xl md:text-5xl font-black text-purple-100 mb-2 relative z-10'
               >
-                Tahap 4: The Native Life
+                Tahap 4: Intuisi Pra-Mekar
               </h3>
               <p
                 class='text-purple-400 font-mono text-sm tracking-widest uppercase mb-8 relative z-10'
@@ -2902,17 +3168,13 @@ const commonImageProps = {
                 class='prose prose-invert prose-lg text-stone-300 mb-10 relative z-10'
               >
                 <p>
-                  Kamu bukan "murid" lagi—kamu udah tamat. Nggak lagi "belajar"
-                  Jepang; kamu hidup di dalamnya. Telinga terbiasa sepenuhnya
-                  dengan penekanan dan gaya bicara native—semua input familiar,
-                  paham tanpa mikir.
+                  Bibit remajamu udah siap pra-mekar—akar dalam, cabang lebat,
+                  tinggal nunggu bunga Sakura mekar penuh. Kamu bukan "murid"
+                  lagi—kamu udah tamat. Nggak lagi "belajar" Jepang; kamu hidup
+                  di dalamnya. Telinga terbiasa sepenuhnya dengan penekanan dan
+                  gaya bicara native—semua input familiar, paham tanpa mikir.
                 </p>
-                <div class='pl-4 border-l-2 border-purple-500/30 my-6'>
-                  <p class='text-stone-400 text-base italic'>
-                    Goal: Optimalisasi dan perluas intuisi—20.000+ kosakata,
-                    bahasa jadi alat sehari-hari.
-                  </p>
-                </div>
+                <!-- Quest Card moved to image overlay -->
               </div>
 
               <div class='grid gap-6 relative z-10'>
@@ -3009,6 +3271,8 @@ const commonImageProps = {
                   </div>
                 </div>
               </div>
+
+              <!-- Closing insight moved to visual column -->
             </div>
 
             <!-- Visual Column -->
@@ -3020,6 +3284,58 @@ const commonImageProps = {
               <div
                 class='relative rounded-[2rem] overflow-hidden border border-purple-500/30 shadow-2xl bg-[#0c080c]'
               >
+                <!-- Quest Card Overlay -->
+                <div
+                  class='relative w-full rounded-t-[2rem] rounded-b-none border-b border-purple-500/30 p-6 z-20 bg-white/5 backdrop-blur-2xl shadow-2xl 2xl:absolute 2xl:w-auto 2xl:top-6 2xl:left-6 2xl:right-6 2xl:rounded-xl 2xl:border 2xl:border-purple-500/30 2xl:p-5'
+                >
+                  <!-- Header -->
+                  <div class='flex items-center justify-between gap-2 mb-2'>
+                    <div class='flex items-center gap-2'>
+                      <span class='flex h-2 w-2 relative'>
+                        <span
+                          class='animate-ping absolute inline-flex h-2 w-2 rounded-full bg-purple-400 opacity-75'
+                        ></span>
+                        <span
+                          class='relative inline-flex rounded-full h-2 w-2 bg-purple-500'
+                        ></span>
+                      </span>
+                      <span
+                        class='text-[10px] md:text-xs font-bold text-purple-400 tracking-[0.15em] uppercase'
+                      >
+                        Fase 4 [Intuisi Pra-Mekar]
+                      </span>
+                    </div>
+                    <span
+                      class='text-[10px] font-mono text-purple-400 hidden md:block'
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+
+                  <!-- Content -->
+                  <h4 class='text-sm md:text-base font-bold text-white mb-1'>
+                    Mission: Mastery
+                  </h4>
+                  <p
+                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
+                  >
+                    Goal: Optimalisasi dan perluas intuisi—<strong
+                      >20.000+ kosakata</strong
+                    >, bahasa jadi alat sehari-hari.
+                  </p>
+
+                  <!-- Progress Bar -->
+                  <div class='mt-3 pt-2 border-t border-white/10'>
+                    <div
+                      class='h-1 w-full bg-white/10 rounded-full overflow-hidden'
+                    >
+                      <div
+                        class='h-full bg-purple-500 w-full origin-left animate-progress-bar'
+                      >
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <CldImage
                   src={The_Pre_Bloom_Image}
                   width={800}
@@ -3027,11 +3343,44 @@ const commonImageProps = {
                   alt='The Pre-Bloom - Tahap 4'
                   class='w-full h-auto object-cover opacity-90 group-hover:scale-105 transition-transform duration-700'
                 />
-                <div
-                  class='absolute top-6 right-6 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur border border-purple-500/30 text-purple-400 text-xs font-bold uppercase tracking-widest'
-                >
-                  Phase 4: Mastery
+              </div>
+
+              <!-- Floating Insight (Glassmorphism Card) -->
+              <div
+                class='relative -mt-16 mr-auto ml-4 w-[90%] md:w-[80%] p-5 md:p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl z-20 group-hover:translate-y-[-10px] transition-transform duration-700 mb-4'
+              >
+                <div class='flex items-center gap-3 mb-3'>
+                  <div
+                    class='w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      ><path
+                        d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z'
+                      ></path><path d='M20 3v4'></path><path d='M22 5h-4'
+                      ></path><path d='M4 17v2'></path><path d='M5 18H3'
+                      ></path></svg
+                    >
+                  </div>
+                  <h4
+                    class='text-purple-100 font-bold text-sm uppercase tracking-wider'
+                  >
+                    Mekar & Hidup
+                  </h4>
                 </div>
+                <p class='text-stone-300 text-sm leading-relaxed'>
+                  Kamu udah bilingual asli, bukan produk hafalan—seperti Sakura
+                  bonsai yang siap mekar, jadi indah dan kuat dari akar sampai
+                  ujung.
+                </p>
               </div>
             </div>
           </div>
@@ -3039,4 +3388,23 @@ const commonImageProps = {
       </div>
     </section>
   </main>
+  <style>
+    @keyframes progressLoading {
+      0% {
+        transform: scaleX(0);
+      }
+
+      100% {
+        transform: scaleX(1);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .animate-progress-bar {
+        animation: progressLoading 2.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+        transform-origin: left;
+        will-change: transform;
+      }
+    }
+  </style>
 </BaseLayout>
