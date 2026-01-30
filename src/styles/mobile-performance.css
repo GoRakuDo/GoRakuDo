@@ -10,17 +10,6 @@
  */
 
 @media (max-width: 768px) {
-  /* モバイル用アニメーション無効化 - パフォーマンス最適化 */
-  /* モバイル用アニメーション無効化 - パフォーマンス最適化 */
-  *:not(.animate-marquee):not(.animate-marquee-vertical),
-  *:not(.animate-marquee):not(.animate-marquee-vertical)::before,
-  *:not(.animate-marquee):not(.animate-marquee-vertical)::after {
-    will-change: auto !important;
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
-  }
-
   /* post-emoji例外 - モバイルでも回転を維持 */
   .post-emoji {
     transform: rotate(15deg) !important;
@@ -57,5 +46,16 @@
   .toc-expand-icon.rotated {
     transform: rotate(180deg) !important;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* モバイル用アニメーション無効化 - パフォーマンス最適化 (specificity低下のため最後に配置) */
+  /* stylelint-disable-next-line no-descending-specificity */
+  *:not(.animate-marquee, .animate-marquee-vertical),
+  *:not(.animate-marquee, .animate-marquee-vertical)::before,
+  *:not(.animate-marquee, .animate-marquee-vertical)::after {
+    will-change: auto !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
   }
 }

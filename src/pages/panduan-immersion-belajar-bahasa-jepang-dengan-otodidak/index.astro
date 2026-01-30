@@ -3863,19 +3863,21 @@ const secondRow = reviews.slice(reviews.length / 2);
   }
 
   /* Playful Animations */
-  @keyframes pulse-slow {
+  @keyframes pulseSlow {
     0%,
     100% {
       opacity: 0.2;
       transform: scale(1);
     }
+
     50% {
       opacity: 0.15;
       transform: scale(1.1);
     }
   }
+
   .animate-pulse-slow {
-    animation: pulse-slow 6s infinite ease-in-out;
+    animation: pulseSlow 6s infinite ease-in-out;
   }
 
   @keyframes float {
@@ -3883,43 +3885,50 @@ const secondRow = reviews.slice(reviews.length / 2);
     100% {
       transform: translateY(0) rotate(-12deg);
     }
+
     50% {
       transform: translateY(-10px) rotate(-10deg);
     }
   }
+
   .animate-float {
     animation: float 5s infinite ease-in-out;
   }
 
-  @keyframes bounce-subtle {
+  @keyframes bounceSubtle {
     0%,
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-3px);
     }
   }
+
   .animate-bounce-subtle {
-    animation: bounce-subtle 2s infinite ease-in-out;
+    animation: bounceSubtle 2s infinite ease-in-out;
   }
 
-  @keyframes spin-slow {
+  @keyframes spinSlow {
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(360deg);
     }
   }
+
   .animate-spin-slow {
-    animation: spin-slow 8s linear infinite;
+    animation: spinSlow 8s linear infinite;
   }
 
   /* 3D Transform Utilities */
   .perspective-1000 {
     perspective: 1000px;
   }
+
   .transform-style-3d {
     transform-style: preserve-3d;
   }
