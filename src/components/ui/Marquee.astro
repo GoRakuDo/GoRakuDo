@@ -108,4 +108,17 @@ const {
       transparent
     );
   }
+
+  /* Force animation on mobile to override any global performance disabling */
+  @media (max-width: 768px) {
+    /* stylelint-disable declaration-no-important */
+    .animate-marquee-vertical {
+      animation: marqueeVertical var(--duration) linear infinite !important;
+    }
+
+    .animate-marquee {
+      animation: marquee var(--duration) linear infinite !important;
+    }
+    /* stylelint-enable declaration-no-important */
+  }
 </style>

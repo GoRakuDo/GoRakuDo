@@ -5,7 +5,7 @@
 /* 
  * モバイルデバイス（768px以下）でアニメーション・transform・hover/activeを無効化
  * 目的: パフォーマンス向上、バッテリー消費削減、ユーザー体験改善
- * 例外: WaveAnimation.astro、hero.astro、post-emoji
+ * 例外: WaveAnimation.astro、hero.astro、post-emoji、Marquee
  * 注意: !important は他のスタイルを確実に上書きするため必須
  */
 
@@ -48,14 +48,31 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
-  /* モバイル用アニメーション無効化 - パフォーマンス最適化 (specificity低下のため最後に配置) */
-  /* stylelint-disable-next-line no-descending-specificity */
-  *:not(.animate-marquee, .animate-marquee-vertical),
-  *:not(.animate-marquee, .animate-marquee-vertical)::before,
-  *:not(.animate-marquee, .animate-marquee-vertical)::after {
+  /* 
+     モバイル用アニメーション無効化 - パフォーマンス最適化 
+     変更: 全要素(*)に対する無効化は副作用が強すぎるため（Marquee等が動かなくなる）、
+     パフォーマンスに影響を与えやすい特定の「重い」要素や、
+     意図しておとなしくさせたい装飾要素に対してのみ適用する。
+  */
+
+  /* 画像、ビデオ、iframeのアニメーション/遷移の抑制 */
+  img,
+  video,
+  iframe,
+  picture,
+  svg:not(.hero-section *) {
     will-change: auto !important;
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
+    /* transform無効化はレイアウト崩れのリスクがあるため慎重に */
+    /* transition: none !important; */
+    /* animation: none !important; */
   }
+
+  /* 
+     どうしても全体的にアニメーションを抑えたい場合は、
+     prefers-reduced-motion メディアクエリを活用するのがWeb標準的である。
+  */
+
+  /* ここでは、明示的に Marquee 等は除外せずとも、
+     上記のようにセレクタを絞ることで、divベースの軽量アニメーションは動作するようにする。
+  */
 }

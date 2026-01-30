@@ -37,7 +37,7 @@
   clip-path: inset(100%);
 }
 
-.sr-only.focus:not-sr-only {
+.sr-only:focus {
   position: static;
   overflow: visible;
   width: auto;
@@ -60,8 +60,6 @@
   word-spacing: var(--orphan-word-spacing);
   hyphens: auto;
   hyphenate-limit-chars: 6 3 3;
-  hyphenate-limit-lines: 2;
-  hyphenate-limit-last: always;
 
   @media (min-width: 640px) {
     font-size: 1rem;
