@@ -140,7 +140,7 @@ const commonImageProps = {
                     >
                   </div>
                   <h4
-                    class='text-rose-400 font-bold text-sm uppercase tracking-wider mb-1'
+                    class='!text-rose-400 !mt-0 font-bold text-sm uppercase tracking-wider mb-1'
                   >
                     Status: Doubt
                   </h4>
@@ -171,7 +171,7 @@ const commonImageProps = {
                     >
                   </div>
                   <h4
-                    class='text-amber-400 font-bold text-sm uppercase tracking-wider mb-1'
+                    class='!text-amber-400 !mt-0 font-bold text-sm uppercase tracking-wider mb-1'
                   >
                     Status: Guilt
                   </h4>
@@ -202,7 +202,7 @@ const commonImageProps = {
                     >
                   </div>
                   <h4
-                    class='text-violet-400 font-bold text-sm uppercase tracking-wider mb-1'
+                    class='!text-violet-400 !mt-0 font-bold text-sm uppercase tracking-wider mb-1'
                   >
                     Status: Confused
                   </h4>
@@ -213,7 +213,7 @@ const commonImageProps = {
               </div>
 
               <p
-                class='font-bold text-lg mb-4 text-white pl-4 border-l-4 border-[var(--token-purple-base)]'
+                class='font-bold text-lg mb-4 !text-white pl-4 border-l-4 border-[var(--token-purple-base)]'
               >
                 Dengerin baik-baik: <span
                   class='text-[var(--token-purple-base)]'
@@ -1286,7 +1286,7 @@ const commonImageProps = {
                 <p>
                   Sementara Meidinger dan Plötz lagi sibuk bikin "pabrik
                   hafalan" penuh tabel bunpou yang bikin pusing, ada satu orang
-                  yang nemuin <strong class='text-white font-bold'
+                  yang nemuin <strong class='!text-white font-bold'
                     >kebenaran biologis sejati</strong
                   > tentang cara otak manusia belajar bahasa.
                 </p>
@@ -1377,7 +1377,7 @@ const commonImageProps = {
               <div
                 class='prose-lg prose-invert text-[var(--token-text-secondary)]'
               >
-                <p class='font-bold text-white text-xl'>Kenapa?</p>
+                <p class='font-bold !text-white text-xl'>Kenapa?</p>
                 <p>
                   Karena kalau semua orang tahu rahasia ini, mereka nggak perlu
                   lagi beli buku tebal mahal, ikut kursus berbayar, atau hafal
@@ -1836,7 +1836,7 @@ const commonImageProps = {
                   beneran.
                 </p>
 
-                <p class='font-bold text-white mb-2'>
+                <p class='font-bold !text-white mb-2'>
                   Kamu lagi main <span class='text-red-500'>sirkus</span> di otak
                   sendiri:
                 </p>
@@ -2244,9 +2244,7 @@ const commonImageProps = {
                   <h4 class='text-sm md:text-base font-bold text-white mb-1'>
                     Mission: Absorption
                   </h4>
-                  <p
-                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
-                  >
+                  <p class='text-stone-400 text-xs leading-relaxed'>
                     Pahami <strong>2.000 kosakata pertama</strong> beserta penggunaannya
                     di kehidupan sehari-hari. Pastiin kamu udah bisa baca hiragana
                     dan katakana.
@@ -2334,9 +2332,11 @@ const commonImageProps = {
                 <p>
                   Bayangin intuisi bahasa Jepang kamu lagi kayak benih Sakura
                   bonsai yang baru ditanam—masih rapuh, butuh nutrisi dasar dulu
-                  sebelum bisa bertunas. <strong class='text-white'
+                  sebelum bisa bertunas. <strong
+                    class='!text-emerald-100 !font-bold'
                     >Lupakan dulu soal ngomong atau nulis.</strong
                   > Tugas utama di tahap ini: <strong
+                    class='!text-emerald-100 !font-bold'
                     >tutup mulut dan nyerap aja</strong
                   >.
                 </p>
@@ -2362,7 +2362,9 @@ const commonImageProps = {
                 <div
                   class='p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors group/card'
                 >
-                  <h4 class='text-white font-bold mb-2 flex items-center gap-2'>
+                  <h4
+                    class='!text-emerald-200 font-bold mb-2 flex items-center gap-2'
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       width='20'
@@ -2373,7 +2375,7 @@ const commonImageProps = {
                       stroke-width='1.5'
                       stroke-linecap='round'
                       stroke-linejoin='round'
-                      class='text-blue-400'
+                      class='text-emerald-100'
                       ><path
                         d='m21.12 6.4-6.05-4.06a2 2 0 0 0-2.17.05L2.95 10.41a2 2 0 0 0-.05 2.17l6.05 4.06a2 2 0 0 0 2.17-.05l9.95-7.99a2 2 0 0 0 .05-2.17Z'
                       ></path><path
@@ -2465,14 +2467,42 @@ const commonImageProps = {
                     <a
                       href='https://www.youtube.com/watch?v=6BKA603SaZ4'
                       target='_blank'
-                      class='hover:text-white flex items-center gap-1'
-                      >▶ Setup Windows</a
+                      class='hover:text-white inline-flex items-center gap-1'
+                      ><svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='14'
+                        height='14'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        class='lucide lucide-youtube translate-y-[0.5px]'
+                        ><path
+                          d='M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17'
+                        ></path><path d='m10 15 5-3-5-3z'></path></svg
+                      > Setup Windows</a
                     >
                     <a
                       href='https://youtu.be/dvT3CpE7IdU'
                       target='_blank'
-                      class='hover:text-white flex items-center gap-1'
-                      >▶ Setup Mobile</a
+                      class='hover:text-white inline-flex items-center gap-1'
+                      ><svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='14'
+                        height='14'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        class='lucide lucide-youtube translate-y-[0.5px]'
+                        ><path
+                          d='M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17'
+                        ></path><path d='m10 15 5-3-5-3z'></path></svg
+                      > Setup Mobile</a
                     >
                   </div>
                 </div>
@@ -2481,7 +2511,9 @@ const commonImageProps = {
                 <div
                   class='p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors'
                 >
-                  <h4 class='text-white font-bold mb-2 flex items-center gap-2'>
+                  <h4
+                    class='!text-emerald-200 font-bold mb-2 flex items-center gap-2'
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       width='20'
@@ -2492,7 +2524,7 @@ const commonImageProps = {
                       stroke-width='1.5'
                       stroke-linecap='round'
                       stroke-linejoin='round'
-                      class='text-emerald-400'
+                      class='text-emerald-100'
                       ><path
                         d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3'
                       ></path></svg
@@ -2529,7 +2561,9 @@ const commonImageProps = {
                 <div
                   class='p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors'
                 >
-                  <h4 class='text-white font-bold mb-2 flex items-center gap-2'>
+                  <h4
+                    class='!text-emerald-200 font-bold mb-2 flex items-center gap-2'
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       width='20'
@@ -2540,6 +2574,7 @@ const commonImageProps = {
                       stroke-width='1.5'
                       stroke-linecap='round'
                       stroke-linejoin='round'
+                      class='text-emerald-100'
                       ><path
                         d='M14.531 12.469 6.619 20.38a1 1 0 1 1-3-3l7.912-7.912'
                       ></path><path
@@ -2550,7 +2585,7 @@ const commonImageProps = {
                         d='M19.686 8.314a12.501 12.501 0 0 1 1.356 10.225 1 1 0 0 1-1.751-.119 22 22 0 0 0-3.393-6.319'
                       ></path></svg
                     >
-                    > Mulai Sentence Mining
+                    Mulai Sentence Mining
                   </h4>
                   <p class='text-sm text-stone-400'>
                     Setelah 750 kartu, mulai kumpulin kalimat dari materi
@@ -2566,7 +2601,9 @@ const commonImageProps = {
                 <div
                   class='p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 transition-colors'
                 >
-                  <h4 class='text-white font-bold mb-2 flex items-center gap-2'>
+                  <h4
+                    class='!text-emerald-200 font-bold mb-2 flex items-center gap-2'
+                  >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       width='20'
@@ -2576,7 +2613,9 @@ const commonImageProps = {
                       stroke='currentColor'
                       stroke-width='1.5'
                       stroke-linecap='round'
+                      stroke-linecap='round'
                       stroke-linejoin='round'
+                      class='text-emerald-100'
                       ><path d='M2 10v3'></path><path d='M6 6v11'></path><path
                         d='M10 3v18'></path><path d='M14 8v7'></path><path
                         d='M18 5v13'></path><path d='M22 10v3'></path></svg
@@ -2617,6 +2656,7 @@ const commonImageProps = {
                   "klik!"—suara bising berubah jadi makna yang nyambung. Di
                   tahap ini, kabut di otak hilang; kamu nggak lagi nerjemahin
                   kata per kata (dari 0 ke 1 ke 2), tapi <strong
+                    class='!text-lime-100 !font-bold'
                     >mulai bisa paham intuitif</strong
                   > (0 langsung ke 1).
                 </p>
@@ -2638,7 +2678,7 @@ const commonImageProps = {
                   class='p-6 rounded-2xl bg-gradient-to-br from-lime-900/10 to-transparent border border-lime-500/20 hover:border-lime-500/40 transition-colors'
                 >
                   <h4
-                    class='text-lime-300 font-bold mb-2 flex items-center gap-2'
+                    class='!text-lime-300 font-bold mb-2 flex items-center gap-2'
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -2665,13 +2705,37 @@ const commonImageProps = {
                     video mudah, like dan subscribe channel rekomendasi biar
                     algoritma ngerti.
                   </p>
+                  <div
+                    class='mt-4 pt-4 border-t border-lime-500/20 flex gap-4 text-xs text-stone-500'
+                  >
+                    <a
+                      href='https://youtu.be/QOjauyzWT9w'
+                      target='_blank'
+                      class='hover:text-lime-400 inline-flex items-center gap-1'
+                      ><svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='14'
+                        height='14'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        class='lucide lucide-youtube translate-y-[0.5px]'
+                        ><path
+                          d='M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17'
+                        ></path><path d='m10 15 5-3-5-3z'></path></svg
+                      > Trik Algorithm YouTube</a
+                    >
+                  </div>
                 </div>
 
                 <div
                   class='p-6 rounded-2xl bg-gradient-to-br from-lime-900/10 to-transparent border border-lime-500/20 hover:border-lime-500/40 transition-colors'
                 >
                   <h4
-                    class='text-lime-300 font-bold mb-2 flex items-center gap-2'
+                    class='!text-lime-300 font-bold mb-2 flex items-center gap-2'
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -2697,19 +2761,49 @@ const commonImageProps = {
                     nggak frustasi.
                   </p>
                   <div
-                    class='flex gap-4 text-xs font-bold uppercase tracking-wider text-lime-500/70'
+                    class='mt-4 pt-4 border-t border-lime-500/20 flex gap-4 text-xs text-stone-500'
                   >
-                    <span>Resources:</span>
                     <a
                       href='https://learnnatively.com/'
                       target='_blank'
-                      class='hover:text-lime-400'>Natively</a
+                      class='hover:text-lime-400 inline-flex items-center gap-1'
+                      ><svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='14'
+                        height='14'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        class='lucide lucide-external-link'
+                        ><path d='M15 3h6v6'></path><path d='M10 14 21 3'
+                        ></path><path
+                          d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'
+                        ></path></svg
+                      > Natively</a
                     >
-                    <span class='text-stone-700'>|</span>
                     <a
                       href='https://jpdb.io/'
                       target='_blank'
-                      class='hover:text-lime-400'>JPDB.io</a
+                      class='hover:text-lime-400 inline-flex items-center gap-1'
+                      ><svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='14'
+                        height='14'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        class='lucide lucide-external-link'
+                        ><path d='M15 3h6v6'></path><path d='M10 14 21 3'
+                        ></path><path
+                          d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'
+                        ></path></svg
+                      > JPDB.io</a
                     >
                   </div>
                 </div>
@@ -2718,7 +2812,7 @@ const commonImageProps = {
                   class='p-6 rounded-2xl bg-gradient-to-br from-lime-900/10 to-transparent border border-lime-500/20 hover:border-lime-500/40 transition-colors'
                 >
                   <h4
-                    class='text-lime-300 font-bold mb-2 flex items-center gap-2'
+                    class='!text-lime-300 font-bold mb-2 flex items-center gap-2'
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -2746,7 +2840,7 @@ const commonImageProps = {
                   class='p-6 rounded-2xl bg-gradient-to-br from-lime-900/10 to-transparent border border-lime-500/20 hover:border-lime-500/40 transition-colors'
                 >
                   <h4
-                    class='text-lime-300 font-bold mb-2 flex items-center gap-2'
+                    class='!text-lime-300 font-bold mb-2 flex items-center gap-2'
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -2766,7 +2860,7 @@ const commonImageProps = {
                         d='m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65'
                       ></path></svg
                     >
-                    > Expand Anki Mining
+                    Expand Anki Mining
                   </h4>
                   <p class='text-sm text-stone-400'>
                     Perluas ke difficulty 35-50%. Mining dari anime, YouTube,
@@ -2820,11 +2914,10 @@ const commonImageProps = {
                   <h4 class='text-sm md:text-base font-bold text-white mb-1'>
                     Mission: Breakthrough
                   </h4>
-                  <p
-                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
-                  >
-                    Pahami <strong>7.500 kosakata pertama</strong>, dengan
-                    definisi dari "kacamata penutur asli Jepang".
+                  <p class='text-stone-400 text-xs leading-relaxed'>
+                    Pahami <strong class='!text-lime-200'
+                      >7.500 kosakata pertama</strong
+                    >, dengan definisi dari "kacamata penutur asli Jepang".
                   </p>
 
                   <!-- Progress Bar -->
@@ -2875,7 +2968,7 @@ const commonImageProps = {
                     >
                   </div>
                   <h4
-                    class='text-lime-100 font-bold text-sm uppercase tracking-wider'
+                    class='!text-lime-100 font-bold text-sm uppercase tracking-wider'
                   >
                     Tunas Mindset
                   </h4>
@@ -2934,11 +3027,10 @@ const commonImageProps = {
                   <h4 class='text-sm md:text-base font-bold text-white mb-1'>
                     Mission: Endurance
                   </h4>
-                  <p
-                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
-                  >
-                    Perdalam <strong>12.500-20.000 kosakata</strong>, pahami
-                    "cara orang Jepang berpikir dan bicara".
+                  <p class='text-stone-400 text-xs leading-relaxed'>
+                    Perdalam <strong class='!text-orange-200 !font-bold'
+                      >12.500-20.000 kosakata</strong
+                    >, pahami "cara orang Jepang berpikir dan bicara".
                   </p>
 
                   <!-- Progress Bar -->
@@ -2987,7 +3079,7 @@ const commonImageProps = {
                     >
                   </div>
                   <h4
-                    class='text-orange-100 font-bold text-sm uppercase tracking-wider'
+                    class='!text-orange-100 font-bold text-sm uppercase tracking-wider'
                   >
                     Intuisi Tumbuh
                   </h4>
@@ -3048,7 +3140,7 @@ const commonImageProps = {
                   class='p-6 rounded-2xl bg-white/5 border-l-4 border-orange-600 border-y border-r border-white/5'
                 >
                   <h4
-                    class='text-orange-200 font-bold mb-2 flex items-center gap-2'
+                    class='!text-orange-200 font-bold mb-2 flex items-center gap-2'
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -3077,7 +3169,7 @@ const commonImageProps = {
                   class='p-6 rounded-2xl bg-white/5 border-l-4 border-orange-500 border-y border-r border-white/5'
                 >
                   <h4
-                    class='text-orange-200 font-bold mb-2 flex items-center gap-2'
+                    class='!text-orange-200 font-bold mb-2 flex items-center gap-2'
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -3107,7 +3199,7 @@ const commonImageProps = {
                   class='p-6 rounded-2xl bg-white/5 border-l-4 border-orange-400 border-y border-r border-white/5'
                 >
                   <h4
-                    class='text-orange-200 font-bold mb-2 flex items-center gap-2'
+                    class='!text-orange-200 font-bold mb-2 flex items-center gap-2'
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -3127,7 +3219,7 @@ const commonImageProps = {
                         y1='19'
                         y2='22'></line></svg
                     >
-                    Persiapan & Mulai Output
+                    Persiapan Output
                   </h4>
                   <p class='text-sm text-stone-400'>
                     Tahun pertama output wajib dengan native. Tiru 100% respon
@@ -3198,7 +3290,7 @@ const commonImageProps = {
                     >
                   </div>
                   <div>
-                    <h4 class='text-purple-200 font-bold mb-1'>
+                    <h4 class='!text-purple-200 font-bold mb-1'>
                       Lanjut Semua dari Tahap Sebelumnya
                     </h4>
                     <p class='text-sm text-stone-400'>
@@ -3230,7 +3322,7 @@ const commonImageProps = {
                     >
                   </div>
                   <div>
-                    <h4 class='text-purple-200 font-bold mb-1'>
+                    <h4 class='!text-purple-200 font-bold mb-1'>
                       Output Natural
                     </h4>
                     <p class='text-sm text-stone-400'>
@@ -3260,7 +3352,7 @@ const commonImageProps = {
                     >
                   </div>
                   <div>
-                    <h4 class='text-purple-200 font-bold mb-1'>
+                    <h4 class='!text-purple-200 font-bold mb-1'>
                       Hidup di Bahasa
                     </h4>
                     <p class='text-sm text-stone-400'>
@@ -3316,10 +3408,9 @@ const commonImageProps = {
                   <h4 class='text-sm md:text-base font-bold text-white mb-1'>
                     Mission: Mastery
                   </h4>
-                  <p
-                    class='text-stone-400 text-xs leading-relaxed line-clamp-2'
-                  >
+                  <p class='text-stone-400 text-xs leading-relaxed'>
                     Goal: Optimalisasi dan perluas intuisi—<strong
+                      class='!text-purple-200 !font-bold'
                       >20.000+ kosakata</strong
                     >, bahasa jadi alat sehari-hari.
                   </p>
