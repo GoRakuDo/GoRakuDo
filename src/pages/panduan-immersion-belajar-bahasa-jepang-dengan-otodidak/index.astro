@@ -5,6 +5,8 @@ import { CldImage } from 'astro-cloudinary';
 import JlptCanDoChart from '../../components/features/JlptCanDoChart.astro';
 import LADExperiment from '../../components/features/LADExperiment.astro';
 import HistoryBiome from '../../components/features/HistoryBiome.astro';
+import Marquee from '../../components/ui/Marquee.astro';
+import DiscordCard from '../../components/ui/DiscordCard.astro';
 
 const empathyBridgeImage = 'Empathy_Bridge_Image_ikv9d4ikv9d4ikv9_ck8fch';
 
@@ -31,6 +33,84 @@ const commonImageProps = {
   loading: 'eager' as const,
   class: 'block w-full h-auto object-cover rounded-2xl',
 };
+
+const reviews = [
+  {
+    name: 'Rezky8982',
+    username: 'Rezky8982',
+    body: 'Ga sampe sebulan, Anki sama Immers ngebantu banget. Dulu baca bunpou ga masuk, sekarang kalimat rasanya udah ga asing. Beneran kerasa bedanya.',
+    img: 'https://avatar.vercel.sh/Rezky8982', // Placeholder derived from backup logic
+    avatar: 'https://avatar.vercel.sh/Rezky8982',
+    nameColor: '#ed4245',
+    date: 'Today at 2:30 PM',
+  },
+  {
+    name: 'Ceberos_',
+    username: 'Ceberos_',
+    body: 'Aku mahasiswa Sastra Jepang smstr 5 sempat mau give up. Pas pake metodenya kak Yoshi, jadi bisa baca banyak kanji yang belum diajarin di kampus. Proud! 🥰',
+    img: 'https://avatar.vercel.sh/Ceberos_',
+    avatar: 'https://avatar.vercel.sh/Ceberos_',
+    nameColor: '#57f287',
+    date: 'Yesterday at 10:15 AM',
+  },
+  {
+    name: 'Kirai9649',
+    username: 'Kirai9649',
+    body: 'Semenjak jalanin deck Kaishi 1.5k & nonton anime rekomendasi, aku mulai paham little-by-little. Konteks scene ngebantu banget nentuin maknanya daripada kamus.',
+    img: 'https://avatar.vercel.sh/Kirai9649',
+    avatar: 'https://avatar.vercel.sh/Kirai9649',
+    nameColor: '#fee75c', // Yellow
+    date: 'Today at 4:45 PM',
+  },
+  {
+    name: 'Axel_Rose',
+    username: 'Axel_Rose',
+    body: 'Awalnya skeptis sama "belajar tanpa buku". Tapi setelah 3 bulan, listening skill naik drastis. Nonton anime tanpa sub mulai nangkep intinya.',
+    img: 'https://avatar.vercel.sh/Axel_Rose',
+    avatar: 'https://avatar.vercel.sh/Axel_Rose',
+    nameColor: '#eb459f', // Pink
+    date: 'Today at 6:20 PM',
+  },
+  {
+    name: 'Esoftie',
+    username: 'Esoftie',
+    body: "Yg paling 'berdamage' itu pas sentence mining. Media source-nya kesukaan gue semua, jadi mood banget. Yoshi bilang langsung immerse aja, bener bat euy. 💯",
+    img: 'https://avatar.vercel.sh/Esoftie',
+    avatar: 'https://avatar.vercel.sh/Esoftie',
+    nameColor: '#eb459f',
+    date: 'Today at 9:00 AM',
+  },
+  {
+    name: '_Ryuuusuke',
+    username: '_Ryuuusuke',
+    body: 'Udah 1 tahun di server ini. Makasih udah ngenalin metode ini... belajar bahasa jepun jadi lebih seru dan lebih paham! Nggak beban lagi.',
+    img: 'https://avatar.vercel.sh/_Ryuuusuke',
+    avatar: 'https://avatar.vercel.sh/_Ryuuusuke',
+    nameColor: '#3498db', // Blue
+    date: 'Yesterday at 11:20 PM',
+  },
+  {
+    name: 'MochiMochi',
+    username: 'MochiMochi',
+    body: 'Dulu stress hafalan kanji satu-satu. Sekarang main game RPG Jepang, kanji-nya nempel sendiri karena sering liat di action menu. Magic! ✨',
+    img: 'https://avatar.vercel.sh/MochiMochi',
+    avatar: 'https://avatar.vercel.sh/MochiMochi',
+    nameColor: '#95a5a6', // Gray
+    date: 'Today at 1:15 PM',
+  },
+  {
+    name: 'Kenjiro',
+    username: 'Kenjiro',
+    body: 'Komunitasnya supportif banget. Kalau bingung tinggal tanya, dan jawabannya selalu "immers aja dulu, nanti paham". And it works.',
+    img: 'https://avatar.vercel.sh/Kenjiro',
+    avatar: 'https://avatar.vercel.sh/Kenjiro',
+    nameColor: '#e67e22', // Orange
+    date: 'Yesterday at 8:40 AM',
+  },
+];
+
+const firstRow = reviews.slice(0, reviews.length / 2);
+const secondRow = reviews.slice(reviews.length / 2);
 ---
 
 <BaseLayout
@@ -1967,7 +2047,7 @@ const commonImageProps = {
                           class='inline-block opacity-50 hover:opacity-100 transition-opacity'
                         >
                           <img
-                            src='https://www.researchgate.net/images/icons/svgicons/researchgate-logo-white.svg'
+                            src='/researchgate-logo-white.svg'
                             alt='Read on ResearchGate'
                             class='h-4'
                           />
@@ -3479,23 +3559,375 @@ const commonImageProps = {
       </div>
     </section>
   </main>
-  <style>
-    @keyframes progressLoading {
-      0% {
-        transform: scaleX(0);
-      }
 
-      100% {
-        transform: scaleX(1);
-      }
-    }
+  <!-- Unified "Solid Notebook" Section: Failure/Pause, Stories & Marquee in ONE CARD -->
+  <section class='py-32 relative overflow-hidden'>
+    <!-- Background Ambience -->
+    <div
+      class='absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-purple-500/10 rounded-full blur-[120px] animate-pulse-slow'
+    >
+    </div>
 
-    @media (min-width: 768px) {
-      .animate-progress-bar {
-        animation: progressLoading 2.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-        transform-origin: left;
-        will-change: transform;
-      }
-    }
-  </style>
+    <div
+      class='w-full max-w-[90rem] mx-auto px-4 md:px-8 relative z-10 text-center'
+    >
+      <!-- THE UNIFIED MANIFESTO CARD -->
+      <div class='w-full mx-auto text-left'>
+        <div
+          class='relative bg-[#18181b] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl group'
+        >
+          <!-- NOTEBOOK TEXTURE: subtle grid -->
+          <div
+            class='absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none'
+          >
+          </div>
+
+          <!-- Decoration: "Washi Tape" Accent at top center -->
+          <div
+            class='absolute top-0 left-1/2 -translate-x-1/2 w-32 h-2 bg-indigo-500/50 blur-[1px] z-10'
+          >
+          </div>
+
+          <!-- ========================================== -->
+          <!-- PART 1: PHILOSOPHY (The Rule)              -->
+          <!-- ========================================== -->
+          <div
+            class='relative z-10 p-8 md:p-16 pb-0 flex flex-col items-center text-center space-y-12'
+          >
+            <!-- Stickered Title Block (PRESERVED EXACTLY) -->
+            <div class='relative inline-block'>
+              <!-- Sticker: 3D Pause Button Floating -->
+              <div
+                class='absolute -top-12 -right-8 hidden lg:block animate-float'
+              >
+                <div
+                  class='w-16 h-16 bg-gradient-to-br from-orange-400 to-rose-500 rounded-2xl shadow-lg border-b-4 border-rose-700 flex items-center justify-center transform rotate-12 cursor-pointer hover:border-b-0 hover:translate-y-1 transition-all'
+                >
+                  <svg
+                    class='w-8 h-8 text-white fill-current'
+                    viewBox='0 0 24 24'
+                    ><path d='M6 4h4v16H6V4zm8 0h4v16h-4V4z'></path></svg
+                  >
+                </div>
+              </div>
+
+              <h2
+                class='text-3xl md:text-5xl font-black tracking-tight text-white leading-tight'
+              >
+                Kamu Nggak Bisa "Gagal",<br />
+                <span class='relative inline-block'>
+                  <span
+                    class='relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-rose-400'
+                    >Cuma Bisa "Jeda".</span
+                  >
+                  <svg
+                    class='absolute -bottom-2 left-0 w-full h-3 text-orange-500/50'
+                    viewBox='0 0 100 10'
+                    preserveAspectRatio='none'
+                    ><path
+                      d='M0 5 Q 50 10 100 5'
+                      stroke='currentColor'
+                      stroke-width='3'
+                      fill='none'></path></svg
+                  >
+                </span>
+              </h2>
+            </div>
+
+            <!-- Philosophy Text (Exact Request) -->
+            <div
+              class='prose prose-xl prose-invert text-gray-400 leading-relaxed max-w-4xl'
+            >
+              <p>
+                Kamu nggak bisa gagal dalam metode ini, kecuali kamu berhenti
+                dari input bahasa Jepang seperti membaca dan mendengarkan sama
+                sekali. <span
+                  class='text-2xl inline-block hover:scale-125 transition-transform cursor-default'
+                  >🛌</span
+                >
+              </p>
+              <p>
+                Di immersion, kita lagi bangun <strong
+                  class='!text-transparent !bg-clip-text !bg-gradient-to-r !from-orange-100 !to-rose-200'
+                  >kemampuan intuisi bawah sadar</strong
+                > (deep structure). Bayangin kayak belajar naik sepeda—kamu bakal
+                lupa caranya kalau nggak naik setahun? Nggak tuh. Sama kayak bahasa
+                yang diserap secara alami, dia nempel kuat di otakmu.
+              </p>
+              <p>
+                Jadi, santai aja—prosesnya fleksibel, cocok buat kamu dan semua
+                manusia pada umumnya. Karena metode "immersion" kita ini udah
+                terbukti sejak zaman peradaban manusia dulu, dan didukung kuat
+                sama ilmu linguistik modern dari para profesor ahli.
+              </p>
+            </div>
+          </div>
+
+          <!-- SEPARATOR: Subtle Gradient Line -->
+          <div
+            class='relative w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-16'
+          >
+          </div>
+
+          <!-- ========================================== -->
+          <!-- PART 2: STORIES (The Proof)                -->
+          <!-- ========================================== -->
+          <div class='relative z-10 p-8 md:p-16 pt-0 mb-8'>
+            <div class='grid lg:grid-cols-2 gap-8 lg:gap-16 items-start'>
+              <!-- 1. HEADER & TITLE (Mobile: Top, Desktop: Left Top) -->
+              <div class='lg:col-start-1 lg:row-start-1 space-y-4'>
+                <!-- Header with 'Stamp' -->
+                <div class='flex items-center gap-4 mb-2'>
+                  <div
+                    class='px-3 py-1 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono font-bold uppercase tracking-widest flex items-center gap-2'
+                  >
+                    <span
+                      class='w-2 h-2 rounded-full bg-indigo-400 animate-pulse'
+                    ></span>
+                    Case Study #01
+                  </div>
+                  <div class='text-xs text-zinc-500 font-mono hidden md:block'>
+                    2026 COMMUNITY LOG
+                  </div>
+                </div>
+
+                <h3
+                  class='text-3xl md:text-5xl font-black text-white leading-tight'
+                >
+                  Kisah Kami yang <span
+                    class='bg-indigo-500/10 text-indigo-300 px-2 leading-relaxed decoration-clone box-decoration-clone'
+                    >Progress dalam Nativeness</span
+                  >
+                </h3>
+              </div>
+
+              <!-- 2. PHOTO (Mobile: Middle/Red Area, Desktop: Right Full Height) -->
+              <div class='lg:col-start-2 lg:row-start-1 lg:row-span-2 w-full'>
+                <div
+                  class='relative transform rotate-3 hover:rotate-0 transition-transform duration-500 ease-out perspective-1000'
+                >
+                  <!-- Photo Frame Effect -->
+                  <div
+                    class='p-3 bg-white rounded-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] relative'
+                  >
+                    <!-- Tape on corner -->
+                    <div
+                      class='absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-yellow-100/30 backdrop-blur-sm -rotate-2 border-l border-r border-white/20 shadow-sm z-20'
+                    >
+                    </div>
+
+                    <div
+                      class='rounded-lg overflow-hidden bg-zinc-900 border border-zinc-200/20 relative'
+                    >
+                      <div
+                        class='absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-transparent mix-blend-overlay z-10'
+                      >
+                      </div>
+                      <CldImage
+                        src='Sample_Novel_Generated_Image_54tw1q54tw1q54tw_zmhkhw'
+                        width={800}
+                        height={1000}
+                        class='w-full h-auto relative z-0'
+                        alt='Bukti Nyata Immersion'
+                      />
+                    </div>
+                    <!-- Caption on the 'paper' border -->
+                    <div
+                      class='pt-3 pb-1 px-1 flex justify-between items-center opacity-60'
+                    >
+                      <p
+                        class='text-[10px] text-zinc-900 font-mono tracking-widest uppercase flex-1'
+                      >
+                        Figure 1.1: Immersion Material
+                      </p>
+                      <svg
+                        class='w-4 h-4 text-zinc-400'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        ><path
+                          d='M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z'
+                        ></path><circle cx='12' cy='13' r='4'></circle></svg
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Decorative Sticker: Level Up -->
+                  <div
+                    class='absolute -top-6 -right-6 w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center shadow-xl border-4 border-white transform rotate-12 group-hover:scale-110 transition-transform'
+                  >
+                    <span
+                      class='text-black font-black text-xs text-center leading-none'
+                      >LEVEL<br />UP!</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. BODY TEXT (Mobile: Bottom, Desktop: Left Bottom) -->
+              <div
+                class='lg:col-start-1 lg:row-start-2 prose prose-lg prose-invert text-zinc-400 space-y-6'
+              >
+                <p>
+                  Di komunitas kita, ceritanya beda banget. Ada anggota yang
+                  dulu stres banget hafal buku Minna no Nihongo, sekarang bisa
+                  ketawa-ketawa nonton livestream VTuber, nonton Anime tanpa
+                  Subtitle, dan baca light novel susah sekalipun kayak 「Re:Zero
+                  kara Hajimeru Isekai Seikatsu」 atau 「幼女戦記 Youjo Senki」.
+                </p>
+                <p
+                  class='text-zinc-300 font-medium border-l-4 border-indigo-500 pl-6 italic'
+                >
+                  "Mereka bukan orang jenius atau punya bakat super. Mereka cuma
+                  berhenti melawan cara kerja otak mereka sendiri."
+                </p>
+                <p>
+                  Mereka berhenti jadi "murid" yang hafal doang, dan mulai jadi
+                  "penutur" yang beneran hidup di bahasa itu. Kalau mereka bisa,
+                  kamu juga pasti bisa—karena masalahnya bukan di kamu, tapi di
+                  metode lama yang salah.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- PART 3: FOOTER (Marquee/Logs)              -->
+          <!-- ========================================== -->
+          <div
+            class='relative border-t border-dashed border-white/10 bg-black/20 pt-12 pb-12'
+          >
+            <!-- Label -->
+            <div
+              class='absolute -top-3 left-8 md:left-12 px-3 py-1 bg-[#18181b] rounded border border-white/10 text-[10px] font-mono text-zinc-500 uppercase tracking-widest flex items-center gap-2'
+            >
+              <span class='w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse'
+              ></span>
+              Live Community Logs
+            </div>
+
+            <div
+              class='opacity-70 hover:opacity-100 transition-opacity duration-300'
+            >
+              <!-- MOBILE: Single Vertical Marquee -->
+              <div class='md:hidden h-[28rem] px-4 flex justify-center'>
+                <Marquee
+                  vertical
+                  pauseOnHover
+                  class='[--duration:90s] [--gap:1rem]'
+                >
+                  {
+                    [...firstRow, ...secondRow].map(review => (
+                      <DiscordCard {...review} />
+                    ))
+                  }
+                </Marquee>
+              </div>
+
+              <!-- DESKTOP: Two Horizontal Marquees -->
+              <div class='hidden md:block'>
+                <!-- Top Row: Marquee Left -->
+                <Marquee
+                  pauseOnHover
+                  class='[--duration:60s] [--gap:2rem] mb-6'
+                >
+                  {firstRow.map(review => <DiscordCard {...review} />)}
+                </Marquee>
+
+                <!-- Bottom Row: Marquee Right (Reverse) -->
+                <Marquee
+                  reverse
+                  pauseOnHover
+                  class='[--duration:70s] [--gap:2rem]'
+                >
+                  {secondRow.map(review => <DiscordCard {...review} />)}
+                </Marquee>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+<style>
+  @keyframes progressLoading {
+    0% {
+      transform: scaleX(0);
+    }
+
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Playful Animations */
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 0.2;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.15;
+      transform: scale(1.1);
+    }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 6s infinite ease-in-out;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-12deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(-10deg);
+    }
+  }
+  .animate-float {
+    animation: float 5s infinite ease-in-out;
+  }
+
+  @keyframes bounce-subtle {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+  .animate-bounce-subtle {
+    animation: bounce-subtle 2s infinite ease-in-out;
+  }
+
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+
+  /* 3D Transform Utilities */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  @media (min-width: 768px) {
+    .animate-progress-bar {
+      animation: progressLoading 2.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+      transform-origin: left;
+    }
+  }
+</style>
