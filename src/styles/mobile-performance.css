@@ -62,8 +62,11 @@
   picture,
   svg:not(.hero-section *) {
     will-change: auto !important;
+
     /* transform無効化はレイアウト崩れのリスクがあるため慎重に */
+
     /* transition: none !important; */
+
     /* animation: none !important; */
   }
 
