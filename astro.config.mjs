@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import mcp from 'astro-mcp';
+
 import sitemap from '@astrojs/sitemap';
 import compress from 'vite-plugin-compression';
 
@@ -35,6 +35,7 @@ export default defineConfig({
     sizes: [320, 640, 768, 1024, 1280, 1600, 1920],
     quality: 85,
     placeholder: 'blur',
+    domains: ['avatar.vercel.sh'],
   },
 
   // MDX support and Sitemap generation
@@ -68,11 +69,7 @@ export default defineConfig({
       }),
     ],
     // MIME type configuration for XSL files
-    server: {
-      fs: {
-        strict: false,
-      },
-    },
+
     build: {
       rollupOptions: {
         onwarn(warning, warn) {
@@ -120,6 +117,9 @@ export default defineConfig({
       dedupe: ['astro', 'astro-cloudinary'],
     },
     server: {
+      fs: {
+        strict: false,
+      },
       hmr: {
         overlay: true,
       },
