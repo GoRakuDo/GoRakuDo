@@ -31,7 +31,7 @@ const {
       .map(_ => (
         <div
           class:list={[
-            'flex shrink-0 justify-around [gap:var(--gap)]',
+            'flex shrink-0 [gap:var(--gap)]',
             vertical
               ? 'flex-col items-center animate-marquee-vertical'
               : 'flex-row animate-marquee',
@@ -114,10 +114,14 @@ const {
     /* stylelint-disable declaration-no-important */
     .animate-marquee-vertical {
       animation: marqueeVertical var(--duration) linear infinite !important;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
     }
 
     .animate-marquee {
       animation: marquee var(--duration) linear infinite !important;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
     }
     /* stylelint-enable declaration-no-important */
   }
