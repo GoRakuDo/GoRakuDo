@@ -18,7 +18,7 @@ const {
 
 <div
   class:list={[
-    'group flex overflow-hidden py-8 [--gap:1rem] [gap:var(--gap)]',
+    'group flex overflow-hidden py-8 [--gap:1rem] gap-(--gap)',
     vertical ? 'flex-col' : 'flex-row',
     vertical ? 'mask-gradient-vertical' : 'mask-gradient-horizontal',
     className,
@@ -31,7 +31,7 @@ const {
       .map(_ => (
         <div
           class:list={[
-            'flex shrink-0 [gap:var(--gap)]',
+            'flex shrink-0 gap-(--gap)',
             vertical
               ? 'flex-col items-center animate-marquee-vertical'
               : 'flex-row animate-marquee',
@@ -113,15 +113,15 @@ const {
   @media (max-width: 768px) {
     /* stylelint-disable declaration-no-important */
     .animate-marquee-vertical {
-      animation: marqueeVertical var(--duration) linear infinite !important;
       will-change: transform;
       transform: translate3d(0, 0, 0);
+      animation: marqueeVertical var(--duration) linear infinite !important;
     }
 
     .animate-marquee {
-      animation: marquee var(--duration) linear infinite !important;
       will-change: transform;
       transform: translate3d(0, 0, 0);
+      animation: marquee var(--duration) linear infinite !important;
     }
     /* stylelint-enable declaration-no-important */
   }
