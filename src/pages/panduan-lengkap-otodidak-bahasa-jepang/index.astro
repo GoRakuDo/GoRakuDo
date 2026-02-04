@@ -168,6 +168,18 @@ const faqSchema = {
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
 >
+  <script is:inline>
+    (function () {
+      const isLocal = ['localhost', '127.0.0.1'].includes(
+        window.location.hostname
+      );
+      if (!isLocal) {
+        window.location.replace(
+          '/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak/'
+        );
+      }
+    })();
+  </script>
   <!-- 構造化データはUnifiedSEOコンポーネントで統一管理 -->
 
   <Prose>
@@ -982,9 +994,9 @@ const faqSchema = {
                 Phase 3 ini adalah fase dimana otak kalian mulai <strong
                   >menyadari banyak kemiripan</strong
                 > antara kata-kata atau pola kalimat yang berbeda. Di Phase 2 sebelumnya,
-                kalian sudah mendapatkan banyak kosakata baru. Sekarang di Phase
-                3, kalian harus <strong>menyelesaikan kebingungan</strong> - kalian
-                tahu banyak kata, tapi masih bingung cara pakainya yang benar.
+                kalian sudah mendapatkan banyak kosakata baru. Sekarang di Phase 3,
+                kalian harus <strong>menyelesaikan kebingungan</strong> - kalian tahu
+                banyak kata, tapi masih bingung cara pakainya yang benar.
               </p>
 
               <p>
@@ -1215,9 +1227,8 @@ const faqSchema = {
     imageZoomPromise = (async () => {
       try {
         if (import.meta.env.DEV) console.log('Loading ImageZoom script...');
-        const { default: ImageZoom } = await import(
-          '../../scripts/image-zoom.js'
-        );
+        const { default: ImageZoom } =
+          await import('../../scripts/image-zoom.js');
         imageZoomInstance = new ImageZoom();
         imageZoomLoaded = true;
         if (import.meta.env.DEV) console.log('ImageZoom loaded successfully');
