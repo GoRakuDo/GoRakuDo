@@ -1,0 +1,113 @@
+---
+/**
+ * StageQuestCard Component
+ * The quest/mission overlay card that appears on the stage images.
+ * Handles all theme-specific coloring automatically.
+ */
+
+export interface Props {
+  theme: 'emerald' | 'lime' | 'orange' | 'purple';
+  stageNumber: 1 | 2 | 3 | 4;
+  stageName: string;
+  missionTitle: string;
+  missionDescription: string;
+}
+
+const { theme, stageNumber, stageName, missionTitle, missionDescription } =
+  Astro.props;
+
+// Theme color mappings
+const themeColors = {
+  emerald: {
+    borderColor: 'border-emerald-500/30',
+    textColor: 'text-emerald-400',
+    pingBg: 'bg-emerald-400',
+    dotBg: 'bg-emerald-500',
+    progressBg: 'bg-emerald-500',
+  },
+  lime: {
+    borderColor: 'border-lime-500/30',
+    textColor: 'text-lime-400',
+    pingBg: 'bg-lime-400',
+    dotBg: 'bg-lime-500',
+    progressBg: 'bg-lime-500',
+  },
+  orange: {
+    borderColor: 'border-orange-500/30',
+    textColor: 'text-orange-400',
+    pingBg: 'bg-orange-400',
+    dotBg: 'bg-orange-500',
+    progressBg: 'bg-orange-500',
+  },
+  purple: {
+    borderColor: 'border-purple-500/30',
+    textColor: 'text-purple-400',
+    pingBg: 'bg-purple-400',
+    dotBg: 'bg-purple-500',
+    progressBg: 'bg-purple-500',
+  },
+};
+
+const colors = themeColors[theme];
+---
+
+<div
+  class:list={[
+    'relative w-full rounded-t-4xl rounded-b-none border-b p-6 z-20 bg-white/5 backdrop-blur-2xl shadow-2xl',
+    '2xl:absolute 2xl:w-auto 2xl:top-6 2xl:left-6 2xl:right-6 2xl:rounded-xl 2xl:border 2xl:p-5',
+    colors.borderColor,
+  ]}
+>
+  <!-- Header -->
+  <div class='flex items-center justify-between gap-2 mb-2'>
+    <div class='flex items-center gap-2'>
+      <!-- Ping indicator -->
+      <span class='flex h-2 w-2 relative'>
+        <span
+          class:list={[
+            'animate-ping absolute inline-flex h-2 w-2 rounded-full opacity-75',
+            colors.pingBg,
+          ]}></span>
+        <span
+          class:list={[
+            'relative inline-flex rounded-full h-2 w-2',
+            colors.dotBg,
+          ]}></span>
+      </span>
+      <span
+        class:list={[
+          'text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase',
+          colors.textColor,
+        ]}
+      >
+        Fase {stageNumber} [{stageName}]
+      </span>
+    </div>
+    <span
+      class:list={['text-[10px] font-mono hidden md:block', colors.textColor]}
+    >
+      ACTIVE
+    </span>
+  </div>
+
+  <!-- Content -->
+  <h4 class='text-sm md:text-base font-bold text-white mb-1'>
+    {missionTitle}
+  </h4>
+  <p class='text-stone-400 text-xs leading-relaxed'>
+    <Fragment set:html={missionDescription} />
+  </p>
+
+  <!-- Progress Bar -->
+  <div class='mt-3 pt-2 border-t border-white/10'>
+    <div class='h-1 w-full bg-white/10 rounded-full overflow-hidden'>
+      <div
+        class:list={[
+          'h-full w-full origin-left animate-progress-bar',
+          colors.progressBg,
+        ]}
+      >
+      </div>
+    </div>
+  </div>
+</div>

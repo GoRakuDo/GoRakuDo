@@ -125,4 +125,14 @@ const {
     }
     /* stylelint-enable declaration-no-important */
   }
+
+  /* Accessibility: Respect user's motion preferences */
+  /* stylelint-disable declaration-no-important */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-marquee-vertical {
+      animation: none !important;
+    }
+  }
+  /* stylelint-enable declaration-no-important */
 </style>

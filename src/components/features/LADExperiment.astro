@@ -53,15 +53,23 @@
   .animate-shake {
     animation: shake 0.5s ease-in-out;
   }
+
+  /* Accessibility: Focus visible styles */
+  .lad-card:focus-visible {
+    outline: 2px solid #818cf8;
+    outline-offset: 2px;
+  }
 </style>
 
 <!-- 2. The Experiment: Interactive Game Cards -->
 <div class='grid lg:grid-cols-2 gap-6 lg:gap-12 mb-12 max-w-5xl mx-auto'>
   <!-- Card 1: Natural -->
-  <div
-    class='lad-card group relative p-8 rounded-3xl bg-white/5 border border-white/10 transition-all duration-500 transform ease-out flex flex-col cursor-pointer hover:bg-white/10 hover:scale-[1.02] active:scale-95'
+  <button
+    type='button'
+    class='lad-card group relative p-8 rounded-3xl bg-white/5 border border-white/10 transition-all duration-500 transform ease-out flex flex-col cursor-pointer hover:bg-white/10 hover:scale-[1.02] active:scale-95 text-left w-full'
     id='card-1'
     data-type='natural'
+    aria-label='Kalimat 1: Klik jika kalimat ini terasa aneh'
   >
     <div
       class='text-xs font-bold tracking-widest text-gray-500 mb-4 uppercase transition-colors duration-300 group-[.revealed]:text-emerald-500'
@@ -116,13 +124,15 @@
         </div>
       </div>
     </div>
-  </div>
+  </button>
 
   <!-- Card 2: Glitch (The Target) -->
-  <div
-    class='lad-card group relative p-8 rounded-3xl bg-white/5 border border-white/10 transition-all duration-500 transform ease-out flex flex-col cursor-pointer hover:bg-white/10 hover:scale-[1.02] active:scale-95'
+  <button
+    type='button'
+    class='lad-card group relative p-8 rounded-3xl bg-white/5 border border-white/10 transition-all duration-500 transform ease-out flex flex-col cursor-pointer hover:bg-white/10 hover:scale-[1.02] active:scale-95 text-left w-full'
     id='card-2'
     data-type='glitch'
+    aria-label='Kalimat 2: Klik jika kalimat ini terasa aneh'
   >
     <div
       class='text-xs font-bold tracking-widest text-gray-500 mb-4 uppercase transition-colors duration-300 group-[.revealed]:text-red-500'
@@ -179,7 +189,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </button>
 </div>
 
 <script>

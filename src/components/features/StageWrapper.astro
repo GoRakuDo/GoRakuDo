@@ -1,0 +1,166 @@
+---
+/**
+ * StageWrapper Component
+ * A structural wrapper for the 4-Stage Bonsai section that handles common layout,
+ * colors, and animations while accepting unique content via slots.
+ *
+ * Usage:
+ * <StageWrapper
+ *   theme="emerald"
+ *   stageNumber={1}
+ *   japaneseLevel="幼級"
+ *   reverseLayout={false}
+ * >
+ *   <Fragment slot="visual">... image and quest card ...</Fragment>
+ *   <Fragment slot="mindset">... mindset card content ...</Fragment>
+ *   <Fragment slot="header">... title and subtitle ...</Fragment>
+ *   <Fragment slot="content">... prose and resources ...</Fragment>
+ * </StageWrapper>
+ */
+
+export interface Props {
+  /** Color theme: emerald, lime, orange, or purple */
+  theme: 'emerald' | 'lime' | 'orange' | 'purple';
+  /** Stage number 1-4 */
+  stageNumber: 1 | 2 | 3 | 4;
+  /** Japanese level character */
+  japaneseLevel: '幼級' | '小級' | '中級' | '高級';
+  /** Reverse layout for alternating stages (image-left vs image-right) */
+  reverseLayout?: boolean;
+}
+
+const {
+  theme,
+  stageNumber,
+  japaneseLevel,
+  reverseLayout = false,
+} = Astro.props;
+
+// Theme color mappings for dynamic classes
+const themeColors = {
+  emerald: {
+    spotlight: 'bg-emerald-500/5',
+    hover: 'bg-emerald-900/20',
+    border: 'border-emerald-900/30',
+    bgColor: 'md:bg-[#080a08]',
+    text100: 'text-emerald-100',
+    text400: 'text-emerald-400',
+    text500: 'text-emerald-500',
+    questBorder: 'border-emerald-500/30',
+    pingBg: 'bg-emerald-400',
+    dotBg: 'bg-emerald-500',
+    progressBg: 'bg-emerald-500',
+  },
+  lime: {
+    spotlight: 'bg-lime-500/5',
+    hover: 'bg-lime-900/20',
+    border: 'border-lime-900/30',
+    bgColor: 'md:bg-[#080908]',
+    text100: 'text-lime-100',
+    text400: 'text-lime-400',
+    text500: 'text-lime-500',
+    questBorder: 'border-lime-500/30',
+    pingBg: 'bg-lime-400',
+    dotBg: 'bg-lime-500',
+    progressBg: 'bg-lime-500',
+  },
+  orange: {
+    spotlight: 'bg-orange-500/5',
+    hover: 'bg-orange-900/20',
+    border: 'border-orange-900/30',
+    bgColor: 'md:bg-[#0a0808]',
+    text100: 'text-orange-100',
+    text400: 'text-orange-400',
+    text500: 'text-orange-500',
+    questBorder: 'border-orange-500/30',
+    pingBg: 'bg-orange-400',
+    dotBg: 'bg-orange-500',
+    progressBg: 'bg-orange-500',
+  },
+  purple: {
+    spotlight: 'bg-purple-500/5',
+    hover: 'bg-purple-900/20',
+    border: 'border-purple-900/30',
+    bgColor: 'md:bg-[#0c080c]',
+    text100: 'text-purple-100',
+    text400: 'text-purple-400',
+    text500: 'text-purple-500',
+    questBorder: 'border-purple-500/30',
+    pingBg: 'bg-purple-400',
+    dotBg: 'bg-purple-500',
+    progressBg: 'bg-purple-500',
+  },
+};
+
+const colors = themeColors[theme];
+---
+
+<!-- Stage Wrapper Container -->
+<div class='mb-40 last:mb-0'>
+  <div class='relative grid lg:grid-cols-2 gap-12 lg:gap-24 items-center'>
+    <!-- Background Spotlight -->
+    <div
+      class='absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,#0c080c_0%,transparent_70%)] pointer-events-none rounded-[3rem]'
+    >
+    </div>
+    <div
+      class:list={[
+        'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[100px] pointer-events-none',
+        colors.spotlight,
+      ]}
+    >
+    </div>
+
+    <!-- Visual Column -->
+    <div class:list={['relative group', reverseLayout && 'lg:order-2']}>
+      <div
+        class:list={[
+          'absolute -inset-4 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700',
+          colors.hover,
+        ]}
+      >
+      </div>
+      <div
+        class:list={[
+          'relative rounded-4xl overflow-hidden shadow-2xl bg-[radial-gradient(ellipse_at_center,#0c080c_0%,transparent_70%)]',
+          colors.border,
+          colors.bgColor,
+        ]}
+      >
+        <!-- Visual slot: Quest Card + Image -->
+        <slot name='visual' />
+      </div>
+
+      <!-- Mindset Card slot -->
+      <slot name='mindset' />
+    </div>
+
+    <!-- Content Column -->
+    <div
+      class:list={['relative overflow-hidden', reverseLayout && 'lg:order-1']}
+    >
+      <!-- Japanese Level Watermark -->
+      <div
+        class='absolute top-0 right-0 text-[12rem] leading-none opacity-[0.08] font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
+      >
+        {japaneseLevel}
+      </div>
+
+      <!-- Header slot: Title + Subtitle -->
+      <slot name='header' />
+
+      <!-- Content slot: Prose + Resources -->
+      <div class='relative z-10'>
+        <slot name='content' />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Vertical writing mode for Japanese characters */
+  .writing-vertical-rl {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+</style>

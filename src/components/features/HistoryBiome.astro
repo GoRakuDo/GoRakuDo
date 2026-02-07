@@ -85,7 +85,7 @@ const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_v
          Mobile: Parent pt-4 (1rem) + Flex py-4 (1rem) + Half h-16 (2rem) = 4rem (top-16)
          Desktop: Parent pt-4 (1rem) + Flex py-4 (1rem) + Half h-20 (2.5rem) = 4.5rem (top-[4.5rem])
     -->
-    <div class="absolute top-16 md:top-[4.5rem] left-12 right-12 md:left-22 md:right-22 h-0.5 bg-white/10 rounded-full hidden md:block z-0"></div>
+    <div class="absolute md:top-18 top-16 left-12 right-12 md:left-22 md:right-22 h-0.5 bg-white/10 rounded-full hidden md:block z-0"></div>
 
     <div class="relative flex flex-wrap md:flex-nowrap justify-center md:justify-between gap-4 md:gap-4 md:overflow-x-auto py-4 px-4 md:px-12 no-scrollbar md:snap-x z-10">
       {historyData.map((figure, index) => (
@@ -95,7 +95,7 @@ const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_v
           aria-label={`View message from ${figure.name}`}
         >
           <!-- Avatar Squarcle -->
-          <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl shadow-lg transition-all duration-300 transform group-hover:scale-110 group-focus-visible:ring-2 ring-[var(--token-purple-base)] overflow-hidden z-20 bg-gray-800">
+          <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl shadow-lg transition-all duration-300 transform group-hover:scale-110 group-focus-visible:ring-2 ring-(--token-purple-base) overflow-hidden z-20 bg-gray-800">
              <div class="absolute inset-0 bg-black/50 group-hover:bg-transparent transition-colors duration-300 overlay-dim"></div>
              <CldImage
                 src={figure.avatarId}
@@ -125,10 +125,10 @@ const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_v
       <!-- The Message Card -->
       <div 
         id="history-message-card" 
-        class="bg-[var(--token-bg-light)]/10 backdrop-blur-md border border-white/10 p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl w-full md:max-w-4xl min-h-[28rem] sm:min-h-[24rem] md:min-h-[22rem] transform transition-all duration-500 translate-y-4 opacity-0 scale-95 shadow-2xl relative overflow-hidden"
+        class="bg-(--token-bg-light)/10 backdrop-blur-md border border-white/10 p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl w-full md:max-w-4xl min-h-112 sm:min-h-96 md:min-h-88 transform transition-all duration-500 translate-y-4 opacity-0 scale-95 shadow-2xl relative overflow-hidden"
       >
         <!-- Background Decor -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-white/5 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
         <!-- Header: Avatar + Name + Year -->
         <div class="flex items-center gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-5 md:mb-6 border-b border-white/5 pb-4 sm:pb-5 md:pb-6 relative z-10">
@@ -138,21 +138,21 @@ const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_v
            </div>
            <div class="text-left">
                            <h4 id="card-name" class="font-bold text-white text-sm sm:text-base md:text-xl uppercase tracking-tight"></h4>
-             <span id="card-year" class="text-sm font-mono text-[var(--token-text-muted)] tracking-wider"></span>
+             <span id="card-year" class="text-sm font-mono text-(--token-text-muted) tracking-wider"></span>
            </div>
         </div>
 
         <!-- Quote Body -->
         <div class="relative z-10">
           <span class="absolute -top-4 -left-2 text-6xl text-white/5 font-serif">“</span>
-          <p id="card-quote" class="text-base md:text-xl text-[var(--token-text-primary)] text-left leading-relaxed italic mb-6 relative pl-2">
+          <p id="card-quote" class="text-base md:text-xl text-(--token-text-primary) text-left leading-relaxed italic mb-6 relative pl-2">
              <!-- Quote goes here -->
           </p>
         </div>
 
         <!-- Source Footer -->
         <div class="text-right relative z-10 border-t border-white/5 pt-4">
-           <p id="card-source" class="text-xs text-[var(--token-text-muted)] font-bold uppercase tracking-widest opacity-80"></p>
+           <p id="card-source" class="text-xs text-(--token-text-muted) font-bold uppercase tracking-widest opacity-80"></p>
         </div>
       </div>
   </div>
@@ -303,6 +303,24 @@ const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_v
         activateFigure(idx);
         // Optional: Restart autoplay after a long pause? No, manual override usually means "let me read".
       });
+    });
+
+    // Keyboard Navigation (Arrow keys)
+    wrapper.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      if (key === 'ArrowRight' || key === 'ArrowDown') {
+        e.preventDefault();
+        stopAutoPlay();
+        const nextIndex = (currentIndex + 1) % figuresData.length;
+        activateFigure(nextIndex);
+        btns[nextIndex]?.focus();
+      } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+        e.preventDefault();
+        stopAutoPlay();
+        const prevIndex = (currentIndex - 1 + figuresData.length) % figuresData.length;
+        activateFigure(prevIndex);
+        btns[prevIndex]?.focus();
+      }
     });
 
     // Initialize

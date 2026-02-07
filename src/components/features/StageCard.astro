@@ -1,0 +1,198 @@
+---
+/**
+ * StageCard Component
+ * Complete stage card with all structural elements.
+ * Uses slots for complex unique content (prose, resources) to preserve exact design.
+ */
+import { CldImage } from 'astro-cloudinary';
+import StageQuestCard from './StageQuestCard.astro';
+import StageMindsetCard from './StageMindsetCard.astro';
+
+export interface Props {
+  theme: 'emerald' | 'lime' | 'orange' | 'purple';
+  stageNumber: 1 | 2 | 3 | 4;
+  japaneseLevel: '幼級' | '小級' | '中級' | '高級';
+
+  // Stage metadata
+  stageName: string;
+  stageTitle: string;
+  stageSubtitle: string;
+
+  // Quest card content
+  missionTitle: string;
+  missionDescription: string;
+
+  // Mindset card content
+  mindsetTitle: string;
+  mindsetText: string;
+
+  // Image
+  imageSrc: string;
+  imageAlt: string;
+
+  // Layout
+  reverseLayout?: boolean;
+}
+
+const {
+  theme,
+  stageNumber,
+  japaneseLevel,
+  stageName,
+  stageTitle,
+  stageSubtitle,
+  missionTitle,
+  missionDescription,
+  mindsetTitle,
+  mindsetText,
+  imageSrc,
+  imageAlt,
+  reverseLayout = false,
+} = Astro.props;
+
+// Theme color mappings
+const themeColors = {
+  emerald: {
+    spotlight: 'bg-emerald-500/5',
+    hover: 'bg-emerald-900/20',
+    border: 'border-emerald-900/30',
+    bgColor: 'md:bg-[#080a08]',
+    text100: 'text-emerald-100',
+    text500: 'text-emerald-500',
+  },
+  lime: {
+    spotlight: 'bg-lime-500/5',
+    hover: 'bg-lime-900/20',
+    border: 'border-lime-900/30',
+    bgColor: 'md:bg-[#080908]',
+    text100: 'text-lime-100',
+    text500: 'text-lime-500',
+  },
+  orange: {
+    spotlight: 'bg-orange-500/5',
+    hover: 'bg-orange-900/20',
+    border: 'border-orange-900/30',
+    bgColor: 'md:bg-[#0a0808]',
+    text100: 'text-orange-100',
+    text500: 'text-orange-500',
+  },
+  purple: {
+    spotlight: 'bg-purple-500/5',
+    hover: 'bg-purple-900/20',
+    border: 'border-purple-900/30',
+    bgColor: 'md:bg-[#0c080c]',
+    text100: 'text-purple-100',
+    text500: 'text-purple-500',
+  },
+};
+
+const colors = themeColors[theme];
+const mindsetPosition = reverseLayout ? 'left' : 'right';
+---
+
+<!-- Stage Card Container -->
+<div class='mb-32 last:mb-0'>
+  <div class='relative grid lg:grid-cols-2 gap-12 lg:gap-24 items-center'>
+    <!-- Background Spotlight -->
+    <div
+      class='absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,#0c080c_0%,transparent_70%)] pointer-events-none rounded-[3rem]'
+    >
+    </div>
+    <div
+      class:list={[
+        'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[100px] pointer-events-none',
+        colors.spotlight,
+      ]}
+    >
+    </div>
+
+    <!-- Visual Column -->
+    <div class:list={['relative group', reverseLayout && 'lg:order-2']}>
+      <div
+        class:list={[
+          'absolute -inset-4 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700',
+          colors.hover,
+        ]}
+      >
+      </div>
+      <div
+        class:list={[
+          'relative rounded-4xl overflow-hidden border shadow-2xl bg-[radial-gradient(ellipse_at_center,#0c080c_0%,transparent_70%)]',
+          colors.border,
+          colors.bgColor,
+        ]}
+      >
+        <!-- Quest Card Overlay -->
+        <StageQuestCard
+          theme={theme}
+          stageNumber={stageNumber}
+          stageName={stageName}
+          missionTitle={missionTitle}
+          missionDescription={missionDescription}
+        />
+
+        <!-- Stage Image -->
+        <CldImage
+          src={imageSrc}
+          width={800}
+          height={1000}
+          alt={imageAlt}
+          class='w-full h-auto object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700'
+        />
+      </div>
+
+      <!-- Floating Mindset Card -->
+      <StageMindsetCard
+        theme={theme}
+        title={mindsetTitle}
+        description={mindsetText}
+        position={mindsetPosition}
+      />
+    </div>
+
+    <!-- Content Column -->
+    <div
+      class:list={['relative overflow-hidden', reverseLayout && 'lg:order-1']}
+    >
+      <!-- Stage Title -->
+      <h3 class:list={['text-3xl md:text-5xl font-black mb-2', colors.text100]}>
+        {stageTitle}
+      </h3>
+      <p
+        class:list={[
+          'font-mono text-sm tracking-widest uppercase mb-8',
+          colors.text500,
+        ]}
+      >
+        {stageSubtitle}
+      </p>
+
+      <!-- Prose Content Slot -->
+      <div class='prose prose-invert prose-lg text-stone-300 mb-10'>
+        <slot name='prose' />
+      </div>
+
+      <!-- Japanese Level Watermark -->
+      <div
+        class='absolute top-0 right-0 text-[12rem] leading-none opacity-[0.08] font-black text-white select-none pointer-events-none z-0 writing-vertical-rl font-serif hidden md:block'
+      >
+        {japaneseLevel}
+      </div>
+
+      <!-- Resources Grid Slot -->
+      <div class='grid gap-4 relative z-10'>
+        <slot name='resources' />
+      </div>
+
+      <!-- Closing insight moved to visual column -->
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Vertical writing mode for Japanese characters */
+  .writing-vertical-rl {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+</style>
