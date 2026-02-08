@@ -3706,25 +3706,64 @@ const secondRow = reviews.filter(r => r.attachment); // Reviews with images
                     console.error('Failed to load Discord avatars', e);
                   }
 
-                  // 2. Load Total Member Count (from Invite API)
+                  // 2. Load Total Member Count
                   try {
-                    const inviteResponse = await fetch(
-                      'https://discord.com/api/v9/invites/EPP7h2Sk?with_counts=true'
+                    // Fetch Widget API data (used for both avatars and presence count)
+                    const widgetResponse = await fetch(
+                      'https://discord.com/api/guilds/1075777026482520114/widget.json'
                     );
-                    const inviteData = await inviteResponse.json();
-                    if (inviteData.approximate_member_count) {
+                    const widgetData = await widgetResponse.json();
+
+                    let memberCount = null;
+                    let countLabel = 'Active Members';
+
+                    // Try Invite API for total member count
+                    try {
+                      const inviteResponse = await fetch(
+                        'https://discord.com/api/v9/invites/hDdW4qUM?with_counts=true'
+                      );
+
+                      // Check if response is OK (NOT a 404 or other error)
+                      if (inviteResponse.ok) {
+                        const inviteData = await inviteResponse.json();
+
+                        if (inviteData.approximate_member_count) {
+                          memberCount = inviteData.approximate_member_count;
+                          countLabel = 'Active Members';
+                        }
+                      } else {
+                        console.warn(
+                          `Invite API returned ${inviteResponse.status}: ${inviteResponse.statusText}`
+                        );
+                        // Fall back to Widget presence count
+                        if (widgetData.presence_count) {
+                          memberCount = widgetData.presence_count;
+                          countLabel = 'Online Now';
+                        }
+                      }
+                    } catch (inviteError) {
+                      console.warn('Invite API error:', inviteError);
+                      // Fall back to Widget presence count
+                      if (widgetData.presence_count) {
+                        memberCount = widgetData.presence_count;
+                        countLabel = 'Online Now';
+                      }
+                    }
+
+                    // Update the count display
+                    if (memberCount) {
                       const countEl = document.getElementById(
                         'discord-members-count'
                       );
                       if (countEl) {
                         const formatted = new Intl.NumberFormat('en-US').format(
-                          inviteData.approximate_member_count
+                          memberCount
                         );
                         countEl.textContent = `+${formatted}`;
                       }
                     }
                   } catch (e) {
-                    console.error('Failed to load Discord count', e);
+                    console.error('Failed to load Discord count:', e);
                   }
                 }
 
