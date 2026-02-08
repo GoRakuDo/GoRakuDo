@@ -20,20 +20,14 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 24
-          cache: 'npm'
+          bun-version: latest
       - name: Install dependencies
-        run: npm ci
-      - name: Rebuild native dependencies for Linux
-        run: |
-          npm rebuild
-          npm install @rollup/rollup-linux-x64-gnu --platform=linux --arch=x64
-          npm install --force lightningcss @tailwindcss/oxide
+        run: bun install --frozen-lockfile
       - name: Build the site
-        run: npm run build
+        run: bun run build
         env:
           NODE_ENV: production
           GITHUB_ACTIONS: true
