@@ -1,233 +1,232 @@
 ---
+
 ---
 
-      <!-- NEW SECTION 2: BATTLE CARDS (Learning vs Acquisition) - "Gamified Selection" -->
-      <section class='py-24 relative'>
-        <div class='container mx-auto px-4 max-w-7xl'>
-          <div class='text-center mb-16'>
-            <h2 class='text-3xl md:text-5xl font-black text-white mb-6'>
-              Pilih Mode Operasimu
-            </h2>
-            <p class='text-xl text-(--token-text-secondary)'>
-              Otak manusia punya dua jalan berbeda. Satu jalan rusak, satu jalan
-              tol.
-            </p>
+<!-- NEW SECTION 2: BATTLE CARDS (Learning vs Acquisition) - "Gamified Selection" -->
+<section class='py-24 relative'>
+  <div class='container mx-auto px-4 max-w-7xl'>
+    <div class='text-center mb-16'>
+      <h2 class='text-3xl md:text-5xl font-black text-white mb-6'>
+        Pilih Mode Operasimu
+      </h2>
+      <p class='text-xl text-(--token-text-secondary)'>
+        Otak manusia punya dua jalan berbeda. Satu jalan rusak, satu jalan tol.
+      </p>
+    </div>
+
+    <div class='grid md:grid-cols-2 gap-6 lg:gap-12 max-w-6xl mx-auto'>
+      <!-- CARD 1: LEARNING (The Bad Way) -->
+      <div class='relative group cursor-default'>
+        <div
+          class='absolute inset-0 bg-red-600/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+        >
+        </div>
+        <div
+          class='relative h-full bg-[oklch(0.122_0.004_286)] border border-red-900/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:border-red-500/50'
+        >
+          <!-- Background Grid -->
+          <div
+            class="absolute inset-0 bg-[url('/images/noise.svg')] opacity-20 mix-blend-overlay"
+          >
+          </div>
+          <div
+            class='absolute inset-0'
+            style='background-image: radial-gradient(oklch(23.6% 0.054 22deg) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3;'
+          >
           </div>
 
-          <div class='grid md:grid-cols-2 gap-6 lg:gap-12 max-w-6xl mx-auto'>
-            <!-- CARD 1: LEARNING (The Bad Way) -->
-            <div class='relative group cursor-default'>
-              <div
-                class='absolute inset-0 bg-red-600/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+          <div class='relative z-10 flex flex-col h-full'>
+            <div
+              class='w-16 h-16 rounded-2xl bg-red-900/20 border border-red-500/20 flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-300'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                class='w-8 h-8 text-red-500'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+                stroke-width='2'
               >
-              </div>
-              <div
-                class='relative h-full bg-[#0f0f11] border border-red-900/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:border-red-500/50'
-              >
-                <!-- Background Grid -->
-                <div
-                  class="absolute inset-0 bg-[url('/images/noise.svg')] opacity-20 mix-blend-overlay"
-                >
-                </div>
-                <div
-                  class='absolute inset-0'
-                  style='background-image: radial-gradient(#3f1515 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3;'
-                >
-                </div>
-
-                <div class='relative z-10 flex flex-col h-full'>
-                  <div
-                    class='w-16 h-16 rounded-2xl bg-red-900/20 border border-red-500/20 flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-300'
-                  >
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      class='w-8 h-8 text-red-500'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'
-                      stroke-width='2'
-                    >
-                      <path
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        d='M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
-                      ></path>
-                    </svg>
-                  </div>
-
-                  <h3
-                    class='text-3xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors'
-                  >
-                    Learning
-                  </h3>
-                  <p
-                    class='text-red-400/80 font-mono text-xs uppercase tracking-wider mb-6'
-                  >
-                    Jalan Sekolah (Sadar)
-                  </p>
-
-                  <div
-                    class='space-y-4 text-(--token-text-secondary) leading-relaxed grow'
-                  >
-                    <p>
-                      Ini yang kamu jalani selama ini. Hafal rumus bunpou,
-                      latihan soal JLPT, dikoreksi terus kalau salah.
-                    </p>
-                    <ul class='space-y-3 mt-6'>
-                      <li class='flex items-center gap-3 text-sm'>
-                        <span class='w-2 h-2 rounded-full bg-red-500'></span>
-                        <span>Proses capek & gampang lupa</span>
-                      </li>
-                      <li class='flex items-center gap-3 text-sm'>
-                        <span class='w-2 h-2 rounded-full bg-red-500'></span>
-                        <span>Ngomong "loading" lama & gagap</span>
-                      </li>
-                      <li class='flex items-center gap-3 text-sm'>
-                        <span class='w-2 h-2 rounded-full bg-red-500'></span>
-                        <span>Bahasa penuh "kotoran" & anomali</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class='mt-8 pt-8 border-t border-red-900/30'>
-                    <div
-                      class='inline-flex items-center gap-2 text-red-500 font-bold text-sm'
-                    >
-                      <span class='uppercase'>Status:</span>
-                      <span class='animate-pulse'>Fossilized 💀</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  d='M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+                ></path>
+              </svg>
             </div>
 
-            <!-- CARD 2: ACQUISITION (The Good Way) -->
-            <div class='relative group cursor-default'>
+            <h3
+              class='text-3xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors'
+            >
+              Learning
+            </h3>
+            <p
+              class='text-red-400/80 font-mono text-xs uppercase tracking-wider mb-6'
+            >
+              Jalan Sekolah (Sadar)
+            </p>
+
+            <div
+              class='space-y-4 text-(--token-text-secondary) leading-relaxed grow'
+            >
+              <p>
+                Ini yang kamu jalani selama ini. Hafal rumus bunpou, latihan
+                soal JLPT, dikoreksi terus kalau salah.
+              </p>
+              <ul class='space-y-3 mt-6'>
+                <li class='flex items-center gap-3 text-sm'>
+                  <span class='w-2 h-2 rounded-full bg-red-500'></span>
+                  <span>Proses capek & gampang lupa</span>
+                </li>
+                <li class='flex items-center gap-3 text-sm'>
+                  <span class='w-2 h-2 rounded-full bg-red-500'></span>
+                  <span>Ngomong "loading" lama & gagap</span>
+                </li>
+                <li class='flex items-center gap-3 text-sm'>
+                  <span class='w-2 h-2 rounded-full bg-red-500'></span>
+                  <span>Bahasa penuh "kotoran" & anomali</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class='mt-8 pt-8 border-t border-red-900/30'>
               <div
-                class='absolute inset-0 bg-emerald-500/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+                class='inline-flex items-center gap-2 text-red-500 font-bold text-sm'
               >
-              </div>
-              <div
-                class='relative h-full bg-linear-to-br from-[#131f17] to-[#0f0f11] border border-emerald-500/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_50px_rgba(16,185,129,0.15)]'
-              >
-                <!-- Organic Background -->
-                <div
-                  class='absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors duration-700'
-                >
-                </div>
-
-                <div class='relative z-10 flex flex-col h-full'>
-                  <div
-                    class='w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center mb-8 group-hover:-rotate-12 transition-transform duration-300'
-                  >
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      class='w-8 h-8 text-emerald-400'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke='currentColor'
-                      stroke-width='2'
-                    >
-                      <path
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        d='M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-                      ></path>
-                    </svg>
-                  </div>
-
-                  <h3
-                    class='text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors'
-                  >
-                    Acquisition
-                  </h3>
-                  <p
-                    class='text-emerald-400/80 font-mono text-xs uppercase tracking-wider mb-6'
-                  >
-                    Jalan Alami (Bawah Sadar)
-                  </p>
-
-                  <div
-                    class='space-y-4 text-(--token-text-secondary) leading-relaxed grow'
-                  >
-                    <p>
-                      Ini cara kamu jago Bahasa Indonesia. Nggak pernah hafal
-                      S-P-O-K, tapi lama-lama kamu "ngerasa" mana yang benar
-                      sendiri.
-                    </p>
-                    <ul class='space-y-3 mt-6'>
-                      <li class='flex items-center gap-3 text-sm'>
-                        <svg
-                          class='w-5 h-5 text-emerald-400'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          stroke='currentColor'
-                          ><path
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
-                            stroke-width='2'
-                            d='M5 13l4 4L19 7'></path></svg
-                        >
-                        <span class='text-white'>Tanpa paksaan & hafalan</span>
-                      </li>
-                      <li class='flex items-center gap-3 text-sm'>
-                        <svg
-                          class='w-5 h-5 text-emerald-400'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          stroke='currentColor'
-                          ><path
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
-                            stroke-width='2'
-                            d='M5 13l4 4L19 7'></path></svg
-                        >
-                        <span class='text-white'
-                          >Otak nyerap sendiri (Native Feeling)</span
-                        >
-                      </li>
-                      <li class='flex items-center gap-3 text-sm'>
-                        <svg
-                          class='w-5 h-5 text-emerald-400'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          stroke='currentColor'
-                          ><path
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
-                            stroke-width='2'
-                            d='M5 13l4 4L19 7'></path></svg
-                        >
-                        <span class='text-white'
-                          >Kemampuan bahasa yang sebenarnya</span
-                        >
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class='mt-8 pt-8 border-t border-emerald-900/30'>
-                    <a
-                      href='#rumus-ajaib'
-                      class='w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 hover:shadow-emerald-500/30 flex items-center justify-center gap-2 group/btn'
-                    >
-                      <span>Aktifkan Mode Ini</span>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        class='w-4 h-4 group-hover/btn:translate-x-1 transition-transform'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='currentColor'
-                        ><path
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
-                          stroke-width='2'
-                          d='M13 7l5 5m0 0l-5 5m5-5H6'></path></svg
-                      >
-                    </a>
-                  </div>
-                </div>
+                <span class='uppercase'>Status:</span>
+                <span class='animate-pulse'>Fossilized 💀</span>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      <!-- CARD 2: ACQUISITION (The Good Way) -->
+      <div class='relative group cursor-default'>
+        <div
+          class='absolute inset-0 bg-emerald-500/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+        >
+        </div>
+        <div
+          class='relative h-full bg-linear-to-br from-[oklch(0.175_0.02_152)] to-[oklch(0.122_0.004_286)] border border-emerald-500/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_50px_oklch(0.696_0.143_164/0.15)]'
+        >
+          <!-- Organic Background -->
+          <div
+            class='absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors duration-700'
+          >
+          </div>
+
+          <div class='relative z-10 flex flex-col h-full'>
+            <div
+              class='w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center mb-8 group-hover:-rotate-12 transition-transform duration-300'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                class='w-8 h-8 text-emerald-400'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+                stroke-width='2'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  d='M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                ></path>
+              </svg>
+            </div>
+
+            <h3
+              class='text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors'
+            >
+              Acquisition
+            </h3>
+            <p
+              class='text-emerald-400/80 font-mono text-xs uppercase tracking-wider mb-6'
+            >
+              Jalan Alami (Bawah Sadar)
+            </p>
+
+            <div
+              class='space-y-4 text-(--token-text-secondary) leading-relaxed grow'
+            >
+              <p>
+                Ini cara kamu jago Bahasa Indonesia. Nggak pernah hafal S-P-O-K,
+                tapi lama-lama kamu "ngerasa" mana yang benar sendiri.
+              </p>
+              <ul class='space-y-3 mt-6'>
+                <li class='flex items-center gap-3 text-sm'>
+                  <svg
+                    class='w-5 h-5 text-emerald-400'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                    ><path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'></path></svg
+                  >
+                  <span class='text-white'>Tanpa paksaan & hafalan</span>
+                </li>
+                <li class='flex items-center gap-3 text-sm'>
+                  <svg
+                    class='w-5 h-5 text-emerald-400'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                    ><path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'></path></svg
+                  >
+                  <span class='text-white'
+                    >Otak nyerap sendiri (Native Feeling)</span
+                  >
+                </li>
+                <li class='flex items-center gap-3 text-sm'>
+                  <svg
+                    class='w-5 h-5 text-emerald-400'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                    ><path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'></path></svg
+                  >
+                  <span class='text-white'
+                    >Kemampuan bahasa yang sebenarnya</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class='mt-8 pt-8 border-t border-emerald-900/30'>
+              <a
+                href='#rumus-ajaib'
+                class='w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 hover:shadow-emerald-500/30 flex items-center justify-center gap-2 group/btn'
+              >
+                <span>Aktifkan Mode Ini</span>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  class='w-4 h-4 group-hover/btn:translate-x-1 transition-transform'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                  ><path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M13 7l5 5m0 0l-5 5m5-5H6'></path></svg
+                >
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

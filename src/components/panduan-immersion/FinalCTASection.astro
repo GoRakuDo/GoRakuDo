@@ -1,328 +1,326 @@
 ---
 import DiscordCard from '../ui/DiscordCard.astro';
 ---
-  <section class='pt-24 pb-40 lg:pt-48 lg:pb-56 relative overflow-hidden'>
-    <!-- Background Vignette (Blends all sides) -->
-    <div
-      class='absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,#0c080c_0%,transparent_70%)] pointer-events-none'
-    >
-    </div>
 
-    <!-- Ambient Glow -->
-    <div
-      class='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none'
-    >
-    </div>
+<section class='pt-24 pb-40 lg:pt-48 lg:pb-56 relative overflow-hidden'>
+  <!-- Background Vignette (Blends all sides) -->
+  <div
+    class='absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,oklch(0.106_0.012_325)_0%,transparent_70%)] pointer-events-none'
+  >
+  </div>
 
-    <div
-      class='page-container mx-auto relative z-10 px-6 lg:px-0 w-full max-w-384'
-    >
-      <div class='grid lg:grid-cols-12 gap-12 items-center'>
-        <!-- Left: The Manifesto -->
-        <div class='lg:col-span-7 space-y-10 order-2 lg:order-1'>
-          <div>
-            <div
-              class='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-indigo-300 mb-6'
-            >
-              <span class='w-2 h-2 rounded-full bg-indigo-400 animate-pulse'
-              ></span>
-              <span>Open Invitation</span>
-            </div>
-            <h2
-              class='text-4xl lg:text-6xl font-black text-white leading-tight mb-6'
-            >
-              100% Gratis.<br />
-              <span
-                class='text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400'
-                >Buat kamu yang serius.</span
-              >
-            </h2>
-            <div
-              class='h-1 w-24 bg-linear-to-r from-indigo-500 to-transparent rounded-full'
-            >
-            </div>
-          </div>
+  <!-- Ambient Glow -->
+  <div
+    class='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none'
+  >
+  </div>
 
+  <div
+    class='page-container mx-auto relative z-10 px-6 lg:px-0 w-full max-w-384'
+  >
+    <div class='grid lg:grid-cols-12 gap-12 items-center'>
+      <!-- Left: The Manifesto -->
+      <div class='lg:col-span-7 space-y-10 order-2 lg:order-1'>
+        <div>
           <div
-            class='prose prose-lg prose-invert text-stone-400 leading-relaxed'
+            class='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-indigo-300 mb-6'
           >
-            <p>
-              Tujuan utama kami cuma satu: <strong class='text-white'
-                >mengembalikan cara belajar bahasa Jepang yang alami dan
-                manusiawi</strong
-              > di Indonesia — cara belajar yang sebenarnya sudah ditakdirkan oleh
-              otak kita sejak lahir.
-            </p>
-            <p>
-              Kamu sudah punya kemampuan alami untuk menguasai bahasa. <span
-                class='text-indigo-200'
-                >Kami nggak akan pernah memungut uang dari bakat yang memang
-                sudah kamu miliki.</span
-              >
-            </p>
-            <p>
-              Berbeda dengan metode tradisional yang selama ini justru
-              "mempermainkan" dan membebani kamu, di sini kita mainnya beda.
-              Kita mainnya pakai <strong class='text-white'>Insting</strong>.
-            </p>
+            <span class='w-2 h-2 rounded-full bg-indigo-400 animate-pulse'
+            ></span>
+            <span>Open Invitation</span>
           </div>
-
-          <!-- Join Button (Mobile/Desktop consistent) -->
-          <div class='flex flex-wrap items-center gap-4 pt-4'>
-            <a
-              href='/discord'
-              target='_blank'
-              rel='noopener noreferrer'
-              class='inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold transition-all shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-1 group'
+          <h2
+            class='text-4xl lg:text-6xl font-black text-white leading-tight mb-6'
+          >
+            100% Gratis.<br />
+            <span
+              class='text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400'
+              >Buat kamu yang serius.</span
             >
-              <span>Join Komunitas GoRakuDo</span>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='20'
-                height='20'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                class='lucide lucide-arrow-right group-hover:translate-x-1 transition-transform'
-                ><path d='M5 12h14'></path><path d='m12 5 7 7-7 7'></path></svg
-              >
-            </a>
-            <div class='flex items-center gap-4 px-4'>
-              <div class='flex flex-col -space-y-1'>
-                <!-- Top Row -->
-                <div id='discord-avatars-top' class='flex -space-x-3'>
-                  {/* Dummies Top */}
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-700'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-600'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-500'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-700'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-600'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-500'
-                  >
-                  </div>
+          </h2>
+          <div
+            class='h-1 w-24 bg-linear-to-r from-indigo-500 to-transparent rounded-full'
+          >
+          </div>
+        </div>
+
+        <div class='prose prose-lg prose-invert text-stone-400 leading-relaxed'>
+          <p>
+            Tujuan utama kami cuma satu: <strong class='text-white'
+              >mengembalikan cara belajar bahasa Jepang yang alami dan manusiawi</strong
+            > di Indonesia — cara belajar yang sebenarnya sudah ditakdirkan oleh otak
+            kita sejak lahir.
+          </p>
+          <p>
+            Kamu sudah punya kemampuan alami untuk menguasai bahasa. <span
+              class='text-indigo-200'
+              >Kami nggak akan pernah memungut uang dari bakat yang memang sudah
+              kamu miliki.</span
+            >
+          </p>
+          <p>
+            Berbeda dengan metode tradisional yang selama ini justru
+            "mempermainkan" dan membebani kamu, di sini kita mainnya beda. Kita
+            mainnya pakai <strong class='text-white'>Insting</strong>.
+          </p>
+        </div>
+
+        <!-- Join Button (Mobile/Desktop consistent) -->
+        <div class='flex flex-wrap items-center gap-4 pt-4'>
+          <a
+            href='/discord'
+            target='_blank'
+            rel='noopener noreferrer'
+            class='inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[oklch(0.546_0.212_277)] hover:bg-[oklch(0.462_0.189_277)] text-white font-bold transition-all shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-1 group'
+          >
+            <span>Join Komunitas GoRakuDo</span>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              class='lucide lucide-arrow-right group-hover:translate-x-1 transition-transform'
+              ><path d='M5 12h14'></path><path d='m12 5 7 7-7 7'></path></svg
+            >
+          </a>
+          <div class='flex items-center gap-4 px-4'>
+            <div class='flex flex-col -space-y-1'>
+              <!-- Top Row -->
+              <div id='discord-avatars-top' class='flex -space-x-3'>
+                {/* Dummies Top */}
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-700'
+                >
                 </div>
-                <!-- Bottom Row (Offset) -->
-                <div id='discord-avatars-bottom' class='flex -space-x-3 pl-3'>
-                  {/* Dummies Bottom */}
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-700'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-600'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-500'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-700'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-600'
-                  >
-                  </div>
-                  <div
-                    class='w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-500'
-                  >
-                  </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-600'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-500'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-700'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-600'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-500'
+                >
                 </div>
               </div>
+              <!-- Bottom Row (Offset) -->
+              <div id='discord-avatars-bottom' class='flex -space-x-3 pl-3'>
+                {/* Dummies Bottom */}
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-700'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-600'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-500'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-700'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-600'
+                >
+                </div>
+                <div
+                  class='w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-500'
+                >
+                </div>
+              </div>
+            </div>
 
-              <!-- Dynamic Discord Stats (Avatars + Count) -->
-              <script is:inline>
-                async function loadDiscordStats() {
-                  let widgetData = null;
+            <!-- Dynamic Discord Stats (Avatars + Count) -->
+            <script is:inline>
+              async function loadDiscordStats() {
+                let widgetData = null;
 
-                  // 1. Fetch Widget API ONCE (used for avatars + fallback count)
-                  try {
-                    const widgetResponse = await fetch(
-                      'https://discord.com/api/guilds/1075777026482520114/widget.json'
-                    );
-                    widgetData = await widgetResponse.json();
-                  } catch (e) {
-                    console.error('Failed to load Discord widget data', e);
-                    return; // Nothing works without widget data
-                  }
+                // 1. Fetch Widget API ONCE (used for avatars + fallback count)
+                try {
+                  const widgetResponse = await fetch(
+                    'https://discord.com/api/guilds/1075777026482520114/widget.json'
+                  );
+                  widgetData = await widgetResponse.json();
+                } catch (e) {
+                  console.error('Failed to load Discord widget data', e);
+                  return; // Nothing works without widget data
+                }
 
-                  // 2. Populate Avatar Grid
-                  try {
-                    const members = (widgetData.members || []).filter(
-                      m => m.avatar_url
-                    );
+                // 2. Populate Avatar Grid
+                try {
+                  const members = (widgetData.members || []).filter(
+                    m => m.avatar_url
+                  );
 
-                    if (members.length >= 12) {
-                      // Shuffle
-                      for (let i = members.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [members[i], members[j]] = [members[j], members[i]];
-                      }
+                  if (members.length >= 12) {
+                    // Shuffle
+                    for (let i = members.length - 1; i > 0; i--) {
+                      const j = Math.floor(Math.random() * (i + 1));
+                      [members[i], members[j]] = [members[j], members[i]];
+                    }
 
-                      const topRow = members.slice(0, 6);
-                      const bottomRow = members.slice(6, 12);
+                    const topRow = members.slice(0, 6);
+                    const bottomRow = members.slice(6, 12);
 
-                      const renderAvatars = list =>
-                        list
-                          .map(
-                            m => `
+                    const renderAvatars = list =>
+                      list
+                        .map(
+                          m => `
                         <img 
                           src="${m.avatar_url}" 
                           alt="${m.username}" 
-                          class="w-8 h-8 rounded-full border-2 border-[#0c080c] bg-zinc-700 object-cover"
+                          class="w-8 h-8 rounded-full border-2 border-[oklch(0.106_0.012_325)] bg-zinc-700 object-cover"
                           width="32"
                           height="32"
                         />
                       `
-                          )
-                          .join('');
+                        )
+                        .join('');
 
-                      const topContainer = document.getElementById(
-                        'discord-avatars-top'
-                      );
-                      const bottomContainer = document.getElementById(
-                        'discord-avatars-bottom'
-                      );
+                    const topContainer = document.getElementById(
+                      'discord-avatars-top'
+                    );
+                    const bottomContainer = document.getElementById(
+                      'discord-avatars-bottom'
+                    );
 
-                      if (topContainer)
-                        topContainer.innerHTML = renderAvatars(topRow);
-                      if (bottomContainer)
-                        bottomContainer.innerHTML = renderAvatars(bottomRow);
-                    }
-                  } catch (e) {
-                    console.error('Failed to render Discord avatars', e);
+                    if (topContainer)
+                      topContainer.innerHTML = renderAvatars(topRow);
+                    if (bottomContainer)
+                      bottomContainer.innerHTML = renderAvatars(bottomRow);
                   }
+                } catch (e) {
+                  console.error('Failed to render Discord avatars', e);
+                }
 
-                  // 3. Load Member Count (try Invite API first, fallback to widget presence)
+                // 3. Load Member Count (try Invite API first, fallback to widget presence)
+                try {
+                  let memberCount = null;
+
                   try {
-                    let memberCount = null;
+                    const inviteResponse = await fetch(
+                      'https://discord.com/api/v9/invites/j8qmYPAGQh?with_counts=true'
+                    );
 
-                    try {
-                      const inviteResponse = await fetch(
-                        'https://discord.com/api/v9/invites/j8qmYPAGQh?with_counts=true'
-                      );
-
-                      if (inviteResponse.ok) {
-                        const inviteData = await inviteResponse.json();
-                        if (inviteData.approximate_member_count) {
-                          memberCount = inviteData.approximate_member_count;
-                        }
-                      } else {
-                        console.warn(
-                          `Invite API returned ${inviteResponse.status}: ${inviteResponse.statusText}`
-                        );
+                    if (inviteResponse.ok) {
+                      const inviteData = await inviteResponse.json();
+                      if (inviteData.approximate_member_count) {
+                        memberCount = inviteData.approximate_member_count;
                       }
-                    } catch (inviteError) {
-                      console.warn('Invite API error:', inviteError);
-                    }
-
-                    // Fallback to widget presence count - REMOVED to keep Total Members label accurate (static backup)
-                    // if (!memberCount && widgetData.presence_count) {
-                    //   memberCount = widgetData.presence_count;
-                    // }
-
-                    // Update display
-                    if (memberCount) {
-                      const countEl = document.getElementById(
-                        'discord-members-count'
+                    } else {
+                      console.warn(
+                        `Invite API returned ${inviteResponse.status}: ${inviteResponse.statusText}`
                       );
-                      if (countEl) {
-                        const formatted = new Intl.NumberFormat('en-US').format(
-                          memberCount
-                        );
-                        countEl.textContent = `+${formatted}`;
-                      }
                     }
-                  } catch (e) {
-                    console.error('Failed to load Discord count:', e);
+                  } catch (inviteError) {
+                    console.warn('Invite API error:', inviteError);
                   }
-                }
 
-                // Load when browser is idle to avoid impacting LCP
-                if ('requestIdleCallback' in window) {
-                  requestIdleCallback(loadDiscordStats);
-                } else {
-                  setTimeout(loadDiscordStats, 2000);
+                  // Fallback to widget presence count - REMOVED to keep Total Members label accurate (static backup)
+                  // if (!memberCount && widgetData.presence_count) {
+                  //   memberCount = widgetData.presence_count;
+                  // }
+
+                  // Update display
+                  if (memberCount) {
+                    const countEl = document.getElementById(
+                      'discord-members-count'
+                    );
+                    if (countEl) {
+                      const formatted = new Intl.NumberFormat('en-US').format(
+                        memberCount
+                      );
+                      countEl.textContent = `+${formatted}`;
+                    }
+                  }
+                } catch (e) {
+                  console.error('Failed to load Discord count:', e);
                 }
-              </script>
-              <div class='ml-5 flex flex-col justify-center gap-0.5'>
-                <span
-                  id='discord-members-count'
-                  class='text-white font-bold text-xl leading-none tracking-tight'
-                >
-                  +12,000
-                </span>
-                <span
-                  class='text-[10px] text-indigo-300/80 uppercase tracking-widest font-semibold'
-                >
-                  Active Members
-                </span>
-              </div>
+              }
+
+              // Load when browser is idle to avoid impacting LCP
+              if ('requestIdleCallback' in window) {
+                requestIdleCallback(loadDiscordStats);
+              } else {
+                setTimeout(loadDiscordStats, 2000);
+              }
+            </script>
+            <div class='ml-5 flex flex-col justify-center gap-0.5'>
+              <span
+                id='discord-members-count'
+                class='text-white font-bold text-xl leading-none tracking-tight'
+              >
+                +12,000
+              </span>
+              <span
+                class='text-[10px] text-indigo-300/80 uppercase tracking-widest font-semibold'
+              >
+                Active Members
+              </span>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Right: The Widget (Sanctuary Portal) -->
-        <div class='lg:col-span-5 order-1 lg:order-2'>
-          <div class='relative group mx-auto max-w-[400px] lg:max-w-none'>
-            <!-- Glowing Backdrop -->
+      <!-- Right: The Widget (Sanctuary Portal) -->
+      <div class='lg:col-span-5 order-1 lg:order-2'>
+        <div class='relative group mx-auto max-w-[400px] lg:max-w-none'>
+          <!-- Glowing Backdrop -->
+          <div
+            class='absolute -inset-1 bg-linear-to-b from-[oklch(0.546_0.212_277)] to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition-opacity duration-700'
+          >
+          </div>
+
+          <!-- Glass Container -->
+          <div
+            class='relative rounded-3xl overflow-hidden bg-[oklch(0.161_0.004_286)]/80 backdrop-blur-xl border border-white/10 shadow-2xl'
+          >
+            <!-- Window Controls (Decoration) -->
             <div
-              class='absolute -inset-1 bg-linear-to-b from-[#5865F2] to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition-opacity duration-700'
+              class='h-10 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2'
             >
+              <div class='w-3 h-3 rounded-full bg-red-500/50'></div>
+              <div class='w-3 h-3 rounded-full bg-yellow-500/50'></div>
+              <div class='w-3 h-3 rounded-full bg-green-500/50'></div>
+              <div
+                class='ml-auto text-[10px] font-mono text-white/30 tracking-widest uppercase'
+              >
+                discord.sys
+              </div>
             </div>
 
-            <!-- Glass Container -->
-            <div
-              class='relative rounded-3xl overflow-hidden bg-[#18181b]/80 backdrop-blur-xl border border-white/10 shadow-2xl'
-            >
-              <!-- Window Controls (Decoration) -->
-              <div
-                class='h-10 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2'
-              >
-                <div class='w-3 h-3 rounded-full bg-red-500/50'></div>
-                <div class='w-3 h-3 rounded-full bg-yellow-500/50'></div>
-                <div class='w-3 h-3 rounded-full bg-green-500/50'></div>
-                <div
-                  class='ml-auto text-[10px] font-mono text-white/30 tracking-widest uppercase'
-                >
-                  discord.sys
-                </div>
-              </div>
-
-              <!-- Iframe Wrapper -->
-              <div class='relative w-full h-[500px]'>
-                <iframe
-                  src='https://discordapp.com/widget?id=1075777026482520114&theme=dark'
-                  width='100%'
-                  height='100%'
-                  allowtransparency='true'
-                  loading='lazy'
-                  sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts'
-                  class='absolute inset-0 w-full h-full border-0'></iframe>
-              </div>
+            <!-- Iframe Wrapper -->
+            <div class='relative w-full h-[500px]'>
+              <iframe
+                src='https://discordapp.com/widget?id=1075777026482520114&theme=dark'
+                width='100%'
+                height='100%'
+                allowtransparency='true'
+                loading='lazy'
+                sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts'
+                class='absolute inset-0 w-full h-full border-0'></iframe>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
