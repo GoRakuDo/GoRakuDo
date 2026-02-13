@@ -1,0 +1,113 @@
+/* Panduan Immersion — Shared Animations & Utilities */
+
+@keyframes progressLoading {
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* Playful Animations */
+@keyframes pulseSlow {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.15;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 6s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-12deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-10deg);
+  }
+}
+
+.animate-float {
+  animation: float 5s infinite ease-in-out;
+}
+
+@keyframes bounceSubtle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounceSubtle 2s infinite ease-in-out;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
+}
+
+/* 3D Transform Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+@media (min-width: 768px) {
+  .animate-progress-bar {
+    animation: progressLoading 2.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    transform-origin: left;
+  }
+}
+
+/* Global focus-visible for keyboard accessibility */
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  /* stylelint-disable declaration-no-important */
+  .animate-pulse-slow,
+  .animate-float,
+  .animate-bounce-subtle,
+  .animate-spin-slow,
+  .animate-progress-bar,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+  /* stylelint-enable declaration-no-important */
+}

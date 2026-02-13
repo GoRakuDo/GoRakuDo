@@ -1,0 +1,490 @@
+---
+import { CldImage } from 'astro-cloudinary';
+import Prose from '../Prose.astro';
+import JlptCanDoChart from '../features/JlptCanDoChart.astro';
+---
+
+      <!-- Stop Learning, Start Absorbing Section -->
+      <section class='py-16 lg:py-24 space-y-24'>
+        <!-- Design: Google x Duolingo Redesign -->
+        <div class='flex flex-col gap-10 lg:gap-16'>
+          <!-- 1. Hero Headline & Problem/Solution Split -->
+          <div class='space-y-12'>
+            <div class='text-center space-y-4 max-w-4xl mx-auto'>
+              <h2
+                class='text-3xl lg:text-5xl font-black tracking-tight leading-tight'
+              >
+                Berhenti "Belajar Keras". <br />
+                <span
+                  class='text-transparent bg-clip-text bg-linear-to-r from-(--token-purple-base) to-(--token-secondary-gold-base)'
+                >
+                  Mulailah "Menyerap" Aja.
+                </span>
+              </h2>
+              <p class='text-base md:text-xl text-(--token-text-secondary)'>
+                Metode tradisional minta kamu jadi robot. Kami minta kamu jadi
+                manusia.
+              </p>
+            </div>
+
+            <div
+              class='grid md:grid-cols-2 gap-6'
+              role='group'
+              aria-label='Perbandingan: Metode Belajar Keras (tradisional) vs Menyerap Alami (immersion)'
+            >
+              <!-- Card A: Old Way -->
+              <div
+                class='p-6 md:p-8 rounded-3xl bg-[#1a1a1a] border border-white/5 relative overflow-hidden group'
+              >
+                <div
+                  class='absolute inset-0 bg-linear-to-br from-red-500/5 to-transparent opacity-50'
+                >
+                </div>
+                <div class='relative z-10'>
+                  <div class='flex items-center gap-3 mb-6 text-red-400'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-triangle-alert'
+                      ><path
+                        d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'
+                      ></path><path d='M12 9v4'></path><path d='M12 17h.01'
+                      ></path></svg
+                    >
+                    <span class='font-bold uppercase tracking-wider text-sm'
+                      >Old Way</span
+                    >
+                  </div>
+                  <h3 class='text-xl md:text-2xl font-bold mb-4 text-white'>
+                    Belajar Keras
+                  </h3>
+                  <ul class='space-y-3 text-gray-400'>
+                    <li class='flex gap-2 items-start'>
+                      <span class='text-red-500 shrink-0 mt-1'>✕</span>
+                      <span>Hafal Rumus Bunpou & Latihan Soal</span>
+                    </li>
+                    <li class='flex gap-2 items-start'>
+                      <span class='text-red-500 shrink-0 mt-1'>✕</span>
+                      <span>Terjemahin Kalimat di Kepala</span>
+                    </li>
+                    <li class='flex gap-2 items-start'>
+                      <span class='text-red-500 shrink-0 mt-1'>✕</span>
+                      <span>Merasa Bersalah pas Capek</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card B: New Way -->
+              <div
+                class='p-6 md:p-8 rounded-3xl bg-linear-to-br from-(--token-purple-base)/10 to-(--token-secondary-gold-base)/10 border border-(--token-purple-base)/20 relative overflow-hidden group'
+              >
+                <div
+                  class='absolute inset-0 bg-(--token-purple-base)/5 blur-3xl'
+                >
+                </div>
+                <div class='relative z-10'>
+                  <div
+                    class='flex items-center gap-3 mb-6 text-(--token-secondary-gold-base)'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-sparkles'
+                      ><path
+                        d='M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z'
+                      ></path><path d='M20 3v4'></path><path d='M22 5h-4'
+                      ></path><path d='M4 17v2'></path><path d='M5 18H3'
+                      ></path></svg
+                    >
+                    <span class='font-bold uppercase tracking-wider text-sm'
+                      >Immersion Way</span
+                    >
+                  </div>
+                  <h3 class='text-xl md:text-2xl font-bold mb-4 text-white'>
+                    Menyerap Alami; Immersion
+                  </h3>
+                  <ul class='space-y-3 text-(--token-text-secondary)'>
+                    <li class='flex gap-2 items-start'>
+                      <span
+                        class='text-(--token-secondary-green-base) shrink-0 mt-1'
+                        >✓</span
+                      >
+                      <span>Nikmati Konten (Anime/Drama/Manga)</span>
+                    </li>
+                    <li class='flex gap-2 items-start'>
+                      <span
+                        class='text-(--token-secondary-green-base) shrink-0 mt-1'
+                        >✓</span
+                      >
+                      <span>Intuisi Kebentuk Sendiri</span>
+                    </li>
+                    <li class='flex gap-2 items-start'>
+                      <span
+                        class='text-(--token-secondary-green-base) shrink-0 mt-1'
+                        >✓</span
+                      >
+                      <span>Lagi Capek? Rebahan Aja Boleh</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Hero Core Message -->
+          <div class='text-center py-4'>
+            <h3
+              class='text-2xl md:text-4xl font-bold leading-relaxed max-w-4xl mx-auto'
+            >
+              <span class='text-(--token-text-muted)'>Intinya sederhana:</span
+              ><br class='mb-2' />
+              Berhenti <span
+                class='bg-red-500/10 text-red-300 px-3 py-1 rounded-lg decoration-red-500/50 line-through decoration-2 mx-1'
+                >"belajar"</span
+              >, mulailah <span
+                class='bg-(--token-purple-base)/20 text-(--token-purple-base) px-3 py-1 rounded-lg mx-1'
+                >"menyerap"</span
+              >.
+            </h3>
+          </div>
+
+          <!-- 3. Scenario Grid Cards -->
+          <div>
+            <h3
+              class='text-center text-xl font-bold mb-10 text-(--token-text-secondary)'
+            >
+              Metode ini works bahkan di hari terburukmu:
+            </h3>
+            <div class='grid md:grid-cols-3 gap-6'>
+              <!-- Card 1: Capek -->
+              <div
+                class='group p-6 rounded-2xl bg-(--token-bg-light)/5 border border-white/5 hover:bg-(--token-bg-light)/10 transition-all hover:-translate-y-1'
+              >
+                <div class='flex items-center gap-4 mb-4'>
+                  <div
+                    class='w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform'
+                  >
+                    <!-- Bed Icon -->
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-bed'
+                      ><path d='M2 4v16'></path><path
+                        d='M2 8h18a2 2 0 0 1 2 2v10'></path><path d='M2 17h20'
+                      ></path><path d='M6 8v9'></path></svg
+                    >
+                  </div>
+                  <h4 class='text-lg font-bold'>Lagi Capek? 😫</h4>
+                </div>
+                <p class='text-sm text-gray-400 leading-relaxed'>
+                  Otak udah ngebul? Cukup putar audio podcast Jepang sambil
+                  rebahan 15 menit. Nggak usah mikir.
+                </p>
+              </div>
+
+              <!-- Card 2: Sibuk -->
+              <div
+                class='group p-6 rounded-2xl bg-(--token-bg-light)/5 border border-white/5 hover:bg-(--token-bg-light)/10 transition-all hover:-translate-y-1'
+              >
+                <div class='flex items-center gap-4 mb-4'>
+                  <div
+                    class='w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 shrink-0 group-hover:scale-110 transition-transform'
+                  >
+                    <!-- Headphones Icon -->
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-headphones'
+                      ><path d='M3 14v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3'
+                      ></path><path d='M3 14h6'></path><path
+                        d='M21 14v3a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-3'
+                      ></path><path d='M15 14h6'></path><path
+                        d='M21 12c0-3.3-2.7-6-6-6h-6c-3.3 0-6 2.7-6 6'
+                      ></path></svg
+                    >
+                  </div>
+                  <h4 class='text-lg font-bold'>Lagi Sibuk? 🏃</h4>
+                </div>
+                <p class='text-sm text-gray-400 leading-relaxed'>
+                  Dengar pas di jalan, di kereta, atau pas lagi masak.
+                  Manfaatkan "waktu mati" mu tanpa mengganggu jadwal.
+                </p>
+              </div>
+
+              <!-- Card 3: Males -->
+              <div
+                class='group p-6 rounded-2xl bg-(--token-bg-light)/5 border border-white/5 hover:bg-(--token-bg-light)/10 transition-all hover:-translate-y-1'
+              >
+                <div class='flex items-center gap-4 mb-4'>
+                  <div
+                    class='w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform'
+                  >
+                    <!-- TV Icon -->
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      class='lucide lucide-tv'
+                      ><rect width='20' height='15' x='2' y='7' rx='2' ry='2'
+                      ></rect><polyline points='17 2 12 7 7 2'></polyline></svg
+                    >
+                  </div>
+                  <h4 class='text-lg font-bold'>Lagi Males? 🦥</h4>
+                </div>
+                <p class='text-sm text-gray-400 leading-relaxed'>
+                  Tonton anime dengan subtitle Jepang aja. Nikmati ceritanya,
+                  nggak usah dipaksa paham 100%. No pressure.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Coach's Note -->
+          <div
+            class='p-6 md:p-8 rounded-2xl bg-(--token-bg-light)/5 border-l-4 border-(--token-secondary-gold-base) backdrop-blur-sm'
+          >
+            <div class='flex gap-3 md:gap-5 items-start'>
+              <div class='shrink-0 text-(--token-secondary-gold-base) mt-1'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='32'
+                  height='32'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  class='lucide lucide-info'
+                  ><circle cx='12' cy='12' r='10'></circle><path d='M12 16v-4'
+                  ></path><path d='M12 8h.01'></path></svg
+                >
+              </div>
+              <div>
+                <h4 class='font-bold text-lg text-white mb-2'>
+                  Satu Hal Penting...
+                </h4>
+                <p class='text-(--token-text-secondary) leading-relaxed'>
+                  Kami nggak janji instan. Immersion tetap butuh waktu
+                  investasi—kamu harus rutin "menyerap" bahasa itu
+                  berbulan-bulan. Tapi bedanya, prosesnya <span
+                    class='text-white font-medium'
+                    >ringan, menyenangkan, dan nggak bikin burnout</span
+                  >. Karena otakmu memang diciptakan untuk belajar bahasa dengan
+                  cara ini sejak lahir.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 1: No Grammar -->
+        <!-- Feature 1: No Grammar -->
+        <div
+          class='flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-20 items-center'
+        >
+          <!-- Image (Mobile Order 2, Desktop Left) -->
+          <div
+            class='order-2 lg:order-0 lg:col-start-1 rounded-2xl overflow-hidden border border-white/10 shadow-2xl skew-y-1 lg:skew-y-2 hover:skew-y-0 transition-transform duration-500 w-full'
+          >
+            <CldImage
+              src='Nggak_Bikin_Kamu_Lancar_Image_76q5so76q5so76q5_k7mexu'
+              alt='Ilustrasi: Hafal grammar tidak bikin lancar'
+              width={1696}
+              height={2528}
+              quality='auto'
+              format='auto'
+              loading='lazy'
+              class='block w-full h-auto rounded-2xl'
+            />
+          </div>
+
+          <!-- Text Wrapper (Mobile: Hidden/Contents, Desktop: Flex Column) -->
+          <div
+            class='contents lg:flex lg:flex-col gap-6 lg:justify-center w-full'
+          >
+            <!-- Header (Mobile Order 1, Desktop Top) -->
+            <div class='order-1 flex items-start gap-4'>
+              <div
+                class='shrink-0 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 mt-1'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  class='lucide lucide-x-circle'
+                  ><circle cx='12' cy='12' r='10'></circle><path d='m15 9-6 6'
+                  ></path><path d='m9 9 6 6'></path></svg
+                >
+              </div>
+              <div>
+                <h3
+                  class='text-xl md:text-2xl font-bold text-white mb-2 leading-tight'
+                >
+                  Kenapa Hafal Bunpou (Grammar) Nggak Bikin Kamu Lancar?
+                </h3>
+                <div
+                  class='h-1 w-20 bg-linear-to-r from-red-500 to-transparent rounded-full'
+                >
+                </div>
+              </div>
+            </div>
+
+            <!-- Text Body (Mobile Order 3, Desktop Bottom) -->
+            <div class='order-3'>
+              <Prose class='prose-lg prose-invert'>
+                <p>
+                  Hafal bunpou itu kayak hafal rumus fisika: kamu tahu teorinya,
+                  bisa ngerjain soal di kertas, tapi pas dipraktikkin di dunia
+                  nyata, otakmu loading lama. Kenapa? Karena bahasa hidup nggak
+                  berjalan kayak rumus matematika. Native speaker Jepang nggak
+                  mikir "ini pakai partikel wa atau ga ya?" sebelum ngomong—they
+                  just know, karena intuisi mereka sudah terbentuk dari kecil
+                  lewat mendengar dan melihat bahasa itu setiap hari.
+                </p>
+                <p>
+                  Kalau kamu mulai dari hafal bunpou, intuisi itu malah nggak
+                  terbentuk. Yang ada otakmu terbiasa "menganalisa" dulu baru
+                  ngomong, jadi gagap, lambat, dan aksennya kental Indonesia.
+                </p>
+
+                <JlptCanDoChart />
+
+                <p>
+                  Data dari situs Resmi JLPT "Can-do" sendiri nunjukin: banyak
+                  yang lulus N4-N1 tapi masih susah paham percakapan kasual atau
+                  formal. Bukan karena mereka bodoh, tapi karena pondasinya
+                  salah dari awal.
+                </p>
+              </Prose>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2: No Translation -->
+        <!-- Feature 2: No Translation -->
+        <div
+          class='flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-20 items-center'
+        >
+          <!-- Image (Mobile Order 2, Desktop Left) -->
+          <div
+            class='order-2 lg:order-0 lg:col-start-1 rounded-2xl overflow-hidden border border-white/10 shadow-2xl -skew-y-1 lg:-skew-y-2 hover:skew-y-0 transition-transform duration-500 w-full'
+          >
+            <CldImage
+              src='Itu_Bikin_Makin_Gagap_Image_76q5so76q5so76q5_jpipnb'
+              alt='Ilustrasi: Menerjemahkan di kepala bikin gagap'
+              width={1696}
+              height={2528}
+              quality='auto'
+              format='auto'
+              loading='lazy'
+              class='block w-full h-auto rounded-2xl'
+            />
+          </div>
+
+          <!-- Text Wrapper (Mobile: Hidden/Contents, Desktop: Flex Column) -->
+          <div
+            class='contents lg:flex lg:flex-col gap-6 lg:justify-center w-full'
+          >
+            <!-- Header (Mobile Order 1, Desktop Top) -->
+            <div class='order-1 flex items-start gap-4'>
+              <div
+                class='shrink-0 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 mt-1'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='2'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  class='lucide lucide-brain-circuit'
+                  ><path
+                    d='M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08 2.5 2.5 0 0 0 4.91.05L12 20V4.5Z'
+                  ></path><path d='M16 8V5c0-1.1.9-2 2-2'></path><path
+                    d='M12 13h4'></path><path d='M12 18h6a2 2 0 0 1 2 2v1'
+                  ></path><path d='M12 8h8'></path></svg
+                >
+              </div>
+              <div>
+                <h3
+                  class='text-xl md:text-2xl font-bold text-white mb-2 leading-tight'
+                >
+                  Kenapa Terjemahin Langsung di Kepala Itu Bikin Makin Gagap?
+                </h3>
+                <div
+                  class='h-1 w-20 bg-linear-to-r from-red-500 to-transparent rounded-full'
+                >
+                </div>
+              </div>
+            </div>
+
+            <!-- Text Body (Mobile Order 3, Desktop Bottom) -->
+            <div class='order-3'>
+              <Prose class='prose-lg prose-invert'>
+                <p>
+                  Setiap kali kamu terjemahin kalimat Jepang ke Indonesia di
+                  kepala (atau sebaliknya), kamu lagi latihan "bahasa ketiga":
+                  campuran Indonesia-Jepang yang aneh. Otakmu jadi terbiasa
+                  mikir dalam Bahasa Indonesia dulu, baru convert ke
+                  Jepang—prosesnya lambat dan makan energi banget. Hasilnya? Pas
+                  ngomong sama native, kamu loading lama, kalimatnya kaku, dan
+                  sering salah struktur.
+                </p>
+                <p>
+                  Native nggak gitu. Mereka mikir langsung dalam bahasa mereka.
+                  Immersion bikin kamu juga gitu: lama-lama kamu "merasa" mana
+                  yang benar tanpa perlu terjemahin. Kamu mulai bisa bilang
+                  "Ita'!" secara spontan pas kaki kesandung, bukan mikir dulu
+                  "sakit itu bahasa Jepangnya apa ya?". Itu yang bikin bahasa
+                  terasa hidup, bukan mati kayak di buku pelajaran.
+                </p>
+              </Prose>
+            </div>
+          </div>
+        </div>
+      </section>

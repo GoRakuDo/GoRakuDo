@@ -1,0 +1,231 @@
+---
+import { CldImage } from 'astro-cloudinary';
+import Prose from '../Prose.astro';
+
+interface Props {
+  empathyBridgeImage: string;
+}
+const { empathyBridgeImage } = Astro.props;
+
+const commonImageProps = {
+  src: empathyBridgeImage,
+  alt: 'Illustrasi Empathy Bridge: Belajar dari pengalaman pahit',
+  width: 800,
+  height: 800,
+  quality: 'auto',
+  format: 'auto',
+  loading: 'eager' as const,
+  class: 'block w-full h-auto object-cover rounded-2xl',
+};
+
+const currentYear = new Date().getFullYear();
+---
+      <!-- Hero / Empathy Bridge Section -->
+      <section class='empathy-bridge-section'>
+        <!-- Layout:
+             - Mobile: flex-col (Natural DOM order: Image Top, Text Bottom)
+             - Desktop: grid-cols-12
+        -->
+        <div
+          class='flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-20 lg:items-center'
+        >
+          <!-- Left Column (Text Content) - FIRST IN DOM
+               - Mobile: First (Top)
+               - Desktop: order-1 (Left), Span 7
+          -->
+          <div class='w-full lg:order-1 lg:col-span-7 flex flex-col gap-8'>
+            <div class='hero-header space-y-6'>
+              <!-- BADGE: Capsule Style (Google Vibe) -->
+              <div
+                class='inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-(--token-purple-base)/10 border border-(--token-purple-base)/20 text-(--token-purple-base) text-xs font-bold tracking-wide uppercase'
+              >
+                <span
+                  class='w-2 h-2 rounded-full bg-(--token-purple-base) animate-pulse'
+                ></span>
+                Edisi {currentYear} • Updated
+              </div>
+
+              <!-- HEADLINE: Massive Authorithy (Tracking Tight) -->
+              <h1
+                class='text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-left text-white'
+              >
+                Panduan Immersion <br class='hidden lg:block' />
+                <span
+                  class='text-transparent bg-clip-text bg-linear-to-r from-gray-200 to-gray-500'
+                  >Bahasa Jepang</span
+                >
+                <br />
+                <span
+                  class='text-transparent bg-clip-text bg-linear-to-r from-(--token-purple-base) via-fuchsia-400 to-(--token-secondary-gold-base) animate-gradient-x'
+                  >OTODIDAK</span
+                >
+              </h1>
+            </div>
+
+            <Prose class='prose-lg prose-invert max-w-none'>
+              <!-- FEATURED SNIPPET: The "Truth Bomb" -->
+              <div
+                class='p-6 md:p-8 rounded-3xl bg-(--token-bg-light)/5 border border-white/10 backdrop-blur-md shadow-2xl my-6 relative overflow-hidden group'
+              >
+                <div
+                  class='absolute top-0 right-0 w-32 h-32 bg-(--token-purple-base)/10 rounded-full blur-[50px] pointer-events-none group-hover:bg-(--token-purple-base)/20 transition-colors duration-500'
+                >
+                </div>
+
+                <p
+                  class='text-lg md:text-2xl font-bold text-white leading-relaxed relative z-10'
+                >
+                  <span class='text-(--token-purple-base)'
+                    >Kamu Tidak Bodoh.</span
+                  >
+                  <br />
+                  Kamu Hanya Korban "Metode Pabrik" yang Salah.
+                </p>
+              </div>
+
+              <p class='text-(--token-text-secondary)'>
+                Kalau kamu lagi baca halaman ini, pasti kamu pernah ngerasain: <strong
+                  >capek banget tapi nggak maju-maju</strong
+                >. Hafal ribuan bunpou, lulus N3/N2, punya sertifikat... tapi
+                pas mau ngomong? <em>Blank.</em> Mulut terkunci.
+              </p>
+
+              <!-- GAMIFIED STATUS: Mental Debuffs (HUD Style) -->
+              <div class='grid grid-cols-1 md:grid-cols-3 gap-4 my-8'>
+                <!-- Debuff 1: Imposter Syndrome (Rose) -->
+                <div
+                  class='group relative bg-[#1a1515] hover:bg-[#251a1a] border border-white/5 hover:border-rose-500/30 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1'
+                >
+                  <div
+                    class='w-10 h-10 rounded-full bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      class='w-5 h-5 text-rose-400'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                      aria-hidden='true'
+                      ><path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                      ></path></svg
+                    >
+                  </div>
+                  <h2
+                    class='text-rose-400! mt-0! font-bold text-sm uppercase tracking-wider mb-1'
+                  >
+                    Status: Doubt
+                  </h2>
+                  <p class='text-gray-400 text-sm italic'>
+                    "Aku nggak berbakat..."
+                  </p>
+                </div>
+
+                <!-- Debuff 2: Guilt (Amber) -->
+                <div
+                  class='group relative bg-[#1a1712] hover:bg-[#261f15] border border-white/5 hover:border-amber-500/30 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 delay-50'
+                >
+                  <div
+                    class='w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      class='w-5 h-5 text-amber-400'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                      aria-hidden='true'
+                      ><path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+                      ></path></svg
+                    >
+                  </div>
+                  <h2
+                    class='text-amber-400! mt-0! font-bold text-sm uppercase tracking-wider mb-1'
+                  >
+                    Status: Guilt
+                  </h2>
+                  <p class='text-gray-400 text-sm italic'>
+                    "Aku kurang disiplin..."
+                  </p>
+                </div>
+
+                <!-- Debuff 3: Envy/Confusion (Violet) -->
+                <div
+                  class='group relative bg-[#16151a] hover:bg-[#1d1a25] border border-white/5 hover:border-violet-500/30 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 delay-100'
+                >
+                  <div
+                    class='w-10 h-10 rounded-full bg-violet-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform'
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      class='w-5 h-5 text-violet-400'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                      aria-hidden='true'
+                      ><path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                      ></path></svg
+                    >
+                  </div>
+                  <h2
+                    class='text-violet-400! mt-0! font-bold text-sm uppercase tracking-wider mb-1'
+                  >
+                    Status: Confused
+                  </h2>
+                  <p class='text-gray-400 text-sm italic'>
+                    "Kok orang lain bisa?"
+                  </p>
+                </div>
+              </div>
+
+              <p
+                class='font-bold text-lg mb-4 text-white! pl-4 border-l-4 border-(--token-purple-base)'
+              >
+                Dengerin baik-baik: <span class='text-(--token-purple-base)'
+                  >Itu bukan salahmu.</span
+                >
+              </p>
+
+              <p>
+                Yang salah adalah metode tradisional yang selama ini kamu
+                pakai—hafal rumus, terjemahin kata per kata. Itu metode buat
+                bahasa mati (Latin/Yunani), bukan buat manusia hidup.
+              </p>
+
+              <!-- Mobile-Only Interleaved Image -->
+              <div class='w-full my-8 lg:hidden'>
+                <CldImage {...commonImageProps} />
+              </div>
+
+              <p>
+                Kamu nggak gagal. Kamu cuma dipaksa lari maraton sambil kaki
+                dibelenggu besi. Wajar kalau capek. Wajar kalau skeptis. Malah
+                bagus kalau skeptis—artinya kamu udah pinter.
+              </p>
+            </Prose>
+          </div>
+
+          <!-- Right Column (Image) - DESKTOP ONLY
+               - Mobile: Hidden (shown interleaved above)
+               - Desktop: Visible, order-2, Span 5
+          -->
+          <div
+            class='hidden lg:block w-full lg:order-2 lg:col-span-5 mt-8 lg:mt-0'
+          >
+            <div class='image-wrapper w-full'>
+              <CldImage {...commonImageProps} />
+            </div>
+          </div>
+        </div>
+      </section>

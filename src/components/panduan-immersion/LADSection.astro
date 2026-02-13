@@ -1,0 +1,271 @@
+---
+import { CldImage } from 'astro-cloudinary';
+import LADExperiment from '../features/LADExperiment.astro';
+---
+      <!-- LAD Experiment Section -->
+      <section class='relative py-20 lg:py-32 overflow-hidden' id='lad-section'>
+        <!-- Background Glow -->
+        <!-- Background Glow (hidden on mobile to prevent hard edges from overflow clipping) -->
+        <div
+          class='hidden md:block absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] translate-x-1/2 pointer-events-none'
+        >
+        </div>
+
+        <div class='page-container relative z-10'>
+          <!-- 1. The Hook: 30-Second Test -->
+          <div class='text-center max-w-192 mx-auto mb-16'>
+            <div
+              class='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-white mb-6 backdrop-blur-sm'
+            >
+              <span class='animate-pulse text-yellow-400'>⏱️</span>
+              <span>Tes 30 Detik</span>
+            </div>
+
+            <h2
+              class='text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight'
+            >
+              Buktikan Sendiri dalam 30 Detik: Kamu Punya <span
+                class='text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400'
+                >"Insting Bahasa"</span
+              > yang Kuat Banget.
+            </h2>
+            <p class='text-lg text-(--token-text-secondary) leading-relaxed'>
+              Jangan cuma percaya omongan kami. Yuk, kita buktiin bareng-bareng
+              sekarang juga—cuma butuh 30 detik doang. Kami yakin kamu bakal
+              langsung ngerasain "wah, bener juga" sendiri.
+              <br /><br />
+              Baca dua kalimat Bahasa Indonesia ini pelan-pelan:
+            </p>
+          </div>
+
+          <LADExperiment />
+
+          <!-- 3. Immediate Reaction Text -->
+          <div
+            class='w-full mx-auto text-center mb-24 hidden lad-reaction opacity-0 transition-opacity duration-700'
+            style='max-width: 48rem;'
+          >
+            <p
+              class='text-xl lg:text-2xl text-white font-medium leading-relaxed'
+            >
+              <span class='text-emerald-400'>"Wah, bener juga."</span><br />
+              Tanpa buka buku tata bahasa, tanpa mikir S-P-O-K atau aturan apa pun...
+              kamu langsung ngerasa kalimat nomor 2 itu aneh banget, kan?
+            </p>
+            <div class='w-full mx-auto mt-4' style='max-width: 42rem;'>
+              <p class='text-lg text-(--token-text-secondary)'>
+                Rasanya "nggak enak" dibaca, kayak ada yang salah, meskipun kamu
+                masih bisa nangkep maksudnya secara kasar (lupa dompet pas mau
+                beli takoyaki).
+              </p>
+            </div>
+          </div>
+
+          <!-- 4. The Deep Dive (Grid) -->
+          <div class='grid lg:grid-cols-12 gap-8 lg:gap-20 items-start mb-24'>
+            <div
+              class='lg:col-span-5 order-2 lg:order-1 sticky top-32 hidden lg:block'
+            >
+              <div
+                class='relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group'
+              >
+                <CldImage
+                  src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
+                  alt='Visualisasi Language Acquisition Device (LAD)'
+                  width={1000}
+                  height={1000}
+                  crop='fill'
+                  class='w-full h-auto transform group-hover:scale-105 transition-transform duration-700 ease-in-out'
+                />
+                <div
+                  class='absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60'
+                >
+                </div>
+                <div class='absolute bottom-6 left-6 right-6'>
+                  <div
+                    class='text-xs font-bold tracking-widest text-white/70 uppercase mb-1'
+                  >
+                    Konsep
+                  </div>
+                  <div class='text-lg font-bold text-white'>
+                    The Language Acquisition Device
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class='lg:col-span-7 order-1 lg:order-2 space-y-8'>
+              <div
+                class='relative rounded-3xl overflow-hidden p-6 md:p-8 border border-white/10 shadow-2xl bg-[radial-gradient(ellipse_at_center,#0c080c_0%,transparent_100%)]'
+              >
+                <!-- Purple Ambient Spotlight -->
+                <div
+                  class='absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.15)_0%,transparent_70%)] pointer-events-none'
+                >
+                </div>
+                <h3 class='text-3xl font-bold text-white mb-6'>
+                  Kenapa kamu langsung tahu itu salah dan terasa janggal? 🤔
+                </h3>
+                <div
+                  class='space-y-6 text-lg text-(--token-text-secondary) leading-relaxed'
+                >
+                  <p>
+                    Bukan karena kamu hafal rumus grammar Indonesia dari SD.
+                    Kamu tahu karena kamu punya <strong class='text-purple-400'
+                      >insting bahasa alami</strong
+                    > yang disebut <span class='text-white'
+                      >Language Acquisition Device (LAD)</span
+                    > oleh Prof. Chomsky—semacam "perangkat bawaan" di otak manusia
+                    yang aktif sejak lahir untuk menyerap bahasa secara intuitif lewat
+                    paparan terus-menerus.
+                  </p>
+
+                  <!-- Mobile-only LAD Image -->
+                  <div class='lg:hidden my-6'>
+                    <div
+                      class='relative rounded-2xl overflow-hidden shadow-xl border border-white/10'
+                    >
+                      <CldImage
+                        src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
+                        alt='Visualisasi Language Acquisition Device (LAD)'
+                        width={800}
+                        height={800}
+                        crop='fill'
+                        class='w-full h-auto'
+                      />
+                      <div
+                        class='absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60'
+                      >
+                      </div>
+                      <div class='absolute bottom-4 left-4 right-4'>
+                        <div
+                          class='text-xs font-bold tracking-widest text-white/70 uppercase mb-1'
+                        >
+                          Konsep
+                        </div>
+                        <div class='text-base font-bold text-white'>
+                          The Language Acquisition Device
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p>
+                    LAD ini yang bikin kamu otomatis "merasa" mana kalimat yang
+                    natural dan mana yang pincang, tanpa perlu analisa rumus.
+                  </p>
+                  <div
+                    class='p-6 rounded-2xl bg-white/5 border border-white/10 my-6'
+                  >
+                    <p class='text-base italic text-white/80'>
+                      "Kalimat nomor 2 itu sengaja kami bikin mirip kayak
+                      terjemahan mentah-mentah dari orang Jepang yang lagi
+                      belajar Bahasa Indonesia—mereka nerjemahin kata per kata
+                      sesuai struktur Jepang, jadi urutannya campur aduk,
+                      partikelnya ngawur..."
+                    </p>
+                  </div>
+                  <p>
+                    Kamu masih bisa paham maksudnya (karena konteksnya jelas),
+                    tapi rasanya "off" banget, unsettling, kayak denger orang
+                    ngomong tapi agak pincang.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. The Conclusion / Bridge -->
+          <div class='max-w-4xl mx-auto space-y-12'>
+            <!-- Success Box -->
+            <div
+              class='relative p-8 lg:p-10 rounded-3xl bg-linear-to-br from-purple-900/40 to-indigo-900/40 border border-white/10 overflow-hidden'
+            >
+              <div
+                class='absolute top-0 right-0 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px] pointer-events-none'
+              >
+              </div>
+              <div
+                class='relative flex flex-col md:flex-row gap-6 md:gap-8 items-center'
+              >
+                <div class='shrink-0 p-4 rounded-full bg-white/10 text-4xl'>
+                  🌱
+                </div>
+                <div>
+                  <h4 class='text-xl md:text-2xl font-bold text-white mb-4'>
+                    Selamat! Kamu baru saja buktiin sendiri.
+                  </h4>
+                  <p
+                    class='text-lg text-(--token-text-secondary) leading-relaxed'
+                  >
+                    LAD di otakmu masih aktif dan super kuat. Perangkat bawaan
+                    itu udah jalan lancar buat Bahasa Indonesia sejak kamu
+                    kecil.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- The Problem & Solution -->
+            <div class='grid md:grid-cols-2 gap-6 lg:gap-12'>
+              <div class='space-y-4'>
+                <h4
+                  class='text-xl font-bold text-red-400 flex items-center gap-2'
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='20'
+                    height='20'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    stroke-width='2'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    class='lucide lucide-x-circle'
+                    ><circle cx='12' cy='12' r='10'></circle><path d='m15 9-6 6'
+                    ></path><path d='m9 9 6 6'></path></svg
+                  >
+                  Masalahnya di bahasa Jepang?
+                </h4>
+                <p class='text-(--token-text-secondary) leading-relaxed'>
+                  Metode tradisional (hafal bunpou dulu, terjemahin dulu) justru <strong
+                    >mematikan LAD itu</strong
+                  > sebelum dia sempat bekerja optimal. Mereka paksa kamu mikir lewat
+                  rumus (surface structure), bukan lewat insting alami (deep structure).
+                  Akibatnya, intuisi nativemu buat Jepang nggak pernah terbentuk—kamu
+                  jadi gagap, loading lama, dan bahasa keluarnya kaku.
+                </p>
+              </div>
+              <div class='space-y-4'>
+                <h4
+                  class='text-xl font-bold text-emerald-400 flex items-center gap-2'
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='20'
+                    height='20'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    stroke-width='2'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    class='lucide lucide-check-circle'
+                    ><path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'
+                    ></path><polyline points='22 4 12 14.01 9 11.01'
+                    ></polyline></svg
+                  >
+                  Metode Solusi & Komunitas Immersion
+                </h4>
+                <p class='text-(--token-text-secondary) leading-relaxed'>
+                  Kami cuma mengaktifkan kembali LAD yang sama—yang udah
+                  terbukti works di Bahasa Indonesia kamu—buat bahasa Jepang.
+                  Caranya? Dengan kasih <strong>comprehensible input</strong> yang
+                  pas, sampai LAD-mu bangun intuisi nativenya sendiri secara alami.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
