@@ -10,6 +10,7 @@ import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
 import { CldImage } from 'astro-cloudinary';
 import { buildCloudinaryUrl } from '../../utils/cloudinary';
+import { getContentDates } from '../../utils/git-dates';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -101,13 +102,18 @@ const generateTemplateBasedKeywords = post => {
     .slice(0, 15);
 };
 
+// Resolve modifiedDate: frontmatter > git > publishedDate
+const contentPath = `src/content/docs/${post.id}`;
+const dates = getContentDates(contentPath, post.data.publishedDate);
+const resolvedModifiedDate = post.data.modifiedDate || dates.modifiedDate;
+
 // シンプルなSEOデータ生成
 const seoData = {
   title: generateTemplateBasedTitle(post),
   description: generateTemplateBasedDescription(post),
   keywords: generateTemplateBasedKeywords(post),
   publishedDate: post.data.publishedDate,
-  modifiedDate: post.data.publishedDate,
+  modifiedDate: resolvedModifiedDate,
   isDraft: post.data.isDraft || false,
 };
 
@@ -183,6 +189,7 @@ const faqSchema =
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
+  modifiedDate={seoData.modifiedDate}
   lang='id'
   author={post.data.author || 'GoRakuDo Team'}
   featuredImage={post.data.featuredImage}

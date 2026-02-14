@@ -10,6 +10,7 @@ import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
 import { CldImage } from 'astro-cloudinary';
 import { buildCloudinaryUrl } from '../../../utils/cloudinary';
+import { getContentDates } from '../../../utils/git-dates';
 
 // ========== UTILITY FUNCTIONS ==========
 export async function getVisibleToolArticlesData() {
@@ -228,6 +229,11 @@ const generateTemplateBasedKeywords = post => {
     .slice(0, 15);
 };
 
+// Resolve modifiedDate: frontmatter > git > publishedDate
+const contentPath = `src/content/tool-articles/${post.id}`;
+const dates = getContentDates(contentPath, post.data.publishedDate);
+const resolvedModifiedDate = post.data.modifiedDate || dates.modifiedDate;
+
 // 最適化されたSEOデータ
 const seoData = {
   title: generateTemplateBasedTitle(post),
@@ -236,7 +242,7 @@ const seoData = {
   articleType: 'tool-guide',
   searchIntent: 'informational',
   publishedDate: post.data.publishedDate,
-  modifiedDate: post.data.publishedDate,
+  modifiedDate: resolvedModifiedDate,
   isDraft: post.data.status !== 'published',
 };
 
@@ -261,6 +267,7 @@ const breadcrumbConfig = {
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
+  modifiedDate={seoData.modifiedDate}
   lang='id'
   author={post.data.author || 'GoRakuDo Team'}
   featuredImage={post.data.featuredImage}
@@ -441,7 +448,7 @@ const breadcrumbConfig = {
             class='related-tool-card group flex items-center gap-3 p-4 bg-primary/5 hover:bg-primary/10 border border-primary/20 hover:border-primary/30 rounded-lg transition-all duration-200 hover:scale-105'
             aria-label={`Buka halaman detail ${relatedTool}`}
           >
-            <div class='tool-icon-container flex-shrink-0'>
+            <div class='tool-icon-container shrink-0'>
               <img
                 src={`/icon/${relatedTool.toLowerCase()}-icon-240.webp`}
                 alt={`Ikon ${relatedTool}`}
@@ -456,7 +463,7 @@ const breadcrumbConfig = {
               </h3>
               <p class='text-sm text-muted-foreground'>Tool Terkait</p>
             </div>
-            <div class='arrow-icon flex-shrink-0 text-muted-foreground group-hover:text-primary transition-colors'>
+            <div class='arrow-icon shrink-0 text-muted-foreground group-hover:text-primary transition-colors'>
               <svg
                 class='w-4 h-4'
                 fill='none'

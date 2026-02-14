@@ -1,0 +1,170 @@
+---
+/**
+ * FAQSection — Renders FAQ questions and answers as visible, accessible content.
+ * Required by Google: FAQ structured data must have matching visible text on the page.
+ *
+ * Usage:
+ *   <FAQSection questions={[{ question: "...", answer: "..." }]} />
+ */
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  questions: FAQItem[];
+  title?: string;
+  id?: string;
+}
+
+const {
+  questions,
+  title = 'Pertanyaan yang Sering Ditanyakan',
+  id = 'faq',
+} = Astro.props;
+---
+
+{
+  questions.length > 0 && (
+    <section class='faq-section' id={id} aria-labelledby={`${id}-title`}>
+      <h2 class='faq-title' id={`${id}-title`}>
+        {title}
+      </h2>
+      <div class='faq-list'>
+        {questions.map((item, index) => (
+          <details class='faq-item' name='faq-accordion'>
+            <summary class='faq-question'>
+              <span class='faq-question-text'>{item.question}</span>
+              <svg
+                class='faq-chevron'
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                aria-hidden='true'
+              >
+                <polyline points='6 9 12 15 18 9' />
+              </svg>
+            </summary>
+            <div class='faq-answer'>
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .faq-section {
+    margin-top: 2rem;
+    padding: 3rem 0;
+  }
+
+  .faq-title {
+    margin-bottom: 2rem;
+    color: oklch(95% 0 0deg);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    overflow: hidden;
+    border: 1px solid oklch(30% 0.01 260deg);
+    border-radius: 0.75rem;
+    background: oklch(15% 0.01 260deg / 0.5);
+    transition: border-color 0.2s ease;
+  }
+
+  .faq-item:hover {
+    border-color: oklch(45% 0.02 260deg);
+  }
+
+  .faq-item[open] {
+    border-color: oklch(55% 0.1 260deg);
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    color: oklch(90% 0.01 260deg);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::marker {
+    display: none;
+    content: '';
+  }
+
+  .faq-question-text {
+    flex: 1;
+  }
+
+  .faq-chevron {
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: transform 0.25s ease;
+  }
+
+  .faq-item[open] .faq-chevron {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    color: oklch(75% 0.01 260deg);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .faq-section {
+      padding: 2rem 0;
+    }
+
+    .faq-title {
+      font-size: 1.25rem;
+    }
+
+    .faq-question {
+      padding: 0.875rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .faq-answer {
+      padding: 0 1rem 1rem;
+      font-size: 0.85rem;
+    }
+  }
+</style>

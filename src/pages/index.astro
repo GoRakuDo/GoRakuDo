@@ -5,6 +5,7 @@ import Hero from '../components/homepage/hero.astro';
 import MissionSection from '../components/homepage/MissionSection.astro';
 import FeaturesSection from '../components/homepage/FeaturesSection.astro';
 import DocumentationPreviewSection from '../components/homepage/DocumentationPreviewSection.astro';
+import FAQSection from '../components/common/FAQSection.astro';
 import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
 import indexData from '../data/seo/pages/index.json';
 import '../styles/pages/homepage.css';
@@ -45,6 +46,7 @@ const faqSchema = {
 <BaseLayout
   title={seoData.title}
   description={seoData.description}
+  keywords={seoData.keywords}
   pageType={seoData.pageType}
   lang={seoData.lang}
   breadcrumbSchema={breadcrumbSchema}
@@ -73,6 +75,9 @@ const faqSchema = {
 
     <!-- Documentation Preview Section -->
     <DocumentationPreviewSection />
+
+    <!-- FAQ Section (visible content matching JSON-LD schema) -->
+    <FAQSection questions={indexData.homepageSpecificData.faq} />
   </main>
 
   <!-- ========== SCRIPTS ========== -->

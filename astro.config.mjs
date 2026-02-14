@@ -6,6 +6,7 @@ import compress from 'vite-plugin-compression';
 
 import mdx from '@astrojs/mdx';
 import rehypeWrapEmoji from './src/plugins/rehype-wrap-emoji.mjs';
+import { getLastModForUrl } from './src/utils/sitemap-dates';
 
 // https://astro.build/config
 export default defineConfig({
@@ -44,10 +45,46 @@ export default defineConfig({
       rehypePlugins: [rehypeWrapEmoji],
     }),
     sitemap({
-      filter: page => !page.includes('404'),
+      filter: page =>
+        !page.includes('404') &&
+        !page.match(/\/page-\d+/) &&
+        !page.includes('/search'),
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date(),
+      serialize(item) {
+        // Set per-page lastmod from Git history
+        const urlPath = new URL(item.url).pathname;
+        item.lastmod = getLastModForUrl(urlPath).toISOString();
+
+        // Homepage — highest priority
+        if (item.url === 'https://gorakudo.org/') {
+          item.priority = 1.0;
+          item.changefreq = 'daily';
+        }
+        // Major guide pages
+        else if (
+          item.url.includes('/panduan-immersion') ||
+          item.url.includes('/panduan-lengkap')
+        ) {
+          item.priority = 0.9;
+          item.changefreq = 'weekly';
+        }
+        // Tool pages and YouTube recommendations
+        else if (
+          item.url.includes('/tools/') ||
+          item.url.includes('/rekomendasi-channel-youtube')
+        ) {
+          item.priority = 0.8;
+          item.changefreq = 'weekly';
+        }
+        // Documentation pages
+        else if (item.url.includes('/docs/')) {
+          item.priority = 0.6;
+          item.changefreq = 'monthly';
+        }
+        // Default: 0.7 / weekly (from top-level config)
+        return item;
+      },
     }),
   ],
 

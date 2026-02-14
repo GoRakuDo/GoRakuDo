@@ -17,28 +17,14 @@ import '../../styles/pages/youtube-rekomendasi/youtube-rekomendasi-index.css';
 const { sections } = channelsDataRaw;
 const seoData = youtubeSeoData.seoData;
 
-// テンプレート変数置き換え関数
-const replaceTemplateVars = (template: any, vars: Record<string, string>): any => {
-  if (typeof template === 'string') {
-    return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] || template);
-  }
-  if (Array.isArray(template)) return template.map(item => replaceTemplateVars(item, vars));
-  if (template && typeof template === 'object') {
-    const result: any = {};
-    for (const [key, value] of Object.entries(template)) {
-      result[key] = replaceTemplateVars(value, vars);
-    }
-    return result;
-  }
-  return template;
-};
+import { replaceTemplateVars } from '../../utils/seo-template';
 
 const templateVars = {
   seoTitle: seoData.title,
   seoDescription: seoData.description,
 };
 
-const structuredData = replaceTemplateVars(youtubeSeoData.structuredData, templateVars);
+const structuredData = replaceTemplateVars(youtubeSeoData.structuredData, templateVars) as typeof youtubeSeoData.structuredData;
 const breadcrumbData = youtubeSeoData.breadcrumbData;
 
 // ========== HEADER IMAGE CONFIG ==========

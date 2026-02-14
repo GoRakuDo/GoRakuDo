@@ -39,31 +39,10 @@ const KerangkaActive = 'gorakudo-kerangka-active_ija47y';
 const KonsolidasiIntuisi = 'gorakudo-konsolidasi-intuisi_ykkbvk';
 const MenataIntusi = 'gorakudo-menata-intusi_nrrl6c';
 
+import { replaceTemplateVars } from '../../utils/seo-template';
+
 // ========== SEO DATA ==========
 const seoData = panduanSeoData.seoData;
-
-// テンプレート変数置き換え関数
-const replaceTemplateVars = (
-  template: any,
-  vars: Record<string, string>
-): any => {
-  if (typeof template === 'string') {
-    return template.replace(
-      /\{\{(\w+)\}\}/g,
-      (_, key) => vars[key] || template
-    );
-  }
-  if (Array.isArray(template))
-    return template.map(item => replaceTemplateVars(item, vars));
-  if (template && typeof template === 'object') {
-    const result: any = {};
-    for (const [key, value] of Object.entries(template)) {
-      result[key] = replaceTemplateVars(value, vars);
-    }
-    return result;
-  }
-  return template;
-};
 
 const templateVars = {
   seoTitle: seoData.title,
@@ -74,7 +53,7 @@ const templateVars = {
 const baseStructuredData = replaceTemplateVars(
   panduanSeoData.structuredData,
   templateVars
-);
+) as typeof panduanSeoData.structuredData;
 
 // ========== DYNAMIC STRUCTURED DATA ==========
 // ステップ画像のマッピング
@@ -92,7 +71,7 @@ const stepImages = {
 const structuredData = {
   ...baseStructuredData,
   article: {
-    ...baseStructuredData.article,
+    '@type': 'Article',
     image: {
       '@type': 'ImageObject',
       url: buildCloudinaryUrl(gorakudoImmerisonImage),
@@ -154,6 +133,11 @@ const faqSchema = {
     },
   })),
 } as const;
+
+const howToSchema = {
+  '@context': 'https://schema.org' as const,
+  ...structuredData.howTo,
+};
 ---
 
 <BaseLayout
@@ -167,6 +151,7 @@ const faqSchema = {
   ogImage={buildCloudinaryUrl(gorakudoImmerisonImage)}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
+  howToSchema={howToSchema}
 >
   <script is:inline>
     (function () {

@@ -129,39 +129,40 @@ export function validateFAQSchema(schema: FAQSchema): {
 }
 
 /**
- * GoRakuDo用のデフォルトFAQデータ
- * 主要なFAQアイテムを定義
+ * Default FAQ data for GoRakuDo — /faq/ page
+ * Search-intent-driven questions targeting Indonesian learners of Japanese.
+ * Each question owns a unique topic not covered on other pages' FAQ schemas.
  */
 export const defaultFAQData: FAQItem[] = [
  {
-  question: "GoRakuDoとは何ですか？",
-  answer: "GoRakuDoは、日本語学習を支援する総合プラットフォームです。初心者から上級者まで、効率的な日本語学習をサポートする様々なツールとリソースを提供しています。",
-  id: "what-is-gorakudo"
+  question: "Apakah bisa belajar bahasa Jepang tanpa kursus?",
+  answer: "Ya, metode Immersion membuktikan bahwa belajar bahasa Jepang secara otodidak sangat efektif. Dengan mengonsumsi konten native (anime, manga, podcast) secara konsisten sebagai Comprehensible Input, otak membentuk intuisi bahasa secara alami — sama seperti cara anak kecil belajar bahasa ibu tanpa les atau buku teks.",
+  id: "belajar-tanpa-kursus"
  },
  {
-  question: "どのレベルの日本語学習者向けですか？",
-  answer: "GoRakuDoは、日本語学習の全レベルに対応しています。初心者（N5-N4）から上級者（N1）まで、個人のレベルに合わせたカスタマイズされた学習プランをご提供します。",
-  id: "target-levels"
+  question: "Apakah perlu JLPT untuk bekerja di Jepang?",
+  answer: "JLPT tidak selalu wajib, tetapi sangat membantu. Banyak perusahaan Jepang mensyaratkan JLPT N2 untuk posisi non-teknis dan N1 untuk posisi yang memerlukan komunikasi tingkat tinggi. Namun, kemampuan percakapan nyata sering lebih dihargai daripada sertifikat. Metode Immersion membantu membangun kedua hal tersebut secara bersamaan.",
+  id: "jlpt-kerja-jepang"
  },
  {
-  question: "無料で利用できますか？",
-  answer: "はい、GoRakuDoの基本的な機能は無料でご利用いただけます。基本的な学習コンテンツ、進捗追跡機能、コミュニティ参加、月5回までのAI学習支援が含まれます。",
-  id: "pricing"
+  question: "Apa sumber belajar bahasa Jepang gratis terbaik?",
+  answer: "Sumber gratis terbaik untuk metode Immersion: (1) Anime dan drama Jepang dengan subtitle Jepang untuk listening, (2) Yomitan + Anki untuk membangun kosakata dari konten native, (3) Komunitas Discord seperti GoRakuDo untuk praktik dan motivasi, (4) NHK Web Easy untuk reading level menengah. Kuncinya adalah konsistensi input setiap hari.",
+  id: "sumber-belajar-gratis"
  },
  {
-  question: "GoRakuDoの使い方を教えてください",
-  answer: "GoRakuDoの基本的な使い方：1.アカウント作成、2.レベル診断、3.学習プラン選択、4.学習開始、5.進捗確認の5ステップで始められます。",
-  id: "how-to-use"
+  question: "Kenapa sudah hafal tata bahasa tapi masih tidak bisa bicara?",
+  answer: "Ini disebut 'fossilization' — otak Anda menghafal aturan secara sadar tetapi belum membentuk intuisi bahasa bawah sadar. Menurut teori Prof. Stephen Krashen, acquisition (pemerolehan alami) berbeda dari learning (belajar sadar). Solusinya adalah memperbanyak Comprehensible Input agar otak memproses bahasa secara natural, bukan mengandalkan hafalan.",
+  id: "hafal-tapi-tidak-bisa-bicara"
  },
  {
-  question: "学習進捗は保存されますか？",
-  answer: "はい、すべての学習進捗は安全に保存されます。完了したレッスンとクイズの結果、学習時間と頻度、苦手分野の分析、個人設定とカスタマイズが保存され、デバイスを変更しても引き継げます。",
-  id: "progress-save"
+  question: "Berapa jam per hari idealnya belajar bahasa Jepang?",
+  answer: "Untuk hasil optimal dengan metode Immersion, targetkan 4-6 jam Comprehensible Input per hari (menonton, membaca, mendengarkan konten Jepang). Ini termasuk aktivitas pasif seperti mendengarkan podcast saat commute. Konsistensi lebih penting dari durasi — 3 jam setiap hari lebih efektif daripada 10 jam di akhir pekan saja.",
+  id: "jam-belajar-ideal"
  },
  {
-  question: "モバイルアプリはありますか？",
-  answer: "現在、モバイルアプリの開発を進めており、2024年後半にリリース予定です。現在はレスポンシブWebサイト（スマートフォン対応）とPWA機能をご利用いただけます。",
-  id: "mobile-app"
+  question: "Apa bedanya GoRakuDo dengan situs belajar bahasa Jepang lain?",
+  answer: "GoRakuDo adalah platform open-source 100% gratis yang berfokus pada metode Immersion berdasarkan penelitian Linguistik Modern (Second Language Acquisition). Berbeda dari situs yang mengajarkan tata bahasa tradisional, GoRakuDo menyediakan panduan step-by-step untuk belajar dari konten native Jepang, lengkap dengan panduan tools (Anki, Yomitan) dan komunitas Discord 10.000+ member.",
+  id: "beda-gorakudo"
  }
 ];
 

@@ -16,6 +16,7 @@ export interface Props {
   pageType?: 'website' | 'article';
   author?: string;
   publishedDate?: string;
+  modifiedDate?: string;
   articleKeywords?: string;
   lang?: string;
   keywords?: string[];
@@ -24,6 +25,7 @@ export interface Props {
   baseUrl?: string;
   breadcrumbSchema?: UnifiedSEOProps['breadcrumbSchema'];
   faqSchema?: UnifiedSEOProps['faqSchema'];
+  howToSchema?: UnifiedSEOProps['howToSchema'];
   collectionPageSchema?: UnifiedSEOProps['collectionPageSchema'];
   softwareApplicationSchema?: UnifiedSEOProps['softwareApplicationSchema'];
   websiteSchema?: UnifiedSEOProps['websiteSchema'];
@@ -41,6 +43,7 @@ const {
   pageType,
   author,
   publishedDate,
+  modifiedDate,
   articleKeywords,
   lang,
   keywords,
@@ -49,6 +52,7 @@ const {
   baseUrl,
   breadcrumbSchema,
   faqSchema,
+  howToSchema,
   collectionPageSchema,
   softwareApplicationSchema,
   websiteSchema,
@@ -75,12 +79,14 @@ const processedOgImage = ogImage && ogImage.trim() !== '' ? ogImage : undefined;
       image={processedOgImage}
       author={author}
       publishedDate={publishedDate}
+      modifiedDate={modifiedDate}
       lang={lang}
       currentPage={currentPage}
       totalPages={totalPages}
       baseUrl={baseUrl}
       breadcrumbSchema={breadcrumbSchema}
       faqSchema={faqSchema}
+      howToSchema={howToSchema}
       collectionPageSchema={collectionPageSchema}
       softwareApplicationSchema={softwareApplicationSchema}
       websiteSchema={websiteSchema}

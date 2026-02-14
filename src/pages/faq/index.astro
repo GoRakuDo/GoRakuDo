@@ -42,17 +42,19 @@ const collectionMetadata = getCollectionInfo('pages');
 
 // Dynamic SEO data based on document content
 const seoData = {
-  title: faqPage.data.title || 'よくある質問 - GoRakuDo',
+  title:
+    faqPage.data.title ||
+    'FAQ - Pertanyaan Umum Belajar Bahasa Jepang | GoRakuDo',
   description:
     faqPage.data.description ||
-    'GoRakuDo日本語学習プラットフォームに関するよくある質問と回答をご覧ください。使い方、料金、機能について詳しく説明しています。',
+    'Jawaban untuk pertanyaan paling umum tentang belajar bahasa Jepang otodidak dengan metode Immersion, JLPT, sumber belajar gratis, dan tips efektif.',
   keywords: [
-    'FAQ',
-    'よくある質問',
-    'GoRakuDo',
-    '日本語学習',
-    'サポート',
-    'ヘルプ',
+    'FAQ belajar bahasa Jepang',
+    'pertanyaan umum',
+    'belajar Jepang otodidak',
+    'metode immersion',
+    'tips belajar bahasa Jepang',
+    'JLPT',
   ],
   articleType: 'faq',
   learningStage: 'all',
@@ -82,7 +84,7 @@ const breadcrumbConfig = {
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
     { title: 'Home', url: '/', isActive: false },
-    { title: 'よくある質問', url: resolvedPath.path, isActive: true },
+    { title: 'FAQ', url: resolvedPath.path, isActive: true },
   ],
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
@@ -99,7 +101,7 @@ const faqSchema = generateFAQSchema(defaultFAQData);
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
-  lang='ja'
+  lang='id'
   author={faqPage.data.author || 'GoRakuDo Team'}
   tags={seoData.keywords}
   post={faqPage}
@@ -128,7 +130,7 @@ const faqSchema = generateFAQSchema(defaultFAQData);
       (faqPage.data.publishedDate || faqPage.data.author) && (
         <div class='content-meta' aria-label='Page metadata'>
           <time class='content-date' datetime={seoData.publishedDate}>
-            {new Date(seoData.publishedDate).toLocaleDateString('ja-JP', {
+            {new Date(seoData.publishedDate).toLocaleDateString('id-ID', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',

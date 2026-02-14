@@ -45,12 +45,12 @@ interface HowToSchema {
   '@type': string;
   name: string;
   description: string;
-  image: string;
+  image: string | { '@type': string; url: string; width?: number; height?: number };
   totalTime: string;
   estimatedCost: { '@type': string; currency: string; value: string };
   supply: Array<{ '@type': string; name: string }>;
   tool: Array<{ '@type': string; name: string }>;
-  step: Array<{ '@type': string; name: string; text: string; url: string }>;
+  step: Array<{ '@type': string; name: string; text: string; url: string; image?: string | { '@type': string; url: string; width?: number } }>;
 }
 
 interface CollectionPageSchema {
@@ -115,6 +115,7 @@ export interface Props {
   canonical?: string;
   lang?: string;
   pageType?: 'website' | 'article';
+  articleSection?: string;
   image?: string;
   author?: string;
   publishedDate?: string;
@@ -173,6 +174,7 @@ export interface Props {
   preload?: PreloadResource[];
   sitemapUrl?: string;
   robotsTxtUrl?: string;
+  wordCount?: number;
 }
 
 // ========== PROPS DESTRUCTURING ==========
@@ -184,6 +186,7 @@ const {
   canonical,
   lang = seoConfig.site.language,
   pageType = seoConfig.seo.defaultPageType,
+  articleSection = 'Japanese Learning',
   image,
   author,
   publishedDate,
@@ -222,7 +225,8 @@ const {
   prefetch = [],
   preload = [],
   sitemapUrl = seoConfig.sitemap.url,
-  robotsTxtUrl = seoConfig.sitemap.robotsTxtUrl
+  robotsTxtUrl = seoConfig.sitemap.robotsTxtUrl,
+  wordCount
 } = Astro.props;
 
 // ========== URL UTILITY FUNCTIONS ==========
@@ -348,6 +352,14 @@ const ogImageUrl = createFullImageUrl(image, true);
 const fullSitemapUrl = createFullSitemapUrl(sitemapUrl);
 const fullRobotsTxtUrl = createFullRobotsTxtUrl(robotsTxtUrl);
 
+// ========== ENTITY @ID REGISTRY ==========
+const ENTITY_IDS = {
+  organization: `${getSiteUrl()}/#organization`,
+  educationalOrg: `${getSiteUrl()}/#educational`,
+  website: `${getSiteUrl()}/#website`,
+  webpage: normalizedCanonical,
+} as const;
+
 // ========== DEFAULT CONFIGURATION ==========
 const defaultConfig = {
   siteName: seoConfig.site.name,
@@ -411,8 +423,8 @@ const createContactPoint = () => ({
 
 // ========== BASE ORGANIZATION SCHEMA ==========
 const baseOrganization = {
-  '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': ENTITY_IDS.organization,
   name: organizationName,
   url: organizationUrl,
   logo: createImageObject(organizationLogo),
@@ -445,7 +457,11 @@ const createAuthorObject = () => {
 };
 
 const createMainEntityOfPage = () => ({ '@type': 'WebPage', '@id': normalizedCanonical });
-const estimateWordCount = (text: string): number => text.length * 2;
+const estimateWordCount = (text: string): number => {
+  // Indonesian: split by whitespace; Japanese: ~1 word per 2-3 chars
+  const spaceSplit = text.split(/\s+/).filter(w => w.length > 0).length;
+  return spaceSplit > 5 ? spaceSplit : Math.ceil(text.length / 2.5);
+};
 
 const processAbout = (aboutData: any) => {
   if (!aboutData) return null;
@@ -483,7 +499,6 @@ const processCitation = (citationData: any) => {
 };
 
 const articleSchema = pageType === 'article' ? {
-  '@context': 'https://schema.org',
   '@type': 'Article',
   name: title,
   headline: title,
@@ -492,13 +507,13 @@ const articleSchema = pageType === 'article' ? {
   datePublished: publishedDate,
   dateModified: modifiedDate || publishedDate,
   author: createAuthorObject(),
-  publisher: baseOrganization,
+  publisher: { '@id': ENTITY_IDS.organization },
   image: createImageObject(fullImageUrl),
   mainEntityOfPage: createMainEntityOfPage(),
   keywords: articleKeywords || keywords.join(', '),
   inLanguage: lang,
-  articleSection: 'Japanese Learning',
-  wordCount: estimateWordCount(description),
+  articleSection,
+  wordCount: wordCount || estimateWordCount(description),
   ...(learningResourceType && { learningResourceType }),
   ...(educationalLevel && { educationalLevel }),
   ...(processAbout(about) && { about: processAbout(about) }),
@@ -520,22 +535,16 @@ const createGeoCoordinates = () => ({
   longitude: contactGeo.longitude
 });
 
-const localBusinessSchema = {
-  '@context': 'https://schema.org',
+const educationalOrgSchema = {
   '@type': 'EducationalOrganization',
+  '@id': ENTITY_IDS.educationalOrg,
   name: organizationName,
   description: organizationDescription,
   url: organizationUrl,
-  logo: fullImageUrl,
-  image: fullImageUrl,
   email: contactEmail,
   address: createPostalAddress(),
-  geo: createGeoCoordinates(),
-  openingHours: openingHours,
-  priceRange: priceRange,
-  currenciesAccepted: currenciesAccepted,
-  paymentAccepted: paymentAccepted,
-  sameAs: socialLinks
+  sameAs: socialLinks,
+  parentOrganization: { '@id': ENTITY_IDS.organization }
 };
 
 // ========== STRUCTURED DATA INTEGRATION ==========
@@ -548,31 +557,28 @@ const addMainSchema = (schemas: any[]): void => {
   } else {
     // デフォルトのwebsiteSchema
     const defaultWebsiteSchema = {
-      '@context': 'https://schema.org',
       '@type': 'WebSite',
+      '@id': ENTITY_IDS.website,
       name: organizationName,
       url: organizationUrl,
       description: organizationDescription,
       inLanguage: lang,
-      publisher: baseOrganization,
-      potentialAction: createSearchAction(),
-      mainEntity: { '@type': 'Sitemap', url: fullSitemapUrl }
+      publisher: { '@id': ENTITY_IDS.organization }
     };
     schemas.push(defaultWebsiteSchema);
   }
 };
 
 const addOrganizationSchemas = (schemas: any[]): void => {
-  schemas.push(baseOrganization, localBusinessSchema);
+  schemas.push(baseOrganization, educationalOrgSchema);
 };
 
 const addOptionalSchemas = (schemas: any[]): void => {
   if (breadcrumbSchema) schemas.push(breadcrumbSchema);
-  if (faqSchema) schemas.push(faqSchema);
+  if (faqSchema) schemas.push({ ...faqSchema, '@id': `${normalizedCanonical}#faq` });
   if (howToSchema) schemas.push(howToSchema);
   if (collectionPageSchema) schemas.push(collectionPageSchema);
   if (softwareApplicationSchema) schemas.push(softwareApplicationSchema);
-  if (websiteSchema) schemas.push(websiteSchema);
 };
 
 const structuredDataSchemas: any[] = [];
@@ -585,7 +591,7 @@ addOptionalSchemas(structuredDataSchemas);
 <!-- ========== BASIC META TAGS ========== -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, minimum-scale=0.8, user-scalable=yes, viewport-fit=cover" />
-<meta name="language" content={lang} />
+
 <meta name="generator" content="Astro" />
 <title>{title}</title>
 <meta name="description" content={description} />
@@ -614,18 +620,16 @@ addOptionalSchemas(structuredDataSchemas);
 <meta name="msapplication-starturl" content="/" />
 <meta name="msapplication-TileImage" content="/favicon/web-app-manifest-192x192.png" />
 
-<!-- ========== RENDERING & SECURITY ========== -->
+<!-- ========== RENDERING ========== -->
 <meta name="renderer" content="webkit" />
 <meta name="force-rendering" content="webkit" />
 <meta name="screen-orientation" content="portrait" />
 <meta name="referrer" content={seoConfig.security.referrer} />
-<meta http-equiv="X-Content-Type-Options" content={seoConfig.security.contentTypeOptions} />
-<meta http-equiv="X-XSS-Protection" content={seoConfig.security.xssProtection} />
 
 <!-- ========== SEARCH ENGINE OPTIMIZATION ========== -->
 <meta name="googlebot" content="index, follow" />
 <meta name="bingbot" content="index, follow" />
-<meta name="sitemap" content={fullSitemapUrl} />
+
 
 <!-- ========== OPEN GRAPH ========== -->
 <meta property="og:title" content={title} />
@@ -635,15 +639,30 @@ addOptionalSchemas(structuredDataSchemas);
 <meta property="og:image" content={ogImageUrl} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:type" content="image/webp" />
+
 <meta property="og:image:alt" content={title} />
-<meta property="og:logo" content={joinUrl(getSiteUrl(), seoConfig.site.defaultImage)} />
+
 <meta property="og:site_name" content={defaultConfig.siteName} />
 <meta property="og:locale" content={defaultConfig.locale} />
-<meta property="og:updated_time" content={new Date().toISOString()} />
+{(modifiedDate || publishedDate) && (
+  <meta property="og:updated_time" content={modifiedDate || publishedDate} />
+)}
+
+{pageType === 'article' && author && (
+  <meta property="article:author" content={author} />
+)}
+{pageType === 'article' && publishedDate && (
+  <meta property="article:published_time" content={publishedDate} />
+)}
+{pageType === 'article' && modifiedDate && (
+  <meta property="article:modified_time" content={modifiedDate} />
+)}
+{pageType === 'article' && articleKeywords && (
+  <meta property="article:tag" content={articleKeywords} />
+)}
 
 <!-- ========== TWITTER CARDS ========== -->
-<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:card" content={defaultConfig.twitterCard} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />
@@ -654,7 +673,6 @@ addOptionalSchemas(structuredDataSchemas);
 <!-- ========== CANONICAL & SITEMAP ========== -->
 <link rel="canonical" href={normalizedCanonical} />
 <link rel="sitemap" type="application/xml" title="Sitemap" href={fullSitemapUrl} />
-<link rel="alternate" type="application/xml" title="Sitemap" href={fullSitemapUrl} />
 
 <!-- ========== FAVICON ========== -->
 <link rel="icon" type="image/svg+xml" href={defaultConfig.favicon} />
@@ -663,15 +681,6 @@ addOptionalSchemas(structuredDataSchemas);
 <link rel="shortcut icon" href="/favicon/favicon.ico" />
 
 <!-- ========== APPLE TOUCH ICONS ========== -->
-<link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon.png" />
-<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 
 <!-- ========== PWA MANIFEST ========== -->
@@ -701,11 +710,14 @@ addOptionalSchemas(structuredDataSchemas);
 ))}
 
 <!-- ========== ROBOTS & PAGINATION ========== -->
-<meta name="robots" content={noindex ? 'noindex, nofollow' : seoConfig.seo.robots.default} />
-
-{currentPage && currentPage > 1 && (
-  <meta name="robots" content="noindex, follow" />
-)}
+{(() => {
+  const robotsContent = noindex
+    ? 'noindex, nofollow'
+    : (currentPage && currentPage > 1)
+      ? 'noindex, follow'
+      : seoConfig.seo.robots.default;
+  return <meta name="robots" content={robotsContent} />;
+})()}
 {currentPage && typeof totalPages === 'number' && currentPage < totalPages && (
   <link rel="next" href={joinUrl(getSiteUrl(), `${baseUrl || ''}/page-${currentPage + 1}`)} />
 )}
@@ -718,9 +730,10 @@ addOptionalSchemas(structuredDataSchemas);
 )}
 
 <!-- ========== STRUCTURED DATA ========== -->
-{structuredDataSchemas.map(schema => (
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
-))}
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': structuredDataSchemas.map(({ '@context': _, ...rest }) => rest)
+})} />
 
 <!-- ========== IMAGE FALLBACK - ASTRO NATIVE MINIMAL ========== -->
 <script is:inline>

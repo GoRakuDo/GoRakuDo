@@ -14,6 +14,7 @@ export interface Props {
   title: string;
   description: string;
   publishedDate?: string;
+  modifiedDate?: string;
   lang?: 'id' | 'ja';
   author?: string;
   tags?: string[];
@@ -26,6 +27,7 @@ export interface Props {
   howToSchema?: UnifiedSEOProps['howToSchema'];
   collectionPageSchema?: UnifiedSEOProps['collectionPageSchema'];
   softwareApplicationSchema?: UnifiedSEOProps['softwareApplicationSchema'];
+  articleSection?: string;
 }
 
 // ========== PROPS DESTRUCTURING ==========
@@ -33,6 +35,7 @@ const {
   title,
   description,
   publishedDate,
+  modifiedDate,
   lang = 'id',
   author,
   tags = [],
@@ -45,6 +48,7 @@ const {
   howToSchema,
   collectionPageSchema,
   softwareApplicationSchema,
+  articleSection,
 } = Astro.props;
 
 // ========== IMAGE FALLBACK PROCESSING ==========
@@ -69,7 +73,8 @@ const LAYOUT_CONFIG = {
       image={image}
       author={author}
       publishedDate={publishedDate}
-      modifiedDate={publishedDate}
+      modifiedDate={modifiedDate || publishedDate}
+      articleSection={articleSection}
       currentPage={currentPage}
       totalPages={totalPages}
       baseUrl={baseUrl}

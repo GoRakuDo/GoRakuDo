@@ -6,6 +6,7 @@ import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import aboutUsSeoConfig from '../../data/seo/pages/about-us.json';
+import FAQSection from '../../components/common/FAQSection.astro';
 
 // ========== CONTENT LOADING ==========
 const post = await getEntry('pages', 'about-us');
@@ -51,6 +52,12 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   })),
   siteUrl: String(Astro.site || 'https://gorakudo.org'),
 });
+
+// Transform FAQ schema data to component format
+const faqQuestions = aboutUsSeoConfig.faqSchema.mainEntity.map(faq => ({
+  question: faq.name,
+  answer: faq.acceptedAnswer.text,
+}));
 ---
 
 <PostLayout
@@ -126,6 +133,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     <div class='about-content'>
       <Content />
     </div>
+
+    <!-- FAQ Section (visible content matching JSON-LD schema) -->
+    <FAQSection questions={faqQuestions} />
   </div>
 </PostLayout>
 

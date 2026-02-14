@@ -17,6 +17,7 @@ export interface Props {
   title: string;
   description: string;
   publishedDate?: string;
+  modifiedDate?: string;
   lang?: 'id' | 'ja';
   author?: string;
   tags?: string[];
@@ -44,6 +45,7 @@ export interface Props {
   about?: UnifiedSEOProps['about'];
   mentions?: UnifiedSEOProps['mentions'];
   citation?: UnifiedSEOProps['citation'];
+  articleSection?: string;
 }
 
 // ========== PROPS DESTRUCTURING ==========
@@ -51,6 +53,7 @@ const {
   title,
   description,
   publishedDate,
+  modifiedDate,
   lang = 'id',
   author,
   tags = [],
@@ -66,6 +69,7 @@ const {
   mentions,
   citation,
   featuredImage,
+  articleSection,
 } = Astro.props;
 ---
 
@@ -80,7 +84,8 @@ const {
       pageType='article'
       author={author}
       publishedDate={publishedDate}
-      modifiedDate={publishedDate}
+      modifiedDate={modifiedDate || publishedDate}
+      articleSection={articleSection}
       image={featuredImage}
       breadcrumbSchema={breadcrumbSchema}
       faqSchema={faqSchema}

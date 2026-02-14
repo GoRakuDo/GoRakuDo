@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { firstRow, secondRow } from '../../data/reviews';
 import '../../styles/pages/panduan-immersion/animations.css';
+import panduanImmersionSeoData from '../../data/seo/pages/panduan-immersion.json';
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 
 // Section Components
 import HeroEmpathyBridge from '../../components/panduan-immersion/HeroEmpathyBridge.astro';
@@ -15,6 +17,7 @@ import KaiwaTrapSection from '../../components/panduan-immersion/KaiwaTrapSectio
 import BonsaiRoadmapSection from '../../components/panduan-immersion/BonsaiRoadmapSection.astro';
 import NotebookStoriesSection from '../../components/panduan-immersion/NotebookStoriesSection.astro';
 import FinalCTASection from '../../components/panduan-immersion/FinalCTASection.astro';
+import FAQSection from '../../components/common/FAQSection.astro';
 
 // Cloudinary Image IDs
 const empathyBridgeImage = 'Empathy_Bridge_Image_ikv9d4ikv9d4ikv9_ck8fch';
@@ -24,17 +27,49 @@ const sproutImage = 'The_Sprout_Image_af0bngaf0bngaf0b_bdwzmo';
 const saplingImage = 'Adolescent_Sapling_Image_af0bngaf0bngaf0b_hvtrlj';
 const preBloomImage = 'The_Pre-Bloom_Image_af0bngaf0bngaf0b_qnyni5';
 
+// ========== SEO DATA ==========
+const seoData = panduanImmersionSeoData.seoData;
 const currentYear = new Date().getFullYear();
 const pageTitle = `Panduan Immersion Belajar Bahasa Jepang ${currentYear} dengan OTODIDAK`;
-const pageDescription =
-  'Panduan lengkap belajar bahasa Jepang secara otodidak dengan metode Immersion. Validasi skeptisisme dan solusi modern untuk kefasihan.';
+
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: panduanImmersionSeoData.breadcrumbData.items.map((item, index) => ({
+    title: item.name,
+    url: item.url,
+    isActive: index === panduanImmersionSeoData.breadcrumbData.items.length - 1,
+  })),
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
+
+const faqSchema = {
+  '@context': 'https://schema.org' as const,
+  '@type': 'FAQPage' as const,
+  mainEntity: panduanImmersionSeoData.faqSchema.mainEntity.map(faq => ({
+    '@type': 'Question' as const,
+    name: faq.name,
+    acceptedAnswer: {
+      '@type': 'Answer' as const,
+      text: faq.acceptedAnswer.text,
+    },
+  })),
+} as const;
+
+// Transform FAQ schema data to component format
+const faqQuestions = panduanImmersionSeoData.faqSchema.mainEntity.map(faq => ({
+  question: faq.name,
+  answer: faq.acceptedAnswer.text,
+}));
 ---
 
 <BaseLayout
   title={pageTitle}
-  description={pageDescription}
-  lang='id'
-  pageType='article'
+  description={seoData.description}
+  lang={seoData.lang}
+  pageType={seoData.pageType as 'article' | 'website'}
+  author={seoData.author}
+  publishedDate={seoData.publishedDate}
+  breadcrumbSchema={breadcrumbSchema}
+  faqSchema={faqSchema}
 >
   <!-- Main Container -->
   <main class='page-container min-h-[calc(100vh-var(--navbar-height))]'>
@@ -74,6 +109,11 @@ const pageDescription =
   </main>
 
   <NotebookStoriesSection firstRow={firstRow} secondRow={secondRow} />
+
+  <!-- FAQ Section (visible content matching JSON-LD schema) -->
+  <div class='container mx-auto w-full px-4 md:px-0'>
+    <FAQSection questions={faqQuestions} />
+  </div>
 
   <FinalCTASection />
 </BaseLayout>

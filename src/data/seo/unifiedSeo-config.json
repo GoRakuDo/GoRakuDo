@@ -45,7 +45,7 @@
   },
   "seo": {
     "defaultPageType": "website",
-    "twitterCard": "summary",
+    "twitterCard": "summary_large_image",
     "robots": {
       "default": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, sitemap"
     },
