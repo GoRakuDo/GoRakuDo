@@ -4,7 +4,7 @@
 
 <!-- NEW SECTION 2: BATTLE CARDS (Learning vs Acquisition) - "Gamified Selection" -->
 <section class='py-24 relative'>
-  <div class='container mx-auto px-4 max-w-7xl'>
+  <div class='max-w-7xl mx-auto px-4 md:px-8'>
     <div class='text-center mb-16'>
       <h2 class='text-3xl md:text-5xl font-black text-white mb-6'>
         Pilih Mode Operasimu
@@ -16,32 +16,28 @@
 
     <div class='grid md:grid-cols-2 gap-6 lg:gap-12 max-w-6xl mx-auto'>
       <!-- CARD 1: LEARNING (The Bad Way) -->
-      <div class='relative group cursor-default'>
+      <div class='relative group cursor-default perspective-1000'>
         <div
           class='absolute inset-0 bg-red-600/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
         >
         </div>
         <div
-          class='relative h-full bg-[oklch(0.122_0.004_286)] border border-red-900/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:border-red-500/50'
+          class='skeuo-card h-full p-6 md:p-8 lg:p-12 hover:shadow-[0_12px_24px_oklch(0.05_0_0/0.8),0_4px_8px_oklch(0.62_0.26_29/0.2),inset_0_1px_1px_oklch(0.9_0_0/0.2),inset_0_-1px_1px_oklch(0.05_0_0/0.8)] border border-red-900/30'
         >
-          <!-- Background Grid -->
-          <div
-            class="absolute inset-0 bg-[url('/images/noise.svg')] opacity-20 mix-blend-overlay"
-          >
-          </div>
+          <!-- Organic Background Texture -->
           <div
             class='absolute inset-0'
-            style='background-image: radial-gradient(oklch(23.6% 0.054 22deg) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3;'
+            style='background-image: radial-gradient(oklch(23.6% 0.054 22deg) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.1;'
           >
           </div>
 
           <div class='relative z-10 flex flex-col h-full'>
             <div
-              class='w-16 h-16 rounded-2xl bg-red-900/20 border border-red-500/20 flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform duration-300'
+              class='w-16 h-16 rounded-2xl skeuo-inset border border-red-500/20 flex items-center justify-center mb-8 shadow-[inset_0_4px_8px_oklch(0_0_0/0.8),0_1px_1px_oklch(1_0_0/0.1)]'
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                class='w-8 h-8 text-red-500'
+                class='w-8 h-8 text-red-500 drop-shadow-[0_0_8px_oklch(0.62_0.26_29/0.5)]'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -56,7 +52,7 @@
             </div>
 
             <h3
-              class='text-3xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors'
+              class='text-3xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors skeuo-text-emboss'
             >
               Learning
             </h3>
@@ -102,27 +98,27 @@
       </div>
 
       <!-- CARD 2: ACQUISITION (The Good Way) -->
-      <div class='relative group cursor-default'>
+      <div class='relative group cursor-default perspective-1000'>
         <div
           class='absolute inset-0 bg-emerald-500/20 rounded-3xl blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-500'
         >
         </div>
         <div
-          class='relative h-full bg-linear-to-br from-[oklch(0.175_0.02_152)] to-[oklch(0.122_0.004_286)] border border-emerald-500/30 rounded-3xl p-6 md:p-8 lg:p-12 overflow-hidden transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_50px_oklch(0.696_0.143_164/0.15)]'
+          class='skeuo-card h-full p-6 md:p-8 lg:p-12 hover:shadow-[0_12px_24px_oklch(0.05_0_0/0.8),0_4px_8px_oklch(0.7_0.14_164/0.2),inset_0_1px_1px_oklch(0.9_0_0/0.2),inset_0_-1px_1px_oklch(0.05_0_0/0.8)] border border-emerald-500/30'
         >
           <!-- Organic Background -->
           <div
-            class='absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors duration-700'
+            class='absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors duration-700 pointer-events-none'
           >
           </div>
 
           <div class='relative z-10 flex flex-col h-full'>
             <div
-              class='w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center mb-8 group-hover:-rotate-12 transition-transform duration-300'
+              class='w-16 h-16 rounded-2xl skeuo-inset border border-emerald-400/30 flex items-center justify-center mb-8 shadow-[inset_0_4px_8px_oklch(0_0_0/0.8),0_1px_1px_oklch(1_0_0/0.1)]'
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                class='w-8 h-8 text-emerald-400'
+                class='w-8 h-8 text-emerald-400 drop-shadow-[0_0_8px_oklch(0.7_0.14_164/0.5)]'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -137,7 +133,7 @@
             </div>
 
             <h3
-              class='text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors'
+              class='text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors skeuo-text-emboss'
             >
               Acquisition
             </h3>
@@ -207,12 +203,12 @@
             <div class='mt-8 pt-8 border-t border-emerald-900/30'>
               <a
                 href='#rumus-ajaib'
-                class='w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 hover:shadow-emerald-500/30 flex items-center justify-center gap-2 group/btn'
+                class='skeuo-button w-full py-4 rounded-xl bg-emerald-500 text-black font-black text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 group/btn'
               >
                 <span>Aktifkan Mode Ini</span>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  class='w-4 h-4 group-hover/btn:translate-x-1 transition-transform'
+                  class='w-4 h-4 group-hover/btn:translate-x-1 transition-transform stroke-[3px]'
                   fill='none'
                   viewBox='0 0 24 24'
                   stroke='currentColor'

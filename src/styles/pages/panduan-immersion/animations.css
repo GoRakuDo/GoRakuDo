@@ -111,3 +111,76 @@ button:focus-visible,
   }
   /* stylelint-enable declaration-no-important */
 }
+
+/* Skeuomorphic Utilities (OKLCH Only) */
+
+.skeuo-card {
+  border: 1px solid oklch(20% 0.01 286deg);
+  border-radius: 1.5rem;
+
+  /* Subtle noise texture and base background */
+  background-color: oklch(15% 0.01 286deg);
+  background-image: url('/images/noise.svg');
+  transition:
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background-blend-mode: overlay;
+
+  /* Layered 3D shadow: sharp dark bottom, soft dark ambient, inset white top edge */
+  box-shadow:
+    0 8px 16px oklch(5% 0 0deg / 0.6),
+    0 4px 4px oklch(5% 0 0deg / 0.4),
+    inset 0 1px 1px oklch(90% 0 0deg / 0.15),
+    inset 0 -1px 1px oklch(5% 0 0deg / 0.8);
+}
+
+.skeuo-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 24px oklch(5% 0 0deg / 0.7),
+    0 4px 8px oklch(5% 0 0deg / 0.5),
+    inset 0 1px 1px oklch(90% 0 0deg / 0.2),
+    inset 0 -1px 1px oklch(5% 0 0deg / 0.8);
+}
+
+.skeuo-button {
+  position: relative;
+
+  /* Thick 3D bottom edge */
+  box-shadow:
+    0 4px 0 oklch(10% 0 0deg / 0.8),
+    0 8px 15px oklch(5% 0 0deg / 0.5),
+    inset 0 1px 1px oklch(90% 0 0deg / 0.3);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.skeuo-button:hover {
+  transform: translateY(1px);
+  box-shadow:
+    0 2px 0 oklch(10% 0 0deg / 0.8),
+    0 4px 8px oklch(5% 0 0deg / 0.5),
+    inset 0 1px 1px oklch(90% 0 0deg / 0.3);
+}
+
+.skeuo-button:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 0 0 oklch(10% 0 0deg / 0.8),
+    0 2px 4px oklch(5% 0 0deg / 0.4),
+    inset 0 2px 4px oklch(5% 0 0deg / 0.2);
+}
+
+.skeuo-inset {
+  border-radius: 1rem;
+  background-color: oklch(10% 0.01 286deg);
+  box-shadow:
+    inset 0 4px 8px oklch(5% 0 0deg / 0.6),
+    inset 0 1px 2px oklch(5% 0 0deg / 0.8),
+    0 1px 0 oklch(30% 0.01 286deg / 0.5); /* Bottom highlight */
+}
+
+.skeuo-text-emboss {
+  text-shadow:
+    0 -1px 1px oklch(5% 0 0deg / 0.8),
+    0 1px 1px oklch(90% 0 0deg / 0.2);
+}

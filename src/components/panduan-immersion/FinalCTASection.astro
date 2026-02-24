@@ -2,7 +2,7 @@
 import DiscordCard from '../ui/DiscordCard.astro';
 ---
 
-<section class='pt-24 pb-40 lg:pt-48 lg:pb-56 relative overflow-hidden'>
+<section class='pt-24 pb-40 lg:pt-48 lg:pb-56 relative'>
   <!-- Background Vignette (Blends all sides) -->
   <div
     class='absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,oklch(0.106_0.012_325)_0%,transparent_70%)] pointer-events-none'
@@ -15,13 +15,13 @@ import DiscordCard from '../ui/DiscordCard.astro';
   >
   </div>
 
-  <div
-    class='page-container mx-auto relative z-10 px-6 lg:px-0 w-full max-w-384'
-  >
+  <div class='max-w-7xl mx-auto relative z-10 px-4 md:px-8'>
     <div class='grid lg:grid-cols-12 gap-12 items-center'>
       <!-- Left: The Manifesto -->
-      <div class='lg:col-span-7 space-y-10 order-2 lg:order-1'>
-        <div>
+      <div
+        class='lg:col-span-7 space-y-8 lg:space-y-10 order-2 lg:order-1 text-center lg:text-left'
+      >
+        <div class='flex flex-col items-center lg:items-start w-full'>
           <div
             class='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-indigo-300 mb-6'
           >
@@ -30,23 +30,26 @@ import DiscordCard from '../ui/DiscordCard.astro';
             <span>Open Invitation</span>
           </div>
           <h2
-            class='text-4xl lg:text-6xl font-black text-white leading-tight mb-6'
+            class='text-[3.25rem] sm:text-5xl lg:text-6xl leading-[1.1] font-black text-white mb-6 tracking-tight'
           >
             100% Gratis.<br />
             <span
-              class='text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400'
+              class='text-[1.65rem] sm:text-5xl lg:text-6xl text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-purple-400 block sm:inline mt-1 sm:mt-0'
               >Buat kamu yang serius.</span
             >
           </h2>
           <div
-            class='h-1 w-24 bg-linear-to-r from-indigo-500 to-transparent rounded-full'
+            class='h-1 w-24 bg-linear-to-r from-indigo-500 to-transparent rounded-full mx-auto lg:mx-0'
           >
           </div>
         </div>
 
-        <div class='prose prose-lg prose-invert text-stone-400 leading-relaxed'>
+        <div
+          class='prose prose-invert max-w-none text-[15px] sm:text-base text-stone-400 leading-relaxed'
+        >
           <p>
-            Tujuan utama kami cuma satu: <strong class='text-white'
+            Tujuan utama kami cuma satu: <strong
+              class='text-indigo-400 font-medium'
               >mengembalikan cara belajar bahasa Jepang yang alami dan manusiawi</strong
             > di Indonesia — cara belajar yang sebenarnya sudah ditakdirkan oleh otak
             kita sejak lahir.
@@ -61,17 +64,21 @@ import DiscordCard from '../ui/DiscordCard.astro';
           <p>
             Berbeda dengan metode tradisional yang selama ini justru
             "mempermainkan" dan membebani kamu, di sini kita mainnya beda. Kita
-            mainnya pakai <strong class='text-white'>Insting</strong>.
+            mainnya pakai <strong class='text-purple-400 font-medium'
+              >Insting</strong
+            >.
           </p>
         </div>
 
         <!-- Join Button (Mobile/Desktop consistent) -->
-        <div class='flex flex-wrap items-center gap-4 pt-4'>
+        <div
+          class='flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4'
+        >
           <a
             href='/discord'
             target='_blank'
             rel='noopener noreferrer'
-            class='inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[oklch(0.546_0.212_277)] hover:bg-[oklch(0.462_0.189_277)] text-white font-bold transition-all shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-1 group'
+            class='skeuo-button bg-[oklch(0.546_0.212_277)]! rounded-xl! inline-flex items-center justify-center gap-2 px-8 py-4 text-white font-bold group border border-indigo-400/30!'
           >
             <span>Join Komunitas GoRakuDo</span>
             <svg
@@ -88,7 +95,9 @@ import DiscordCard from '../ui/DiscordCard.astro';
               ><path d='M5 12h14'></path><path d='m12 5 7 7-7 7'></path></svg
             >
           </a>
-          <div class='flex items-center gap-4 px-4'>
+          <div
+            class='flex items-center justify-center gap-4 px-4 w-full sm:w-auto mt-2 sm:mt-0'
+          >
             <div class='flex flex-col -space-y-1'>
               <!-- Top Row -->
               <div id='discord-avatars-top' class='flex -space-x-3'>
@@ -263,7 +272,7 @@ import DiscordCard from '../ui/DiscordCard.astro';
                 setTimeout(loadDiscordStats, 2000);
               }
             </script>
-            <div class='ml-5 flex flex-col justify-center gap-0.5'>
+            <div class='flex flex-col justify-center gap-0.5 text-left'>
               <span
                 id='discord-members-count'
                 class='text-white font-bold text-xl leading-none tracking-tight'
@@ -281,8 +290,10 @@ import DiscordCard from '../ui/DiscordCard.astro';
       </div>
 
       <!-- Right: The Widget (Sanctuary Portal) -->
-      <div class='lg:col-span-5 order-1 lg:order-2'>
-        <div class='relative group mx-auto max-w-[400px] lg:max-w-none'>
+      <div
+        class='lg:col-span-5 order-1 lg:order-2 w-full max-w-[400px] mx-auto lg:max-w-none'
+      >
+        <div class='relative group'>
           <!-- Glowing Backdrop -->
           <div
             class='absolute -inset-1 bg-linear-to-b from-[oklch(0.546_0.212_277)] to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition-opacity duration-700'
@@ -291,7 +302,7 @@ import DiscordCard from '../ui/DiscordCard.astro';
 
           <!-- Glass Container -->
           <div
-            class='relative rounded-3xl overflow-hidden bg-[oklch(0.161_0.004_286)]/80 backdrop-blur-xl border border-white/10 shadow-2xl'
+            class='skeuo-card bg-[oklch(0.16_0.02_286)/80]! backdrop-blur-xl! relative overflow-hidden'
           >
             <!-- Window Controls (Decoration) -->
             <div

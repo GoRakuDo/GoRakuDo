@@ -381,8 +381,13 @@
 
   /* Critical styles - moved from @layer critical */
   html {
-    scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
+    overflow-x: hidden;
     font-family: var(--font-primary) !important;
+
+    /* REASONING: Optimized font stack with Inter as primary to prevent layout shift */
+    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
+    font-weight: 400;
+    scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
     scroll-padding-top: var(--navbar-height); /* Anchor link offset */
 
     /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
@@ -391,10 +396,6 @@
     text-rendering: optimizeSpeed !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
-
-    /* REASONING: Optimized font stack with Inter as primary to prevent layout shift */
-    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
-    font-weight: 400;
     text-wrap: pretty !important;
 
     /* WebKit tap highlight - apply globally once */
@@ -404,6 +405,7 @@
 
   body {
     flex-direction: column;
+    overflow-x: hidden;
 
     /* Global Layout Logic: Reserve space for fixed navbar */
     padding: var(--navbar-height) 0 2rem 0;
@@ -418,15 +420,11 @@
     word-spacing: var(--orphan-word-spacing) !important; /* Orphan prevention */
 
     @media (min-width: 768px) {
-      padding-right: 2rem;
       padding-bottom: 3rem;
-      padding-left: 2rem;
     }
 
     @media (min-width: 1024px) {
-      padding-right: 3rem;
       padding-bottom: 4rem;
-      padding-left: 3rem;
     }
   }
 

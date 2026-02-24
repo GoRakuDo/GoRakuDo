@@ -19,12 +19,10 @@ const { firstRow, secondRow } = Astro.props;
   >
   </div>
 
-  <div class='w-full max-w-360 mx-auto px-4 md:px-8 relative z-10 text-center'>
+  <div class='w-full max-w-7xl mx-auto px-4 lg:px-8 relative z-10 text-center'>
     <!-- THE UNIFIED MANIFESTO CARD -->
     <div class='w-full mx-auto text-left'>
-      <div
-        class='relative bg-[oklch(0.161_0.004_286)] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl group'
-      >
+      <div class='skeuo-card rounded-[2.5rem]! relative overflow-hidden group'>
         <!-- NOTEBOOK TEXTURE: subtle grid -->
         <div
           class='absolute inset-0 bg-[linear-gradient(to_right,oklch(0.6_0_0deg/0.07)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.6_0_0deg/0.07)_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none'
@@ -50,7 +48,7 @@ const { firstRow, secondRow } = Astro.props;
               class='absolute -top-12 -right-8 hidden lg:block animate-float'
             >
               <div
-                class='w-16 h-16 bg-linear-to-br from-orange-400 to-rose-500 rounded-2xl shadow-lg border-b-4 border-rose-700 flex items-center justify-center transform rotate-12 cursor-pointer hover:border-b-0 hover:translate-y-1 transition-all'
+                class='w-16 h-16 border-indigo-500/30! bg-[oklch(0.6_0.2_29)]! skeuo-button rounded-2xl flex items-center justify-center transform rotate-12 cursor-pointer transition-all'
               >
                 <svg class='w-8 h-8 text-white fill-current' viewBox='0 0 24 24'
                   ><path d='M6 4h4v16H6V4zm8 0h4v16h-4V4z'></path></svg
@@ -63,8 +61,7 @@ const { firstRow, secondRow } = Astro.props;
             >
               Kamu Nggak Bisa "Gagal",<br />
               <span class='relative inline-block'>
-                <span
-                  class='relative z-10 text-transparent bg-clip-text bg-linear-to-r from-orange-300 to-rose-400'
+                <span class='relative z-10 text-orange-400 drop-shadow-md'
                   >Cuma Bisa "Jeda".</span
                 >
                 <svg

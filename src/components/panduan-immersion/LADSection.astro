@@ -4,15 +4,15 @@ import LADExperiment from '../features/LADExperiment.astro';
 ---
 
 <!-- LAD Experiment Section -->
-<section class='relative py-20 lg:py-32 overflow-hidden' id='lad-section'>
+<section class='relative py-20 lg:py-32' id='lad-section'>
   <!-- Background Glow -->
   <!-- Background Glow (hidden on mobile to prevent hard edges from overflow clipping) -->
   <div
-    class='hidden md:block absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] translate-x-1/2 pointer-events-none'
+    class='hidden md:block absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,var(--color-purple-500)_0%,transparent_70%)] opacity-10 rounded-full translate-x-1/2 pointer-events-none'
   >
   </div>
 
-  <div class='page-container relative z-10'>
+  <div class='max-w-7xl mx-auto px-4 md:px-8 page-container relative z-10'>
     <!-- 1. The Hook: 30-Second Test -->
     <div class='text-center max-w-192 mx-auto mb-16'>
       <div
@@ -22,13 +22,17 @@ import LADExperiment from '../features/LADExperiment.astro';
         <span>Tes 30 Detik</span>
       </div>
 
-      <h2 class='text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight'>
+      <h2
+        class='text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight text-balance'
+      >
         Buktikan Sendiri dalam 30 Detik: Kamu Punya <span
           class='text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-400'
           >"Insting Bahasa"</span
         > yang Kuat Banget.
       </h2>
-      <p class='text-lg text-(--token-text-secondary) leading-relaxed'>
+      <p
+        class='text-base sm:text-lg text-(--token-text-secondary) leading-relaxed text-pretty'
+      >
         Jangan cuma percaya omongan kami. Yuk, kita buktiin bareng-bareng
         sekarang juga—cuma butuh 30 detik doang. Kami yakin kamu bakal langsung
         ngerasain "wah, bener juga" sendiri.
@@ -59,48 +63,46 @@ import LADExperiment from '../features/LADExperiment.astro';
     </div>
 
     <!-- 4. The Deep Dive (Grid) -->
-    <div class='grid lg:grid-cols-12 gap-8 lg:gap-20 items-start mb-24'>
-      <div
-        class='lg:col-span-5 order-2 lg:order-1 sticky top-32 hidden lg:block'
-      >
-        <div
-          class='relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group'
-        >
-          <CldImage
-            src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
-            alt='Visualisasi Language Acquisition Device (LAD)'
-            width={1000}
-            height={1000}
-            crop='fill'
-            class='w-full h-auto transform group-hover:scale-105 transition-transform duration-700 ease-in-out'
-          />
+    <div class='grid lg:grid-cols-12 gap-8 lg:gap-20 items-center mb-24'>
+      <div class='lg:col-span-5 order-2 lg:order-1 hidden lg:block'>
+        <div class='skeuo-card p-4 lg:p-6'>
           <div
-            class='absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60'
+            class='relative rounded-2xl overflow-hidden shadow-inner border border-white/10 group'
           >
-          </div>
-          <div class='absolute bottom-6 left-6 right-6'>
+            <CldImage
+              src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
+              alt='Visualisasi Language Acquisition Device (LAD)'
+              width={1000}
+              height={1000}
+              crop='fill'
+              class='w-full h-auto transform group-hover:scale-105 transition-transform duration-700 ease-in-out'
+            />
             <div
-              class='text-xs font-bold tracking-widest text-white/70 uppercase mb-1'
+              class='absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60'
             >
-              Konsep
             </div>
-            <div class='text-lg font-bold text-white'>
-              The Language Acquisition Device
+            <div class='absolute bottom-6 left-6 right-6'>
+              <div
+                class='text-xs font-bold tracking-widest text-white/70 uppercase mb-1 skeuo-text-emboss'
+              >
+                Konsep
+              </div>
+              <div class='text-lg font-bold text-white skeuo-text-emboss'>
+                The Language Acquisition Device
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div class='lg:col-span-7 order-1 lg:order-2 space-y-8'>
-        <div
-          class='relative rounded-3xl overflow-hidden p-6 md:p-8 border border-white/10 shadow-2xl bg-[radial-gradient(ellipse_at_center,oklch(0.106_0.012_325)_0%,transparent_100%)]'
-        >
+        <div class='skeuo-card overflow-hidden p-6 md:p-8 relative'>
           <!-- Purple Ambient Spotlight -->
           <div
             class='absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.586_0.246_293/0.15)_0%,transparent_70%)] pointer-events-none'
           >
           </div>
-          <h3 class='text-3xl font-bold text-white mb-6'>
+          <h3 class='text-3xl font-bold text-white mb-6 skeuo-text-emboss'>
             Kenapa kamu langsung tahu itu salah dan terasa janggal? 🤔
           </h3>
           <div
@@ -119,29 +121,33 @@ import LADExperiment from '../features/LADExperiment.astro';
 
             <!-- Mobile-only LAD Image -->
             <div class='lg:hidden my-6'>
-              <div
-                class='relative rounded-2xl overflow-hidden shadow-xl border border-white/10'
-              >
-                <CldImage
-                  src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
-                  alt='Visualisasi Language Acquisition Device (LAD)'
-                  width={800}
-                  height={800}
-                  crop='fill'
-                  class='w-full h-auto'
-                />
+              <div class='skeuo-card p-3'>
                 <div
-                  class='absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60'
+                  class='relative rounded-xl overflow-hidden shadow-inner border border-white/10'
                 >
-                </div>
-                <div class='absolute bottom-4 left-4 right-4'>
+                  <CldImage
+                    src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
+                    alt='Visualisasi Language Acquisition Device (LAD)'
+                    width={800}
+                    height={800}
+                    crop='fill'
+                    class='w-full h-auto'
+                  />
                   <div
-                    class='text-xs font-bold tracking-widest text-white/70 uppercase mb-1'
+                    class='absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60'
                   >
-                    Konsep
                   </div>
-                  <div class='text-base font-bold text-white'>
-                    The Language Acquisition Device
+                  <div class='absolute bottom-4 left-4 right-4'>
+                    <div
+                      class='text-xs font-bold tracking-widest text-white/70 uppercase mb-1 skeuo-text-emboss'
+                    >
+                      Konsep
+                    </div>
+                    <div
+                      class='text-base font-bold text-white skeuo-text-emboss'
+                    >
+                      The Language Acquisition Device
+                    </div>
                   </div>
                 </div>
               </div>
@@ -151,8 +157,12 @@ import LADExperiment from '../features/LADExperiment.astro';
               LAD ini yang bikin kamu otomatis "merasa" mana kalimat yang
               natural dan mana yang pincang, tanpa perlu analisa rumus.
             </p>
-            <div class='p-6 rounded-2xl bg-white/5 border border-white/10 my-6'>
-              <p class='text-base italic text-white/80'>
+            <div
+              class='skeuo-inset p-6 my-6 shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)]'
+            >
+              <p
+                class='text-base text-(--token-text-secondary) leading-relaxed italic'
+              >
                 "Kalimat nomor 2 itu sengaja kami bikin mirip kayak terjemahan
                 mentah-mentah dari orang Jepang yang lagi belajar Bahasa
                 Indonesia—mereka nerjemahin kata per kata sesuai struktur
@@ -173,7 +183,7 @@ import LADExperiment from '../features/LADExperiment.astro';
     <div class='max-w-4xl mx-auto space-y-12'>
       <!-- Success Box -->
       <div
-        class='relative p-8 lg:p-10 rounded-3xl bg-linear-to-br from-purple-900/40 to-indigo-900/40 border border-white/10 overflow-hidden'
+        class='skeuo-card p-8 lg:p-10 relative overflow-hidden bg-[oklch(0.17_0.04_286)]! border-indigo-400/30!'
       >
         <div
           class='absolute top-0 right-0 w-64 h-64 bg-purple-500/20 rounded-full blur-[80px] pointer-events-none'
@@ -182,9 +192,15 @@ import LADExperiment from '../features/LADExperiment.astro';
         <div
           class='relative flex flex-col md:flex-row gap-6 md:gap-8 items-center'
         >
-          <div class='shrink-0 p-4 rounded-full bg-white/10 text-4xl'>🌱</div>
+          <div
+            class='shrink-0 p-4 skeuo-inset rounded-full shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.1)] text-4xl border border-indigo-500/30'
+          >
+            🌱
+          </div>
           <div>
-            <h4 class='text-xl md:text-2xl font-bold text-white mb-4'>
+            <h4
+              class='text-xl md:text-2xl font-bold text-white mb-4 skeuo-text-emboss'
+            >
               Selamat! Kamu baru saja buktiin sendiri.
             </h4>
             <p class='text-lg text-(--token-text-secondary) leading-relaxed'>
@@ -196,60 +212,92 @@ import LADExperiment from '../features/LADExperiment.astro';
       </div>
 
       <!-- The Problem & Solution -->
-      <div class='grid md:grid-cols-2 gap-6 lg:gap-12'>
-        <div class='space-y-4'>
-          <h4 class='text-xl font-bold text-red-400 flex items-center gap-2'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              class='lucide lucide-x-circle'
-              ><circle cx='12' cy='12' r='10'></circle><path d='m15 9-6 6'
-              ></path><path d='m9 9 6 6'></path></svg
-            >
-            Masalahnya di bahasa Jepang?
-          </h4>
-          <p class='text-(--token-text-secondary) leading-relaxed'>
-            Metode tradisional (hafal bunpou dulu, terjemahin dulu) justru <strong
-              >mematikan LAD itu</strong
-            > sebelum dia sempat bekerja optimal. Mereka paksa kamu mikir lewat rumus
-            (surface structure), bukan lewat insting alami (deep structure). Akibatnya,
-            intuisi nativemu buat Jepang nggak pernah terbentuk—kamu jadi gagap, loading
-            lama, dan bahasa keluarnya kaku.
-          </p>
-        </div>
-        <div class='space-y-4'>
+      <div class='grid md:grid-cols-2 gap-6 lg:gap-8'>
+        <!-- Problem Card -->
+        <div
+          class='p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-linear-to-br from-red-500/10 to-transparent border border-red-500/20 space-y-4 shadow-lg'
+        >
           <h4
-            class='text-xl font-bold text-emerald-400 flex items-center gap-2'
+            class='text-lg sm:text-xl font-bold text-red-400 flex items-start gap-3'
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              class='lucide lucide-check-circle'
-              ><path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path><polyline
-                points='22 4 12 14.01 9 11.01'></polyline></svg
-            >
-            Metode Solusi & Komunitas Immersion
+            <div class='mt-1 shrink-0'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-x-circle'
+                ><circle cx='12' cy='12' r='10'></circle><path d='m15 9-6 6'
+                ></path><path d='m9 9 6 6'></path></svg
+              >
+            </div>
+            <span>Masalahnya di bahasa Jepang?</span>
           </h4>
-          <p class='text-(--token-text-secondary) leading-relaxed'>
-            Kami cuma mengaktifkan kembali LAD yang sama—yang udah terbukti
-            works di Bahasa Indonesia kamu—buat bahasa Jepang. Caranya? Dengan
-            kasih <strong>comprehensible input</strong> yang pas, sampai LAD-mu bangun
-            intuisi nativenya sendiri secara alami.
-          </p>
+          <div
+            class='space-y-3 text-[15px] sm:text-base text-white/80 leading-relaxed text-pretty'
+          >
+            <p>
+              Metode tradisional (hafal bunpou dulu, terjemahin dulu) justru <strong
+                class='text-white'>mematikan LAD itu</strong
+              > sebelum dia sempat bekerja optimal.
+            </p>
+            <p>
+              Mereka paksa kamu mikir lewat rumus (surface structure), bukan
+              lewat insting alami (deep structure).
+            </p>
+            <p>
+              Akibatnya, intuisi nativemu buat Jepang nggak pernah
+              terbentuk—kamu jadi <span class='text-red-300'
+                >gagap, loading lama, dan keluarnya kaku</span
+              >.
+            </p>
+          </div>
+        </div>
+
+        <!-- Solution Card -->
+        <div
+          class='p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-linear-to-br from-emerald-500/10 to-transparent border border-emerald-500/20 space-y-4 shadow-lg'
+        >
+          <h4
+            class='text-lg sm:text-xl font-bold text-emerald-400 flex items-start gap-3'
+          >
+            <div class='mt-1 shrink-0'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-check-circle'
+                ><path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path><polyline
+                  points='22 4 12 14.01 9 11.01'></polyline></svg
+              >
+            </div>
+            <span>Metode Solusi & Komunitas Immersion</span>
+          </h4>
+          <div
+            class='space-y-3 text-[15px] sm:text-base text-white/80 leading-relaxed text-pretty'
+          >
+            <p>
+              Kami cuma mengaktifkan kembali LAD yang sama—yang udah terbukti
+              works di Bahasa Indonesia kamu—buat bahasa Jepang.
+            </p>
+            <p>
+              Caranya? Dengan kasih <strong class='text-emerald-300'
+                >comprehensible input</strong
+              > yang pas, sampai LAD-mu bangun intuisi nativenya sendiri secara alami
+              tanpa perlu dihafal.
+            </p>
+          </div>
         </div>
       </div>
     </div>
