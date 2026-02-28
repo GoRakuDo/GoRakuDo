@@ -31,6 +31,8 @@
     "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.6",
     "@astrojs/sitemap": "^3.6.0",
+    "@fontsource-variable/noto-sans-jp": "^5.2.10",
+    "@fontsource-variable/noto-serif-jp": "^5.2.9",
     "@fontsource-variable/roboto-flex": "^5.2.8",
     "@fontsource-variable/roboto-serif": "^5.2.8",
     "@fontsource/noto-sans-jp": "^5.2.8",

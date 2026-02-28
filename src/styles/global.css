@@ -19,15 +19,16 @@
 
   /* Background color tokens - used 3+ times */
   --token-bg-dark: oklch(5% 0 0deg);
-  --token-bg-content: oklch(8% 0.01 270deg);
-  --token-bg-card: oklch(20% 0.01 270deg);
+  --token-bg-content: oklch(14% 0.01 270deg);
+  --token-bg-card: oklch(20% 0.005 285deg);
   --token-bg-input: oklch(15% 0.008 270deg);
 
   /* Text color tokens - used 3+ times */
   --token-text-secondary: oklch(80% 0 0deg);
   --token-text-muted: oklch(65% 0 0deg);
   --token-text-global-secondary: oklch(88% 0 0deg);
-  --token-text-global-muted: oklch(70% 0 0deg);
+  --token-text-global-muted: oklch(70% 0.01 270deg);
+  --token-text-global: oklch(85% 0.01 270deg);
 
   /* Accent color tokens - used 3+ times */
   --token-accent-dark: oklch(60% 0.25 280deg);
@@ -35,6 +36,14 @@
   --token-secondary-foreground: oklch(15% 0.005 270deg);
 
   /* ===== OPACITY VALUES - GLOBAL CALCULATION-BASED SYSTEM ===== */
+
+  /* 
+   * @deprecated [YAGNI / KISS] 
+   * 新規コンポーネントでの --opacity-* 変数の使用は推奨されません。
+   * 今後はTailwindのOpacity修飾子 (bg-black/50) または 
+   * OKLCHの直接指定 (oklch(l c h / 0.5)) を使用してください。
+   * 段階的にレガシーCSSから排除される予定です。
+   */
   --opacity-step: 0.05; /* 基本ステップ */
   --opacity-step-small: 0.02; /* 小さなステップ */
   --opacity-step-large: 0.1; /* 大きなステップ */
@@ -213,19 +222,21 @@
 
   /* Primary fonts - Roboto for Latin, Noto for Japanese (auto via unicode-range) */
   --font-primary:
-    'Roboto Flex Variable', 'Roboto Flex', 'Noto Sans JP', 'Fluent Emoji Color',
-    system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', roboto,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    'Roboto Flex Variable', 'Roboto Flex', 'Noto Sans JP Variable',
+    'Noto Sans JP', 'Fluent Emoji Color', system-ui, -apple-system,
+    blinkmacsystemfont, 'Segoe UI', roboto, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   --font-sans:
-    'Roboto Flex Variable', 'Roboto Flex', 'Noto Sans JP', 'Fluent Emoji Color',
-    system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', roboto,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    'Roboto Flex Variable', 'Roboto Flex', 'Noto Sans JP Variable',
+    'Noto Sans JP', 'Fluent Emoji Color', system-ui, -apple-system,
+    blinkmacsystemfont, 'Segoe UI', roboto, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   --font-serif:
-    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP', 'Lora',
-    'Times New Roman', times, serif;
+    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP Variable',
+    'Noto Serif JP', 'Lora', 'Times New Roman', times, serif;
   --font-heading:
-    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP', 'Lora',
-    'Times New Roman', times, serif;
+    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP Variable',
+    'Noto Serif JP', 'Lora', 'Times New Roman', times, serif;
 
   /* Japanese fonts - Auto-detection via unicode-range */
   --font-jp: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;

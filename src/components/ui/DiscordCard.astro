@@ -5,7 +5,7 @@ interface Props {
   name: string;
   username: string;
   date: string;
-  avatar: string;
+  img: string;
   body: string;
   nameColor?: string;
   link?: string;
@@ -17,7 +17,7 @@ const {
   name,
   username,
   date,
-  avatar,
+  img,
   body,
   nameColor = '#dbdee1',
   link,
@@ -26,16 +26,14 @@ const {
 } = Astro.props;
 ---
 
-<div
-  class='flex gap-4 p-5 rounded-2xl w-[85vw] sm:w-[350px] md:w-[450px] lg:w-[500px] h-auto md:h-full shrink-0 font-sans text-left bg-[#313338] shadow-lg hover:shadow-2xl hover:bg-[#2e3035] transition-all duration-300 border border-white/5 hover:border-[#4752c4]/50 hover:-translate-y-1'
->
+<div class='discord-review-card group'>
   <!-- Avatar -->
   <div class='shrink-0 cursor-pointer mt-0.5'>
     <div
       class='w-10 h-10 rounded-full overflow-hidden bg-[#1e1f22] ring-2 ring-white/5 hover:opacity-80 transition-opacity relative group/avatar'
     >
       <Image
-        src={avatar}
+        src={img}
         alt={username}
         width={40}
         height={40}
