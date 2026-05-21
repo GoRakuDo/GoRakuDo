@@ -1,10 +1,10 @@
 # GoRakuDo — Design System Specification
 
-> **Version:** 2.0.0 (Full Redesign)
-> **Last Updated:** 2026-05-21
+> **Version:** 2.1.0 (Discord Dark Pop OKLCH Influences Absorbed)
+> **Last Updated:** 2026-05-22
 > **Status:** Draft — Pending Implementation
 > **Framework:** Astro 5.13 + Tailwind CSS v4.1 + OKLCH Color Space
-> **Reference:** `frontend-design` skill framework (6-phase workflow)
+> **Reference:** `frontend-design` skill framework (6-phase workflow), Discord Dark Pop OKLCH
 
 ---
 
@@ -28,11 +28,12 @@ VISUAL_DENSITY:   4   (1=art gallery airy,  10=cockpit packed)
 
 **GoRakuDo (語楽道)** — 「言語の楽しい道」
 
-- **Tone:** Calm authority meets playful curiosity
-- **Aesthetic:** Refined dark, with controlled luminous accents — "Night Library" vibe
-  暗闇の中に知識の光が浮かぶイメージ。重厚でありつつ呼吸感のあるデザイン。
+- **Tone:** Calm authority meets playful curiosity — high-contrast, cinematic, yet refined
+- **Aesthetic:** Dark immersive with vibrant luminous accents — "Night Library" meets "Discord Dark Pop" energy
+  暗闇の中に知識の光が弾けるイメージ。重厚さと遊び心の共存。
+  従来の抑制された美しさに、Discord Dark Pop の高い彩度とコントラストを注入。
 - **Differentiation:** 他の語学サイトの明るくカジュアルな雰囲気から差別化し、
-  「本気の学習者が夜通し没頭したくなる空間」を作る。
+  本気の学習者が夜通し没頭したくなる、エナジーにあふれた没入空間を作る。
 
 ### 1.2 Design Principles
 
@@ -50,32 +51,34 @@ VISUAL_DENSITY:   4   (1=art gallery airy,  10=cockpit packed)
 
 | Role | Proportion | Color | Description |
 |---|---|---|---|
-| **Dominant (70%)** | Backgrounds, surfaces, negative space | Black (off-black) | 空間の大部分を占める。深い闇 |
-| **Secondary (20%)** | Accent surfaces, borders, hover states, links | Purple | ブランドの核。アクセントとインタラクション |
-| **Tertiary (10%)** | CTAs, focus indicators, highlight moments | Royal Blue | 視線誘導と行動喚起の切り札 |
+| **Dominant (70%)** | Backgrounds, surfaces, negative space | Black (off-black) + midnight navy surface | 空間の大部分。深い闇に紫のニュアンス。Discord Dark Pop の `surface` (oklch(17.80% 0.058 275.81)) でレイヤー階層を作る |
+| **Secondary (20%)** | Accent surfaces, borders, hover states, links | Purple → Blurple | ブランドの核。Discord のシグネチャー blurple (oklch(57.74% 0.209 273.85)) に近づけ、より鮮やかで遊び心のあるインタラクションに |
+| **Tertiary (10%)** | CTAs, focus indicators, highlight moments | Royal Blue → Electric Violet | 行動喚起の切り札。Discord の secondary (oklch(38.19% 0.232 267.20)) をCTA背景に活用 |
 
-### 2.2 OKLCH Palette — Dominant (Black / Neutral)
+### 2.2 OKLCH Palette — Dominant (Black & Surface)
 
 ダークモード専用。Pure black (`oklch(0 0 0)`) は禁止 — 全てオフブラック。
-Hue は `270deg` に固定し、紫のニュアンスを中性色にも微量混入させる。
+Hue は `270deg` 〜 `275deg` の範囲で変調し、Discord Dark Pop の `surface` 層を追加してレイヤー階層を強化する。
 
 ```
 Token Name                    OKLCH Value                  Hex Fallback     Usage
 ─────────────────────────────────────────────────────────────────────────────────────
 --grkd-black-950              oklch(0.05  0.005 270)       #08070b          Page bg (deepest)
 --grkd-black-900              oklch(0.10  0.008 270)       #110f16          Section bg
+--grkd-surface                oklch(0.178 0.058 275.81)    #1e1830          Surface bg (Discord Dark Pop surface層)
 --grkd-black-850              oklch(0.14  0.010 270)       #181520          Card bg, content area
 --grkd-black-800              oklch(0.18  0.010 270)       #1f1c28          Elevated surface
+--grkd-surface-2              oklch(0.3096 0.150 271.29)   #3b2e6e          Bright indigo surface (Discord surface-2, tonal separation用)
 --grkd-black-750              oklch(0.22  0.010 270)       #272330          Input bg, code block bg
 --grkd-black-700              oklch(0.28  0.008 270)       #332f3d          Subtle border
 --grkd-black-600              oklch(0.35  0.008 270)       #433f4d          Muted border
 --grkd-black-500              oklch(0.45  0.005 270)       #5a5763          Placeholder text
 --grkd-black-400              oklch(0.55  0.005 270)       #74717d          Muted text
 --grkd-black-300              oklch(0.65  0.005 270)       #908d98          Secondary text
+--grkd-muted                  oklch(0.8599 0.071 282.16)   #d6cce6          Soft lavender text (Discord muted)
 --grkd-black-200              oklch(0.75  0.005 270)       #aca9b3          Body text
 --grkd-black-100              oklch(0.85  0.005 270)       #cac7d0          Primary text
 --grkd-black-50               oklch(0.93  0.003 270)       #e7e5eb          Headings, emphasis
-```
 
 **Contrast Check (WCAG 2.2 AA: 4.5:1 for body, 3:1 for large text):**
 
@@ -90,25 +93,26 @@ Token Name                    OKLCH Value                  Hex Fallback     Usag
 
 > L-delta >= 0.40 は AA 4.5:1 のOKLCH近似閾値。0.50以上が安全圏。
 
-### 2.3 OKLCH Palette — Secondary (Purple)
+### 2.3 OKLCH Palette — Secondary (Purple → Blurple)
 
-ブランドカラー。既存の `oklch(0.65 0.25 280deg)` を継続。
-Chroma は `0.22` 以下にキャップ（ダークモードでの彩度暴走防止）。
+ブランドカラー。Discord Dark Pop のシグネチャー blurple (`oklch(57.74% 0.209 273.85)`) を吸収。
+Hue は `273deg`（Discord の primary 近似）〜 `280deg`（既存紫）の範囲で変調。
+Chroma は最大 `0.22` まで引き上げ、ダークモードでも鮮やかに発色させる。
 
 ```
 Token Name                    OKLCH Value                  Hex Fallback     Usage
 ─────────────────────────────────────────────────────────────────────────────────────
---grkd-purple-950             oklch(0.15  0.06  280)       #1a1030          Deep purple bg wash
---grkd-purple-900             oklch(0.22  0.10  280)       #271a45          Purple surface, sidebar tint
---grkd-purple-800             oklch(0.30  0.14  280)       #36255e          Active nav bg
---grkd-purple-700             oklch(0.40  0.18  280)       #4a3380          Border accent
---grkd-purple-600             oklch(0.50  0.20  280)       #6040a0          Hover state
---grkd-purple-500             oklch(0.58  0.22  280)       #7450b8          Primary purple (links, icons)
---grkd-purple-400             oklch(0.65  0.22  280)       #8c65d0          Existing accent color
---grkd-purple-300             oklch(0.72  0.18  280)       #a680e0          Light accent, selected
---grkd-purple-200             oklch(0.80  0.14  280)       #c0a0f0          Tag bg, badge
---grkd-purple-100             oklch(0.88  0.08  280)       #d8c8f4          Subtle highlight
---grkd-purple-50              oklch(0.95  0.04  280)       #f0e8fa          Faint wash
+--grkd-purple-950             oklch(0.15  0.06  273)       #1a0f30          Deep purple bg wash
+--grkd-purple-900             oklch(0.22  0.10  273)       #271a45          Purple surface, sidebar tint
+--grkd-purple-800             oklch(0.30  0.14  273)       #36255e          Active nav bg
+--grkd-purple-700             oklch(0.40  0.18  273)       #4a3380          Border accent
+--grkd-purple-600             oklch(0.50  0.20  273)       #6040a0          Hover state
+--grkd-purple-500             oklch(0.58  0.21  274)       #7450b8          Primary blurple (links, icons, accent)
+--grkd-purple-400             oklch(0.65  0.22  274)       #8c65d0          Existing accent color
+--grkd-purple-300             oklch(0.72  0.18  274)       #a680e0          Light accent, selected
+--grkd-purple-200             oklch(0.80  0.14  274)       #c0a0f0          Tag bg, badge
+--grkd-purple-100             oklch(0.88  0.08  274)       #d8c8f4          Subtle highlight
+--grkd-purple-50              oklch(0.95  0.04  274)       #f0e8fa          Faint wash
 ```
 
 **Contrast Check:**
@@ -120,23 +124,24 @@ Token Name                    OKLCH Value                  Hex Fallback     Usag
 | `--grkd-purple-500` (0.58) on `--grkd-black-850` (0.14) | - | 0.44 | AA Pass (4.5:1+) |
 | `--grkd-black-50` (0.93) on `--grkd-purple-700` (0.40) | - | 0.53 | AA Pass (button text) |
 
-### 2.4 OKLCH Palette — Tertiary (Royal Blue)
+### 2.4 OKLCH Palette — Tertiary (Electric Violet / CTA)
 
 10%比率の切り札。CTA・フォーカスリング・プログレスバー・ハイライト専用。
-紫 (H=280) との色相差 ~35° で調和しつつ明確に区別。
+Discord Dark Pop の `secondary` (oklch(38.19% 0.232 267.20)) からインスパイア。
+紫 (H~274) との色相差 ~30° で調和しつつ明確に区別。Hue は `247deg` に統一。
 
 ```
 Token Name                    OKLCH Value                  Hex Fallback     Usage
 ─────────────────────────────────────────────────────────────────────────────────────
---grkd-blue-900               oklch(0.20  0.08  245)       #0d1a40          Deep blue bg
---grkd-blue-800               oklch(0.28  0.12  245)       #162b60          Blue surface
---grkd-blue-700               oklch(0.38  0.16  245)       #2040a0          Active state
---grkd-blue-600               oklch(0.48  0.20  245)       #3058c8          CTA hover
---grkd-blue-500               oklch(0.55  0.22  245)       #406ae0          Primary CTA bg
---grkd-blue-400               oklch(0.63  0.20  245)       #5580f0          Focus ring, link accent
---grkd-blue-300               oklch(0.72  0.16  245)       #7898f8          Selected state
---grkd-blue-200               oklch(0.82  0.10  245)       #a0b8fc          Subtle indicator
---grkd-blue-100               oklch(0.90  0.06  245)       #c8d4fe          Faint wash
+--grkd-blue-900               oklch(0.20  0.12  247)       #0d1a3e          Deep blue bg
+--grkd-blue-800               oklch(0.28  0.16  247)       #162b5e          Blue surface
+--grkd-blue-700               oklch(0.38  0.20  247)       #2040a0          Active state
+--grkd-blue-600               oklch(0.48  0.22  247)       #3058c8          CTA hover
+--grkd-blue-500               oklch(0.55  0.22  247)       #406ae0          Primary CTA bg
+--grkd-blue-400               oklch(0.63  0.20  247)       #5580f0          Focus ring, link accent
+--grkd-blue-300               oklch(0.72  0.16  247)       #7898f8          Selected state
+--grkd-blue-200               oklch(0.82  0.10  247)       #a0b8fc          Subtle indicator
+--grkd-blue-100               oklch(0.90  0.06  247)       #c8d4fe          Faint wash
 ```
 
 **Contrast Check:**
@@ -211,6 +216,8 @@ Token Name                    OKLCH Value                  Hex Fallback     Usag
 --grkd-text-display: clamp(3rem,   6.0vw, 4.5rem);     /* 48-72px */
 ```
 
+> **Discord Influence:** 大見出し（`--grkd-text-4xl` 以上）は compact な letter-spacing（`--grkd-tracking-tight`）を適用し、ポスターのようなインパクトを出す。Discord の `Abcgintodiscordnord` のコンパクトな印象を、Gen Interface JP の可読性を犠牲にせず再現する。
+
 ### 3.3 Weight Scale
 
 | Token | Value | Usage |
@@ -269,7 +276,10 @@ p, li {
 --grkd-space-20:  5rem;      /* 80px */
 --grkd-space-24:  6rem;      /* 96px */
 --grkd-space-32:  8rem;      /* 128px */
+--grkd-space-hero: 8.125rem; /* 130px — Discord hero vertical spacer */
 ```
+
+> **Discord Influence:** `--grkd-space-hero` は Hero セクションの見出し〜CTA間の dramatic な垂直スペース。130px のワイドな呼吸感で、cinematic な印象を作る。
 
 ### 4.2 Section Spacing
 
@@ -438,22 +448,42 @@ gap: var(--grkd-space-6);
 - Card 内の Card nesting は禁止
 - Variable height 許容。全カード同じ高さに揃えなくてよい
 - Border: `1px solid var(--grkd-black-700)` — hover で `--grkd-purple-700`
-- Background: `var(--grkd-black-850)`
+- Background (default): `var(--grkd-black-850)`
+- Background (elevated/accent): `var(--grkd-surface-2)` — Discord Dark Pop の indigo surface。カードの種類にメリハリをつけるために使用する
+- Background (glass): `var(--grkd-glass-bg)` — Navbar など固定要素のみ
 - Padding: `var(--grkd-card-padding)` (clamp)
 - Radius: `var(--grkd-radius-lg)`
+- Shadow: `var(--grkd-shadow-md)` — hover で `var(--grkd-shadow-lg)`
+- Card 同士の間隔: `var(--grkd-section-gap)`
+
+#### 8.1.1 Card Variants
+
+| Variant | Background | Border | Shadow | Usage |
+|---|---|---|---|---|
+| **Default** | `--grkd-black-850` | `--grkd-black-700` | `--grkd-shadow-sm` | Content cards, article previews |
+| **Elevated** | `--grkd-surface-2` | `--grkd-purple-700` | `--grkd-shadow-md` | Feature cards, highlighted content (Discord surface-2 inspired) |
+| **Glass** | `--grkd-glass-bg` | `--grkd-glass-border` | none | Overlay cards, modals |
 
 ### 8.2 Buttons
 
+Discord Dark Pop のボタンパターンを吸収。primary は白ベース（高コントラスト）、secondary は blurple ベース。
+
 | Variant | Background | Text | Border | Usage |
 |---|---|---|---|---|
-| **Primary** | `--grkd-blue-500` | `--grkd-black-50` | none | CTA, submit |
-| **Secondary** | transparent | `--grkd-purple-400` | `1px --grkd-purple-700` | Alternative actions |
-| **Ghost** | transparent | `--grkd-black-200` | none | Tertiary actions |
+| **Primary** | `--grkd-black-50` (white) | `--grkd-tertiary` (dark) | none | Main CTA, strongest action — Discord の white filled button |
+| **Secondary** | `--grkd-purple-500` (blurple) | `--grkd-black-50` (white) | none | Alternative actions — Discord の blurple filled |
+| **Ghost** | transparent | `--grkd-black-200` | none | Tertiary actions, header nav |
 
+- Height: `56px` (desktop), `48px` (mobile)
+- Padding: `15px 24px` (Discord の substantial padding)
+- Radius: `var(--grkd-radius-lg)` (12px — Discord の medium rounding)
+- Hover: `filter: brightness(1.15)` または `--grkd-hover-lift` (translateY(-2px))
 - Active: `--grkd-active-press` (translateY(1px) scale(0.98))
 - Focus: `outline: 2px solid var(--grkd-blue-400); outline-offset: 2px`
-- Disabled: `opacity: 0.5; cursor: not-allowed`
-- Radius: `var(--grkd-radius-md)`
+- Disabled: `opacity: 0.5; cursor: not-allowed; filter: none`
+- Font: `var(--font-primary)` at `--grkd-text-base` weight `--grkd-font-semibold`
+
+> **Note:** ボタンの形状は medium-rounded を維持。pill shape (`--grkd-radius-pill`) は避け、`12px` で統一。
 
 ### 8.3 Navigation
 
@@ -478,6 +508,45 @@ gap: var(--grkd-space-6);
 - Hover: `var(--grkd-purple-300)` + underline
 - Visited: `var(--grkd-purple-500)` (slightly darker)
 - Focus: same ring as buttons
+
+### 8.6 Chips (Tags & Badges) — Discord Dark Pop Inspired
+
+小型で装飾的なラベル。カテゴリタグ、ステータスバッジ、フィルターチップに使用。
+
+| Variant | Background | Text | Border | Usage |
+|---|---|---|---|---|
+| **Default** | `--grkd-surface-2` | `--grkd-black-50` | none | Category tags, filter chips |
+| **Accent** | `--grkd-purple-700` | `--grkd-black-50` | none | Active filter, selected state |
+| **Outline** | transparent | `--grkd-purple-400` | `1px solid --grkd-purple-700` | Subtle tag |
+
+- Padding: `6px 12px` (compact)
+- Radius: `var(--grkd-radius-pill)` (fully rounded — Discord の pill shape)
+- Font: `--grkd-text-sm` (14px), weight `--grkd-font-medium`
+- Gap between chips: `var(--grkd-space-2)`
+
+### 8.7 Shapes & Elevation
+
+Discord Dark Pop の形状言語を吸収。**フラットでトーナルな奥行き** — shadow ではなく、色のコントラストとレイヤーで階層を表現する。
+
+#### 8.7.1 Shape Language
+
+- **Interactive elements:** Medium-rounded (`var(--grkd-radius-lg)` = 12px) — ボタン、カード
+- **Container surfaces:** Subtle rounding (`var(--grkd-radius-md)` = 8px) — 入力欄、パネル
+- **Decorative tags:** Fully rounded (`var(--grkd-radius-pill)`) — チップ、バッジ
+- **Inner < Outer rule:** Inner elements のradiusは outer container よりタイトにする
+
+#### 8.7.2 Elevation Strategy
+
+| Layer | Method | Tokens |
+|---|---|---|
+| **Background (deepest)** | Base dark color | `--grkd-black-950` |
+| **Section surface** | 1 step lighter | `--grkd-black-900` |
+| **Surface layer** | Midnight navy tint | `--grkd-surface` |
+| **Card content** | 2 steps lighter | `--grkd-black-850` |
+| **Elevated card** | Indigo surface (Discord tonal separation) | `--grkd-surface-2` |
+| **Interactive hover** | Lighter + lift transform | `--grkd-black-800` + `--grkd-hover-lift` |
+
+> **Discord Influence:** Shadow に依存せず、背景色の段階的な明度差（L-delta 0.05〜0.08 step）と彩度（Chroma）の変化だけで奥行きを表現する。これにより、フラットながらも豊かな階層感を実現する。
 
 ---
 
@@ -606,6 +675,51 @@ Examples:
 
 ---
 
+## Appendix D: Discord Dark Pop OKLCH — Absorbed Influences
+
+> 本デザインシステムは、[Discord Dark Pop OKLCH](https://github.com/discord/discord-design-tokens) の設計哲学・カラー値・コンポーネントパターンを部分的に吸収している。
+
+### D.1 吸収した要素
+
+| 要素 | Discord の値 | GoRakuDo での適用 | 根拠 |
+|---|---|---|---|
+| **Surface 層** | `oklch(17.80% 0.058 275.81)` | `--grkd-surface` として新規追加 | 背景のレイヤー階層を強化。midnight navy のトーンで「Night Library」感を増幅 |
+| **Surface-2 層** | `oklch(30.96% 0.150 271.29)` | `--grkd-surface-2` として新規追加 | カードのエレベーテッドバリアントに使用。紫がかった indigo で視覚的トーナル分離 |
+| **Muted Text** | `oklch(85.99% 0.071 282.16)` | `--grkd-muted` として新規追加 | セカンダリテキストより明るく、ラベンダーがかった色合いで柔らかい印象を追加 |
+| **Primary Blurple** | `oklch(57.74% 0.209 273.85)` | `--grkd-purple-500` の Hue を 273deg に調整 | より鮮やかでモダンなブランドカラーに。Discord の「遊び心のあるエネルギッシュさ」を注入 |
+| **Button Primary** | White filled bg + dark text | 既存の Blue CTA を白ベースに変更 | 最強の CTA は白背景＋暗色テキスト。Discord パターンを採用し、視覚的インパクトを最大化 |
+| **Button Secondary** | Blurple filled bg + white text | 既存の Secondary を blurple ベースに変更 | プライマリとセカンダリの明確な役割分担。背景色を塗りで区別 |
+| **Chips** | Fully rounded, compact pills | 新規コンポーネントとして追加 | カテゴリタグ・フィルターに使用。Discord の pill 形状を採用 |
+| **Shapes** | Medium-rounded (12px), no pill for buttons | Card radius を 12px に統一 | フレンドリーで構造的な印象。親しみやすさとプロフェッショナルさのバランス |
+| **Elevation** | Flat/surface — shadow minimal | トーナルな奥行き戦略を明確化 | Shadow ではなく、背景色の明度差と彩度で階層を表現 |
+| **Spacing Hero** | 130px vertical spacer | `--grkd-space-hero` として追加 | Hero セクションの cinematic な呼吸感を実現 |
+
+### D.2 あえて吸収しなかった要素
+
+| 要素 | Discord の値 | 除外理由 |
+|---|---|---|
+| **Font family** | `Abcgintodiscordnord`, `Ggsans` | Discord 専用プロプライエタリフォント。GoRakuDo は `Gen Interface JP` を継続 |
+| **Typography 3-voice system** | Display / Body / Label の3系統 | GoRakuDo は和文混植のため、よりシンプルな2系統（UI + Serif）を維持 |
+| **Chroma cap removal** | 一部トークンで Chroma > 0.25 | ダークモードでの彩度暴走防止のため、Chroma 0.22 キャップは維持 |
+| **Pure black** | 使用していない | 元から禁止。問題なし |
+| **Heavy shadows / glossy** | 使用していない | トーナルな奥行き戦略と一致。問題なし |
+
+### D.3 マイグレーションステータス
+
+- [x] Brand Identity Tone の更新（抑制 + 遊び心）
+- [x] Dominant palette に surface / surface-2 / muted トークン追加
+- [x] Purple palette の Hue を 273deg に調整
+- [x] Blue palette の Chroma を 0.12~0.22 に引き上げ
+- [x] Button variants の redesign（primary=white, secondary=blurple）
+- [x] Card elevated variant に surface-2 追加
+- [x] Chips コンポーネント追加
+- [x] Shapes & Elevation 戦略の明確化
+- [x] Spacing hero トークン追加
+- [ ] **global.css へのトークン反映（別タスク）**
+- [ ] **Figma / デザインファイルの更新（別タスク）**
+
+---
+
 ## Appendix B: Token Alias Layer (Semantic Mapping)
 
 ```css
@@ -647,4 +761,4 @@ Examples:
 | `src/styles/typography.css` | Extended type rules | 要確認 |
 | `src/styles/mobile-performance.css` | Mobile GPU optimizations | 変更なし |
 | `tailwind.config.mjs` | TW v4 plugin config (typography) | 要改修 |
-| `DESIGN.md` | This document | 新規 |
+| `DESIGN.md` | This document | 更新済 (v2.1.0) |
