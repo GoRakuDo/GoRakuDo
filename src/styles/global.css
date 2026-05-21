@@ -33,7 +33,6 @@
   --token-text-secondary: oklch(80% 0 0deg);
   --token-text-muted: var(--grkd-muted); /* Migrated to Discord muted */
   --token-text-global-secondary: var(--grkd-muted);
-
   --token-text-global-muted: oklch(70% 0.01 270deg);
   --token-text-global: oklch(85% 0.01 270deg);
 
@@ -264,6 +263,7 @@
 
   /* Decorative fonts */
   --font-cursive: 'Cedarville Cursive', cursive;
+  --font-pixel: 'Pixelify Sans', sans-serif;
   --font-emoji: 'Fluent Emoji Color', 'Apple Color Emoji', sans-serif;
 
   /* Compatibility aliases */
@@ -891,11 +891,11 @@
     align-items: center;
     padding: 6px 12px;
     border-radius: var(--border-radius-pill);
+    background: var(--grkd-surface-2);
+    color: var(--clr-white);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     line-height: 1;
-    background: var(--grkd-surface-2);
-    color: var(--clr-white);
     transition: background-color var(--duration-fast) var(--grkd-ease-productive);
   }
 
@@ -905,8 +905,8 @@
   }
 
   .chip-outline {
-    background: transparent;
     border: 1px solid var(--clr-purple);
+    background: transparent;
     color: var(--clr-purple);
   }
 

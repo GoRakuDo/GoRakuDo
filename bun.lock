@@ -8,6 +8,7 @@
         "@astrojs/check": "^0.9.6",
         "@astrojs/mdx": "^4.3.6",
         "@astrojs/sitemap": "^3.6.0",
+        "@fontsource/pixelify-sans": "^5.2.7",
         "@fontsource/yuji-syuku": "^5.2.7",
         "@tailwindcss/vite": "^4.1.13",
         "astro": "^5.13.0",
@@ -216,6 +217,8 @@
     "@eslint/object-schema": ["@eslint/object-schema@2.1.7", "", {}, "sha512-VtAOaymWVfZcmZbp6E2mympDIHvyjXs/12LqWYjVw6qjrfF+VK+fyG33kChz3nnK+SU5/NeHOqrTEHS8sXO3OA=="],
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.4.1", "", { "dependencies": { "@eslint/core": "^0.17.0", "levn": "^0.4.1" } }, "sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA=="],
+
+    "@fontsource/pixelify-sans": ["@fontsource/pixelify-sans@5.2.7", "", {}, "sha512-F/UuV2M9poAj/BJ5/6u95mOy6ptp8/+dpfnxh4TFzKeAB+vdanAjQ8fLJcS0q+WHYgesRRxPwNFr2Pqm18CVGg=="],
 
     "@fontsource/yuji-syuku": ["@fontsource/yuji-syuku@5.2.7", "", {}, "sha512-9zBYh4xHWUJsRvsF+78e7H/axtMea8ZiPemc+KZZ06g+0B+kh24gSt/TLQm5rxWqViVmLMX6N8pEQuiyPsg6Cw=="],
 

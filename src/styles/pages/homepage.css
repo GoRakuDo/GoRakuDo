@@ -779,6 +779,12 @@ body.modal-open {
   padding-bottom: 3rem;
 }
 
+.hero-marker {
+  font-family: var(--font-pixel) !important;
+  letter-spacing: 0.05em; /* A bit of breathing room for pixel font */
+  font-size: 1.25rem;
+}
+
 @media (min-width: 1024px) {
   .hero-text-wrapper {
     order: 1; /* Desktop: text on left */

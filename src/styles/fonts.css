@@ -8,3 +8,7 @@
 
 /* Japanese Fonts with unicode-range support */
 @import '@fontsource/yuji-syuku/400.css';
+
+/* Decorative Fonts */
+@import '@fontsource/pixelify-sans/400.css';
+@import '@fontsource/pixelify-sans/700.css';
