@@ -13,12 +13,14 @@
   /* Base color values - used 3+ times */
   --token-white-base: oklch(95% 0.005 285deg);
   --token-black-base: oklch(20% 0.005 285deg);
-  --token-purple-base: oklch(65% 0.25 280deg);
+  --grkd-purple-400: oklch(65% 0.22 280deg);
+  --token-purple-base: var(--grkd-purple-400); /* Legacy alias */
   --token-gold-base: oklch(75% 0.12 85deg);
   --token-secondary-gold-base: oklch(75% 0.12 65deg);
 
   /* Background color tokens - used 3+ times */
-  --token-bg-dark: oklch(5% 0 0deg);
+  --grkd-black-950: oklch(5% 0.005 270deg);
+  --token-bg-dark: var(--grkd-black-950); /* Legacy alias */
   --token-bg-content: oklch(14% 0.01 270deg);
   --token-bg-card: oklch(20% 0.005 285deg);
   --token-bg-input: oklch(15% 0.008 270deg);
@@ -174,25 +176,37 @@
   --clr-accent-fallback: var(--clr-purple);
 
   /* ===== GLASSMORPHISM DESIGN TOKENS ===== */
-  --clr-glass-border: oklch(50% 0.02 270deg / var(--opacity-20));
-  --clr-glass-background: oklch(20% 0.01 270deg / var(--opacity-10));
+  --grkd-glass-border: oklch(40% 0.015 270deg / 0.20);
+  --grkd-glass-bg: oklch(14.% 0.010 270deg / 0.60);
+  --grkd-glass-blur: 12px;
+  --grkd-glass-blur-mobile: 8px;
+  
+  /* Legacy aliases */
+  --clr-glass-border: var(--grkd-glass-border);
+  --clr-glass-background: var(--grkd-glass-bg);
   --clr-glass-border-hover: oklch(50% 0.02 270deg / var(--opacity-30));
   --clr-glass-background-hover: oklch(20% 0.01 270deg / var(--opacity-15));
 
-  /* ===== EASING FUNCTIONS - CENTRALIZED ===== */
-  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
-  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* ===== EASING FUNCTIONS - DESIGN.md v2.0.0 ===== */
+  --grkd-ease-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --grkd-ease-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
+  --grkd-ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --grkd-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Legacy easing aliases */
+  --ease-out: var(--grkd-ease-productive);
+  --ease-in-out: var(--grkd-ease-expressive);
+  --ease-smooth: var(--grkd-ease-expressive);
 
   /* ===== ANIMATION SYSTEM ===== */
-  --transition-smooth: 0.3s var(--ease-out);
-  --transition-fast: 0.2s var(--ease-out);
-  --transition-speed: 0.3s;
-  --transition-bg: 0.3s var(--ease-out);
-  --transition-shadow: 0.3s var(--ease-out);
-  --transition-transform: 0.3s var(--ease-out);
-  --transition-opacity: 0.2s var(--ease-out);
-  --transition-border: 0.3s var(--ease-out);
+  --transition-smooth: 0.3s var(--grkd-ease-expressive);
+  --transition-fast: 0.2s var(--grkd-ease-productive);
+  --transition-speed: 0.3s var(--grkd-ease-productive);
+  --transition-bg: 0.3s var(--grkd-ease-productive);
+  --transition-shadow: 0.3s var(--grkd-ease-productive);
+  --transition-transform: 0.3s var(--grkd-ease-spring);
+  --transition-opacity: 0.2s var(--grkd-ease-productive);
+  --transition-border: 0.3s var(--grkd-ease-productive);
   --animate-duration-fast: 150ms;
   --animate-duration-normal: 300ms;
   --animate-duration-slow: 500ms;
@@ -206,9 +220,9 @@
   --hover-scale-enhanced: scale(1.02);
 
   /* ===== SHADOW SYSTEM ===== */
-  --shadow-hover: 0 8px 25px var(--clr-black-2), 0 4px 12px var(--clr-black-15);
-  --shadow-base: 0 2px 8px var(--clr-black-1);
-  --shadow-active: 0 1px 4px var(--clr-black-2);
+  --shadow-hover: 0 8px 25px oklch(5% 0.01 270deg / 0.30), 0 4px 12px oklch(5% 0.01 270deg / 0.15);
+  --shadow-base: 0 2px 8px oklch(5% 0.01 270deg / 0.15);
+  --shadow-active: 0 1px 4px oklch(5% 0.01 270deg / 0.20);
 
   /* ===== LEGACY COMPATIBILITY ===== */
   --clr-gold-dark-transparent: var(--clr-gold-25);
@@ -220,28 +234,24 @@
 
   /* ===== TYPOGRAPHY SYSTEM - CENTRALIZED FONT DEFINITIONS ===== */
 
-  /* Primary fonts - Roboto for Latin, Noto for Japanese (auto via unicode-range) */
+  /* Primary fonts - Gen Interface JP for harmonious Latin & Japanese */
   --font-primary:
-    'Roboto Flex Variable', 'Roboto Flex', 'Noto Sans JP Variable',
-    'Noto Sans JP', 'Fluent Emoji Color', system-ui, -apple-system,
+    'Gen Interface JP', 'Fluent Emoji Color', system-ui, -apple-system,
     blinkmacsystemfont, 'Segoe UI', roboto, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   --font-sans:
-    'Roboto Flex Variable', 'Roboto Flex', 'Noto Sans JP Variable',
-    'Noto Sans JP', 'Fluent Emoji Color', system-ui, -apple-system,
+    'Gen Interface JP', 'Fluent Emoji Color', system-ui, -apple-system,
     blinkmacsystemfont, 'Segoe UI', roboto, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   --font-serif:
-    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP Variable',
-    'Noto Serif JP', 'Lora', 'Times New Roman', times, serif;
+    'Gen Interface JP', 'Lora', 'Times New Roman', times, serif;
   --font-heading:
-    'Roboto Serif Variable', 'Roboto Serif', 'Noto Serif JP Variable',
-    'Noto Serif JP', 'Lora', 'Times New Roman', times, serif;
+    'Gen Interface JP Display', 'Lora', 'Times New Roman', times, serif;
 
   /* Japanese fonts - Auto-detection via unicode-range */
-  --font-jp: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
-  --font-jp-serif: 'Noto Serif JP', 'Hiragino Mincho', 'Yu Mincho', serif;
-  --font-jp-logo: 'Yuji Syuku', 'Noto Serif JP', serif; /* For logo "語楽道" */
+  --font-jp: 'Gen Interface JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  --font-jp-serif: 'Gen Interface JP', 'Hiragino Mincho', 'Yu Mincho', serif;
+  --font-jp-logo: 'Yuji Syuku', 'Gen Interface JP', serif; /* For logo "語楽道" */
 
   /* Monospace fonts */
   --font-code: 'Fira Code', 'Courier New', monospace;
@@ -335,13 +345,16 @@
   --z-content-background: -10;
   --z-content-main: 1;
   --z-content-progress: 50;
-  --z-content-modal: 100;
+  --z-content-modal: 1400;
 
   /* Z-index scale */
   --z-base: 0;
   --z-docked: 10;
+  --z-sticky: 100;
+  --z-dropdown: 200;
   --z-banner: 1200;
   --z-overlay: 1300;
+  --z-modal: 1400;
   --z-toast: 1500;
   --z-WaveAnimation-transparent-layer: -45;
   --z-WaveAnimation-wave-animation-container: -75;
@@ -393,9 +406,8 @@
   /* Critical styles - moved from @layer critical */
   html {
     overflow-x: hidden;
-    font-family: var(--font-primary) !important;
 
-    /* REASONING: Optimized font stack with Inter as primary to prevent layout shift */
+    /* REASONING: Optimized font stack for readability and layout stability */
     font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
     font-weight: 400;
     scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
@@ -403,7 +415,6 @@
 
     /* REASONING: Legacy used 16px, keeping it for compatibility but with modern optimizations */
     font-display: swap; /* Prevent layout shift during font loading */
-    text-rendering: optimizeSpeed !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
 
@@ -423,10 +434,10 @@
 
     background-color: var(--token-bg-dark);
     color: var(--token-white-base);
-    font-family: var(--font-primary) !important;
+    font-family: var(--font-primary);
     line-height: var(--orphan-line-height); /* Orphan prevention */
     letter-spacing: -0.01em; /* Slightly tighter for modern feel */
-    word-spacing: var(--orphan-word-spacing) !important; /* Orphan prevention */
+    word-spacing: var(--orphan-word-spacing); /* Orphan prevention */
 
     @media (min-width: 768px) {
       padding-bottom: 3rem;
@@ -462,11 +473,11 @@
   .feature-card,
   .discord-link {
     transition:
-      transform var(--transition-speed) ease,
-      background-color var(--transition-speed) ease,
-      border-color var(--transition-speed) ease,
-      box-shadow var(--transition-speed) ease,
-      color var(--transition-speed) ease;
+      transform var(--transition-speed),
+      background-color var(--transition-speed),
+      border-color var(--transition-speed),
+      box-shadow var(--transition-speed),
+      color var(--transition-speed);
   }
 
   /* Hover effects only for devices with hover capability */
@@ -497,8 +508,8 @@
     opacity: 0;
     transform: translateY(10px);
     transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out;
+      opacity 0.6s var(--grkd-ease-expressive),
+      transform 0.6s var(--grkd-ease-expressive);
   }
 
   /* Loaded state - smooth reveal */
@@ -660,7 +671,7 @@
   a {
     color: var(--clr-purple);
     text-decoration: none;
-    transition: color var(--duration-fast) ease;
+    transition: color var(--duration-fast) var(--grkd-ease-productive);
   }
 
   @media (hover: hover) {
@@ -752,11 +763,11 @@
   --duration-slow: 300ms; /* Slower animations */
   --duration-slower: 500ms; /* Slowest animations */
 
-  /* Shadow system - enhanced from legacy */
-  --shadow-sm: 0 1px 2px var(--clr-black-05);
-  --shadow-md: 0 4px 8px var(--clr-black-15), 0 2px 4px var(--clr-black-1);
-  --shadow-lg: 0 8px 16px var(--clr-black-2), 0 4px 8px var(--clr-black-1);
-  --shadow-xl: 0 16px 32px var(--clr-black-25), 0 8px 16px var(--clr-black-15);
+  /* Shadow system - DESIGN.md tinted OKLCH */
+  --shadow-sm: 0 1px 2px oklch(5% 0.01 270deg / 0.05);
+  --shadow-md: 0 4px 8px oklch(5% 0.01 270deg / 0.15), 0 2px 4px oklch(5% 0.01 270deg / 0.10);
+  --shadow-lg: 0 8px 16px oklch(5% 0.01 270deg / 0.20), 0 4px 8px oklch(5% 0.01 270deg / 0.10);
+  --shadow-xl: 0 16px 32px oklch(5% 0.01 270deg / 0.25), 0 8px 16px oklch(5% 0.01 270deg / 0.15);
 
   /* Special shadows with color - preserving legacy values */
   --shadow-primary: 0 8px 24px oklch(65% 0.18 280deg / var(--opacity-3));
@@ -769,9 +780,6 @@
   --container-lg: 1024px; /* Legacy --container-lg */
   --container-xl: 1280px; /* Legacy --container-xl */
   --container-2xl: 1600px; /* Legacy --container-2xl */
-
-  /* Legacy animation registration */
-  --animate-twinkle: twinkle 3s infinite;
 }
 
 /* ========== COMPONENT LAYER - LEGACY AND MODERN BUTTON SYSTEMS ========== */
@@ -788,8 +796,8 @@
     border-radius: var(--radius-lg);
     background: var(--clr-background);
     transition:
-      box-shadow var(--duration-normal) ease,
-      transform var(--duration-normal) ease;
+      box-shadow var(--duration-normal) var(--grkd-ease-productive),
+      transform var(--duration-normal) var(--grkd-ease-spring);
     box-shadow: var(--shadow-sm);
   }
 
@@ -805,10 +813,8 @@
     border-radius: var(--radius-xl);
     background: oklch(12% 0.008 270deg / var(--opacity-8));
     box-shadow: var(--shadow-xl);
-    backdrop-filter: blur(6px);
 
     @media (max-width: 768px) {
-      backdrop-filter: none;
       background: oklch(12% 0.008 270deg / var(--opacity-12));
     }
   }
@@ -847,26 +853,22 @@
     border: 1px solid oklch(100% 0 0deg / var(--opacity-20));
     border-radius: 16px;
     background: oklch(100% 0 0deg / var(--opacity-10));
-    backdrop-filter: blur(12px);
     box-shadow:
       0 8px 32px oklch(0% 0 0deg / var(--opacity-10)),
       inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-20));
 
     @media (max-width: 768px) {
-      backdrop-filter: blur(8px);
       background: oklch(100% 0 0deg / var(--opacity-08));
     }
 
     @media (prefers-contrast: high) {
       border: 2px solid var(--clr-text-primary);
       background: var(--clr-black-85);
-      backdrop-filter: blur(12px) saturate(120%);
 
       @media (hover: hover) {
         &:hover {
           background: var(--clr-black-95);
           border-color: var(--clr-purple);
-          backdrop-filter: blur(12px) saturate(120%);
         }
       }
     }
@@ -1040,12 +1042,15 @@
 /* ===== BLOCKQUOTE QUOTES OVERRIDE ===== */
 
 /* TailwindTypography blockquote quotes を無効化 */
-blockquote {
-  quotes: none !important;
+body blockquote,
+.prose blockquote {
+  quotes: none;
 }
 
-blockquote::before,
-blockquote::after {
-  display: none !important;
-  content: none !important;
+body blockquote::before,
+body blockquote::after,
+.prose blockquote::before,
+.prose blockquote::after {
+  display: none;
+  content: none;
 }
