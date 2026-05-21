@@ -1159,7 +1159,7 @@ section .secondary-button {
 .title-line-2 {
   display: block;
   padding-bottom: 0.1em; /* 下部に少し余白を追加 */
-  font-weight: 800; /* Match title-line-1 */
+  font-weight: 500; /* title-line-1より少し細くしてメリハリをつける */
   line-height: 1.1; /* Discord tight tracking */
   letter-spacing: -0.04em; /* Discord compact headline */
 
