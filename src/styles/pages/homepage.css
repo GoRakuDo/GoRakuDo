@@ -1122,23 +1122,23 @@ section .secondary-button {
   width: 100%;
   max-width: 64rem;
   margin: 0 auto;
-  font-size: 2rem;
+  font-size: 1.75rem;
 
   @media (min-width: 1024px) {
     margin: 0;
   }
 
   @media (min-width: 640px) {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   @media (min-width: 768px) {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   @media (min-width: 1280px) {
-    font-size: 4rem; /* Super massive for cinematic feel */
-    line-height: 1.05;
+    font-size: 3rem; /* 4remから縮小し、美しく改行されるよう調整 */
+    line-height: 1.1;
   }
 }
 
