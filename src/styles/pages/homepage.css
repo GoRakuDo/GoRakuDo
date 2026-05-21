@@ -922,6 +922,7 @@ section .secondary-text {
   display: inline-block;
   color: inherit;
   font-weight: inherit;
+  white-space: nowrap; /* テキストの折り返しを防ぎ、ボタンの高さを統一する */
 }
 
 /* Button icon styling */
