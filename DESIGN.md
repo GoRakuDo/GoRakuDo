@@ -189,16 +189,12 @@ Token Name                    OKLCH Value                  Hex Fallback     Usag
 
 | Role | Font | Fallback | Notes |
 |---|---|---|---|
-| **Primary (Latin)** | `Roboto Flex Variable` | `system-ui, sans-serif` | 既存継続。Variable font で wght/wdth 可変 |
-| **Primary (Japanese)** | `Noto Sans JP Variable` | `Hiragino Sans, Yu Gothic, Meiryo` | unicode-range による自動切替 |
-| **Heading (Latin)** | `Roboto Serif Variable` | `Georgia, serif` | 見出しの格調 |
-| **Heading (Japanese)** | `Noto Serif JP Variable` | `Hiragino Mincho, Yu Mincho` | 和文見出し |
-| **Logo** | `Yuji Syuku` | `Noto Serif JP` | 「語楽道」ロゴ専用 |
-| **Code** | `Fira Code` | `Consolas, Courier New, monospace` | Ligatures 有効 |
+| **Primary (UI & Body)** | `Gen Interface JP` | `system-ui, sans-serif` | Latinと和文の調和を最適化したUI用フォント |
+| **Heading (Display)** | `Gen Interface JP Display` | `Georgia, serif` | 見出しの格調 |
+| **Logo** | `Yuji Syuku` | `serif` | 「語楽道」ロゴ専用 |
 
-> **Note:** `Inter` は frontend-design skill により premium context で禁止だが、
-> GoRakuDo は日本語重視のため Roboto Flex + Noto Sans JP の既存スタックが正解。
-> Inter を導入する理由は無い。
+> **Note:** `Inter` は frontend-design skill により premium context で禁止されている。
+> GoRakuDo は日本語とラテン文字の混植時の可読性重視のため `Gen Interface JP` のスタックに完全移行した。
 
 ### 3.2 Type Scale
 
@@ -556,7 +552,7 @@ gap: var(--grkd-space-6);
 
 ### 11.2 フォント変更
 
-**変更なし。** 既存の Roboto Flex + Noto Sans JP + Yuji Syuku を継続。
+**変更:** 既存の Roboto Flex + Noto Sans JP から `Gen Interface JP` への完全移行。ロゴ用の `Yuji Syuku` は継続。
 
 ### 11.3 構造的変更
 
