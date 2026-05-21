@@ -745,63 +745,59 @@ body.modal-open {
   position: relative;
   z-index: 20;
   display: grid;
-  grid-template-columns: 1fr;
   align-items: center;
+  gap: 2rem;
+  grid-template-columns: 1fr;
   width: 100%;
   max-width: 80rem;
   min-height: calc(100svh - var(--navbar-height));
   margin: 0 auto;
-  gap: 2rem;
   background: transparent;
-  filter: blur(0.25rem);
   opacity: 0;
   transform: translateY(4rem) scale(0.95);
   transition:
     opacity 0.7s var(--grkd-ease-expressive),
     transform 0.7s var(--grkd-ease-expressive),
     filter 0.7s var(--grkd-ease-expressive);
+  filter: blur(0.25rem);
 }
 
 @media (min-width: 1024px) {
   .hero-content {
-    grid-template-columns: 5fr 7fr; /* Asymmetric layout */
-    gap: 4rem;
+    gap: 3rem;
+    grid-template-columns: 1fr 1fr; /* 5fr 7fr から 1:1 に変更し、テキスト側の窮屈さを解消 */
+    padding: 0 4rem; /* 画面端に張り付かないように余白を追加 */
   }
 }
 
 /* Hero text wrapper */
 .hero-text-wrapper {
+  z-index: 10;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  order: 2; /* Mobile: text below image */
-  z-index: 10;
   padding-bottom: 3rem;
-}
-
-.hero-marker {
-  font-family: var(--font-pixel) !important;
-  letter-spacing: 0.05em; /* A bit of breathing room for pixel font */
-  font-size: 1.25rem;
+  order: 2; /* Mobile: text below image */
 }
 
 @media (min-width: 1024px) {
   .hero-text-wrapper {
     order: 1; /* Desktop: text on left */
     align-items: flex-start;
+    padding-bottom: 0; /* デスクトップでは不要な下余白を削除し、垂直中央を正確に保つ */
   }
 }
 
 /* Hero image wrapper */
 .hero-image-wrapper {
   position: relative;
-  width: 100%;
-  height: 40vh; /* Mobile height */
-  order: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 40vh; /* Mobile height */
   margin-top: 2rem;
+  order: 1;
 }
 
 @media (min-width: 1024px) {
@@ -809,8 +805,25 @@ body.modal-open {
     order: 2;
     height: auto;
     margin-top: 0;
-    /* Scale and push slightly to the right for cinematic bleed */
-    transform: scale(1.15) translateX(2%);
+
+    /* 画像が巨大すぎたためスケールを 1.15 -> 1.05 に抑える */
+    transform: scale(1.05) translateX(2%);
+  }
+}
+
+.hero-marker {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-pixel);
+  font-size: 2rem;
+  letter-spacing: 0.05em; /* A bit of breathing room for pixel font */
+
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+  }
+
+  @media (min-width: 1280px) {
+    font-size: 3rem;
   }
 }
 
@@ -819,14 +832,16 @@ body.modal-open {
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 20px 40px oklch(0% 0 0deg / 0.5));
-  animation: float-3d 6s ease-in-out infinite;
+  animation: float3d 6s ease-in-out infinite;
   will-change: transform;
 }
 
-@keyframes float-3d {
-  0% { transform: translateY(0px); }
+@keyframes float3d {
+  0% { transform: translateY(0); }
+
   50% { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
+
+  100% { transform: translateY(0); }
 }
 
 /* Gradient overlay for mobile */
@@ -834,11 +849,11 @@ body.modal-open {
   position: absolute;
   bottom: -2rem; /* Bleed into text area */
   left: 0;
+  z-index: 1;
   width: 100%;
   height: 60%;
   background: linear-gradient(to top, var(--grkd-black-950) 0%, transparent 100%);
   pointer-events: none;
-  z-index: 1;
 }
 
 @media (min-width: 1024px) {
@@ -886,14 +901,15 @@ section .hero-buttons {
   }
 
   @media (min-width: 1024px) {
+    flex-wrap: nowrap; /* デスクトップではボタンを縦積みさせずに1行に収める */
     justify-content: flex-start;
-    padding: 0;
     gap: 1.5rem;
+    padding: 0;
   }
   
   @media (min-width: 1280px) {
     gap: 2rem;
-    max-width: 50rem;
+    max-width: none; /* max-widthの制限を外して横に並びやすくする */
     padding: 0;
   }
 }
@@ -911,12 +927,12 @@ section .secondary-text {
 /* Button icon styling */
 .button-icon,
 .secondary-icon {
-  flex-shrink: 0;
   width: 1rem;
   height: 1rem;
+  color: inherit;
   transform: translateX(var(--icon-offset, 0));
   transition: transform var(--transition-fast);
-  color: inherit;
+  flex-shrink: 0;
 }
 
 /* WCAG 2.1 compliant button styling - 共通スタイル */
@@ -926,10 +942,10 @@ section .secondary-button {
   overflow: hidden;
   min-width: 44px;
   min-height: 44px;
+  border-radius: var(--border-radius-lg); /* Discord shape */
   cursor: pointer;
   transform: translateZ(0);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: var(--border-radius-lg); /* Discord shape */
 
   @media (min-width: 320px) {
     justify-content: center;
@@ -979,6 +995,7 @@ section .primary-button {
 
   &:hover {
     --icon-offset: 0.125rem;
+
     background: oklch(90% 0.01 285deg); /* Slightly darker white on hover */
     box-shadow: 0 10px 30px oklch(95% 0.005 285deg / 0.3);
   }
@@ -1081,21 +1098,22 @@ section .secondary-button {
 
 /* Responsive typography scale */
 .hero-kicker {
-  color: var(--clr-purple);
-  font-family: var(--font-serif);
-  font-size: 0.875rem;
-  font-weight: 500;
-  font-style: italic;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--grkd-purple-500); /* Use strong primary */
+  font-family: var(--font-primary);
+  font-size: 1.125rem;
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.05em;
-  opacity: 0.7;
+  opacity: 0.9;
 
   @media (min-width: 768px) {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
 
   @media (min-width: 1280px) {
-    font-size: 1.125rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -1103,30 +1121,23 @@ section .secondary-button {
   width: 100%;
   max-width: 64rem;
   margin: 0 auto;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.2;
-
-  @media (min-width: 768px) {
-    font-size: 1.875rem;
-  }
-
-  @media (min-width: 1280px) {
-    font-size: 2.625rem;
-  }
-}
-
-.hero-marker {
-  display: block;
-  margin-bottom: 0.5rem;
   font-size: 2rem;
 
+  @media (min-width: 1024px) {
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    font-size: 2.5rem;
+  }
+
   @media (min-width: 768px) {
-    font-size: 2.25rem;
+    font-size: 3rem;
   }
 
   @media (min-width: 1280px) {
-    font-size: 3rem;
+    font-size: 4rem; /* Super massive for cinematic feel */
+    line-height: 1.05;
   }
 }
 
@@ -1135,7 +1146,8 @@ section .secondary-button {
   margin-top: 0.75rem;
   padding-bottom: 0.1em; /* 下部に少し余白を追加 */
   font-weight: 800;
-  line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
+  line-height: 1.1; /* Discord tight tracking */
+  letter-spacing: -0.04em; /* Discord compact headline */
 
   /* Tablet and Desktop: keep as block for 2-line display */
   @media (min-width: 768px) {
@@ -1146,8 +1158,9 @@ section .secondary-button {
 .title-line-2 {
   display: block;
   padding-bottom: 0.1em; /* 下部に少し余白を追加 */
-  font-weight: 500;
-  line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
+  font-weight: 800; /* Match title-line-1 */
+  line-height: 1.1; /* Discord tight tracking */
+  letter-spacing: -0.04em; /* Discord compact headline */
 
   /* Tablet and Desktop: keep as block for 2-line display */
   @media (min-width: 768px) {
