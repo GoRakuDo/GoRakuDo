@@ -13,22 +13,27 @@
   /* Base color values - used 3+ times */
   --token-white-base: oklch(95% 0.005 285deg);
   --token-black-base: oklch(20% 0.005 285deg);
-  --grkd-purple-400: oklch(65% 0.22 280deg);
-  --token-purple-base: var(--grkd-purple-400); /* Legacy alias */
+  --grkd-purple-400: oklch(65% 0.22 273.85deg); /* Hue aligned to Discord */
+  --grkd-purple-500: oklch(57.74% 0.209 273.85deg); /* Discord Blurple Primary */
+  --token-purple-base: var(--grkd-purple-500); /* Legacy alias pointing to new primary */
   --token-gold-base: oklch(75% 0.12 85deg);
   --token-secondary-gold-base: oklch(75% 0.12 65deg);
 
   /* Background color tokens - used 3+ times */
   --grkd-black-950: oklch(5% 0.005 270deg);
+  --grkd-surface: oklch(17.80% 0.058 275.81deg);   /* Discord Midnight Navy */
+  --grkd-surface-2: oklch(30.96% 0.150 271.29deg); /* Discord Indigo Surface */
   --token-bg-dark: var(--grkd-black-950); /* Legacy alias */
-  --token-bg-content: oklch(14% 0.01 270deg);
-  --token-bg-card: oklch(20% 0.005 285deg);
+  --token-bg-content: var(--grkd-surface); /* Migrated to Discord surface */
+  --token-bg-card: var(--grkd-surface-2); /* Migrated to Discord surface-2 */
   --token-bg-input: oklch(15% 0.008 270deg);
 
   /* Text color tokens - used 3+ times */
+  --grkd-muted: oklch(85.99% 0.071 282.16deg); /* Discord Muted (Lavender) */
   --token-text-secondary: oklch(80% 0 0deg);
-  --token-text-muted: oklch(65% 0 0deg);
-  --token-text-global-secondary: oklch(88% 0 0deg);
+  --token-text-muted: var(--grkd-muted); /* Migrated to Discord muted */
+  --token-text-global-secondary: var(--grkd-muted);
+
   --token-text-global-muted: oklch(70% 0.01 270deg);
   --token-text-global: oklch(85% 0.01 270deg);
 
@@ -615,16 +620,16 @@
       padding-bottom: 0.1em; /* 下部に少し余白を追加 */
       font-size: var(--font-size-3xl);
       font-weight: var(--font-weight-bold);
-      line-height: 1.3; /* ディセンダーが切れないように十分な行間を確保 */
-      letter-spacing: -0.02em;
+      line-height: 1.1; /* Discord tight tracking */
+      letter-spacing: -0.04em; /* Discord compact headline */
     }
 
     h2 {
       padding-bottom: 0.1em; /* 下部に少し余白を追加 */
       font-size: var(--font-size-2xl);
       font-weight: var(--font-weight-semibold);
-      line-height: 1.3;
-      letter-spacing: -0.015em;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
     }
 
     h3 {
@@ -739,6 +744,7 @@
   --spacing-xl: 2rem; /* 32px - legacy --spacing-xl */
   --spacing-2xl: 3rem; /* 48px - legacy --spacing-2xl */
   --spacing-3xl: 4rem; /* 64px - legacy --spacing-3xl */
+  --spacing-hero: 8.125rem; /* 130px - Discord hero spacing */
 
   /* Typography scale - preserving legacy font sizes */
   --font-size-xs: 0.75rem; /* 12px - legacy --font-size-xs */
@@ -792,9 +798,9 @@
   /* ===== CARD COMPONENTS ===== */
   .card {
     padding: var(--spacing-lg);
-    border: 1px solid var(--clr-text-muted);
-    border-radius: var(--radius-lg);
-    background: var(--clr-background);
+    border: 1px solid oklch(100% 0 0deg / var(--opacity-10)); /* Subtle border */
+    border-radius: var(--radius-lg); /* 12px Discord shape */
+    background: var(--token-bg-card); /* Discord surface-2 */
     transition:
       box-shadow var(--duration-normal) var(--grkd-ease-productive),
       transform var(--duration-normal) var(--grkd-ease-spring);
@@ -877,6 +883,31 @@
   /* GlassMorphism variants */
   .glassmorphism-card {
     border-radius: var(--border-radius-card);
+  }
+
+  /* ===== CHIPS (TAGS & BADGES) - Discord Inspired ===== */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: var(--border-radius-pill);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    background: var(--grkd-surface-2);
+    color: var(--clr-white);
+    transition: background-color var(--duration-fast) var(--grkd-ease-productive);
+  }
+
+  .chip-accent {
+    background: oklch(45% 0.18 274deg); /* Deep purple */
+    color: var(--clr-white);
+  }
+
+  .chip-outline {
+    background: transparent;
+    border: 1px solid var(--clr-purple);
+    color: var(--clr-purple);
   }
 
   /* ===== LEGACY GRID UTILITIES - PRESERVED ===== */
