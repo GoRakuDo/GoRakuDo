@@ -815,31 +815,12 @@ body.modal-open {
   will-change: transform;
 }
 
-@keyframes float3d {
+  @keyframes float3d {
   0% { transform: translateY(0); }
 
   50% { transform: translateY(-15px); }
 
   100% { transform: translateY(0); }
-}
-
-/* Gradient overlay for mobile */
-.hero-image-overlay {
-  position: absolute;
-  bottom: -2rem; /* Bleed into text area */
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 60%;
-  background: linear-gradient(to top, var(--grkd-black-950) 0%, transparent 100%);
-  pointer-events: none;
-}
-
-@media (min-width: 1024px) {
-  .hero-image-overlay {
-    /* Different gradient for desktop if needed, or hide */
-    display: none;
-  }
 }
 
 /* Hero revealed state */
