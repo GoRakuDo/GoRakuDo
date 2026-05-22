@@ -1167,26 +1167,9 @@ section .secondary-button {
   @media (min-width: 768px) {
     display: block;
   }
-}
-
-.hero-description {
-  max-width: 36rem;
-  margin: 1rem auto 1.5rem;
-  color: var(--clr-text-muted);
-  font-size: 0.875rem;
-  font-style: italic;
-  line-height: 1.6;
-
-  @media (min-width: 768px) {
-    font-size: 1.125rem;
   }
 
-  @media (min-width: 1280px) {
-    font-size: 1.25rem;
-  }
-}
-
-/* Responsive section padding utilities - already nested in each section class */
+  /* Responsive section padding utilities - already nested in each section class */
 
 /* Gold marker utility component */
 .gold-marker {

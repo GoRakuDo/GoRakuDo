@@ -61,9 +61,11 @@ const config = {
     transition: opacity 0.3s ease;
     inset: 0;
     backdrop-filter: blur(20px);
+    will-change: transform; /* GPU compositor promotion for smoother scrolling */
   }
 
   /* トップページの時は、このレイヤーを非表示（または後述の別レイヤーで段階的にぼかす） */
+
   /* 今回のテストのため、トップページでも常に完全ぼかしを適用します
   body[data-page="home"] .global-blur-layer {
     opacity: 0;
