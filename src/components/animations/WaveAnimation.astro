@@ -37,9 +37,9 @@ const config = {
     z-index: var(--z-WaveAnimation-wave-animation-container, -2);
     width: 100vw;
     height: 100vh;
+    background-color: var(--grkd-black-950);
     pointer-events: none;
     inset: 0;
-    background-color: var(--grkd-black-950);
   }
 
   .static-background-image {
@@ -47,6 +47,7 @@ const config = {
     height: 100%;
     object-fit: cover;
     object-position: center;
+
     /* 
       圧倒的なパフォーマンス改善：
       スクロールラグの原因となる backdrop-filter を廃止し、
