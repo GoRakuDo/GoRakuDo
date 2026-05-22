@@ -26,12 +26,9 @@ const config = {
     src={bgImage}
     alt="Background"
     class="static-background-image"
-    quality="high"
+    quality="low" 
     loading="eager"
   />
-
-  <!-- 他のページ用に、あらかじめ全面をぼかすためのレイヤー（トップページではJSかCSSで制御） -->
-  <div id="global-blur-layer" class="global-blur-layer"></div>
 </div>
 
 <style is:global>
@@ -40,49 +37,23 @@ const config = {
     z-index: var(--z-WaveAnimation-wave-animation-container, -2);
     width: 100vw;
     height: 100vh;
-    background-color: var(--grkd-black-950);
     pointer-events: none;
     inset: 0;
+    background-color: var(--grkd-black-950);
   }
 
   .static-background-image {
-    width: 100%;
-    height: 100%;
+    width: 110%; /* ぼかしの端が白くならないように少し拡大 */
+    height: 110%;
+    margin-top: -5%;
+    margin-left: -5%;
     object-fit: cover;
     object-position: center;
-    opacity: 0.85; /* 少し暗くしてテキストを読みやすく */
+    /* 
+      圧倒的なパフォーマンス改善：
+      スクロールラグの原因となる backdrop-filter を廃止し、
+      画像自体に軽量な静的 filter をかけることでGPU負荷をゼロにする
+    */
+    filter: blur(16px) brightness(0.35); 
   }
-
-  /* 他のページでは最初から全体をぼかす。トップページではHero部分のみクリアにする */
-  .global-blur-layer {
-    position: absolute;
-    background: rgb(0 0 0 / 0.4); /* 暗くするTint */
-    opacity: 1; /* デフォルトはON (他のページ用) */
-    transition: opacity 0.3s ease;
-    inset: 0;
-    backdrop-filter: blur(20px);
-    will-change: transform; /* GPU compositor promotion for smoother scrolling */
-  }
-
-  /* トップページの時は、このレイヤーを非表示（または後述の別レイヤーで段階的にぼかす） */
-
-  /* 今回のテストのため、トップページでも常に完全ぼかしを適用します
-  body[data-page="home"] .global-blur-layer {
-    opacity: 0;
-  }
-  */
 </style>
-
-<script>
-  // トップページかどうかを判定して body に data-page="home" を付与
-  const setPageType = () => {
-    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-      document.body.setAttribute('data-page', 'home');
-    } else {
-      document.body.removeAttribute('data-page');
-    }
-  };
-
-  setPageType();
-  document.addEventListener('astro:page-load', setPageType);
-</script>
