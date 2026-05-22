@@ -1,7 +1,7 @@
 ---
 // WaveAnimation.astro - 静止画背景 (Wave & Torii)
 import { Image } from 'astro:assets';
-import bgImage from '../../assets/images/typographic_waves_and_torii_1080.webp';
+import bgImage from '../../assets/images/typographic_waves_and_torii_8bit_1080_blurred.webp';
 
 export interface Props {
   className?: string;
@@ -49,11 +49,12 @@ const config = {
     object-position: center;
 
     /* 
-      圧倒的なパフォーマンス改善：
-      スクロールラグの原因となる backdrop-filter を廃止し、
-      画像自体に軽量な静的 filter をかけることでGPU負荷をゼロにする
+      究極のパフォーマンス改善：
+      あらかじめPhotoshopでぼかした画像を使用することで、ブラウザの blur 負荷を完全にゼロにする。
+      （暗くする処理だけはCSSで残しています）
     */
-    filter: blur(16px) brightness(0.35); 
-    transform: scale(1.1); /* ぼかしの端が透けないように画像全体を10%拡大（ズレ防止） */
+    filter: brightness(0.35); 
+    transform: translateZ(0) scale(1.1); /* 画像全体を10%拡大（ズレ防止）し、GPUにテクスチャとして固定 */
+    will-change: transform;
   }
 </style>
