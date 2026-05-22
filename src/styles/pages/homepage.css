@@ -1275,3 +1275,35 @@ section .secondary-button {
     animation: slideFromBottom 0.6s ease-out;
   }
 }
+
+/* ===== BACKGROUND BLUR EFFECTS FOR HOMEPAGE ===== */
+.mission-section,
+.features-section,
+.docs-preview-section {
+  position: relative;
+  background: transparent;
+}
+
+/* じんわりばかしGradient柔らかく入って段々％的に完全ぼかしにする */
+.mission-section::before {
+  position: absolute;
+  z-index: -1;
+  background: rgb(0 0 0 / 0.4);
+  content: '';
+  inset: 0;
+  backdrop-filter: blur(20px);
+
+  /* Top fades from 0 to 100% over 300px */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 300px);
+}
+
+/* 下のセクションは最初から完全にぼかす */
+.features-section::before,
+.docs-preview-section::before {
+  position: absolute;
+  z-index: -1;
+  background: rgb(0 0 0 / 0.4);
+  content: '';
+  inset: 0;
+  backdrop-filter: blur(20px);
+}
