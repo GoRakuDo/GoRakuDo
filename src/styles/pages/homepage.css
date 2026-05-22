@@ -1284,6 +1284,31 @@ section .secondary-button {
   background: transparent;
 }
 
+/* テスト中: 全画面を WaveAnimation.astro 側で一括ぼかししているため、セクションごとの個別ぼかしをオフ
+.mission-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.4);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 300px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 300px);
+}
+
+.features-section::before,
+.docs-preview-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.4);
+}
+*/
+
 /* じんわりばかしGradient柔らかく入って段々％的に完全ぼかしにする */
 .mission-section::before {
   position: absolute;
