@@ -181,28 +181,7 @@ body.modal-open {
 
 /* ===== RESPONSIVE UTILITY CLASSES ===== */
 
-/* Base section padding utility */
-.section-base {
-  padding: var(--spacing-section-sm);
-
-  @media (min-width: 640px) {
-    padding: var(--spacing-section-md);
-  }
-
-  @media (min-width: 768px) {
-    padding: var(--spacing-section-lg);
-  }
-
-  @media (min-width: 1024px) {
-    padding: var(--spacing-section-xl);
-  }
-
-  @media (min-width: 1280px) {
-    padding: var(--spacing-section-2xl);
-  }
-}
-
-/* ===== SECTION LAYOUT COMPONENTS ===== */
+  /* ===== SECTION LAYOUT COMPONENTS ===== */
 
 .section-container {
   max-width: 72rem;
