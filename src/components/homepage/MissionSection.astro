@@ -43,9 +43,9 @@ const {
       
       <!-- Left Column: Sticky Title & Quote -->
       <div class='lg:col-span-5 relative'>
-        <div class='lg:sticky lg:top-32'>
+        <div class='lg:sticky lg:top-24'>
           <h2
-            class='text-4xl md:text-5xl font-black mb-12 tracking-tight'
+            class='text-4xl md:text-5xl font-black mb-8 lg:mb-12 tracking-tight'
             style="color: var(--clr-text-primary);"
             id='mission-title'
             transition:name='mission-title'
@@ -53,35 +53,35 @@ const {
             {title}
           </h2>
 
-          <blockquote class='relative mt-12'>
+          <blockquote class='relative mt-8 lg:mt-12'>
             <!-- Giant Quote Watermark -->
             <span 
-              class='absolute -top-16 -left-8 text-9xl font-serif leading-none select-none pointer-events-none'
+              class='absolute -top-12 -left-2 md:-top-16 md:-left-8 text-8xl md:text-9xl font-serif leading-none select-none pointer-events-none'
               style="color: var(--grkd-purple-500); opacity: 0.15;"
               aria-hidden="true"
             >&ldquo;</span>
             
-            <p class='relative z-10 text-xl md:text-2xl font-medium leading-relaxed mb-8' style="color: var(--clr-text-primary);">
+            <p class='relative z-10 text-xl md:text-2xl font-medium leading-relaxed mb-6 lg:mb-8' style="color: var(--clr-text-primary);">
               {quote.message}
             </p>
             
-            <footer class='flex items-center gap-5'>
+            <footer class='flex items-center gap-4 md:gap-5'>
               <Image 
                 src={krashenImage} 
                 alt={quote.imageAlt} 
-                class='w-16 h-16 rounded-full border-2' 
+                class='w-14 h-14 md:w-16 md:h-16 rounded-full border-2 shrink-0' 
                 style="border-color: var(--grkd-surface-2);" 
               />
               <div>
                 <cite class='block font-bold not-italic' style="color: var(--clr-text-primary);">{quote.author}</cite>
-                <span class='block text-sm mt-1 max-w-[250px]' style="color: var(--grkd-muted);">{quote.title}</span>
+                <span class='block text-xs md:text-sm mt-1 max-w-[250px]' style="color: var(--grkd-muted);">{quote.title}</span>
                 
                 {quote.sourceUrl && (
                   <a
                     href={quote.sourceUrl}
                     target='_blank'
                     rel='noopener noreferrer'
-                    class='inline-flex items-center gap-1 mt-3 text-sm font-semibold transition-colors duration-200'
+                    class='inline-flex items-center gap-1 mt-2 md:mt-3 text-xs md:text-sm font-semibold transition-colors duration-200'
                     style="color: var(--grkd-purple-500);"
                     aria-label='Lihat sumber di X (Twitter)'
                   >
