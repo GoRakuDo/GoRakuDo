@@ -242,46 +242,9 @@ body.modal-open {
   @media (min-width: 1280px) {
     padding: var(--spacing-section-2xl);
   }
-}
-
-/* Mission section components */
-.mission-container {
-  max-width: 72rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.mission-title {
-  margin-bottom: 4rem;
-  font-family: var(--font-serif);
-  font-size: var(--font-size-title-sm);
-  font-weight: 600;
-
-  @media (min-width: 640px) {
-    font-size: var(--font-size-title-md);
   }
 
-  @media (min-width: 1024px) {
-    font-size: var(--font-size-title-lg);
-  }
-}
-
-.mission-text {
-  margin-bottom: 4rem;
-  text-align: justify;
-}
-
-.mission-text p {
-  margin-bottom: 1.5rem;
-  color: var(--clr-text-secondary);
-  line-height: 1.625;
-
-  @media (min-width: 640px) {
-    font-size: 1.125rem;
-  }
-}
-
-/* ===== FEATURES SECTION ===== */
+  /* ===== FEATURES SECTION ===== */
 .features-section {
   padding: var(--spacing-section-sm);
   background: var(--features-background);
