@@ -39,12 +39,12 @@ const {
   data-lazy
 >
   <div class='mx-auto max-w-7xl px-6 lg:px-8 py-16 lg:py-24'>
-    <div class='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start'>
+    <!-- items-start を items-center に変更して、左右のカラムを完全に上下中央揃えにする -->
+    <div class='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center'>
       
-      <!-- Left Column: Sticky Title & Quote -->
+      <!-- Left Column: Title & Quote -->
       <div class='lg:col-span-5 relative'>
-        <!-- ブロック全体を画面の上下中央（Vertical Center）に配置しつつ、左寄せを維持 -->
-        <div class='lg:sticky lg:top-1/2 lg:-translate-y-1/2'>
+        <div>
           <h2
             class='text-4xl md:text-5xl font-black mb-8 lg:mb-12 tracking-tight'
             style="color: var(--clr-text-primary);"
@@ -105,10 +105,10 @@ const {
       </div>
 
       <!-- Right Column: Paragraphs -->
-      <div class='lg:col-span-7 flex flex-col gap-8 lg:gap-10 lg:py-6'>
+      <div class='lg:col-span-7 flex flex-col gap-6 lg:gap-8 lg:py-6'>
         {paragraphs.map((p, index) => (
           <div class='relative pl-6 lg:pl-8 border-l-2' style="border-color: var(--grkd-surface-2);">
-            <p class='text-lg md:text-xl leading-normal md:leading-[1.6] tracking-wide' style="color: var(--clr-text-secondary);" set:html={p} />
+            <p class='text-lg md:text-xl leading-snug md:leading-normal tracking-wide' style="color: var(--clr-text-secondary);" set:html={p} />
           </div>
         ))}
       </div>
