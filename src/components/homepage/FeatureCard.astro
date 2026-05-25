@@ -11,7 +11,8 @@ interface Props {
 const { id, svgPath, type, title, description, index = 1 } = Astro.props;
 
 // Split title into chunks of 6 chars for vertical writing line breaks
-const titleChunks = title.match(/.{1,6}/g) ?? [title];
+// Reverse order because writing-mode: vertical-rl reads right → left
+const titleChunks = (title.match(/.{1,6}/g) ?? [title]).reverse();
 ---
 
 <article class='feature-card' transition:name={`feature-card-${index}`}>
