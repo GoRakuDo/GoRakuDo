@@ -456,8 +456,23 @@ body.modal-open {
 }
 
 .feature-rarity {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
   color: var(--token-gold-base);
-  letter-spacing: 0.1em;
+}
+
+.rarity-star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.rarity-star.filled {
+  fill: currentColor;
+}
+
+.rarity-star.empty {
+  fill: none;
 }
 
 .feature-svg-container {
