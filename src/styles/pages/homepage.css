@@ -523,18 +523,6 @@ body.modal-open {
   backdrop-filter: blur(8px);
 }
 
-.image-mode-badge {
-  position: relative;
-  right: auto;
-  bottom: auto;
-  margin-bottom: 0.5rem;
-  border: 1px solid color-mix(in oklch, var(--token-gold-base) 20%, transparent);
-  background: color-mix(in oklch, var(--token-gold-base) 10%, transparent);
-  transform: none;
-  box-shadow: none;
-  backdrop-filter: none;
-}
-
 .badge-icon {
   display: flex;
   justify-content: center;

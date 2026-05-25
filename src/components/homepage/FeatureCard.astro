@@ -61,11 +61,6 @@ const { id, svgPath, type, title, description, image, index = 1 } = Astro.props;
     )}
     
     <div class='feature-text-content'>
-      {image && (
-        <div class='feature-type-badge image-mode-badge'>
-          {type}
-        </div>
-      )}
       <h3>{title}</h3>
       <p>{description}</p>
     </div>
