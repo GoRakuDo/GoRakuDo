@@ -404,9 +404,9 @@ body.modal-open {
   padding: 2.5rem 1.25rem;
   border-bottom: 1px solid color-mix(in oklch, var(--clr-white) 5%, transparent);
   background: radial-gradient(
-    ellipse at center,
-    color-mix(in oklch, var(--grkd-purple-500) 8%, transparent) 0%,
-    transparent 100%
+    circle at center,
+    color-mix(in oklch, var(--grkd-purple-500) 10%, transparent) 0%,
+    var(--grkd-surface) 100%
   );
 
   @media (min-width: 640px) {
