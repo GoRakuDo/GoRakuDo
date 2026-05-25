@@ -613,7 +613,7 @@ body.modal-open {
 
 .feature-card h3 {
   color: var(--clr-text-primary);
-  font-family: var(--font-noto-serif-jp);
+  font-family: var(--font-jp-logo);
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.3;
