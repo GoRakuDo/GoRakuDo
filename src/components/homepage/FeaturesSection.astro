@@ -1,11 +1,13 @@
 ---
 import FeatureCard from './FeatureCard.astro';
+import petaJalanImg from '../../assets/images/features/peta_jalan_terstruktur.webp';
 
 interface Feature {
   icon: string;
   type: string;
   title: string;
   description: string;
+  image?: ImageMetadata;
 }
 
 interface Props {
@@ -36,6 +38,7 @@ const {
       title: 'Peta Jalan Terstruktur',
       description:
         'Tahapan yang jelas dan dapat dicapai dari kana dasar hingga media kompleks. Setiap langkah dibangun secara alami dari yang sebelumnya.',
+      image: petaJalanImg,
     },
     {
       icon: '🧠',
@@ -86,6 +89,7 @@ const {
             type={feature.type}
             title={feature.title}
             description={feature.description}
+            image={feature.image}
             index={index + 1}
           />
         ))
