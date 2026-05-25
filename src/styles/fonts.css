@@ -8,6 +8,9 @@
 
 /* Japanese Fonts with unicode-range support */
 @import '@fontsource/yuji-syuku/400.css';
+@import '@fontsource/noto-serif-jp/400.css';
+@import '@fontsource/noto-serif-jp/700.css';
+@import '@fontsource/noto-serif-jp/900.css';
 
 /* Decorative Fonts */
 @import '@fontsource/pixelify-sans/400.css';

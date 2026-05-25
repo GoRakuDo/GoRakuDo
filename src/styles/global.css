@@ -255,6 +255,7 @@
   /* Japanese fonts - Auto-detection via unicode-range */
   --font-jp: 'Gen Interface JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
   --font-jp-serif: 'Gen Interface JP', 'Hiragino Mincho', 'Yu Mincho', serif;
+  --font-noto-serif-jp: 'Noto Serif JP', serif;
   --font-jp-logo: 'Yuji Syuku', 'Gen Interface JP', serif; /* For logo "語楽道" */
 
   /* Monospace fonts */
