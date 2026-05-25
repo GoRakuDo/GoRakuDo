@@ -9,6 +9,9 @@ interface Props {
 }
 
 const { id, svgPath, type, title, description, index = 1 } = Astro.props;
+
+// Split title into chunks of 6 chars for vertical writing line breaks
+const titleChunks = title.match(/.{1,6}/g) ?? [title];
 ---
 
 <article class='feature-card' transition:name={`feature-card-${index}`}>
@@ -18,7 +21,11 @@ const { id, svgPath, type, title, description, index = 1 } = Astro.props;
     <!-- Left Column: Vertical Title -->
     <div class='feature-icon-column'>
       <div class='feature-svg-glow'></div>
-      <h3 class='feature-title-vertical'>{title}</h3>
+      <h3 class='feature-title-vertical'>
+        {titleChunks.map((chunk) => (
+          <span class='title-chunk'>{chunk}</span>
+        ))}
+      </h3>
     </div>
     
     <!-- Right Column: ID/Rarity + Description -->

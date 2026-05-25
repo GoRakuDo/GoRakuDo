@@ -427,6 +427,13 @@ body.modal-open {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.title-chunk {
+  display: block;
 }
 
 .feature-text-column {
