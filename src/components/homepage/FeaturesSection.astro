@@ -3,6 +3,7 @@ import FeatureCard from './FeatureCard.astro';
 
 interface Feature {
   icon: string;
+  type: string;
   title: string;
   description: string;
 }
@@ -13,31 +14,49 @@ interface Props {
 }
 
 const {
-  title = 'Pendekatan Immersion',
+  title = 'Fitur Utama',
   features = [
     {
       icon: '⚡',
+      type: 'Core Engine',
       title: 'Adaptive Learning',
       description:
         'Rekomendasi yang didukung oleh Metodologi SLA (Ilmu Pembelajaran Bahasa ke-2) terbaru yang sesuai cara otak dirancang untuk memperoleh bahasa—melalui paparan bermakna, bukan sekedar hafalan.',
     },
     {
       icon: '🤜🤛',
+      type: 'Guild Network',
       title: 'Belajar Bersama Komunitas',
       description:
         'Bergabunglah dengan sesama pembelajar dan penutur asli dalam lingkungan komunitas yang mendukung.',
     },
     {
       icon: '📚',
+      type: 'Navigation Map',
       title: 'Peta Jalan Terstruktur',
       description:
         'Tahapan yang jelas dan dapat dicapai dari kana dasar hingga media kompleks. Setiap langkah dibangun secara alami dari yang sebelumnya.',
     },
     {
       icon: '🧠',
+      type: 'Passive Skill',
       title: 'Berpikir dalam Jepang',
       description:
         'Melampaui terjemahan. Kembangkan kemampuan untuk memahami dan merasakan bahasa Jepang secara instan, seperti penutur asli.',
+    },
+    {
+      icon: '📸',
+      type: 'Legendary Tool',
+      title: 'Sentence Miner',
+      description:
+        'Ekstrak kosakata tak dikenal dari konteks asli manga atau anime hanya dengan satu klik dan ubah menjadi flashcard Anki otomatis.',
+    },
+    {
+      icon: '🎮',
+      type: 'Field Spell',
+      title: 'Content Library',
+      description:
+        'Harta karun konten Jepang asli (anime, manga, VTuber) yang dikurasi sesuai levelmu, dari pemula hingga mahir.',
     },
   ],
 } = Astro.props;
@@ -49,18 +68,22 @@ const {
   data-lazy
 >
   <div class='features-container'>
-    <h2
-      class='features-title'
-      id='features-title'
-      transition:name='features-title'
-    >
-      {title}
-    </h2>
+    <div class='features-header-wrapper'>
+      <h2
+        class='features-title'
+        id='features-title'
+        transition:name='features-title'
+      >
+        {title}
+      </h2>
+      <p class='features-subtitle'>Senjata Rahasia Menuju Nativeness</p>
+    </div>
     <div class='features-grid'>
       {
         features.map((feature, index) => (
           <FeatureCard
             icon={feature.icon}
+            type={feature.type}
             title={feature.title}
             description={feature.description}
             index={index + 1}

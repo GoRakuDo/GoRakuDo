@@ -1,18 +1,29 @@
 ---
 interface Props {
   icon: string;
+  type: string;
   title: string;
   description: string;
   index?: number;
 }
 
-const { icon, title, description, index = 1 } = Astro.props;
+const { icon, type, title, description, index = 1 } = Astro.props;
 ---
 
 <article class='feature-card' transition:name={`feature-card-${index}`}>
-  <div class='feature-icon' aria-hidden='true'>
-    {icon}
+  <div class='feature-card-glow'></div>
+  <div class='feature-card-content'>
+    <div class='feature-image-placeholder'>
+      <!-- Image will go here later -->
+      <span class='placeholder-icon'>{icon}</span>
+    </div>
+    <div class='feature-text-content'>
+      <div class='feature-type-badge'>
+        <span class='badge-icon'>✧</span>
+        {type}
+      </div>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </div>
   </div>
-  <h3>{title}</h3>
-  <p>{description}</p>
 </article>
