@@ -435,8 +435,8 @@ body.modal-open {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   text-align: center;
-  line-height: 2;
-  letter-spacing: 0.15em;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
 }
 
 .feature-text-column {
