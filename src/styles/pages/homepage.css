@@ -418,7 +418,7 @@ body.modal-open {
 }
 
 .feature-title-vertical {
-  font-family: var(--font-noto-serif-jp);
+  font-family: var(--font-jp-logo);
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--clr-text-primary);
@@ -435,7 +435,7 @@ body.modal-open {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.25;
   letter-spacing: 0.1em;
 }
 
