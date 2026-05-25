@@ -405,8 +405,7 @@ body.modal-open {
   border-bottom: 1px solid color-mix(in oklch, var(--clr-white) 5%, transparent);
   background: radial-gradient(
     ellipse at center,
-    color-mix(in oklch, var(--grkd-cyan-400) 12%, transparent) 0%,
-    color-mix(in oklch, var(--grkd-purple-500) 5%, transparent) 60%,
+    color-mix(in oklch, var(--grkd-purple-500) 8%, transparent) 0%,
     transparent 100%
   );
 
@@ -423,18 +422,21 @@ body.modal-open {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--clr-text-primary);
-  line-height: 2;
-  letter-spacing: 0.15em;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  text-align: center;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  height: 100%;
 }
 
 .title-chunk {
   display: block;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  text-align: center;
+  line-height: 2;
+  letter-spacing: 0.15em;
 }
 
 .feature-text-column {
