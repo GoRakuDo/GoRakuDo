@@ -405,7 +405,8 @@ body.modal-open {
   border-bottom: 1px solid color-mix(in oklch, var(--clr-white) 5%, transparent);
   background: radial-gradient(
     ellipse at center,
-    color-mix(in oklch, var(--grkd-purple-500) 8%, transparent) 0%,
+    color-mix(in oklch, var(--grkd-cyan-400) 12%, transparent) 0%,
+    color-mix(in oklch, var(--grkd-purple-500) 5%, transparent) 60%,
     transparent 100%
   );
 
