@@ -1,5 +1,7 @@
 ---
 import FeatureCard from './FeatureCard.astro';
+import petaJalanImg from '../../assets/images/features/peta_jalan_terstruktur.webp';
+import slaCoreImg from '../../assets/images/features/sla_daptive_core.webp';
 
 interface Feature {
   id: string;
@@ -7,6 +9,7 @@ interface Feature {
   type: string;
   title: string;
   description: string;
+  image?: ImageMetadata;
 }
 
 interface Props {
@@ -21,9 +24,10 @@ const {
       id: 'ARTF-01',
       svgPath: '<rect width="16" height="16" x="4" y="4" rx="2" /><rect width="6" height="6" x="9" y="9" rx="1" /><path d="M15 2v2" /><path d="M15 20v2" /><path d="M2 15h2" /><path d="M2 9h2" /><path d="M20 15h2" /><path d="M20 9h2" /><path d="M9 2v2" /><path d="M9 20v2" />',
       type: 'Core Engine',
-      title: 'SLA Adaptive Core',
+      title: '言語習得理論に基づく',
       description:
         'Tinggalkan hafalan robotik. Engine ini mensimulasikan akuisisi bahasa alami otak manusia. Semakin sering kamu membaca, semakin cerdas sistem beradaptasi.',
+      image: slaCoreImg,
     },
     {
       id: 'ARTF-02',
@@ -40,6 +44,7 @@ const {
       title: 'Nativeness Blueprint',
       description:
         'Cetak biru menuju kefasihan sejati. Navigasi rahasia langkah-demi-langkah dari kana dasar hingga menaklukkan media kompleks tanpa tersesat.',
+      image: petaJalanImg,
     },
     {
       id: 'ARTF-04',
@@ -94,6 +99,7 @@ const {
             type={feature.type}
             title={feature.title}
             description={feature.description}
+            image={feature.image}
             index={index + 1}
           />
         ))
