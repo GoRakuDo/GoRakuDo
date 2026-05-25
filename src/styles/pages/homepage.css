@@ -568,23 +568,6 @@ body.modal-open {
   filter: drop-shadow(0 0 22px color-mix(in oklch, var(--grkd-cyan-400) 90%, transparent));
 }
 
-.feature-type-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  width: fit-content;
-  margin-top: 1.25rem;
-  padding: 0.2rem 0.6rem;
-  border: 1px solid color-mix(in oklch, var(--token-gold-base) 25%, transparent);
-  border-radius: 9999px;
-  background: color-mix(in oklch, var(--grkd-surface-2) 90%, black);
-  color: var(--token-gold-base);
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
 .badge-icon {
   display: flex;
   justify-content: center;
