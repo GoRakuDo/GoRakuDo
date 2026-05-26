@@ -337,8 +337,12 @@ body.modal-open {
   height: 100%;
   color: var(--clr-text-primary);
   font-family: var(--font-noto-serif-jp);
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.25rem; /* 小さくなっていたのを大迫力に修正 */
+  font-weight: 900;   /* 先ほどの極太ウェイトをこちらに正しく適用 */
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem; /* PC画面ではさらに大きく */
+  }
 }
 
 .title-chunk {
