@@ -1,7 +1,6 @@
 ---
 interface Props {
   id: string;
-  svgPath: string;
   type: string;
   title: string;
   description: string;
@@ -9,7 +8,7 @@ interface Props {
   rarity?: number;
 }
 
-const { id, svgPath, type, title, description, rarity = 4, index = 1 } = Astro.props;
+const { id, type, title, description, rarity = 4, index = 1 } = Astro.props;
 
 // Split title by manual newline (\n) for vertical writing columns
 // Reverse order because writing-mode: vertical-rl reads right → left

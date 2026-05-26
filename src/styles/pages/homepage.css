@@ -90,97 +90,6 @@ body.modal-open {
 
 /* ===== HOMEPAGE-SPECIFIC ANIMATIONS ===== */
 
-/* Note: Core animations (fadeIn, slideFromRight, slideFromBottom, twinkle) are defined in global.css */
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0) translateX(0);
-  }
-
-  25% {
-    /* モバイル: 浮遊アニメーションを無効化 */
-    @media (min-width: 769px) {
-      transform: translateY(-8px) translateX(4px);
-    }
-
-    @media (max-width: 768px) {
-      transform: none; /* 浮遊アニメーション停止 */
-    }
-  }
-
-  50% {
-    /* モバイル: 浮遊アニメーションを無効化 */
-    @media (min-width: 769px) {
-      transform: translateY(-4px) translateX(-6px);
-    }
-
-    @media (max-width: 768px) {
-      transform: none; /* 浮遊アニメーション停止 */
-    }
-  }
-
-  75% {
-    /* モバイル: 浮遊アニメーションを無効化 */
-    @media (min-width: 769px) {
-      transform: translateY(-12px) translateX(2px);
-    }
-
-    @media (max-width: 768px) {
-      transform: none; /* 浮遊アニメーション停止 */
-    }
-  }
-}
-
-@keyframes float2 {
-  0%,
-  100% {
-    transform: translateY(0) translateX(0);
-  }
-
-  33% {
-    /* モバイル: 浮遊アニメーションを無効化 */
-    @media (min-width: 769px) {
-      transform: translateY(-6px) translateX(-3px);
-    }
-
-    @media (max-width: 768px) {
-      transform: none; /* 浮遊アニメーション停止 */
-    }
-  }
-
-  66% {
-    /* モバイル: 浮遊アニメーションを無効化 */
-    @media (min-width: 769px) {
-      transform: translateY(-10px) translateX(5px);
-    }
-
-    @media (max-width: 768px) {
-      transform: none; /* 浮遊アニメーション停止 */
-    }
-  }
-}
-
-@keyframes float3 {
-  0%,
-  100% {
-    transform: translateY(0) translateX(0);
-  }
-
-  50% {
-    /* モバイル: 浮遊アニメーションを無効化 */
-    @media (min-width: 769px) {
-      transform: translateY(-8px) translateX(-2px);
-    }
-
-    @media (max-width: 768px) {
-      transform: none; /* 浮遊アニメーション停止 */
-    }
-  }
-}
-
-/* ===== RESPONSIVE UTILITY CLASSES ===== */
-
   /* ===== SECTION LAYOUT COMPONENTS ===== */
 
 .section-container {
@@ -419,7 +328,7 @@ body.modal-open {
   );
 }
 
-.feature-title-vertical {
+.feature-card .feature-title-vertical {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -451,7 +360,7 @@ body.modal-open {
   -webkit-text-fill-color: transparent;
   
   /* Drop shadow for gradient text */
-  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.6));
+  filter: drop-shadow(0 2px 4px oklch(5% 0.05 270deg / 0.6));
 }
 
 .feature-text-column {
@@ -537,17 +446,7 @@ body.modal-open {
   padding-top: 11.5rem;
 }
 
-.feature-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid color-mix(in oklch, var(--clr-white) 5%, transparent);
-  color: var(--grkd-muted);
-  font-family: var(--font-mono, monospace);
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-}
+
 
 .feature-rarity {
   display: flex;
@@ -591,14 +490,7 @@ body.modal-open {
   transform: scale(1.4);
 }
 
-.lucide-hero-icon {
-  width: 3rem;
-  height: 3rem;
-  color: var(--clr-white);
-  filter: drop-shadow(0 0 14px color-mix(in oklch, var(--grkd-cyan-400) 70%, transparent));
-  transition: transform var(--duration-normal) var(--grkd-ease-spring),
-              filter var(--duration-normal) var(--grkd-ease-out);
-}
+
 
 .feature-card:hover .lucide-hero-icon {
   transform: scale(1.15);
@@ -612,7 +504,7 @@ body.modal-open {
   color: var(--token-gold-base);
 }
 
-.feature-card h3 {
+.feature-text-body h3 {
   color: var(--clr-text-primary);
   font-family: var(--font-noto-serif-jp);
   font-size: 1.25rem;
@@ -1060,14 +952,9 @@ body.modal-open {
   }
 }
 
-.hero-3d-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 40px oklch(0% 0 0deg / 0.5));
-  animation: float3d 6s ease-in-out infinite;
-  will-change: transform;
-}
+  .hero-3d-image {
+    animation: none;
+  }
 
   @keyframes float3d {
   0% { transform: translateY(0); }
@@ -1479,4 +1366,12 @@ section .secondary-button {
 .docs-preview-section {
   position: relative;
   background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card:hover { transform: none; }
+
+  .feature-card:hover .feature-card-glow { opacity: 0; }
+
+  .hero-3d-image { animation: none; }
 }

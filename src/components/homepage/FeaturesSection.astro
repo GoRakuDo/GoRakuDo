@@ -5,11 +5,9 @@ import slaCoreImg from '../../assets/images/features/sla_daptive_core.webp';
 
 interface Feature {
   id: string;
-  svgPath: string;
   type: string;
   title: string;
   description: string;
-  image?: ImageMetadata;
   rarity?: number;
 }
 
@@ -24,7 +22,6 @@ const {
     {
       id: 'GRKD-01',
       rarity: 5,
-      svgPath: '<rect width="16" height="16" x="4" y="4" rx="2" /><rect width="6" height="6" x="9" y="9" rx="1" /><path d="M15 2v2" /><path d="M15 20v2" /><path d="M2 15h2" /><path d="M2 9h2" /><path d="M20 15h2" /><path d="M20 9h2" /><path d="M9 2v2" /><path d="M9 20v2" />',
       type: 'Core Engine',
       title: '第二言語習得\n理論に基づく',
       description:
@@ -33,7 +30,6 @@ const {
     },
     {
       id: 'GRKD-02',
-      svgPath: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />',
       type: 'Guild Network',
       title: '独自学習と\nコミュニティ',
       description:
@@ -42,7 +38,6 @@ const {
     {
       id: 'GRKD-03',
       rarity: 5,
-      svgPath: '<path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" /><path d="M15 5.764v15" /><path d="M9 3.236v15" />',
       type: 'Navigation Map',
       title: '自然習得の\n学習段階',
       description:
@@ -52,7 +47,6 @@ const {
     {
       id: 'GRKD-04',
       rarity: 5,
-      svgPath: '<path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />',
       type: 'Passive Skill',
       title: '文脈により\n自然解釈',
       description:
@@ -61,7 +55,6 @@ const {
     {
       id: 'GRKD-05',
       rarity: 5,
-      svgPath: '<path d="m16 6 4 14" /><path d="M12 6v14" /><path d="M8 8v12" /><path d="M4 4v16" />',
       type: 'Field Spell',
       title: '母語話者の\nコンテンツ教材',
       description:
@@ -69,7 +62,6 @@ const {
     },
     {
       id: 'GRKD-06',
-      svgPath: '<path d="M3 7V5a2 2 0 0 1 2-2h2" /><path d="M17 3h2a2 2 0 0 1 2 2v2" /><path d="M21 17v2a2 2 0 0 1-2 2h-2" /><path d="M7 21H5a2 2 0 0 1-2-2v-2" />',
       type: 'Legendary Tool',
       title: '暗記アプリと\n言葉抽出ツール',
       description:
@@ -86,7 +78,7 @@ const {
 >
   <div class='features-container'>
     <div class='features-header-wrapper'>
-      <div class='features-marker'>/// GEARS_ACTIVATED ///</div>
+      <div class='features-marker' transition:name='features-marker'>/// GEARS_ACTIVATED ///</div>
       <h2
         class='features-title'
         id='features-title'
@@ -101,11 +93,9 @@ const {
         features.map((feature, index) => (
           <FeatureCard
             id={feature.id}
-            svgPath={feature.svgPath}
             type={feature.type}
             title={feature.title}
             description={feature.description}
-            image={feature.image}
             rarity={feature.rarity || 4}
             index={index + 1}
           />

@@ -15,6 +15,8 @@
   --token-black-base: oklch(20% 0.005 285deg);
   --grkd-purple-400: oklch(65% 0.22 273.85deg); /* Hue aligned to Discord */
   --grkd-purple-500: oklch(57.74% 0.209 273.85deg); /* Discord Blurple Primary */
+  --grkd-brand-secondary: var(--grkd-purple-400);
+  --grkd-cyan-400: oklch(70% 0.15 195deg);
   --token-purple-base: var(--grkd-purple-500); /* Legacy alias pointing to new primary */
   --token-gold-base: oklch(75% 0.12 85deg);
   --token-secondary-gold-base: oklch(75% 0.12 65deg);
