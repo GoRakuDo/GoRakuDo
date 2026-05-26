@@ -952,11 +952,25 @@ body.modal-open {
   }
 }
 
-  .hero-3d-image {
-    animation: none;
-  }
+.hero-3d-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px oklch(0% 0 0deg / 0.5));
+  will-change: transform;
 
-  @keyframes float3d {
+  /* デフォルト（モバイル）はアニメーションなし */
+  animation: none;
+}
+
+/* 768px以上（720pなど）でアニメーション復活 */
+@media (min-width: 768px) {
+  .hero-3d-image {
+    animation: float3d 6s ease-in-out infinite;
+  }
+}
+
+@keyframes float3d {
   0% { transform: translateY(0); }
 
   50% { transform: translateY(-15px); }
