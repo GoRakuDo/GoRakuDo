@@ -2,7 +2,6 @@
 // ========== IMPORTS ==========
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolsGridSection from '../../components/tools/Tools-GridSection.astro';
-import { CldImage } from 'astro-cloudinary';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import { buildCloudinaryUrl } from '../../utils/cloudinary';
 import toolsData from '../../data/tools.json';
@@ -21,26 +20,6 @@ interface Tool {
 
 // ========== DATA & CONFIGURATION ==========
 const tools: Tool[] = toolsData as Tool[];
-
-const STATS_CONFIG = {
-  tools: { label: 'Tools Terpilih', suffix: '+' },
-  free: { label: 'Gratis', value: '100%' },
-  access: { label: 'Akses', value: '24/7' },
-} as const;
-
-// ========== UTILITY FUNCTIONS ==========
-const getStatsData = (toolsCount: number) => [
-  {
-    number: `${toolsCount}${STATS_CONFIG.tools.suffix}`,
-    label: STATS_CONFIG.tools.label,
-  },
-  { number: STATS_CONFIG.free.value, label: STATS_CONFIG.free.label },
-  { number: STATS_CONFIG.access.value, label: STATS_CONFIG.access.label },
-];
-
-// ========== PROCESSED DATA ==========
-const toolsCount = tools.length;
-const statsData = getStatsData(toolsCount);
 
 // ========== IMAGE CONFIG ==========
 const heroImageId = 'gorakudo-tools-tutorials_exzci4';
@@ -118,93 +97,21 @@ const websiteSchema = {
 >
   <!-- Main Content -->
   <main
-    class='main-content min-h-screen tools-layout-optimized'
+    class='main-content tools-layout-optimized'
     role='main'
     transition:name='main-content'
     aria-label='Japanese learning tools and applications'
   >
-    <!-- Tools Header Section -->
-    <section
-      class='tools-header-section'
-      aria-labelledby='tools-header-title'
-      role='banner'
-      transition:name='tools-header'
-      itemscope
-      itemtype='https://schema.org/WebPageElement'
-    >
-      <div class='tools-header-container'>
-        <!-- Main Content -->
-        <div class='tools-header-content'>
-          <!-- Left Content (Title + Description + Stats) -->
-          <div class='tools-header-left'>
-            <header class='tools-header-main'>
-              <h2
-                class='tools-header-title'
-                id='tools-header-title'
-                itemprop='headline'
-              >
-                Tutorial Tools & Aplikasi<wbr /> dalam Belajar Bahasa Jepang
-              </h2>
-            </header>
-
-            <!-- Description and Stats Group -->
-            <div class='tools-header-info-group'>
-              <p class='tools-header-description' itemprop='description'>
-                Tutorial berdasarkan Aplikasi dan Tools yang membantu kalian
-                dengan mudah dalam Otodidak Bahasa Japang. Setiap tool telah
-                dipilih berdasarkan efektivitas dan kemudahan penggunaan.
-              </p>
-
-              <!-- Stats Section -->
-              <div
-                class='tools-header-stats'
-                role='region'
-                aria-label='Tools statistics'
-              >
-                {
-                  statsData.map((stat, index) => (
-                    <>
-                      <div
-                        class='tools-stat-item'
-                        itemprop='mainEntity'
-                        itemscope
-                        itemtype='https://schema.org/QuantitativeValue'
-                      >
-                        <span class='tools-stat-number' itemprop='value'>
-                          {stat.number}
-                        </span>
-                        <span class='tools-stat-label' itemprop='name'>
-                          {stat.label}
-                        </span>
-                      </div>
-                      {index < statsData.length - 1 && (
-                        <div class='tools-stat-divider' aria-hidden='true' />
-                      )}
-                    </>
-                  ))
-                }
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Content (Hero Image) -->
-          <div class='tools-header-right'>
-            <div class='tools-hero-image-container'>
-              <CldImage
-                src={heroImageId}
-                alt='Japanese Learning Tools and Applications - GoRakuDo'
-                class='tools-hero-image'
-                width={350}
-                quality='auto'
-                loading='eager'
-                fetchpriority='high'
-                sizes='(max-width: 640px) 300px, (max-width: 768px) 350px, (max-width: 1024px) 400px, 450px'
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Tools Header - Marker Style -->
+    <div class='tools-header-wrapper' transition:name='tools-header'>
+      <div class='tools-marker' transition:name='tools-marker' aria-hidden='true'>/// TOOLS_ACTIVATED ///</div>
+      <h2 class='tools-title' id='tools-title' transition:name='tools-title'>
+        Tutorial Tools & Aplikasi
+      </h2>
+      <p class='tools-subtitle'>
+        Aplikasi dan Tools yang membantu kalian dalam Otodidak Bahasa Jepang
+      </p>
+    </div>
 
     <!-- Tools Grid Section - 統合されたコンポーネント -->
     <ToolsGridSection tools={tools} />
@@ -213,111 +120,20 @@ const websiteSchema = {
 
 <!-- ========== SCRIPTS ========== -->
 <script>
-  // Page animations
-  const initPageAnimations = () => {
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) mainContent.classList.add('page-load-fade-in');
-
-    const toolCards = document.querySelectorAll('.tool-card');
-    toolCards.forEach((card, index) => {
-      (card as HTMLElement).style.setProperty(
-        '--stagger-delay',
-        `${index * 0.1}s`
-      );
-      card.classList.add('stagger-animation');
-    });
-  };
-
-  // Micro-interactions
+  // Micro-interactions for non-card elements only
   const initMicroInteractions = () => {
     const elements = document.querySelectorAll(`
-        .tool-card,
-        .tools-section a,
-        .tools-section button,
-        .main-content a:not([href="/"]),
-        .main-content button:not(.get-started-btn):not(.mobile-menu-btn)
+        .main-content a:not([href="/"]):not(.tool-card-link),
+        .main-content button:not(.mobile-menu-btn):not(.menu-overlay-close):not(.menu-overlay-view-toggle)
       `);
     elements.forEach(element =>
       element.classList.add('micro-interaction-scale')
     );
   };
 
-  // Tool card interactions
-  const initToolCardInteractions = () => {
-    const toolCards = document.querySelectorAll('.tool-card');
-    toolCards.forEach(card => {
-      card.addEventListener('click', e => {
-        e.preventDefault();
-        card.classList.add('is-interacting');
-        setTimeout(() => {
-          card.classList.remove('is-interacting');
-          window.location.href = (card as HTMLAnchorElement).href;
-        }, 150);
-      });
-    });
-  };
-
-  // Stats animation
-  const initStatsAnimation = () => {
-    const statsItems = document.querySelectorAll(
-      '.tools-stat-item'
-    ) as NodeListOf<HTMLElement>;
-    if (!('IntersectionObserver' in window)) return;
-
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const element = entry.target as HTMLElement;
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    statsItems.forEach(item => {
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(20px)';
-      item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(item);
-    });
-  };
-
-  // Lazy loading
-  const initLazyLoading = () => {
-    if (!('IntersectionObserver' in window)) return;
-
-    const observer = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target as HTMLImageElement;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-              observer.unobserve(img);
-            }
-          }
-        });
-      },
-      { rootMargin: '50px 0px', threshold: 0.01 }
-    );
-
-    document
-      .querySelectorAll('img[data-src]')
-      .forEach(img => observer.observe(img));
-  };
-
-  // Initialize all
+  // Initialize
   const init = () => {
-    initPageAnimations();
     initMicroInteractions();
-    initToolCardInteractions();
-    initStatsAnimation();
-    initLazyLoading();
   };
 
   if (document.readyState === 'loading') {

@@ -451,15 +451,13 @@
   .app,
   main {
     display: flex;
-    flex-direction: column; /* Modern viewport units for mobile */
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    flex-direction: column;
   }
 
   /* Main content structure - preserved from legacy */
   .main-content {
     position: relative;
     z-index: 1;
-    min-height: 100dvh; /* Dynamic viewport height for mobile */
   }
 
   /* --- Reusable Components & Transitions --- */
@@ -1034,6 +1032,15 @@
 .modal-title *,
 .modal-description * {
   color: inherit;
+}
+
+/* ===== NAVBAR SPACING (Desktop) ===== */
+
+/* ヒーローセクションを持つページは自力でnavbar分を調整しているため除外 */
+@media (min-width: 1024px) {
+  .layout-content:not(:has(.hero-section)) {
+    padding-top: calc(var(--navbar-height) + 2rem);
+  }
 }
 
 /* ===== BOTTOM NAVIGATION BAR SPACING ===== */

@@ -1,8 +1,6 @@
 ---
-// ========== OPTIMIZED TOOLS GRID SECTION ==========
-// Tools-GridSection.astro - 最適化されたツールグリッドセクションコンポーネント
+// ========== TOOLS GRID SECTION - TCG Card Style ==========
 
-// ========== TYPE DEFINITIONS ==========
 interface Tool {
   readonly id: string;
   readonly name: string;
@@ -12,123 +10,369 @@ interface Tool {
   readonly link: string;
 }
 
-// ========== COMPONENT PROPS TYPE DEFINITIONS ==========
 export interface GridSectionProps {
   tools: Tool[];
   className?: string;
-  title?: string;
-  description?: string;
-  showTitle?: boolean;
 }
 
-// ========== OPTIMIZED CONFIGURATION ==========
-const DEFAULT_ANIMATION_CLASS = 'animation-scale';
-
-// ========== OPTIMIZED UTILITY FUNCTIONS ==========
-const getAnimationClass = (): string => {
-  return DEFAULT_ANIMATION_CLASS;
-};
+const { tools = [], className = '' } = Astro.props;
 
 const validateTool = (tool: Tool): boolean =>
   !!(tool.id && tool.name && tool.description && tool.iconUrl && tool.link);
 
-// 説明文を最初のセンテンスのみに分割する関数
-const getFirstSentence = (description: string): string => {
-  // ピリオド、感嘆符、疑問符で分割し、最初のセンテンスを取得
-  const sentences = description.split(/[.!?]+/);
-  const firstSentence = sentences[0]?.trim();
-
-  // センテンスが空でない場合は、適切な句読点を追加
-  if (firstSentence && firstSentence.length > 0) {
-    // 元のテキストがピリオドで終わっている場合はピリオドを追加
-    if (description.includes('.')) {
-      return firstSentence + '.';
-    }
-    return firstSentence;
-  }
-
-  // フォールバック: 元の説明文を返す
-  return description;
-};
-
-// ========== OPTIMIZED DATA PROCESSING ==========
-const { tools = [], className = '' } = Astro.props;
-
-// ツールの検証とフィルタリング
 const validTools: Tool[] = tools.filter(validateTool);
 ---
 
 <section
-  class={`py-8 sm:py-12 lg:py-16 scroll-reveal ${className}`}
-  aria-labelledby='tools-title'
+  class={`tools-grid-section ${className}`}
+  aria-label='Available learning tools'
   id='tools-main-content'
 >
-  <div class='w-full flex justify-center px-2 sm:px-6 lg:px-8'>
+  <div class='tools-grid-container'>
     <div class='tools-grid' role='list' aria-label='Available learning tools'>
       {
-        validTools.map(tool => (
+        validTools.map((tool, index) => (
           <div class='tool-grid-item' role='listitem'>
-            <article class='tool-card-wrapper'>
+            <article class='tool-card' transition:name={`tool-card-${tool.id}`}>
+              <div class='tool-card-glow'></div>
               <a
                 href={tool.link}
-                class={`tool-card glassmorphism glassmorphism-card group ${getAnimationClass()}`}
+                class='tool-card-link'
                 aria-labelledby={`tool-name-${tool.id}`}
                 aria-describedby={`tool-desc-${tool.id}`}
-                aria-label={`Learn more about ${tool.name} tool`}
               >
-                <div class='tool-card-frame'>
-                  <header class='tool-card-header'>
-                    <div class='tool-title-container'>
-                      <div
-                        class='tool-icon'
-                        role='img'
-                        aria-label={`${tool.name} tool icon`}
-                      >
-                        <img
-                          src={tool.iconUrl}
-                          alt={`${tool.name} tool icon`}
-                          class='tool-icon-image'
-                          loading='lazy'
-                          decoding='async'
-                        />
-                      </div>
+                <div class='tool-card-content'>
+                  {/* Left Column: Tool Icon */}
+                  <div class='tool-icon-column'>
+                    <div class='tool-icon-glow'></div>
+                    <div
+                      class='tool-icon'
+                      role='img'
+                      aria-label={`${tool.name} icon`}
+                    >
+                      <img
+                        src={tool.iconUrl}
+                        alt={`${tool.name} icon`}
+                        class='tool-icon-image'
+                        loading={index < 2 ? 'eager' : 'lazy'}
+                        decoding='async'
+                        width='64'
+                        height='64'
+                      />
+                    </div>
+                  </div>
+
+                  {/* Right Column: Name + Description */}
+                  <div class='tool-text-column'>
+                    <div class='tool-text-body'>
                       <h3 class='tool-name' id={`tool-name-${tool.id}`}>
                         {tool.name}
                       </h3>
+                      <p class='tool-description' id={`tool-desc-${tool.id}`}>
+                        {tool.description}
+                      </p>
                     </div>
-                  </header>
-
-                  <div class='tool-card-body'>
-                    <p
-                      class='tool-description-card'
-                      id={`tool-desc-${tool.id}`}
-                    >
-                      {getFirstSentence(tool.description)}
-                    </p>
                   </div>
-
-                  <footer class='tool-card-footer'>
-                    <span class='tool-cta-text'>Lihat Panduan</span>
-                    <svg
-                      class='tool-arrow'
-                      width='16'
-                      height='16'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      stroke-width='2.5'
-                      aria-label='Arrow indicating link to tool guide'
-                    >
-                      <path d='M5 12h14M12 5l7 7-7 7' />
-                    </svg>
-                  </footer>
                 </div>
               </a>
             </article>
           </div>
         ))
       }
-      <slot />
     </div>
   </div>
 </section>
+
+<style>
+  /* ========== Tools Grid Section ========== */
+  .tools-grid-section {
+    padding: 2rem 0;
+  }
+
+  .tools-grid-container {
+    width: 100%;
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .tools-grid-container {
+      padding: 0 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tools-grid-container {
+      padding: 0 2rem;
+    }
+  }
+
+  /* ========== Grid Layout ========== */
+  .tools-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .tools-grid {
+      gap: 1.5rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tools-grid {
+      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ========== Tool Card ========== */
+  .tool-grid-item {
+    list-style: none;
+    width: 100%;
+  }
+
+  .tool-card {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-radius: var(--border-radius-lg, 1.25rem);
+    background: var(--grkd-surface-2, oklch(8% 0.01 270deg / 0.12));
+    transition:
+      transform var(--duration-normal, 0.3s) var(--grkd-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1)),
+      box-shadow var(--duration-normal, 0.3s) var(--grkd-ease-out, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+  }
+
+  .tool-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px oklch(0% 0 0deg / 0.4);
+  }
+
+  /* Gradient border on hover */
+  .tool-card::before {
+    position: absolute;
+    z-index: -1;
+    border-radius: calc(var(--border-radius-lg, 1.25rem) + 1px);
+    background: linear-gradient(
+      135deg,
+      var(--grkd-purple-500, oklch(65% 0.25 280deg)) 0%,
+      var(--token-gold-base, oklch(75% 0.15 85deg)) 50%,
+      var(--grkd-cyan-400, oklch(75% 0.15 195deg)) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    content: "";
+    inset: -1px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  .tool-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Glow effect */
+  .tool-card-glow {
+    position: absolute;
+    z-index: 0;
+    border-radius: var(--border-radius-lg, 1.25rem);
+    background: radial-gradient(
+      circle at 50% 0%,
+      color-mix(in oklch, var(--grkd-purple-500, oklch(65% 0.25 280deg)) 15%, transparent) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    inset: 0;
+  }
+
+  .tool-card:hover .tool-card-glow {
+    opacity: 1;
+  }
+
+  /* ========== Card Link ========== */
+  .tool-card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ========== Card Content ========== */
+  .tool-card-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    height: 100%;
+  }
+
+  /* ========== Left Column: Icon ========== */
+  .tool-icon-column {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    padding: 2rem 1rem;
+    border-right: 1px solid color-mix(in oklch, var(--clr-white, white) 5%, transparent);
+    background: radial-gradient(
+      circle at center,
+      color-mix(in oklch, var(--grkd-purple-500, oklch(65% 0.25 280deg)) 10%, transparent) 0%,
+      var(--grkd-surface, oklch(6% 0.008 270deg)) 100%
+    );
+  }
+
+  .tool-icon-glow {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      color-mix(in oklch, var(--grkd-purple-500, oklch(65% 0.25 280deg)) 20%, transparent) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .tool-card:hover .tool-icon-glow {
+    opacity: 1;
+  }
+
+  .tool-icon {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+  }
+
+  .tool-icon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    transition: transform var(--duration-normal, 0.3s) var(--grkd-ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+    filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
+  }
+
+  .tool-card:hover .tool-icon-image {
+    transform: scale(1.1);
+  }
+
+  /* ========== Right Column: Text ========== */
+  .tool-text-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 70%;
+  }
+
+  .tool-text-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .tool-name {
+    margin: 0;
+    background: linear-gradient(
+      135deg,
+      oklch(85% 0.15 85deg) 0%,
+      oklch(65% 0.15 85deg) 70%
+    );
+    font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px oklch(5% 0.05 270deg / 0.6));
+  }
+
+  .tool-description {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0;
+    color: var(--clr-text-secondary, oklch(85% 0.002 270deg));
+    font-size: 0.9rem;
+    line-height: 1.6;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  /* ========== Mobile Adjustments ========== */
+  @media (max-width: 639px) {
+    .tool-icon-column {
+      width: 25%;
+      padding: 1.5rem 0.75rem;
+    }
+
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .tool-text-body {
+      gap: 0.5rem;
+      padding: 1.25rem;
+    }
+
+    .tool-name {
+      font-size: 1.25rem;
+    }
+
+    .tool-description {
+      font-size: 0.85rem;
+    }
+  }
+
+  /* ========== Desktop Hover ========== */
+  @media (hover: hover) and (pointer: fine) {
+    .tool-card {
+      cursor: pointer;
+    }
+  }
+
+  /* ========== High Contrast ========== */
+  @media (prefers-contrast: high) {
+    .tool-name {
+      background: none;
+      -webkit-text-fill-color: var(--clr-text-primary, oklch(98% 0.002 270deg));
+      color: var(--clr-text-primary, oklch(98% 0.002 270deg));
+      filter: none;
+    }
+  }
+
+  /* ========== Reduced Motion ========== */
+  @media (prefers-reduced-motion: reduce) {
+    .tool-card,
+    .tool-card::before,
+    .tool-card-glow,
+    .tool-icon-glow,
+    .tool-icon-image {
+      transition: none;
+    }
+
+    .tool-card:hover {
+      transform: none;
+    }
+
+    .tool-card:hover .tool-icon-image {
+      transform: none;
+    }
+  }
+</style>
