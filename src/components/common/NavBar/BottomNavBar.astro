@@ -1083,7 +1083,7 @@ const menuItems = [
     width: 90%;
     max-width: 420px;
     max-height: 75vh;
-    border: 1px solid oklch(25% 0.015 270deg / 0.15);
+    border: 1px solid oklch(100% 0 0deg / 0.15);
     border-radius: 1.5rem;
 
     /* 最適化: 具体的なプロパティのみアニメーション */
@@ -1166,12 +1166,8 @@ const menuItems = [
     width: 40px;
     height: 40px;
     border: 1px solid oklch(100% 0 0deg / 0.15);
-    border-radius: 50%;
-    background: linear-gradient(
-      135deg,
-      oklch(100% 0 0deg / 0.1) 0%,
-      oklch(100% 0 0deg / 0.05) 100%
-    );
+    border-radius: 1.25rem;
+    background: oklch(100% 0 0deg / 0.12);
     color: oklch(from var(--token-white-base) l c h);
     cursor: pointer;
     transition:
@@ -1220,32 +1216,30 @@ const menuItems = [
   /* Desktop hover effects */
   @media (hover: hover) and (pointer: fine) {
     .menu-overlay-view-toggle:hover {
-      background: linear-gradient(
-        135deg,
-        oklch(100% 0 0deg / 0.2) 0%,
-        oklch(100% 0 0deg / 0.1) 100%
-      );
+      background: oklch(100% 0 0deg / 0.18);
       border-color: oklch(100% 0 0deg / 0.25);
-      transform: scale(1.05);
+      transform: translateY(-1px);
       box-shadow:
         0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+        0 2px 6px oklch(from var(--token-black-base) l c h / 0.1);
     }
   }
 
   .menu-overlay-view-toggle:active {
-    transform: scale(0.95);
+    background: oklch(100% 0 0deg / 0.22);
+    transform: translateY(0);
     box-shadow:
-      0 1px 4px oklch(from var(--token-black-base) l c h / 0.1),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+      0 2px 6px oklch(from var(--token-black-base) l c h / 0.2),
+      inset 0 1px 2px oklch(100% 0 0deg / 0.1);
   }
 
   .menu-overlay-title {
     margin: 0;
     color: oklch(from var(--token-white-base) l c h);
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-family: var(--font-jp-logo, 'Yuji Syuku', serif);
+    font-size: 1.45rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
 
     /* UNIFIED text shadow - Navbar.astroと同じ */
     text-shadow:
@@ -1261,12 +1255,8 @@ const menuItems = [
     width: 40px;
     height: 40px;
     border: 1px solid oklch(100% 0 0deg / 0.15);
-    border-radius: 50%;
-    background: linear-gradient(
-      135deg,
-      oklch(100% 0 0deg / 0.1) 0%,
-      oklch(100% 0 0deg / 0.05) 100%
-    );
+    border-radius: 1.25rem;
+    background: oklch(100% 0 0deg / 0.12);
     color: oklch(from var(--token-white-base) l c h);
     cursor: pointer;
 
@@ -1285,24 +1275,21 @@ const menuItems = [
   /* デスクトップのみホバー効果 */
   @media (hover: hover) and (pointer: fine) {
     .menu-overlay-close:hover {
-      background: linear-gradient(
-        135deg,
-        oklch(100% 0 0deg / 0.2) 0%,
-        oklch(100% 0 0deg / 0.1) 100%
-      );
+      background: oklch(100% 0 0deg / 0.18);
       border-color: oklch(100% 0 0deg / 0.25);
-      transform: scale(1.05);
+      transform: translateY(-1px);
       box-shadow:
         0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+        0 2px 6px oklch(from var(--token-black-base) l c h / 0.1);
     }
   }
 
   .menu-overlay-close:active {
-    transform: scale(0.95);
+    background: oklch(100% 0 0deg / 0.22);
+    transform: translateY(0);
     box-shadow:
-      0 1px 4px oklch(from var(--token-black-base) l c h / 0.1),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+      0 2px 6px oklch(from var(--token-black-base) l c h / 0.2),
+      inset 0 1px 2px oklch(100% 0 0deg / 0.1);
   }
 
   .menu-overlay-items {
@@ -1326,10 +1313,6 @@ const menuItems = [
     @media (max-width: 768px) {
       gap: 0.5rem; /* ボタン間のスペースを25%削減 */
       padding: 0.75rem 1rem 1rem; /* パディングも削減 */
-
-      /* WebKit系ブラウザのスクロールバーカスタマイズ */
-      scrollbar-width: thin;
-      scrollbar-color: oklch(100% 0 0deg / 0.3) transparent;
     }
 
     /* WebKit系ブラウザのスクロールバーカスタマイズ */
@@ -1398,14 +1381,10 @@ const menuItems = [
     gap: 1rem;
     padding: 1rem;
     border: 1px solid oklch(100% 0 0deg / 0.15);
-    border-radius: 1rem;
+    border-radius: 1.25rem;
 
-    /* UNIFIED background - Navbar.astroと同じ */
-    background: linear-gradient(
-      135deg,
-      oklch(100% 0 0deg / 0.08) 0%,
-      oklch(100% 0 0deg / 0.05) 100%
-    );
+    /* UNIFIED background - Navbar.astroのnav-itemと同じ */
+    background: oklch(100% 0 0deg / 0.12);
     color: oklch(from var(--token-white-base) l c h);
     text-decoration: none;
     cursor: pointer;
@@ -1423,28 +1402,25 @@ const menuItems = [
       0 2px 8px oklch(from var(--token-black-base) l c h / 0.08),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
 
-    /* デスクトップのみホバー効果 */
+    /* デスクトップのみホバー効果 - nav-itemと同じ */
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background: linear-gradient(
-          135deg,
-          oklch(100% 0 0deg / 0.15) 0%,
-          oklch(100% 0 0deg / 0.1) 100%
-        );
+        background: oklch(100% 0 0deg / 0.18);
         border-color: oklch(100% 0 0deg / 0.25);
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow:
-          0 8px 24px oklch(from var(--token-black-base) l c h / 0.15),
-          0 4px 12px oklch(from var(--token-black-base) l c h / 0.1),
-          inset 0 1px 0 oklch(100% 0 0deg / 0.15);
+          0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
+          0 2px 6px oklch(from var(--token-black-base) l c h / 0.1);
       }
     }
 
     &:active {
+      background: oklch(100% 0 0deg / 0.22);
       transform: translateY(0);
+      border-color: oklch(100% 0 0deg / 0.3);
       box-shadow:
-        0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.05);
+        0 2px 6px oklch(from var(--token-black-base) l c h / 0.2),
+        inset 0 1px 2px oklch(100% 0 0deg / 0.1);
     }
 
     /* モバイル最適化: ボタンサイズの調整 */
