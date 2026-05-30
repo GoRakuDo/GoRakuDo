@@ -115,12 +115,15 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
       <!-- Center Logo -->
       <div class='nav-center'>
-        <a href='/' class='logo-japanese' title='GoRakuDo'> 語楽道 </a>
+        <a href='/' class='logo-container' title='GoRakuDo'>
+          <img src="/svg/Logo.svg" alt="GoRakuDo Logo" class="nav-logo-icon" width="28" height="28" />
+          <span class="logo-japanese">語楽道</span>
+        </a>
       </div>
 
       <!-- Right Actions - Desktop Only -->
       <div class='nav-right'>
-        <button class='get-started-btn' data-action='metodologi'>
+        <button class='get-started-btn desktop-only' data-action='metodologi'>
           <svg
             class='nav-svg-icon'
             width='16'
@@ -138,7 +141,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           </svg>
           Panduan
         </button>
-        <button class='get-started-btn' data-action='get-started'>
+        <button class='get-started-btn desktop-only' data-action='get-started'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='16'
@@ -159,30 +162,27 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           </svg>
           Mulai Sekarang
         </button>
-      </div>
 
-      <!-- Mobile Menu Button -->
-      <button class='mobile-menu-btn' data-action='discord'>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          width='16'
-          height='16'
-          viewBox='0 0 24 24'
-          class='nav-svg-icon lucide lucide-gamepad2-icon lucide-gamepad-2'
-          aria-hidden='true'
-        >
-          <line x1='6' x2='10' y1='11' y2='11'></line>
-          <line x1='8' x2='8' y1='9' y2='13'></line>
-          <line x1='15' x2='15.01' y1='12' y2='12'></line>
-          <line x1='18' x2='18.01' y1='10' y2='10'></line>
-          <path
-            d='M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'></path>
-        </svg>
-        Join
-      </button>
+        <!-- Mobile Menu Hamburger -->
+        <button class='mobile-hamburger-btn mobile-only' data-action='menu'>
+          <svg
+            class='nav-svg-icon'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'
+          >
+            <path
+              d='M3 12h18M3 6h18M3 18h18'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
 </div>
@@ -366,20 +366,21 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
     /* ---------- Main Navbar Container - Modern Redesign with Enhanced GlassMorphism ---------- */
     .navbar {
-      /* REASONING: Fixed positioning for persistent navigation */
-      position: fixed;
-      top: var(--safe-area-top);
-      right: var(--safe-area-right);
-      left: var(--safe-area-left);
+      /* REASONING: Mobile default is absolute at top (non-sticky) */
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
       z-index: var(--z-Navbar-navbar);
 
-      /* REASONING: Apply safe viewport width to navbar */
-      width: var(--navbar-width);
-      padding: var(--navbar-padding-y);
+      /* Full width on mobile */
+      width: 100%;
+      padding: 0;
 
       /* REASONING: Enhanced glass border styling with gradient */
       border: none;
-      border-radius: 0 0 var(--navbar-radius-lg) var(--navbar-radius-lg);
+      border-bottom: 1px solid oklch(25% 0.015 270deg / 0.15);
+      border-radius: 0;
 
       /* REASONING: Enhanced glass morphism background with multiple layers */
       background:
@@ -395,45 +396,38 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           ellipse at 50% 0%,
           oklch(65% 0.18 280deg / 0.12) 0%,
           transparent 70%
-        ),
-        radial-gradient(
-          ellipse at 0% 50%,
-          oklch(65% 0.18 15deg / 0.08) 0%,
-          transparent 50%
-        ),
-        radial-gradient(
-          ellipse at 100% 50%,
-          oklch(70% 0.15 45deg / 0.08) 0%,
-          transparent 50%
         );
       transform: translateZ(0);
 
       /* REASONING: Enhanced transition system with modern easing */
-      transition:
-        background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        backdrop-filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-      /* REASONING: CSS Scroll-driven Animation for enhanced opacity */
-      animation: navbarScrollOpacityEnhanced linear;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
       /* REASONING: Enhanced backdrop filters for superior glass effect */
       backdrop-filter: blur(12px) saturate(120%);
 
-      /* REASONING: Enhanced shadow system */
-      box-shadow:
-        0 8px 32px oklch(0% 0 0deg / 0.12),
-        0 4px 16px oklch(0% 0 0deg / 0.08),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.1),
-        inset 0 -1px 0 oklch(0% 0 0deg / 0.1);
-
       /* REASONING: GPU acceleration for smooth animations */
       will-change:
         background, backdrop-filter, border-color, transform, box-shadow;
-      animation-timeline: scroll(root);
-      animation-range: 0 200px;
+    }
+
+    @media (min-width: 1024px) {
+      .navbar {
+        /* Desktop: Floating Pill (Fixed on scroll) */
+        position: fixed;
+        top: 1.5rem;
+        left: 50%;
+        width: fit-content;
+        max-width: 90vw;
+        padding: 0.5rem;
+        border: 1px solid oklch(100% 0 0deg / 0.15);
+        border-radius: 100px;
+        transform: translateX(-50%) translateZ(0);
+        box-shadow:
+          0 8px 32px oklch(0% 0 0deg / 0.4),
+          0 4px 16px oklch(0% 0 0deg / 0.2),
+          inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+          inset 0 -1px 0 oklch(0% 0 0deg / 0.1);
+      }
     }
 
     /* ---------- Navigation Container - Flexbox Layout ---------- */
@@ -441,15 +435,75 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
+      width: 100%;
       max-width: 75rem;
-
-      /* REASONING: Centered container with responsive max-width */
       margin: 0 auto;
-
-      /* REASONING: Safe area padding using global variables */
-      padding: 0 calc(var(--navbar-padding-x) + var(--safe-area-right)) 0
-        calc(var(--navbar-padding-x) + var(--safe-area-left));
+      padding: 1rem 1.5rem;
       background: transparent;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-container {
+        gap: 2rem;
+        padding: 0 0.5rem; /* Pill has its own padding, keep this minimal */
+      }
+    }
+
+    /* ---------- Logo Area ---------- */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .logo-container:hover {
+      opacity: 0.8;
+    }
+
+    .nav-logo-icon {
+      flex-shrink: 0;
+
+      /* If Logo.svg is white/black it might need a filter for dark mode, but assume it's styled correctly */
+    }
+
+    .logo-japanese {
+      color: var(--navbar-text-primary);
+      font-family: var(--font-jp-logo, 'Yuji Syuku', serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 1024px) {
+      .logo-japanese {
+        font-size: 1.25rem; /* slightly smaller in pill */
+      }
+    }
+
+    /* ---------- Desktop / Mobile Display Utilities ---------- */
+
+    /* Remove !important, rely on specificity / media queries */
+    @media (max-width: 1023px) {
+      .desktop-only {
+        display: none;
+      }
+
+      .mobile-only {
+        display: flex;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .desktop-only {
+        display: flex;
+      }
+
+      .mobile-only {
+        display: none;
+      }
     }
 
     /* ---------- SVG Icon System - Unified Styling ---------- */
@@ -481,22 +535,39 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       transform: translateZ(0) scale(0.95);
     }
 
-    /* ---------- Navigation Sections - Mobile First ---------- */
+    /* ---------- Navigation Sections - Unified Layout ---------- */
     .nav-left,
+    .nav-center,
     .nav-right {
-      /* REASONING: Hidden on mobile, shown on desktop */
-      display: var(--navbar-nav-display);
-      flex: 1 1 0%;
+      display: flex;
       align-items: center;
     }
 
     .nav-left {
+      /* Left side (Logo) always visible, but only takes needed space */
+      flex: 0 0 auto;
+    }
+
+    .nav-center {
+      display: var(--navbar-nav-display); /* Hidden on mobile */
+
+      /* Center links take up space, centered */
+      flex: 1 1 auto;
+      justify-content: center;
       gap: var(--navbar-gap-left);
     }
 
     .nav-right {
+      /* Right actions */
+      flex: 0 0 auto;
       justify-content: flex-end;
-      gap: var(--navbar-gap-right);
+      gap: 0.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-right {
+        gap: var(--navbar-gap-right);
+      }
     }
 
     /* ---------- Navigation Items - Touch-Optimized Interactive Elements ---------- */
@@ -558,182 +629,25 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         inset 0 1px 2px oklch(100% 0 0deg / 0.1);
     }
 
-    /* ---------- Mobile Menu Button - Modern Redesign with Enhanced Styling ---------- */
-    .mobile-menu-btn {
-      position: relative;
-      display: var(--navbar-mobile-display);
+    /* ---------- Mobile Menu Button (Hamburger) ---------- */
+    .mobile-hamburger-btn {
+      display: var(--navbar-mobile-display); /* Hidden on desktop */
       justify-content: center;
       align-items: center;
-      gap: var(--navbar-gap-small);
-      overflow: hidden;
-      min-width: var(--touch-target-min);
-      min-height: var(--touch-target-min);
-      padding: var(--touch-target-padding) var(--navbar-gap-medium);
-      border: none;
-      border-radius: var(--navbar-radius-lg);
-      background:
-        linear-gradient(var(--navbar-primary), var(--navbar-primary))
-          padding-box,
-        linear-gradient(
-            135deg,
-            var(--navbar-accent-orange) 0%,
-            var(--navbar-accent-blue) 50%,
-            var(--navbar-accent-green) 100%
-          )
-          border-box;
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      border: 1px solid oklch(100% 0 0deg / 0.15);
+      border-radius: var(--navbar-radius-md);
+      background: oklch(100% 0 0deg / 0.12);
       color: var(--navbar-text-primary);
-      font-size: var(--navbar-item-size-md);
-      font-weight: 600;
-      letter-spacing: 0.02em;
       cursor: pointer;
-      transform: translateZ(0);
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      touch-action: manipulation;
-      box-shadow:
-        0 4px 16px oklch(65% 0.25 280deg / 0.2),
-        0 2px 8px oklch(0% 0 0deg / 0.1),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-      will-change: transform, background, box-shadow, filter;
-      -webkit-tap-highlight-color: transparent;
-      filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
+      backdrop-filter: blur(4px);
     }
 
-    .mobile-menu-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        oklch(100% 0 0deg / 0.1) 0%,
-        transparent 50%,
-        oklch(100% 0 0deg / 0.05) 100%
-      );
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
+    /* ---------- Logo Component - Clean Redesign ---------- */
 
-    .mobile-menu-btn:hover {
-      background:
-        linear-gradient(
-            var(--navbar-primary-light),
-            var(--navbar-primary-light)
-          )
-          padding-box,
-        linear-gradient(
-            135deg,
-            var(--navbar-accent-orange) 0%,
-            var(--navbar-accent-blue) 50%,
-            var(--navbar-accent-green) 100%
-          )
-          border-box;
-      box-shadow:
-        0 8px 32px oklch(65% 0.25 280deg / 0.3),
-        0 4px 16px oklch(0% 0 0deg / 0.15),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.2);
-
-      /* モバイル: ホバー効果を無効化 */
-      @media (min-width: 1025px) {
-        transform: translateZ(0) translateY(-2px) scale(1.02);
-      }
-
-      @media (max-width: 1024px) {
-        transform: none; /* ホバー無効 */
-      }
-
-      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
-    }
-
-    .mobile-menu-btn:active {
-      /* モバイル: アクティブ状態を簡略化 */
-      @media (min-width: 1025px) {
-        transform: translateZ(0) translateY(0) scale(0.98);
-      }
-
-      @media (max-width: 1024px) {
-        transform: scale(0.98);
-      }
-
-      box-shadow:
-        0 2px 8px oklch(65% 0.25 280deg / 0.2),
-        0 1px 4px oklch(0% 0 0deg / 0.1);
-      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
-    }
-
-    /* ---------- Logo Component - Brand Identity with Enhanced Readability ---------- */
-    .logo-japanese {
-      color: oklch(from var(--token-white-base) l c h);
-      font-family: var(--font-jp);
-      font-size: var(--navbar-logo-size);
-      font-weight: 500;
-      line-height: 1;
-      text-decoration: none;
-      letter-spacing: 0.005em;
-      -webkit-text-stroke: 0.25px
-        oklch(from var(--token-black-base) l c h / 0.4);
-
-      /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.4); Non-standard property removed */
-
-      /* REASONING: Brand-consistent logo styling */
-      cursor: pointer;
-      transform: translateZ(0);
-
-      /* REASONING: Unified transition system with GPU acceleration */
-      transition:
-        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-      /* REASONING: Enhanced readability with optimized shadow system */
-      text-shadow:
-        0 2px 4px oklch(from var(--token-black-base) l c h / 0.4),
-        0 1px 2px oklch(from var(--token-black-base) l c h / 0.5),
-        0 0 8px oklch(from var(--token-black-base) l c h / 0.3),
-        0 0 16px oklch(from var(--token-purple-base) l c h / 0.2);
-
-      /* REASONING: GPU acceleration for logo animations */
-      will-change: transform, color, text-shadow, filter;
-
-      @media (min-width: 1024px) {
-        color: oklch(from var(--token-white-base) l c h);
-        font-weight: 450;
-        -webkit-text-stroke: 0.25px
-          oklch(from var(--token-black-base) l c h / 0.5);
-
-        /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.5); Non-standard property removed */
-        text-shadow:
-          0 3px 6px oklch(from var(--token-black-base) l c h / 0.5),
-          0 1px 3px oklch(from var(--token-black-base) l c h / 0.6),
-          0 0 12px oklch(from var(--token-black-base) l c h / 0.4),
-          0 0 20px oklch(from var(--token-white-base) l c h / 0.3);
-      }
-    }
-
-    .logo-japanese:hover {
-      color: oklch(from var(--token-white-base) l c h);
-      -webkit-text-stroke: 0.25px
-        oklch(from var(--token-black-base) l c h / 0.6);
-
-      /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.6); Non-standard property removed */
-      text-shadow:
-        0 4px 8px oklch(from var(--token-black-base) l c h / 0.6),
-        0 2px 4px oklch(from var(--token-black-base) l c h / 0.7),
-        0 0 16px oklch(from var(--token-black-base) l c h / 0.5),
-        0 0 24px oklch(from var(--token-purple-base) l c h / 0.4),
-        0 0 32px oklch(from var(--token-purple-base) l c h / 0.3);
-      filter: drop-shadow(
-        0 0 12px oklch(from var(--token-purple-base) l c h / 0.4)
-      );
-
-      /* モバイル: ホバー効果を無効化 */
-      @media (min-width: 1025px) {
-        transform: translateZ(0) translateY(-2px) scale(1.02);
-      }
-
-      @media (max-width: 1024px) {
-        transform: none; /* ホバー無効 */
-      }
-    }
+    /* Previous complex logo styles removed in favor of clean Logo.svg + Text layout */
 
     /* ---------- Ruby Text Styling - Japanese Typography with Enhanced Readability ---------- */
     .logo-japanese rt {
