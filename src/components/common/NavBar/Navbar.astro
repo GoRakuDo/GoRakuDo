@@ -336,43 +336,54 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       /* Full width on mobile */
       width: 100%;
       padding: 0;
-
-      /* REASONING: Enhanced glass border styling with gradient */
       border: none;
-      border-bottom: 1px solid oklch(25% 0.015 270deg / 0.15);
-      border-radius: 0;
 
-      /* REASONING: Enhanced glass morphism background with multiple layers */
-      background:
-        linear-gradient(
-          135deg,
-          oklch(6% 0.008 270deg / 0.15) 0%,
-          oklch(8% 0.01 270deg / 0.12) 25%,
-          oklch(6% 0.008 270deg / 0.18) 50%,
-          oklch(8% 0.01 270deg / 0.12) 75%,
-          oklch(6% 0.008 270deg / 0.15) 100%
-        ),
-        radial-gradient(
-          ellipse at 50% 0%,
-          oklch(65% 0.18 280deg / 0.12) 0%,
-          transparent 70%
-        );
-      transform: translateZ(0);
+      /* Mobile: Completely transparent so it doesn't obscure the Hero image */
+      background: transparent;
+      box-sizing: border-box;
+      backdrop-filter: none;
+      box-shadow: none;
+    }
 
-      /* REASONING: Enhanced transition system with modern easing */
-      transition:
-        background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        backdrop-filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    @media (min-width: 1024px) {
+      .navbar {
+        /* Desktop: Floating Pill (Fixed on scroll) */
+        position: fixed;
+        top: 1.5rem;
+        left: 50%;
+        width: fit-content;
+        max-width: 90vw;
+        padding: 0.5rem;
+        border: 1px solid oklch(100% 0 0deg / 0.15);
+        border-radius: 100px;
+        
+        /* REASONING: Enhanced glass morphism background for desktop pill */
+        background:
+          linear-gradient(
+            135deg,
+            oklch(6% 0.008 270deg / 0.15) 0%,
+            oklch(8% 0.01 270deg / 0.12) 25%,
+            oklch(6% 0.008 270deg / 0.18) 50%,
+            oklch(8% 0.01 270deg / 0.12) 75%,
+            oklch(6% 0.008 270deg / 0.15) 100%
+          ),
+          radial-gradient(
+            ellipse at 50% 0%,
+            oklch(65% 0.18 280deg / 0.12) 0%,
+            transparent 70%
+          );
+        transform: translateX(-50%) translateZ(0);
 
-      /* REASONING: Enhanced backdrop filters for superior glass effect */
-      backdrop-filter: blur(12px) saturate(120%);
-
-      /* REASONING: GPU acceleration for smooth animations */
-      will-change:
-        background, backdrop-filter, border-color, transform, box-shadow;
+        /* REASONING: Enhanced transition system with modern easing */
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        backdrop-filter: blur(12px) saturate(120%);
+        box-shadow:
+          0 8px 32px oklch(0% 0 0deg / 0.4),
+          0 4px 16px oklch(0% 0 0deg / 0.2),
+          inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+          inset 0 -1px 0 oklch(0% 0 0deg / 0.1);
+        will-change: background, backdrop-filter, border-color, transform, box-shadow;
+      }
     }
 
     @media (min-width: 1024px) {
