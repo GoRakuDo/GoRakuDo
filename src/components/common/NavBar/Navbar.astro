@@ -451,13 +451,14 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       color: var(--navbar-text-primary);
       font-family: var(--font-jp-logo, 'Yuji Syuku', serif);
       font-size: 1.5rem;
-      font-weight: 700;
+      font-weight: 400; /* 太さを抑えて筆文字の優雅さを引き出す */
+      letter-spacing: 0.05em; /* 筆文字が詰まらないよう少し字間を空ける */
       white-space: nowrap;
     }
 
     @media (min-width: 1024px) {
       .logo-japanese {
-        font-size: 1.25rem; /* slightly smaller in pill */
+        font-size: 1.45rem; /* ピルの中に収まりつつ、以前(1.25rem)より存在感を出す */
       }
     }
 
