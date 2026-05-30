@@ -432,24 +432,14 @@
   }
 
   body {
+    display: flex;
     flex-direction: column;
-    overflow-x: hidden;
-
-    /* Global Layout Logic: Reserve space for fixed navbar */
-    padding: var(--navbar-height) 0 2rem 0;
-
-    /* Dynamic Global Padding as requested */
-
-    background-color: var(--token-bg-dark);
-    color: var(--token-white-base);
+    min-height: 100dvh;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: var(--font-primary);
-    line-height: var(--orphan-line-height); /* Orphan prevention */
-    letter-spacing: -0.01em; /* Slightly tighter for modern feel */
-    word-spacing: var(--orphan-word-spacing); /* Orphan prevention */
-
-    @media (min-width: 768px) {
-      padding-bottom: 3rem;
-    }
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
     @media (min-width: 1024px) {
       padding-bottom: 4rem;
@@ -548,6 +538,7 @@
   /* ===== SCROLLBAR STYLING - GLOBAL DESIGN ===== */
 
   /* Firefox scrollbar styling */
+  /* stylelint-disable-next-line no-duplicate-selectors */
   :root {
     scrollbar-width: thin;
     scrollbar-color: var(--clr-purple) transparent; /* thumb: accent, track: transparent */
@@ -693,7 +684,6 @@
     max-width: 100%;
     height: auto;
   }
-}
 
 /* ========== TAILWIND V4.1 THEME TOKENS - PURE OKLCH IMPLEMENTATION ========== */
 @theme {
@@ -873,13 +863,13 @@
     @media (prefers-contrast: high) {
       border: 2px solid var(--clr-text-primary);
       background: var(--clr-black-85);
+    }
+  }
 
-      @media (hover: hover) {
-        &:hover {
-          background: var(--clr-black-95);
-          border-color: var(--clr-purple);
-        }
-      }
+  @media (prefers-contrast: high) and (hover: hover) {
+    .glassmorphism:hover {
+      background: var(--clr-black-95);
+      border-color: var(--clr-purple);
     }
   }
 
@@ -1087,4 +1077,5 @@ body blockquote::after,
 .prose blockquote::after {
   display: none;
   content: none;
+}
 }

@@ -148,77 +148,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           </svg>
         </button>
       </div>
-
-      <!-- Center Logo -->
-      <div class='nav-center'>
-        <a href='/' class='logo-container' title='GoRakuDo'>
-          <img src="/svg/Logo.svg" alt="GoRakuDo Logo" class="nav-logo-icon" width="28" height="28" />
-          <span class="logo-japanese">語楽道</span>
-        </a>
-      </div>
-
-      <!-- Right Actions - Desktop Only -->
-      <div class='nav-right'>
-        <button class='get-started-btn desktop-only' data-action='metodologi'>
-          <svg
-            class='nav-svg-icon'
-            width='16'
-            height='16'
-            viewBox='0 0 24 24'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-            aria-hidden='true'
-          >
-            <path
-              d='M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'></path>
-          </svg>
-          Panduan
-        </button>
-        <button class='get-started-btn desktop-only' data-action='get-started'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='16'
-            height='16'
-            viewBox='0 0 24 24'
-            class='nav-svg-icon lucide lucide-gamepad2-icon lucide-gamepad-2'
-            aria-hidden='true'
-          >
-            <line x1='6' x2='10' y1='11' y2='11'></line>
-            <line x1='8' x2='8' y1='9' y2='13'></line>
-            <line x1='15' x2='15.01' y1='12' y2='12'></line>
-            <line x1='18' x2='18.01' y1='10' y2='10'></line>
-            <path
-              d='M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'></path>
-          </svg>
-          Mulai Sekarang
-        </button>
-
-        <!-- Mobile Menu Hamburger -->
-        <button class='mobile-hamburger-btn mobile-only' data-action='menu'>
-          <svg
-            class='nav-svg-icon'
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-            aria-hidden='true'
-          >
-            <path
-              d='M3 12h18M3 6h18M3 18h18'
-              stroke='currentColor'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'></path>
-          </svg>
-        </button>
-      </div>
     </div>
   </nav>
 </div>
@@ -244,11 +173,24 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
  * - Progressive enhancement with fallbacks for older browsers
  */
 
-  /* ===== DESIGN TOKENS - MODERN REDESIGN ===== */
-  .navbar-wrapper {
-    /* REASONING: Single root element with proper layout flow */
-    display: block;
-    overflow-x: hidden;
+    /* ===== DESIGN TOKENS - MODERN REDESIGN ===== */
+    .navbar-wrapper {
+      position: relative;
+
+      /* REASONING: Single root element with proper layout flow */
+      display: block;
+
+      /* REASONING: Prevent horizontal overflow and ensure proper containment */
+      max-width: 100%;
+      padding-right: var(--safe-area-right);
+
+    /* REASONING: Safe area considerations using global variables */
+    padding-left: var(--safe-area-left);
+    box-sizing: border-box;
+
+    /* REASONING: Container query setup for responsive design */
+    container-name: navbar;
+    container-type: inline-size;
 
     /* Modern Color Tokens - Enhanced OKLCH palette */
     --navbar-white: oklch(100% 0 0deg);
@@ -326,34 +268,18 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     --navbar-radius-lg: 1.25rem;
     --navbar-radius-btn: var(--border-radius-btn-small);
 
-    /* Display Tokens */
-    --navbar-nav-display: none;
-    --navbar-mobile-display: flex;
-    --navbar-opacity: 1;
+      /* Display Tokens */
+      --navbar-nav-display: none;
+      --navbar-mobile-display: flex;
+      --navbar-opacity: 1;
 
-    /* Viewport Tokens */
-    --navbar-width: 100vw;
-    --navbar-height: 100vh;
+      /* Viewport Tokens */
+      --navbar-height: 100vh;
 
-    /* Backdrop Filter Tokens */
-    --navbar-blur-base: blur(12px) saturate(150%) brightness(1.05)
-      contrast(1.05);
-    --navbar-blur-transparent: blur(0) saturate(100%) brightness(1) contrast(1);
-
-    /* REASONING: Progressive enhancement with fallbacks for browser compatibility */
-    width: 100dvw;
-
-    /* REASONING: Prevent horizontal overflow and ensure proper containment */
-    max-width: 100%;
-    padding-right: var(--safe-area-right);
-
-    /* REASONING: Safe area considerations using global variables */
-    padding-left: var(--safe-area-left);
-    box-sizing: border-box;
-
-    /* REASONING: Container query setup for responsive design */
-    container-name: navbar;
-    container-type: inline-size;
+      /* Backdrop Filter Tokens */
+      --navbar-blur-base: blur(12px) saturate(150%) brightness(1.05)
+        contrast(1.05);
+      --navbar-blur-transparent: blur(0) saturate(100%) brightness(1) contrast(1);
 
     @media (min-width: 768px) {
       --navbar-padding-y: var(--navbar-gap-medium);
@@ -395,11 +321,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       --navbar-logo-size: var(--navbar-logo-size-lg);
     }
 
-    @supports (container-type: inline-size) {
-      container-name: navbar;
-      container-type: inline-size;
-    }
-
     /* ---------- Main Navbar Container - Modern Redesign with Enhanced GlassMorphism ---------- */
     .navbar {
       /* REASONING: Mobile default is absolute at top (non-sticky) */
@@ -436,7 +357,12 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       transform: translateZ(0);
 
       /* REASONING: Enhanced transition system with modern easing */
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition:
+        background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        backdrop-filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
       /* REASONING: Enhanced backdrop filters for superior glass effect */
       backdrop-filter: blur(12px) saturate(120%);
@@ -477,6 +403,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       margin: 0 auto;
       padding: 1rem 1.5rem;
       background: transparent;
+      box-sizing: border-box;
     }
 
     @media (min-width: 1024px) {
@@ -502,7 +429,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     .nav-logo-icon {
       flex-shrink: 0;
 
-      /* If Logo.svg is white/black it might need a filter for dark mode, but assume it's styled correctly */
+      /* Invert the black Logo.svg to white and slightly brighten */
+      filter: invert(1) brightness(1.2);
     }
 
     .logo-japanese {
