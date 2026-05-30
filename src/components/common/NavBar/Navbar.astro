@@ -422,8 +422,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
     @media (min-width: 1024px) {
       .nav-container {
-        gap: 2rem;
-        padding: 0 0.5rem; /* Pill has its own padding, keep this minimal */
+        gap: 1.25rem; /* ピルの要素間の隙間を凝縮 */
+        padding: 0 0.25rem; /* Pill has its own padding, keep this minimal */
       }
     }
 
@@ -533,7 +533,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       /* Center links take up space, centered */
       flex: 1 1 auto;
       justify-content: center;
-      gap: var(--navbar-gap-left);
+      gap: 0.75rem; /* より凝縮させるために固定値に */
     }
 
     .nav-right {
@@ -547,7 +547,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
     @media (min-width: 1024px) {
       .nav-right {
-        gap: var(--navbar-gap-right);
+        gap: 0.5rem; /* デスクトップでもボタン間の隙間を凝縮 */
       }
     }
 
