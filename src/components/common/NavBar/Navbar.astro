@@ -26,6 +26,17 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 }));
 ---
 
+<script is:inline>
+  try {
+    document.documentElement.dataset.bottomNav =
+      localStorage.getItem('grkd:bottom-nav-visible') === 'hidden'
+        ? 'hidden'
+        : 'visible';
+  } catch {
+    document.documentElement.dataset.bottomNav = 'visible';
+  }
+</script>
+
 <div class={`navbar-wrapper ${className}`}>
   <nav class='navbar'>
     <div class='nav-container'>
@@ -88,7 +99,12 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
       <!-- Right: Actions & Mobile Menu -->
       <div class='nav-right'>
-        <button class='get-started-btn' data-action='metodologi'>
+        <button
+          class='nav-item'
+          data-action='metodologi'
+          type='button'
+          aria-label='Panduan'
+        >
           <svg
             class='nav-svg-icon'
             width='16'
@@ -106,50 +122,67 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           </svg>
           Panduan
         </button>
-        <button class='get-started-btn' data-action='get-started'>
+        <button
+          class='nav-item'
+          data-action='menu'
+          type='button'
+          aria-label='Menu'
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='16'
             height='16'
             viewBox='0 0 24 24'
-            class='nav-svg-icon lucide lucide-gamepad2-icon lucide-gamepad-2'
+            class='nav-svg-icon lucide lucide-menu-icon lucide-menu'
             aria-hidden='true'
           >
-            <line x1='6' x2='10' y1='11' y2='11'></line>
-            <line x1='8' x2='8' y1='9' y2='13'></line>
-            <line x1='15' x2='15.01' y1='12' y2='12'></line>
-            <line x1='18' x2='18.01' y1='10' y2='10'></line>
-            <path
-              d='M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'></path>
+            <line x1='4' x2='20' y1='12' y2='12'></line>
+            <line x1='4' x2='20' y1='6' y2='6'></line>
+            <line x1='4' x2='20' y1='18' y2='18'></line>
           </svg>
-          Mulai Sekarang
+          Menu
         </button>
       </div>
 
-      <!-- Mobile Top Action Button (Join Discord) -->
-      <button class='mobile-menu-btn' data-action='discord'>
+      <!-- Mobile Top Action Button (BottomNavBar visibility toggle) -->
+      <button
+        class='mobile-menu-btn'
+        data-action='toggle-bottom-nav'
+        type='button'
+        aria-label='Sembunyikan navigasi bawah'
+        title='Sembunyikan navigasi bawah'
+        aria-pressed='true'
+      >
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          width='16'
-          height='16'
+          width='18'
+          height='18'
           viewBox='0 0 24 24'
-          class='nav-svg-icon lucide lucide-gamepad2-icon lucide-gamepad-2'
+          class='nav-svg-icon bottom-nav-toggle-icon bottom-nav-toggle-icon--close lucide lucide-panel-bottom-close-icon lucide-panel-bottom-close'
           aria-hidden='true'
         >
-          <line x1='6' x2='10' y1='11' y2='11'></line>
-          <line x1='8' x2='8' y1='9' y2='13'></line>
-          <line x1='15' x2='15.01' y1='12' y2='12'></line>
-          <line x1='18' x2='18.01' y1='10' y2='10'></line>
+          <rect width='18' height='18' x='3' y='3' rx='2'></rect>
+          <path d='M3 15h18'></path>
           <path
-            d='M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z'
-            stroke-width='2'
+            d='m15 8-3 3-3-3'
             stroke-linecap='round'
             stroke-linejoin='round'></path>
         </svg>
-        Join
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='18'
+          height='18'
+          viewBox='0 0 24 24'
+          class='nav-svg-icon bottom-nav-toggle-icon bottom-nav-toggle-icon--open lucide lucide-panel-bottom-open-icon lucide-panel-bottom-open'
+          aria-hidden='true'
+        >
+          <rect width='18' height='18' x='3' y='3' rx='2'></rect>
+          <path d='M3 15h18'></path>
+          <path
+            d='m9 10 3-3 3 3'
+            stroke-linecap='round'
+            stroke-linejoin='round'></path>
+        </svg>
       </button>
     </div>
   </nav>
@@ -422,8 +455,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
     @media (min-width: 1024px) {
       .nav-container {
-        gap: 1.25rem; /* ピルの要素間の隙間を凝縮 */
-        padding: 0 0.25rem; /* Pill has its own padding, keep this minimal */
+        gap: 1rem;
+        padding: 0 0.5rem; /* Pill has its own padding, keep this minimal */
       }
     }
 
@@ -452,7 +485,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       font-family: var(--font-jp-logo, 'Yuji Syuku', serif);
       font-size: 1.5rem;
       font-weight: 400; /* 太さを抑えて筆文字の優雅さを引き出す */
-      letter-spacing: 0.05em; /* 筆文字が詰まらないよう少し字間を空ける */
+      letter-spacing: 0.01em; /* 筆文字の余白を残しつつ、横幅を少し凝縮 */
       white-space: nowrap;
     }
 
@@ -533,7 +566,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       /* Center links take up space, centered */
       flex: 1 1 auto;
       justify-content: center;
-      gap: 0.75rem; /* より凝縮させるために固定値に */
+      gap: var(--navbar-gap-left);
     }
 
     .nav-right {
@@ -547,7 +580,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
     @media (min-width: 1024px) {
       .nav-right {
-        gap: 0.5rem; /* デスクトップでもボタン間の隙間を凝縮 */
+        gap: 0.75rem;
       }
     }
 
@@ -610,89 +643,62 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         inset 0 1px 2px oklch(100% 0 0deg / 0.1);
     }
 
-    /* ---------- Mobile Menu Button - Modern Redesign with Enhanced Styling ---------- */
+    .nav-item:focus-visible {
+      outline: 2px solid oklch(65% 0.18 280deg);
+      outline-offset: 2px;
+      background: oklch(100% 0 0deg / 0.18);
+    }
+
+    /* ---------- Mobile Icon Entry - transparent touch target ---------- */
     .mobile-menu-btn {
       position: relative;
       display: var(--navbar-mobile-display);
       justify-content: center;
       align-items: center;
-      gap: var(--navbar-gap-small);
-      overflow: hidden;
       min-width: var(--touch-target-min);
       min-height: var(--touch-target-min);
-      padding: var(--touch-target-padding) var(--navbar-gap-medium);
+      padding: 0;
       border: none;
-      border-radius: var(--navbar-radius-lg);
-      background:
-        linear-gradient(var(--navbar-primary), var(--navbar-primary))
-          padding-box,
-        linear-gradient(
-            135deg,
-            var(--navbar-accent-orange) 0%,
-            var(--navbar-accent-blue) 50%,
-            var(--navbar-accent-green) 100%
-          )
-          border-box;
+      background: transparent;
       color: var(--navbar-text-primary);
-      font-size: var(--navbar-item-size-md);
-      font-weight: 600;
-      letter-spacing: 0.02em;
       cursor: pointer;
       transform: translateZ(0);
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition:
+        color var(--duration-fast) ease,
+        opacity var(--duration-fast) ease,
+        transform var(--duration-fast) ease,
+        filter var(--duration-fast) ease;
       touch-action: manipulation;
-      box-shadow:
-        0 4px 16px oklch(65% 0.25 280deg / 0.2),
-        0 2px 8px oklch(0% 0 0deg / 0.1),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-      will-change: transform, background, box-shadow, filter;
+      box-shadow: none;
+      will-change: transform, opacity, filter;
       -webkit-tap-highlight-color: transparent;
-      filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
-    }
-
-    .mobile-menu-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        oklch(100% 0 0deg / 0.1) 0%,
-        transparent 50%,
-        oklch(100% 0 0deg / 0.05) 100%
-      );
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      filter: drop-shadow(0 0 8px oklch(65% 0.18 280deg / 0.35));
     }
 
     .mobile-menu-btn:hover {
-      background:
-        linear-gradient(
-            var(--navbar-primary-light),
-            var(--navbar-primary-light)
-          )
-          padding-box,
-        linear-gradient(
-            135deg,
-            var(--navbar-accent-orange) 0%,
-            var(--navbar-accent-blue) 50%,
-            var(--navbar-accent-green) 100%
-          )
-          border-box;
-      box-shadow:
-        0 8px 32px oklch(65% 0.25 280deg / 0.3),
-        0 4px 16px oklch(0% 0 0deg / 0.15),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.2);
-
-      /* モバイル: ホバー効果を無効化 */
-      @media (min-width: 1025px) {
+      @media (hover: hover) and (min-width: 1024px) {
+        color: oklch(86% 0.12 280deg);
+        opacity: 0.92;
         transform: translateZ(0) translateY(-2px) scale(1.02);
+        filter: drop-shadow(0 0 12px oklch(65% 0.18 280deg / 0.45));
       }
+    }
 
-      @media (max-width: 1024px) {
-        transform: none; /* ホバー無効 */
-      }
+    .mobile-menu-btn:focus-visible {
+      outline: 2px solid oklch(65% 0.18 280deg);
+      outline-offset: 3px;
+    }
 
-      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
+    .bottom-nav-toggle-icon--open {
+      display: none;
+    }
+
+    [data-bottom-nav='hidden'] .bottom-nav-toggle-icon--close {
+      display: none;
+    }
+
+    [data-bottom-nav='hidden'] .bottom-nav-toggle-icon--open {
+      display: block;
     }
 
     .mobile-menu-btn:active {
@@ -705,10 +711,8 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         transform: scale(0.98);
       }
 
-      box-shadow:
-        0 2px 8px oklch(65% 0.25 280deg / 0.2),
-        0 1px 4px oklch(0% 0 0deg / 0.1);
-      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
+      box-shadow: none;
+      filter: drop-shadow(0 0 4px oklch(65% 0.18 280deg / 0.25));
     }
 
     /* ---------- Logo Component - Clean Redesign ---------- */
@@ -735,106 +739,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
         0 0 8px oklch(from var(--token-white-base) l c h / 0.2);
     }
 
-    /* ---------- Get Started Buttons - Modern Redesign with Enhanced Styling ---------- */
-    .get-started-btn {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--navbar-gap-small);
-      overflow: hidden;
-      min-width: var(--touch-target-min);
-      min-height: var(--touch-target-min);
-      padding: var(--touch-target-padding) var(--navbar-padding-btn);
-      border: none;
-      border-radius: var(--navbar-radius-lg);
-      background:
-        linear-gradient(var(--navbar-primary), var(--navbar-primary))
-          padding-box,
-        linear-gradient(
-            135deg,
-            var(--navbar-accent-orange) 0%,
-            var(--navbar-accent-blue) 50%,
-            var(--navbar-accent-green) 100%
-          )
-          border-box;
-      color: var(--navbar-text-primary);
-      font-size: var(--navbar-item-size-md);
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      transform: translateZ(0);
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      touch-action: manipulation;
-      box-shadow:
-        0 4px 16px oklch(65% 0.25 280deg / 0.2),
-        0 2px 8px oklch(0% 0 0deg / 0.1),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
-      will-change: transform, background, box-shadow, filter;
-      -webkit-tap-highlight-color: transparent;
-      filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
-    }
-
-    .get-started-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        oklch(100% 0 0deg / 0.1) 0%,
-        transparent 50%,
-        oklch(100% 0 0deg / 0.05) 100%
-      );
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .get-started-btn:hover {
-      background:
-        linear-gradient(
-            var(--navbar-primary-light),
-            var(--navbar-primary-light)
-          )
-          padding-box,
-        linear-gradient(
-            135deg,
-            var(--navbar-accent-orange) 0%,
-            var(--navbar-accent-blue) 50%,
-            var(--navbar-accent-green) 100%
-          )
-          border-box;
-      box-shadow:
-        0 8px 32px oklch(65% 0.25 280deg / 0.3),
-        0 4px 16px oklch(0% 0 0deg / 0.15),
-        inset 0 1px 0 oklch(100% 0 0deg / 0.2);
-
-      /* モバイル: ホバー効果を無効化 */
-      @media (min-width: 1025px) {
-        transform: translateZ(0) translateY(-2px) scale(1.02);
-      }
-
-      @media (max-width: 1024px) {
-        transform: none; /* ホバー無効 */
-      }
-
-      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
-    }
-
-    .get-started-btn:active {
-      /* モバイル: アクティブ状態を簡略化 */
-      @media (min-width: 1025px) {
-        transform: translateZ(0) translateY(0) scale(0.98);
-      }
-
-      @media (max-width: 1024px) {
-        transform: scale(0.98);
-      }
-
-      box-shadow:
-        0 2px 8px oklch(65% 0.25 280deg / 0.2),
-        0 1px 4px oklch(0% 0 0deg / 0.1);
-      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
-    }
   }
 
   /* ---------- CSS Scroll-driven Animations - Enhanced Modern Design ---------- */
@@ -942,11 +846,39 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
   // REASONING: Following Astro's zero-JavaScript philosophy with minimal interactivity
   // KISS Principle: Simple, focused functions under 5 lines each
 
-  /**
-   * Open Discord invitation - 3-line function following KISS principle
-   */
-  function openDiscordLink() {
-    window.open('https://discord.gg/j8qmYPAGQh', '_blank');
+  const BOTTOM_NAV_STORAGE_KEY = 'grkd:bottom-nav-visible';
+
+  function getBottomNavState() {
+    return document.documentElement.dataset.bottomNav === 'hidden'
+      ? 'hidden'
+      : 'visible';
+  }
+
+  function updateBottomNavToggleButton(state = getBottomNavState()) {
+    const button = document.querySelector('[data-action="toggle-bottom-nav"]');
+    if (!button) return;
+
+    const isVisible = state === 'visible';
+    const label = isVisible
+      ? 'Sembunyikan navigasi bawah'
+      : 'Tampilkan navigasi bawah';
+    button.setAttribute('aria-label', label);
+    button.setAttribute('title', label);
+    button.setAttribute('aria-pressed', String(isVisible));
+  }
+
+  function setBottomNavState(state) {
+    document.documentElement.dataset.bottomNav = state;
+    updateBottomNavToggleButton(state);
+    try {
+      localStorage.setItem(BOTTOM_NAV_STORAGE_KEY, state);
+    } catch {
+      // localStorage may be unavailable in private browsing; visual state still works.
+    }
+  }
+
+  function toggleBottomNav() {
+    setBottomNavState(getBottomNavState() === 'hidden' ? 'visible' : 'hidden');
   }
 
   /**
@@ -956,39 +888,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
     if (routeKey === 'Dokumentasi') {
       window.location.href = '/docs';
     }
-  }
-
-  /**
-   * Context-aware action handler - 5-line function with conditional logic
-   */
-  function handleGetStartedAction() {
-    const isHomepage =
-      window.location.pathname === '/' ||
-      window.location.pathname === '/index.html';
-    if (isHomepage) scrollToMission();
-    else window.open('https://discord.gg/j8qmYPAGQh', '_blank');
-  }
-
-  /**
-   * Scroll to mission section with retry logic - 5-line function with DOM ready check
-   */
-  function scrollToMission() {
-    const missionSection = document.getElementById('mission');
-    if (!missionSection) {
-      setTimeout(scrollToMission, 100);
-      return;
-    }
-
-    const navbarHeight =
-      (document.querySelector('.navbar') as HTMLElement)?.offsetHeight || 0;
-    const scrollToPosition = Math.max(
-      0,
-      missionSection.getBoundingClientRect().top +
-        window.pageYOffset -
-        navbarHeight -
-        40
-    );
-    window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
   }
 
   /**
@@ -1003,12 +902,10 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
     if (route) {
       navigateTo(route);
-    } else if (action === 'discord') {
-      openDiscordLink();
+    } else if (action === 'toggle-bottom-nav') {
+      toggleBottomNav();
     } else if (action === 'metodologi') {
       window.location.href = '/panduan-lengkap-otodidak-bahasa-jepang';
-    } else if (action === 'get-started') {
-      handleGetStartedAction();
     } else if (action === 'menu') {
       // Dispatch custom event to open BottomNavBar menu overlay
       const menuEvent = new CustomEvent('openMenuOverlay', {
@@ -1024,6 +921,7 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
   function initNavbar() {
     // Event delegation for efficient event handling
     document.addEventListener('click', handleNavbarClick);
+    updateBottomNavToggleButton();
   }
 
   // Initialize when DOM is ready
