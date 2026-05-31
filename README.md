@@ -27,9 +27,10 @@
 
 ### 🏗️ Arsitektur Modern
 - ⚡ **Static Site Generation (SSG)** dengan Astro 5.x
-- 🎨 **Glassmorphism Design** dengan OKLCH color space
-- 📱 **Mobile-First Responsive** dengan Flexbox dan CSS Grid
-- 🌊 **Animasi Canvas** dengan WaveAnimation component
+- 🎨 **Discord Dark Pop Design System** dengan OKLCH color space (Max Chroma 0.22)
+- 🎴 **TCG Artifact Card Layouts** dengan vertical-rl typography
+- 📱 **Floating Pill Navbar** & Transparent Mobile Header
+- 🌊 **Cinematic WebP Backgrounds** pre-blurred untuk zero-lag scrolling
 - ♿ **Accessibility-First**: WCAG-compliant, semantic HTML
 
 ### 🔧 Teknologi & Optimasi
@@ -70,10 +71,10 @@
 - **tsx** - TypeScript execution
 
 ### Fonts
-- **Noto Sans JP** - Japanese sans-serif
-- **Noto Serif JP** - Japanese serif
-- **Roboto Flex** - Variable font untuk Latin
-- **Yuji Syuku** - Decorative Japanese font
+- **Gen Interface JP** - Primary Japanese sans-serif
+- **Noto Serif JP** - Japanese serif untuk card titles (Cinematic contrast)
+- **Pixelify Sans** - Pixel font untuk section markers (`/// GEARS_ACTIVATED ///`)
+- **Yuji Syuku** - Decorative Japanese font untuk Logo & Accents
 
 ---
 
@@ -568,10 +569,10 @@ file, You can obtain one at https://mozilla.org/MPL/2.0/.
 **GoRakuDo** dibangun dengan prinsip:
 
 1. 🎯 **Evidence-Based Learning**: Berdasarkan riset SLA dan linguistik modern
-2. 🚀 **Performance-First**: Optimasi untuk pengalaman pengguna terbaik
-3. ♿ **Accessibility-First**: Website untuk semua orang
-4. 📱 **Mobile-First**: Mayoritas pengguna di mobile
-5. 🧘 **Minimalist Code**: Kode sederhana, efisien, dan maintainable
+2. 🌃 **Night Library Aesthetic**: Desain gelap, imersif, dan sinematik dengan "Discord Dark Pop" vibe
+3. 🚀 **Performance-First**: Pre-blurred backgrounds dan optimasi aset untuk zero-lag experience
+4. ♿ **Accessibility-First**: Website untuk semua orang dengan WCAG contrast compliance
+5. 📱 **Mobile-First**: Mayoritas pengguna di mobile dengan pengalaman navigasi yang dioptimalkan
 
 ---
 
@@ -593,4 +594,4 @@ file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 **Dibuat dengan ❤️ untuk komunitas pembelajar bahasa Jepang Indonesia**
 
-*Versi terakhir diperbarui: Oktober 2025*
+*Versi terakhir diperbarui: Mei 2026*
