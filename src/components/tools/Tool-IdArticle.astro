@@ -21,43 +21,7 @@ interface Props {
   };
   tool: string;
   index: number;
-  role?:
-    | 'gridcell'
-    | 'listitem'
-    | 'article'
-    | 'button'
-    | 'link'
-    | 'tab'
-    | 'tabpanel'
-    | 'menuitem'
-    | 'option'
-    | 'treeitem'
-    | 'grid'
-    | 'listbox'
-    | 'menu'
-    | 'menubar'
-    | 'tablist'
-    | 'tree'
-    | 'treegrid'
-    | 'application'
-    | 'banner'
-    | 'complementary'
-    | 'contentinfo'
-    | 'form'
-    | 'main'
-    | 'navigation'
-    | 'region'
-    | 'search'
-    | 'alert'
-    | 'alertdialog'
-    | 'dialog'
-    | 'log'
-    | 'marquee'
-    | 'status'
-    | 'timer'
-    | 'tooltip'
-    | 'presentation'
-    | 'none';
+  role?: 'row' | 'gridcell';
   'aria-label'?: string;
 }
 
@@ -79,157 +43,43 @@ const CARD_ACCESSIBILITY = {
 } as const;
 ---
 
-<!-- ========== OPTIMIZED ARTICLE CARD MARKUP ========== -->
+<!-- ========== TOME ARTICLE ROW MARKUP ========== -->
 <div
-  class='article-card-optimized glassmorphism glassmorphism-card'
+  class='tome-article-row'
   data-index={index}
   data-tool={tool}
   role={role}
-  aria-label={ariaLabel}
 >
-  <a
-    href={`/tools/${tool}/${article.slug}`}
-    class='card-link'
-    aria-label={CARD_ACCESSIBILITY.actionLabels.readArticle(article.title)}
-    itemprop='url'
-    tabindex='0'
-  >
-    <!-- カードヘッダー -->
-    <header class='card-header'>
-      <div class='card-header-top'>
-        <time
-          class='card-date'
-          datetime={article.originalArticle.data.publishedDate ||
-            new Date().toISOString()}
-          itemprop='datePublished'
-        >
-          {article.publishedDate}
-        </time>
-
-        <!-- 記事タイプ表示 -->
-        {
-          article.articleType === 'related' && (
-            <span
-              class='article-type-badge related-article-badge'
-              title={CARD_ACCESSIBILITY.articleTypeLabels.related}
-              aria-label={CARD_ACCESSIBILITY.articleTypeLabels.related}
-            >
-              <svg class='w-3 h-3' fill='currentColor' viewBox='0 0 20 20'>
-                <path
-                  fill-rule='evenodd'
-                  d='M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z'
-                  clip-rule='evenodd'
-                />
-              </svg>
-              Artikel Terkait
-            </span>
-          )
-        }
-
-        <!-- アクションインジケーター -->
-        <div class='card-action-indicator' aria-hidden='true'>
-          <svg
-            class='arrow-icon'
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            aria-hidden='true'
-          >
-            <path d='M5 12h14'></path>
-            <path d='m12 5 7 7-7 7'></path>
-          </svg>
-        </div>
-      </div>
-    </header>
-
-    <!-- メインコンテンツ -->
-    <div class='card-content'>
-      {
-        article.hasImage && (
-          <div class='card-image-section'>
-            <img
-              src={article.image}
-              alt={`${article.title} - ${formatToolName(tool)} guide`}
-              class='card-image'
-              loading='lazy'
-              decoding='async'
-              width={IMAGE_DIMENSIONS.width}
-              height={IMAGE_DIMENSIONS.height}
-              itemprop='image'
-            />
-          </div>
-        )
-      }
-
-      <div class='card-main-content'>
-        <!-- プラットフォームアイコン -->
-        <div class='card-icon'>
-          {
-            article.devicePlatform === 'Android' ? (
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                class='lucide lucide-smartphone-icon lucide-smartphone'
-              >
-                <rect width='14' height='20' x='5' y='2' rx='2' ry='2' />
-                <path d='M12 18h.01' />
-              </svg>
-            ) : (
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                class='lucide lucide-laptop-icon lucide-laptop'
-              >
-                <path d='M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z' />
-                <path d='M20.054 15.987H3.946' />
-              </svg>
-            )
-          }
-        </div>
-
-        <!-- テキストコンテンツ -->
-        <div class='card-text-content'>
-          <h3 class='card-title' itemprop='headline'>{article.title}</h3>
-          <p class='card-description' itemprop='description'>
-            {article.description}
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- フッター -->
-    <footer class='card-footer'>
-      <div class='card-tags' role='list' aria-label='Article tags'>
-        {
-          article.tags.map((tag: string) => (
-            <span class='card-tag' role='listitem' itemprop='keywords'>
-              #{tag}
-            </span>
-          ))
-        }
-      </div>
-    </footer>
-  </a>
+  <div class='tome-cell-date' role='cell'>
+    <time
+      datetime={article.originalArticle.data.publishedDate || new Date().toISOString()}
+      itemprop='datePublished'
+    >
+      {article.publishedDate}
+    </time>
+  </div>
+  
+  <div class='tome-cell-title' role='cell'>
+    <a
+      href={`/tools/${tool}/${article.slug}`}
+      class='tome-article-link'
+      aria-label={CARD_ACCESSIBILITY.actionLabels.readArticle(article.title)}
+      itemprop='url'
+    >
+      <span itemprop='headline'>{article.title}</span>
+    </a>
+    {article.articleType === 'related' && (
+      <span class='tome-related-badge' title={CARD_ACCESSIBILITY.articleTypeLabels.related} aria-label={CARD_ACCESSIBILITY.articleTypeLabels.related}>
+        (関連)
+      </span>
+    )}
+  </div>
+  
+  <div class='tome-cell-tags' role='cell'>
+    {article.tags.map((tag: string) => (
+      <span class='tome-tag' itemprop='keywords'>[{tag}]</span>
+    ))}
+  </div>
 </div>
 
 <!-- Styles moved to Tool-IdIndex.css -->

@@ -1,1042 +1,198 @@
 /* ========== BEM METHOD - TOOL PAGE DESIGN SYSTEM ========== */
 @import 'tailwindcss';
 
-/* BEM Method - Tool Block Variables */
-:root {
-  /* Tool Block Colors */
-  --tool__color-secondary: oklch(75% 0.12 65deg);
-  --tool__color-bg-card: oklch(8% 0.01 270deg / var(--opacity-50));
-  --tool__color-text-light: oklch(60% 0.01 270deg);
-
-  /* ===== OPACITY VALUES - グローバルシステムを使用 ===== */
-
-  /* 不透明度変数は global.css から継承 */
-
-  /* Black Color with Opacity */
-  --clr-black-10: oklch(0% 0 0deg / var(--opacity-1));
-  --clr-black-15: oklch(0% 0 0deg / var(--opacity-15));
-
-  /* Gray Color Variations */
-  --clr-gray-5: oklch(5% 0.005 270deg);
-  --clr-gray-8: oklch(8% 0.01 270deg);
-  --clr-gray-12: oklch(12% 0.02 270deg);
-  --clr-gray-15: oklch(15% 0.02 270deg);
-  --clr-gray-20: oklch(20% 0.03 270deg);
-  --clr-gray-25: oklch(25% 0.02 270deg);
-  --clr-gray-45: oklch(45% 0.08 65deg);
-  --clr-gray-55: oklch(55% 0.18 280deg);
-  --clr-gray-58: oklch(58% 0.15 15deg);
-  --clr-gray-60: oklch(60% 0.16 280deg);
-  --clr-gray-65: oklch(65% 0.18 280deg);
-  --clr-gray-75: oklch(75% 0.12 65deg);
-  --clr-gray-90: oklch(90% 0.01 270deg);
-  --clr-gray-95: oklch(95% 0.02 65deg);
-
-  /* Gray Color with Opacity */
-  --clr-gray-5-50: oklch(5% 0.005 270deg / var(--opacity-5));
-  --clr-gray-8-50: oklch(8% 0.01 270deg / var(--opacity-5));
-  --clr-gray-8-70: oklch(8% 0.01 270deg / var(--opacity-70));
-  --clr-gray-8-95: oklch(8% 0.01 270deg / var(--opacity-95));
-  --clr-gray-8-98: oklch(8% 0.01 270deg / var(--opacity-98));
-  --clr-gray-12-98: oklch(12% 0.02 270deg / var(--opacity-98));
-  --clr-gray-15-10: oklch(15% 0.02 270deg / var(--opacity-1));
-  --clr-gray-15-15: oklch(15% 0.02 270deg / var(--opacity-15));
-  --clr-gray-15-80: oklch(15% 0.02 270deg / var(--opacity-8));
-  --clr-gray-20-10: oklch(20% 0.03 270deg / var(--opacity-1));
-  --clr-gray-25-10: oklch(25% 0.02 270deg / var(--opacity-1));
-  --clr-gray-25-20: oklch(25% 0.02 270deg / var(--opacity-2));
-  --clr-gray-25-50: oklch(25% 0.02 270deg / var(--opacity-5));
-  --clr-gray-45-08: oklch(45% 0.08 65deg);
-  --clr-gray-55-90: oklch(55% 0.18 280deg / var(--opacity-9));
-  --clr-gray-58-20: oklch(58% 0.15 15deg / var(--opacity-2));
-  --clr-gray-58-15: oklch(58% 0.15 15deg);
-  --clr-gray-65-10: oklch(65% 0.18 280deg / var(--opacity-1));
-  --clr-gray-65-15: oklch(65% 0.18 280deg / var(--opacity-15));
-  --clr-gray-75-30: oklch(75% 0.12 65deg / var(--opacity-3));
-  --clr-gray-95-50: oklch(95% 0.02 65deg / var(--opacity-5));
-
-  /* Shadow Values */
-  --shadow-card: 0 4px 12px var(--clr-black-10);
-  --shadow-image: 0 8px 25px var(--clr-black-15);
-
-  /* Tool Block Layout */
-  --tool__container-max-width: 1200px;
-
-  /* レスポンシブスペーシングシステム */
-  --tool__spacing-xs: clamp(0.25rem, 1vw, 0.5rem);
-  --tool__spacing-sm: clamp(0.5rem, 2vw, 1rem);
-  --tool__spacing-md: clamp(1rem, 3vw, 1.5rem);
-  --tool__spacing-lg: clamp(1.5rem, 4vw, 2rem);
-  --tool__spacing-xl: clamp(2rem, 5vw, 3rem);
-  --tool__spacing-2xl: clamp(3rem, 6vw, 4rem);
-  --tool__spacing-3xl: clamp(4rem, 8vw, 6rem);
-
-  /* レスポンシブパディングシステム */
-  --tool__padding-sm: clamp(0.5rem, 2vw, 1rem);
-  --tool__padding-md: clamp(1rem, 3vw, 1.5rem);
-  --tool__padding-lg: clamp(1.5rem, 4vw, 2rem);
-  --tool__padding-xl: clamp(2rem, 5vw, 3rem);
-
-  /* レスポンシブマージンシステム */
-  --tool__margin-sm: clamp(0.5rem, 2vw, 1rem);
-  --tool__margin-md: clamp(1rem, 3vw, 1.5rem);
-  --tool__margin-lg: clamp(1.5rem, 4vw, 2rem);
-  --tool__margin-xl: clamp(2rem, 5vw, 3rem);
-}
-
-/* ========== TOOL-IdHeader.astro INTEGRATED STYLES ========== */
-
-/* ========== COMPONENT HEADER STYLES ========== */
-.component-header {
-  /* スマホ画面での左右マージン */
-  @media (max-width: 767px) {
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
-  }
-}
-
-/* ========== OPTIMIZED ICON STYLES ========== */
-.tool-icon-large {
-  width: clamp(100px, 12.5vw, 170px);
-  height: clamp(100px, 12.5vw, 170px);
-  margin: 0;
-  border: none;
-  border-radius: 16px;
-  background: transparent;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
-  will-change: transform;
-  transition: transform 0.2s ease-in-out;
-
-  /* Optimized image loading */
-  &[loading='eager'] {
-    opacity: 1;
-  }
-
-  /* タブレット以上でサイズ調整 */
-  @media (min-width: 768px) {
-    width: clamp(85px, 8.5vw, 145px);
-    height: clamp(85px, 8.5vw, 145px);
-  }
-}
-
-/* Hover effect for better interactivity */
-.tool-icon-container:hover .tool-icon-large {
-  transform: scale(1.05);
-}
-
-/* ========== HEADER CONTENT SECTION STYLES ========== */
-
-/* Header content section styles - 適切なネスト構造で定義 */
-.header-content-section {
-  position: relative;
-  z-index: var(--z-Tool-IdHeader-header-content-section);
+/* ========== NIGHT LIBRARY TOME HEADER ========== */
+.tome-header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--tool__spacing-md);
-  width: 100%;
-
-  /* タブレット以上で横並び */
-  @media (min-width: 640px) {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: var(--tool__spacing-lg);
-  }
-
-  /* デスクトップで最適化 */
-  @media (min-width: 768px) {
-    gap: var(--tool__spacing-xl);
-  }
-
-  @media (min-width: 1024px) {
-    gap: var(--tool__spacing-2xl);
-  }
-}
-
-.header-content-section .tool-icon-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: clamp(100px, 12.5vw, 170px);
-  height: clamp(100px, 12.5vw, 170px);
-  border: none;
-  border-radius: 16px;
-  background: transparent;
-  text-align: center;
-  flex-shrink: 0;
-  filter: drop-shadow(0 4px 8px oklch(0% 0 0deg / 0.3));
-
-  /* タブレット以上でサイズ調整 */
-  @media (min-width: 768px) {
-    width: clamp(85px, 8.5vw, 145px);
-    height: clamp(85px, 8.5vw, 145px);
-  }
-}
-
-.header-text-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  text-align: center;
-
-  /* タブレット以上で左寄せ */
-  @media (min-width: 640px) {
-    flex: 1;
-    justify-content: center;
-    text-align: left;
-  }
-}
-
-.header-title {
-  margin: 0 0 var(--spacing-md) 0;
-  color: var(--clr-text-primary);
-  font-size: clamp(1.5rem, 5vw, 2.5rem);
-  font-weight: 800;
-  line-height: 1.2;
-
-  /* デスクトップでフォントサイズ調整 */
-  @media (min-width: 768px) {
-    font-size: clamp(2rem, 6vw, 2.5rem);
-  }
-}
-
-.header-description {
-  margin: 0 0 var(--spacing-lg) 0;
-  color: var(--clr-text-secondary);
-  font-size: clamp(0.875rem, 2.5vw, 1rem);
-  line-height: 1.6;
-}
-
-.header-meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacing-lg);
-
-  /* タブレット以上で左寄せ */
-  @media (min-width: 640px) {
-    justify-content: flex-start;
-  }
-}
-
-.meta-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-sm);
-  color: var(--clr-text-muted);
-  font-size: var(--font-size-base);
-  font-weight: 500;
-}
-
-.meta-icon {
-  width: var(--spacing-md);
-  height: var(--spacing-md);
-  color: var(--clr-purple);
-}
-
-/* ========== HEADER CONTAINER LAYOUT ========== */
-.header-container,
-.tool__header-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-md);
-  overflow: hidden;
-  width: 100%;
-  max-width: var(--tool__container-max-width);
+  max-width: 60rem;
   margin: 0 auto;
-  padding: 2rem;
-  border-radius: var(--border-radius-card);
+  padding: 8rem 1.5rem 4rem;
+}
+
+.tome-marker {
+  margin-bottom: 2rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 1rem;
   text-align: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    gap: var(--tool__spacing-xl);
-    text-align: left;
-  }
-
-  @media (min-width: 1024px) {
-    gap: var(--tool__spacing-2xl);
-  }
-
-  /* Background Elements removed - no longer needed */
-}
-
-/* ========== NAVIGATION ========== */
-
-/* ========== BEM METHOD - TOOL MAIN CONTENT (FLEXBOX OPTIMIZED) ========== */
-
-.tool__articles {
-  &-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: var(--tool__spacing-3xl);
-  }
-}
-
-.tool__articles-grid {
-  position: relative;
-  display: grid;
-  gap: var(--tool__spacing-md);
-  grid-template-columns: 1fr;
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: var(--tool__spacing-2xl);
-  padding: 0;
-  will-change: transform;
-
-  /* タブレット以上: 2列Gridレイアウト */
-  @media (min-width: 768px) {
-    align-items: stretch; /* 各行内でカードの高さを統一 */
-    gap: var(--tool__spacing-lg);
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* デスクトップ: 最適化されたスペーシング */
-  @media (min-width: 1024px) {
-    gap: var(--tool__spacing-xl);
-  }
-}
-
-/* ========== FLEXBOX OPTIMIZATION UTILITIES ========== */
-.tool-main-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  min-height: auto;
-}
-
-/* ========== EMPTY STATE COMPREHENSIVE REDESIGN ========== */
-
-/* Empty State Container */
-.tool__empty-state-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--tool__spacing-xl);
-  width: 100%;
-  max-width: 48rem;
-  margin: 0 auto;
-  padding: var(--tool__spacing-2xl) var(--tool__spacing-lg);
-  text-align: center;
-
-  @media (min-width: 768px) {
-    gap: var(--tool__spacing-2xl);
-    padding: var(--tool__spacing-3xl) var(--tool__spacing-xl);
-  }
-}
-
-/* Main Icon */
-.tool__empty-state-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: clamp(3rem, 8vw, 6rem);
-  height: clamp(3rem, 8vw, 6rem);
-  margin: 0;
-
-  svg {
-    width: 100%;
-    height: 100%;
-    color: var(--clr-text-muted);
-    opacity: 0.6;
-    transition: all 0.3s ease;
-  }
-}
-
-/* Title */
-.tool__empty-state-title {
-  margin: 0;
-  color: var(--clr-text-primary);
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-/* Description */
-.tool__empty-state-description {
-  max-width: 40rem;
-  margin: 0;
-  color: var(--clr-text-secondary);
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-  font-weight: 400;
-  line-height: 1.6;
+  letter-spacing: 0.15em;
   opacity: 0.9;
+  text-shadow: 0 0 12px rgb(88 101 242 / 0.4);
 }
 
-/* Action Buttons Container */
-.tool__empty-state-actions {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--tool__spacing-md);
-  width: 100%;
-
-  @media (min-width: 640px) {
-    flex-direction: row;
-    gap: var(--tool__spacing-lg);
-  }
-}
-
-/* Action Buttons */
-.tool__empty-state-btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--tool__spacing-sm);
-  width: 100%;
-  min-height: 3rem;
-  padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
-  border: 1px solid transparent;
-  border-radius: 0.75rem;
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  font-weight: 600;
-  line-height: 1.5;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  @media (min-width: 640px) {
-    width: auto;
-    min-width: 12rem;
-  }
-
-  svg {
-    width: clamp(1rem, 2.5vw, 1.25rem);
-    height: clamp(1rem, 2.5vw, 1.25rem);
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
-  }
-
-  &:hover svg {
-    transform: translateX(-2px);
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-}
-
-/* Primary Button */
-.tool__empty-state-btn--primary {
-  border-color: color-mix(in oklch, var(--token-purple-base) 50%, transparent);
-  background: linear-gradient(
-    135deg,
-    color-mix(in oklch, var(--token-purple-base) 20%, transparent) 0%,
-    color-mix(in oklch, var(--token-purple-base) 10%, transparent) 100%
-  );
-  color: var(--clr-text-primary);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.1);
-
-  &:hover {
-    border-color: color-mix(
-      in oklch,
-      var(--token-purple-base) 70%,
-      transparent
-    );
-    background: linear-gradient(
-      135deg,
-      color-mix(in oklch, var(--token-purple-base) 30%, transparent) 0%,
-      color-mix(in oklch, var(--token-purple-base) 15%, transparent) 100%
-    );
-    box-shadow: 0 8px 24px oklch(0% 0 0deg / 0.15);
-  }
-}
-
-/* Secondary Button */
-.tool__empty-state-btn--secondary {
-  border-color: oklch(100% 0 0deg / 0.2);
-  background: oklch(100% 0 0deg / 0.05);
-  color: var(--clr-text-primary);
-  backdrop-filter: blur(8px);
-
-  &:hover {
-    border-color: oklch(100% 0 0deg / 0.3);
-    background: oklch(100% 0 0deg / 0.1);
-    box-shadow: 0 4px 12px oklch(0% 0 0deg / 0.08);
-  }
-}
-
-/* Suggestions Section */
-.tool__empty-state-suggestions {
+.tome-header-layout {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--tool__spacing-lg);
-  width: 100%;
-  margin-top: var(--tool__spacing-md);
+  gap: 1.5rem;
+  text-align: center;
 }
 
-/* Suggestions Title */
-.tool__suggestions-title {
-  margin: 0;
-  color: var(--clr-text-secondary);
-  font-size: clamp(1rem, 2.5vw, 1.125rem);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-/* Suggestions List */
-.tool__suggestions-list {
+.tome-header-left {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: var(--tool__spacing-md);
-  width: 100%;
+  gap: 1rem;
 }
 
-/* Individual Suggestion Tool */
-.tool__suggestion-tool {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--tool__spacing-sm);
-  padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2.5vw, 1.5rem);
-  border: 1px solid oklch(100% 0 0deg / 0.12);
-  border-radius: 0.625rem;
-  background: linear-gradient(
-    135deg,
-    oklch(20% 0 0deg / 0.15) 0%,
-    oklch(15% 0 0deg / 0.1) 100%
-  );
-  color: var(--clr-text-primary);
-  font-size: clamp(0.875rem, 2vw, 1rem);
-  font-weight: 500;
-  text-decoration: none;
-  backdrop-filter: blur(12px);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    border-color: color-mix(
-      in oklch,
-      var(--token-purple-base) 40%,
-      transparent
-    );
-    background: linear-gradient(
-      135deg,
-      oklch(25% 0 0deg / 0.2) 0%,
-      oklch(20% 0 0deg / 0.15) 100%
-    );
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px oklch(0% 0 0deg / 0.12);
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.98);
-  }
-}
-
-/* Suggestion Tool Icon */
-.tool__suggestion-tool-icon {
-  display: block;
-  width: clamp(1.5rem, 3vw, 2rem);
-  height: clamp(1.5rem, 3vw, 2rem);
-  border-radius: 0.375rem;
+.tome-icon {
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-  flex-shrink: 0;
+  filter: drop-shadow(0 0 15px oklch(65% 0.25 280deg / 0.3));
 }
 
-/* Suggestion Tool Name */
-.tool__suggestion-tool-name {
-  font-weight: 500;
+.tome-title {
+  color: var(--clr-text-primary);
+  font-family: var(--font-noto-serif-jp, 'Noto Serif JP', serif);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
-/* ========== TOOL-IdArticle.astro INTEGRATED STYLES ========== */
+.tome-description {
+  max-width: 40rem;
+  color: var(--grkd-muted, oklch(75% 0.002 270deg));
+  font-size: 1rem;
+  line-height: 1.6;
+}
 
-/* ========== MODERN COMPACT ARTICLE CARD STYLES ========== */
-.article-card-optimized {
-  position: relative;
-  display: flex; /* Gridアイテム自体をFlexコンテナにする */
-  flex-direction: column; /* 縦方向のFlexレイアウト */
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  border: 1px solid oklch(100% 0 0deg / 0.12);
-  border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    oklch(20% 0 0deg / 0.15) 0%,
-    oklch(15% 0 0deg / 0.1) 100%
-  );
-  backdrop-filter: blur(12px) saturate(1.1);
-  box-shadow:
-    0 4px 20px oklch(0% 0 0deg / 0.08),
-    0 1px 3px oklch(0% 0 0deg / 0.12),
-    inset 0 1px 0 oklch(100% 0 0deg / 0.15);
-  contain: layout style paint;
-  will-change: transform, box-shadow;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-
-  /* Gridアイテムとしての設定 */
-  @media (min-width: 768px) {
-    /* Gridアイテムは自動的に配置されるため、特別な幅設定は不要 */
+@media (min-width: 768px) {
+  .tome-header-layout {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid oklch(100% 0 0deg / 0.1);
+    text-align: left;
+  }
+  
+  .tome-marker {
+    text-align: left;
   }
 
-  /* Smooth Hover Lift Effect */
-  &:hover {
-    background: linear-gradient(
-      135deg,
-      oklch(25% 0 0deg / 0.2) 0%,
-      oklch(20% 0 0deg / 0.15) 100%
-    );
-    transform: none;
-    border-color: color-mix(
-      in oklch,
-      var(--token-purple-base) 30%,
-      transparent
-    );
-    backdrop-filter: blur(12px) saturate(1.1);
-    box-shadow:
-      0 20px 60px oklch(0% 0 0deg / 0.18),
-      0 8px 25px oklch(0% 0 0deg / 0.12),
-      0 2px 8px oklch(0% 0 0deg / 0.08),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.3),
-      0 0 0 1px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+  .tome-header-left {
+    align-items: flex-start;
+    flex-shrink: 0;
   }
 
-  /* Active State - Smooth Press Effect */
-  &:active {
-    transform: none;
-    transition-duration: 0.1s;
-    box-shadow:
-      0 10px 30px oklch(0% 0 0deg / 0.15),
-      0 4px 15px oklch(0% 0 0deg / 0.1),
-      0 1px 4px oklch(0% 0 0deg / 0.06),
-      inset 0 1px 0 oklch(100% 0 0deg / 0.25);
+  .tome-title {
+    margin-left: -0.5rem;
+    font-size: 2.5rem;
   }
 
-  /* Focus State */
-  &:focus-within {
-    outline: 2px solid var(--token-purple-base);
-    outline-offset: 2px;
-  }
-
-  /* High Contrast Support */
-  @media (prefers-contrast: high) {
-    border-color: var(--clr-text-primary);
-    background: var(--clr-background);
-    box-shadow: 0 2px 8px oklch(0% 0 0deg / 0.3);
-  }
-
-  /* Reduce layout thrashing */
-  .card-meta {
-    contain: layout;
+  .tome-header-right {
+    flex: 1;
+    padding-bottom: 0.5rem;
   }
 }
 
-/* ========== ARTICLE TYPE BADGE STYLES ========== */
-.article-type-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  color: var(--token-purple-base);
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
-
-  /* デフォルトスタイル（related-article-badge以外） */
-  &:not(.related-article-badge) {
-    border: 1px solid
-      color-mix(in oklch, var(--token-purple-base) 30%, transparent);
-    background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 1px 3px oklch(0% 0 0deg / 0.1);
-
-    svg {
-      width: 0.75rem;
-      height: 0.75rem;
-      flex-shrink: 0;
-    }
-  }
-
-  /* 関連記事専用の特別なスタイル */
-  &.related-article-badge {
-    position: absolute;
-    left: 50%;
-    background: transparent;
-    color: var(--clr-text-muted);
-    opacity: 0.8;
-    transform: translateX(-50%);
-  }
+/* ========== TOME LIBRARY LIST STYLES ========== */
+.tome-articles-section {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 6rem;
 }
 
-/* ========== MODERN COMPACT CARD LINK ========== */
-.card-link {
-  position: relative;
-  z-index: var(--z-Tool-IdArticle-card-link);
+.tome-table-wrapper {
   display: flex;
-  flex: 1; /* 親Flexコンテナの残り空間を全て使用 */
   flex-direction: column;
-  justify-content: space-between; /* コンテンツを均等に分配 */
-  overflow: hidden;
-  border-radius: inherit;
+  border-top: 1px solid oklch(100% 0 0deg / 0.1);
+}
+
+.tome-table-header {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .tome-table-header {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 100px 1fr 150px;
+    padding: 1rem 0;
+    border-bottom: 1px solid oklch(100% 0 0deg / 0.1);
+    color: var(--grkd-muted, oklch(75% 0.002 270deg));
+    font-family: var(--font-primary, sans-serif);
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+.tome-table-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.tome-article-row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px dashed oklch(100% 0 0deg / 0.1);
+  color: var(--clr-text-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .tome-article-row {
+    display: grid;
+    align-items: center;
+    gap: 1.5rem;
+    grid-template-columns: 100px 1fr 150px;
+    padding: 1rem 0;
+  }
+}
+
+.tome-article-row:hover {
+  background: linear-gradient(90deg, transparent, oklch(65% 0.25 280deg / 0.05), transparent);
+  border-bottom-color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+}
+
+.tome-cell-date {
+  color: var(--grkd-muted, oklch(75% 0.002 270deg));
+  font-family: Courier New, Courier, monospace;
+  font-size: 0.875rem;
+}
+
+.tome-cell-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-primary, sans-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.tome-article-link {
   color: inherit;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  isolation: isolate;
+}
 
-  /* Modern Focus Management */
-  &:focus-visible {
-    position: relative;
-    z-index: var(--z-Tool-IdArticle-card-link-focus-visible);
-    outline: 2px solid var(--token-purple-base);
-    outline-offset: 3px;
-    border-radius: 16px;
-    will-change: outline;
-    transition: outline 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 0 0 1px
-      color-mix(in oklch, var(--token-purple-base) 20%, transparent);
-  }
+.tome-article-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
 
-  /* Enhanced Hover State */
-  &:hover {
-    color: inherit;
-    text-decoration: none;
-    transform: translateZ(0);
-  }
+.tome-related-badge {
+  color: oklch(65% 0.18 280deg);
+  font-size: 0.75rem;
+}
 
-  /* Active State */
-  &:active {
-    color: inherit;
-    text-decoration: none;
-    transform: translateZ(0) scale(0.98);
-    transition-duration: 0.1s;
-  }
+.tome-cell-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: oklch(70% 0.1 270deg);
+  font-family: Courier New, Courier, monospace;
+  font-size: 0.8rem;
+}
 
-  /* High Contrast Support */
-  @media (prefers-contrast: high) {
-    &:focus-visible {
-      outline-color: var(--clr-text-primary);
-      outline-width: 3px;
-      box-shadow: none;
-    }
-  }
-
-  /* ========== MODERN COMPACT CARD HEADER ========== */
-  .card-header {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: clamp(0.5rem, 1.5vw, 1rem);
-    padding: clamp(0.5rem, 1.25vw, 0.75rem);
-    flex-shrink: 0;
-    border-bottom: 1px solid oklch(100% 0 0deg / 0.08);
-    background: linear-gradient(
-      135deg,
-      oklch(20% 0 0deg / 0.1) 0%,
-      oklch(15% 0 0deg / 0.06) 100%
-    );
-    backdrop-filter: blur(12px) saturate(1.1);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-    /* スマホ画面で上下左右パディングを2倍に */
-    @media (max-width: 767px) {
-      padding: clamp(1rem, 2.5vw, 1.5rem);
-    }
-
-    /* タブレット以上でパディング調整（統一） */
-    @media (min-width: 768px) {
-      padding: 1rem;
-    }
-
-    /* Modern Hover Enhancement */
-    &:hover {
-      background: linear-gradient(
-        135deg,
-        oklch(25% 0 0deg / 0.15) 0%,
-        oklch(20% 0 0deg / 0.1) 100%
-      );
-      border-bottom-color: color-mix(
-        in oklch,
-        var(--token-purple-base) 15%,
-        transparent
-      );
-    }
-  }
-
-  /* ========== CARD HEADER TOP FLEXBOX LAYOUT ========== */
-  .card-header-top {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    .card-date {
-      color: var(--clr-text-muted);
-      font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-      font-weight: 500;
-      opacity: 0.8;
-      flex-shrink: 0;
-    }
-  }
-
-  /* ========== メインコンテンツ (MOBILE PADDING OPTIMIZED) ========== */
-  .card-content {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: flex-start; /* コンテンツを上部に配置 */
-    gap: clamp(
-      0.5rem,
-      1vw,
-      0.75rem
-    ); /* コンテンツ内要素間に自然なスペーシング */
-
-    min-height: 0; /* Prevents flex item from overflowing */
-    padding: clamp(0.5rem, 1.25vw, 0.75rem);
-    background: transparent;
-
-    /* スマホ画面で上下左右パディングを2倍に */
-    @media (max-width: 767px) {
-      padding: clamp(1rem, 2.5vw, 1.5rem);
-    }
-
-    /* タブレット以上でパディング調整（統一） */
-    @media (min-width: 768px) {
-      padding: 1rem;
-    }
-  }
-
-  /* ========== カードメインコンテンツ (アイコン + テキスト) ========== */
-  .card-main-content {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    gap: 1rem;
-
-    @media (min-width: 768px) {
-      gap: 1.5rem;
-    }
-  }
-
-  /* ========== プラットフォームアイコン ========== */
-  .card-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: 0.5rem;
-    background: oklch(from var(--clr-purple) l c h / 0.1);
-    color: var(--clr-text-primary);
-
-    @media (min-width: 768px) {
-      width: 64px;
-      height: 64px;
-      border-radius: 0.75rem;
-    }
-
-    svg {
-      width: 24px;
-      height: 24px;
-
-      @media (min-width: 768px) {
-        width: 48px;
-        height: 48px;
-      }
-    }
-  }
-
-  .card-image-section {
-    overflow: hidden;
-    margin-bottom: clamp(0.5rem, 1.25vw, 0.75rem);
-    border-radius: clamp(8px, 1.5vw, 12px);
-    background: oklch(100% 0 0deg / var(--opacity-05));
-  }
-
-  .card-image {
-    width: 100%;
-    height: clamp(120px, 18vh, 180px);
-    border-radius: clamp(8px, 1.5vw, 12px);
-    background: var(--clr-background);
-    object-fit: cover;
-    object-position: center;
-    image-rendering: auto;
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    will-change: transform;
-
-    /* Smooth Hover Effect */
-    &:hover {
-      transform: scale(1.03);
-    }
-
-    /* 画像読み込み最適化 */
-    &[loading='lazy'] {
-      opacity: 1;
-    }
-  }
-
-  /* ========== テキストコンテンツ (COMPACT DESIGN) ========== */
-  .card-text-content {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: flex-start; /* テキストコンテンツを上部に配置 */
-    gap: clamp(0.25rem, 0.75vw, 0.375rem);
-    min-height: 0;
-
-    .card-title {
-      display: -webkit-box;
-      overflow: hidden;
-      margin: 0;
-      color: var(--clr-text-primary);
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      font-weight: 700;
-      line-height: 1.3;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      flex-shrink: 0;
-      letter-spacing: -0.01em;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .card-description {
-      display: -webkit-box;
-      flex: 1;
-      overflow: hidden;
-      margin: 0;
-      color: var(--clr-text-secondary);
-      font-size: clamp(0.875rem, 2vw, 1rem);
-      font-weight: 400;
-      line-height: 1.6;
-      opacity: 0.9;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-  }
-
-  /* ========== MODERN COMPACT CARD FOOTER ========== */
-  .card-footer {
-    display: flex;
-    flex-direction: column;
-    padding: clamp(0.5rem, 1.25vw, 0.75rem);
-    flex-shrink: 0;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-    /* スマホ画面で上下左右パディングを2倍に */
-    @media (max-width: 767px) {
-      padding: clamp(1rem, 2.5vw, 1.5rem);
-    }
-
-    /* タブレット以上でパディング調整（統一） */
-    @media (min-width: 768px) {
-      padding: 1rem;
-    }
-  }
-
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: clamp(0.25rem, 0.75vw, 0.375rem);
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    contain: layout;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .card-tag {
-    flex-shrink: 0;
-    padding: clamp(0.25rem, 1vw, 0.375rem) clamp(0.5rem, 1.5vw, 0.75rem);
-    border: 1px solid
-      color-mix(in oklch, var(--token-purple-base) 30%, transparent);
-    border-radius: clamp(6px, 1vw, 8px);
-    background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
-    color: var(--token-purple-base);
-    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-    font-weight: 500;
-    white-space: nowrap;
-    transition: all 0.2s ease-in-out;
-
-    /* ホバー効果 */
-    &:hover {
-      background: color-mix(
-        in oklch,
-        var(--token-purple-base) 20%,
-        transparent
-      );
-      border-color: color-mix(
-        in oklch,
-        var(--token-purple-base) 50%,
-        transparent
-      );
-    }
-  }
-
-  /* ========== アクションインジケーター (REDESIGNED) ========== */
-  .card-action-indicator {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: clamp(2rem, 4vw, 2.5rem);
-    height: clamp(2rem, 4vw, 2.5rem);
-    border: 1px solid oklch(100% 0 0deg / 0.12);
-    border-radius: 50%;
-    background: transparent;
-    opacity: 1;
-    flex-shrink: 0;
-
-    .arrow-icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: clamp(0.875rem, 2vw, 1rem);
-      height: clamp(0.875rem, 2vw, 1rem);
-      color: var(--clr-text-muted);
-      opacity: 0.8;
-      flex-shrink: 0;
-    }
-  }
-
-  /* ========== レスポンシブデザイン (REDESIGNED) ========== */
-
-  /* タブレット (768px+) - コンパクトデザイン */
-  @media (min-width: 768px) {
-    height: fit-content;
-    min-height: auto;
-    padding: 0;
-  }
-
-  /* デスクトップ (1024px+) - コンパクトデザイン */
-  @media (min-width: 1024px) {
-    /* より大きなホバー効果 */
-    &:hover {
-      transform: none;
-      box-shadow:
-        0 16px 48px oklch(0% 0 0deg / var(--opacity-20)),
-        inset 0 1px 0 oklch(100% 0 0deg / var(--opacity-40));
-    }
-  }
+.tome-tag {
+  white-space: nowrap;
 }

@@ -28,19 +28,22 @@ const EMPTY_STATE_CONFIG = {
 } as const;
 ---
 
-<!-- FlexBox Optimized Main Content with Modern Layout -->
-<div class="tool-main-content">
+<!-- Tome Library List Layout -->
+<div class="tome-articles-section">
   {hasArticles ? (
-    <div class="tool__articles-section">
-      <!-- FlexBox Optimized Articles Grid -->
-      <div class="tool__articles-grid" role="grid" aria-label={`Articles for ${formattedToolName}`}>
+    <div class="tome-table-wrapper" role="table" aria-label={`Articles for ${formattedToolName}`}>
+      <div class="tome-table-header" role="row">
+        <div class="tome-col-date" role="columnheader">日付</div>
+        <div class="tome-col-title" role="columnheader">記事タイトル</div>
+        <div class="tome-col-tags" role="columnheader">タグ</div>
+      </div>
+      <div class="tome-table-body" role="rowgroup">
         {toolArticles.map((article, index) => (
           <ToolIdArticle 
             article={article} 
             tool={tool} 
             index={index} 
-            role="gridcell"
-            aria-label={`Article: ${article.title}`}
+            role="row"
           />
         ))}
       </div>

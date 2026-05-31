@@ -194,7 +194,6 @@ const headerData = {
 };
 
 // ========== DISPLAY CONSTANTS ==========
-const ICON_DIMENSIONS = { width: 175, height: 175 };
 const iconAlt = `${headerData.formattedToolName} tool icon`;
 
 const META_ITEMS = [
@@ -341,66 +340,35 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   collectionPageSchema={collectionPageSchema}
   softwareApplicationSchema={softwareApplicationSchema}
 >
-  <!-- ========== INTEGRATED ENHANCED HEADER COMPONENT ========== -->
+  <!-- ========== NIGHT LIBRARY TOME HEADER ========== -->
   <header
     slot='articles-header'
-    class='component-header'
+    class='tome-header'
     role='banner'
     itemscope
     itemtype='https://schema.org/WebPageElement'
   >
-    <div class='header-container glassmorphism glassmorphism-card'>
-      <!-- Integrated Content Section with Icon and Text -->
-      <div class='header-content-section'>
-        <!-- Icon Container -->
-        <div class='tool-icon-container'>
-          <img
-            src={headerData.iconPath}
-            alt={iconAlt}
-            class='tool-icon-large'
-            loading='eager'
-            width={ICON_DIMENSIONS.width}
-            height={ICON_DIMENSIONS.height}
-            itemprop='image'
-          />
-        </div>
-
-        <!-- Text Content -->
-        <div class='header-text-content'>
-          <h1 class='header-title' itemprop='headline'>
-            {headerData.title}
-          </h1>
-          <p class='header-description' itemprop='description'>
-            {headerData.description}
-          </p>
-          <div class='header-meta' role='list' aria-label='Tool statistics'>
-            {
-              META_ITEMS.map(item => (
-                <span
-                  class='meta-item'
-                  role='listitem'
-                  aria-label={item.ariaLabel}
-                >
-                  <svg
-                    class='meta-icon'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    aria-hidden='true'
-                  >
-                    <path
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
-                      d={item.icon}
-                    />
-                  </svg>
-                  {item.label}
-                </span>
-              ))
-            }
-          </div>
-        </div>
+    <div class='tome-marker' aria-hidden='true'>/// ARCHIVE_OPEN ///</div>
+    
+    <div class='tome-header-layout'>
+      <div class='tome-header-left'>
+        <img
+          src={headerData.iconPath}
+          alt={iconAlt}
+          class='tome-icon'
+          loading='eager'
+          width="64"
+          height="64"
+          itemprop='image'
+        />
+        <h1 class='tome-title' itemprop='headline'>
+          【 {headerData.title} 】
+        </h1>
+      </div>
+      <div class='tome-header-right'>
+        <p class='tome-description' itemprop='description'>
+          {headerData.description}
+        </p>
       </div>
     </div>
   </header>
