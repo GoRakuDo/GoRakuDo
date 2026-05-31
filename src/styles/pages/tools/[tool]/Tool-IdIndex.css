@@ -51,13 +51,18 @@
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: 0.05em;
+  opacity: 0.75;
 }
 
 .tome-description {
   max-width: 40rem;
+  margin-inline: auto;
+  padding-left: 1rem;
+  border-left: 1px solid oklch(65% 0.18 280deg / 0.28);
   color: var(--grkd-muted, oklch(75% 0.002 270deg));
   font-size: 1rem;
   line-height: 1.6;
+  text-align: left;
 }
 
 @media (min-width: 768px) {
@@ -92,6 +97,12 @@
     flex: 1;
     max-width: 32rem;
     padding-bottom: 0.5rem;
+  }
+
+  .tome-description {
+    margin-inline: 0;
+    padding-left: 0;
+    border-left: 0;
   }
 }
 
