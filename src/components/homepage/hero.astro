@@ -10,7 +10,6 @@ interface Props {
   titleLine2?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
-  missionId?: string;
   navbarSelector?: string;
 }
 
@@ -21,14 +20,12 @@ const {
   titleLine2 = 'Kuasai Layaknya Penutur Asli.',
   ctaPrimary = 'Panduan',
   ctaSecondary = 'Gabung Komunitas',
-  missionId = 'mission',
   navbarSelector = '.navbar',
 } = Astro.props;
 ---
 
 <section
   class='hero-section'
-  data-mission-id={missionId}
   data-navbar-selector={navbarSelector}
   aria-label='Hero section'
   transition:name='hero-section'
@@ -83,7 +80,7 @@ const {
         <button
           type='button'
           class='primary-button'
-          data-action='scroll-to-mission'
+          data-action='scroll-to-docs'
           aria-label={ctaPrimary}
           transition:name='hero-primary-button'
         >
@@ -128,9 +125,8 @@ const {
 
 <script is:inline>
   (() => {
-    const section = document.querySelector('[data-mission-id]');
+    const section = document.querySelector('.hero-section');
     const cfg = {
-      mission: section?.dataset?.missionId || 'mission',
       navbar: section?.dataset?.navbarSelector || '.navbar',
     };
 
@@ -139,8 +135,8 @@ const {
       el && setTimeout(() => el.classList.add('hero-revealed'), 300);
     };
 
-    const scroll = () => {
-      const target = document.getElementById(cfg.mission);
+    const scrollToTarget = targetId => {
+      const target = document.getElementById(targetId);
       const nav = document.querySelector(cfg.navbar);
       if (target && nav) {
         const offset =
@@ -158,9 +154,9 @@ const {
       const btn = e.target?.closest?.('[data-action]');
       if (!btn) return;
       const actions = {
-        'scroll-to-mission': scroll,
         'open-discord': () =>
           window.open('https://discord.gg/j8qmYPAGQh', '_blank'),
+        'scroll-to-docs': () => scrollToTarget('docs-title'),
         'go-to-posts': () => (window.location.href = '/docs'),
       };
       actions[btn.dataset.action]?.();
