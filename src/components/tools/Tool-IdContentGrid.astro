@@ -23,7 +23,10 @@ const suggestions = toolsData
 // Optimized constants for better performance
 const EMPTY_STATE_CONFIG = {
   title: `Tutorial ${formattedToolName} Sedang Disiapkan`,
-  description: `Tutorial tentang ${formattedToolName} sedang dalam tahap penyusunan. Akan segera dipublikasikan, mohon tunggu sebentar.`,
+  descriptionLines: [
+    `Tutorial tentang ${formattedToolName} sedang dalam tahap penyusunan.`,
+    'Akan segera dipublikasikan, mohon tunggu sebentar.',
+  ],
   suggestions,
 } as const;
 ---
@@ -49,51 +52,29 @@ const EMPTY_STATE_CONFIG = {
       </div>
     </div>
   ) : (
-    <div class="tool__empty-state" role="region" aria-label="No articles available">
-      <div class="tool__empty-state-content">
-        <div class="tool__empty-state-icon">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
+    <section class="tome-empty-state" role="region" aria-label="No articles available">
+      <div class="tome-empty-line" aria-hidden="true"></div>
+      <h2 class="tome-empty-title">{EMPTY_STATE_CONFIG.title}</h2>
+      <p class="tome-empty-description">
+        {EMPTY_STATE_CONFIG.descriptionLines.map((line) => (
+          <span>{line}</span>
+        ))}
+      </p>
+      <nav class="tome-empty-actions" aria-label="Alternative navigation">
+        <a href="/tools" class="tome-empty-link">Lihat tutorial lain</a>
+        <a href="/docs" class="tome-empty-link">Lihat dokumentasi</a>
+      </nav>
+      {EMPTY_STATE_CONFIG.suggestions.length > 0 && (
+        <div class="tome-suggestions" role="list" aria-label="Recommended tools">
+          <span class="tome-suggestions-label">Tool terkait:</span>
+          {EMPTY_STATE_CONFIG.suggestions.map((suggestion) => (
+            <a href={suggestion.href} class="tome-suggestion-link" role="listitem">
+              {suggestion.name}
+            </a>
+          ))}
         </div>
-        <h2 class="tool__empty-state-title">{EMPTY_STATE_CONFIG.title}</h2>
-        <p class="tool__empty-state-description">
-          {EMPTY_STATE_CONFIG.description}
-        </p>
-        <div class="tool__empty-state-actions">
-          <a href="/tools" class="tool__empty-state-btn tool__empty-state-btn--primary" aria-label="Browse other available tools">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-            </svg>
-            <span>Lihat tutorial Lain</span>
-          </a>
-          <a href="/docs" class="tool__empty-state-btn tool__empty-state-btn--secondary" aria-label="Browse documentation">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-            </svg>
-            <span>Lihat Dokumentasi</span>
-          </a>
-        </div>
-        <div class="tool__empty-state-suggestions">
-          <h3 class="tool__suggestions-title">Tutotrial lain-nya yang kami Rekomendasikan</h3>
-          <div class="tool__suggestions-list" role="list" aria-label="Recommended tools">
-            {EMPTY_STATE_CONFIG.suggestions.map((suggestion) => (
-              <a href={suggestion.href} class="tool__suggestion-tool" role="listitem" aria-label={`Visit ${suggestion.name} tool page`}>
-                <img 
-                  src={suggestion.iconUrl} 
-                  alt={`${suggestion.name} icon`}
-                  class="tool__suggestion-tool-icon"
-                  loading="lazy"
-                  width="32"
-                  height="32"
-                />
-                <span class="tool__suggestion-tool-name">{suggestion.name}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+      <div class="tome-empty-line" aria-hidden="true"></div>
+    </section>
   )}
 </div>
-

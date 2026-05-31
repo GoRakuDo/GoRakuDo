@@ -4,12 +4,9 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
-import Breadcrumb from '../../../components/common/Breadcrumb.astro';
-import SearchPopover from '../../../components/common/SearchPopover.astro';
 import Pagination from '../../../components/common/Pagination/Pagination.astro';
 import {
   calculatePagination,
-  transformToolArticleData,
   validatePageNumber,
   shouldRedirectToFirstPage,
   type PaginationConfig,
@@ -208,7 +205,7 @@ const processedArticles = paginatedItems.map(
 const headerData = {
   tool,
   articleCount: toolArticles.length,
-  title: `Apa itu ${formattedToolName} ?`,
+  title: formattedToolName,
   description: toolConfig.description,
   iconPath: toolConfig.iconPath,
   formattedToolName,
@@ -216,26 +213,7 @@ const headerData = {
 };
 
 // ========== DISPLAY CONSTANTS ==========
-const ICON_DIMENSIONS = { width: 175, height: 175 };
 const iconAlt = `${headerData.formattedToolName} tool icon`;
-
-const META_ITEMS = [
-  {
-    icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
-    label:
-      headerData.articleCount === 0
-        ? 'No Articles'
-        : headerData.articleCount === 1
-          ? '1 Article'
-          : `${headerData.articleCount} Articles`,
-    ariaLabel: `This tool has ${headerData.articleCount} articles available`,
-  },
-  {
-    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
-    label: 'Free Resources',
-    ariaLabel: 'All resources are free to use',
-  },
-] as const;
 
 // ========== CONTENT GRID DATA ==========
 const contentGridData = {
@@ -374,88 +352,38 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   collectionPageSchema={collectionPageSchema}
   softwareApplicationSchema={softwareApplicationSchema}
 >
-  <!-- ========== INTEGRATED ENHANCED HEADER COMPONENT ========== -->
+  <!-- ========== NIGHT LIBRARY TOME HEADER ========== -->
   <header
     slot='articles-header'
-    class='component-header'
-    role='banner'
+    class='tome-header'
+    role='region'
+    aria-label={`${headerData.formattedToolName} tool header`}
     itemscope
     itemtype='https://schema.org/WebPageElement'
   >
-    <div class='header-container glassmorphism glassmorphism-card'>
-      <!-- Integrated Content Section with Icon and Text -->
-      <div class='header-content-section'>
-        <!-- Icon Container -->
-        <div class='tool-icon-container'>
-          <img
-            src={headerData.iconPath}
-            alt={iconAlt}
-            class='tool-icon-large'
-            loading='eager'
-            width={ICON_DIMENSIONS.width}
-            height={ICON_DIMENSIONS.height}
-            itemprop='image'
-          />
-        </div>
+    <div class='tome-marker' aria-hidden='true'>/// ARCHIVE_OPEN ///</div>
 
-        <!-- Text Content -->
-        <div class='header-text-content'>
-          <h1 class='header-title' itemprop='headline'>
-            {headerData.title}
-          </h1>
-          <p class='header-description' itemprop='description'>
-            {headerData.description}
-          </p>
-          <div class='header-meta' role='list' aria-label='Tool statistics'>
-            {
-              META_ITEMS.map(item => (
-                <span
-                  class='meta-item'
-                  role='listitem'
-                  aria-label={item.ariaLabel}
-                >
-                  <svg
-                    class='meta-icon'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    aria-hidden='true'
-                  >
-                    <path
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
-                      d={item.icon}
-                    />
-                  </svg>
-                  {item.label}
-                </span>
-              ))
-            }
-          </div>
-        </div>
+    <div class='tome-header-layout'>
+      <div class='tome-header-left'>
+        <img
+          src={headerData.iconPath}
+          alt={iconAlt}
+          class='tome-icon'
+          loading='eager'
+          width="72"
+          height="72"
+        />
+        <h1 class='tome-title' itemprop='headline'>
+          {headerData.title}
+        </h1>
+      </div>
+      <div class='tome-header-right'>
+        <p class='tome-description' itemprop='description'>
+          {headerData.description}
+        </p>
       </div>
     </div>
   </header>
-
-  <Breadcrumb
-    slot='breadcrumb'
-    currentPath={`/tools/${tool}/page-${currentPage}`}
-    showHome={true}
-    orientation='horizontal'
-    showIcons={true}
-    ariaLabel='Tool navigation breadcrumb'
-  />
-
-  <SearchPopover
-    slot='search'
-    buttonStyle='rounded'
-    placeholder={`Search ${formattedToolName} articles...`}
-    searchAction={`/search?tool=${tool}`}
-    className='tool-search-popover'
-    toolFilter={tool}
-    searchCollections='tools'
-  />
 
   <ToolIdContentGrid
     hasArticles={contentGridData.hasArticles}
