@@ -141,9 +141,9 @@
 @media (min-width: 768px) {
   .tome-table-header {
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: 100px 1fr 150px;
-    padding: 1rem 0;
+    gap: 2rem;
+    grid-template-columns: 120px 1fr;
+    padding: 1.25rem 0.5rem;
     border-bottom: 1px solid oklch(85% 0.05 270deg / 0.15);
     color: var(--grkd-muted, oklch(75% 0.002 270deg));
     font-family: var(--font-primary, sans-serif);
@@ -162,7 +162,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1.25rem 0;
+  padding: 1.25rem 0.5rem;
   border-bottom: 1px dashed oklch(85% 0.05 270deg / 0.15);
   color: var(--clr-text-primary);
   text-decoration: none;
@@ -173,9 +173,9 @@
   .tome-article-row {
     display: grid;
     align-items: center;
-    gap: 1.5rem;
-    grid-template-columns: 100px 1fr 150px;
-    padding: 1rem 0;
+    gap: 2rem;
+    grid-template-columns: 120px 1fr;
+    padding: 1.5rem 0.5rem;
   }
 }
 
@@ -221,19 +221,6 @@
   font-size: 0.75rem;
 }
 
-.tome-cell-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  color: oklch(70% 0.1 270deg);
-  font-family: var(--font-primary, sans-serif);
-  font-size: 0.8rem;
-}
-
-.tome-tag {
-  white-space: nowrap;
-}
-
 /* ========== TOME EMPTY STATE ========== */
 .tome-empty-state {
   display: flex;
@@ -243,12 +230,6 @@
   padding: 1rem 0;
   color: var(--clr-text-primary);
   text-align: center;
-}
-
-.tome-empty-line {
-  width: 100%;
-  height: 1px;
-  background: oklch(85% 0.05 270deg / 0.15);
 }
 
 .tome-empty-icon {
