@@ -281,6 +281,198 @@
   }
 }
 
+/* ============================================
+   QUEST CODEX TOC - Tree-line design
+   (overrides TableOfContents.astro default styles
+   when inside .tqa-toc on tool article pages)
+
+   Inspired by the ABUI TOC reference (tree-line
+   guide, item-level horizontal branches, active
+   text-color highlight) and harmonized with the
+   GoRakuDo Discord Dark Pop OKLCH theme.
+
+   Scoped under .tqa-toc to avoid affecting
+   PostLayout / docs pages.
+   ============================================ */
+
+@media (min-width: 1280px) {
+  /* Container: drop card chrome, become a transparent tree */
+  .tqa-toc .toc-container {
+    position: sticky;
+    top: 100px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    max-height: calc(100vh - 120px);
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* Header: Pixelify marker + serif title */
+  .tqa-toc .toc-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 100%;
+    margin: 0 0 0.75rem;
+    padding: 0 0 0.75rem;
+    border-bottom: 1px solid oklch(85% 0.05 270deg / 0.18);
+  }
+
+  .tqa-toc .toc-marker {
+    margin: 0;
+    padding: 0;
+    color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+    font-family: var(--font-pixel, 'Pixelify Sans'), Courier New, monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+    text-shadow: 0 0 10px oklch(65% 0.25 280deg / 0.5);
+  }
+
+  .tqa-toc .toc-title {
+    margin: 0;
+    color: oklch(95% 0.005 270deg);
+    font-family: var(--font-noto-serif-jp, 'Noto Serif JP'), serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  /* Hide desktop-only toggle button (no collapse UX on this layout) */
+  .tqa-toc .toc-toggle {
+    display: none;
+  }
+
+  /* Hide mobile-only footer */
+  .tqa-toc .toc-footer {
+    display: none;
+  }
+
+  /* Nav: scrollable area with vertical fade mask */
+  .tqa-toc .toc-nav {
+    position: relative;
+    overflow: hidden auto;
+    max-height: calc(100vh - 220px);
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 16px,
+      #000 calc(100% - 16px),
+      transparent 100%
+    );
+  }
+
+  /* List: 1px tree guide on the left */
+  .tqa-toc .toc-list {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tqa-toc .toc-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.5rem;
+    width: 1px;
+    background: oklch(85% 0.05 270deg / 0.22);
+    pointer-events: none;
+  }
+
+  /* Item: each link is a tree leaf with horizontal branch */
+  .tqa-toc .toc-item {
+    position: relative;
+    margin: 0;
+  }
+
+  .tqa-toc .toc-link {
+    position: relative;
+    display: block;
+    overflow: visible;
+    margin: 0;
+    padding: 0.4rem 0.5rem 0.4rem 1.5rem;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: oklch(78% 0.005 270deg);
+    font-family: var(--font-primary, sans-serif);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+    white-space: normal;
+    transform: none;
+    transition: color 0.2s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
+    text-overflow: clip;
+  }
+
+  /* Horizontal branch from the tree guide to the link */
+  .tqa-toc .toc-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    width: 0.875rem;
+    height: 1px;
+    background: oklch(85% 0.05 270deg / 0.22);
+    transform: translateY(-50%);
+    transition: background-color 0.2s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  /* Nested items (depth >= 2): larger left offset to align with branch tip */
+  .tqa-toc .toc-level-2 .toc-link,
+  .tqa-toc .toc-level-3 .toc-link,
+  .tqa-toc .toc-level-4 .toc-link,
+  .tqa-toc .toc-level-5 .toc-link,
+  .tqa-toc .toc-level-6 .toc-link {
+    padding-left: 2.25rem;
+    font-size: 0.75rem;
+  }
+
+  /* Hover: Blurple text only (no background) */
+  .tqa-toc .toc-link:hover {
+    background: transparent;
+    color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+    transform: none;
+  }
+
+  /* Active: Blurple text + 2px Blurple edge bar + glow (no background fill).
+     Using box-shadow inset instead of ::before to keep specificity within 0,3,0. */
+  .tqa-toc .toc-link.active {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+    font-weight: 600;
+    transform: none;
+    animation: none;
+    box-shadow: inset 2px 0 0 var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+    text-shadow: 0 0 8px oklch(65% 0.25 280deg / 0.45);
+  }
+
+  /* Active: inset Blurple bar is the visual marker.
+     The branch ::before stays gray (deliberate — the bar is the indicator). */
+
+  /* Focus-visible for keyboard navigation */
+  .tqa-toc .toc-link:focus-visible {
+    outline: 2px solid var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+
 /* ========== MAIN QUEST ENTRY AREA ========== */
 .tqa-main {
   min-width: 0;

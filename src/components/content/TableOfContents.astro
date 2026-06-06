@@ -10,9 +10,8 @@ const { headings = [] } = Astro.props
   <>
     <aside class="toc-container" aria-label="Table of Contents">
       <div class="toc-header">
-        <h2 class="toc-title">
-          Daftar isi:
-        </h2>
+        <p class="toc-marker" aria-hidden="true">/// TOC_INDEX ///</p>
+        <h2 class="toc-title">{'Daftar Isi'}</h2>
         <button class="toc-toggle" aria-label="Hide table of contents" aria-expanded="true" data-state="visible">
           <svg 
             class="toc-hide-icon"
@@ -111,6 +110,20 @@ const { headings = [] } = Astro.props
 )}
 
 <style is:global>
+  /* Pixel-art marker above the title. Styled minimally so it renders
+     consistently on both Quest Codex (tool articles) and PostLayout (docs). */
+  .toc-marker {
+    margin: 0 0 0.25rem;
+    padding: 0;
+    color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+    font-family: var(--font-pixel, 'Pixelify Sans'), Courier New, monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+    text-shadow: 0 0 10px oklch(65% 0.25 280deg / 0.5);
+  }
+
   .toc-nav {
     overflow: hidden auto;
     max-height: calc(100vh - 200px);
@@ -141,7 +154,7 @@ const { headings = [] } = Astro.props
   .toc-container {
     position: sticky;
     top: 100px;
-    z-index: var(-z-TableOfContents-toc-container);
+    z-index: var(--z-TableOfContents-toc-container);
     overflow-x: hidden;
     width: 18rem;
     height: fit-content;
@@ -169,7 +182,7 @@ const { headings = [] } = Astro.props
     &:not(.mobile-toc) {
       position: sticky;
       top: 100px;
-      z-index: var(-z-TableOfContents-toc-container);
+      z-index: var(--z-TableOfContents-toc-container);
       overflow-x: hidden;
       width: 18rem;
       height: fit-content;
