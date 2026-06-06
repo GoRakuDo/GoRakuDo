@@ -63,14 +63,15 @@
   padding: 2rem 1rem;
   border-bottom: 1px solid oklch(85% 0.05 270deg / 0.12);
 
-  /* Subtle purple radial that fades into the card's own surface
-     (--grkd-surface-2), so the column blends naturally with the rest
-     of the card. Mirrors the .feature-icon-column pattern on the
-     homepage Feature cards. */
+  /* Subtle purple radial that fades to --grkd-surface (Discord
+     Midnight Navy, 17.80% lightness), making the left column
+     slightly DARKER than the card body. Mirrors the .tool-icon-column
+     pattern in Tools-GridSection.astro — this creates the
+     "darker left panel" look that matches the /tools cards. */
   background: radial-gradient(
     circle at center,
     color-mix(in oklch, var(--grkd-purple-500) 10%, transparent) 0%,
-    var(--grkd-surface-2) 80%
+    var(--grkd-surface) 100%
   );
 }
 
