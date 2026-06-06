@@ -559,7 +559,8 @@ const { headings = [] } = Astro.props
       max-width: 100%;
       max-height: none;
       margin-top: 1.5rem;
-      padding: 1.25rem 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+      padding: 1.25rem;
       border: 1px solid oklch(65% 0.15 280deg / 0.2);
       border-radius: 16px;
         background: oklch(50% 0 0deg / 0.15);
@@ -573,9 +574,9 @@ const { headings = [] } = Astro.props
 
       .toc-header {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.6rem;
         width: 100%;
         max-width: 100%;
         margin: 0 0 1rem;
@@ -589,18 +590,18 @@ const { headings = [] } = Astro.props
         padding: 0;
         color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
         font-family: var(--font-pixel, 'Pixelify Sans'), Courier New, monospace;
-        font-size: 0.7rem;
+        font-size: 0.95rem;
         font-weight: 500;
+        line-height: 1.2;
         letter-spacing: 0.1em;
-        opacity: 0.85;
         text-shadow: 0 0 10px oklch(65% 0.25 280deg / 0.5);
       }
 
       .toc-title {
         margin: 0;
-        color: oklch(95% 0.005 270deg);
-        font-family: var(--font-noto-serif-jp, 'Noto Serif JP'), serif;
-        font-size: 1.5rem;
+        color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+        font-family: var(--font-primary, 'Gen Interface JP'), system-ui, sans-serif;
+        font-size: 0.95rem;
         font-weight: 700;
         line-height: 1.2;
         letter-spacing: 0.01em;
