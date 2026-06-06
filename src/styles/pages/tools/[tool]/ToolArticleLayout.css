@@ -647,7 +647,7 @@
   object-fit: contain;
   max-width: 100%;
   margin: 0;
-  background-color: var(--grkd-surface-2, oklch(30% 0.02 270deg));
+  background: transparent;
 }
 
 .tutorial-image-grid :is(img) {
