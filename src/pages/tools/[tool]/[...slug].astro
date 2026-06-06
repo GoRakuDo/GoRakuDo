@@ -2,6 +2,10 @@
 // ========== IMPORTS ==========
 import { getCollection, type CollectionEntry } from 'astro:content';
 import ToolArticleLayout from '../../../layouts/ToolArticleLayout.astro';
+import TableOfContents from '../../../components/content/TableOfContents.astro';
+import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
+import { resolvePath, getCollectionInfo } from '../../../utils/collections';
+import { logger } from '../../../utils/logging/console-logger';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
 import { buildCloudinaryUrl } from '../../../utils/cloudinary';
