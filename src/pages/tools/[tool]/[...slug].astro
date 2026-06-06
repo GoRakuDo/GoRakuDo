@@ -2,11 +2,6 @@
 // ========== IMPORTS ==========
 import { getCollection, type CollectionEntry } from 'astro:content';
 import ToolArticleLayout from '../../../layouts/ToolArticleLayout.astro';
-import Breadcrumb from '../../../components/common/Breadcrumb.astro';
-import TableOfContents from '../../../components/content/TableOfContents.astro';
-import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
-import { resolvePath, getCollectionInfo } from '../../../utils/collections';
-import { logger } from '../../../utils/logging/console-logger';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
 import { buildCloudinaryUrl } from '../../../utils/cloudinary';
@@ -260,14 +255,6 @@ const postData = {
   toolName,
 };
 
-// ========== BREADCRUMB CONFIGURATION ==========
-const breadcrumbConfig = {
-  currentPath: resolvedPath.path,
-  showHome: true,
-  showIcons: true,
-  ariaLabel: `Tool article navigation breadcrumb for ${toolName}`,
-};
-
 // ========== TOOL METADATA ==========
 const toolMetadata = toolsData.find(
   (t: { id: string; name: string }) => t.id === toolName.toLowerCase()
@@ -356,20 +343,9 @@ const relatedTools = (post.data.relatedTools || [])
   nextArticle={nextArticle}
   relatedTools={relatedTools}
 >
-  <!-- Breadcrumb Slot (uses toolConfig to avoid the docs/tool-articles
-       CollectionEntry type mismatch; toolConfig path also preserves the
-       custom ariaLabel) -->
-  <Breadcrumb
-    slot='breadcrumb'
-    toolConfig={{
-      toolName,
-      articleTitle: post.data.title,
-      articleSlug,
-    }}
-    showHome={breadcrumbConfig.showHome}
-    showIcons={breadcrumbConfig.showIcons}
-    ariaLabel={breadcrumbConfig.ariaLabel}
-  />
+  <!-- Breadcrumb Slot (temporarily removed — was overlapping the floating
+       navbar at the top of the page. Keep slot in layout, drop the
+       instance here until we add proper top offset handling.) -->
 
   <!-- TOC Slot (left column, ≥1280px) -->
   <TableOfContents slot='toc' headings={tocHeadings} />
