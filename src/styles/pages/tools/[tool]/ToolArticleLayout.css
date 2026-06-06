@@ -644,10 +644,10 @@
 .tqa-article .tutorial-image-grid :is(img) {
   width: 100%;
   aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: top;
+  object-fit: contain;
   max-width: 100%;
   margin: 0;
+  background-color: var(--grkd-surface-2, oklch(30% 0.02 270deg));
 }
 
 .tutorial-image-grid :is(img) {
