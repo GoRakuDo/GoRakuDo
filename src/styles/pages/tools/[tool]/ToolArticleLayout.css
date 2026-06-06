@@ -628,6 +628,17 @@
   border-radius: 0.5rem;
 }
 
+/* Desktop: cap inline images to prevent portrait screenshots from dominating
+   wide article columns. Mobile keeps full-width since viewport is already narrow. */
+@media (min-width: 768px) {
+  .tqa-article :is(img) {
+    width: auto;
+    max-width: 24rem;   /* ~384px — comfortable inline size */
+    height: auto;
+    max-height: 32rem;  /* ~512px — prevents 9:16 portrait blowup */
+  }
+}
+
 /* Strong / em */
 .tqa-article :is(strong) {
   color: var(--clr-text-primary);
@@ -873,4 +884,5 @@
   .tqa-article {
     border-left-color: var(--clr-text-primary);
   }
+}
 }
