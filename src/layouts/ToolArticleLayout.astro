@@ -109,45 +109,51 @@ const formattedDate = publishedDate
           /// ARTICLE_OPEN ///
         </p>
 
-        <div class='tqa-hero-grid'>
-          <div class='tqa-hero-icon-wrap'>
-            <img
-              class='tqa-hero-icon'
-              src={toolIcon}
-              alt={`${toolName} icon`}
-              width='72'
-              height='72'
-              loading='eager'
-              decoding='async'
-            />
-          </div>
-
-          <div class='tqa-hero-content'>
-            <h1 class='tqa-hero-title'>{title}</h1>
-            <div class='tqa-hero-meta' aria-label='Article metadata'>
-              {
-                formattedDate && (
-                  <time
-                    class='tqa-hero-meta-item'
-                    datetime={publishedDate}
-                  >
-                    {formattedDate}
-                  </time>
-                )
-              }
-              {author && <span class='tqa-hero-meta-item'>{author}</span>}
-              {devicePlatform && (
-                <span class='tqa-hero-meta-item tqa-hero-meta-os'>
-                  {devicePlatform}
-                </span>
-              )}
-              {readingTimeMin !== undefined && (
-                <span class='tqa-hero-meta-item'>
-                  {readingTimeMin} min read
-                </span>
-              )}
+        <div class='tqa-hero-card'>
+          <div class='tqa-hero-grid'>
+            <div class='tqa-hero-icon-wrap'>
+              <img
+                class='tqa-hero-icon'
+                src={toolIcon}
+                alt={`${toolName} icon`}
+                width='72'
+                height='72'
+                loading='eager'
+                decoding='async'
+              />
             </div>
-            <p class='tqa-hero-description'>{description}</p>
+
+            <div class='tqa-hero-content'>
+              <h1 class='tqa-hero-title'>{title}</h1>
+              <div
+                class='tqa-hero-title-accent'
+                aria-hidden='true'
+              ></div>
+              <div class='tqa-hero-meta' aria-label='Article metadata'>
+                {
+                  formattedDate && (
+                    <time
+                      class='tqa-hero-meta-item'
+                      datetime={publishedDate}
+                    >
+                      {formattedDate}
+                    </time>
+                  )
+                }
+                {author && <span class='tqa-hero-meta-item'>{author}</span>}
+                {devicePlatform && (
+                  <span class='tqa-hero-meta-item tqa-hero-meta-os'>
+                    {devicePlatform}
+                  </span>
+                )}
+                {readingTimeMin !== undefined && (
+                  <span class='tqa-hero-meta-item'>
+                    {readingTimeMin} min read
+                  </span>
+                )}
+              </div>
+              <p class='tqa-hero-description'>{description}</p>
+            </div>
           </div>
         </div>
       </header>
