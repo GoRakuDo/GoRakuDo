@@ -545,7 +545,7 @@ const { headings = [] } = Astro.props
   }
 
 
-  /* Mobile TOC - show as collapsible at top on mobile */
+  /* Mobile TOC - default expanded, no toggle button */
   @media (max-width: 1200px) {
     .toc-container.mobile-toc {
       position: relative;
@@ -558,7 +558,8 @@ const { headings = [] } = Astro.props
       width: 100%;
       max-width: 100%;
       max-height: none;
-      padding: 8px 16px;
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.25rem 1.5rem;
       border: 1px solid oklch(65% 0.15 280deg / 0.2);
       border-radius: 16px;
         background: oklch(50% 0 0deg / 0.15);
@@ -570,77 +571,72 @@ const { headings = [] } = Astro.props
         inset 0 1px 0 oklch(100% 0 0deg / 0.15);
       touch-action: manipulation;
 
-      .toc-title {
-        font-size: 21px;
-      font-weight: 600;
-    }
-
       .toc-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
         width: 100%;
-        max-width: calc(100% - 1rem);
-        margin: 0 0.25rem; /* 左右8px (0.5rem)、下12px (0.75rem) */
+        max-width: 100%;
+        margin: 0 0 1rem;
+        padding: 0 0 0.75rem;
+        border-bottom: 1px solid oklch(85% 0.05 270deg / 0.18);
         box-sizing: border-box;
       }
 
-      /* Show TOC footer only on mobile */
-      .toc-footer {
-        display: block;
+      .toc-marker {
+        margin: 0;
+        padding: 0;
+        color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+        font-family: var(--font-pixel, 'Pixelify Sans'), Courier New, monospace;
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        opacity: 0.85;
+        text-shadow: 0 0 10px oklch(65% 0.25 280deg / 0.5);
       }
 
-      /* モバイルTOCのtoc-navはデフォルトで表示 */
-      .toc-nav {
-        max-height: 300px;
-        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        will-change: max-height, opacity, transform;
+      .toc-title {
+        margin: 0;
+        color: oklch(95% 0.005 270deg);
+        font-family: var(--font-noto-serif-jp, 'Noto Serif JP'), serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0.01em;
       }
 
-      /* スマホサイズでデフォルトでtoc-listを非表示 */
-      .toc-list {
-        display: none;
-        overflow: visible;
-        max-height: none;
-      }
-
+      /* Hide header toggle button on mobile (no expand/collapse UX) */
       .toc-toggle {
-        opacity: 0.3;
-        cursor: default;
-        pointer-events: none;
+        display: none;
       }
-    }
 
-    /* toc-footerボタンがタップされた時の状態 */
-    .mobile-toc.toc-expanded {
+      /* Hide "Tampilkan Daftar isi" footer button (no longer needed) */
+      .toc-footer {
+        display: none;
+      }
+
+      /* Mobile toc-nav: no max-height, no transitions (always expanded) */
+      .toc-nav {
+        max-height: none;
+        transition: none;
+        will-change: auto;
+      }
+
+      /* Mobile toc-list: always visible (expanded by default) */
       .toc-list {
         display: block;
-      }
-
-      .toc-nav {
         overflow: visible;
         max-height: none;
       }
     }
   }
 
-  /* モバイルTOC Expand icon animation */
-  .toc-expand-icon {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-  }
-
-  .toc-expand-icon.rotated {
-    transform: rotate(180deg);
-  }
-
-  /* Mobile TOC collapsed state */
+  /* Mobile TOC - list items, indentation, and active state.
+     (The expand/collapse toggle button is now hidden on mobile — TOC is
+      always expanded by default. The JS that toggles toc-expanded /
+      toc-collapsed classes still runs but has no visual effect.) */
   @media (max-width: 1200px) {
-    .mobile-toc.toc-collapsed .toc-nav {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      transform: translateY(-12px) scale(0.98);
-    }
-
-
     .mobile-toc .toc-link {
       padding: 10px 12px;
       font-size: 14px;
@@ -680,43 +676,6 @@ const { headings = [] } = Astro.props
       background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
       color: var(--token-purple-base);
       font-weight: 600;
-      animation: mobileActiveGlow 0.3s ease-in-out;
-    }
-
-    .toc-mobile-active::before {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 4px;
-      border-radius: 0 2px 2px 0;
-      background: linear-gradient(180deg, var(--token-purple-base), color-mix(in oklch, var(--token-purple-base) 80%, var(--token-white-base)));
-      content: '';
-    }
-
-    .toc-mobile-active::after {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      color: var(--token-purple-base);
-      font-size: 8px;
-      transform: translateY(-50%);
-      animation: pulse 3s infinite;
-      content: '●';
-    }
-
-    @keyframes mobileActiveGlow {
-      0% {
-        background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
-      }
-
-      50% {
-        background: color-mix(in oklch, var(--token-purple-base) 25%, transparent);
-      }
-
-      100% {
-        background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
-      }
     }
   }
 
@@ -924,50 +883,24 @@ const { headings = [] } = Astro.props
      * ------------------------------ */
     const createMobileTOC = () => {
       const existing = document.querySelector('.toc-container.mobile-toc');
-      if (window.innerWidth <= 1200) {
+      if (window.matchMedia('(max-width: 1200px)').matches) {
         if (!existing) {
           // Try multiple possible IDs for the main content element
-          const contentMain = document.getElementById('contentMain') || 
-                             document.getElementById('main-content') || 
+          const contentMain = document.getElementById('contentMain') ||
+                             document.getElementById('main-content') ||
                              document.querySelector('main') ||
                              document.querySelector('article');
           if (contentMain && contentMain.parentNode) {
             const clone = tocContainer.cloneNode(true) as HTMLElement;
             clone.classList.add('mobile-toc');
-            
-            // Re-attach event listeners to mobile TOC
+
+            // Re-attach event listeners to mobile TOC.
+            // NOTE: The expand/collapse toggle is no longer used on mobile
+            // (TOC is always expanded by default), so the .toc-expand-toggle
+            // click handler has been removed. The button still exists in the
+            // DOM but is hidden via CSS and is no longer clickable.
             const mobileLinks = clone.querySelectorAll('.toc-link') as NodeListOf<HTMLAnchorElement>;
-            const mobileExpandToggle = clone.querySelector('.toc-expand-toggle') as HTMLButtonElement;
-            
-            // toc-toggle機能は無効化されているため、関連スクリプトを削除
-            
-            // Mobile expand toggle - シンプルなクラスベース実装
-            if (mobileExpandToggle) {
-              const mobileExpandIcon = mobileExpandToggle.querySelector('.toc-expand-icon') as SVGElement;
-              
-              mobileExpandToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // toc-expanded クラスをトグル
-                const isExpanded = clone.classList.toggle('toc-expanded');
-                
-                // SVGアイコンの回転クラスをトグル
-                mobileExpandIcon?.classList.toggle('rotated', isExpanded);
-                
-                // ARIA属性を更新
-                if (isExpanded) {
-                  mobileExpandToggle.setAttribute('aria-expanded', 'true');
-                  mobileExpandToggle.setAttribute('aria-label', 'Tutup daftar isi');
-                  mobileExpandToggle.querySelector('.toc-expand-text')!.textContent = 'Tutup Daftar isi';
-                } else {
-                  mobileExpandToggle.setAttribute('aria-expanded', 'false');
-                  mobileExpandToggle.setAttribute('aria-label', 'Expand table of contents');
-                  mobileExpandToggle.querySelector('.toc-expand-text')!.textContent = 'Tampilkan Daftar isi';
-                }
-              });
-            }
-            
+
             mobileLinks.forEach(link => {
               link.addEventListener('click', e => {
                 e.preventDefault();
