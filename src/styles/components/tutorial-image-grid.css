@@ -1,0 +1,123 @@
+/* === Reusable: Tutorial Image Grid =========================================
+   Phone-frame card grid for step-by-step tutorial screenshots. Each <figure>
+   auto-increments a STEP_NN badge (Pixelify Sans, Blurple glow).
+
+   Usage in MDX:
+   ```mdx
+   <div class="tutorial-image-grid">
+     <figure>
+       <img src="..." alt="Step 1: ..." />
+     </figure>
+     <figure>
+       <img src="..." alt="Step 2: ..." />
+     </figure>
+     ...
+   </div>
+   ```
+
+   Features
+   - Auto-numbered badge (CSS counter, decimal-leading-zero: STEP_01..STEP_99)
+   - Phone-frame card (rounded border, surface-2 background, hover glow)
+   - 3:4 aspect ratio image, object-fit: contain (full image visible, no crop)
+   - 2-col mobile (<768px) / 3-col desktop (>=768px)
+
+   Theming (CSS custom properties; override per instance):
+   --tutorial-grid-cols-mobile    default 2
+   --tutorial-grid-cols-desktop   default 3
+   --tutorial-grid-gap            default 1rem
+   --tutorial-card-bg             default var(--grkd-surface-2)
+   --tutorial-card-border         default oklch(65% 0.15 280deg / 0.3)
+   --tutorial-card-border-hover   default oklch(65% 0.25 280deg / 0.6)
+   --tutorial-card-radius         default 0.75rem
+   --tutorial-step-prefix         default "STEP_"
+   --tutorial-step-bg             default oklch(50% 0.2 280deg / 0.85)
+   --tutorial-step-color          default oklch(98% 0.005 270deg)
+   --tutorial-glow                default oklch(65% 0.25 280deg / 0.3)
+   --tutorial-hover-lift          default -3px
+
+   Accessibility
+   - Include "Step N:" in each alt text — ::before generated content is not
+     announced by all screen readers, so the alt is the only sequential cue
+   - The card itself is keyboard-focusable if the <img> is wrapped in <a>;
+     otherwise the figure is purely visual
+
+   @since  2026-06-07
+   @author Kuraudo
+   ========================================================================== */
+
+.tutorial-image-grid {
+  --tutorial-grid-cols-mobile: 2;
+  --tutorial-grid-cols-desktop: 3;
+  --tutorial-grid-gap: 1rem;
+  --tutorial-card-bg: var(--grkd-surface-2, oklch(30% 0.02 270deg));
+  --tutorial-card-border: oklch(65% 0.15 280deg / 0.3);
+  --tutorial-card-border-hover: oklch(65% 0.25 280deg / 0.6);
+  --tutorial-card-radius: 0.75rem;
+  --tutorial-step-prefix: "STEP_";
+  --tutorial-step-bg: oklch(50% 0.2 280deg / 0.85);
+  --tutorial-step-color: oklch(98% 0.005 270deg);
+  --tutorial-glow: oklch(65% 0.25 280deg / 0.3);
+  --tutorial-hover-lift: -3px;
+
+  display: grid;
+  gap: var(--tutorial-grid-gap);
+  grid-template-columns: repeat(var(--tutorial-grid-cols-mobile), 1fr);
+  margin: 1.5rem 0;
+  counter-reset: step;
+}
+
+@media (min-width: 768px) {
+  .tutorial-image-grid {
+    grid-template-columns: repeat(var(--tutorial-grid-cols-desktop), 1fr);
+  }
+}
+
+.tutorial-image-grid figure {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--tutorial-card-border);
+  border-radius: var(--tutorial-card-radius);
+  background: var(--tutorial-card-bg);
+  transition:
+    transform 0.3s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1)),
+    border-color 0.3s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1)),
+    box-shadow 0.3s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
+  counter-increment: step;
+}
+
+.tutorial-image-grid figure:hover {
+  transform: translateY(var(--tutorial-hover-lift));
+  border-color: var(--tutorial-card-border-hover);
+  box-shadow: 0 0 20px var(--tutorial-glow);
+}
+
+.tutorial-image-grid figure::before {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 1;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.25rem;
+  background: var(--tutorial-step-bg);
+  color: var(--tutorial-step-color);
+  font-family: var(--font-pixel, 'Pixelify Sans'), monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  content: var(--tutorial-step-prefix) counter(step, decimal-leading-zero);
+  backdrop-filter: blur(4px);
+}
+
+.tutorial-image-grid figure img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;        /* override .tqa-article :is(img) border in tool articles */
+  border-radius: 0.5rem;
+  background: transparent;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+}

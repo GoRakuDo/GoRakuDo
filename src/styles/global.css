@@ -2,6 +2,7 @@
 @import './mobile-performance.css';
 @import './fonts.css';
 @import './typography.css';
+@import './components/tutorial-image-grid.css';
 @import 'tailwindcss';
 
 :root {

@@ -628,73 +628,8 @@
   border-radius: 0.5rem;
 }
 
-/* Tutorial image grid: 6 phone screenshots in step-by-step chronological
-   order. Mobile: 2 columns, Desktop: 3 columns. Each image gets a phone-frame
-   card with a STEP_NN badge (Pixelify Sans, Blurple) and hover glow.
-   Step numbers are auto-generated via CSS counters. */
-.tutorial-image-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 1.5rem 0;
-  counter-reset: step;
-}
-
-.tutorial-image-grid figure {
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  padding: 0.5rem;
-  border: 1px solid oklch(65% 0.15 280deg / 0.3);
-  border-radius: 0.75rem;
-  background: var(--grkd-surface-2, oklch(30% 0.02 270deg));
-  transition:
-    transform 0.3s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1)),
-    border-color 0.3s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1)),
-    box-shadow 0.3s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
-  counter-increment: step;
-}
-
-.tutorial-image-grid figure:hover {
-  transform: translateY(-3px);
-  border-color: oklch(65% 0.25 280deg / 0.6);
-  box-shadow: 0 0 20px oklch(65% 0.25 280deg / 0.3);
-}
-
-.tutorial-image-grid figure::before {
-  position: absolute;
-  top: 0.6rem;
-  left: 0.6rem;
-  z-index: 1;
-  padding: 0.2rem 0.45rem;
-  border-radius: 0.25rem;
-  background: oklch(50% 0.2 280deg / 0.85);
-  color: oklch(98% 0.005 270deg);
-  font-family: var(--font-pixel, 'Pixelify Sans'), monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  content: "STEP_" counter(step, decimal-leading-zero);
-  backdrop-filter: blur(4px);
-}
-
-.tutorial-image-grid figure img {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  border: none;        /* override .tqa-article :is(img) border */
-  border-radius: 0.5rem;
-  background: transparent;
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
-}
-
-@media (min-width: 768px) {
-  .tutorial-image-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+/* Tutorial image grid: rules live in src/styles/components/tutorial-image-grid.css
+   (imported via global.css) so the component is reusable across all pages. */
 
 /* Desktop: cap inline images to prevent portrait screenshots from dominating
    wide article columns. Mobile keeps full-width since viewport is already narrow. */
