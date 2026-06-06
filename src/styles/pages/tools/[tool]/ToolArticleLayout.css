@@ -628,6 +628,42 @@
   border-radius: 0.5rem;
 }
 
+/* Tutorial image grid: multi-step screenshots in chronological order.
+   Mobile: 2 columns, Desktop: 3 columns. Images keep .tqa-article img border
+   but use full grid cell width instead of inline max-width cap. */
+.tutorial-image-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 1.5rem 0;
+}
+
+/* Specificity bump: .tqa-Article prefix raises this rule above the
+   `.tqa-article :is(img) @media (min-width: 768px)` block (0,1,1) so the
+   grid cell width wins on desktop. */
+.tqa-article .tutorial-image-grid :is(img) {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top;
+  max-width: 100%;
+  margin: 0;
+}
+
+.tutorial-image-grid :is(img) {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 28rem;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .tutorial-image-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Desktop: cap inline images to prevent portrait screenshots from dominating
    wide article columns. Mobile keeps full-width since viewport is already narrow. */
 @media (min-width: 768px) {
