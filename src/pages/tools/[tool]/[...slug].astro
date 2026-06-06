@@ -1,16 +1,17 @@
 ---
 // ========== IMPORTS ==========
 import { getCollection, type CollectionEntry } from 'astro:content';
-import PostLayout from '../../../layouts/PostLayout.astro';
+import ToolArticleLayout from '../../../layouts/ToolArticleLayout.astro';
 import Breadcrumb from '../../../components/common/Breadcrumb.astro';
+import TableOfContents from '../../../components/content/TableOfContents.astro';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
-import { CldImage } from 'astro-cloudinary';
 import { buildCloudinaryUrl } from '../../../utils/cloudinary';
 import { getContentDates } from '../../../utils/git-dates';
+import toolsData from '../../../data/tools.json';
 
 // ========== UTILITY FUNCTIONS ==========
 export async function getVisibleToolArticlesData() {
@@ -22,8 +23,9 @@ export function extractToolNameFromSlug(slug: string): string {
   return slug.split('/')[0];
 }
 
-async function getValidTools(): Promise<string[]> {
-  const posts = await getVisibleToolArticlesData();
+async function getValidTools(
+  posts: CollectionEntry<'tool-articles'>[]
+): Promise<string[]> {
   const toolNames = new Set<string>();
   posts.forEach((post: CollectionEntry<'tool-articles'>) => {
     const toolName = extractToolNameFromSlug(post.slug);
@@ -48,6 +50,10 @@ const params = Astro.params as { tool: string; slug: string };
 const toolName = params.tool;
 const articleSlug = params.slug;
 
+// Cache the visible articles list once per build; reused by getValidTools
+// (above) and the prev/next sibling sort further below.
+const visibleToolArticles = await getVisibleToolArticlesData();
+
 // ========== SECURITY VALIDATION ==========
 if (
   toolName?.includes('..') ||
@@ -62,7 +68,7 @@ if (
   return Astro.redirect('/404', 301);
 }
 
-const validTools = await getValidTools();
+const validTools = await getValidTools(visibleToolArticles);
 if (!validTools.includes(toolName)) {
   logger.log(`Security: Invalid tool name requested: ${toolName}`, 'warning');
   return Astro.redirect('/tools', 301);
@@ -261,296 +267,225 @@ const breadcrumbConfig = {
   showIcons: true,
   ariaLabel: `Tool article navigation breadcrumb for ${toolName}`,
 };
+
+// ========== TOOL METADATA ==========
+const toolMetadata = toolsData.find(
+  (t: { id: string; name: string }) => t.id === toolName.toLowerCase()
+);
+const toolIcon = toolMetadata?.iconUrl || `/icon/${toolName}-icon-240.webp`;
+const toolDisplayName = toolMetadata?.name || toolName;
+
+// ========== READING TIME ==========
+// 200 words per minute is a typical reading speed for Indonesian text
+const WORDS_PER_MINUTE = 200;
+const wordCount = (post.body ?? '')
+  .replace(/```[\s\S]*?```/g, '')
+  .replace(/[`#*_~>\-\[\]\(\)!]/g, ' ')
+  .split(/\s+/)
+  .filter(Boolean).length;
+const readingTimeMin = Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE));
+
+// ========== PREV / NEXT NAVIGATION ==========
+// Sort sibling articles (same tool) by publishedDate; pick neighbors of current.
+// Reuses the cached `visibleToolArticles` from above (Risk #2 fix).
+const siblingArticles = visibleToolArticles
+  .filter(
+    (p: CollectionEntry<'tool-articles'>) =>
+      extractToolNameFromSlug(p.slug) === toolName
+  )
+  .sort(
+    (a: CollectionEntry<'tool-articles'>, b: CollectionEntry<'tool-articles'>) =>
+      new Date(a.data.publishedDate).getTime() -
+      new Date(b.data.publishedDate).getTime()
+  );
+
+const currentIndex = siblingArticles.findIndex(
+  (p: CollectionEntry<'tool-articles'>) => p.slug === post.slug
+);
+const prevEntry = currentIndex > 0 ? siblingArticles[currentIndex - 1] : null;
+const nextEntry =
+  currentIndex >= 0 && currentIndex < siblingArticles.length - 1
+    ? siblingArticles[currentIndex + 1]
+    : null;
+
+const buildNavArticle = (entry: CollectionEntry<'tool-articles'> | null) => {
+  if (!entry) return null;
+  const tool = extractToolNameFromSlug(entry.slug);
+  const articleSlugPart = entry.slug.split('/').slice(1).join('/');
+  return {
+    title: entry.data.title,
+    slug: `/tools/${tool}/${articleSlugPart}`,
+  };
+};
+
+const prevArticle = buildNavArticle(prevEntry);
+const nextArticle = buildNavArticle(nextEntry);
+
+// ========== RELATED TOOLS (with resolved icons) ==========
+const relatedTools = (post.data.relatedTools || [])
+  .map((name: string) => {
+    const slug = name.toLowerCase();
+    const meta = toolsData.find(
+      (t: { id: string; name: string }) => t.id === slug
+    );
+    return {
+      name: meta?.name || name,
+      slug,
+      icon: meta?.iconUrl || `/icon/${slug}-icon-240.webp`,
+    };
+  })
+  .slice(0, 5);
 ---
 
-<PostLayout
+<ToolArticleLayout
   title={seoData.title}
   description={seoData.description}
   publishedDate={seoData.publishedDate}
   modifiedDate={seoData.modifiedDate}
   lang='id'
   author={post.data.author || 'GoRakuDo Team'}
-  featuredImage={post.data.featuredImage}
   tags={seoData.keywords}
-  post={post}
-  collectionMetadata={collectionMetadata}
-  headings={tocHeadings}
-  postActions={true}
-  contentConfig={{
-    id: 'main-content',
-    ariaLabel: 'Tool article content',
-  }}
-  breadcrumbConfig={breadcrumbConfig}
+  toolName={toolDisplayName}
+  toolIcon={toolIcon}
+  devicePlatform={post.data.devicePlatform}
+  readingTimeMin={readingTimeMin}
   breadcrumbSchema={breadcrumbSchema as any}
   softwareApplicationSchema={softwareApplicationSchema}
-  featuredImage={post.data.featuredImage}
+  articleSection='Tool Tutorial'
+  prevArticle={prevArticle}
+  nextArticle={nextArticle}
+  relatedTools={relatedTools}
 >
-  <!-- Breadcrumb Slot -->
+  <!-- Breadcrumb Slot (uses toolConfig to avoid the docs/tool-articles
+       CollectionEntry type mismatch; toolConfig path also preserves the
+       custom ariaLabel) -->
   <Breadcrumb
     slot='breadcrumb'
-    {post}
-    currentPath={breadcrumbConfig.currentPath}
+    toolConfig={{
+      toolName,
+      articleTitle: post.data.title,
+      articleSlug,
+    }}
     showHome={breadcrumbConfig.showHome}
     showIcons={breadcrumbConfig.showIcons}
     ariaLabel={breadcrumbConfig.ariaLabel}
   />
 
-  <!-- Header Slot -->
-  <header slot='header' class='content-header mt-8'>
-    <h1>{post.data.title}</h1>
+  <!-- TOC Slot (left column, ≥1280px) -->
+  <TableOfContents slot='toc' headings={tocHeadings} />
 
-    <div class='content-meta' aria-label='Tool article metadata'>
-      <time class='content-date' datetime={seoData.publishedDate}>
-        {
-          new Date(seoData.publishedDate).toLocaleDateString('id-ID', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })
-        }
-      </time>
-      <span class='content-author'
-        >by {post.data.author || 'GoRakuDo Team'}</span
-      >
-      <span class='tool-indicator'>Tool: {toolName}</span>
-    </div>
-
-    {
-      post.data.tags && post.data.tags.length > 0 ? (
-        <nav
-          class='flex gap-2 flex-wrap mt-4 justify-center sm:justify-start'
-          aria-label='Article tags'
-        >
-          {post.data.tags.map((tag: string) => (
-            <span class='bg-primary/20 text-primary px-2 py-1 rounded text-xs border border-primary/30'>
-              {tag}
-            </span>
-          ))}
-        </nav>
-      ) : (
-        <div class='tag-warning mt-4' role='alert'>
-          <span class='text-warning text-sm'>
-            Belum ada tag yang ditetapkan
-          </span>
-        </div>
-      )
-    }
-  </header>
-
-  <!-- Content Slot -->
-  <div slot='content'>
-    {
-      post.data.tags && post.data.tags.length > 0 ? (
+  <!-- Default slot: Main article content -->
+  {
+    post.data.tags && post.data.tags.length > 0 ? (
+      <Content />
+    ) : (
+      <div class='fallback-content' role='alert'>
+        <p class='text-warning mb-4'>
+          This article is missing proper tag categorization. Content may not
+          appear in tool indexes.
+        </p>
         <Content />
-      ) : (
-        <div class='fallback-content' role='alert'>
-          <p class='text-warning mb-4'>
-            This article is missing proper tag categorization. Content may not
-            appear in tool indexes.
-          </p>
-          <Content />
-        </div>
-      )
-    }
-  </div>
-
-  <!-- Actions Slot -->
-  <footer slot='actions' class='content-actions'>
-    <div class='action-buttons'>
-      <a
-        href={`/tools/${toolName}`}
-        class='back-to-tools'
-        aria-label={`Back to ${toolName} tools`}
-      >
-        <svg
-          width='16'
-          height='16'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          stroke-width='2'
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          aria-hidden='true'
-        >
-          <path d='M19 12H5M12 19l-7-7 7-7'></path>
-        </svg>
-        Back to {toolName} tools
-      </a>
-
-      <a href='/tools' class='back-to-content' aria-label='Back to all tools'>
-        <svg
-          width='16'
-          height='16'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          stroke-width='2'
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          aria-hidden='true'
-        >
-          <path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'></path>
-        </svg>
-        All Tools
-      </a>
-
-      <div class='share-buttons'>
-        <button
-          class='share-btn'
-          onclick='sharePost()'
-          aria-label='Share this tool article'
-        >
-          <svg
-            width='16'
-            height='16'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            aria-hidden='true'
-          >
-            <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8'></path>
-            <polyline points='16,6 12,2 8,6'></polyline>
-            <line x1='12' y1='2' x2='12' y2='15'></line>
-          </svg>
-          Share
-        </button>
       </div>
-    </div>
-  </footer>
-</PostLayout>
+    )
+  }
 
-<!-- Related Tools Section -->
-{
-  post.data.relatedTools && post.data.relatedTools.length > 0 && (
-    <section
-      class='related-tools-section mt-12 p-6 bg-surface border border-border rounded-lg'
-      role='complementary'
-      aria-labelledby='related-tools-title'
+  <!-- End actions: back to tool, all tools, share -->
+  <Fragment slot='end-actions'>
+    <a
+      href={`/tools/${toolName}`}
+      aria-label={`Kembali ke halaman ${toolDisplayName}`}
     >
-      <h2
-        id='related-tools-title'
-        class='text-xl font-semibold text-foreground mb-4'
+      <svg
+        width='16'
+        height='16'
+        viewBox='0 0 24 24'
+        fill='none'
+        stroke='currentColor'
+        stroke-width='2'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+        aria-hidden='true'
       >
-        Tools Terkait
-      </h2>
-      <p class='text-muted-foreground text-sm mb-4'>
-        Tools lain yang memiliki keterkaitan dengan tool yang dibahas dalam
-        artikel ini.
-      </p>
-      <div class='related-tools-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-        {post.data.relatedTools.map((relatedTool: string) => (
-          <a
-            href={`/tools/${relatedTool.toLowerCase()}`}
-            class='related-tool-card group flex items-center gap-3 p-4 bg-primary/5 hover:bg-primary/10 border border-primary/20 hover:border-primary/30 rounded-lg transition-all duration-200 hover:scale-105'
-            aria-label={`Buka halaman detail ${relatedTool}`}
-          >
-            <div class='tool-icon-container shrink-0'>
-              <img
-                src={`/icon/${relatedTool.toLowerCase()}-icon-240.webp`}
-                alt={`Ikon ${relatedTool}`}
-                class='w-8 h-8 object-contain'
-                loading='lazy'
-                decoding='async'
-              />
-            </div>
-            <div class='tool-info flex-1 min-w-0'>
-              <h3 class='font-medium text-foreground group-hover:text-primary transition-colors'>
-                {relatedTool}
-              </h3>
-              <p class='text-sm text-muted-foreground'>Tool Terkait</p>
-            </div>
-            <div class='arrow-icon shrink-0 text-muted-foreground group-hover:text-primary transition-colors'>
-              <svg
-                class='w-4 h-4'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  stroke-width='2'
-                  d='M9 5l7 7-7 7'
-                />
-              </svg>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
-  )
-}
+        <path d='M19 12H5M12 19l-7-7 7-7'></path>
+      </svg>
+      Kembali ke {toolDisplayName}
+    </a>
+    <a href='/tools' aria-label='Kembali ke semua tools'>
+      <svg
+        width='16'
+        height='16'
+        viewBox='0 0 24 24'
+        fill='none'
+        stroke='currentColor'
+        stroke-width='2'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+        aria-hidden='true'
+      >
+        <path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'></path>
+      </svg>
+      Semua Tools
+    </a>
+    <button
+      type='button'
+      id='tqa-share-btn'
+      aria-label='Bagikan artikel ini'
+    >
+      <svg
+        width='16'
+        height='16'
+        viewBox='0 0 24 24'
+        fill='none'
+        stroke='currentColor'
+        stroke-width='2'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+        aria-hidden='true'
+      >
+        <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8'></path>
+        <polyline points='16,6 12,2 8,6'></polyline>
+        <line x1='12' y1='2' x2='12' y2='15'></line>
+      </svg>
+      <span id='tqa-share-label'>Bagikan</span>
+    </button>
+  </Fragment>
+</ToolArticleLayout>
 
 <!-- ========== SCRIPTS ========== -->
-<script is:inline define:vars={{ postData, toolName, articleSlug }}>
-  // Share functionality
-  const sharePost = () => {
-    const shareUrl = postData?.resolvedPath
-      ? `${window.location.origin}${postData.resolvedPath}`
-      : window.location.href;
+<script is:inline define:vars={{ postData, toolName, articleSlug, toolDisplayName }}>
+  // Share functionality (replaces inline onclick=sharePost)
+  (() => {
+    const shareBtn = document.getElementById('tqa-share-btn');
+    const shareLabel = document.getElementById('tqa-share-label');
+    if (!shareBtn) return;
 
-    if (navigator.share) {
-      navigator.share({
-        title: postData?.title || `${toolName} Tool Guide`,
-        text:
-          postData?.description ||
-          `Check out this ${toolName} guide from GoRakuDo`,
-        url: shareUrl,
-      });
-    } else {
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        alert('Link berhasil disalin ke clipboard!');
-      });
-    }
-  };
+    shareBtn.addEventListener('click', async () => {
+      const shareUrl = postData?.resolvedPath
+        ? `${window.location.origin}${postData.resolvedPath}`
+        : window.location.href;
 
-  window.sharePost = sharePost;
-
-  // Accessibility enhancements
-  const initAccessibility = () => {
-    const articleContent = document.querySelector('.content-main');
-    if (!articleContent) return;
-
-    // Add skip link
-    const skipLink = document.createElement('a');
-    skipLink.href = '#main-content';
-    skipLink.className =
-      'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50';
-    skipLink.textContent = 'Skip to main content';
-    document.body.insertBefore(skipLink, document.body.firstChild);
-
-    // Add alt text to images
-    const images = articleContent.querySelectorAll('img:not([alt])');
-    images.forEach(img => {
-      img.alt = `${toolName} tool illustration`;
-    });
-
-    // Validate heading hierarchy
-    const headings = articleContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    let lastLevel = 0;
-    headings.forEach(heading => {
-      const level = parseInt(heading.tagName.charAt(1));
-      if (level - lastLevel > 1) {
-        console.warn(
-          `⚠️ Accessibility: Heading level skipped from h${lastLevel} to h${level}`
-        );
+      try {
+        if (navigator.share) {
+          await navigator.share({
+            title: postData?.title || `${toolDisplayName} Tool Guide`,
+            text:
+              postData?.description ||
+              `Check out this ${toolDisplayName} guide from GoRakuDo`,
+            url: shareUrl,
+          });
+        } else if (navigator.clipboard) {
+          await navigator.clipboard.writeText(shareUrl);
+          if (shareLabel) {
+            const original = shareLabel.textContent;
+            shareLabel.textContent = 'Tersalin!';
+            setTimeout(() => {
+              if (shareLabel) shareLabel.textContent = original;
+            }, 2000);
+          }
+        }
+      } catch (err) {
+        console.error('Share failed:', err);
       }
-      lastLevel = level;
     });
-  };
-
-  // Initialize
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ Tool article accessed:', {
-      tool: toolName,
-      slug: articleSlug,
-      title: postData?.title,
-      timestamp: new Date().toISOString(),
-    });
-    initAccessibility();
-  });
+  })();
 </script>
