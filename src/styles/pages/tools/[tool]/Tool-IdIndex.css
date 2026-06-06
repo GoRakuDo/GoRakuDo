@@ -141,6 +141,7 @@
 @media (min-width: 768px) {
   .tome-table-header {
     display: grid;
+    align-items: center;
     gap: 2rem;
     grid-template-columns: 120px 1fr;
     padding: 1.25rem 0.5rem;
