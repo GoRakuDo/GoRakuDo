@@ -348,18 +348,21 @@
   position: relative;
   counter-increment: tqa-li;
   margin-bottom: 0.5rem;
-  padding-left: 2rem;
+  padding-left: 2.5rem;
 }
 
 .tqa-article :is(ol) > li::before {
-  content: '▸ ' counter(tqa-li, decimal-leading-zero);
   position: absolute;
+  top: 0.05em;
   left: 0;
+  min-width: 1.85rem;
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
   font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
   font-size: 0.85rem;
   font-weight: 700;
+  text-align: right;
   letter-spacing: 0.05em;
+  content: counter(tqa-li, decimal-leading-zero) '.';
 }
 
 .tqa-article :is(ul) > li {
