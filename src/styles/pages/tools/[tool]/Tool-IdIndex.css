@@ -152,7 +152,8 @@
     letter-spacing: 0.05em;
   }
 
-  .tome-col-date {
+  .tome-col-date,
+  .tome-col-title {
     text-align: center;
   }
 }
