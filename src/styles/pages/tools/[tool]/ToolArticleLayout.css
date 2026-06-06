@@ -33,14 +33,15 @@
   text-shadow: 0 0 12px oklch(65% 0.25 280deg / 0.4);
 }
 
-/* Hero card container — matches the Feature-card visual language: tinted
-   background, subtle border, soft purple-tinted shadow, rounded corners. */
+/* Hero card container — matches the Feature-card visual language:
+   --grkd-surface-2 (Discord Indigo Surface) as the base, no border
+   (gradient border activates on hover, like the Feature cards), soft
+   purple-tinted shadow for depth. */
 .tqa-hero-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid oklch(85% 0.05 270deg / 0.15);
   border-radius: var(--border-radius-lg, 1rem);
-  background: oklch(85% 0.05 270deg / 0.04);
+  background: var(--grkd-surface-2);
   box-shadow: 0 12px 32px oklch(5% 0.05 270deg / 0.35);
 }
 
@@ -101,20 +102,6 @@
   line-height: 1.2;
   letter-spacing: 0.01em;
   opacity: 0.92;
-}
-
-/* Gold gradient decorative line below the title — Feature card accent */
-.tqa-hero-title-accent {
-  width: 3.5rem;
-  height: 2px;
-  margin: 0.25rem auto 0.5rem;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    var(--clr-gold-light, oklch(85% 0.15 85deg)) 0%,
-    var(--clr-gold-dark, oklch(65% 0.15 85deg)) 100%
-  );
-  box-shadow: 0 0 12px oklch(75% 0.12 85deg / 0.45);
 }
 
 .tqa-hero-meta {
@@ -180,10 +167,6 @@
     min-width: 0;
     padding: 2rem 2rem 2.25rem;
     text-align: left;
-  }
-
-  .tqa-hero-title-accent {
-    margin-inline: 0;
   }
 
   .tqa-hero-meta {
