@@ -733,11 +733,37 @@
 }
 
 .tqa-nav-direction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+.tqa-nav-direction .tqa-nav-label {
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans'), Courier New, monospace;
+  font-weight: 500;
+}
+
+.tqa-nav-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  stroke: currentColor;
+  transition: transform 0.25s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+.tqa-nav-prev:hover .tqa-nav-icon {
+  transform: translateX(-2px);
+}
+
+.tqa-nav-next:hover .tqa-nav-icon {
+  transform: translateX(2px);
 }
 
 .tqa-nav-title {

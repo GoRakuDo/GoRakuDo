@@ -191,7 +191,23 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
                   href={prevArticle.slug}
                   rel='prev'
                 >
-                  <span class='tqa-nav-direction'>◀ Sebelumnya</span>
+                  <span class='tqa-nav-direction'>
+                    <svg
+                      class='tqa-nav-icon'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    >
+                      <path d='m11 17-5-5 5-5' />
+                      <path d='m18 17-5-5 5-5' />
+                    </svg>
+                    <span class='tqa-nav-label'>Sebelumnya</span>
+                  </span>
                   <span class='tqa-nav-title'>{prevArticle.title}</span>
                 </a>
               ) : (
@@ -199,7 +215,23 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
                   class='tqa-nav-card tqa-nav-disabled'
                   aria-disabled='true'
                 >
-                  <span class='tqa-nav-direction'>◀ Artikel pertama</span>
+                  <span class='tqa-nav-direction'>
+                    <svg
+                      class='tqa-nav-icon'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    >
+                      <path d='m11 17-5-5 5-5' />
+                      <path d='m18 17-5-5 5-5' />
+                    </svg>
+                    <span class='tqa-nav-label'>Artikel pertama</span>
+                  </span>
                 </div>
               )
             }
@@ -210,7 +242,23 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
                   href={nextArticle.slug}
                   rel='next'
                 >
-                  <span class='tqa-nav-direction'>Selanjutnya ▶</span>
+                  <span class='tqa-nav-direction'>
+                    <span class='tqa-nav-label'>Selanjutnya</span>
+                    <svg
+                      class='tqa-nav-icon'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    >
+                      <path d='m6 17 5-5-5-5' />
+                      <path d='m13 17 5-5-5-5' />
+                    </svg>
+                  </span>
                   <span class='tqa-nav-title'>{nextArticle.title}</span>
                 </a>
               ) : (
@@ -218,7 +266,23 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
                   class='tqa-nav-card tqa-nav-disabled'
                   aria-disabled='true'
                 >
-                  <span class='tqa-nav-direction'>Artikel terbaru ▶</span>
+                  <span class='tqa-nav-direction'>
+                    <span class='tqa-nav-label'>Artikel terbaru</span>
+                    <svg
+                      class='tqa-nav-icon'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      stroke-width='2'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                    >
+                      <path d='m6 17 5-5-5-5' />
+                      <path d='m13 17 5-5-5-5' />
+                    </svg>
+                  </span>
                 </div>
               )
             }
