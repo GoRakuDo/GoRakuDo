@@ -203,7 +203,7 @@
   }
 }
 
-/* ========== 3-COLUMN GRID ========== */
+/* ========== 2-COLUMN GRID ========== */
 .tqa-grid {
   display: grid;
   gap: 0;
@@ -214,19 +214,38 @@
 
 @media (min-width: 768px) {
   .tqa-grid {
-    gap: 2.5rem;
-    grid-template-columns: 1fr minmax(0, 240px);
+    gap: 2rem;
+
+    /* Tablet: 2-col with narrow left nav (no TOC) */
+    grid-template-columns: minmax(0, 220px) 1fr;
   }
 }
 
 @media (min-width: 1280px) {
   .tqa-grid {
     gap: 2.5rem;
-    grid-template-columns: minmax(0, 220px) 1fr minmax(0, 240px);
+
+    /* Desktop: 2-col with wider left nav (TOC sticky) */
+    grid-template-columns: minmax(0, 240px) 1fr;
   }
 }
 
-/* ========== LEFT TOC COLUMN ========== */
+/* ========== LEFT SIDEBAR (Prev/Next + Related + TOC) ========== */
+.tqa-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 0;
+}
+
+@media (min-width: 768px) {
+  .tqa-left {
+    padding-top: 1rem;
+    align-self: start;
+  }
+}
+
+/* ========== TOC (sticky on ≥1280px, inside left column) ========== */
 .tqa-toc {
   display: none;
 }
@@ -238,10 +257,9 @@
     display: block;
     overflow-y: auto;
     max-height: calc(100vh - 120px);
-    align-self: start;
   }
 
-  /* Override TableOfContents hardcoded 18rem width to fit 220px column */
+  /* Override TableOfContents hardcoded 18rem width to fit 240px column */
   .tqa-toc .toc-container:not(.mobile-toc) {
     width: 100%;
     min-width: 0;
@@ -480,26 +498,7 @@
   outline-offset: 2px;
 }
 
-/* ========== RIGHT ASIDE ========== */
-.tqa-aside {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding-top: 0;
-}
-
-@media (min-width: 768px) {
-  .tqa-aside {
-    position: sticky;
-    top: 100px;
-    overflow-y: auto;
-    max-height: calc(100vh - 120px);
-    padding-top: 1rem;
-    align-self: start;
-  }
-}
-
-/* Prev/Next cards */
+/* ========== PREV/NEXT NAV (in left sidebar) ========== */
 .tqa-aside-nav {
   display: flex;
   flex-direction: column;

@@ -179,35 +179,10 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
         </div>
       </header>
 
-      <!-- 3-column Quest Codex grid -->
+      <!-- 2-column Quest Codex grid -->
       <div class='tqa-grid'>
-        <!-- Left: TOC (sticky, ≥1280px) -->
-        <aside class='tqa-toc' aria-label='Table of contents'>
-          <slot name='toc' />
-        </aside>
-
-        <!-- Center: Quest Entries -->
-        <main class='tqa-main' role='main'>
-          <article class='tqa-article' id='main-content'>
-            <Prose>
-              <slot />
-            </Prose>
-          </article>
-
-          <!-- End of Chapter -->
-          <footer class='tqa-end' role='contentinfo'>
-            <p class='tqa-end-marker' aria-hidden='true'>
-              /// ARCHIVE_CLOSE ///
-            </p>
-
-            <div class='tqa-end-actions'>
-              <slot name='end-actions' />
-            </div>
-          </footer>
-        </main>
-
-        <!-- Right: Prev / Next / Related (sticky, ≥1280px) -->
-        <aside class='tqa-aside' aria-label='Article navigation'>
+        <!-- Left: Prev/Next nav + TOC (sticky on ≥1280px) -->
+        <aside class='tqa-left' aria-label='Article navigation and contents'>
           <nav class='tqa-aside-nav' aria-label='Navigasi artikel'>
             {
               prevArticle ? (
@@ -283,7 +258,31 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
               </section>
             )
           }
+
+          <aside class='tqa-toc' aria-label='Table of contents'>
+            <slot name='toc' />
+          </aside>
         </aside>
+
+        <!-- Center: Quest Entries -->
+        <main class='tqa-main' role='main'>
+          <article class='tqa-article' id='main-content'>
+            <Prose>
+              <slot />
+            </Prose>
+          </article>
+
+          <!-- End of Chapter -->
+          <footer class='tqa-end' role='contentinfo'>
+            <p class='tqa-end-marker' aria-hidden='true'>
+              /// ARCHIVE_CLOSE ///
+            </p>
+
+            <div class='tqa-end-actions'>
+              <slot name='end-actions' />
+            </div>
+          </footer>
+        </main>
       </div>
     </div>
   </body>
