@@ -81,16 +81,17 @@
   padding: 1rem;
   border-radius: 1.25rem;
 
-  /* Darker purple radial — lower lightness + higher alpha for a more
-     pronounced glow that scales with the 2x icon size. */
+  /* Shadow-like radial — very low lightness (28%) with high alpha (0.7)
+     for a deep, almost-shadow purple glow that grounds the icon in
+     darkness rather than letting it glow. */
   background: radial-gradient(
     circle at center,
-    oklch(50% 0.28 280deg / 0.55) 0%,
-    oklch(50% 0.28 280deg / 0.25) 40%,
-    transparent 70%
+    oklch(28% 0.25 280deg / 0.7) 0%,
+    oklch(28% 0.25 280deg / 0.35) 35%,
+    transparent 65%
   );
   object-fit: contain;
-  filter: drop-shadow(0 0 24px oklch(50% 0.28 280deg / 0.5));
+  filter: drop-shadow(0 0 28px oklch(25% 0.25 280deg / 0.65));
 }
 
 .tqa-hero-content {
