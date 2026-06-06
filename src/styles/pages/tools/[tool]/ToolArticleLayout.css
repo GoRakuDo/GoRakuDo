@@ -60,7 +60,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
   border-bottom: 1px solid oklch(85% 0.05 270deg / 0.12);
 
   /* Subtle purple radial that fades to --grkd-surface (Discord
@@ -76,18 +76,21 @@
 }
 
 .tqa-hero-icon {
-  width: 80px;
-  height: 80px;
-  padding: 0.75rem;
-  border-radius: 1rem;
+  width: 160px;
+  height: 160px;
+  padding: 1rem;
+  border-radius: 1.25rem;
+
+  /* Darker purple radial — lower lightness + higher alpha for a more
+     pronounced glow that scales with the 2x icon size. */
   background: radial-gradient(
     circle at center,
-    oklch(65% 0.25 280deg / 0.35) 0%,
-    oklch(65% 0.25 280deg / 0.12) 45%,
+    oklch(50% 0.28 280deg / 0.55) 0%,
+    oklch(50% 0.28 280deg / 0.25) 40%,
     transparent 70%
   );
   object-fit: contain;
-  filter: drop-shadow(0 0 18px oklch(65% 0.25 280deg / 0.35));
+  filter: drop-shadow(0 0 24px oklch(50% 0.28 280deg / 0.5));
 }
 
 .tqa-hero-content {
