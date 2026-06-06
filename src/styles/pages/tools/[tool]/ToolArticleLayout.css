@@ -62,11 +62,15 @@
   align-items: center;
   padding: 2rem 1rem;
   border-bottom: 1px solid oklch(85% 0.05 270deg / 0.12);
+
+  /* Subtle purple radial that fades into the card's own surface
+     (--grkd-surface-2), so the column blends naturally with the rest
+     of the card. Mirrors the .feature-icon-column pattern on the
+     homepage Feature cards. */
   background: radial-gradient(
     circle at center,
-    oklch(65% 0.25 280deg / 0.18) 0%,
-    oklch(65% 0.25 280deg / 0.04) 50%,
-    transparent 80%
+    color-mix(in oklch, var(--grkd-purple-500) 10%, transparent) 0%,
+    var(--grkd-surface-2) 80%
   );
 }
 
