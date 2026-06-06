@@ -151,6 +151,10 @@
     font-size: 0.875rem;
     letter-spacing: 0.05em;
   }
+
+  .tome-col-date {
+    text-align: center;
+  }
 }
 
 .tome-table-body {
@@ -194,6 +198,13 @@
   color: var(--grkd-muted, oklch(75% 0.002 270deg));
   font-family: var(--font-primary, sans-serif);
   font-size: 0.875rem;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .tome-cell-date {
+    text-align: center;
+  }
 }
 
 .tome-cell-title {
