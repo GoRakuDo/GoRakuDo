@@ -575,13 +575,28 @@
   content: counter(tqa-li, decimal-leading-zero) '.';
 }
 
-.tqa-article :is(ul) > li {
-  margin-bottom: 0.5rem;
-  padding-left: 0.25rem;
+.tqa-article :is(ul) {
+  list-style: none;
+  padding-left: 0;
 }
 
-.tqa-article :is(ul) > li::marker {
+.tqa-article :is(ul) > li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 2.5rem;
+}
+
+.tqa-article :is(ul) > li::before {
+  position: absolute;
+  top: 0.05em;
+  left: 0;
+  min-width: 1.85rem;
+  content: '>';
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 /* Inline code */
