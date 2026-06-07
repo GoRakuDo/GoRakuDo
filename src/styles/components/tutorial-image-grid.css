@@ -2,7 +2,7 @@
    Phone-frame card grid for step-by-step tutorial screenshots. Each <figure>
    auto-increments a STEP_NN badge (Pixelify Sans, Blurple glow).
 
-   Usage in MDX:
+   Usage in MDX (basic):
    ```mdx
    <div class="tutorial-image-grid">
      <figure>
@@ -15,11 +15,28 @@
    </div>
    ```
 
+   Usage in MDX (with HiRes long-press link — recommended for mobile):
+   ```mdx
+   <div class="tutorial-image-grid">
+     <figure>
+       <a href="/path/to/HiRes.webp" target="_blank" rel="noopener">
+         <img src="/path/to/HiRes.webp" alt="Step 1: ..." />
+       </a>
+     </figure>
+     ...
+   </div>
+   ```
+   On mobile (iOS Safari, Android Chrome), long-pressing the image shows a
+   native context menu with "Open in New Tab" — no JavaScript required. The
+   browser handles the gesture; CSS just makes the <a> feel like a button.
+   For public/ images the src and href are the same (full HiRes served as-is).
+
    Features
    - Auto-numbered badge (CSS counter, decimal-leading-zero: STEP_01..STEP_99)
    - Phone-frame card (rounded border, surface-2 background, hover glow)
    - 3:4 aspect ratio image, object-fit: contain (full image visible, no crop)
    - 2-col mobile (<768px) / 3-col desktop (>=768px)
+   - Optional <a> wrapper: cursor: zoom-in, focus-visible ring, opens HiRes
 
    Theming (CSS custom properties; override per instance):
    --tutorial-grid-cols-mobile    default 2
@@ -38,8 +55,8 @@
    Accessibility
    - Include "Step N:" in each alt text — ::before generated content is not
      announced by all screen readers, so the alt is the only sequential cue
-   - The card itself is keyboard-focusable if the <img> is wrapped in <a>;
-     otherwise the figure is purely visual
+   - When wrapping in <a>, the card becomes keyboard-focusable; add a clear
+     rel="noopener" and consider rel="noopener noreferrer" if external
 
    @since  2026-06-07
    @author Kuraudo
@@ -120,4 +137,21 @@
   background: transparent;
   aspect-ratio: 3 / 4;
   object-fit: contain;
+}
+
+/* Optional <a> wrapper for HiRes long-press "Open in New Tab" gesture.
+   Mobile browsers (iOS Safari, Android Chrome) show this option in the
+   native long-press context menu — no JavaScript required.
+   Desktop: cursor: zoom-in hints at clickability, Ctrl/Cmd+Click opens
+   the image in a new tab through the same <a>. */
+.tutorial-image-grid figure a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: zoom-in;
+}
+
+.tutorial-image-grid figure a:focus-visible {
+  outline: 2px solid var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  outline-offset: 4px;
 }
