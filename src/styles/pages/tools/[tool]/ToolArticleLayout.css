@@ -413,6 +413,14 @@
     pointer-events: none;
     content: '';
   }
+
+  .tqa-toc .toc-item.toc-level-3 + .toc-item.toc-level-3::before {
+    top: 0;
+  }
+
+  .tqa-toc .toc-item.toc-level-3 + .toc-item.toc-level-3::after {
+    display: none;
+  }
   /* stylelint-enable selector-max-specificity */
 
   /* Item: each link is a tree leaf with horizontal branch */
