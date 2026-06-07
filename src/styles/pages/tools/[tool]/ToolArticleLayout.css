@@ -746,7 +746,7 @@
     relative to the blockquote box. */
   margin: 1.75rem 0;
   padding: 1.5rem 1.5rem 1.25rem;
-  border-left: 3px solid var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  border-left: 3px solid oklch(65% 0.25 280deg / 0.5);
   background: transparent;
   color: var(--clr-text-primary, oklch(92% 0.005 270deg));
   font-style: normal;
