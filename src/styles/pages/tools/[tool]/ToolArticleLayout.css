@@ -371,7 +371,9 @@
     );
   }
 
-  /* List: 1px tree guide on the left */
+  /* List: reference-style TOC rail. The reference does not draw one
+     full-height CSS line; each item owns a short vertical segment, and
+     H3 starts add a diagonal connector. */
   .tqa-toc .toc-list {
     position: relative;
     margin: 0;
@@ -379,41 +381,46 @@
     list-style: none;
   }
 
-  .tqa-toc .toc-list::before {
-    content: '';
+  /* Per-H3 vertical guide (H3 sub-column). Reference geometry is H2
+     text at 14px, H3 guide at 10px, H3 text at 26px; in our spacing
+     that becomes H2 text at 1.5rem, H3 guide at 1.25rem, H3 text at
+     2.25rem. */
+  /* stylelint-disable selector-max-specificity */
+  .tqa-toc .toc-item.toc-level-3::before {
     position: absolute;
-    top: 0;
+    top: 0.35rem;
     bottom: 0;
-    left: 0.5rem;
+    left: 1.25rem;
+    z-index: 0;
     width: 1px;
     background: oklch(85% 0.05 270deg / 0.22);
     pointer-events: none;
+    content: '';
   }
 
-  /* Second tree guide for H3 nesting.
-     Matches the reference's two-column pattern (main guide at x=0,
-     H3 sub-column at x=10px). In our spacing the H3 guide sits 4px
-     to the left of the H2 text start (2rem guide vs 2.25rem text),
-     so the H3 branch (::before below) extends from the sub-column
-     to the H3 text. Only drawn when at least one H3 item exists.
-     stylelint-disable: selector-max-specificity — the :has() requires
-     (0,4,1) to scope the 2nd guide by presence of .toc-level-3. */
-  /* stylelint-disable selector-max-specificity */
-  .tqa-toc .toc-list:has(.toc-level-3)::after {
-    content: '';
+  /* H3 start curl: small diagonal connector inspired by the reference
+     SVG (<line x1="0" y1="0" x2="10" y2="12">). */
+  .tqa-toc .toc-item.toc-level-3::after {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 2rem;
-    width: 1px;
-    background: oklch(85% 0.05 270deg / 0.22);
+    top: -0.4rem;
+    left: 0.5rem;
+    width: 0.75rem;
+    height: 0.95rem;
+    background: linear-gradient(
+      52deg,
+      transparent calc(50% - 0.5px),
+      oklch(85% 0.05 270deg / 0.22) 50%,
+      transparent calc(50% + 0.5px)
+    );
     pointer-events: none;
+    content: '';
   }
   /* stylelint-enable selector-max-specificity */
 
   /* Item: each link is a tree leaf with horizontal branch */
   .tqa-toc .toc-item {
     position: relative;
+    display: block;
     margin: 0;
   }
 
@@ -438,31 +445,25 @@
     text-overflow: clip;
   }
 
-  /* Horizontal branch from the tree guide to the link */
+  /* H2 line segment: reference-style per-row vertical rail at the text
+     start column, not a full-height global rail and not a horizontal
+     branch. */
   .tqa-toc .toc-link::before {
     content: '';
     position: absolute;
-    top: 50%;
+    top: 0.4rem;
+    bottom: 0.4rem;
     left: 0.5rem;
-    width: 0.875rem;
-    height: 1px;
+    width: 1px;
     background: oklch(85% 0.05 270deg / 0.22);
-    transform: translateY(-50%);
     transition: background-color 0.2s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
   }
 
-  /* H3 branch: extends from the 2nd tree guide (left: 2rem) to
-     2.875rem — leaving a 2px gap before the H3 text at 3rem,
-     matching the H2 branch's 2px gap pattern (1.375rem branch
-     end vs 1.5rem text start). Same width (0.875rem) as the H2
-     branch so the visual rhythm matches.
-     stylelint-disable: selector-max-specificity — the .toc-level-3
-     ancestor selector requires (0,3,1) to override the generic
-     .tqa-toc .toc-link::before (0,2,1). */
+  /* H3 text should not keep the H2 rail; H3 owns its rail on the
+     parent item at left: 1.25rem, like the reference's inset-inline-start:10px. */
   /* stylelint-disable selector-max-specificity */
   .tqa-toc .toc-level-3 .toc-link::before {
-    left: 2rem;
-    width: 0.875rem;
+    display: none;
   }
   /* stylelint-enable selector-max-specificity */
 
@@ -476,16 +477,16 @@
   .tqa-toc .toc-level-4 .toc-link,
   .tqa-toc .toc-level-5 .toc-link,
   .tqa-toc .toc-level-6 .toc-link {
-    padding-left: 2.25rem;
+    padding-left: 1.5rem;
     font-size: 0.75rem;
   }
 
-  /* H3 (depth 3) - ducked to the right (3rem = 0.75rem more than H2),
+  /* H3 (depth 3) - ducked to the right (2.25rem = 0.75rem more than H2),
      smaller font, slightly muted to reinforce the hierarchy.
      H4-H6 are intentionally not handled here per current design
      (no H4+ in current Anki tutorial). */
   .tqa-toc .toc-level-3 .toc-link {
-    padding-left: 3rem;
+    padding-left: 2.25rem;
     font-size: 0.7rem;
     opacity: 0.85;
   }
@@ -531,9 +532,14 @@
   .tqa-toc .toc-link.active::after {
     display: none;
   }
+
+  .tqa-toc .toc-level-3:has(.toc-link.active)::before,
+  .tqa-toc .toc-level-3:has(.toc-link.active)::after {
+    display: none;
+  }
   /* stylelint-enable selector-max-specificity */
 
-  /* H3 active: bar and tint aligned with the 2nd tree guide (left: 2rem),
+  /* H3 active: bar and tint aligned with the H3 tree guide (left: 1.25rem),
      not the main guide (left: 0.5rem). The H3 horizontal branch is
      already hidden by the .toc-link.active::before { display: none }
      rule above (specificity 0,3,2 beats this 0,4,1 rule).
@@ -547,11 +553,11 @@
       linear-gradient(
         var(--grkd-brand-secondary, oklch(65% 0.25 280deg)),
         var(--grkd-brand-secondary, oklch(65% 0.25 280deg))
-      ) 2rem 0 / 1px 100% no-repeat,
+      ) 1.25rem 0 / 1px 100% no-repeat,
       linear-gradient(
         color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent),
         color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent)
-      ) 2rem 0 / calc(100% - 2rem) 100% no-repeat;
+      ) 1.25rem 0 / calc(100% - 1.25rem) 100% no-repeat;
   }
   /* stylelint-enable selector-max-specificity */
 
