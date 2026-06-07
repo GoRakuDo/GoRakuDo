@@ -447,12 +447,19 @@
     transform: none;
   }
 
-  /* Active: Blurple text + 2px Blurple edge bar + glow (no background fill).
-     Using box-shadow inset instead of ::before to keep specificity within 0,3,0. */
+  /* Active: full-row Blurple tint + 2px Blurple edge bar + Blurple text + glow.
+     Uses a 12% Blurple background (lower than the base 15% so it doesn't
+     overpower the 2px inset bar). The base TableOfContents.astro active
+     state also draws a 3px gradient bar via ::before and a pulsing dot
+     via ::after — those are hidden to prevent visual drift on the left.
+     stylelint-disable: selector-max-specificity — the override requires
+     (0,3,1) to null out the base .toc-link.active::before (0,2,1) that
+     the 3-wrapper scoped .tqa-toc prefix cannot otherwise beat. */
+  /* stylelint-disable selector-max-specificity */
   .tqa-toc .toc-link.active {
     border: none;
     border-radius: 0;
-    background: transparent;
+    background: color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 12%, transparent);
     color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
     font-weight: 600;
     transform: none;
@@ -460,6 +467,12 @@
     box-shadow: inset 2px 0 0 var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
     text-shadow: 0 0 8px oklch(65% 0.25 280deg / 0.45);
   }
+
+  .tqa-toc .toc-link.active::before,
+  .tqa-toc .toc-link.active::after {
+    display: none;
+  }
+  /* stylelint-enable selector-max-specificity */
 
   /* Active: inset Blurple bar is the visual marker.
      The branch ::before stays gray (deliberate — the bar is the indicator). */
