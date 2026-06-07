@@ -326,7 +326,10 @@
     margin: 0;
     padding: 0;
     color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
-    font-family: var(--font-pixel, 'Pixelify Sans'), Courier New, monospace;
+    font-family:
+      var(--font-pixel, 'Pixelify Sans'),
+      Courier New,
+      monospace;
     font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -462,14 +465,42 @@
     left: 0.5rem;
     width: 1px;
     background: oklch(85% 0.05 270deg / 0.22);
-    transition: background-color 0.2s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
+    transition: background-color 0.2s
+      var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
   }
 
-  /* H3 text should not keep the H2 rail; H3 owns its rail on the
-     parent item at left: 1.25rem, like the reference's inset-inline-start:10px. */
+  /* H3 hides the straight H2 rail and uses diagonal bends instead, so the
+     branch feels like one folded line instead of two parallel rails. */
   /* stylelint-disable selector-max-specificity */
   .tqa-toc .toc-level-3 .toc-link::before {
     display: none;
+  }
+
+  /* Reference behavior: the return bend is owned by the next H2 row, not
+     by the final H3 row. This keeps H3 rows clean and lets the H2 parent
+     rail restart with a diagonal SVG that physically meets it. */
+  .tqa-toc
+    .toc-item.toc-level-3
+    + .toc-item:not(.toc-level-3)
+    .toc-link::before {
+    top: 0.55rem;
+    bottom: 0.55rem;
+  }
+
+  .tqa-toc
+    .toc-item.toc-level-3
+    + .toc-item:not(.toc-level-3)
+    .toc-link::after {
+    position: absolute;
+    top: -0.15rem;
+    left: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cline x1='10' y1='0' x2='0' y2='12' stroke='rgba(193,190,204,0.22)' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-size: 1rem 1rem;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    content: '';
   }
   /* stylelint-enable selector-max-specificity */
 
@@ -519,13 +550,23 @@
     border-radius: 0;
     background:
       linear-gradient(
-        var(--grkd-brand-secondary, oklch(65% 0.25 280deg)),
-        var(--grkd-brand-secondary, oklch(65% 0.25 280deg))
-      ) 0.5rem 0 / 1px 100% no-repeat,
+          var(--grkd-brand-secondary, oklch(65% 0.25 280deg)),
+          var(--grkd-brand-secondary, oklch(65% 0.25 280deg))
+        )
+        0.5rem 0 / 1px 100% no-repeat,
       linear-gradient(
-        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent),
-        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent)
-      ) 0.5rem 0 / calc(100% - 0.5rem) 100% no-repeat;
+          color-mix(
+            in oklch,
+            var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%,
+            transparent
+          ),
+          color-mix(
+            in oklch,
+            var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%,
+            transparent
+          )
+        )
+        0.5rem 0 / calc(100% - 0.5rem) 100% no-repeat;
     color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
     font-weight: 600;
     transform: none;
@@ -557,13 +598,23 @@
   .tqa-toc .toc-level-3 .toc-link.active {
     background:
       linear-gradient(
-        var(--grkd-brand-secondary, oklch(65% 0.25 280deg)),
-        var(--grkd-brand-secondary, oklch(65% 0.25 280deg))
-      ) 1.25rem 0 / 1px 100% no-repeat,
+          var(--grkd-brand-secondary, oklch(65% 0.25 280deg)),
+          var(--grkd-brand-secondary, oklch(65% 0.25 280deg))
+        )
+        1.25rem 0 / 1px 100% no-repeat,
       linear-gradient(
-        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent),
-        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent)
-      ) 1.25rem 0 / calc(100% - 1.25rem) 100% no-repeat;
+          color-mix(
+            in oklch,
+            var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%,
+            transparent
+          ),
+          color-mix(
+            in oklch,
+            var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%,
+            transparent
+          )
+        )
+        1.25rem 0 / calc(100% - 1.25rem) 100% no-repeat;
   }
   /* stylelint-enable selector-max-specificity */
 
@@ -574,7 +625,6 @@
     border-radius: 4px;
   }
 }
-
 
 /* ========== MAIN QUEST ENTRY AREA ========== */
 .tqa-main {
@@ -777,7 +827,7 @@
   font-weight: 500;
   text-transform: none;
   letter-spacing: 0.18em;
-  content: "/// " attr(data-note-type, "NOTE_XX") " ///";
+  content: '/// ' attr(data-note-type, 'NOTE_XX') ' ///';
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -809,7 +859,7 @@
   line-height: 1;
   opacity: 0.18;
   pointer-events: none;
-  content: "\201C";
+  content: '\201C';
 }
 
 /* Blockquote inner <p> — keep typography clean, no italic (we are
@@ -839,9 +889,9 @@
 @media (min-width: 768px) {
   .tqa-article :is(img) {
     width: auto;
-    max-width: 24rem;   /* ~384px — comfortable inline size */
+    max-width: 24rem; /* ~384px — comfortable inline size */
     height: auto;
-    max-height: 32rem;  /* ~512px — prevents 9:16 portrait blowup */
+    max-height: 32rem; /* ~512px — prevents 9:16 portrait blowup */
   }
 }
 
@@ -894,7 +944,9 @@
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .tqa-end-actions :is(a, button):hover {
@@ -925,7 +977,9 @@
   color: var(--clr-text-primary);
   font-family: var(--font-primary, sans-serif);
   text-decoration: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease,
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
     transform 0.2s ease;
 }
 
@@ -962,7 +1016,10 @@
 
 .tqa-nav-direction .tqa-nav-label {
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
-  font-family: var(--font-pixel, 'Pixelify Sans'), Courier New, monospace;
+  font-family:
+    var(--font-pixel, 'Pixelify Sans'),
+    Courier New,
+    monospace;
   font-weight: 500;
 }
 
@@ -972,7 +1029,8 @@
   flex-shrink: 0;
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
   stroke: currentColor;
-  transition: transform 0.25s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
+  transition: transform 0.25s
+    var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 .tqa-nav-prev:hover .tqa-nav-icon {
@@ -1027,7 +1085,9 @@
   font-size: 0.85rem;
   font-weight: 500;
   text-decoration: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .tqa-related-card:hover {
