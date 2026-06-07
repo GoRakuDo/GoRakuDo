@@ -447,11 +447,12 @@
     transform: none;
   }
 
-  /* Active: full-row Blurple tint + 2px Blurple edge bar + Blurple text + glow.
-     Uses a 12% Blurple background (lower than the base 15% so it doesn't
-     overpower the 2px inset bar). The base TableOfContents.astro active
-     state also draws a 3px gradient bar via ::before and a pulsing dot
-     via ::after — those are hidden to prevent visual drift on the left.
+  /* Active: tree-aligned Blurple tint + 1px Blurple guide marker + text glow.
+     The vertical TOC guide is left: 0.5rem, so the active marker and tint
+     also start at 0.5rem. A previous inset box-shadow started at left: 0,
+     which made the active bar look shifted 0.5rem to the left of the tree.
+     The base TableOfContents.astro active state also draws a 3px gradient
+     bar via ::before and a pulsing dot via ::after — those are hidden here.
      stylelint-disable: selector-max-specificity — the override requires
      (0,3,1) to null out the base .toc-link.active::before (0,2,1) that
      the 3-wrapper scoped .tqa-toc prefix cannot otherwise beat. */
@@ -459,12 +460,20 @@
   .tqa-toc .toc-link.active {
     border: none;
     border-radius: 0;
-    background: color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 12%, transparent);
+    background:
+      linear-gradient(
+        var(--grkd-brand-secondary, oklch(65% 0.25 280deg)),
+        var(--grkd-brand-secondary, oklch(65% 0.25 280deg))
+      ) 0.5rem 0 / 1px 100% no-repeat,
+      linear-gradient(
+        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent),
+        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent)
+      ) 0.5rem 0 / calc(100% - 0.5rem) 100% no-repeat;
     color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
     font-weight: 600;
     transform: none;
     animation: none;
-    box-shadow: inset 2px 0 0 var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+    box-shadow: none;
     text-shadow: 0 0 8px oklch(65% 0.25 280deg / 0.45);
   }
 
@@ -473,9 +482,6 @@
     display: none;
   }
   /* stylelint-enable selector-max-specificity */
-
-  /* Active: inset Blurple bar is the visual marker.
-     The branch ::before stays gray (deliberate — the bar is the indicator). */
 
   /* Focus-visible for keyboard navigation */
   .tqa-toc .toc-link:focus-visible {
