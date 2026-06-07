@@ -1,6 +1,14 @@
 /* ========== BEM METHOD - TOOL PAGE DESIGN SYSTEM ========== */
 @import 'tailwindcss';
 
+/* Opt out of the global .layout-content mobile navbar clearance rule
+   (see global.css :root --mobile-content-padding). This page manages
+   mobile top spacing locally via the .tome-header padding (8rem) below,
+   so the global .layout-content default is not needed. */
+body {
+  --mobile-content-padding: 0;
+}
+
 /* ========== NIGHT LIBRARY TOME HEADER ========== */
 .tome-header {
   display: flex;
