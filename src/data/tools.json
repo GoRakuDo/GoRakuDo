@@ -2,7 +2,7 @@
   {
     "id": "anki",
     "name": "Anki",
-    "description": "Anki adalah aplikasi flashcard yang sangat powerful untuk menghafal kosakata bahasa Jepang. Dengan sistem spaced repetition, Anki membantu Anda mengingat kata-kata dengan lebih efektif dan efisien.",
+    "description": "Aplikasi flashcard dengan Algoritma AI untuk menjaga daya ingat manusia dalam jangka panajang. Umumnya digunakan untuk menjaga ingatan dalam mengingat fakta, point, atau kosakata baru dalam pembelejaran Bahasa kedua.",
     "iconUrl": "/icon/anki-icon-240.webp",
     "color": "var(--clr-purple)",
     "link": "/tools/anki"
@@ -10,7 +10,7 @@
   {
     "id": "yomitan",
     "name": "Yomitan",
-    "description": "Yomitan adalah browser extension yang memudahkan membaca teks bahasa Jepang. Dengan hover dictionary dan furigana generation, Yomitan membuat proses pembelajaran menjadi lebih interaktif dan menyenangkan.",
+    "description": "Ekstensi browser yang membantu pembelajar bahasa Jepang agar dapat melihat kamus kapaun dimanapun dalam browser.",
     "iconUrl": "/icon/yomitan-icon-240.webp",
     "color": "var(--clr-accent-dark)",
     "link": "/tools/yomitan"
