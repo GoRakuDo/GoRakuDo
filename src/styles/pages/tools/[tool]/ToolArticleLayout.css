@@ -390,6 +390,27 @@
     pointer-events: none;
   }
 
+  /* Second tree guide for H3 nesting.
+     Matches the reference's two-column pattern (main guide at x=0,
+     H3 sub-column at x=10px). In our spacing the H3 guide sits 4px
+     to the left of the H2 text start (2rem guide vs 2.25rem text),
+     so the H3 branch (::before below) extends from the sub-column
+     to the H3 text. Only drawn when at least one H3 item exists.
+     stylelint-disable: selector-max-specificity — the :has() requires
+     (0,4,1) to scope the 2nd guide by presence of .toc-level-3. */
+  /* stylelint-disable selector-max-specificity */
+  .tqa-toc .toc-list:has(.toc-level-3)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 2rem;
+    width: 1px;
+    background: oklch(85% 0.05 270deg / 0.22);
+    pointer-events: none;
+  }
+  /* stylelint-enable selector-max-specificity */
+
   /* Item: each link is a tree leaf with horizontal branch */
   .tqa-toc .toc-item {
     position: relative;
@@ -430,14 +451,43 @@
     transition: background-color 0.2s var(--ease-productive, cubic-bezier(0.4, 0, 0.2, 1));
   }
 
-  /* Nested items (depth >= 2): larger left offset to align with branch tip */
+  /* H3 branch: extends from the 2nd tree guide (left: 2rem) to
+     2.875rem — leaving a 2px gap before the H3 text at 3rem,
+     matching the H2 branch's 2px gap pattern (1.375rem branch
+     end vs 1.5rem text start). Same width (0.875rem) as the H2
+     branch so the visual rhythm matches.
+     stylelint-disable: selector-max-specificity — the .toc-level-3
+     ancestor selector requires (0,3,1) to override the generic
+     .tqa-toc .toc-link::before (0,2,1). */
+  /* stylelint-disable selector-max-specificity */
+  .tqa-toc .toc-level-3 .toc-link::before {
+    left: 2rem;
+    width: 0.875rem;
+  }
+  /* stylelint-enable selector-max-specificity */
+
+  /* H2 (depth 2) - main column aligned with the primary tree guide
+     (left: 0.5rem). H4-H6 are intentionally NOT specially treated
+     here (no H4+ in the current Anki tutorial); if a future tool
+     article introduces H4+, those items will look identical to H2
+     until a deeper ducking scheme is designed. This is a known
+     design decision, not a bug. */
   .tqa-toc .toc-level-2 .toc-link,
-  .tqa-toc .toc-level-3 .toc-link,
   .tqa-toc .toc-level-4 .toc-link,
   .tqa-toc .toc-level-5 .toc-link,
   .tqa-toc .toc-level-6 .toc-link {
     padding-left: 2.25rem;
     font-size: 0.75rem;
+  }
+
+  /* H3 (depth 3) - ducked to the right (3rem = 0.75rem more than H2),
+     smaller font, slightly muted to reinforce the hierarchy.
+     H4-H6 are intentionally not handled here per current design
+     (no H4+ in current Anki tutorial). */
+  .tqa-toc .toc-level-3 .toc-link {
+    padding-left: 3rem;
+    font-size: 0.7rem;
+    opacity: 0.85;
   }
 
   /* Hover: Blurple text only (no background) */
@@ -480,6 +530,28 @@
   .tqa-toc .toc-link.active::before,
   .tqa-toc .toc-link.active::after {
     display: none;
+  }
+  /* stylelint-enable selector-max-specificity */
+
+  /* H3 active: bar and tint aligned with the 2nd tree guide (left: 2rem),
+     not the main guide (left: 0.5rem). The H3 horizontal branch is
+     already hidden by the .toc-link.active::before { display: none }
+     rule above (specificity 0,3,2 beats this 0,4,1 rule).
+     stylelint-disable: selector-max-specificity — the .toc-level-3
+     ancestor selector requires (0,4,1) to override the existing
+     .tqa-toc .toc-link.active (0,3,1) and base .toc-link.active
+     (0,2,1) rules. */
+  /* stylelint-disable selector-max-specificity */
+  .tqa-toc .toc-level-3 .toc-link.active {
+    background:
+      linear-gradient(
+        var(--grkd-brand-secondary, oklch(65% 0.25 280deg)),
+        var(--grkd-brand-secondary, oklch(65% 0.25 280deg))
+      ) 2rem 0 / 1px 100% no-repeat,
+      linear-gradient(
+        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent),
+        color-mix(in oklch, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)) 10%, transparent)
+      ) 2rem 0 / calc(100% - 2rem) 100% no-repeat;
   }
   /* stylelint-enable selector-max-specificity */
 
