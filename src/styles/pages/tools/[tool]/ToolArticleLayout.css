@@ -731,14 +731,86 @@
   line-height: 1.6;
 }
 
-/* Blockquotes */
-.tqa-article :is(blockquote) {
-  margin: 1.5rem 0;
-  padding: 0.75rem 1rem;
+/* Blockquotes — Quest Codex hybrid (A+C):
+   A: left Blurple rail + transparent background + Pixelify Sans marker
+      /// NOTE_XX /// top-left (mirrors /// QUEST_XX /// visual language)
+   C: large Noto Serif JP decorative quotation mark top-right, low
+      opacity, to give the blockquote a "tome fragment" feel.
+   Overrides typography.css .article-content blockquote by chaining
+   .tqa-article on the selector (specificity 0,3,0 vs 0,2,0). */
+.tqa-article :is(blockquote),
+.tqa-article :is(.article-content) :is(blockquote) {
+  position: relative;
+  display: block; /* override flex from typography.css:262 so inner
+    <p> flows naturally and the ::after quote can position absolutely
+    relative to the blockquote box. */
+  margin: 1.75rem 0;
+  padding: 1.5rem 1.5rem 1.25rem;
   border-left: 3px solid var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
-  background: oklch(65% 0.25 280deg / 0.06);
-  color: var(--grkd-muted, oklch(75% 0.002 270deg));
-  font-style: italic;
+  background: transparent;
+  color: var(--clr-text-primary, oklch(92% 0.005 270deg));
+  font-style: normal;
+  line-height: 1.7;
+}
+
+/* Top-left Pixelify Sans marker — mirrors /// QUEST_XX /// treatment
+   in the Quest Codex hero / end-of-chapter. Default text is
+   /// NOTE_XX ///; authors can override per-blockquote with
+   <blockquote data-note-type="WARNING"> in the MDX to render
+   /// WARNING /// (or TIP / CAUTION / etc.) without needing custom
+   CSS. The attr() default keeps existing blockquotes unchanged. */
+.tqa-article :is(blockquote)::before,
+.tqa-article :is(.article-content) :is(blockquote)::before {
+  display: block;
+  margin: 0 0 0.75rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.18em;
+  content: "/// " attr(data-note-type, "NOTE_XX") " ///";
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tqa-article :is(blockquote)::before,
+  .tqa-article :is(.article-content) :is(blockquote)::before {
+    text-shadow: 0 0 8px oklch(65% 0.25 280deg / 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tqa-article :is(blockquote)::before,
+  .tqa-article :is(.article-content) :is(blockquote)::before {
+    text-shadow: none;
+  }
+}
+
+/* Top-right decorative quotation mark — Noto Serif JP, oversized,
+   low opacity. Positioned absolutely so it never competes with the
+   inline text. pointer-events: none keeps it from blocking selection. */
+.tqa-article :is(blockquote)::after,
+.tqa-article :is(.article-content) :is(blockquote)::after {
+  position: absolute;
+  top: -0.5rem;
+  right: 0.75rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-noto-serif-jp, 'Noto Serif JP', serif);
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.18;
+  pointer-events: none;
+  content: "\201C";
+}
+
+/* Blockquote inner <p> — keep typography clean, no italic (we are
+   not using italic for emphasis in Quest Codex; emphasis is done via
+   <strong> + Blurple color in the .tqa-article em rule below). */
+.tqa-article :is(blockquote) :is(p),
+.tqa-article :is(.article-content) :is(blockquote) :is(p) {
+  margin: 0;
+  font-style: normal;
 }
 
 /* Images */
