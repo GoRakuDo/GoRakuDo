@@ -1091,3 +1091,13 @@
     border-left-color: var(--clr-text-primary);
   }
 }
+
+/* Hard reset: kill any ::before / ::after content that some browser
+   extension, MDX renderer, or third-party stylesheet may inject on
+   inline <code> (some setups append a backtick glyph on either side
+   of the code text). Selectors use `code` directly (not `:is(code)`)
+   to keep specificity under the project's 0,3,0 limit. */
+.tqa-article code:not(pre code)::before,
+.tqa-article code:not(pre code)::after {
+  content: none;
+}
