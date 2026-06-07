@@ -586,6 +586,19 @@
   padding-left: 2.5rem;
 }
 
+/* When a list is nested inside an ol li, it should not contribute its own
+   1.5rem bottom margin to the parent's vertical rhythm. The parent's
+   li margin-bottom should manage the spacing to the next ol item so
+   the sub-bullet gap matches the regular ol item gap (0.5rem). */
+.tqa-article :is(ol) > li > :is(ul) {
+  margin: 0.5rem 0 0;
+  padding-left: 0;
+}
+
+.tqa-article :is(ol) > li > :is(ul) > li:last-child {
+  margin-bottom: 0;
+}
+
 .tqa-article :is(ul) > li::before {
   position: absolute;
   top: 0.05em;
