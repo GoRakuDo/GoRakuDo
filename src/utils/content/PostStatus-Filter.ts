@@ -20,7 +20,12 @@ export type PostStatus = 'published' | 'draft' | 'archived';
  * @returns 公開済みのドキュメントエントリの配列
  */
 export function getVisibleDocs<T extends CollectionEntry<'docs'>>(entries: T[]): T[] {
-  return entries.filter(entry => entry.data.status === 'published');
+  return entries.filter(entry => {
+    if (import.meta.env.DEV) {
+      return entry.data.status === 'published' || entry.data.status === 'draft';
+    }
+    return entry.data.status === 'published';
+  });
 }
 
 /**
@@ -67,7 +72,12 @@ export function getDocStatus(status: PostStatus): { isVisible: boolean; label: s
  * @returns 公開済みのページエントリの配列
  */
 export function getVisiblePages<T extends CollectionEntry<'pages'>>(entries: T[]): T[] {
-  return entries.filter(entry => entry.data.status === 'published');
+  return entries.filter(entry => {
+    if (import.meta.env.DEV) {
+      return entry.data.status === 'published' || entry.data.status === 'draft';
+    }
+    return entry.data.status === 'published';
+  });
 }
 
 /**
@@ -114,7 +124,12 @@ export function getPageStatus(status: PostStatus): { isVisible: boolean; label: 
  * @returns 公開済みのツール記事エントリの配列
  */
 export function getVisibleToolArticles<T extends CollectionEntry<'tool-articles'>>(entries: T[]): T[] {
-  return entries.filter(entry => entry.data.status === 'published');
+  return entries.filter(entry => {
+    if (import.meta.env.DEV) {
+      return entry.data.status === 'published' || entry.data.status === 'draft';
+    }
+    return entry.data.status === 'published';
+  });
 }
 
 /**
