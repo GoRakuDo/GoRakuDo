@@ -90,6 +90,11 @@
 
 body {
   padding-top: 80px;
+
+  /* Opt out of the global .layout-content mobile navbar clearance rule
+     (see global.css :root --mobile-content-padding). This page manages
+     mobile top spacing via the body padding-top above. */
+  --mobile-content-padding: 0;
 }
 
 /* ===== SEARCH PAGE ===== */
