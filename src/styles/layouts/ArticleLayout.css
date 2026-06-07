@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+/* Opt out of the global mobile navbar clearance rule (see global.css
+   NAVBAR SPACING). ArticleLayout pages host a PageHeader inside
+   .article-layout-container; the PageHeader manages its own top spacing,
+   so adding the global padding-top would create excessive whitespace
+   (~126-143px on mobile). */
+body {
+  --mobile-content-padding: 0;
+}
+
 /* ========== ARTICLE LAYOUT STYLES ========== */
 
 /* Enhanced article layout with modern design and accessibility */

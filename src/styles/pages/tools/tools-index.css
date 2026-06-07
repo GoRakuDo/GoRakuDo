@@ -114,6 +114,14 @@
   }
 }
 
+/* Opt out of the global .layout-content mobile navbar clearance rule
+   (see global.css :root --mobile-content-padding). /tools manages mobile
+   top spacing locally via the .tools-header-wrapper padding-top override
+   above, so the global .layout-content default is not needed. */
+body {
+  --mobile-content-padding: 0;
+}
+
 .tools-marker {
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
   font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);

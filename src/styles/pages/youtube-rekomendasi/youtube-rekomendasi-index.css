@@ -60,6 +60,13 @@
     --rc-navbar-height: 78px; /* デスクトップ */
   }
 
+  /* Opt out of global mobile content padding (see global.css NAVBAR SPACING).
+     This page manages mobile top spacing via --rc-safe-area-top applied to
+     its own hero section. */
+  body {
+    --mobile-content-padding: 0;
+  }
+
   /* モバイルファーストテキストサイズ */
   --rc-text-xs: 0.75rem; /* 12px */
   --rc-text-sm: 0.875rem; /* 14px */

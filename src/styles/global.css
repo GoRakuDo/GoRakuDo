@@ -1035,11 +1035,50 @@
   color: inherit;
 }
 
-/* ===== NAVBAR SPACING (Desktop) ===== */
+/* ===== NAVBAR SPACING ===== */
 
-/* ヒーローセクションを持つページは自力でnavbar分を調整しているため除外 */
+/* Mobile + tablet: clear the position:absolute, transparent navbar
+   (--navbar-height: 70px mobile / 75px tablet) so content doesn't overlap
+   the logo when the user is at the top of the page. Applied as a default
+   to all non-homepage pages via these 7 layout wrappers:
+     - .layout-content (BaseLayout)
+     - .article-layout-container + .article-main-container (ArticleLayout)
+     - .content-page + .content-wrapper + .content-container (PostLayout)
+     - .tqa-page (ToolArticleLayout)
+   The homepage uses .layout-content with .hero-section, so the :not(:has())
+   exclusion on that one wrapper keeps the hero full-bleed. The other 6
+   wrappers never host a hero, so they don't need the exclusion.
+   Pages with their own top-padding solution (body padding, wrapper
+   padding, PageHeader, etc.) can opt out by setting
+   --mobile-content-padding: 0 on a parent in the page-specific CSS —
+   see /tools, /panduan, /search, /tools/[tool], /rekomendasi-youtube,
+   and ArticleLayout for opt-out examples. */
+/* stylelint-disable-next-line no-duplicate-selectors */
+:root {
+  --mobile-content-padding: calc(var(--navbar-height) + 2rem);
+}
+
+@media (max-width: 1023px) {
+  .layout-content:not(:has(.hero-section)),
+  .article-layout-container,
+  .article-main-container,
+  .content-page,
+  .content-wrapper,
+  .content-container,
+  .tqa-page {
+    padding-top: var(--mobile-content-padding);
+  }
+}
+
+/* Desktop: floating pill navbar needs clearance too */
 @media (min-width: 1024px) {
-  .layout-content:not(:has(.hero-section)) {
+  .layout-content:not(:has(.hero-section)),
+  .article-layout-container,
+  .article-main-container,
+  .content-page,
+  .content-wrapper,
+  .content-container,
+  .tqa-page {
     padding-top: calc(var(--navbar-height) + 2rem);
   }
 }
@@ -1052,7 +1091,8 @@
   .content-page,
   main,
   .content-wrapper,
-  .article-content-wrapper {
+  .article-content-wrapper,
+  .tqa-page {
     padding-bottom: var(--bottom-nav-spacing);
   }
 }
@@ -1063,7 +1103,8 @@
   .content-page,
   main,
   .content-wrapper,
-  .article-content-wrapper {
+  .article-content-wrapper,
+  .tqa-page {
     padding-bottom: var(--bottom-nav-spacing-small);
   }
 }
