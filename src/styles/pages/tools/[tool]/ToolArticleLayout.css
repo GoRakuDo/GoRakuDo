@@ -959,6 +959,10 @@
     transform 0.2s ease;
 }
 
+.tqa-end-actions :is(a, button) span {
+  color: inherit;
+}
+
 .tqa-end-actions :is(a, button):hover {
   background: oklch(65% 0.25 280deg / 0.15);
   transform: translateY(-1px);
