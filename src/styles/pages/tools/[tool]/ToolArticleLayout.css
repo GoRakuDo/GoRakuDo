@@ -245,6 +245,20 @@
   }
 }
 
+@media (min-width: 1280px) {
+  .tqa-left {
+    position: sticky;
+    top: calc(var(--navbar-height, 80px) + 1rem);
+    overflow-y: auto;
+    max-height: calc(100vh - var(--navbar-height, 80px) - 2rem);
+    scrollbar-width: none;
+  }
+
+  .tqa-left::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* ========== TOC (sticky on ≥1280px, inside left column) ========== */
 .tqa-toc {
   display: none;
@@ -252,11 +266,7 @@
 
 @media (min-width: 1280px) {
   .tqa-toc {
-    position: sticky;
-    top: 100px;
     display: block;
-    overflow-y: auto;
-    max-height: calc(100vh - 120px);
   }
 
   /* Override TableOfContents hardcoded 18rem width to fit 240px column */
