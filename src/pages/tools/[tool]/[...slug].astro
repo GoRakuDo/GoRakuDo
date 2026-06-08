@@ -387,7 +387,7 @@ const relatedTools = (post.data.relatedTools || [])
 
         <!-- Right Column: Content -->
         <div class='tqa-cta-content'>
-          <h3 id='cta-heading' class='tqa-cta-heading'>Bantu Kami Menulis Artefak Baru</h3>
+          <h3 id='cta-heading' class='tqa-cta-heading'>Bantu Kami Menulis Konten Baru</h3>
           <p class='tqa-cta-text'>
             Kami sedang menulis dokumentasi &amp; tutorial lainnya. Jika kamu
             terbantu dengan Dokumen Tutorial ini boleh dong Trakteer-in...
@@ -395,9 +395,8 @@ const relatedTools = (post.data.relatedTools || [])
           
           <a
             href='https://trakteer.id/v1/yosiakefas/tip/embed/modal'
-            target='_blank'
-            rel='noopener noreferrer'
             class='tqa-cta-trakteer'
+            id='tqa-trakteer-btn'
             aria-label='Dukung kami di Trakteer'
           >
             <svg
@@ -490,6 +489,22 @@ const relatedTools = (post.data.relatedTools || [])
 
 <!-- ========== SCRIPTS ========== -->
 <script is:inline define:vars={{ postData, toolName, articleSlug, toolDisplayName }}>
+  // Trakteer Popup
+  (() => {
+    const trakteerBtn = document.getElementById('tqa-trakteer-btn');
+    if (trakteerBtn) {
+      trakteerBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = trakteerBtn.href;
+        const w = 500;
+        const h = 750;
+        const left = window.screenX + (window.outerWidth - w) / 2;
+        const top = window.screenY + (window.outerHeight - h) / 2;
+        window.open(url, 'trakteerPopup', `width=${w},height=${h},left=${left},top=${top},scrollbars=yes`);
+      });
+    }
+  })();
+
   // Share functionality (replaces inline onclick=sharePost)
   (() => {
     const shareBtn = document.getElementById('tqa-share-btn');
