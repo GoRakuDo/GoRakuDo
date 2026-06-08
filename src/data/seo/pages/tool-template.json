@@ -91,13 +91,13 @@
         "isActive": false
       },
       {
-        "title": "Tools",
-        "url": "/tools",
+        "title": "Tutorial",
+        "url": "/tutorial",
         "isActive": false
       },
       {
         "title": "{{formattedToolName}}",
-        "url": "/tools/{{tool}}",
+        "url": "/tutorial/{{tool}}",
         "isActive": true
       }
     ]

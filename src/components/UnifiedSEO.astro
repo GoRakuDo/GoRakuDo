@@ -261,7 +261,7 @@ const removeTrailingSlashIfNeeded = (url: string): string => {
 // ツールページのOG Image自動判定
 const getToolImageFromPath = (): string | null => {
   const path = getCurrentPath();
-  const toolMatch = path.match(/^\/tools\/([^\/]+)/);
+  const toolMatch = path.match(/^\/tutorial\/([^\/]+)/);
   if (toolMatch) {
     const toolId = toolMatch[1].replace(/^page-\d+$/, ''); // page-[page]を除外
     const tool = toolsData.find((t: any) => t.id === toolId);

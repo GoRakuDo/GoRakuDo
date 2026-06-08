@@ -15,6 +15,13 @@ export default defineConfig({
   // Static Site Generation (SSG) - Astro Native Best Practice
   output: 'static',
 
+  // Legacy URL redirects (/tools → /tutorial)
+  redirects: {
+    '/tools': '/tutorial',
+    '/tools/[tool]': '/tutorial/[tool]',
+    '/tools/[tool]/[...slug]': '/tutorial/[tool]/[...slug]',
+  },
+
   // View Transitions API - Astro 5.x Native Support
   viewTransitions: true,
 
@@ -71,7 +78,7 @@ export default defineConfig({
         }
         // Tool pages and YouTube recommendations
         else if (
-          item.url.includes('/tools/') ||
+          item.url.includes('/tutorial/') ||
           item.url.includes('/rekomendasi-channel-youtube')
         ) {
           item.priority = 0.8;

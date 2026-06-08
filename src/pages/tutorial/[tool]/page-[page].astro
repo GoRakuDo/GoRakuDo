@@ -98,10 +98,10 @@ const { tool, page } = Astro.params as { tool: string; page: string };
 const { totalArticles, totalPages } = Astro.props;
 const currentPage = validatePageNumber(page);
 
-if (!tool) return Astro.redirect('/tools', 301);
-if (currentPage === 1) return Astro.redirect(`/tools/${tool}`, 301);
+if (!tool) return Astro.redirect('/tutorial', 301);
+if (currentPage === 1) return Astro.redirect(`/tutorial/${tool}`, 301);
 if (shouldRedirectToFirstPage(currentPage, totalPages)) {
-  return Astro.redirect(`/tools/${tool}/page-${totalPages}`, 301);
+  return Astro.redirect(`/tutorial/${tool}/page-${totalPages}`, 301);
 }
 
 // ========== DATA PROCESSING ==========
@@ -305,7 +305,7 @@ const collectionPageSchema = {
           name: article.data.title || `Panduan ${formattedToolName}`,
           description:
             article.data.description || `Panduan lengkap ${formattedToolName}`,
-          url: `/tools/${tool}/${article.slug}`,
+          url: `/tutorial/${tool}/${article.slug}`,
           datePublished: article.data.publishedDate,
           author: { '@type': 'Organization', name: 'GoRakuDo Team' },
         },
@@ -328,7 +328,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     })),
     {
       title: `Page ${currentPage}`,
-      url: `/tools/${tool}/page-${currentPage}`,
+      url: `/tutorial/${tool}/page-${currentPage}`,
       isActive: true,
     },
   ],
@@ -343,7 +343,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   author={seoData.author}
   currentPage={currentPage}
   totalPages={totalPages}
-  baseUrl={`/tools/${tool}`}
+  baseUrl={`/tutorial/${tool}`}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={replaceTemplateObject(
     toolSeoTemplate.structuredData.faq,
@@ -398,7 +398,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         slot='pagination'
         currentPage={currentPage}
         totalPages={totalPages}
-        baseUrl={`/tools/${tool}`}
+        baseUrl={`/tutorial/${tool}`}
         showPageInfo={true}
       />
     )

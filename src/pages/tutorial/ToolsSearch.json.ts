@@ -1,7 +1,7 @@
 // ========== TOOLS SEARCH DATA JSON ENDPOINT ==========
 // Architect Optimization: Tools-only search data for client-side search
 // Purpose: Provides search data exclusively from tool-articles content collection
-// File: src/pages/tools/ToolsSearch.json.ts
+// File: src/pages/tutorial/ToolsSearch.json.ts
 
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getVisibleToolArticles } from '../../utils/content/PostStatus-Filter';

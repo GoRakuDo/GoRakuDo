@@ -100,7 +100,7 @@ export function transformToolArticleData(
     slug: articleSlug,
     title: article.data.title,
     description: article.data.description,
-    url: `/tools/${toolName}/${articleSlug}`,
+    url: `/tutorial/${toolName}/${articleSlug}`,
     publishedDate: article.data.publishedDate,
     tags: displayTags,
     toolName: article.data.toolName,

@@ -15,8 +15,8 @@ export const COLLECTIONS = {
     basePath: '',
   },
   'tool-articles': {
-    displayName: 'Tools',
-    basePath: '/tools',
+    displayName: 'Tutorial',
+    basePath: '/tutorial',
   },
 } as const;
 

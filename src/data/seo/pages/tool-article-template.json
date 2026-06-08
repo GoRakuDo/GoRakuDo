@@ -36,13 +36,13 @@
         "isActive": false
       },
       {
-        "name": "Tools",
-        "url": "/tools",
+        "name": "Tutorial",
+        "url": "/tutorial",
         "isActive": false
       },
       {
         "name": "{{toolName}}",
-        "url": "/tools/{{toolSlug}}",
+        "url": "/tutorial/{{toolSlug}}",
         "isActive": false
       },
       {

@@ -65,7 +65,7 @@ const PATH_ICON_MAP: Record<string, keyof typeof ICONS> = {
   docs: 'book',
   pages: 'document',
   'support-us': 'folder',
-  tools: 'tools',
+  tutorial: 'tools',
 };
 
 // ========== UTILITY FUNCTIONS ==========
@@ -119,19 +119,19 @@ function generateToolBreadcrumb(config: ToolBreadcrumbConfig): BreadcrumbData {
     items.push({ title: 'Home', url: '/', isActive: false, icon: 'home' });
   }
 
-  items.push({ title: 'Tools', url: '/tools', isActive: false, icon: 'tools' });
+  items.push({ title: 'Tutorial', url: '/tutorial', isActive: false, icon: 'tools' });
 
   if (articleTitle && articleSlug) {
     items.push(
       {
         title: displayName,
-        url: `/tools/${toolName}`,
+        url: `/tutorial/${toolName}`,
         isActive: false,
         icon: 'folder',
       },
       {
         title: truncateText(sanitizeText(articleTitle), 30),
-        url: `/tools/${toolName}/${sanitizeText(articleSlug)}`,
+        url: `/tutorial/${toolName}/${sanitizeText(articleSlug)}`,
         isActive: true,
         icon: 'document',
       }
@@ -139,7 +139,7 @@ function generateToolBreadcrumb(config: ToolBreadcrumbConfig): BreadcrumbData {
   } else {
     items.push({
       title: displayName,
-      url: `/tools/${toolName}`,
+      url: `/tutorial/${toolName}`,
       isActive: true,
       icon: 'folder',
     });

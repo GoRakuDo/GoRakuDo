@@ -52,8 +52,8 @@
         "isActive": false
       },
       {
-        "title": "Tools & Aplikasi",
-        "url": "/tools",
+        "title": "Tutorial",
+        "url": "/tutorial",
         "isActive": true
       }
     ]

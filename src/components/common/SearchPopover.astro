@@ -1299,8 +1299,8 @@ const sanitizedPlaceholder = placeholder.trim() || 'Cari...';
       } else {
         // tools がデフォルト
         url = toolFilterValue
-          ? `/tools/ToolsSearch.json?tool=${encodeURIComponent(toolFilterValue)}`
-          : '/tools/ToolsSearch.json';
+          ? `/tutorial/ToolsSearch.json?tool=${encodeURIComponent(toolFilterValue)}`
+          : '/tutorial/ToolsSearch.json';
         console.log('Using tools endpoint:', url);
       }
 

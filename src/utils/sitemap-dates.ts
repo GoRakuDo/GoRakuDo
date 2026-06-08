@@ -17,7 +17,7 @@ const PAGE_SOURCE_MAP: Record<string, string> = {
  '/discord/': 'src/pages/discord/index.astro',
  '/faq/': 'src/pages/faq/index.astro',
  '/search/': 'src/pages/search/index.astro',
- '/tools/': 'src/pages/tools/index.astro',
+  '/tutorial/': 'src/pages/tutorial/index.astro',
 };
 
 /**

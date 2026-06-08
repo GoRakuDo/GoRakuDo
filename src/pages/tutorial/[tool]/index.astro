@@ -44,7 +44,7 @@ export async function getStaticPaths() {
 // ========== COMPONENT LOGIC ==========
 const { tool } = Astro.params as { tool: string };
 
-if (!tool) return Astro.redirect('/tools', 301);
+if (!tool) return Astro.redirect('/tutorial', 301);
 
 const getAllToolsFromCollection = async () => {
   try {
@@ -64,7 +64,7 @@ const getAllToolsFromCollection = async () => {
 
 const allTools = await getAllToolsFromCollection();
 if (allTools.length === 0 || !allTools.includes(tool.toLowerCase())) {
-  return Astro.redirect('/tools', 301);
+  return Astro.redirect('/tutorial', 301);
 }
 
 // ========== DATA PROCESSING ==========
@@ -279,7 +279,7 @@ const collectionPageSchema = {
           name: article.data.title || `Panduan ${formattedToolName}`,
           description:
             article.data.description || `Panduan lengkap ${formattedToolName}`,
-          url: `/tools/${tool}/${article.slug}`,
+          url: `/tutorial/${tool}/${article.slug}`,
           datePublished: article.data.publishedDate,
           author: { '@type': 'Organization', name: 'GoRakuDo Team' },
         },
@@ -311,7 +311,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   author={seoData.author}
   currentPage={1}
   totalPages={totalPages}
-  baseUrl={`/tools/${tool}`}
+  baseUrl={`/tutorial/${tool}`}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={replaceTemplateObject(
     toolSeoTemplate.structuredData.faq,
@@ -366,7 +366,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         slot='pagination'
         currentPage={1}
         totalPages={totalPages}
-        baseUrl={`/tools/${tool}`}
+        baseUrl={`/tutorial/${tool}`}
         showPageInfo={true}
       />
     )

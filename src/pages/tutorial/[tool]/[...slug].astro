@@ -70,7 +70,7 @@ if (
 const validTools = await getValidTools(visibleToolArticles);
 if (!validTools.includes(toolName)) {
   logger.log(`Security: Invalid tool name requested: ${toolName}`, 'warning');
-  return Astro.redirect('/tools', 301);
+  return Astro.redirect('/tutorial', 301);
 }
 
 const sanitizedSlug = articleSlug?.replace(/[<>\"'&]/g, '');
@@ -162,7 +162,7 @@ const templateVariables = {
   toolDescription: toolInfo.description,
   operatingSystem: toolInfo.operatingSystem,
   toolAuthor: toolInfo.author,
-  toolUrl: `https://gorakudo.org/tools/${toolName}`,
+  toolUrl: `https://gorakudo.org/tutorial/${toolName}`,
 };
 
 // テンプレートベースのSoftwareApplication生成
@@ -174,7 +174,7 @@ const generateSoftwareApplicationSchema = () => {
       '@type': 'SoftwareApplication',
       name: templateVariables.toolName,
       description: templateVariables.toolDescription,
-      url: `https://gorakudo.org/tools/${templateVariables.toolSlug}`,
+      url: `https://gorakudo.org/tutorial/${templateVariables.toolSlug}`,
       applicationCategory: 'EducationalApplication',
       operatingSystem: templateVariables.operatingSystem,
       author: {
@@ -305,7 +305,7 @@ const buildNavArticle = (entry: CollectionEntry<'tool-articles'> | null) => {
   const articleSlugPart = entry.slug.split('/').slice(1).join('/');
   return {
     title: entry.data.title,
-    slug: `/tools/${tool}/${articleSlugPart}`,
+    slug: `/tutorial/${tool}/${articleSlugPart}`,
   };
 };
 
@@ -429,7 +429,7 @@ const relatedTools = (post.data.relatedTools || [])
           
           <nav class='tqa-cta-nav' aria-label='Artikel actions'>
             <a
-              href={`/tools/${toolName}`}
+              href={`/tutorial/${toolName}`}
               aria-label={`Tutorial ${toolDisplayName}`}
             >
               <svg
@@ -447,7 +447,7 @@ const relatedTools = (post.data.relatedTools || [])
               </svg>
               Tutorial {toolDisplayName}
             </a>
-            <a href='/tools' aria-label='Tutorial lainnya'>
+            <a href='/tutorial' aria-label='Tutorial lainnya'>
               <svg
                 width='16'
                 height='16'
