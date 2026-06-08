@@ -992,6 +992,13 @@
   align-items: center;
 }
 
+.tqa-cta-watermark a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .tqa-cta-watermark img {
   width: 100%;
   max-width: 320px;

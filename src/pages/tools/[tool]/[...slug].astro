@@ -375,14 +375,21 @@ const relatedTools = (post.data.relatedTools || [])
     <section class='tqa-cta-section' aria-labelledby='cta-heading'>
       <div class='tqa-cta-grid'>
         <!-- Left Column: 3D Image Artifact -->
-        <div class='tqa-cta-watermark' aria-hidden='true'>
-          <img 
-            src='/page_images/nl_asymmetric_artifact.webp' 
-            alt='' 
-            width='320' 
-            height='320' 
-            loading='lazy' 
-          />
+        <div class='tqa-cta-watermark'>
+          <a 
+            href='https://trakteer.id/v1/yosiakefas/tip/embed/modal'
+            class='tqa-trakteer-trigger'
+            aria-hidden='true'
+            tabindex='-1'
+          >
+            <img 
+              src='/page_images/nl_asymmetric_artifact.webp' 
+              alt='' 
+              width='320' 
+              height='320' 
+              loading='lazy' 
+            />
+          </a>
         </div>
 
         <!-- Right Column: Content -->
@@ -395,7 +402,7 @@ const relatedTools = (post.data.relatedTools || [])
           
           <a
             href='https://trakteer.id/v1/yosiakefas/tip/embed/modal'
-            class='tqa-cta-trakteer'
+            class='tqa-cta-trakteer tqa-trakteer-trigger'
             id='tqa-trakteer-btn'
             aria-label='Dukung kami di Trakteer'
           >
@@ -491,18 +498,18 @@ const relatedTools = (post.data.relatedTools || [])
 <script is:inline define:vars={{ postData, toolName, articleSlug, toolDisplayName }}>
   // Trakteer Popup
   (() => {
-    const trakteerBtn = document.getElementById('tqa-trakteer-btn');
-    if (trakteerBtn) {
-      trakteerBtn.addEventListener('click', (e) => {
+    const trakteerTriggers = document.querySelectorAll('.tqa-trakteer-trigger');
+    trakteerTriggers.forEach(btn => {
+      btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const url = trakteerBtn.href;
+        const url = btn.href;
         const w = 500;
         const h = 750;
         const left = window.screenX + (window.outerWidth - w) / 2;
         const top = window.screenY + (window.outerHeight - h) / 2;
         window.open(url, 'trakteerPopup', `width=${w},height=${h},left=${left},top=${top},scrollbars=yes`);
       });
-    }
+    });
   })();
 
   // Share functionality (replaces inline onclick=sharePost)
