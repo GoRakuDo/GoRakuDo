@@ -110,6 +110,78 @@
   box-shadow: 0 0 20px var(--tutorial-glow);
 }
 
+/* === Reusable: Account Split Layout =========================================
+   Two-column split for tutorial sections: ordered list on the left,
+   supporting image/GIF on the right. Stacks vertically on mobile.
+
+   Usage in MDX:
+   ```mdx
+   <div class="account-split">
+     <ol>
+       <li>Step 1...</li>
+       <li>Step 2...</li>
+     </ol>
+     <img src="..." alt="..." />
+   </div>
+   ```
+   ========================================================================== */
+.account-split {
+  display: block;
+}
+
+.account-split > img {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.account-split ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  counter-reset: none;
+}
+
+.account-split ol > li {
+  padding-left: 0;
+}
+
+.account-split ol > li::before {
+  content: none;
+}
+
+@media (min-width: 768px) {
+  .account-split {
+    display: grid;
+    align-items: start;
+    gap: 2rem;
+    grid-template-columns: 1fr 240px;
+  }
+
+  .account-split > img {
+    position: sticky;
+    top: calc(var(--navbar-height, 80px) + 1rem);
+    margin: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .account-split {
+    display: grid;
+    align-items: start;
+    gap: 2rem;
+    grid-template-columns: 1fr 240px;
+  }
+
+  .account-split img {
+    position: sticky;
+    top: 6rem;
+    margin: 0;
+  }
+}
+
 .tutorial-image-grid figure::before {
   position: absolute;
   top: 0.6rem;
