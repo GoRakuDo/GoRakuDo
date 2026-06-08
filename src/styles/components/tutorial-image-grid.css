@@ -172,6 +172,32 @@
   }
 }
 
+/* === Settings Split: reverse column order (bullets left, image right) ==== */
+.settings-split {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .settings-split {
+    display: grid;
+    align-items: start;
+    gap: 2rem;
+    grid-template-columns: 1fr var(--split-sidebar-width);
+  }
+
+  .settings-split > img {
+    order: 2;
+    position: sticky;
+    top: calc(var(--navbar-height, 80px) + 1rem);
+    margin: 0;
+  }
+
+  .settings-split > ul,
+  .settings-split > ol {
+    order: 1;
+  }
+}
+
 .tutorial-image-grid figure::before {
   position: absolute;
   top: 0.6rem;
