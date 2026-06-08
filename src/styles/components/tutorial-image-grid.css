@@ -126,13 +126,15 @@
    ```
    ========================================================================== */
 .account-split {
+  --split-sidebar-width: 240px;
+
   display: block;
 }
 
 .account-split > img {
   display: block;
   width: 100%;
-  max-width: 240px;
+  max-width: var(--split-sidebar-width);
   height: auto;
   margin: 0 auto;
   border-radius: 8px;
@@ -157,27 +159,12 @@
     display: grid;
     align-items: start;
     gap: 2rem;
-    grid-template-columns: 1fr 240px;
+    grid-template-columns: 1fr var(--split-sidebar-width);
   }
 
   .account-split > img {
     position: sticky;
     top: calc(var(--navbar-height, 80px) + 1rem);
-    margin: 0;
-  }
-}
-
-@media (min-width: 768px) {
-  .account-split {
-    display: grid;
-    align-items: start;
-    gap: 2rem;
-    grid-template-columns: 1fr 240px;
-  }
-
-  .account-split img {
-    position: sticky;
-    top: 6rem;
     margin: 0;
   }
 }
