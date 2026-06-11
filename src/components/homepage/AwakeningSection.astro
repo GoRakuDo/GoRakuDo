@@ -357,12 +357,16 @@
 
   /* --- Content & Rules --- */
   .sl-quest-name {
+    overflow: hidden;
+    max-width: 100%;
     margin-bottom: 1.5rem;
     color: var(--grkd-brand-secondary, oklch(65% 0.22 273.85deg));
     font-family: var(--font-primary, sans-serif);
-    font-size: 1rem;
+    font-size: clamp(0.8rem, 3.4vw, 1rem);
     font-weight: 800;
-    letter-spacing: 0.05em;
+    letter-spacing: clamp(0.02em, 0.15vw, 0.05em);
+    white-space: nowrap;
+    text-overflow: clip;
     text-shadow: 0 0 10px var(--grkd-brand-secondary, oklch(65% 0.22 273.85deg));
   }
 
@@ -370,6 +374,7 @@
     .sl-quest-name {
       margin-bottom: 2rem;
       font-size: 1.1rem;
+      letter-spacing: 0.05em;
     }
   }
 
