@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/homepage/hero.astro';
 import MissionSection from '../components/homepage/MissionSection.astro';
 import FeaturesSection from '../components/homepage/FeaturesSection.astro';
+import AwakeningSection from '../components/homepage/AwakeningSection.astro';
 import DocumentationPreviewSection from '../components/homepage/DocumentationPreviewSection.astro';
 import FAQSection from '../components/common/FAQSection.astro';
 import { generateBreadcrumbSchema } from '../utils/breadcrumb-schema';
@@ -71,6 +72,9 @@ const faqSchema = {
 
     <!-- Features Section -->
     <FeaturesSection />
+
+    <!-- Awakening Section (Traditional vs Immersion) -->
+    <AwakeningSection />
 
     <!-- Documentation Preview Section -->
     <DocumentationPreviewSection />
