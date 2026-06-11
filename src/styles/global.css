@@ -25,6 +25,7 @@
 
   /* Background color tokens - used 3+ times */
   --grkd-black-950: oklch(5% 0.005 270deg);
+  --grkd-black-200: oklch(75% 0.005 270deg); /* Body text — DESIGN.md */
   --grkd-surface: oklch(17.80% 0.058 275.81deg);   /* Discord Midnight Navy */
   --grkd-surface-2: oklch(30.96% 0.150 271.29deg); /* Discord Indigo Surface */
   --token-bg-dark: var(--grkd-black-950); /* Legacy alias */
@@ -522,10 +523,6 @@
 
   .features-section.loading {
     min-height: 600px;
-  }
-
-  .docs-preview-section.loading {
-    min-height: 400px;
   }
 
   .loaded {

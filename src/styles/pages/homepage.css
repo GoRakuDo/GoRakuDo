@@ -55,12 +55,6 @@
     var(--clr-purple-04) 40%,
     transparent 70%
   );
-  --docs-background: linear-gradient(
-    180deg,
-    var(--clr-black-3) 0%,
-    var(--clr-black-1) 50%,
-    var(--clr-black-05) 100%
-  );
 }
 
 /* Note: Global styles, animations, and accessibility are handled in global.css */
@@ -531,70 +525,10 @@ body.modal-open {
   }
 }
 
-/* ===== DOCS PREVIEW SECTION ===== */
-.docs-preview-section {
-  padding: var(--spacing-section-sm);
-  background: var(--docs-background);
-  transition: background 0.6s ease-out;
-
-  @media (min-width: 640px) {
-    padding: var(--spacing-section-md);
-  }
-
-  @media (min-width: 768px) {
-    padding: var(--spacing-section-lg);
-    background: var(--docs-background);
-  }
-
-  @media (min-width: 1024px) {
-    padding: var(--spacing-section-xl);
-  }
-
-  @media (min-width: 1280px) {
-    padding: var(--spacing-section-2xl);
-  }
-}
-
-/* Docs section components */
-.docs-container {
-  max-width: 56rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.docs-title {
-  margin-bottom: 2rem;
-  font-family: var(--font-serif);
-  font-size: var(--font-size-title-sm);
-  font-weight: 600;
-
-  @media (min-width: 640px) {
-    font-size: var(--font-size-title-md);
-  }
-
-  @media (min-width: 1024px) {
-    font-size: var(--font-size-title-lg);
-  }
-}
-
-.docs-description {
-  max-width: 600px;
-  margin-bottom: 50px;
-  color: var(--clr-text-secondary);
-  font-size: 18px;
-  line-height: 1.7;
-  margin-inline: auto;
-}
-
-.docs-cta {
-  text-align: center;
-}
-
 /* ===== BUTTON COMPONENTS ===== */
 
-/* Base button styles */
-.cta-button,
-.docs-button {
+/* Primary CTA button */
+.cta-button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -603,6 +537,12 @@ body.modal-open {
   padding: 1rem 1.5rem;
   border: none;
   border-radius: var(--border-radius-pill);
+  background: linear-gradient(
+    135deg,
+    var(--clr-purple) 0%,
+    var(--clr-accent-dark) 100%
+  );
+  color: var(--clr-text-primary);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -612,37 +552,9 @@ body.modal-open {
     padding: 1rem 1.5rem;
     font-size: 1.125rem;
   }
-}
-
-/* Primary CTA button */
-.cta-button {
-  background: linear-gradient(
-    135deg,
-    var(--clr-purple) 0%,
-    var(--clr-accent-dark) 100%
-  );
-  color: var(--clr-text-primary);
 
   &:hover {
     box-shadow: 0 15px 40px var(--clr-accent-shadow);
-  }
-}
-
-/* Secondary docs button */
-.docs-button {
-  border: 2px solid var(--clr-accent-glow-strong);
-  background: transparent;
-  color: var(--clr-text-primary);
-
-  @media (max-width: 768px) {
-    padding: 14px 28px;
-    font-size: 15px;
-  }
-
-  &:hover {
-    background: var(--clr-accent-glow-medium);
-    border-color: var(--clr-purple);
-    box-shadow: 0 10px 30px var(--clr-accent-glow-strong);
   }
 }
 
@@ -674,9 +586,7 @@ body.modal-open {
   ::view-transition-old(mission-section),
   ::view-transition-new(mission-section),
   ::view-transition-old(features-section),
-  ::view-transition-new(features-section),
-  ::view-transition-old(docs-section),
-  ::view-transition-new(docs-section) {
+  ::view-transition-new(features-section) {
     animation-duration: 0.5s;
     animation-timing-function: ease-out;
   }
@@ -685,9 +595,7 @@ body.modal-open {
   ::view-transition-old(mission-title),
   ::view-transition-new(mission-title),
   ::view-transition-old(features-title),
-  ::view-transition-new(features-title),
-  ::view-transition-old(docs-title),
-  ::view-transition-new(docs-title) {
+  ::view-transition-new(features-title) {
     animation-duration: 0.4s;
     animation-timing-function: ease-out;
   }
@@ -719,9 +627,7 @@ body.modal-open {
 
   /* Button transitions */
   ::view-transition-old(cta-button),
-  ::view-transition-new(cta-button),
-  ::view-transition-old(docs-button),
-  ::view-transition-new(docs-button) {
+  ::view-transition-new(cta-button) {
     animation-duration: 0.25s;
     animation-timing-function: ease-out;
   }
@@ -1366,22 +1272,19 @@ section .secondary-button {
     animation-delay: 0.3s;
   }
 
-  .cta-button,
-  .docs-button {
+  .cta-button {
     animation: slideFromRight 0.5s ease-out;
   }
 
   .mission-section.loaded,
-  .features-section.loaded,
-  .docs-preview-section.loaded {
+  .features-section.loaded {
     animation: slideFromBottom 0.6s ease-out;
   }
 }
 
 /* ===== BACKGROUND BLUR EFFECTS FOR HOMEPAGE ===== */
 .mission-section,
-.features-section,
-.docs-preview-section {
+.features-section {
   position: relative;
   background: transparent;
 }

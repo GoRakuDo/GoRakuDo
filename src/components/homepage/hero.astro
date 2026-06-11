@@ -156,8 +156,7 @@ const {
       const actions = {
         'open-discord': () =>
           window.open('https://discord.gg/j8qmYPAGQh', '_blank'),
-        'scroll-to-docs': () => scrollToTarget('docs-title'),
-        'go-to-posts': () => (window.location.href = '/docs'),
+        'scroll-to-docs': () => scrollToTarget('awakening'),
       };
       actions[btn.dataset.action]?.();
     });
