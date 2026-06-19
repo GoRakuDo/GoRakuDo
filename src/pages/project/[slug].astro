@@ -76,9 +76,8 @@ const docsCategories = [
             Baca Dokumentasi
           </a>
           {githubUrl && (
-            <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="lp-btn-secondary">
+            <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="lp-btn-secondary" aria-label="GitHub Repository" title="GitHub Repository">
               <Fragment set:html={GithubIcon} />
-              GitHub Repo
             </a>
           )}
         </div>
