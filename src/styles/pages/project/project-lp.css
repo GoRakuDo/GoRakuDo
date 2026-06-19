@@ -146,7 +146,7 @@
   max-width: 800px;
   height: auto;
   object-fit: contain;
-  border-radius: 1.25rem;
+  border-radius: 0.85rem;
   overflow: hidden;
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
 }
