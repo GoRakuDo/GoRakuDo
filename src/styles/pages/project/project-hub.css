@@ -56,13 +56,13 @@
 /* Individual Cinematic Banner */
 .project-banner {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: 1.2fr 1fr;
   overflow: hidden;
   width: 100%;
   min-height: clamp(350px, 45vh, 450px);
-  padding: 3rem;
+  padding: 0;
   border: 1px solid oklch(100% 0 0deg / 0.05);
   border-radius: 1.5rem;
   background-color: var(--grkd-surface-2);
@@ -81,11 +81,22 @@
   transform: translateY(-4px);
 }
 
-/* Background Image with Cinematic Fade */
+/* Content Area */
+.banner-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 100%;
+  padding: 3rem;
+}
+
+/* Background Image Area (Right) */
 .banner-bg-wrapper {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+  position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -94,7 +105,7 @@
   z-index: 1;
 
   /* Left side dark for text, right side fades into image */
-  background: linear-gradient(to right, var(--grkd-surface-2) 15%, transparent 80%);
+  background: linear-gradient(to right, var(--grkd-surface-2) 0%, transparent 40%);
   content: '';
   inset: 0;
 }
@@ -105,23 +116,13 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: right center;
-  opacity: 0.6;
+  object-position: left center;
+  opacity: 0.8;
   transition: transform 10s var(--ease-out);
 }
 
 .project-banner:hover .banner-bg-image {
   transform: scale(1.05);
-}
-
-/* Content Area */
-.banner-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 60%;
 }
 
 /* Giant Watermark text */
@@ -141,7 +142,6 @@
   transform: translateY(-50%);
 }
 
-/* Status Badge */
 .banner-title {
   background: linear-gradient(
     135deg,
@@ -182,23 +182,28 @@
 /* Mobile Adjustments */
 @media (max-width: 768px) {
   .project-banner {
-    justify-content: flex-end;
-    min-height: 400px;
-    padding: 2rem;
-  }
-  
-  .banner-bg-wrapper::after {
-    /* Bottom dark for text, top fades into image */
-    background: linear-gradient(to top, var(--grkd-surface-2) 30%, transparent 90%);
-  }
-  
-  .banner-bg-image {
-    object-position: top center;
+    align-items: end;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 300px;
   }
   
   .banner-content {
-    max-width: 100%;
-    margin-top: auto;
+    grid-row: 1 / 2;
+    padding: 2rem;
+    padding-bottom: 0;
+  }
+
+  .banner-bg-wrapper {
+    grid-row: 2 / 3;
+  }
+  
+  .banner-bg-wrapper::after {
+    /* Top dark for text transition */
+    background: linear-gradient(to bottom, var(--grkd-surface-2) 0%, transparent 30%);
+  }
+  
+  .banner-bg-image {
+    object-position: center bottom;
   }
   
   .banner-watermark {

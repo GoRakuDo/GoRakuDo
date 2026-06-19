@@ -66,23 +66,8 @@ const breadcrumbSchema = generateBreadcrumbSchema({
             style={`--project-accent: ${accentColor};`}
             aria-label={`${project.data.title} project page`}
           >
-            <!-- Watermark Text -->
-            <div class="banner-watermark">{project.data.title.toUpperCase()}</div>
-
-            <!-- Background Image -->
-            <div class="banner-bg-wrapper">
-              <img 
-                src={getBannerImage(project)} 
-                alt="" 
-                class="banner-bg-image" 
-                loading="lazy" 
-                decoding="async" 
-              />
-            </div>
-
-            <!-- Content Area -->
+            <!-- Content Area (Left) -->
             <div class="banner-content">
-              
               <h2 class="banner-title" transition:name={`project-title-${project.slug}`}>
                 {project.data.title}
               </h2>
@@ -95,6 +80,20 @@ const breadcrumbSchema = generateBreadcrumbSchema({
                 {project.data.description}
               </p>
             </div>
+
+            <!-- Background Image Area (Right) -->
+            <div class="banner-bg-wrapper">
+              <img 
+                src={getBannerImage(project)} 
+                alt="" 
+                class="banner-bg-image" 
+                loading="lazy" 
+                decoding="async" 
+              />
+            </div>
+
+            <!-- Watermark Text (Absolute) -->
+            <div class="banner-watermark">{project.data.title.toUpperCase()}</div>
           </a>
         );
       })}
