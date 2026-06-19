@@ -24,7 +24,7 @@ const getBannerImage = (project: any) => {
 // 2. SEO & Schema
 // ==============================
 const title = "Original Projects | GoRakuDo";
-const description = "語楽道が開発したオリジナルの学習アーティファクト（ツール・システム）の展示室です。";
+const description = "Ruang pameran artefak pembelajaran (tools dan sistem) orisinal yang dikembangkan oleh GoRakuDo.";
 
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
@@ -39,7 +39,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
   title={title}
   description={description}
   pageType="website"
-  lang="ja"
+  lang="id"
   breadcrumbSchema={breadcrumbSchema}
 >
   <main class="project-hub-layout" role="main" aria-label="GoRakuDo Projects Showcase">
@@ -49,8 +49,8 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       <div class="hub-marker" aria-hidden="true">/// ARTIFACT_SHOWCASE ///</div>
       <h1 class="hub-title">Original Projects</h1>
       <p class="hub-subtitle">
-        語楽道が設計・開発した学習アーティファクト。<br />
-        没入型学習を支えるシステムとツール群。
+        Artefak pembelajaran orisinal yang dirancang dan dikembangkan oleh GoRakuDo.
+        Kumpulan sistem dan tools yang mendukung metode belajar immersion.
       </p>
     </header>
 
@@ -82,11 +82,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
             <!-- Content Area -->
             <div class="banner-content">
-              {project.data.releaseStatus && (
-                <div class="banner-badge">
-                  {project.data.releaseStatus.toUpperCase()}
-                </div>
-              )}
               
               <h2 class="banner-title" transition:name={`project-title-${project.slug}`}>
                 {project.data.title}

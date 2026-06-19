@@ -36,12 +36,14 @@
 }
 
 .hub-subtitle {
-  max-width: 600px;
+  max-width: 800px;
   margin-top: 1.5rem;
   color: var(--grkd-text-secondary);
   font-family: var(--font-primary);
   font-size: clamp(0.95rem, 2vw, 1.15rem);
   margin-inline: auto;
+  text-wrap: balance;
+  line-height: 1.6;
 }
 
 /* Banners Container */
@@ -72,7 +74,7 @@
 }
 
 .project-banner:hover {
-  border-color: var(--banner-glow);
+  border-color: oklch(from var(--banner-glow) l c h / 0.15);
   box-shadow: 
     0 0 30px oklch(from var(--banner-glow) l c h / 0.15),
     inset 0 0 20px oklch(from var(--banner-glow) l c h / 0.05);
@@ -102,8 +104,8 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center right;
+  object-fit: contain;
+  object-position: right center;
   opacity: 0.6;
   transition: transform 10s var(--ease-out);
 }
@@ -140,27 +142,21 @@
 }
 
 /* Status Badge */
-.banner-badge {
-  padding: 0.4rem 1rem;
-  border: 1px solid oklch(from var(--banner-glow) l c h / 0.3);
-  border-radius: 999px;
-  background-color: oklch(from var(--banner-glow) l c h / 0.15);
-  color: var(--banner-glow);
-  font-family: var(--font-pixel);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-  align-self: flex-start;
-  text-shadow: 0 0 8px oklch(from var(--banner-glow) l c h / 0.5);
-  backdrop-filter: blur(8px);
-}
-
 .banner-title {
-  color: var(--grkd-text-primary);
-  font-family: var(--font-noto-serif-jp);
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 900;
+  background: linear-gradient(
+    135deg,
+    oklch(85% 0.15 85deg) 0%,
+    oklch(65% 0.15 85deg) 70%
+  );
+  color: transparent;
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
   line-height: 1.1;
-  text-shadow: 0 4px 12px rgb(0 0 0 / 0.5);
+  letter-spacing: 0.05em;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 12px rgb(0 0 0 / 0.5));
 }
 
 .banner-tagline {
