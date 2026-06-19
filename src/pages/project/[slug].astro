@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { title, tagline, description, accentColor, githubUrl } = project.data;
+const { title, tagline, description, githubUrl } = project.data;
 
 // In a real scenario, this would be fetched from `getCollection('project-docs')` filtered by `project: project.slug`.
 // For the mockup phase, we'll construct the DenChou structure manually to guarantee the exact visual output.
@@ -60,7 +60,7 @@ const docsCategories = [
   pageType="website"
   lang="id"
 >
-  <main class="project-lp-layout" style={`--project-accent: ${accentColor || 'var(--grkd-brand-secondary)'};`}>
+  <main class="project-lp-layout">
     
     <!-- Hero Section -->
     <section class="lp-hero">

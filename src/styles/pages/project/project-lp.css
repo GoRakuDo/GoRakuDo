@@ -31,12 +31,12 @@
 }
 
 .lp-marker {
-  color: var(--project-accent, var(--grkd-brand-secondary));
+  color: var(--grkd-brand-secondary);
   font-family: var(--font-pixel);
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.1em;
-  text-shadow: 0 0 10px oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.5);
+  text-shadow: 0 0 10px oklch(from var(--grkd-brand-secondary) l c h / 0.5);
 }
 
 .lp-title {
@@ -85,14 +85,14 @@
 }
 
 .lp-btn-primary {
-  background: linear-gradient(135deg, var(--project-accent, var(--grkd-brand-secondary)), oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.6));
+  background: linear-gradient(135deg, var(--grkd-brand-secondary), oklch(from var(--grkd-brand-secondary) l c h / 0.6));
   color: var(--token-white-base);
-  box-shadow: 0 4px 15px oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.3);
+  box-shadow: 0 4px 15px oklch(from var(--grkd-brand-secondary) l c h / 0.3);
 }
 
 .lp-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.5);
+  box-shadow: 0 6px 20px oklch(from var(--grkd-brand-secondary) l c h / 0.5);
 }
 
 .lp-btn-secondary {
@@ -124,7 +124,7 @@
   z-index: 0;
   width: 120%;
   height: 120%;
-  background: radial-gradient(circle, oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.2) 0%, transparent 60%);
+  background: radial-gradient(circle, oklch(from var(--grkd-brand-secondary) l c h / 0.2) 0%, transparent 60%);
   pointer-events: none;
   transform: translate(-50%, -50%);
 }
@@ -144,13 +144,13 @@
 ========================================= */
 .lp-section-title {
   margin-bottom: 3rem;
-  color: var(--project-accent, var(--grkd-brand-secondary));
+  color: var(--grkd-brand-secondary);
   font-family: var(--font-pixel);
   font-size: 1.5rem;
   font-weight: 500;
   text-align: center;
   letter-spacing: 0.1em;
-  text-shadow: 0 0 10px oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.3);
+  text-shadow: 0 0 10px oklch(from var(--grkd-brand-secondary) l c h / 0.3);
 }
 
 /* =========================================
@@ -176,7 +176,7 @@
 .lp-feature-card:hover {
   background: oklch(100% 0 0deg / 0.05);
   transform: translateY(-4px);
-  border-color: oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.3);
+  border-color: oklch(from var(--grkd-brand-secondary) l c h / 0.3);
 }
 
 .lp-feature-icon {
@@ -187,8 +187,8 @@
   height: 3rem;
   margin-bottom: 0.5rem;
   border-radius: 0.75rem;
-  background: oklch(from var(--project-accent, var(--grkd-brand-secondary)) l c h / 0.15);
-  color: var(--project-accent, var(--grkd-brand-secondary));
+  background: oklch(from var(--grkd-brand-secondary) l c h / 0.15);
+  color: var(--grkd-brand-secondary);
 }
 
 .lp-feature-title {
@@ -255,7 +255,7 @@
 }
 
 .lp-docs-link svg {
-  color: var(--project-accent, var(--grkd-brand-secondary));
+  color: var(--grkd-brand-secondary);
   opacity: 0.5;
   transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
 }
