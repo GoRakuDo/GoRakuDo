@@ -107,9 +107,40 @@ const toolArticlesCollection = defineCollection({
   }),
 });
 
+// プロジェクトコレクション（LP表示用）
+const projectsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string().min(1).max(LIMITS.TITLE_MAX),
+    tagline: z.string().min(1).max(LIMITS.DESCRIPTION_MAX),
+    description: z.string().min(LIMITS.DESCRIPTION_MIN).max(LIMITS.DESCRIPTION_MAX),
+    publishedDate: z.string(),
+    modifiedDate: z.string().optional(),
+    heroImage: z.string().optional(),
+    accentColor: z.string().optional(), // CSS OKLCH color string
+    githubUrl: z.string().url().optional(),
+    releaseStatus: z.enum(['Pre-Release', 'Stable', 'Beta', 'Archived']).default('Stable'),
+    status: z.enum(['published', 'draft', 'archived']).default(DEFAULTS.STATUS),
+  }),
+});
+
+// プロジェクトドキュメントコレクション
+const projectDocsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string().min(1).max(LIMITS.TITLE_MAX),
+    description: z.string().min(1).max(LIMITS.DESCRIPTION_MAX).optional(),
+    order: z.number().default(99), // 目次の順序用
+    parentProject: z.string(), // 例: 'denchou'
+    status: z.enum(['published', 'draft']).default(DEFAULTS.STATUS),
+  }),
+});
+
 // コレクションのエクスポート
 export const collections = {
   docs: docsCollection,
   pages: pagesCollection,
   'tool-articles': toolArticlesCollection,
+  projects: projectsCollection,
+  'project-docs': projectDocsCollection,
 };

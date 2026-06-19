@@ -1,0 +1,109 @@
+---
+// src/pages/project/index.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import '../../styles/pages/project/project-hub.css';
+
+// ==============================
+// 1. Fetch Projects Data
+// ==============================
+const projects = await getCollection('projects', ({ data }) => {
+  return data.status !== 'archived';
+});
+
+// For now, if we don't have images in frontmatter, we can assign a fallback image
+const getBannerImage = (project: any) => {
+  if (project.data.heroImage) return project.data.heroImage;
+  // Fallback for DenChou
+  if (project.slug === 'denchou') return '/page_images/homepage/old_rules_statue.webp';
+  return '/page_images/homepage/old_rules_statue.webp'; // generic fallback
+};
+
+// ==============================
+// 2. SEO & Schema
+// ==============================
+const title = "Original Projects | GoRakuDo";
+const description = "語楽道が開発したオリジナルの学習アーティファクト（ツール・システム）の展示室です。";
+
+const breadcrumbSchema = generateBreadcrumbSchema({
+  items: [
+    { title: 'Home', url: '/', isActive: false },
+    { title: 'Projects', url: '/project', isActive: true },
+  ],
+  siteUrl: String(Astro.site || 'https://gorakudo.org'),
+});
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  pageType="website"
+  lang="ja"
+  breadcrumbSchema={breadcrumbSchema}
+>
+  <main class="project-hub-layout" role="main" aria-label="GoRakuDo Projects Showcase">
+    
+    <!-- Hub Header -->
+    <header class="hub-header-wrapper" transition:name="project-hub-header">
+      <div class="hub-marker" aria-hidden="true">/// ARTIFACT_SHOWCASE ///</div>
+      <h1 class="hub-title">Original Projects</h1>
+      <p class="hub-subtitle">
+        語楽道が設計・開発した学習アーティファクト。<br />
+        没入型学習を支えるシステムとツール群。
+      </p>
+    </header>
+
+    <!-- Banners Grid -->
+    <div class="project-banners-grid">
+      {projects.map((project) => {
+        const accentColor = project.data.accentColor || 'var(--grkd-brand-secondary)';
+        
+        return (
+          <a 
+            href={`/project/${project.slug}`} 
+            class="project-banner"
+            style={`--project-accent: ${accentColor};`}
+            aria-label={`${project.data.title} project page`}
+          >
+            <!-- Watermark Text -->
+            <div class="banner-watermark">{project.data.title.toUpperCase()}</div>
+
+            <!-- Background Image -->
+            <div class="banner-bg-wrapper">
+              <img 
+                src={getBannerImage(project)} 
+                alt="" 
+                class="banner-bg-image" 
+                loading="lazy" 
+                decoding="async" 
+              />
+            </div>
+
+            <!-- Content Area -->
+            <div class="banner-content">
+              {project.data.releaseStatus && (
+                <div class="banner-badge">
+                  {project.data.releaseStatus.toUpperCase()}
+                </div>
+              )}
+              
+              <h2 class="banner-title" transition:name={`project-title-${project.slug}`}>
+                {project.data.title}
+              </h2>
+              
+              <div class="banner-tagline">
+                {project.data.tagline}
+              </div>
+              
+              <p class="banner-desc">
+                {project.data.description}
+              </p>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+  </main>
+</BaseLayout>

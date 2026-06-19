@@ -1,0 +1,214 @@
+/* src/styles/pages/project/project-hub.css */
+
+.project-hub-layout {
+  /* Inherits padding-top spacing from global */
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-inline: var(--spacing-container-px);
+  padding-bottom: 6rem;
+}
+
+/* Marker Header */
+.hub-header-wrapper {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.hub-marker {
+  margin-bottom: 1rem;
+  color: var(--grkd-brand-secondary);
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-shadow: 
+    0 0 8px var(--grkd-brand-secondary),
+    0 0 15px var(--grkd-brand-secondary);
+}
+
+.hub-title {
+  color: var(--grkd-text-primary);
+  font-family: var(--font-noto-serif-jp);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.hub-subtitle {
+  max-width: 600px;
+  margin-top: 1.5rem;
+  color: var(--grkd-text-secondary);
+  font-family: var(--font-primary);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  margin-inline: auto;
+}
+
+/* Banners Container */
+.project-banners-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Individual Cinematic Banner */
+.project-banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  min-height: clamp(350px, 45vh, 450px);
+  padding: 3rem;
+  border: 1px solid oklch(100% 0 0deg / 0.05);
+  border-radius: 1.5rem;
+  background-color: var(--grkd-surface-2);
+  text-decoration: none;
+  transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+
+  /* The project accent color will be injected via style attribute */
+  --banner-glow: var(--project-accent, var(--grkd-brand-secondary));
+}
+
+.project-banner:hover {
+  border-color: var(--banner-glow);
+  box-shadow: 
+    0 0 30px oklch(from var(--banner-glow) l c h / 0.15),
+    inset 0 0 20px oklch(from var(--banner-glow) l c h / 0.05);
+  transform: translateY(-4px);
+}
+
+/* Background Image with Cinematic Fade */
+.banner-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.banner-bg-wrapper::after {
+  position: absolute;
+  z-index: 1;
+
+  /* Left side dark for text, right side fades into image */
+  background: linear-gradient(to right, var(--grkd-surface-2) 15%, transparent 80%);
+  content: '';
+  inset: 0;
+}
+
+.banner-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  opacity: 0.6;
+  transition: transform 10s var(--ease-out);
+}
+
+.project-banner:hover .banner-bg-image {
+  transform: scale(1.05);
+}
+
+/* Content Area */
+.banner-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 60%;
+}
+
+/* Giant Watermark text */
+.banner-watermark {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  z-index: 1;
+  color: oklch(100% 0 0deg / 0.03);
+  font-family: var(--font-pixel);
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+/* Status Badge */
+.banner-badge {
+  padding: 0.4rem 1rem;
+  border: 1px solid oklch(from var(--banner-glow) l c h / 0.3);
+  border-radius: 999px;
+  background-color: oklch(from var(--banner-glow) l c h / 0.15);
+  color: var(--banner-glow);
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  align-self: flex-start;
+  text-shadow: 0 0 8px oklch(from var(--banner-glow) l c h / 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.banner-title {
+  color: var(--grkd-text-primary);
+  font-family: var(--font-noto-serif-jp);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  text-shadow: 0 4px 12px rgb(0 0 0 / 0.5);
+}
+
+.banner-tagline {
+  color: var(--token-white-base);
+  font-family: var(--font-primary);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 0.5);
+}
+
+.banner-desc {
+  display: -webkit-box;
+  overflow: hidden;
+  max-width: 90%;
+  color: var(--grkd-text-secondary);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .project-banner {
+    justify-content: flex-end;
+    min-height: 400px;
+    padding: 2rem;
+  }
+  
+  .banner-bg-wrapper::after {
+    /* Bottom dark for text, top fades into image */
+    background: linear-gradient(to top, var(--grkd-surface-2) 30%, transparent 90%);
+  }
+  
+  .banner-bg-image {
+    object-position: top center;
+  }
+  
+  .banner-content {
+    max-width: 100%;
+    margin-top: auto;
+  }
+  
+  .banner-watermark {
+    top: 1rem;
+    left: 50%;
+    font-size: 4.5rem;
+    transform: translateX(-50%);
+  }
+}
