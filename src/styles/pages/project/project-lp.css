@@ -40,12 +40,16 @@
 }
 
 .lp-title {
-  color: var(--grkd-text-primary);
   font-family: var(--font-primary);
   font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  background: linear-gradient(135deg, oklch(85% 0.15 85deg) 0%, oklch(65% 0.15 85deg) 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 4px 12px oklch(5% 0.05 270deg / 0.5));
 }
 
 .lp-tagline {
