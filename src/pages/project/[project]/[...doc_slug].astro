@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectLayout from '../../../layouts/ProjectLayout.astro';
+import ToolArticleLayout from '../../../layouts/ToolArticleLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  
+  // Create dummy paths for mockup
+  // Real implementation will use getCollection('project-docs')
+  const dummyDocs = [
+    'setup-overview', 'mobile-layout', 'deck-presets',
+    'scene-switching', 'lightbox-media', 'kanji-hover',
+    'preferences', 'custom-css'
+  ];
+
+  return projects.flatMap(p => 
+    dummyDocs.map(doc => ({
+      params: { project: p.slug, doc_slug: doc },
+      props: { project: p, doc_slug: doc },
+    }))
+  );
+}
+
+const { project, doc_slug } = Astro.props;
+
+// Reusing same mock categories
+const docsCategories = [
+  {
+    title: "[ SETUP & BASIC ]",
+    links: [
+      { text: "Setup Overview", url: "/project/denchou/setup-overview", slug: "setup-overview" },
+      { text: "Mobile Layout", url: "/project/denchou/mobile-layout", slug: "mobile-layout" },
+      { text: "Deck Presets", url: "/project/denchou/deck-presets", slug: "deck-presets" }
+    ]
+  },
+  {
+    title: "[ FEATURES ]",
+    links: [
+      { text: "Scene Switching", url: "/project/denchou/scene-switching", slug: "scene-switching" },
+      { text: "Lightbox Media", url: "/project/denchou/lightbox-media", slug: "lightbox-media" },
+      { text: "Kanji Hover (Jitendex)", url: "/project/denchou/kanji-hover", slug: "kanji-hover" }
+    ]
+  },
+  {
+    title: "[ CUSTOMIZATION ]",
+    links: [
+      { text: "Preferences", url: "/project/denchou/preferences", slug: "preferences" },
+      { text: "Custom CSS / Dark Mode", url: "/project/denchou/custom-css", slug: "custom-css" }
+    ]
+  }
+];
+---
+
+<ProjectLayout project={project} activeDocSlug={doc_slug} docsCategories={docsCategories}>
+  <div style=" display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1rem;min-height: 50vh; color: var(--grkd-text-secondary); text-align: center;">
+    <h2 style=" color: var(--token-white-base);font-family: var(--font-pixel); font-size: 2rem;">/// QUEST_DATA_LOADED ///</h2>
+    <p style="font-family: var(--font-primary);">Dokumen: {doc_slug}</p>
+    <p style="opacity: 0.5;">(Konten MDX akan dirender di sini)</p>
+  </div>
+</ProjectLayout>

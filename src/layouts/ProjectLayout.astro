@@ -1,0 +1,147 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '@/styles/pages/project/project-lp.css';
+
+// SVG Icons
+const BookOpenIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`;
+const GithubIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>`;
+const ChevronRightIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`;
+
+const { project, activeDocSlug, docsCategories } = Astro.props;
+const { title, tagline, description, githubUrl } = project.data;
+---
+
+<BaseLayout 
+  title={`${title} - Project LP | GoRakuDo`} 
+  description={description}
+  pageType="website"
+  lang="id"
+>
+  <main class="project-lp-layout">
+    
+    <!-- Hero Section -->
+    <section class="lp-hero" transition:persist="project-hero">
+      <div class="lp-hero-content">
+        <div class="lp-marker">/// ARTIFACT_CLASS: ANKI_NOTE ///</div>
+        <h1 class="lp-title">{title}</h1>
+        <p class="lp-tagline">{tagline}</p>
+        <p class="lp-desc">{description}</p>
+        
+        <div class="lp-actions">
+          <a href="#docs" class="lp-btn-primary">
+            <Fragment set:html={BookOpenIcon} />
+            Baca Dokumentasi
+          </a>
+          {githubUrl && (
+            <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="lp-btn-secondary" aria-label="GitHub Repository" title="GitHub Repository">
+              <Fragment set:html={GithubIcon} />
+            </a>
+          )}
+        </div>
+      </div>
+      
+      <div class="lp-hero-visual">
+        <div class="lp-hero-glow"></div>
+        <img 
+          src="/page_images/project/DenChou/denchou_showcase.gif" 
+          alt="DenChou UI Demo" 
+          class="lp-hero-gif"
+          loading="eager"
+        />
+      </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="lp-features" transition:persist="project-features">
+      <h2 class="lp-section-title">/// FITUR_UTAMA ///</h2>
+      <div class="lp-features-grid">
+        
+        <!-- Feature 1 -->
+        <div class="lp-feature-card">
+          <div class="lp-feature-glow"></div>
+          <div class="lp-feature-content">
+            <div class="lp-feature-icon-col">
+              <div class="lp-feature-icon-glow"></div>
+              <div class="lp-feature-icon">
+                <img src="/page_images/project/DenChou/optimalisasi-ankidroid-feature.png" alt="Optimalisasi untuk AnkiDroid" loading="lazy" decoding="async" width="64" />
+              </div>
+            </div>
+            <div class="lp-feature-text-col">
+              <h3 class="lp-feature-title">Optimalisasi untuk AnkiDroid</h3>
+              <p class="lp-feature-desc">Dibangun dengan Container Query dan overflow hidden guard untuk mencegah bug scrolling di layar kecil AnkiDroid.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="lp-feature-card">
+          <div class="lp-feature-glow"></div>
+          <div class="lp-feature-content">
+            <div class="lp-feature-icon-col">
+              <div class="lp-feature-icon-glow"></div>
+              <div class="lp-feature-icon">
+                <img src="/page_images/project/DenChou/ankidroid-lite-preset-feature.png" alt="AnkiDroid Lite Preset" loading="lazy" decoding="async" width="64" />
+              </div>
+            </div>
+            <div class="lp-feature-text-col">
+              <h3 class="lp-feature-title">AnkiDroid Lite Preset</h3>
+              <p class="lp-feature-desc">Preset ringan khusus Android tanpa animasi berat atau Javascript berlebihan. Optimal untuk HP low-end.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="lp-feature-card">
+          <div class="lp-feature-glow"></div>
+          <div class="lp-feature-content">
+            <div class="lp-feature-icon-col">
+              <div class="lp-feature-icon-glow"></div>
+              <div class="lp-feature-icon">
+                <img src="/page_images/project/DenChou/immersive%20cards-feature.png" alt="Penampilan Kartu Immersive" loading="lazy" decoding="async" width="64" />
+              </div>
+            </div>
+            <div class="lp-feature-text-col">
+              <h3 class="lp-feature-title">Penampilan Kartu Immersive</h3>
+              <p class="lp-feature-desc">Desain UI/UX yang indah dengan OKLCH dan fonta Gen Interface JP. Belajar jadi tidak terasa seperti menghafal buku.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Docs Index -->
+    <section id="docs" class="lp-docs-index">
+      <h2 class="lp-section-title">/// DOKUMENTASI_TERSEDIA ///</h2>
+      <div class="lp-docs-grid" transition:name="project-docs-index">
+        
+        {docsCategories.map((category: any) => (
+          <div class="lp-docs-category">
+            <h3 class="lp-docs-category-title">{category.title}</h3>
+            <ul class="lp-docs-list">
+              {category.links.map((link: any) => (
+                <li>
+                  <a href={link.url} class={`lp-docs-link ${activeDocSlug === link.slug ? 'active' : ''}`}>
+                    <Fragment set:html={ChevronRightIcon} />
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+      </div>
+    </section>
+
+    <!-- Active Document Content (Quest Codex) -->
+    {Astro.slots.has('default') && (
+      <section id="doc-content" class="lp-active-doc" transition:name="project-doc-content">
+        <div class="lp-doc-wrapper">
+          <slot />
+        </div>
+      </section>
+    )}
+    
+  </main>
+</BaseLayout>
