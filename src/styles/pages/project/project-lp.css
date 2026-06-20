@@ -57,7 +57,7 @@
 }
 
 .lp-desc {
-  color: var(--grkd-muted);
+  color: oklch(80% 0 0deg);
   font-family: var(--font-primary);
   font-size: 1.1rem;
   line-height: 1.6;
