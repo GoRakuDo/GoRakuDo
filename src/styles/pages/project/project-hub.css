@@ -63,14 +63,14 @@
   width: 100%;
   min-height: clamp(350px, 45vh, 450px);
   padding: 0;
-  border: 1px solid oklch(100% 0 0deg / 0.05);
+  border: 1px solid oklch(85% 0.05 270deg / 0.05);
   border-radius: 1.5rem;
   background-color: var(--grkd-surface-2);
   text-decoration: none;
   transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), transform 0.4s var(--ease-out);
 
   /* The project accent color will be injected via style attribute */
-  --banner-glow: var(--project-accent, var(--grkd-brand-secondary));
+  --banner-glow: var(--grkd-brand-secondary);
 }
 
 .project-banner:hover {
@@ -131,7 +131,7 @@
   top: 50%;
   left: 2rem;
   z-index: 1;
-  color: oklch(100% 0 0deg / 0.05);
+  color: oklch(85% 0.05 270deg / 0.05);
   font-family: var(--font-pixel);
   font-size: clamp(6rem, 15vw, 12rem);
   font-weight: 900;
@@ -157,7 +157,7 @@
   letter-spacing: 0.05em;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 12px rgb(0 0 0 / 0.5));
+  filter: drop-shadow(0 4px 12px oklch(5% 0.005 270deg / 0.5));
 }
 
 .banner-tagline {
@@ -165,7 +165,7 @@
   font-family: var(--font-primary);
   font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   font-weight: 700;
-  text-shadow: 0 2px 8px rgb(0 0 0 / 0.5);
+  text-shadow: 0 2px 8px oklch(5% 0.005 270deg / 0.5);
 }
 
 .banner-desc {
