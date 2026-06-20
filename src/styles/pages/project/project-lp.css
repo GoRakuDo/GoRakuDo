@@ -178,9 +178,9 @@
   position: relative;
   z-index: 1;
   overflow: hidden;
+  border: 1px solid oklch(85% 0.05 270deg / 0.08);
   border-radius: 1.25rem;
   background: var(--grkd-surface-2, oklch(8% 0.01 270deg / 0.12));
-  border: 1px solid oklch(85% 0.05 270deg / 0.08);
   transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
 }
 
@@ -223,6 +223,7 @@
   width: 30%;
   padding: 1.5rem;
   border-right: 1px solid oklch(85% 0.05 270deg / 0.08);
+  background: radial-gradient(circle at center, color-mix(in oklch, var(--grkd-brand-secondary) 10%, transparent) 0%, var(--grkd-surface) 100%);
 }
 
 .lp-feature-icon-glow {
