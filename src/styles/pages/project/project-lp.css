@@ -87,7 +87,7 @@
   font-size: 1rem;
   font-weight: 700;
   text-decoration: none;
-  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  transition: transform 0.2s var(--grkd-ease-out), box-shadow 0.2s var(--grkd-ease-out), background 0.2s var(--grkd-ease-out);
   box-shadow: 0 4px 15px oklch(from var(--grkd-brand-secondary) l c h / 0.3);
 }
 
@@ -107,7 +107,7 @@
   background: oklch(85% 0.05 270deg / 0.08);
   color: var(--token-white-base);
   text-decoration: none;
-  transition: transform 0.2s var(--ease-out), border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  transition: transform 0.2s var(--grkd-ease-out), border-color 0.2s var(--grkd-ease-out), background 0.2s var(--grkd-ease-out);
   flex-shrink: 0;
   backdrop-filter: blur(10px);
 }
@@ -181,7 +181,8 @@
   border: 1px solid oklch(85% 0.05 270deg / 0.08);
   border-radius: 1.25rem;
   background: var(--grkd-surface-2, oklch(8% 0.01 270deg / 0.12));
-  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+  will-change: transform, box-shadow;
+  transition: transform 0.4s var(--grkd-ease-spring), box-shadow 0.4s var(--grkd-ease-out), border-color 0.4s var(--grkd-ease-out);
 }
 
 .lp-feature-card:hover {
@@ -256,7 +257,7 @@
 .lp-feature-icon img {
   width: 100%;
   height: auto;
-  transition: transform 0.4s var(--ease-spring);
+  transition: transform 0.4s var(--grkd-ease-spring);
 }
 
 .lp-feature-card:hover img {
@@ -337,13 +338,13 @@
   font-family: var(--font-primary);
   font-size: 1rem;
   text-decoration: none;
-  transition: color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  transition: color 0.2s var(--grkd-ease-out), background 0.2s var(--grkd-ease-out);
 }
 
 .lp-docs-link svg {
   color: var(--grkd-brand-secondary);
   opacity: 0.5;
-  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  transition: opacity 0.2s var(--grkd-ease-out), transform 0.2s var(--grkd-ease-out);
 }
 
 .lp-docs-link:hover {
