@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import { getProjectDocSlug } from '../../utils/project-docs';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -10,36 +12,38 @@ export async function getStaticPaths() {
   }));
 }
 
-const { project } = Astro.props;
+const { project } = Astro.props as { project: CollectionEntry<'projects'> };
 
-// For the root LP, no specific doc is active
 const activeDocSlug = undefined;
 
-// We will eventually load this from getCollection('project-docs')
+const allDocs = await getCollection('project-docs');
+const projectDocs: CollectionEntry<'project-docs'>[] = allDocs
+  .filter((doc) => doc.data.parentProject === project.slug && doc.data.status === 'published' && getProjectDocSlug(doc.id) !== 'index')
+  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+
+const chunkSize = Math.ceil(projectDocs.length / 3);
 const docsCategories = [
   {
-    title: "[ SETUP & BASIC ]",
-    links: [
-      { text: "Setup Overview", url: "/project/denchou/setup-overview", slug: "setup-overview" },
-      { text: "Mobile Layout", url: "/project/denchou/mobile-layout", slug: "mobile-layout" },
-      { text: "Deck Presets", url: "/project/denchou/deck-presets", slug: "deck-presets" }
-    ]
+    title: '[ PART 1 ]',
+    links: projectDocs.slice(0, chunkSize).map((doc) => {
+      const slug = getProjectDocSlug(doc.id);
+      return { text: doc.data.title, url: `/project/${project.slug}/${slug}`, slug };
+    }),
   },
   {
-    title: "[ FEATURES ]",
-    links: [
-      { text: "Scene Switching", url: "/project/denchou/scene-switching", slug: "scene-switching" },
-      { text: "Lightbox Media", url: "/project/denchou/lightbox-media", slug: "lightbox-media" },
-      { text: "Kanji Hover (Jitendex)", url: "/project/denchou/kanji-hover", slug: "kanji-hover" }
-    ]
+    title: '[ PART 2 ]',
+    links: projectDocs.slice(chunkSize, chunkSize * 2).map((doc) => {
+      const slug = getProjectDocSlug(doc.id);
+      return { text: doc.data.title, url: `/project/${project.slug}/${slug}`, slug };
+    }),
   },
   {
-    title: "[ CUSTOMIZATION ]",
-    links: [
-      { text: "Preferences", url: "/project/denchou/preferences", slug: "preferences" },
-      { text: "Custom CSS / Dark Mode", url: "/project/denchou/custom-css", slug: "custom-css" }
-    ]
-  }
+    title: '[ PART 3 ]',
+    links: projectDocs.slice(chunkSize * 2).map((doc) => {
+      const slug = getProjectDocSlug(doc.id);
+      return { text: doc.data.title, url: `/project/${project.slug}/${slug}`, slug };
+    }),
+  },
 ];
 ---
 
