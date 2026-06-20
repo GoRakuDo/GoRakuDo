@@ -180,31 +180,14 @@
   overflow: hidden;
   border-radius: 1.25rem;
   background: var(--grkd-surface-2, oklch(8% 0.01 270deg / 0.12));
-  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out);
+  border: 1px solid oklch(85% 0.05 270deg / 0.08);
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
 }
 
 .lp-feature-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px oklch(0% 0 0deg / 0.4);
-}
-
-.lp-feature-card::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  z-index: -1;
-  border-radius: calc(1.25rem + 1px);
-  background: linear-gradient(135deg, var(--grkd-brand-secondary) 0%, var(--token-gold-base, oklch(75% 0.15 85deg)) 50%, var(--grkd-cyan-400) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-}
-
-.lp-feature-card:hover::before {
-  opacity: 1;
+  box-shadow: 0 20px 40px oklch(5% 0.05 270deg / 0.4);
+  border-color: oklch(from var(--grkd-brand-secondary) l c h / 0.3);
 }
 
 .lp-feature-glow {
