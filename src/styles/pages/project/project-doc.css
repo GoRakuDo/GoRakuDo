@@ -62,7 +62,7 @@
   margin: 3rem 0 1.25rem;
   padding-top: 1.5rem;
   border-top: 1px solid oklch(85% 0.05 270deg / 0.15);
-  color: var(--clr-text-primary);
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
   font-family: var(--font-primary, sans-serif);
   font-size: clamp(1.25rem, 2.5vw, 1.6rem);
   font-weight: 600;
@@ -93,7 +93,7 @@
 /* h3 styled as sub-section */
 .tqa-article :is(h3) {
   margin: 2rem 0 0.75rem;
-  color: var(--clr-text-primary);
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
   font-family: var(--font-primary, sans-serif);
   font-size: 1.15rem;
   font-weight: 600;
