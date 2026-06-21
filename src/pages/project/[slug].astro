@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
-import { getProjectDocSlug } from '../../utils/project-docs';
+import { buildDocsCategories } from '../../utils/project-docs';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -17,34 +17,11 @@ const { project } = Astro.props as { project: CollectionEntry<'projects'> };
 const activeDocSlug = undefined;
 
 const allDocs = await getCollection('project-docs');
-const projectDocs: CollectionEntry<'project-docs'>[] = allDocs
-  .filter((doc) => doc.data.parentProject === project.slug && doc.data.status === 'published' && getProjectDocSlug(doc.id) !== 'index')
-  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+const projectDocs: CollectionEntry<'project-docs'>[] = allDocs.filter(
+  (doc) => doc.data.parentProject === project.slug,
+);
 
-const chunkSize = Math.ceil(projectDocs.length / 3);
-const docsCategories = [
-  {
-    title: '[ PART 1 ]',
-    links: projectDocs.slice(0, chunkSize).map((doc) => {
-      const slug = getProjectDocSlug(doc.id);
-      return { text: doc.data.title, url: `/project/${project.slug}/${slug}`, slug };
-    }),
-  },
-  {
-    title: '[ PART 2 ]',
-    links: projectDocs.slice(chunkSize, chunkSize * 2).map((doc) => {
-      const slug = getProjectDocSlug(doc.id);
-      return { text: doc.data.title, url: `/project/${project.slug}/${slug}`, slug };
-    }),
-  },
-  {
-    title: '[ PART 3 ]',
-    links: projectDocs.slice(chunkSize * 2).map((doc) => {
-      const slug = getProjectDocSlug(doc.id);
-      return { text: doc.data.title, url: `/project/${project.slug}/${slug}`, slug };
-    }),
-  },
-];
+const docsCategories = buildDocsCategories(projectDocs, project.slug);
 ---
 
 <ProjectLayout project={project} activeDocSlug={activeDocSlug} docsCategories={docsCategories} />
