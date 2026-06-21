@@ -6,27 +6,27 @@ status: "published"
 ---
 # Kanji Hover
 
-Hover over any kanji within a word to display up to five other words in your collection that use the same kanji. If more matching cards exist, a “**Show More**” option appears. Clicking a related word in the tooltip opens the corresponding card in Anki’s Card Browser.
+Arahkan kursor (hover) di atas kanji apa pun dalam suatu kata untuk menampilkan hingga lima kata lain di koleksimu yang menggunakan kanji yang sama. Jika ada lebih banyak kartu yang cocok, opsi “**Show More**” (Tampilkan Lebih Banyak) akan muncul. Mengeklik kata terkait di dalam tooltip akan membuka kartu yang bersangkutan di Peramban Kartu (Card Browser) Anki.
 
-### With Pitch Colors
-     ![With Pitch Colors](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/kanji_hover_pitch_preview.gif)
+### Dengan Warna Pitch
+     ![Dengan Warna Pitch](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/kanji_hover_pitch_preview.gif)
 
-### Without Pitch Colors
-    ![Without Pitch Colors](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/kanji_hover_no_pitch_preview.gif)
+### Tanpa Warna Pitch
+     ![Tanpa Warna Pitch](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/kanji_hover_no_pitch_preview.gif)
 
-### Unreviewed cards
-    ![Unreviewed cards](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/kanji_hover_unreviewed_preview.png)
+### Kartu yang belum ditinjau
+     ![Kartu yang belum ditinjau](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/kanji_hover_unreviewed_preview.png)
 
-### Customization
+### Kustomisasi
 
-You can control how the kanji, pitch downstep, and related words are highlighted inside the tooltip via the variables in the `/* PITCH ACCENT SETTINGS */` section of the CSS:
+Kamu bisa mengontrol bagaimana kanji, penurunan pitch (pitch downstep), dan kata-kata terkait disorot di dalam tooltip melalui variabel di bagian `/* PITCH ACCENT SETTINGS */` pada CSS:
 ```css
---kanji-hover-pitch-colors:    true; /* "false" to disable pitch downstep coloring in Kanji Hover */
---kanji-hover-pitch-highlight: true; /* "false" to make pitch colors stop overwriting word + sentence highlights in Kanji Hover */
+--kanji-hover-pitch-colors:    true; /* "false" untuk menonaktifkan pewarnaan pitch downstep di Kanji Hover */
+--kanji-hover-pitch-highlight: true; /* "false" agar warna pitch berhenti menimpa sorotan kata + kalimat di Kanji Hover */
 ```
 
-Both options are enabled by default. To completely disable pitch coloring, set both variables to `false`.
+Kedua opsi aktif secara default. Untuk menonaktifkan pewarnaan pitch sepenuhnya, atur kedua variabel ke `false`.
 
-> **PC Only**
+> **Hanya untuk PC**
 >
-> This feature currently only works on the desktop version of Anki.
+> Fitur ini saat ini hanya berfungsi pada Anki versi desktop.

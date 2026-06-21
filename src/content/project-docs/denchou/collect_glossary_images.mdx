@@ -1,22 +1,22 @@
 ---
-title: "Collect Glossary Images"
+title: "Kumpulkan Gambar Glosarium"
 parentProject: "denchou"
 order: 4
 status: "published"
 ---
-# Collect Glossary Images
+# Kumpulkan Gambar Glosarium
 
-Displays images from glossary dictionaries in the picture container. You can use the left and right buttons on the image to browse through them without needing to search the dictionaries directly. If the card has no image but a glossary dictionary does, that image will be shown automatically in the picture container.
+Menampilkan gambar dari kamus glosarium di dalam wadah gambar (picture container). Kamu bisa menggunakan tombol kiri dan kanan pada gambar untuk menjelajahinya tanpa perlu mencari langsung di kamus. Jika kartu tidak memiliki gambar tetapi kamus glosarium memilikinya, gambar tersebut akan ditampilkan secara otomatis di dalam wadah gambar.
 
-### Enabled
-    ![light](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/collect_glossary_images_enabled.png)
+### Diaktifkan
+    ![terang](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/collect_glossary_images_enabled.png)
 
-### Disabled
-    ![dark](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/collect_glossary_images_disabled.png)
+### Dinonaktifkan
+    ![gelap](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/collect_glossary_images_disabled.png)
 
-This feature may cause issues with dictionaries that require additional CSS in Anki. If you run into problems, it’s recommended to disable it via the variables in the `/* Default States (true/false) */` section of the CSS:
+Fitur ini mungkin menyebabkan masalah dengan kamus yang memerlukan CSS tambahan di Anki. Jika kamu menemui masalah, disarankan untuk menonaktifkannya melalui variabel di bagian `/* Default States (true/false) */` pada CSS:
 ```css
---collect-glossary-images: true; /* Enable glossary images to be collected into the picture container */
+--collect-glossary-images: true; /* Mengizinkan gambar glosarium dikumpulkan ke dalam wadah gambar */
 ```
 
-It’s enabled by default. Change to `false` to disable.
+Fitur ini aktif secara default. Ubah menjadi `false` untuk menonaktifkannya.

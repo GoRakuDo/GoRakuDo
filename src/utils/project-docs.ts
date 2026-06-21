@@ -16,7 +16,6 @@ export const DOC_CATEGORY: Record<string, DocCategory> = {
   anki: 'setup',
   JL: 'setup',
   yomitan: 'setup',
-  anki_droid_performance_plan: 'setup',
   Preferences: 'setup',
   sharex: 'setup',
   mpvacious: 'setup',

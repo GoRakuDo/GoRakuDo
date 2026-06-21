@@ -1,40 +1,40 @@
 ---
-title: "Scene Switching"
+title: "Peralihan Adegan"
 parentProject: "denchou"
 order: 26
 status: "published"
 ---
-# Scene Switching
+# Peralihan Adegan
 
-Switch between immersive "Scenes" where the Sentences, Audio, Images and Misc Info are synchronized.
+Beralih di antara "Adegan" (Scenes) imersif di mana Kalimat (Sentences), Audio, Gambar (Images), dan Informasi Tambahan (Misc Info) disinkronkan.
 
-![type:video](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/Scene_Switching_Preview.mp4)
+![tipe:video](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/Scene_Switching_Preview.mp4)
 
-- **Grouped Navigation:** Supports splitting sentences into segments using `<span class="group">...</span>` tags in the Anki field.
-- To use this feature, update the `sentence` and `sentenceFurigana` fields in Yomitan’s "**Configure Anki flashcards…**" settings:
+- **Navigasi Terkelompok (Grouped Navigation):** Mendukung pembagian kalimat menjadi segmen-segmen menggunakan tag `<span class="group">...</span>` di dalam bidang (field) Anki.
+- Untuk menggunakan fitur ini, perbarui bidang `sentence` dan `sentenceFurigana` pada pengaturan "**Configure Anki flashcards…**" di Yomitan:
 
     <img width="627" height="161" alt="image" src="https://github.com/user-attachments/assets/12506bd0-d03a-456a-90de-b86c4118d61f" />
 
-  - Set `sentence` to: `<span class="group">{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}</span>`
-  - Set `sentenceFurigana` to: `<span class="group">{sentence-furigana}</span>`
+  - Atur `sentence` ke: `<span class="group">{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}</span>`
+  - Atur `sentenceFurigana` ke: `<span class="group">{sentence-furigana}</span>`
     
-    Make sure **Append** is enabled so you can add new sentences instead of overwriting the first one.
-    To do this, turn on “**Allow Overwriting**”:
+    Pastikan **Append** (Tambahkan) diaktifkan agar kamu bisa menambahkan kalimat baru alih-alih menimpa kalimat pertama.
+    Untuk melakukan ini, aktifkan “**Allow Overwriting**” (Izinkan Penimpaan):
 
     <img width="671" height="204" alt="image" src="https://github.com/user-attachments/assets/2f7a705f-ab9d-4f0d-a9b2-ad3a1e0a49e2" />
     
--   `sentenceEng` and `miscInfo` are also supported. However, you'll need to manually edit the field to group it correctly with each scene using `<span class="group">...</span>`.
-    - You can choose which scene it belongs to by numbering the group, e.g., `<span class="group2">...</span>`. This skips the first scene and groups it with the second.
-    - If you have multiple scenes but only one `sentenceEng`, it will appear only in the first scene unless you assign it to a specific group as shown above.
-    > It’s not necessary to number the groups if the number of translations is the same as the number of sentences.
+-   `sentenceEng` dan `miscInfo` juga didukung. Namun, kamu perlu mengedit bidang tersebut secara manual untuk mengelompokkannya dengan benar pada setiap adegan menggunakan `<span class="group">...</span>`.
+    - Kamu bisa memilih adegan mana yang memuat teks tersebut dengan memberi nomor pada grupnya, contohnya `<span class="group2">...</span>`. Ini akan melewati adegan pertama dan mengelompokkannya ke adegan kedua.
+    - Jika kamu memiliki beberapa adegan tetapi hanya satu `sentenceEng`, teks tersebut hanya akan muncul di adegan pertama kecuali jika kamu menetapkannya ke grup tertentu seperti contoh di atas.
+    > Tidak perlu memberi nomor pada grup jika jumlah terjemahan sama dengan jumlah kalimat.
 
-  - This is how it would look inside the field’s HTML:
+  - Berikut adalah tampilan di dalam HTML bidang tersebut:
   ```html
   <span class="group2">The future seems bleak...</span><span class="group3">Looks like I have a hard path ahead.</span>
   ```
-  ![type:video](https://github.com/user-attachments/assets/ccc24115-a1f8-4c67-a8d1-cb7985887a8f)
+  ![tipe:video](https://github.com/user-attachments/assets/ccc24115-a1f8-4c67-a8d1-cb7985887a8f)
 
-  - Other Example format:
+  - Contoh format lainnya:
   ```html
   <span class="group">Something you wanna try?</span><span class="group">Why don't we test it out?</span><span class="group">Don't you want to try it out?</span>
   ```
@@ -43,15 +43,15 @@ Switch between immersive "Scenes" where the Sentences, Audio, Images and Misc In
   ```
   ![Scene Switching](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/scene_switching_preview.gif)
 
-- **Auto-Detection:** Automatically detects if a card has multiple audio files. If found, it enables the Scene Navigation mode; otherwise, it defaults to standard behavior. Multiple sentences are not split if the card doesn’t contain at least 2 audio files.
-- **Custom Audio Replay Shortcut:** By default, Anki plays every audio file when you press **R**. This custom shortcut plays only the audio for the active scene. The default key is **W**, you can change this via the variable in the `/* CUSTOM SHORTCUTS */` section of the CSS:
+- **Deteksi Otomatis:** Secara otomatis mendeteksi jika sebuah kartu memiliki beberapa file audio. Jika ditemukan, fitur ini akan mengaktifkan mode Navigasi Adegan; jika tidak, kartu akan kembali ke perilaku standar secara default. Kalimat yang banyak tidak akan dibagi jika kartu tidak berisi setidaknya 2 file audio.
+- **Pintasan Putar Ulang Audio Kustom:** Secara default, Anki memutar setiap file audio saat kamu menekan **R**. Pintasan kustom ini hanya memutar audio untuk adegan yang aktif. Tombol default-nya adalah **W**, kamu bisa mengubahnya melalui variabel di bagian `/* CUSTOM SHORTCUTS */` pada CSS:
     ```css
-    --scene-replay-shortcut-key: w; /* Set the key to replay active scene */
+    --scene-replay-shortcut-key: w; /* Atur tombol untuk memutar ulang adegan aktif */
     ```
 
-*   **Scene Navigation Shortcuts**
+*   **Pintasan Navigasi Adegan**
 
-    **Front:** Use **Left / Right Arrow** keys.
+    **Depan:** Gunakan tombol **Panah Kiri / Kanan**.
     
-    **Back:** Use **Ctrl + Left / Right Arrow** keys 
-    > Ctrl is required here to prevent conflicts with Dictionary navigation.
+    **Belakang:** Gunakan tombol **Ctrl + Panah Kiri / Kanan**
+    > Ctrl diperlukan di sini untuk mencegah konflik dengan navigasi Kamus.

@@ -1,41 +1,41 @@
 ---
-title: "Setting Up ShareX"
+title: "Persiapan ShareX"
 parentProject: "denchou"
 order: 29
 status: "published"
 ---
-# Setting Up ShareX
+# Persiapan ShareX
 
-Use ShareX to quickly capture screenshots and audio snippets for your Anki cards.
+Gunakan ShareX untuk mengambil tangkapan layar (screenshot) dan cuplikan audio dengan cepat untuk kartu Anki kamu.
 
-1.  Download and install [ShareX](https://getsharex.com/).
-2.  Download the DenChou ShareX settings file: [DenChou-ShareX-Settings.sxb](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/resources/DenChou-ShareX-Settings.sxb) (Right-click -> Save Link As...)
-3.  Import the settings: In ShareX -> Application Settings -> Settings (Tab) -> Import -> select the downloaded `.sxb` file.
-4.  **Update Hotkey Paths:** You MUST update the save paths to point to *your* Anki media folder.
-    *   Go to ShareX -> Hotkey settings...
-    *   For each of the **Screenshot**, **Screenshot-NSFW**, and **Audio** hotkeys:
-        *   Click the task to highlight it, then click **Edit**.
-        *   Check **Override screenshots folder**.
-        *   Change the path to *your* profile's `collection.media` folder (e.g., `C:\Users\Administrator\AppData\Roaming\Anki2\YourAnkiProfileName\collection.media`).
-        *   Click **Ok**.
+1.  Unduh dan instal [ShareX](https://getsharex.com/).
+2.  Unduh file pengaturan ShareX DenChou: [DenChou-ShareX-Settings.sxb](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/resources/DenChou-ShareX-Settings.sxb) (Klik kanan -> Simpan Tautan Sebagai... / Save Link As...)
+3.  Impor pengaturan: Di ShareX -> Application Settings -> Settings (Tab) -> Import -> pilih file `.sxb` yang telah diunduh.
+4.  **Perbarui Jalur Pintasan (Hotkey Paths):** Kamu HARUS memperbarui jalur penyimpanan agar mengarah ke folder media Anki *milikmu*.
+    *   Buka ShareX -> Hotkey settings...
+    *   Untuk masing-masing hotkey **Screenshot**, **Screenshot-NSFW**, dan **Audio**:
+        *   Klik tugas tersebut untuk menyorotnya, lalu klik **Edit**.
+        *   Centang **Override screenshots folder**.
+        *   Ubah jalurnya ke folder `collection.media` dari profil Anki *milikmu* (misalnya, `C:\Users\Administrator\AppData\Roaming\Anki2\NamaProfilAnkiKamu\collection.media`).
+        *   Klik **Ok**.
 
-## Audio Recording Settings
+## Pengaturan Perekaman Audio
 
-To enable audio recording:
+Untuk mengaktifkan perekaman audio:
 
-1.  In ShareX -> Hotkey settings... -> Edit the **Audio** hotkey.
-2.  Go to Screen Recorder and Click **Screen recording options...**.
-3.  Click **Install recorder devices**.
-4.  Set **Video source** to `none`.
-5.  Set **Audio source** to `virtual-audio-capturer`.
+1.  Di ShareX -> Hotkey settings... -> Edit hotkey **Audio**.
+2.  Buka Screen Recorder dan klik **Screen recording options...**.
+3.  Klik **Install recorder devices**.
+4.  Atur **Video source** ke `none`.
+5.  Atur **Audio source** ke `virtual-audio-capturer`.
 
-## Default Hotkeys
+## Hotkey Default
 
-*   `Alt + C`: Take screenshot -> Save to Anki media -> Add `<img>` tag to last card's `picture` field.
-*   `Alt + N`: Take screenshot -> Save to Anki media -> Add `<img>` tag to last card's `picture` field -> Add `NSFW` tag to last card.
-*   `Alt + V`: Record audio -> Save to Anki media -> Add `[sound:]` tag to last card's `sentenceAudio` field.
-*   `PrtSc`: Standard screenshot -> Save to default ShareX folder -> Copy image to clipboard.
+*   `Alt + C`: Ambil tangkapan layar -> Simpan ke media Anki -> Tambahkan tag `<img>` ke bidang `picture` pada kartu terakhir.
+*   `Alt + N`: Ambil tangkapan layar -> Simpan ke media Anki -> Tambahkan tag `<img>` ke bidang `picture` pada kartu terakhir -> Tambahkan tag `NSFW` ke kartu terakhir.
+*   `Alt + V`: Rekam audio -> Simpan ke media Anki -> Tambahkan tag `[sound:]` ke bidang `sentenceAudio` pada kartu terakhir.
+*   `PrtSc`: Tangkapan layar standar -> Simpan ke folder ShareX default -> Salin gambar ke papan klip (clipboard).
 
-> **Usage Order**
+> **Urutan Penggunaan**
 >
-> Use these hotkeys **AFTER** creating the card in Anki. ShareX targets the *last modified* card.
+> Gunakan hotkey ini **SETELAH** membuat kartu di Anki. ShareX menargetkan kartu yang *terakhir diubah* (last modified).

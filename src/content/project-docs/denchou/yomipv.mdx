@@ -1,34 +1,34 @@
 ---
-title: "Setting Up Yomipv"
+title: "Persiapan Yomipv"
 parentProject: "denchou"
 order: 31
 status: "published"
 ---
-# Setting Up Yomipv
+# Persiapan Yomipv
 
-Use Yomipv to create cards without leaving MPV or breaking immersion.
+Gunakan Yomipv untuk membuat kartu tanpa perlu keluar dari MPV atau mengganggu proses imersi (immersion) kamu.
 
-![type:video](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/yomipv_demo.mp4)
+![tipe:video](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/yomipv_demo.mp4)
 
-## Requirements
+## Persyaratan
 
-- **[MPV](https://mpv.io/)** (0.33.0 or higher)
-- **[FFmpeg](https://ffmpeg.org/)** (Required for media extraction, falls back to MPV's internal encoder if not found)
-- **[Anki](https://apps.ankiweb.net/)** with **[AnkiConnect](https://ankiweb.net/shared/info/2055492159)**
-- **[Yomitan](https://yomitan.wiki/)** and **[Yomitan Api](https://github.com/yomidevs/yomitan-api)**
-- **curl** (Pre-installed on most systems, used for API requests)
-- **[Node.js](https://nodejs.org/)** (Only required if installing from source or contributing)
+- **[MPV](https://mpv.io/)** (0.33.0 atau yang lebih baru)
+- **[FFmpeg](https://ffmpeg.org/)** (Diperlukan untuk ekstraksi media, akan dialihkan ke enkoder internal MPV jika tidak ditemukan)
+- **[Anki](https://apps.ankiweb.net/)** dengan **[AnkiConnect](https://ankiweb.net/shared/info/2055492159)**
+- **[Yomitan](https://yomitan.wiki/)** dan **[Yomitan Api](https://github.com/yomidevs/yomitan-api)**
+- **curl** (Sudah terpasang di sebagian besar sistem, digunakan untuk permintaan API)
+- **[Node.js](https://nodejs.org/)** (Hanya diperlukan jika menginstal dari sumber (source) atau berkontribusi)
 
-## Installation
+## Instalasi
 
-### Recommended
-1. Download the [Latest version for your OS](https://github.com/BrenoAqua/Yomipv/releases/latest)
-2. Extract the contents directly into your MPV directory:
+### Disarankan
+1. Unduh [versi terbaru untuk OS kamu](https://github.com/BrenoAqua/Yomipv/releases/latest)
+2. Ekstrak kontennya langsung ke dalam direktori MPV kamu:
     - Windows: `%APPDATA%/mpv/`
     - Linux/macOS: `~/.config/mpv/`
 
-### Alternative (Requires Node.js)
-1. **Clone the repository** to your MPV directory and install dependencies **(make sure you have Node.js installed)**:
+### Alternatif (Memerlukan Node.js)
+1. **Klon repositori** ke direktori MPV kamu dan instal dependensi **(pastikan kamu telah menginstal Node.js)**:
    - Windows: `%APPDATA%/mpv/`
      ```
      git clone https://github.com/BrenoAqua/Yomipv && xcopy /e /i /y Yomipv . && rd /s /q Yomipv && cd scripts\yomipv\lookup-app && npm install
@@ -39,97 +39,97 @@ Use Yomipv to create cards without leaving MPV or breaking immersion.
      git clone https://github.com/BrenoAqua/Yomipv && cp -rn Yomipv/* . && rm -rf Yomipv && cd scripts/yomipv/lookup-app && npm install
      ```
 
-## Usage
+## Penggunaan
 
-**Configure Settings**:
-   - Open `script-opts/yomipv.conf` and update your Anki deck/note type names and field mappings
+**Konfigurasi Pengaturan**:
+   - Buka `script-opts/yomipv.conf` dan perbarui nama deck/tipe kartu Anki kamu serta pemetaan bidangnya (field mappings)
 
-**External Services**:
-   - Ensure Anki is running with AnkiConnect enabled
-   - Ensure Yomitan Api is running and the browser where the Yomitan extension is installed is open, and you have dictionaries installed
+**Layanan Eksternal**:
+   - Pastikan Anki berjalan dengan AnkiConnect yang aktif
+   - Pastikan Yomitan Api berjalan dan browser tempat ekstensi Yomitan terinstal dalam keadaan terbuka, serta kamu telah menginstal kamus-kamus
 
-### Basic Workflow
+### Alur Kerja Dasar
 
-1. Open a video with Japanese subtitles in MPV
-2. Press **`c`** or **move your mouse after an idle period** (if `selector_trigger_on_mouse_move` is enabled) to activate the word selector
-3. Navigate with **mouse hover** or **arrow keys** to select a word
-4. Press **`Enter`**, **`c`**, or **left-click** to create an Anki card
+1. Buka video dengan terjemahan (subtitle) bahasa Jepang di MPV
+2. Tekan **`c`** or **gerakkan mouse setelah periode diam** (jika `selector_trigger_on_mouse_move` diaktifkan) untuk mengaktifkan pemilih kata (word selector)
+3. Navigasi dengan **mengarahkan mouse (hover)** atau **tombol panah** untuk memilih kata
+4. Tekan **`Enter`**, **`c`**, atau **klik kiri** untuk membuat kartu Anki
 
-### Advanced Features
+### Fitur Lanjutan
 
-- **Append Mode (`Shift+C`)**: Select multiple subtitle lines before exporting
-  - Press `Shift+C` to enter append mode, `c` to start the word selector, or `Shift+C` again to cancel
+- **Mode Tambah (Append Mode) (`Shift+C`)**: Pilih beberapa baris subtitle sebelum mengekspor
+  - Tekan `Shift+C` untuk masuk ke mode tambah, `c` untuk memulai pemilih kata, atau `Shift+C` lagi untuk membatalkannya
 
-- **Subtitle Substitution & Colorization (`S`)**: 
-  - Press **`S`** to toggle between native MPV subtitles and Yomipv's colorized tokens
-  - Enable `substitute_mpv_subtitles` in `yomipv.conf` to start with it enabled
-  - Words are colorized based on their Anki card metadata:
-    - **Status**: New, Learning, Review, Suspended
-    - **Intervals**: Reflects how well a word is known (affects color shades)
-    - **Requirement**: Press **`B`** to build/sync the local Anki database first before these statuses can be displayed for your existing collection
-  - **Instant Feedback**: When you create a card, the word is immediately added to the local database and highlighted (red) in the current subtitle
+- **Substitusi & Pewarnaan Subtitle (`S`)**: 
+  - Tekan **`S`** untuk beralih antara subtitle bawaan MPV dan token berwarna Yomipv
+  - Aktifkan `substitute_mpv_subtitles` di `yomipv.conf` agar fitur ini langsung aktif saat memulai
+  - Kata-kata diwarnai berdasarkan metadata kartu Anki mereka:
+    - **Status**: Baru (New), Sedang Dipelajari (Learning), Ditinjau (Review), Ditangguhkan (Suspended)
+    - **Interval**: Mencerminkan seberapa baik sebuah kata diketahui (memengaruhi tingkat kecerahan warna)
+    - **Persyaratan**: Tekan **`B`** untuk membangun/menyinkronkan database Anki lokal terlebih dahulu sebelum status-status ini dapat ditampilkan untuk koleksi kartumu saat ini
+  - **Umpan Balik Instan (Instant Feedback)**: Ketika kamu membuat kartu, kata tersebut akan segera ditambahkan ke database lokal dan disorot (merah) pada subtitle saat ini
 
-- **Secondary Subtitle**:
-  - Automatically select secondary subtitles based on preferred languages
-  - Configure `secondary_sub_lang` in `yomipv.conf`
+- **Subtitle Sekunder (Secondary Subtitle)**:
+  - Memilih subtitle sekunder secara otomatis berdasarkan bahasa pilihan
+  - Konfigurasikan `secondary_sub_lang` di `yomipv.conf`
 
-- **Mora-level Navigation**:
-  - When `selector_mora_hover` is enabled, hovering over a word narrows the lookup to start from mora under your cursor instead of the full word
-  - **`s`**: Toggle mora-level keyboard navigation (left/right moves by mora instead of word)
+- **Navigasi Tingkat Mora (Mora-level Navigation)**:
+  - Ketika `selector_mora_hover` diaktifkan, mengarahkan kursor (hover) di atas kata akan mempersempit pencarian untuk dimulai dari mora di bawah kursor kamu, alih-alih dari kata lengkapnya
+  - **`s`**: Beralih navigasi keyboard tingkat mora (tombol kiri/kanan akan berpindah per mora, bukan per kata)
 
-- **Lookup App (`Ctrl+c`)**: Opens a popup window powered by your Yomitan dictionaries, showing definitions, pitch accents, and frequencies
-  - **Right-click** on the word in the selector to lock the lookup
-  - **Click any mora** in the header to narrow the lookup to a sub-word
-  - **Right-click the header** to go back to the previous word
-  - **Pitch Accents**: Toggle `lookup_show_pitch_accents` in `yomipv.conf`
-  - **Frequencies**: Toggle `lookup_show_frequencies` in `yomipv.conf`
-  - See [docs/lookup-app.md](docs/lookup-app.md) for full details
+- **Aplikasi Pencarian (Lookup App) (`Ctrl+c`)**: Membuka jendela pop-up yang didukung oleh kamus Yomitan kamu, menampilkan definisi, aksen pitch, dan frekuensi
+  - **Klik kanan** pada kata di pemilih untuk mengunci pencarian
+  - **Klik mora mana saja** di bagian tajuk (header) untuk mempersempit pencarian ke sub-kata
+  - **Klik kanan pada tajuk (header)** untuk kembali ke kata sebelumnya
+  - **Aksen Pitch**: Beralih opsi `lookup_show_pitch_accents` di `yomipv.conf`
+  - **Frekuensi**: Beralih opsi `lookup_show_frequencies` di `yomipv.conf`
+  - Lihat [docs/lookup-app.md](docs/lookup-app.md) untuk detail lengkapnya
 
-- **Persistent Mode (`v`)**: 
-  - Toggle persistent mode to export multiple words from a single subtitle selection without closing the selector
-  - Press **`v`** to toggle; the selection color changes to indicate it's active
-  - Confirming a selection exports the card but keeps the selector open for the next pick
+- **Mode Persisten (Persistent Mode) (`v`)**: 
+  - Beralih mode persisten untuk mengekspor beberapa kata dari satu pemilihan subtitle tanpa menutup pemilih
+  - Tekan **`v`** untuk beralih; warna pilihan akan berubah untuk menunjukkan bahwa mode ini aktif
+  - Mengonfirmasi pilihan akan mengekspor kartu tetapi membiarkan pemilih tetap terbuka untuk pilihan berikutnya
 
-- **Auto-Trigger Selector (`z`)**:
-  - Automatically open the selector by moving the mouse after it has been idle.
-  - Enable `selector_trigger_on_mouse_move` and customize `selector_trigger_mouse_idle_time` in `yomipv.conf`
+- **Pemicu Otomatis Pemilih (Auto-Trigger Selector) (`z`)**:
+  - Membuka pemilih secara otomatis dengan menggerakkan mouse setelah beberapa saat diam.
+  - Aktifkan `selector_trigger_on_mouse_move` dan sesuaikan `selector_trigger_mouse_idle_time` di `yomipv.conf`
 
-- **Manual Timing**:
-  - **`q`** / **`w`**: Set a custom start/end time for audio and picture extraction
-  - Unset start or end times default to the subtitle boundaries when opening the selector
-  - **`e`**: Clear manual timings
+- **Waktu Manual (Manual Timing)**:
+  - **`q`** / **`w`**: Atur waktu mulai/selesai kustom untuk ekstraksi audio dan gambar
+  - Waktu mulai atau selesai yang tidak disetel secara default akan mengikuti batas subtitle saat membuka pemilih
+  - **`e`**: Hapus waktu manual
 
-- **History Panel (`a`)**: Toggle subtitle history panel
-  - Click on previous/next lines to expand the subtitle lines (when selector is open)
-  - Seek to a specific subtitle's timestamp by clicking on it (when selector is closed)
-  - **`Alt+LEFT`** / **`Alt+RIGHT`**: Seek to the previous/next subtitle
+- **Panel Riwayat (History Panel) (`a`)**: Beralih panel riwayat subtitle
+  - Klik pada baris sebelumnya/berikutnya untuk memperluas baris subtitle (saat pemilih terbuka)
+  - Lompat ke stempel waktu (timestamp) subtitle tertentu dengan mengekliknya (saat pemilih ditutup)
+  - **`Alt+LEFT`** / **`Alt+RIGHT`**: Lompat ke subtitle sebelumnya/berikutnya
 
-- **AniList Tracking (`Ctrl+A`)**: Integrates AniList with Yomipv, enabling automatic episode progress updates.
-  - See [docs/anilist_tracking.md](docs/anilist_tracking.md) for setup and full details
+- **Pelacakan AniList (AniList Tracking) (`Ctrl+A`)**: Mengintegrasikan AniList dengan Yomipv, memungkinkan pembaruan kemajuan episode secara otomatis.
+  - Lihat [docs/anilist_tracking.md](docs/anilist_tracking.md) untuk persiapan dan detail lengkapnya
 
-- **Auto-Updater (`U`)**: Keeps Yomipv updated to the latest version
-  - Press **`U`** in MPV to trigger the update, or:
-    - On Windows: Run **`yomipv-updater.bat`** directly
-    - On Linux / macOS: Run **`yomipv-updater.sh`** directly
-  - Choose between latest official releases or latest source (main branch)
-  - Automatically preserves user configuration in `script-opts/yomipv.conf`
-  - Downloads platform-specific binaries for the Lookup App
-  - (Source mode only) Updates dependencies for the Lookup App (requires Node.js)
-  - Requires administrator privileges to run the PowerShell script on Windows
+- **Pembaruan Otomatis (Auto-Updater) (`U`)**: Menjaga Yomipv tetap diperbarui ke versi terbaru
+  - Tekan **`U`** di MPV untuk memicu pembaruan, atau:
+    - Di Windows: Jalankan **`yomipv-updater.bat`** secara langsung
+    - Di Linux / macOS: Jalankan **`yomipv-updater.sh`** secara langsung
+  - Pilih antara rilis resmi terbaru atau kode sumber (source) terbaru (cabang/branch main)
+  - Secara otomatis mempertahankan konfigurasi pengguna di `script-opts/yomipv.conf`
+  - Mengunduh biner khusus platform untuk Lookup App
+  - (Hanya mode Source) Memperbarui dependensi untuk Lookup App (memerlukan Node.js)
+  - Memerlukan hak istimewa administrator (administrator privileges) untuk menjalankan skrip PowerShell di Windows
 
 ## Troubleshooting
 
 ### Windows
-- Ensure PowerShell execution policy allows scripts
-- Check that curl is available at `C:\Windows\System32\curl.exe`
+- Pastikan kebijakan eksekusi (execution policy) PowerShell mengizinkan skrip
+- Periksa apakah curl tersedia di `C:\Windows\System32\curl.exe`
 
 ### Linux
-- Ensure `curl`, `unzip`, `grep`, and `sed` are installed
-- Ensure the updater script has execute permissions: `chmod +x yomipv-updater.sh`
-- For the lookup app, ensure the binary in `scripts/yomipv/` has execution permissions
+- Pastikan `curl`, `unzip`, `grep`, and `sed` telah terinstal
+- Pastikan skrip pembaru memiliki izin eksekusi: `chmod +x yomipv-updater.sh`
+- Untuk lookup app, pastikan file biner di `scripts/yomipv/` memiliki izin eksekusi
 
 ### macOS
-- Ensure `curl`, `unzip`, `grep`, and `sed` are installed
-- Ensure the updater script has execute permissions: `chmod +x yomipv-updater.sh`
-- If macOS blocks the Lookup App with a Gatekeeper warning, run: `xattr -cr scripts/yomipv/YomipvLookup.app`
-- MPV config directory: `~/.config/mpv/` (create it if it does not exist)
+- Pastikan `curl`, `unzip`, `grep`, and `sed` telah terinstal
+- Pastikan skrip pembaru memiliki izin eksekusi: `chmod +x yomipv-updater.sh`
+- Jika macOS memblokir Lookup App dengan peringatan Gatekeeper, jalankan: `xattr -cr scripts/yomipv/YomipvLookup.app`
+- Direktori konfigurasi MPV: `~/.config/mpv/` (buat folder tersebut jika belum ada)

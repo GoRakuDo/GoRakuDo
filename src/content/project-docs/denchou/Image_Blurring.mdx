@@ -1,22 +1,22 @@
 ---
-title: "NSFW Cards"
+title: "Kartu NSFW"
 parentProject: "denchou"
 order: 12
 status: "published"
 ---
-# NSFW Cards
+# Kartu NSFW
 
-Add the `NSFW` tag to any card, and its associated image will be automatically blurred on display. Clicking the image reveals it.
+Tambahkan tag `NSFW` pada kartu mana pun, dan gambar yang terkait akan secara otomatis diburamkan saat ditampilkan. Mengeklik gambar akan mengungkapnya.
 
-![Image Blurring](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Image_Blurring.gif)
+![Pemblururan Gambar](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Image_Blurring.gif)
 
-Additionally, cards tagged as `NSFW` can have their sentence audio muted initially (you can still play it using the replay button or the shortcut).
-> Disabled by default.
+Selain itu, kartu yang ditandai sebagai `NSFW` dapat membuat audio kalimatnya dibisukan (mute) pada awalnya (kamu masih bisa memutarnya menggunakan tombol putar ulang atau pintasan).
+> Dinonaktifkan secara default.
 
-These options can be configured via the variables in the `/* Default States (true/false) */` section of the CSS:
+Opsi-opsi ini dapat dikonfigurasi melalui variabel di bagian `/* Default States (true/false) */` pada CSS:
 ```css
---blur-nsfw-picture: true;  /* Blur picture on NSFW cards */
---mute-nsfw-audio:   false; /* Mute sentence audio on NSFW cards */
+--blur-nsfw-picture: true;  /* Buramkan gambar pada kartu NSFW */
+--mute-nsfw-audio:   false; /* Bisukan audio kalimat pada kartu NSFW */
 ```
 
-Set each option to `true` to enable it or `false` to disable it.
+Atur masing-masing opsi ke `true` untuk mengaktifkannya atau `false` untuk menonaktifkannya.

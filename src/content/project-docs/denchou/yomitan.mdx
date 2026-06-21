@@ -1,63 +1,63 @@
 ---
-title: "Setup: Yomitan"
+title: "Persiapan: Yomitan"
 parentProject: "denchou"
 order: 32
 status: "published"
 ---
-# Setup: Yomitan
+# Persiapan: Yomitan
 
-Configure Yomitan to automatically populate DenChou's fields when creating cards.
+Konfigurasikan Yomitan untuk secara otomatis mengisi bidang (field) DenChou saat membuat kartu.
 
-## Fields Configuration
+## Konfigurasi Bidang (Fields Configuration)
 
-In Yomitan Settings -> Anki -> Configure Anki Flashcards:
+Dalam Yomitan Settings -> Anki -> Configure Anki Flashcards:
 
 | Field                 | Value                                                                       | Note         |
 |-----------------------|-----------------------------------------------------------------------------|--------------|
 |  word                 | `{expression}`                                                              |              |
 |  reading              | `{reading}`                                                                 |              |
-|  sentence             | `<span class="group">{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}</span>`   |  `{cloze-prefix}<b>{cloze-body}</b>{cloze-suffix}` or `{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}` will also work if you don’t intend to use the scene switching feature. Both the `<b>` tag and the `<span class="highlight">` are supported for marking the target word. ||
-|  sentenceFurigana     | `<span class="group">{sentence-furigana}</span>`                           | Alternatively, use `<span class="group">{sentence-furigana-plain}</span>`. As with `sentence`, you can remove the outer `<span>` if you don’t intend to use the scene switching feature. |
-|  sentenceTranslation  |                                                                             | Leave empty. |
-|  sentenceCard         |                                                                             | Leave empty. |
-|  audioCard            |                                                                             | Leave empty. |
-|  notes                |                                                                             | Leave empty. | 
-|  selectionText        | `{popup-selection-text}`                                                    | The selected text from the search page or popup takes priority over the dictionary in the `definition` field. If no text is selected, it doesn't do anything.               |
-|  definition           | `{single-glossary-jitendexorg-2026-01-04}`                                  | Set your primary dictionary here, or leave it empty. The primary dictionary can be set in the `dictionaryPreference` field. |
+|  sentence             | `<span class="group">{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}</span>`   |  `{cloze-prefix}<b>{cloze-body}</b>{cloze-suffix}` atau `{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}` juga dapat berfungsi jika kamu tidak berniat menggunakan fitur peralihan adegan (scene switching). Baik tag `<b>` maupun `<span class="highlight">` didukung untuk menandai kata target. ||
+|  sentenceFurigana     | `<span class="group">{sentence-furigana}</span>`                           | Sebagai alternatif, gunakan `<span class="group">{sentence-furigana-plain}</span>`. Sama seperti `sentence`, kamu bisa menghapus bagian luar `<span>` jika tidak berniat menggunakan fitur peralihan adegan. |
+|  sentenceTranslation  |                                                                             | Biarkan kosong. |
+|  sentenceCard         |                                                                             | Biarkan kosong. |
+|  audioCard            |                                                                             | Biarkan kosong. |
+|  notes                |                                                                             | Biarkan kosong. | 
+|  selectionText        | `{popup-selection-text}`                                                    | Teks terpilih dari halaman pencarian atau pop-up memiliki prioritas di atas kamus di bidang `definition`. Jika tidak ada teks yang dipilih, ini tidak akan berpengaruh apa-apa. |
+|  definition           | `{single-glossary-jitendexorg-2026-01-04}`                                  | Atur kamus utamamu di sini, atau biarkan kosong. Kamus utama dapat diatur di bidang `dictionaryPreference`. |
 |  wordAudio            | `{audio}`                                                                   |              |
-|  sentenceAudio        |                                                                             | Leave empty. |
-|  picture              |                                                                             | Leave empty. |
-|  glossary             | `{glossary}`                                                                | There are two ways to use this field. The first is by setting it to `{glossary}`, this will extract definitions from all your dictionaries. <br /> The second is by setting it to specific dictionaries (e.g. `{single-glossary-新選国語辞典-第十版}{single-glossary-デジタル大辞泉}{single-glossary-漢検漢字辞典-第二版}`), which will include only the selected ones. <br /><br /> This requires "Group term-reading pairs" or "Group related terms" to be enabled in Result Display [(see below)](#result-display-setting). |
-|  pitchAccents         | `{pitch-accents}`                                                           | Requires pitch accent dictionaries. |
-|  pitchPositions       | `{pitch-accent-positions}`                                                  | Requires pitch accent dictionaries. |
-|  pitchCategories      | `{pitch-accent-categories}`                                                 | Requires pitch accent dictionaries. |
-|  frequencies          | `{frequencies}`                                                             | Requires frequency dictionaries. |
-|  freqSort             | `{frequency-harmonic-rank}`                                                 | Used for sorting new cards. Requires frequency dictionaries. |
-|  miscInfo             | `{document-title}`                                                          | Captures the source web page title. Leave empty if using mpvacious or similar tools that populate this. |
-|  dictionaryPreference |                                                                             | Enter `glossary` to show the glossary first, leave it empty to show the `definition` first, or enter a dictionary name to prioritize it (e.g., `新選国語辞典　第十版`). If Jitendex is your main dictionary but you want another one for a specific card, edit this field in **Anki** and it will take priority without using Selection Text. <br /><br /> Use [Batch Editing add-on](https://ankiweb.net/shared/info/291119185) to update existing cards. |
+|  sentenceAudio        |                                                                             | Biarkan kosong. |
+|  picture              |                                                                             | Biarkan kosong. |
+|  glossary             | `{glossary}`                                                                | Ada dua cara untuk menggunakan bidang ini. Pertama adalah dengan mengaturnya ke `{glossary}`, ini akan mengekstrak definisi dari semua kamusmu. <br /> Kedua adalah dengan mengaturnya ke kamus tertentu (misalnya `{single-glossary-新選国語辞典-第十版}{single-glossary-デジタル大辞泉}{single-glossary-漢検漢字辞典-第二版}`), yang hanya akan menyertakan kamus yang dipilih. <br /><br /> Ini memerlukan opsi "Group term-reading pairs" atau "Group related terms" untuk diaktifkan di Result Display [(lihat di bawah)](#result-display-setting). |
+|  pitchAccents         | `{pitch-accents}`                                                           | Memerlukan kamus aksen pitch. |
+|  pitchPositions       | `{pitch-accent-positions}`                                                  | Memerlukan kamus aksen pitch. |
+|  pitchCategories      | `{pitch-accent-categories}`                                                 | Memerlukan kamus aksen pitch. |
+|  frequencies          | `{frequencies}`                                                             | Memerlukan kamus frekuensi. |
+|  freqSort             | `{frequency-harmonic-rank}`                                                 | Digunakan untuk mengurutkan kartu baru. Memerlukan kamus frekuensi. |
+|  miscInfo             | `{document-title}`                                                          | Mengambil judul halaman web sumber. Biarkan kosong jika menggunakan mpvacious atau alat serupa yang mengisi bagian ini. |
+|  dictionaryPreference |                                                                             | Masukkan `glossary` untuk menampilkan glosarium terlebih dahulu, biarkan kosong untuk menampilkan `definition` terlebih dahulu, atau masukkan nama kamus untuk memprioritaskannya (misalnya, `新選国語辞典　第十版`). Jika Jitendex adalah kamus utamamu tetapi kamu menginginkan kamus lain untuk kartu tertentu, edit bidang ini di **Anki** dan ini akan diprioritaskan tanpa menggunakan Teks Pilihan. <br /><br /> Gunakan [add-on Batch Editing](https://ankiweb.net/shared/info/291119185) untuk memperbarui kartu yang sudah ada. |
 
-## Result Display Setting
+## Pengaturan Tampilan Hasil (Result Display Setting)
 
-Crucially, for the `glossary` field to work correctly with multiple dictionaries listed, you need to enable grouping in Yomitan:
+Penting! Agar bidang `glossary` berfungsi dengan benar saat beberapa kamus tercantum, kamu perlu mengaktifkan pengelompokan di Yomitan:
 
-Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select either:
+Buka **Yomitan Settings** -> **Appearance** -> **Result Display** dan pilih salah satu:
 
-*   **Group term-reading pairs** OR
+*   **Group term-reading pairs** ATAU
 *   **Group related terms**
 
 ![Yomitan Result Display Setting](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Result_Display.png)
 
-## CSS Template (Optional) 
+## Templat CSS (Opsional) 
 
-* Go to Yomitan Settings -> Appearance -> Configure Custom CSS...
-* Select all existing content in the template editor.
-* Replace it with the following code:
+* Buka Yomitan Settings -> Appearance -> Configure Custom CSS...
+* Pilih semua konten yang ada di dalam editor templat.
+* Ganti dengan kode berikut:
 
 <details open>
-<summary>Click to expand CSS code</summary>
+<summary>Klik untuk membuka kode CSS</summary>
 
     ```css
-    /* Firefox specific fix for furigana alignment (Remove this rule if not using Firefox) */
+    /* Perbaikan khusus Firefox untuk penyelarasan furigana (Hapus aturan ini jika tidak menggunakan Firefox) */
     .headword ruby>* {
       margin-top: -3px;
       margin-bottom: -10px;
@@ -99,11 +99,11 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --sidebar-button-danger-icon-color: #4c566a;
       --list-padding1: 0;
 
-      /* Marked Mora */
+      /* Mora yang Ditandai */
       --devoiced-color: RoyalBlue;
       --nasal-color: #d03e2d;
 
-      /* Pitch Accent Colors (Slightly darkened for light mode legibility) */
+      /* Warna Aksen Pitch (Sedikit digelapkan demi keterbacaan mode terang) */
       --pitch-red: #D62839;
       --pitch-blue: #3474FF;
       --pitch-orange: #FF6E03;
@@ -111,7 +111,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --pitch-purple: #8A5EDE;
       --pitch-background: rgba(255, 255, 255, 0.8);
 
-      /* Fonts */
+      /* Fonta */
       --font-sans: "Hiragino Kaku Gothic ProN", sans-serif;
       --font-serif: "Klee One", serif;
     }
@@ -152,11 +152,11 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --sidebar-button-danger-icon-color: #ebffff;
       --list-padding1: 0;
 
-      /* Marked Mora */
+      /* Mora yang Ditandai */
       --devoiced-color: cornflowerBlue;
       --nasal-color: #FF4936;
 
-      /* Pitch Accent Colors */
+      /* Warna Aksen Pitch */
       --pitch-red: #F5436D;
       --pitch-blue: #39C1FF;
       --pitch-orange: #fca311;
@@ -164,12 +164,12 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --pitch-purple: #afa2ff;
       --pitch-background: rgba(0, 0, 0, 0.2);
 
-      /* Fonts */
+      /* Fonta */
       --font-sans: hiragino kaku gothic proN;
       --font-serif: klee one;
     }
 
-    /* Base Settings */
+    /* Pengaturan Dasar */
     body {
       font-family: var(--font-sans);
       line-height: 1.4;
@@ -235,7 +235,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       font-size: initial;
     }
 
-    /* Inflections Hover */
+    /* Hover Infleksi */
     .inflection-rule-chains {
       display: inline-block;
       position: relative;
@@ -260,7 +260,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       margin-bottom: 0.2em;
     }
 
-    /* Dictionary Colorizer */
+    /* Pewarna Kamus */
     .definition-item {
       background-color: color-mix(in srgb,
           var(--dict-color) calc(var(--dict-bg-opacity) * var(--dict-color-opacity)),
@@ -490,239 +490,13 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --tag-color: rgb(0, 132, 255);
     }
 
-    /* Pitch Accent */
-    .tag[data-category="pronunciation-dictionary"][data-details="NHK"] {
-      --tag-color: #0076d0;
-    }
-
-    .tag[data-category="pronunciation-dictionary"][data-details^="大辞泉"] {
-      --tag-color: rgb(170, 0, 0);
-    }
-
-    .tag[data-category="pronunciation-dictionary"][data-details^="大辞林"] {
-      --tag-color: rgb(85, 34, 85);
-    }
-
-    /* Frequency Dicts (Also Kanji Dicts) */
-    .frequency-group-item[data-details^="JPDB"] {
-      --tag-frequency-background-color: #ff3e3d;
-    }
-
-    .frequency-group-item[data-details^="Innocent"] {
-      --tag-frequency-background-color: #e82c9c;
-    }
-
-    .frequency-group-item[data-details="Novels"] {
-      --tag-frequency-background-color: #e537fa;
-    }
-
-    .frequency-group-item[data-details^="BCCWJ"] {
-      --tag-frequency-background-color: #8f27e3;
-    }
-
-    .frequency-group-item[data-details="CC100"] {
-      --tag-frequency-background-color: #6238fa;
-    }
-
-    .frequency-group-item[data-details="Conversation Corpus"] {
-      --tag-frequency-background-color: #273ce3;
-    }
-
-    .frequency-group-item[data-details^="青空文庫"] {
-      --tag-frequency-background-color: #3d93ff;
-    }
-
-    .frequency-group-item[data-details="Youtube"] {
-      --tag-frequency-background-color: #fd0101;
-    }
-
-    .frequency-group-item[data-details^="Wikipedia"] {
-      --tag-frequency-background-color: #447ff5;
-    }
-
-    .frequency-group-item[data-details^="Jiten"] {
-      --tag-frequency-background-color: #2e2e8e;
-    }
-
-    /* Frequency hover (average enabled) */
-    [data-average-frequency="true"] [data-section-type="frequencies"]:active .frequency-group-item:not([data-details="Average"]) {
-      display: inline-block;
-    }
-
-    [data-average-frequency="true"] [data-section-type="frequencies"]:active .frequency-group-item[data-details="Average"] {
-      display: none;
-    }
-
-    /* Frequency hover (average disabled) */
-    [data-average-frequency="false"] span.frequency-group-item:nth-child(n + 4) {
-      display: none;
-    }
-
-    [data-average-frequency="false"] [data-section-type="frequencies"]:active span.frequency-group-item:nth-child(n + 4):not([data-details="Average"]) {
-      display: inline-block;
-    }
-
-    /* Pitch Accent Hover */
-    li.pronunciation-group:first-child~* {
-      display: none;
-    }
-
-    ol.pronunciation-group-list:active li.pronunciation-group:first-child~li.pronunciation-group {
-      display: inline-block;
-    }
-
-
-    /* Hide add duplicate */
-    button.action-button[title="Add duplicate expression (Alt + E)"] {
-      display: none;
-    }
-
-    /* Hide add reading */
-    button.action-button[title="Add reading (Alt + R)"] {
-      display: none;
-    }
-
-    /* Hide tags */
-    [data-category="popular"],
-    [data-category="frequent"] {
-      display: none;
-    }
-
-    /* Only show summary for Pixiv */
-    [data-sc-pixiv="children"],
-    [data-sc-pixiv="related-tags"],
-    [data-sc-pixiv="continue-reading"],
-    [data-sc-pixiv="nav-header"] {
-      display: none;
-    }
-
-    /* Jitendex Settings */
-    [data-glossary-layout-mode="default"] [data-sc-content="glossary"] li:not(:last-child)::after {
-      color: var(--jitendex-separators) !important;
-    }
-
-    [data-dictionary*="Jitendex.org"] {
-
-      li[data-sc-content="sense-group"],
-      li[data-sc-content="forms"],
-      li[data-sc-content="sense"],
-      ul[data-sc-content="glossary"] {
-        padding-left: 0 !important;
-      }
-    }
-
-    [data-dictionary*="Jitendex.org"] {
-      span[data-sc-class="tag"] {
-        margin-right: 0.25em !important;
-      }
-    }
-
-    .definition-item[data-dictionary*="Jitendex"] *[data-sc-content="example-sentence-a"] {
-      font-size: 1em !important;
-    }
-
-    [data-glossary-layout-mode="default"] [data-sc-content="glossary"] {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 0;
-      margin: 0;
-    }
-
-    [data-glossary-layout-mode="default"] [data-sc-content="glossary"] li:not(:last-child)::after {
-      content: "|";
-      color: rgba(255, 255, 255, 0.5);
-      margin: 0 8px;
-    }
-
-    /* Hide version date */
-    .tag[title^="Jitendex"] .tag-label-content {
-      font-size: 0;
-    }
-
-    .tag[title^="Jitendex"] .tag-label-content::after {
-      content: "Jitendex";
-      font-size: 0.885rem;
-    }
-
-    /* Example Keyword */
-    span[data-sc-content="example-keyword"] {
-      color: var(--example-keyword) !important;
-      text-decoration: none !important;
-    }
-
-    /* Example Sentences */
-    [data-sc-content|="example-sentence"] {
-      opacity: 0.5;
-      display: block;
-      transition: opacity 0.3s ease;
-    }
-
-    [data-sc-content|="example-sentence"]:hover {
-      opacity: 1;
-      display: block;
-    }
-
-    [data-sc-content="example-sentence-a"] {
-      transition: opacity 0.3s ease;
-    }
-
-    [data-sc-content="example-sentence-b"] {
-      opacity: 0;
-      display: none;
-      transition: opacity 0.3s ease;
-      /* Collapse height initially */
-      overflow: hidden;
-      /* Hide overflow */
-    }
-
-    [data-sc-content="example-sentence-a"]:hover+[data-sc-content="example-sentence-b"] {
-      opacity: 1;
-      display: block;
-    }
-
-    [data-sc-content="example-sentence-b"]:hover [data-sc-content|="example-sentence"] {
-      opacity: 1;
-    }
-
-    [data-sc-content="example-sentence"] rt {
-      opacity: 0;
-      transition: opacity ease 0.3s;
-    }
-
-    [data-sc-content="example-sentence"]:hover rt {
-      opacity: 1;
-    }
-
-    /* Hidden */
-    [data-sc-content="forms"] {
-      display: none;
-    }
-
-    div[data-sc-content="attribution"] {
-      display: none;
-    }
-
-    /* Extra */
-    [data-sc-content="antonym"],
-    [data-sc-content="sense-note"],
-    [data-sc-content="xref"] {
-      opacity: 0.5;
-      transition: opacity 0.3s ease;
-    }
-
-    [data-sc-content="antonym"]:hover,
-    [data-sc-content="sense-note"]:hover,
-    [data-sc-content="xref"]:hover {
-      opacity: 1;
-    }
-
-    /* Pitch Accent Colors */
+    /* Warna Aksen Pitch */
     .pronunciation-mora-line {
       border-top-width: 0.15em !important;
       border-right-width: 0.15em !important;
     }
 
-    /* Heiban*/
+    /* Heiban */
     html:has(.entry-current .headword[data-is-primary="true"][data-pronunciation-categories^="heiban"]) {
       --accent-color: var(--pitch-blue);
     }
@@ -823,7 +597,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       color: var(--pitch-purple);
     }
 
-    /* Downstep Position */
+    /* Angka Posisi Downstep */
     .pronunciation-downstep-notation-number {
       font-weight: bold;
       font-family: var(--font-sans);
@@ -839,7 +613,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       display: none;
     }
 
-    /* Nasal Mora */
+    /* Mora Sengau (Nasal Mora) */
     .pronunciation-nasal-indicator {
       border: 0.1em solid var(--nasal-color);
       width: 0.35em;
@@ -848,7 +622,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       top: 0.225em;
     }
 
-    /* Devoiced Mora */
+    /* Mora Tanpa Suara (Devoiced Mora) */
     .pronunciation-devoice-indicator {
       display: none;
     }
@@ -857,7 +631,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       color: var(--devoiced-color);
     }
 
-    /* Format Buttons */
+    /* Tombol Format */
     .action-button-container~.action-button-container .action-button[data-action="view-note"] {
       display: none;
     }
@@ -866,7 +640,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       filter: hue-rotate(180deg);
     }
 
-    /* Hide Tag List */
+    /* Sembunyikan Daftar Tag */
     .headword-list-tag-list.tag-list {
       display: none !important;
     }
@@ -875,23 +649,23 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
     
 ![Yomitan CSS](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/yomitan-css.png)
 
-## Alternative CSS Template (Optional) 
+## Templat CSS Alternatif (Opsional) 
 
-* Go to Yomitan Settings -> Appearance -> Configure Custom CSS...
-* Select all existing content in the Popup CSS template editor.
-* Replace it with the following code:
+* Buka Yomitan Settings -> Appearance -> Configure Custom CSS...
+* Pilih semua konten yang ada di editor templat Popup CSS.
+* Ganti dengan kode berikut:
 
 <details open>
-<summary>Click to expand Popup CSS Code</summary>
+<summary>Klik untuk membuka kode Popup CSS</summary>
 
     ```css
-    /* Firefox specific fix for furigana alignment (Remove this rule if not using Firefox) */
+    /* Perbaikan khusus Firefox untuk penyelarasan furigana (Hapus aturan ini jika tidak menggunakan Firefox) */
     .headword ruby>* {
       margin-top: -3px;
       margin-bottom: -10px;
     }
 
-    /* General settings */
+    /* Pengaturan umum */
     :root {
       --entry-vertical-padding: 0.5em;
       --entry-horizontal-padding: 0.5em;
@@ -901,7 +675,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --collapsible-definition-line-count: 15;
     }
 
-    /* Fix search page width */
+    /* Perbaiki lebar halaman pencarian */
     :root[data-page-type="search"] {
       --content-width: 1400px;
     }
@@ -942,11 +716,11 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --sidebar-button-danger-icon-color: #4c566a;
       --list-padding1: 0;
 
-      /* Marked Mora */
+      /* Mora yang Ditandai */
       --devoiced-color: RoyalBlue;
       --nasal-color: #d03e2d;
 
-      /* Pitch Accent Colors (Slightly darkened for light mode legibility) */
+      /* Warna Aksen Pitch (Sedikit digelapkan demi keterbacaan mode terang) */
       --pitch-red: #D62839;
       --pitch-blue: #3474FF;
       --pitch-orange: #FF6E03;
@@ -954,7 +728,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --pitch-purple: #8A5EDE;
       --pitch-background: rgba(255, 255, 255, 0.4);
 
-      /* Fonts */
+      /* Fonta */
       --font-sans: "Hiragino Kaku Gothic ProN", sans-serif;
       --font-serif: "Klee One", serif;
     }
@@ -995,11 +769,11 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --sidebar-button-danger-icon-color: #ebffff;
       --list-padding1: 0;
 
-      /* Marked Mora */
+      /* Mora yang Ditandai */
       --devoiced-color: cornflowerBlue;
       --nasal-color: #FF4936;
 
-      /* Pitch Accent Colors */
+      /* Warna Aksen Pitch */
       --pitch-red: #F5436D;
       --pitch-blue: #39C1FF;
       --pitch-orange: #fca311;
@@ -1007,22 +781,22 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --pitch-purple: #afa2ff;
       --pitch-background: rgba(0, 0, 0, 0.2);
 
-      /* Fonts */
+      /* Fonta */
       --font-sans: "Hiragino Kaku Gothic ProN", sans-serif;
       --font-serif: "Klee One", serif;
     }
 
-    /* Tranparency Theme */
+    /* Tema Transparansi */
     :root[data-theme="light"] {
       color-scheme: light !important;
-      /* Forces light theme */
+      /* Memaksa tema terang */
       --text-color: #202020;
       --subtext-color: #535353;
     }
 
     :root[data-theme="dark"] {
       color-scheme: dark !important;
-      /* Forces dark theme */
+      /* Memaksa tema gelap */
       --text-color: #F2F2F2;
       --subtext-color: #acacac;
     }
@@ -1038,7 +812,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       background-color: transparent !important;
     }
 
-    /* Hide scrollbars but keep scrolling functional */
+    /* Sembunyikan scrollbar tetapi tetap pertahankan fungsi gulir */
     .scrollbar {
       scrollbar-color: transparent transparent !important;
       /* Firefox */
@@ -1051,7 +825,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       /* Chrome, Edge, Safari */
     }
 
-    /* Base Typography & Layout */
+    /* Tipografi & Tata Letak Dasar */
     body {
       font-family: var(--font-sans);
       line-height: 1.4;
@@ -1073,7 +847,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
 
     .headword-term ruby rt {
       user-select: none;
-      /* Prevent selecting furigana */
+      /* Cegah pemilihan furigana */
     }
 
     .source-text rt {
@@ -1096,7 +870,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       color: var(--dict-color);
     }
 
-    /* Header & Search */
+    /* Tajuk & Pencarian */
     #search-textbox {
       font-size: initial;
     }
@@ -1105,13 +879,13 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       display: none;
     }
 
-    /* Hide unused action buttons */
+    /* Sembunyikan tombol tindakan yang tidak digunakan */
     button.action-button[title="Add duplicate expression (Alt + E)"],
     button.action-button[title="Add reading (Alt + R)"] {
       display: none;
     }
 
-    /* Dictionary Entry Layout (Dual Pane) */
+    /* Tata Letak Entri Kamus (Panel Ganda) */
     .entry-body-section-content.pronunciation-group-list {
       display: grid;
       grid-gap: 5px;
@@ -1170,13 +944,13 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       box-sizing: border-box;
     }
 
-    /* Pitch Accent Styling */
+    /* Warna Aksen Pitch */
     .pronunciation-mora-line {
       border-top-width: 0.15em !important;
       border-right-width: 0.15em !important;
     }
 
-    /* Pitch Accent: Show all pronunciations when pressed */
+    /* Aksen Pitch: Tampilkan semua pengucapan saat ditekan */
     li.pronunciation-group:first-child~* {
       display: none;
     }
@@ -1185,7 +959,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       display: inline-block;
     }
 
-    /* Downstep Position Number */
+    /* Angka Posisi Downstep */
     .pronunciation-downstep-notation-number {
       font-weight: bold;
       font-family: var(--font-sans);
@@ -1201,7 +975,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       display: none;
     }
 
-    /* Pitch Type Colors */
+    /* Warna Tipe Pitch */
     /* Heiban */
     html:has(.entry-current .headword[data-is-primary="true"][data-pronunciation-categories^="heiban"]) {
       --accent-color: var(--pitch-blue);
@@ -1299,7 +1073,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --headword-current-kanji-text-color: var(--pitch-purple);
     }
 
-    /* Nasal Mora */
+    /* Mora Sengau (Nasal Mora) */
     .pronunciation-nasal-indicator {
       border: 0.1em solid var(--nasal-color);
       width: 0.35em;
@@ -1308,7 +1082,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       top: 0.225em;
     }
 
-    /* Devoiced Mora */
+    /* Mora Tanpa Suara (Devoiced Mora) */
     .pronunciation-devoice-indicator {
       display: none;
     }
@@ -1317,8 +1091,8 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       color: var(--devoiced-color);
     }
 
-    /* Frequency Information */
-    /* Frequency (average enabled): Show all frequencies when pressed */
+    /* Informasi Frekuensi */
+    /* Frekuensi (rata-rata diaktifkan): Tampilkan semua frekuensi saat ditekan */
     [data-average-frequency="true"] [data-section-type="frequencies"]:active .frequency-group-item:not([data-details="Average"]) {
       display: inline-block;
     }
@@ -1327,7 +1101,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       display: none;
     }
 
-    /* Frequency (average disabled): Show all frequencies when pressed */
+    /* Frekuensi (rata-rata dinonaktifkan): Tampilkan semua frekuensi saat ditekan */
     [data-average-frequency="false"] span.frequency-group-item:nth-child(n + 4) {
       display: none;
     }
@@ -1336,7 +1110,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       display: inline-block;
     }
 
-    /* Frequency Dictionary Colors */
+    /* Warna Kamus Frekuensi */
     .frequency-group-item[data-details^="JPDB"] {
       --tag-frequency-background-color: #ff3e3d;
     }
@@ -1377,12 +1151,12 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --tag-frequency-background-color: #2e2e8e;
     }
 
-    /* Inflections & Toggles */
+    /* Infleksi & Pengalih */
     .toggle>input[type=checkbox]:checked+.toggle-body>.toggle-track {
       background: var(--toggle-track-color);
     }
 
-    /* Inflections Hover */
+    /* Hover Infleksi */
     .inflection-rule-chains {
       display: inline-block;
       position: relative;
@@ -1407,114 +1181,13 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       margin-bottom: 0.2em;
     }
 
-    /* Hide popular/frequent tags */
+    /* Sembunyikan tag populer/sering */
     [data-category="popular"],
     [data-category="frequent"] {
       display: none;
     }
 
-    /* Jitendex Settings */
-    [data-glossary-layout-mode="default"] [data-sc-content="glossary"] li:not(:last-child)::after {
-      color: var(--jitendex-separators) !important;
-    }
-
-    [data-dictionary*="Jitendex.org"] li[data-sc-content="sense-group"],
-    [data-dictionary*="Jitendex.org"] li[data-sc-content="forms"],
-    [data-dictionary*="Jitendex.org"] li[data-sc-content="sense"],
-    [data-dictionary*="Jitendex.org"] ul[data-sc-content="glossary"] {
-      padding-left: 0 !important;
-    }
-
-    [data-dictionary*="Jitendex.org"] span[data-sc-class="tag"] {
-      margin-right: 0.25em !important;
-    }
-
-    .definition-item[data-dictionary*="Jitendex"] *[data-sc-content="example-sentence-a"] {
-      font-size: 1em !important;
-    }
-
-    [data-glossary-layout-mode="default"] [data-sc-content="glossary"] {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 0;
-      margin: 0;
-    }
-
-    [data-glossary-layout-mode="default"] [data-sc-content="glossary"] li:not(:last-child)::after {
-      content: "|";
-      color: rgba(255, 255, 255, 0.5);
-      margin: 0 8px;
-    }
-
-    /* Jitendex Example Sentences & Keywords */
-    span[data-sc-content="example-keyword"] {
-      color: var(--example-keyword) !important;
-      text-decoration: none !important;
-    }
-
-    [data-sc-content|="example-sentence"] {
-      opacity: 0.5;
-      display: block;
-    }
-
-    [data-dictionary*="Jitendex.org"] [data-sc-content|="example-sentence"]:hover {
-      border-left-color: var(--dict-color);
-    }
-
-    [data-sc-content|="example-sentence"]:hover {
-      opacity: 1;
-      display: block;
-    }
-
-    [data-sc-content="example-sentence-a"] {
-      transition: opacity 0.3s ease;
-    }
-
-    [data-sc-content="example-sentence-b"] {
-      opacity: 0;
-      display: none;
-      transition: opacity 0.3s ease;
-      overflow: hidden;
-    }
-
-    [data-sc-content="example-sentence-a"]:hover+[data-sc-content="example-sentence-b"] {
-      opacity: 1;
-      display: block;
-    }
-
-    [data-sc-content="example-sentence-b"]:hover [data-sc-content|="example-sentence"] {
-      opacity: 1;
-    }
-
-    [data-sc-content="example-sentence"] rt {
-      opacity: 0;
-      transition: opacity ease 0.3s;
-    }
-
-    [data-sc-content="example-sentence"]:hover rt {
-      opacity: 1;
-    }
-
-    /* Jitendex Hidden & Faded Elements */
-    [data-sc-content="forms"],
-    div[data-sc-content="attribution"] {
-      display: none;
-    }
-
-    [data-sc-content="antonym"],
-    [data-sc-content="sense-note"],
-    [data-sc-content="xref"] {
-      opacity: 0.5;
-      transition: opacity 0.3s ease;
-    }
-
-    [data-sc-content="antonym"]:hover,
-    [data-sc-content="sense-note"]:hover,
-    [data-sc-content="xref"]:hover {
-      opacity: 1;
-    }
-
-    /* Pixiv Settings */
+    /* Pengaturan Pixiv */
     [data-sc-pixiv="children"],
     [data-sc-pixiv="related-tags"],
     [data-sc-pixiv="continue-reading"],
@@ -1522,14 +1195,14 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       display: none;
     }
 
-    /* Dictionary Colorizer */
+    /* Pewarna Kamus */
     .definition-item {
       background-color: color-mix(in srgb, var(--dict-color) calc(var(--dict-bg-opacity) * var(--dict-color-opacity)),
           var(--background-color));
       --tag-dictionary-background-color: var(--dict-color);
     }
 
-    /* Hide dictionary version date */
+    /* Sembunyikan tanggal versi kamus */
     .tag[title^="Jitendex"] .tag-label-content {
       font-size: 0;
     }
@@ -1539,7 +1212,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       font-size: 0.885rem;
     }
 
-    /* --- DICTIONARY THEMES --- */
+    /* --- TEMA KAMUS --- */
     .definition-item[data-dictionary^="JMdict"],
     .definition-item[data-dictionary^="JMDict"],
     .definition-item[data-dictionary^="JMnedict"],
@@ -1547,7 +1220,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --dict-color: rgb(0, 132, 255);
     }
 
-    . definition-item[data-dictionary^="新明解"] {
+    .definition-item[data-dictionary^="新明解"] {
       --dict-color: #FF0000;
     }
 
@@ -1682,7 +1355,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --tag-text-color: black;
     }
 
-    .definition-item[data-dictionary="実用日本語表現辞典"] {
+    .definition-item[data-dictionary="実用日本語表现辞典"] {
       --dict-color: #A6B0CF;
     }
 
@@ -1732,7 +1405,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       --tag-color: #B388DD;
     }
 
-    /* Format Buttons */
+    /* Tombol Format */
     .action-button-container~.action-button-container .action-button[data-action="view-note"] {
       display: none;
     }
@@ -1741,7 +1414,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
       filter: hue-rotate(180deg);
     }
 
-    /* Hide Tag List */
+    /* Sembunyikan Daftar Tag */
     .headword-list-tag-list.tag-list {
       display: none !important;
     }
@@ -1752,7 +1425,7 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
 * Replace it with the following code:
 
 <details open>
-<summary>Click to expand Popup outer CSS Code</summary>
+<summary>Klik untuk membuka kode Popup outer CSS</summary>
 
     ```css
     iframe.yomitan-popup[data-theme="light"] {
@@ -1785,5 +1458,5 @@ Go to **Yomitan Settings** -> **Appearance** -> **Result Display** and select ei
 ### Popup
     ![Popup](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/CSS_Alternative_Popup.png)
 
-### Search
-    ![Searc](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/CSS_Alternative_Search.png)
+### Pencarian
+    ![Pencarian](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/CSS_Alternative_Search.png)

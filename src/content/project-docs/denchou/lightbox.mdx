@@ -1,37 +1,37 @@
 ---
-title: "Picture Lightbox"
+title: "Lightbox Gambar"
 parentProject: "denchou"
 order: 17
 status: "published"
 ---
-# Picture Lightbox
+# Lightbox Gambar
 
-Click the image to view it in an enlarged, focused lightbox overlay.
+Klik gambar untuk melihatnya dalam tampilan lightbox overlay yang diperbesar dan terfokus.
 
-*   **Zoom & Pan:** Zoom follows the cursor; click and drag to pan the zoomed image.
-*   **Multiple Images:** If multiple images are present (e.g., in the `picture` field or detected in glossary entries), you can navigate between them using arrow keys or on-screen buttons. Only the first image shows in the main card view.
-*   **Glossary Images:** Images found within glossary definitions (like those from 画像付き-絵でわかる日本語) can be displayed in the lightbox.
-*   **Lightbox Grid View:** Toggle between the default single-image view and a grid view showing thumbnails of all available images.
+*   **Zoom & Geser (Pan):** Zoom mengikuti kursor; klik dan seret untuk menggeser gambar yang di-zoom.
+*   **Beberapa Gambar:** Jika terdapat beberapa gambar (misalnya, di bidang `picture` atau terdeteksi di entri glosarium), kamu bisa bernavigasi di antaranya menggunakan tombol panah atau tombol di layar. Hanya gambar pertama yang ditampilkan pada tampilan kartu utama.
+*   **Gambar Glosarium:** Gambar yang ditemukan di dalam definisi glosarium (seperti dari 画像付き-絵でわかる日本語) dapat ditampilkan di dalam lightbox.
+*   **Tampilan Kisi Lightbox (Lightbox Grid View):** Beralih antara tampilan gambar tunggal default dan tampilan kisi yang menampilkan gambar mini (thumbnail) dari semua gambar yang tersedia.
 
-    ### Preview 1
-        ![Lightbox Preview GIF 1](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox Preview 1.gif)
+    ### Pratinjau 1
+        ![GIF Pratinjau Lightbox 1](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox Preview 1.gif)
 
-    ### Preview 2
-        ![Lightbox Preview GIF 2](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox Preview 2.gif)
+    ### Pratinjau 2
+        ![GIF Pratinjau Lightbox 2](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox Preview 2.gif)
 
-    ### Default View
-        ![Lightbox Default View](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox_Default_View.png)
+    ### Tampilan Default
+        ![Tampilan Default Lightbox](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox_Default_View.png)
 
-    ### Grid View
-        ![Lightbox Grid View](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox_Grid_View.png)
+    ### Tampilan Kisi
+        ![Tampilan Kisi Lightbox](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/Lightbox_Grid_View.png)
 
-*   **Default Shortcuts:** 
-    * **Q**: Toggle lightbox
-    * **Shift+Q**: Toggle lightbox grid view
+*   **Pintasan Default:** 
+    * **Q**: Beralih lightbox
+    * **Shift+Q**: Beralih tampilan kisi lightbox
 
-    You can change these in the `/* CUSTOM SHORTCUTS */` section of the CSS:
+    Kamu bisa mengubahnya di bagian `/* CUSTOM SHORTCUTS */` pada CSS:
 
     ```css
-    --toggle-picture-lightbox-key:      q;       /* Set the key to toggle lightbox */
-    --toggle-picture-lightbox-grid-key: shift+q; /* Set the key to toggle lightbox grid */
+    --toggle-picture-lightbox-key:      q;       /* Atur tombol untuk beralih lightbox */
+    --toggle-picture-lightbox-grid-key: shift+q; /* Atur tombol untuk beralih kisi lightbox */
     ```

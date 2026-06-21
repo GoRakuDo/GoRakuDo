@@ -1,30 +1,30 @@
 ---
-title: "Reading Display"
+title: "Tampilan Cara Baca"
 parentProject: "denchou"
 order: 23
 status: "published"
 ---
-# Reading Display
+# Tampilan Cara Baca
 
-Hides the reading when a word is written entirely in kana while keeping the pitch accent, preventing redundant information and maintaining a clean layout.
+Menyembunyikan cara baca ketika sebuah kata ditulis sepenuhnya dalam kana sambil mempertahankan aksen pitch, mencegah informasi redundan dan menjaga tata letak tetap bersih.
 
-### Disabled
-    ![Before](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/No_Duplicate_Kana_Before.png)
+### Dinonaktifkan
+    ![Sebelum](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/No_Duplicate_Kana_Before.png)
 
-### Enabled
-    ![After](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/No_Duplicate_Kana.png)
+### Diaktifkan
+    ![Sesudah](https://raw.githubusercontent.com/GoRakuDo/DenChou/main/docs/assets/images/No_Duplicate_Kana.png)
 
-**How to Use:**
+**Cara Penggunaan:**
 
-To enable this feature, you need to edit the `Styling` in your Anki card template.
+Untuk mengaktifkan fitur ini, kamu perlu mengedit `Styling` di templat kartu Anki kamu.
 
-1.  **Enable Kana Replacement**: Find the `--no-duplicate-kana` variable and set its value to `true`. This will replace a kana word with its reading if they are the same.
+1.  **Aktifkan Penggantian Kana**: Cari variabel `--no-duplicate-kana` dan atur nilainya ke `true`. Ini akan mengganti kata kana dengan cara bacanya jika keduanya sama.
 
     ```css
     --no-duplicate-kana: true;
     ```
 
-2.  **Adjust Pitch Accent Thickness**: If the pitch accent lines appear too thick or thin after the replacement, you can adjust the `--only-kana-pitch-size` variable. A smaller value makes the line thinner, while a larger value makes it thicker.
+2.  **Sesuaikan Ketebalan Aksen Pitch**: Jika garis aksen pitch tampak terlalu tebal atau tipis setelah penggantian, kamu bisa menyesuaikan variabel `--only-kana-pitch-size`. Nilai yang lebih kecil membuat garis lebih tipis, sedangkan nilai yang lebih besar membuatnya lebih tebal.
 
     ```css
     --only-kana-pitch-size: 0.08em;
