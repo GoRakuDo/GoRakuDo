@@ -152,13 +152,13 @@
   padding-left: 1.5rem;
 }
 
-/* Sub-bullet inside ordered list — same rhythm as the parent ol item. */
-.tqa-article :is(ol) > li > :is(ul) {
+/* Sub-bullets (nested lists) — same rhythm as the parent item. */
+.tqa-article :is(ol, ul) > li > :is(ol, ul) {
   margin: 0.5rem 0 0;
   padding-left: 0;
 }
 
-.tqa-article :is(ol) > li > :is(ul) > li:last-child {
+.tqa-article :is(ol, ul) > li > :is(ol, ul) > li:last-child {
   margin-bottom: 0;
 }
 
