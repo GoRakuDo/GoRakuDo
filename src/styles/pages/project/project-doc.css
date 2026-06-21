@@ -39,7 +39,7 @@
   font-family: var(--font-primary, sans-serif);
   font-size: 1rem;
   line-height: 1.75;
-  counter-reset: tqa-quest;
+  counter-reset: tqa-sect;
 }
 
 /* h1 (doc article title) — Pixelify Sans + gold gradient, centered */
@@ -72,8 +72,8 @@
 }
 
 .tqa-article :is(h2)::before {
-  counter-increment: tqa-quest;
-  content: '/// SECT_' counter(tqa-quest, decimal-leading-zero) ' ///';
+  counter-increment: tqa-sect;
+  content: '/// SECT_' counter(tqa-sect, decimal-leading-zero) ' ///';
   display: block;
   margin-bottom: 0.5rem;
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
