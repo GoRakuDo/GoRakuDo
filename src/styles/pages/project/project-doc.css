@@ -9,11 +9,15 @@
    into 29 doc pages.
    ============================================================ */
 
-/* ========== PAGE SHELL ========== */
+/* ========== PAGE SHELL ==========
+   No horizontal padding: outer .project-lp-layout already provides
+   padding-inline via clamp(). Doubling it caused the doc article
+   to feel cramped on mobile. Bottom padding stays for breathing
+   room before the global BottomNav. */
 .tqa-page {
   max-width: 80rem;
   margin: 0 auto;
-  padding: 0 1.5rem 4rem;
+  padding: 0 0 4rem;
 }
 
 .tqa-grid {
