@@ -2,7 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../../layouts/ProjectLayout.astro';
-import { getProjectDocSlug } from '../../../utils/project-docs';
+import { getProjectDocSlug, buildDocsCategories } from '../../../utils/project-docs';
+import '../../../styles/pages/project/project-doc.css';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -26,43 +27,21 @@ const { project, doc, allDocs } = Astro.props as {
 };
 const { Content } = await render(doc);
 
-const sortedDocs: CollectionEntry<'project-docs'>[] = [...allDocs]
-  .filter((d) => d.data.status === 'published')
-  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
-const chunkSize = Math.ceil(sortedDocs.length / 3);
-
-const docsCategories = [
-  {
-    title: "[ PART 1 ]",
-    links: sortedDocs.slice(0, chunkSize).map(d => ({
-      text: d.data.title,
-      url: `/project/${project.slug}/${getProjectDocSlug(d.id)}`,
-      slug: getProjectDocSlug(d.id)
-    }))
-  },
-  {
-    title: "[ PART 2 ]",
-    links: sortedDocs.slice(chunkSize, chunkSize * 2).map(d => ({
-      text: d.data.title,
-      url: `/project/${project.slug}/${getProjectDocSlug(d.id)}`,
-      slug: getProjectDocSlug(d.id)
-    }))
-  },
-  {
-    title: "[ PART 3 ]",
-    links: sortedDocs.slice(chunkSize * 2).map(d => ({
-      text: d.data.title,
-      url: `/project/${project.slug}/${getProjectDocSlug(d.id)}`,
-      slug: getProjectDocSlug(d.id)
-    }))
-  }
-];
-
+const docsCategories = buildDocsCategories(allDocs, project.slug);
 const docSlug = getProjectDocSlug(doc.id);
 ---
 
 <ProjectLayout project={project} activeDocSlug={docSlug} docsCategories={docsCategories}>
-  <article class="lp-doc-article prose prose-invert max-w-none p-8">
-    <Content />
-  </article>
+  <div class='tqa-page'>
+    <div class='tqa-grid'>
+      <main class='tqa-main' role='main'>
+        <article class='tqa-article' id='main-content'>
+          <Content />
+        </article>
+        <footer class='tqa-end' role='contentinfo'>
+          <p class='tqa-end-marker' aria-hidden='true'>/// QUEST_LOG_CLOSE ///</p>
+        </footer>
+      </main>
+    </div>
+  </div>
 </ProjectLayout>

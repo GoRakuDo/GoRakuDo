@@ -1,0 +1,284 @@
+/* ============================================================
+   Project Doc Article (Quest Codex, project-scoped subset)
+   ------------------------------------------------------------
+   Project docs (/project/<slug>/<doc>) reuse the tqa-* family
+   from /tutorial/<tool>/<slug>, but only the article body +
+   page shell + end-of-chapter marker. No hero, no breadcrumb,
+   no left aside (TOC + prev/next), no CTA. No Tailwind import
+   — keeps the bundle small and avoids pulling global utilities
+   into 29 doc pages.
+   ============================================================ */
+
+/* ========== PAGE SHELL ========== */
+.tqa-page {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.tqa-grid {
+  display: block;
+}
+
+.tqa-main {
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+}
+
+/* ========== ARTICLE BODY ==========
+   No border-left: tutorial pages use that as a divider from
+   tqa-left aside; project docs have no aside, so a left rail
+   would look like a left-edge margin. */
+.tqa-article {
+  color: var(--clr-text-primary);
+  font-family: var(--font-primary, sans-serif);
+  font-size: 1rem;
+  line-height: 1.75;
+  counter-reset: tqa-quest;
+}
+
+/* Quest headings (h2) with Pixelify Sans marker */
+.tqa-article :is(h2) {
+  position: relative;
+  margin: 3rem 0 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid oklch(85% 0.05 270deg / 0.15);
+  color: var(--clr-text-primary);
+  font-family: var(--font-primary, sans-serif);
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  scroll-margin-top: 100px;
+}
+
+.tqa-article :is(h2)::before {
+  counter-increment: tqa-quest;
+  content: '/// QUEST_' counter(tqa-quest, decimal-leading-zero) ' ///';
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 8px oklch(65% 0.25 280deg / 0.35);
+}
+
+.tqa-article :is(h2):first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* h3 styled as sub-section */
+.tqa-article :is(h3) {
+  margin: 2rem 0 0.75rem;
+  color: var(--clr-text-primary);
+  font-family: var(--font-primary, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Paragraphs in article */
+.tqa-article :is(p) {
+  margin: 0 0 1.25rem;
+  color: oklch(85% 0.02 270deg);
+  text-wrap: pretty;
+}
+
+/* Lists with custom markers */
+.tqa-article :is(ol, ul) {
+  margin: 0 0 1.5rem;
+  padding-left: 1.25rem;
+  color: oklch(85% 0.02 270deg);
+}
+
+.tqa-article :is(ol) {
+  list-style: none;
+  counter-reset: tqa-li;
+  padding-left: 0;
+}
+
+.tqa-article :is(ol) > li {
+  position: relative;
+  counter-increment: tqa-li;
+  margin-bottom: 0.5rem;
+  padding-left: 2.5rem;
+}
+
+.tqa-article :is(ol) > li::before {
+  position: absolute;
+  top: 0.05em;
+  left: 0;
+  min-width: 1.85rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: right;
+  letter-spacing: 0.05em;
+  content: counter(tqa-li, decimal-leading-zero) '.';
+}
+
+.tqa-article :is(ul) {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tqa-article :is(ul) > li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 2.5rem;
+}
+
+/* Sub-bullet inside ordered list — same rhythm as the parent ol item. */
+.tqa-article :is(ol) > li > :is(ul) {
+  margin: 0.5rem 0 0;
+  padding-left: 0;
+}
+
+.tqa-article :is(ol) > li > :is(ul) > li:last-child {
+  margin-bottom: 0;
+}
+
+.tqa-article :is(ul) > li::before {
+  position: absolute;
+  top: 0.05em;
+  left: 0;
+  min-width: 1.85rem;
+  content: '>';
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Inline code */
+.tqa-article :is(code):not(pre code) {
+  padding: 0.125rem 0.375rem;
+  border: 1px solid oklch(85% 0.05 270deg / 0.2);
+  border-radius: 0.25rem;
+  background: oklch(85% 0.05 270deg / 0.08);
+  color: var(--grkd-muted, oklch(75% 0.002 270deg));
+  font-family: var(--font-code, 'Fira Code', monospace);
+  font-size: 0.875em;
+}
+
+/* Code blocks (terminal style) */
+.tqa-article :is(pre) {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid oklch(65% 0.18 280deg / 0.25);
+  border-radius: 0.5rem;
+  background: oklch(15% 0.05 270deg / 0.6);
+  font-family: var(--font-code, 'Fira Code', monospace);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Blockquotes — Quest Codex style (/// NOTE_XX /// marker + decorative quote) */
+.tqa-article :is(blockquote) {
+  position: relative;
+  display: block;
+  margin: 1.75rem 0;
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-left: 3px solid oklch(65% 0.25 280deg / 0.5);
+  background: transparent;
+  color: var(--clr-text-primary, oklch(92% 0.005 270deg));
+  font-style: normal;
+  line-height: 1.7;
+}
+
+.tqa-article :is(blockquote)::before {
+  display: block;
+  margin: 0 0 0.75rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.18em;
+  content: '/// ' attr(data-note-type, 'NOTE_XX') ' ///';
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tqa-article :is(blockquote)::before {
+    text-shadow: 0 0 8px oklch(65% 0.25 280deg / 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tqa-article :is(blockquote)::before {
+    text-shadow: none;
+  }
+}
+
+.tqa-article :is(blockquote)::after {
+  position: absolute;
+  top: -0.5rem;
+  right: 0.75rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-noto-serif-jp, 'Noto Serif JP', serif);
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.18;
+  pointer-events: none;
+  content: '\201C';
+}
+
+.tqa-article :is(blockquote) :is(p) {
+  margin: 0;
+  font-style: normal;
+}
+
+/* Images */
+.tqa-article :is(img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border: 1px solid oklch(85% 0.05 270deg / 0.15);
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .tqa-article :is(img) {
+    width: auto;
+    max-width: 24rem;
+    height: auto;
+    max-height: 32rem;
+  }
+}
+
+/* Strong / em */
+.tqa-article :is(strong) {
+  color: var(--clr-text-primary);
+  font-weight: 700;
+}
+
+.tqa-article :is(em) {
+  color: var(--grkd-muted, oklch(75% 0.002 270deg));
+  font-style: italic;
+}
+
+/* ========== END OF CHAPTER ========== */
+.tqa-end {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.tqa-end-marker {
+  margin: 0 0 1.5rem;
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  opacity: 0.85;
+}
