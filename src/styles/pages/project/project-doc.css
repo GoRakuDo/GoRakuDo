@@ -54,10 +54,9 @@
   text-align: center;
   letter-spacing: 0.05em;
   background-clip: text;
-  background-clip: text;
 }
 
-/* Quest headings (h2) with Pixelify Sans marker */
+/* Section headings (h2) with Pixelify Sans marker */
 .tqa-article :is(h2) {
   position: relative;
   margin: 3rem 0 1.25rem;
@@ -74,7 +73,7 @@
 
 .tqa-article :is(h2)::before {
   counter-increment: tqa-quest;
-  content: '/// QUEST_' counter(tqa-quest, decimal-leading-zero) ' ///';
+  content: '/// SECT_' counter(tqa-quest, decimal-leading-zero) ' ///';
   display: block;
   margin-bottom: 0.5rem;
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
