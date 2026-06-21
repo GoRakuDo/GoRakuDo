@@ -131,7 +131,7 @@
 .tqa-article :is(ul) > li {
   position: relative;
   margin-bottom: 0.5rem;
-  padding-left: 2.5rem;
+  padding-left: 1.5rem;
 }
 
 /* Sub-bullet inside ordered list — same rhythm as the parent ol item. */
@@ -148,7 +148,7 @@
   position: absolute;
   top: 0.05em;
   left: 0;
-  min-width: 1.85rem;
+  min-width: 1rem;
   content: '>';
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
   font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
@@ -253,6 +253,72 @@
     max-width: 24rem;
     height: auto;
     max-height: 32rem;
+  }
+}
+
+/* Tables — GitHub-flavored markdown output. Wrap in a scroll container
+   on mobile to prevent horizontal overflow, optimize column widths on
+   desktop. */
+.tqa-article :is(table) {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  margin: 1.75rem 0;
+  border: 1px solid oklch(85% 0.05 270deg / 0.15);
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.tqa-article :is(thead) {
+  background: oklch(from var(--grkd-brand-secondary) l c h / 0.08);
+}
+
+.tqa-article :is(th),
+.tqa-article :is(td) {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid oklch(85% 0.05 270deg / 0.1);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tqa-article :is(th) {
+  color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tqa-article :is(tbody tr:last-child :is(td)) {
+  border-bottom: 0;
+}
+
+.tqa-article :is(tbody tr:nth-child(even)) {
+  background: oklch(85% 0.05 270deg / 0.03);
+}
+
+/* Desktop: lock column proportions so the table reads like a designed
+   data grid instead of uneven markdown defaults. */
+@media (min-width: 768px) {
+  .tqa-article :is(table) {
+    table-layout: fixed;
+  }
+
+  /* 3-column tables: short label / evidence / explanation */
+  .tqa-article :is(table) :is(thead tr) :is(th):first-child {
+    width: 22%;
+  }
+
+  .tqa-article :is(table) :is(thead tr) :is(th):last-child {
+    width: 48%;
+  }
+
+  .tqa-article :is(th),
+  .tqa-article :is(td) {
+    padding: 1rem 1.25rem;
   }
 }
 
