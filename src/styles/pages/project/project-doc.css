@@ -42,6 +42,21 @@
   counter-reset: tqa-quest;
 }
 
+/* h1 (doc article title) — Pixelify Sans + gold gradient, centered */
+.tqa-article :is(h1) {
+  margin: 0 0 2.5rem;
+  background-image: linear-gradient(135deg, oklch(85% 0.15 85deg), oklch(65% 0.15 85deg));
+  color: transparent;
+  font-family: var(--font-pixel, 'Pixelify Sans', sans-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 500;
+  line-height: 1.15;
+  text-align: center;
+  letter-spacing: 0.05em;
+  background-clip: text;
+  background-clip: text;
+}
+
 /* Quest headings (h2) with Pixelify Sans marker */
 .tqa-article :is(h2) {
   position: relative;
