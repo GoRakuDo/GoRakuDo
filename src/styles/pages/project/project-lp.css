@@ -311,11 +311,13 @@
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid oklch(85% 0.05 270deg / 0.15);
-  color: var(--token-white-base);
+  color: var(--grkd-brand-secondary);
   font-family: var(--font-pixel);
   font-size: 1.2rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 10px oklch(from var(--grkd-brand-secondary) l c h / 0.3);
 }
 
 .lp-docs-list {
@@ -333,7 +335,7 @@
   gap: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  color: var(--grkd-text-secondary);
+  color: var(--grkd-muted);
   font-family: var(--font-primary);
   font-size: 1rem;
   text-decoration: none;
@@ -346,10 +348,11 @@
   transition: opacity 0.2s var(--grkd-ease-out), transform 0.2s var(--grkd-ease-out), filter 0.2s var(--grkd-ease-out);
 }
 
-.lp-docs-link:hover,
+.lp-docs-link:hover:not(.active),
 .lp-docs-link.active {
-  background: oklch(85% 0.05 270deg / 0.08);
-  color: var(--token-white-base);
+  background-image: linear-gradient(135deg, oklch(85% 0.15 85deg), oklch(65% 0.15 85deg));
+  color: transparent;
+  background-clip: text;
 }
 
 .lp-docs-link:hover svg,
@@ -359,8 +362,11 @@
 }
 
 .lp-docs-link.active {
-  background: oklch(from var(--grkd-brand-secondary) l c h / 0.15);
-  box-shadow: inset 2px 0 0 var(--grkd-brand-secondary);
+  background-color: oklch(from var(--grkd-brand-secondary) l c h / 0.15);
+  background-image: none;
+  color: oklch(85% 0.15 85deg);
+  font-family: var(--font-pixel);
+  letter-spacing: 0.05em;
 }
 
 .lp-docs-link.active svg {
@@ -374,12 +380,6 @@
   margin-top: 4rem;
   padding-top: 4rem;
   border-top: 1px dashed oklch(85% 0.05 270deg / 0.15);
-}
-
-.lp-doc-article {
-  border: 1px solid oklch(85% 0.05 270deg / 0.08);
-  border-radius: 1.25rem;
-  background: var(--grkd-surface-2);
 }
 
 /* =========================================
