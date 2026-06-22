@@ -14,7 +14,7 @@ export const DOC_CATEGORY: Record<string, DocCategory> = {
   // Setup — first-run, install, settings
   setup_overview: 'setup',
   anki: 'setup',
-  JL: 'setup',
+  AnkiFields: 'setup',
   yomitan: 'setup',
   Preferences: 'setup',
   sharex: 'setup',
