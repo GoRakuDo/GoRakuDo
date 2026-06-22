@@ -2,13 +2,14 @@
 title: "Tautan Eksternal"
 parentProject: "denchou"
 order: 10
+category: setup
 status: "published"
 ---
-# Tautan Eksternal
+# Fitur Tautan Eksternal
 
 ![Pratinjau Tautan Eksternal](/page_images/project/DenChou/docs/assets/images/External_Links_Preview.png)
 
-Mengeklik salah satu tombol ini akan mengarahkan kamu ke situs masing-masing dan mencari kata target secara otomatis.
+Mengeklik salah satu tombol ini akan mengarahkan kamu ke situs masing-masing, dan mencari target kosakata secara otomatis.
 
 Situs yang Didukung:
 
@@ -19,12 +20,14 @@ Situs yang Didukung:
 *   [Immersion Kit](https://v2.immersionkit.com/)
 
 Untuk menghapus Tautan Eksternal sepenuhnya, buka bagian `/* Component Visibility */` pada CSS:
+
 ```css
 --external-links-visibility: 1; /* "0" untuk menyembunyikan tautan eksternal */
 ```
 Fitur ini aktif secara default. Ubah menjadi `0` untuk menonaktifkannya.
 
-Jika kamu ingin menambahkan atau menghapus situs apa pun yang didukung, buka bagian `<!-- External Links -->` pada Templat Belakang (Back Template):
+Jika kamu ingin menambahkan atau menghapus situs apa pun yang didukung, buka bagian `<!-- External Links -->` pada Template Belakang (Back Templatee):
+
 ```html
 <!-- Jpdb -->
 <a data-details="jpdb.io" href="https://jpdb.io/search?q={{text:word}}">
@@ -57,7 +60,7 @@ Jika kamu ingin menambahkan atau menghapus situs apa pun yang didukung, buka bag
  </a>
  ```
  
- Templat untuk menambahkan situs baru:
+ Template untuk menambahkan situs baru:
  
  ```html
  <!-- Nama Situs -->
@@ -66,6 +69,7 @@ Jika kamu ingin menambahkan atau menghapus situs apa pun yang didukung, buka bag
    <img class="dark-icon" src="_icon_example_dark.png">
  </a>
  ```
- > **Folder Lokasi Ikon**
+ 
+ > **Lokasi Folder Ikon**
  >
- > Ikon situs barumu harus diletakkan di dalam folder `%appdata%\Anki2\[NamaPenggunaKamu]\collection.media`. Jangan lupa untuk menambahkan garis bawah (`_`) di awal nama file, seperti `_icon_example_dark.png`.
+ > Ikon situs barumu harus diletakkan di dalam folder `%appdata%\Anki2\[NamaPenggunaKamu]\collection.media`. Jangan lupa untuk menambahkan garis bawah (`_`) di awal nama file, contohnya `_icon_example_dark.png`.

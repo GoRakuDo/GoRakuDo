@@ -131,6 +131,7 @@ const projectDocsCollection = defineCollection({
     title: z.string().min(1).max(LIMITS.TITLE_MAX),
     description: z.string().min(1).max(LIMITS.DESCRIPTION_MAX).optional(),
     order: z.number().default(99), // 目次の順序用
+    category: z.enum(['setup', 'features', 'resources']).default('resources'), // 目次のカテゴリ
     parentProject: z.string(), // 例: 'denchou'
     status: z.enum(['published', 'draft']).default(DEFAULTS.STATUS),
   }),
