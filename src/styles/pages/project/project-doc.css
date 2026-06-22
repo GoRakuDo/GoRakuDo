@@ -35,6 +35,7 @@
    tqa-left aside; project docs have no aside, so a left rail
    would look like a left-edge margin. */
 .tqa-article {
+  overflow-x: auto;
   color: var(--clr-text-primary);
   font-family: var(--font-primary, sans-serif);
   font-size: 1rem;
@@ -274,12 +275,10 @@
   }
 }
 
-/* Tables — GitHub-flavored markdown output. Wrap in a scroll container
-   on mobile to prevent horizontal overflow, optimize column widths on
-   desktop. */
+/* Tables — GitHub-flavored markdown output. Horizontal scroll container
+   is on .tqa-article so the table keeps its natural display:table layout
+   and width:100% actually fills the parent. */
 .tqa-article :is(table) {
-  display: block;
-  overflow-x: auto;
   width: 100%;
   margin: 1.75rem 0;
   border: 1px solid oklch(85% 0.05 270deg / 0.15);
