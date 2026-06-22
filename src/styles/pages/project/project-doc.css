@@ -322,16 +322,7 @@
    data grid instead of uneven markdown defaults. */
 @media (min-width: 768px) {
   .tqa-article :is(table) {
-    table-layout: fixed;
-  }
-
-  /* 3-column tables: short label / evidence / explanation */
-  .tqa-article :is(table) :is(thead tr) :is(th):first-child {
-    width: 22%;
-  }
-
-  .tqa-article :is(table) :is(thead tr) :is(th):last-child {
-    width: 48%;
+    table-layout: auto;
   }
 
   .tqa-article :is(th),
