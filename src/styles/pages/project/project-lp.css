@@ -353,6 +353,8 @@
   background-image: linear-gradient(135deg, oklch(85% 0.15 85deg), oklch(65% 0.15 85deg));
   color: transparent;
   background-clip: text;
+  font-family: var(--font-pixel);
+  letter-spacing: 0.05em;
 }
 
 .lp-docs-link:hover svg,
@@ -365,8 +367,6 @@
   background-color: oklch(from var(--grkd-brand-secondary) l c h / 0.15);
   background-image: none;
   color: oklch(85% 0.15 85deg);
-  font-family: var(--font-pixel);
-  letter-spacing: 0.05em;
 }
 
 .lp-docs-link.active svg {
