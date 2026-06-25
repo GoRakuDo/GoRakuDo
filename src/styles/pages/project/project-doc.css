@@ -334,6 +334,10 @@
     margin: 3rem 0;
   }
 
+  .tqa-split > * {
+    min-width: 0;
+  }
+
   .tqa-split > :last-child {
     position: sticky;
     top: calc(var(--navbar-height, 80px) + 2rem);
