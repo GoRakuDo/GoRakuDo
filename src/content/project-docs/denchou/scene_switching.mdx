@@ -1,61 +1,15 @@
 ---
-title: "Menguban Media Sentence Mining"
+title: "Multi-Scene dari Sentence Mining"
 parentProject: "denchou"
 order: 6
 category: features
 status: "published"
 ---
-# Peralihan Adegan
+# Peralihan Adegan Scene
 
-Beralih di antara "Adegan" (Scenes) imersif di mana Kalimat (Sentences), Audio, Gambar (Images), dan Informasi Tambahan (Misc Info) disinkronkan.
+Kalian bisa dengan mudah mengganti di antara "Adegan" (Scenes) dalam 1 kartu dengan Kalimat (Sentences), Audio, Gambar (Images), dan Informasi Tambahan (Misc Info) yang berbeda dan tetap tersinkronisasi.
 
 <video src="/page_images/project/DenChou/docs/assets/Scene_Switching_Preview.mp4" controls autoplay loop muted playsinline></video>
-
-- **Navigasi Terkelompok (Grouped Navigation):** Mendukung pembagian kalimat menjadi segmen-segmen menggunakan tag `<span class="group">...</span>` di dalam bidang (field) Anki.
-- Untuk menggunakan fitur ini, perbarui bidang `sentence` dan `sentenceFurigana` pada pengaturan "**Configure Anki flashcards…**" di Yomitan:
-
-<div class="tqa-split">
-
-<ul>
-<li>Atur `sentence` ke: `<span class="group">{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}</span>`</li>
-<li>Atur `sentenceFurigana` ke: `<span class="group">{sentence-furigana}</span>`</li>
-</ul>
-
-<img width="627" height="161" alt="Yomitan field settings" src="/page_images/project/DenChou/scene_yomitan_fields.png" />
-
-</div>
-
-Pastikan **Append** (Tambahkan) diaktifkan agar kamu bisa menambahkan kalimat baru alih-alih menimpa kalimat pertama.
-Untuk melakukan ini, aktifkan "**Allow Overwriting**" (Izinkan Penimpaan):
-
-<div class="tqa-split">
-
-<ul>
-<li>Aktifkan **Allow Overwriting** di pengaturan kartu duplikat.</li>
-</ul>
-
-<img width="671" height="204" alt="Allow Overwriting setting" src="/page_images/project/DenChou/scene_allow_overwriting.png" />
-
-</div>
-    
--   `sentenceEng` dan `miscInfo` juga didukung. Namun, kamu perlu mengedit bidang tersebut secara manual untuk mengelompokkannya dengan benar pada setiap adegan menggunakan `<span class="group">...</span>`.
-    - Kamu bisa memilih adegan mana yang memuat teks tersebut dengan memberi nomor pada grupnya, contohnya `<span class="group2">...</span>`. Ini akan melewati adegan pertama dan mengelompokkannya ke adegan kedua.
-    - Jika kamu memiliki beberapa adegan tetapi hanya satu `sentenceEng`, teks tersebut hanya akan muncul di adegan pertama kecuali jika kamu menetapkannya ke grup tertentu seperti contoh di atas.
-    > Tidak perlu memberi nomor pada grup jika jumlah terjemahan sama dengan jumlah kalimat.
-
-  - Berikut adalah tampilan di dalam HTML bidang tersebut:
-  ```html
-  <span class="group2">The future seems bleak...</span><span class="group3">Looks like I have a hard path ahead.</span>
-  ```
- <video src="/page_images/project/DenChou/docs/assets/Front_Scene_Switching_Preview.mp4" controls autoplay loop muted playsinline></video>
-
-  - Contoh format lainnya:
-  ```html
-  <span class="group">Something you wanna try?</span><span class="group">Why don't we test it out?</span><span class="group">Don't you want to try it out?</span>
-  ```
-  ```html
-  <span class="group">My Dress-Up Darling • Season 2, Episode 5 • 0:17:53</span><span class="group">16bit Sensation: Another Layer • Season 1, Episode 13 • 0:16:21</span><span class="group">The Irregular at Magic High School • Season 1, Episode 11 • 0:21:58</span>
-  ```
 
 - **Deteksi Otomatis:** Secara otomatis mendeteksi jika sebuah kartu memiliki beberapa file audio. Jika ditemukan, fitur ini akan mengaktifkan mode Navigasi Adegan; jika tidak, kartu akan kembali ke perilaku standar secara default. Kalimat yang banyak tidak akan dibagi jika kartu tidak berisi setidaknya 2 file audio.
 - **Pintasan Putar Ulang Audio Kustom:** Secara default, Anki memutar setiap file audio saat kamu menekan **R**. Pintasan kustom ini hanya memutar audio untuk adegan yang aktif. Tombol default-nya adalah **W**, kamu bisa mengubahnya melalui variabel di bagian `/* CUSTOM SHORTCUTS */` pada CSS:
@@ -63,9 +17,67 @@ Untuk melakukan ini, aktifkan "**Allow Overwriting**" (Izinkan Penimpaan):
     --scene-replay-shortcut-key: w; /* Atur tombol untuk memutar ulang adegan aktif */
     ```
 
-*   **Pintasan Navigasi Adegan**
-
-    **Depan:** Gunakan tombol **Panah Kiri / Kanan**.
-    
-    **Belakang:** Gunakan tombol **Ctrl + Panah Kiri / Kanan**
+- **Navigasi Terkelompok (Grouped Navigation):** Mendukung pembagian kalimat menjadi segmen-segmen menggunakan tag `<span class="group">...</span>` di dalam bidang (field) Anki.
+- **Shortcut Navigasi Adegan Scene**:
+    - **Depan:** Gunakan tombol **Panah Kiri / Kanan**.
+    - **Belakang:** Gunakan tombol **Ctrl + Panah Kiri / Kanan**
     > Ctrl diperlukan di sini untuk mencegah konflik dengan navigasi Kamus.
+
+---
+
+## Pengaturan Konfigurasi
+- Untuk menggunakan fitur ini, perbarui bidang `sentence` dan `sentenceFurigana` pada pengaturan "**Configure Anki flashcards…**" di Yomitan:
+
+    <div class="tqa-split">
+
+    <ul>
+    <li>Atur `sentence` ke: `<span class="group">{cloze-prefix}<span class="highlight">{cloze-body}</span>{cloze-suffix}</span>`</li>
+    <li>Atur `sentenceFurigana` ke: `<span class="group">{sentence-furigana}</span>`</li>
+    </ul>
+
+    <img width="627" height="161" alt="Yomitan field settings" src="/page_images/project/DenChou/scene_yomitan_fields.png" />
+
+    </div>
+
+- Agar contoh kalimat pertama tidak tertimpa dengan yang baru, pastikan **Append** (Tambahkan) diaktifkan agar kamu bisa menambahkan kalimat baru dengan aman. Untuk melakukan ini, aktifkan "**Allow Overwriting**" (Izinkan Penimpaan):
+
+    <div class="tqa-split">
+
+    <ul>
+    <li>Aktifkan **Allow Overwriting** di pengaturan kartu duplikat.</li>
+    </ul>
+
+    <img width="671" height="204" alt="Allow Overwriting setting" src="/page_images/project/DenChou/scene_allow_overwriting.png" />
+
+    </div>
+    
+-   DenChou juga mendukung multiple `sentence` dan `miscInfo`. Namun, kamu perlu mengedit bidang tersebut secara manual untuk mengelompokkannya dengan benar pada setiap adegan menggunakan `<span class="group">...</span>`.
+    - Kalian bisa memilih adegan mana yang memuat teks tersebut dengan memberi nomor pada grupnya, contohnya `<span class="group2">...</span>`. Ini akan melewati adegan pertama dan mengelompokkannya ke adegan kedua.
+    - Jika kamu memiliki beberapa adegan tetapi hanya satu `sentence`, teks tersebut hanya akan muncul di adegan pertama kecuali jika kamu menetapkannya ke grup tertentu seperti contoh di atas.
+
+> Tidak perlu memberi nomor pada grup jika semunya memliki pasangan jumlah yang sama dengan jumlah kalimat.
+
+## Berikut adalah tampilan di dalam HTML bidang `Sentence`:
+```html
+<span class="group2">The future seems bleak...</span><span class="group3">Looks like I have a hard path ahead.</span>
+```
+ <video src="/page_images/project/DenChou/docs/assets/Front_Scene_Switching_Preview.mp4" controls autoplay loop muted playsinline></video>
+
+## Contoh format `Sentence` lainnya:
+```html
+<span class="group">Something you wanna try?</span><span class="group">Why don't we test it out?</span><span class="group">Don't you want to try it out?</span>
+```
+
+```html
+<span class="group"><span class="highlight">試したい</span>こと？</span><span class="group"><span class="highlight">試して</span>みるか？</span><span class="group"><span class="highlight">試したくない</span>か</span>
+```
+
+## Contoh format `SentenceFurigana`:
+```html
+<span class="group"><span class="term"><ruby>試<rt>ため</rt></ruby>したい</span><span class="term">こと</span><span class="term">？</span></span><span class="group"><span class="term"><ruby>試<rt>ため</rt></ruby>して</span><span class="term">みるか</span><span class="term">？</span></span><span class="group"><span class="term"><ruby>試<rt>ため</rt></ruby>したくない</span><span class="term">か</span></span>
+```
+
+## Contoh format `miscInfo`:
+```html
+<span class="group">My Dress-Up Darling • Season 2, Episode 5 • 0:17:53</span><span class="group">16bit Sensation: Another Layer • Season 1, Episode 13 • 0:16:21</span><span class="group">The Irregular at Magic High School • Season 1, Episode 11 • 0:21:58</span>
+```

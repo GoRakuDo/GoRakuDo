@@ -322,20 +322,20 @@
 /* ========== TQA SPLIT LAYOUT (DESKTOP 2-COLUMN) ========== */
 .tqa-split {
   display: block;
-  margin: 2rem 0;
+  margin: 1rem 0;
 }
 
 .tqa-split > :last-child {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 @media (min-width: 1024px) {
   .tqa-split {
     display: grid;
     align-items: start;
-    gap: 2.5rem;
+    gap: 2rem;
     grid-template-columns: 1.2fr 1fr;
-    margin: 3rem 0;
+    margin: 1.5rem 0;
   }
 
   .tqa-split > * {
@@ -486,4 +486,12 @@
   font-size: 0.875rem;
   letter-spacing: 0.15em;
   opacity: 0.85;
+}
+
+/* Horizontal rule — styled as subtle section divider */
+.tqa-article hr {
+  height: 1px;
+  margin: 2.5rem 0;
+  border: none;
+  background: oklch(65% 0.18 280deg / 0.2);
 }
