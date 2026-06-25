@@ -788,7 +788,9 @@
 
 /* Code blocks (terminal style) */
 .tqa-article :is(pre) {
-  overflow-x: auto;
+  /* stylelint-disable declaration-no-important */
+  overflow-x: hidden !important;
+  /* stylelint-enable declaration-no-important */
   margin: 1.5rem 0;
   padding: 1.25rem 1.5rem;
   border: 1px solid oklch(65% 0.18 280deg / 0.25);
@@ -797,6 +799,8 @@
   font-family: var(--font-code, 'Fira Code', monospace);
   font-size: 0.875rem;
   line-height: 1.6;
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
 }
 
 /* Blockquotes — Quest Codex hybrid (A+C):
