@@ -373,8 +373,8 @@
   margin-bottom: 0.5rem;
 }
 
-/* Images */
-.tqa-article :is(img) {
+/* Images & Videos */
+.tqa-article :is(img, video) {
   display: block;
   max-width: 100%;
   height: auto;
@@ -384,11 +384,25 @@
 }
 
 @media (min-width: 768px) {
+  /* Cap portrait images */
   .tqa-article :is(img) {
     width: auto;
     max-width: 24rem;
     height: auto;
     max-height: 32rem;
+  }
+
+  /* GIFs are animation content like videos — give them more width */
+  .tqa-article :is(img[src$=".gif"]) {
+    width: 100%;
+    max-width: 42rem;
+    height: auto;
+  }
+
+  /* Videos are usually landscape screencasts, let them be wider */
+  .tqa-article :is(video) {
+    width: 100%;
+    max-width: 42rem;
   }
 }
 

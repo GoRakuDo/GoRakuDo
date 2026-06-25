@@ -1,20 +1,18 @@
 ---
-title: "Preferensi Kamus & Pengalih Definisi"
+title: "Preferensi Definisi Kamus"
 parentProject: "denchou"
-order: 8
+order: 5
 category: features
 status: "published"
 ---
 # Preferensi Kamus & Pengalih Definisi
-Ini mengontrol definisi mana yang muncul pertama kali saat kamu membuka jawaban, dan bagaimana kamu beralih di antara kamus-kamus yang berbeda.
+Ini mengontrol definisi mana yang muncul pertama kali saat kamu membalik melihat jawaban kartu Anki, dan kalian bisa beralih di antara kamus-kamus yang berbeda.
 
 ### Pengalih Definisi
-    ![type:video](/page_images/project/DenChou/docs/assets/definition_toggle_preview.mp4) }
+<video src="/page_images/project/DenChou/docs/assets/definition_toggle_preview.mp4" controls autoplay loop muted playsinline></video>
 
-### Preferensi Kamus
-    ![type:video](/page_images/project/DenChou/docs/assets/dictionary_preference_preview.mp4) }
-
-*   **Logika Prioritas:** Kartu menentukan apa yang akan ditampilkan berdasarkan urutan prioritas berikut:
+*   **Preferensi Kamus:** Isi bagian `dictionaryPreference` untuk menetapkan definisi kamus apa yang muncul pertama kali.
+*   **Logika Prioritas:** Kartu secara otomatis akan menentukan apa yang akan ditampilkan berdasarkan urutan prioritas berikut ini:
     <ol type="1">
         <li><strong>Teks Pilihan (Selection Text):</strong> Jika kamu menandai (highlight) teks saat membuat kartu (menggunakan Yomitan), bagian tersebut akan muncul pertama kali.</li>
         <li><strong>Memori:</strong> Kartu mengingat apakah terakhir kali kamu melihat "Definisi", "Glosarium", "Teks Pilihan" atau kamus glosarium tertentu melalui <code>localStorage</code>, dan menyimpannya sampai Anki ditutup.</li>
@@ -22,7 +20,6 @@ Ini mengontrol definisi mana yang muncul pertama kali saat kamu membuka jawaban,
         <li><strong>Preferensi Generik:</strong> Jika preferensi disetel menjadi "glossary" saja, kartu akan membuka kamus pertama yang tersedia dalam daftar glosarium.</li>
         <li><strong>Definisi Utama:</strong> Jika tidak ada kondisi di atas yang terpenuhi, kartu secara default akan menampilkan satu kamus yang dipilih untuk definisi.</li>
     </ol>
-    
 *   **Navigasi:**
     *   **Zona Klik:** Tepi kiri dan kanan layar dapat diklik. Mengeklik **Kanan** akan memutar maju (cycle forward); mengeklik **Kiri** akan memutar mundur (cycle backward).
     *   **Urutan Putaran:** Teks Pilihan ↔ Definisi ↔ Kamus Glosarium 1... ↔ Kamus Glosarium 2...

@@ -1,29 +1,25 @@
 ---
 title: "Mode Gelap Kustom"
 parentProject: "denchou"
-order: 6
+order: 2
 category: features
 status: "published"
 ---
 # Mode Gelap Kustom
 
-Beralih dengan mudah antara tema default (mode terang atau mode gelap bawaan) dan mode gelap kontras tinggi dengan latar belakang hitam pekat menggunakan tombol khusus.
+Kalian bisa mengganti tema default (mode terang atau mode gelap bawaan), dan mode gelap kontras tinggi menggunakan tombol khusus dibagian kiri atas.
 
 ![Mode Gelap Kustom](/page_images/project/DenChou/docs/assets/custom_dark_mode.gif)
 
 *   **Pintasan Default:** 
-    * **S**: Beralih mode gelap kustom 
-
-    Kamu bisa mengubah ini di bagian `/* CUSTOM SHORTCUTS */` pada CSS:
+    **S**: Beralih mode gelap kustom. Kamu bisa mengubah ini di bagian `/* CUSTOM SHORTCUTS */` pada CSS:
 
     ```css
     --toggle-custom-dark-mode-key: c; /* Atur tombol untuk beralih mode gelap kustom */
     ```
-
 *   **Visibilitas**
     Kamu bisa menyembunyikan tombol pengalih mode gelap kustom di bagian `/* Component Visibility */` pada CSS:
     ```css
     --custom-dark-mode-visibility: 1; /* "0" untuk menyembunyikan tombol pengalih mode gelap kustom */
     ```
-
-    Atur nilai ini ke `0` untuk menghapusnya sama sekali.
+    Ubah nilai ini ke `0` untuk menghapusnya sama sekali.
