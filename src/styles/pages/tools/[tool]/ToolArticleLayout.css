@@ -787,10 +787,9 @@
 }
 
 /* Code blocks (terminal style) */
+/* stylelint-disable declaration-no-important */
 .tqa-article :is(pre) {
-  /* stylelint-disable declaration-no-important */
   overflow-x: hidden !important;
-  /* stylelint-enable declaration-no-important */
   margin: 1.5rem 0;
   padding: 1.25rem 1.5rem;
   border: 1px solid oklch(65% 0.18 280deg / 0.25);
@@ -802,6 +801,7 @@
   white-space: pre-wrap !important;
   overflow-wrap: anywhere !important;
 }
+/* stylelint-enable declaration-no-important */
 
 /* Blockquotes — Quest Codex hybrid (A+C):
    A: left Blurple rail + transparent background + Pixelify Sans marker
