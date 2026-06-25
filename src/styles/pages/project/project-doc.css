@@ -315,6 +315,39 @@
   color: var(--clr-text-primary);
 }
 
+/* ========== TQA SPLIT LAYOUT (DESKTOP 2-COLUMN) ========== */
+.tqa-split {
+  display: block;
+  margin: 2rem 0;
+}
+
+.tqa-split > :last-child {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .tqa-split {
+    display: grid;
+    align-items: start;
+    gap: 2.5rem;
+    grid-template-columns: 1.2fr 1fr;
+    margin: 3rem 0;
+  }
+
+  .tqa-split > :last-child {
+    position: sticky;
+    top: calc(var(--navbar-height, 80px) + 2rem);
+    margin-top: 0;
+  }
+}
+
+.tqa-split img {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 0.5rem;
+}
+
 /* Inner content spacing */
 .tqa-article :is(details) > :not(summary) {
   margin-right: 0.5rem;
