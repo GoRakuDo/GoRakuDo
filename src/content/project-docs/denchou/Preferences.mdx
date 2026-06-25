@@ -1,43 +1,29 @@
 ---
 title: "Pengaturan Preferensi"
 parentProject: "denchou"
-order: 22
-category: setup
+order: 1
+category: features
 status: "published"
 ---
 # Pengaturan Preferensi
 
-Menu yang memungkinkan kamu menyesuaikan tipe kartu langsung di dalam peninjau (reviewer), tanpa memerlukan pengetahuan CSS!
+Pengaturan Menu DenChou yang memungkinkan kamu menyesuaikan tipe kartu langsung di dalam peninjau (reviewer), tanpa memerlukan pengetahuan CSS!
 
 ![Pratinjau Pengaturan](/page_images/project/DenChou/docs/assets/preferences_preview.mp4)
 
 ### Cara Kerja
 
-**1. Pratinjau Real-Time**
-
-Semua penyesuaian yang dilakukan di menu Preferensi akan langsung diterapkan pada kartu saat ini. Kamu bisa mengubah ukuran fonta, warna, spasi, opsi tata letak, dan lainnya, lalu melihat hasilnya seketika, sama seperti yang kamu lakukan di editor. (Pratinjau tidak mencerminkan 100% dari opsi yang tersedia, beberapa di antaranya memiliki batasan yang membuatnya baru terperbarui dengan benar setelah kamu menutup jendela modal.)
-
-**2. Menyimpan Perubahan**
-
-Ada dua jenis perubahan:
-
-*   **Sementara (Temporary):** 
-Pengaturan disimpan secara lokal selama sesi kamu berlangsung. Pengaturan tersebut tetap aktif selama kamu terus meninjau kartu.
-
-*   **Permanen (Permanent):** 
-Untuk menerapkan perubahanmu secara permanen, klik **"Save to Anki"**.
-
-    *  Ini akan langsung menulis nilai yang diperbarui ke model kartu.
-    *  Setelah disimpan, penyimpanan sementara akan dihapus untuk memastikan bahwa edit manual di masa mendatang pada CSS kartu kamu di editor Anki tidak tertimpa oleh pengaturan yang kedaluwarsa.
-    
-Beberapa opsi sebelumnya mungkin masih bertahan setelah kamu menyimpan dan menutup Preferensi, jadi disarankan untuk keluar dan masuk kembali ke peninjau deck.
+1. **Pratinjau Real-Time** Semua penyesuaian yang dilakukan di menu Preferensi akan langsung diterapkan secara langsung setelah menekan "Save to Anki".
+2. **Sistem Perubahan Prefrensi** Ada dua jenis:
+    *   **Sementara (Temporary):** Pengaturan disimpan secara lokal selama sesi kamu berlangsung. Pengaturan tersebut tetap aktif selama kamu terus melakukan review kartu.
+    *   **Permanen (Permanent):** Untuk menerapkan perubahanmu secara permanen, klik **"Save to Anki"**. Ini secara langsung akan menyimpan prefrensi yang kamu rubah, dan langsung diperbarui ke model kartu.
  
 ### Sistem Preset
 *  Preset disimpan di file khusus: (`_denchou_presets.js`) yang terletak di folder `collection.media` Anki kamu.
-*  File preset dikelola oleh pengguna. Memperbarui templat kartu di versi mendatang tidak akan menimpa preset milikmu. Preset tersebut tidak akan disentuh kecuali jika kamu secara eksplisit membuat, mengganti nama, atau menghapus preset melalui menu pengaturan.
-*  Karena file preset disimpan di folder media, preset akan disinkronkan di berbagai perangkat. (Hanya dapat diedit di PC.)
+*  File preset dikelola oleh pengguna. Dengan preset jika kamu update template kartu di versi mendatang tidak akan menimpa preset milikmu. Preset tersebut tidak akan tersentuh kecuali jika kamu sendiri secara eksplisit membuat, mengganti nama, atau menghapus preset melalui menu pengaturan.
+*  Karena file preset disimpan di folder media, preset akan tersinkronkan di berbagai perangkat. (Tapi hanya dapat diedit di PC.)
 
 > **Persyaratan**
 >
-> Sama seperti Kanji Hover, add-on **AnkiConnect** diperlukan untuk fungsi **"Save to Anki"** dan untuk menyimpan preset.
-> Di perangkat mobile, menu pengaturan tetap berfungsi, tetapi setiap perubahan bersifat sementara dan hanya bertahan untuk sesi saat ini.
+> Untuk menyimpan prefrensi-mu add-on **AnkiConnect** diperlukan, agar fungsi **"Save to Anki"** dapat menyimpan preset.
+> Di perangkat mobile (AnkiDroid), menu pengaturan tetap berfungsi, tetapi setiap perubahan bersifat sementara (tidak tersimpan permanent) dan hanya bertahan untuk satu sesi review.
