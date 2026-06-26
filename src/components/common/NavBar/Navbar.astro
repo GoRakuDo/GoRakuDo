@@ -12,18 +12,6 @@ export interface Props {
 
 // ========== ASTRO-NATIVE DEFAULT PROPS ==========
 const { className = '' } = Astro.props;
-
-// ========== NAVIGATION CONFIGURATION ==========
-// REASONING: Centralized route management following DRY principle
-const NAV_ROUTES = {
-  Dokumentasi: { path: '/docs', label: 'Dokumentasi' },
-} as const;
-
-// ========== ASTRO-NATIVE NAVIGATION ITEMS ==========
-const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
-  key,
-  ...route,
-}));
 ---
 
 <script is:inline>
@@ -50,39 +38,6 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
 
       <!-- Center: Navigation Links (Desktop) -->
       <div class='nav-center desktop-only'>
-        {
-          navItems.map(item => (
-            <a
-              href={item.path}
-              class='nav-item'
-              data-route={item.key}
-              data-path={item.path}
-            >
-              <svg
-                class='nav-svg-icon'
-                width='16'
-                height='16'
-                viewBox='0 0 24 24'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-                aria-hidden='true'
-              >
-                <path
-                  d='M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20'
-                  stroke='currentColor'
-                  stroke-width='2'
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                />
-              </svg>
-              {item.label}
-            </a>
-          ))
-        }
-      </div>
-
-      <!-- Right: Actions & Mobile Menu -->
-      <div class='nav-right'>
         <button
           class='nav-item'
           data-action='metodologi'
@@ -154,6 +109,66 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           </svg>
           Panduan
         </button>
+        <a
+          href='/tutorial'
+          class='nav-item'
+          data-route='Tutorial'
+          data-path='/tutorial'
+        >
+          <svg
+            class='nav-svg-icon'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'
+          >
+            <path
+              d='M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m8 6 2-2'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m18 16 2-2'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m15 5 4 4'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+          </svg>
+          Tutorial
+        </a>
         <button
           class='nav-item'
           data-action='menu'
@@ -175,6 +190,9 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
           Menu
         </button>
       </div>
+
+      <!-- Right: Actions & Mobile Menu -->
+      <div class='nav-right'>
 
       <!-- Mobile Top Action Button (BottomNavBar visibility toggle) -->
       <button
@@ -598,21 +616,24 @@ const navItems = Object.entries(NAV_ROUTES).map(([key, route]) => ({
       /* Center links take up space, centered */
       flex: 1 1 auto;
       justify-content: center;
-      gap: var(--navbar-gap-left);
+      gap: 0.4rem;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-center {
+        gap: 0.4rem;
+      }
     }
 
     .nav-right {
-      display: var(--navbar-nav-display);
-
-      /* Right actions (Desktop only) */
-      flex: 0 0 auto;
+      display: flex;
       justify-content: flex-end;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     @media (min-width: 1024px) {
       .nav-right {
-        gap: 0.75rem;
+        display: none;
       }
     }
 
