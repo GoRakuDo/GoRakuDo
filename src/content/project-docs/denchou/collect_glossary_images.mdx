@@ -1,21 +1,17 @@
 ---
-title: "Kumpulkan Gambar Glosarium"
+title: "Pengunaan Gambar dari Kamus"
 parentProject: "denchou"
-order: 4
-category: resources
+order: 15
+category: features
 status: "published"
 ---
-# Kumpulkan Gambar Glosarium
+# Gambar dari Kamus Glosarium
 
-Menampilkan gambar dari kamus glosarium di dalam wadah gambar (picture container). Kamu bisa menggunakan tombol kiri dan kanan pada gambar untuk menjelajahinya tanpa perlu mencari langsung di kamus. Jika kartu tidak memiliki gambar tetapi kamus glosarium memilikinya, gambar tersebut akan ditampilkan secara otomatis di dalam wadah gambar.
+Fitur ini diteruskan dari pendahulu DenChou, yaitu Senren. Kalian dapat menggunakan kembali, atau menampilkan gambar dari kamus glosarium untuk wadah gambar (picture container). Jika kartu tidak memiliki gambar tetapi kamus glosarium memilikinya, gambar tersebut akan ditampilkan secara otomatis di dalam wadah gambar.
 
-### Diaktifkan
-    ![terang](/page_images/project/DenChou/docs/assets/images/collect_glossary_images_enabled.png)
+    ![Gambar dari Kamus Glosarium](/page_images/project/DenChou/docs/assets/images/collect_glossary_images.gif)
 
-### Dinonaktifkan
-    ![gelap](/page_images/project/DenChou/docs/assets/images/collect_glossary_images_disabled.png)
-
-Fitur ini mungkin menyebabkan masalah dengan kamus yang memerlukan CSS tambahan di Anki. Jika kamu menemui masalah, disarankan untuk menonaktifkannya melalui variabel di bagian `/* Default States (true/false) */` pada CSS:
+Fitur ini dapat menyebabkan masalah dengan kamus yang memerlukan CSS tambahan di Anki. Jika kamu menemui masalah, disarankan untuk menonaktifkannya melalui variabel di bagian `/* Default States (true/false) */` pada CSS:
 ```css
 --collect-glossary-images: true; /* Mengizinkan gambar glosarium dikumpulkan ke dalam wadah gambar */
 ```

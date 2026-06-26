@@ -1,15 +1,15 @@
 ---
-title: "Persiapan Yomipv"
+title: "Setup: Yomipv"
 parentProject: "denchou"
-order: 31
-category: setup
+order: 1
+category: resources
 status: "published"
 ---
 # Persiapan Yomipv
 
-Gunakan Yomipv untuk membuat kartu tanpa perlu keluar dari MPV atau mengganggu proses imersi (immersion) kamu.
-
 <video src="/page_images/project/DenChou/docs/assets/yomipv_demo.mp4" controls autoplay loop muted playsinline></video>
+
+Gunakan Yomipv untuk membuat kartu tanpa perlu keluar dari MPV atau mengganggu proses imersi (immersion) kamu.
 
 ## Persyaratan
 
@@ -34,7 +34,6 @@ Gunakan Yomipv untuk membuat kartu tanpa perlu keluar dari MPV atau mengganggu p
      ```
      git clone https://github.com/BrenoAqua/Yomipv && xcopy /e /i /y Yomipv . && rd /s /q Yomipv && cd scripts\yomipv\lookup-app && npm install
      ```
-   
    - Linux/macOS: `~/.config/mpv/`
      ```
      git clone https://github.com/BrenoAqua/Yomipv && cp -rn Yomipv/* . && rm -rf Yomipv && cd scripts/yomipv/lookup-app && npm install
@@ -44,7 +43,6 @@ Gunakan Yomipv untuk membuat kartu tanpa perlu keluar dari MPV atau mengganggu p
 
 **Konfigurasi Pengaturan**:
    - Buka `script-opts/yomipv.conf` dan perbarui nama deck/tipe kartu Anki kamu serta pemetaan bidangnya (field mappings)
-
 **Layanan Eksternal**:
    - Pastikan Anki berjalan dengan AnkiConnect yang aktif
    - Pastikan Yomitan Api berjalan dan browser tempat ekstensi Yomitan terinstal dalam keadaan terbuka, serta kamu telah menginstal kamus-kamus

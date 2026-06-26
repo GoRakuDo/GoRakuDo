@@ -7,14 +7,13 @@ status: "published"
 ---
 # Kartu NSFW
 
-Tambahkan tag `NSFW` pada kartu mana pun, dan gambar yang terkait akan secara otomatis diburamkan saat ditampilkan. Mengeklik gambar akan mengungkapnya.
+Tambahkan tag `NSFW` pada kartu apapun sehingga gambar yang ada dalam kartu akan secara otomatis diburamkan saat ditampilkan. Mengeklik gambar akan menampilkannya.
 
-![Pemblururan Gambar](/page_images/project/DenChou/docs/assets/images/Image_Blurring.gif)
+<video src="/page_images/project/DenChou/docs/assets/Image_Blurring.mp4" controls autoplay loop muted playsinline></video>
 
-Selain itu, kartu yang ditandai sebagai `NSFW` dapat membuat audio kalimatnya dibisukan (mute) pada awalnya (kamu masih bisa memutarnya menggunakan tombol putar ulang atau pintasan).
-> Dinonaktifkan secara default.
+Selain itu, kartu yang ditandai dengan tag `NSFW` akan membuat audio menjadi dibisukan (mute). Kalian masih bisa memutarnya menggunakan tombol putar ulang atau pintasan.
 
-Opsi-opsi ini dapat dikonfigurasi melalui variabel di bagian `/* Default States (true/false) */` pada CSS:
+Pengaturan ini dapat dikonfigurasi melalui variabel di bagian `/* Default States (true/false) */` pada CSS:
 ```css
 --blur-nsfw-picture: true;  /* Buramkan gambar pada kartu NSFW */
 --mute-nsfw-audio:   false; /* Bisukan audio kalimat pada kartu NSFW */

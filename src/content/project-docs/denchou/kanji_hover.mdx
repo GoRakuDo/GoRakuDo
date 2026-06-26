@@ -1,33 +1,24 @@
 ---
 title: "Kanji Hover"
 parentProject: "denchou"
-order: 16
+order: 11
 category: features
 status: "published"
 ---
 # Kanji Hover
 
-Arahkan kursor (hover) di atas kanji apa pun dalam suatu kata untuk menampilkan hingga lima kata lain di koleksimu yang menggunakan kanji yang sama. Jika ada lebih banyak kartu yang cocok, opsi “**Show More**” (Tampilkan Lebih Banyak) akan muncul. Mengeklik kata terkait di dalam tooltip akan membuka kartu yang bersangkutan di Peramban Kartu (Card Browser) Anki.
+Fitur ini diteruskan dari pendahulu DenChou, yaitu SenRen. Kalian bisa arahkan kursor (hover) di atas kanji apa pun untuk menampilkan hingga lima kosakata lainnya yang menggunakan kanji yang sama di koleksi deck-mu. Jika ada lebih banyak kartu, opsi “**Show More**” (Tampilkan Lebih Banyak) akan muncul. Mengklik kosakata terkait di dalam tooltip akan membuka kartu yang bersangkutan di Daftar Kartu (Card Browser) Anki.
 
-### Dengan Warna Pitch
-     ![Dengan Warna Pitch](/page_images/project/DenChou/docs/assets/images/kanji_hover_pitch_preview.gif)
+<video src="/page_images/project/DenChou/docs/assets/kanji_hover_pitch_preview.mp4" controls autoplay loop muted playsinline></video>
 
-### Tanpa Warna Pitch
-     ![Tanpa Warna Pitch](/page_images/project/DenChou/docs/assets/images/kanji_hover_no_pitch_preview.gif)
+## Kustomisasi
 
-### Kartu yang belum ditinjau
-     ![Kartu yang belum ditinjau](/page_images/project/DenChou/docs/assets/images/kanji_hover_unreviewed_preview.png)
-
-### Kustomisasi
-
-Kamu bisa mengontrol bagaimana kanji, penurunan pitch (pitch downstep), dan kata-kata terkait disorot di dalam tooltip melalui variabel di bagian `/* PITCH ACCENT SETTINGS */` pada CSS:
+Kamu bisa mengontrol bagaimana kanji, penurunan pitch (pitch downstep), dan kata-kata terkait diurutkan di dalam tooltip melalui variabel di bagian `/* PITCH ACCENT SETTINGS */` pada CSS:
 ```css
 --kanji-hover-pitch-colors:    true; /* "false" untuk menonaktifkan pewarnaan pitch downstep di Kanji Hover */
---kanji-hover-pitch-highlight: true; /* "false" agar warna pitch berhenti menimpa sorotan kata + kalimat di Kanji Hover */
+--kanji-hover-pitch-highlight: true; /* "false" agar warna pitch berhenti menimpa urutan kata + kalimat di Kanji Hover */
 ```
 
 Kedua opsi aktif secara default. Untuk menonaktifkan pewarnaan pitch sepenuhnya, atur kedua variabel ke `false`.
 
-> **Hanya untuk PC**
->
-> Fitur ini saat ini hanya berfungsi pada Anki versi desktop.
+> **Hanya untuk PC**: Fitur ini saat ini hanya berfungsi pada Anki versi desktop.

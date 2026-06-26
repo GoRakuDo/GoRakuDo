@@ -6,17 +6,16 @@ category: features
 status: "published"
 ---
 # Preferensi Kamus & Pengalih Definisi
-Ini mengontrol definisi mana yang muncul pertama kali saat kamu membalik melihat jawaban kartu Anki, dan kalian bisa beralih di antara kamus-kamus yang berbeda.
+Kalian bisa menentukan definisi mana yang muncul pertama kali saat kamu membalik melihat jawaban kartu Anki, dan kalian bisa beralih di antara kamus-kamus yang berbeda.
 
-### Pengalih Definisi
 <video src="/page_images/project/DenChou/docs/assets/definition_toggle_preview.mp4" controls autoplay loop muted playsinline></video>
 
 *   **Preferensi Kamus:** Isi bagian `dictionaryPreference` untuk menetapkan definisi kamus apa yang muncul pertama kali.
 *   **Logika Prioritas:** Kartu secara otomatis akan menentukan apa yang akan ditampilkan berdasarkan urutan prioritas berikut ini:
     <ol type="1">
         <li><strong>Teks Pilihan (Selection Text):</strong> Jika kamu menandai (highlight) teks saat membuat kartu (menggunakan Yomitan), bagian tersebut akan muncul pertama kali.</li>
-        <li><strong>Memori:</strong> Kartu mengingat apakah terakhir kali kamu melihat "Definisi", "Glosarium", "Teks Pilihan" atau kamus glosarium tertentu melalui <code>localStorage</code>, dan menyimpannya sampai Anki ditutup.</li>
-        <li><strong>Nama Kamus Tertentu:</strong> Jika kamu menetapkan preferensi di bidang (field) <code>dictionaryPreference</code> (misalnya, "新選国語辞典　第十版"), kartu akan mencoba membuka kamus tertentu tersebut di dalam glosarium terlebih dahulu.</li>
+        <li><strong>Kondisi Kamus Terakhir:</strong> Kartu mengingat apakah terakhir kali kamu melihat "Definisi", "Glosarium", "Teks Pilihan" atau kamus glosarium tertentu melalui <code>localStorage</code>, dan menyimpannya sampai Anki ditutup.</li>
+        <li><strong>Nama Kamus Tertentu:</strong> Jika kamu menetapkan preferensi di bidang (field) <code>dictionaryPreference</code> (misalnya, "新選国語辞典　第十版"), kartu akan mencoba membuka kamus tersebut di dalam glosarium terlebih dahulu.</li>
         <li><strong>Preferensi Generik:</strong> Jika preferensi disetel menjadi "glossary" saja, kartu akan membuka kamus pertama yang tersedia dalam daftar glosarium.</li>
         <li><strong>Definisi Utama:</strong> Jika tidak ada kondisi di atas yang terpenuhi, kartu secara default akan menampilkan satu kamus yang dipilih untuk definisi.</li>
     </ol>

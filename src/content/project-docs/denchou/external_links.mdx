@@ -1,7 +1,7 @@
 ---
 title: "Tautan Eksternal"
 parentProject: "denchou"
-order: 3
+order: 4
 category: features
 status: "published"
 ---
@@ -9,24 +9,23 @@ status: "published"
 
 ![Pratinjau Tautan Eksternal](/page_images/project/DenChou/docs/assets/images/External_Links_Preview.png)
 
-Mengeklik salah satu tombol ini akan mengarahkan kamu ke situs masing-masing, dan mencari target kosakata secara otomatis.
-
-Situs yang Didukung:
-
+Mengeklik salah satu tombol ini akan mengarahkan kamu ke situs masing-masing, dan mencari target kosakata secara otomatis. Situs yang Didukung:
 *   [JPDB](https://jpdb.io/)
 *   [Jisho](https://jisho.org/)
 *   [Google Images](https://images.google.com/)
 *   [Nadeshiko](https://nadeshiko.co/)
 *   [Immersion Kit](https://v2.immersionkit.com/)
 
-Untuk menghapus Tautan Eksternal sepenuhnya, buka bagian `/* Component Visibility */` pada CSS:
+Untuk menghilangkan Tautan Eksternal sepenuhnya, buka bagian `/* Component Visibility */` pada CSS:
 
 ```css
 --external-links-visibility: 1; /* "0" untuk menyembunyikan tautan eksternal */
 ```
 Fitur ini aktif secara default. Ubah menjadi `0` untuk menonaktifkannya.
 
-Jika kamu ingin menambahkan atau menghapus situs apa pun yang didukung, buka bagian `<!-- External Links -->` pada Template Belakang (Back Templatee):
+---
+
+Jika kamu ingin menambahkan atau menghapus situs, buka bagian `<!-- External Links -->` pada Template Belakang (Back Templatee):
 
 ```html
 <!-- Jpdb -->

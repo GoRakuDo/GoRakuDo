@@ -1,38 +1,28 @@
 ---
 title: "Lightbox Gambar"
 parentProject: "denchou"
-order: 17
+order: 9
 category: features
 status: "published"
 ---
 # Lightbox Gambar
 
-Klik gambar untuk melihatnya dalam tampilan lightbox overlay yang diperbesar dan terfokus.
+<video src="/page_images/project/DenChou/docs/assets/Lightbox_Preview.mp4" controls autoplay loop muted playsinline></video>
+
+Kalian bisa klik gambar untuk melihatnya dalam tampilan lightbox overlay yang lebih besar.
 
 *   **Zoom & Geser (Pan):** Zoom mengikuti kursor; klik dan seret untuk menggeser gambar yang di-zoom.
-*   **Beberapa Gambar:** Jika terdapat beberapa gambar (misalnya, di bidang `picture` atau terdeteksi di entri glosarium), kamu bisa bernavigasi di antaranya menggunakan tombol panah atau tombol di layar. Hanya gambar pertama yang ditampilkan pada tampilan kartu utama.
+*   **Beberapa Gambar:** Jika terdapat beberapa gambar (misalnya, di bidang `picture` atau terdeteksi di entri glosarium), kamu bisa bernavigasi di antaranya menggunakan tombol panah pada tombol di layar. Hanya gambar pertama yang ditampilkan pada tampilan kartu utama.
 *   **Gambar Glosarium:** Gambar yang ditemukan di dalam definisi glosarium (seperti dari 画像付き-絵でわかる日本語) dapat ditampilkan di dalam lightbox.
 *   **Tampilan Kisi Lightbox (Lightbox Grid View):** Beralih antara tampilan gambar tunggal default dan tampilan kisi yang menampilkan gambar mini (thumbnail) dari semua gambar yang tersedia.
-
-    ### Pratinjau 1
-        ![GIF Pratinjau Lightbox 1](/page_images/project/DenChou/docs/assets/images/Lightbox_Preview_1.gif)
-
-    ### Pratinjau 2
-        ![GIF Pratinjau Lightbox 2](/page_images/project/DenChou/docs/assets/images/Lightbox_Preview_2.gif)
-
-    ### Tampilan Default
-        ![Tampilan Default Lightbox](/page_images/project/DenChou/docs/assets/images/Lightbox_Default_View.png)
-
-    ### Tampilan Kisi
-        ![Tampilan Kisi Lightbox](/page_images/project/DenChou/docs/assets/images/Lightbox_Grid_View.png)
-
 *   **Pintasan Default:** 
     * **Q**: Beralih lightbox
     * **Shift+Q**: Beralih tampilan kisi lightbox
 
-    Kamu bisa mengubahnya di bagian `/* CUSTOM SHORTCUTS */` pada CSS:
+---
 
-    ```css
-    --toggle-picture-lightbox-key:      q;       /* Atur tombol untuk beralih lightbox */
-    --toggle-picture-lightbox-grid-key: shift+q; /* Atur tombol untuk beralih kisi lightbox */
-    ```
+## Untuk pengaturan shortcut dapat dirubah melalui `/* CUSTOM SHORTCUTS */` pada CSS:
+```css
+--toggle-picture-lightbox-key:      q;       /* Atur tombol untuk beralih lightbox */
+--toggle-picture-lightbox-grid-key: shift+q; /* Atur tombol untuk beralih kisi lightbox */
+```

@@ -1,7 +1,7 @@
 ---
 title: "Tampilan Cara Baca"
 parentProject: "denchou"
-order: 23
+order: 13
 category: features
 status: "published"
 ---
@@ -9,24 +9,23 @@ status: "published"
 
 Menyembunyikan cara baca ketika sebuah kata ditulis sepenuhnya dalam kana sambil mempertahankan aksen pitch, mencegah informasi redundan dan menjaga tata letak tetap bersih.
 
-### Dinonaktifkan
-    ![Sebelum](/page_images/project/DenChou/docs/assets/images/No_Duplicate_Kana_Before.png)
+<div class="tqa-split">
+<div>
 
-### Diaktifkan
-    ![Sesudah](/page_images/project/DenChou/docs/assets/images/No_Duplicate_Kana.png)
-
-**Cara Penggunaan:**
-
-Untuk mengaktifkan fitur ini, kamu perlu mengedit `Styling` di templat kartu Anki kamu.
-
+**Cara Penggunaan:** Untuk mengaktifkan fitur ini, kamu perlu mengedit `Styling` di templat kartu Anki kamu.
 1.  **Aktifkan Penggantian Kana**: Cari variabel `--no-duplicate-kana` dan atur nilainya ke `true`. Ini akan mengganti kata kana dengan cara bacanya jika keduanya sama.
-
     ```css
     --no-duplicate-kana: true;
     ```
-
 2.  **Sesuaikan Ketebalan Aksen Pitch**: Jika garis aksen pitch tampak terlalu tebal atau tipis setelah penggantian, kamu bisa menyesuaikan variabel `--only-kana-pitch-size`. Nilai yang lebih kecil membuat garis lebih tipis, sedangkan nilai yang lebih besar membuatnya lebih tebal.
-
     ```css
     --only-kana-pitch-size: 0.08em;
     ```
+
+</div>
+<div>
+
+![Perbedaan No Duplicate Kana](/page_images/project/DenChou/docs/assets/images/No_Duplicate_Kana.gif)
+
+</div>
+</div>
