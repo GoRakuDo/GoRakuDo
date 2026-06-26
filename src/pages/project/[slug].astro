@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 const { project } = Astro.props as { project: CollectionEntry<'projects'> };
 
 const activeDocSlug = undefined;
+const seoTitle = `${project.data.title}: Template Kartu Anki・GoRakuDo 語楽道`;
 
 const allDocs = await getCollection('project-docs');
 const projectDocs: CollectionEntry<'project-docs'>[] = allDocs.filter(
@@ -24,4 +25,4 @@ const projectDocs: CollectionEntry<'project-docs'>[] = allDocs.filter(
 const docsCategories = buildDocsCategories(projectDocs, project.slug);
 ---
 
-<ProjectLayout project={project} activeDocSlug={activeDocSlug} docsCategories={docsCategories} />
+<ProjectLayout project={project} activeDocSlug={activeDocSlug} docsCategories={docsCategories} seoTitle={seoTitle} />

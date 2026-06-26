@@ -24,18 +24,22 @@ const { project, activeDocSlug, docsCategories } = Astro.props as {
       title: string;
       tagline: string;
       description: string;
+      ogImage?: string;
       githubUrl?: string;
     };
   };
   activeDocSlug?: string;
   docsCategories: DocsCategory[];
+  seoTitle?: string;
 };
-const { title, tagline, description, githubUrl } = project.data;
+const { title, tagline, description, ogImage, githubUrl } = project.data;
+const pageTitle = Astro.props.seoTitle ?? `${title} - Project LP | GoRakuDo`;
 ---
 
 <BaseLayout 
-  title={`${title} - Project LP | GoRakuDo`} 
+  title={pageTitle}
   description={description}
+  ogImage={ogImage}
   pageType="website"
   lang="id"
 >

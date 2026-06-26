@@ -117,6 +117,7 @@ const projectsCollection = defineCollection({
     publishedDate: z.string(),
     modifiedDate: z.string().optional(),
     heroImage: z.string().optional(),
+    ogImage: z.string().optional(),
     accentColor: z.string().optional(), // CSS OKLCH color string
     githubUrl: z.string().url().optional(),
     releaseStatus: z.enum(['Pre-Release', 'Stable', 'Beta', 'Archived']).default('Stable'),

@@ -29,9 +29,10 @@ const { Content } = await render(doc);
 
 const docsCategories = buildDocsCategories(allDocs, project.slug);
 const docSlug = getProjectDocSlug(doc.id);
+const seoTitle = `${project.data.title}: ${doc.data.title}・GoRakuDo 語楽道`;
 ---
 
-<ProjectLayout project={project} activeDocSlug={docSlug} docsCategories={docsCategories}>
+<ProjectLayout project={project} activeDocSlug={docSlug} docsCategories={docsCategories} seoTitle={seoTitle}>
   <div class='tqa-page'>
     <div class='tqa-grid'>
       <main class='tqa-main' role='main'>
