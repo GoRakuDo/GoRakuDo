@@ -64,12 +64,15 @@ const { title, tagline, description, githubUrl } = project.data;
       
       <div class="lp-hero-visual">
         <div class="lp-hero-glow"></div>
-        <img 
-          src="/page_images/project/DenChou/denchou_showcase.gif" 
-          alt="DenChou UI Demo" 
-          class="lp-hero-gif"
-          loading="eager"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcset="/page_images/project/DenChou/denchou_mobile_showcase.gif" />
+          <img 
+            src="/page_images/project/DenChou/denchou_showcase.gif" 
+            alt="DenChou UI Demo" 
+            class="lp-hero-gif"
+            loading="eager"
+          />
+        </picture>
       </div>
     </section>
 

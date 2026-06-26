@@ -4,11 +4,18 @@
   display: flex;
   flex-direction: column;
   gap: 8rem;
+  overflow-x: clip;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 8rem;
+  box-sizing: border-box;
   padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.layout-content:has(.project-lp-layout) {
+  overflow-x: clip;
+  max-width: 100vw;
 }
 
 /* =========================================
@@ -392,12 +399,23 @@
   }
 
   .lp-hero-visual {
-    grid-row: 1 / 2; /* Visual on top for LP */
+    grid-row: 2 / 3;
+    width: 100%;
+  }
+
+  .lp-hero-visual picture {
+    display: block;
+    width: 100%;
+  }
+
+  .lp-hero-gif {
+    max-width: 100%;
+    border-radius: 0.85rem;
   }
 
   .lp-hero-content {
     align-items: center;
-    grid-row: 2 / 3;
+    grid-row: 1 / 2;
     text-align: center;
   }
 
@@ -414,6 +432,12 @@
   .project-lp-layout {
     gap: 5rem;
     padding-bottom: 6rem;
+  }
+
+  .lp-docs-index > .lp-section-title {
+    font-size: clamp(0.85rem, 3.6vw, 1rem);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
   }
 
   .lp-title {

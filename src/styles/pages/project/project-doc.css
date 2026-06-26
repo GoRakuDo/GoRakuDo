@@ -397,6 +397,7 @@
     width: 100%;
     max-width: 42rem;
     height: auto;
+    max-height: none;
   }
 
   /* Videos are usually landscape screencasts, let them be wider */
@@ -494,4 +495,135 @@
   margin: 2.5rem 0;
   border: none;
   background: oklch(65% 0.18 280deg / 0.2);
+}
+
+/* Pitch accent docs: Senren-like compact pattern table */
+.tqa-article .pitch-pattern-table {
+  width: 100%;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.tqa-article .pitch-pattern-table table {
+  width: 100%;
+  margin: 0;
+  border-color: oklch(85% 0.02 270deg / 0.12);
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.9rem;
+}
+
+.tqa-article .pitch-pattern-table thead {
+  background: transparent;
+}
+
+.tqa-article .pitch-pattern-table :is(th, td) {
+  padding: 0.75rem 1rem;
+  border-bottom-color: oklch(85% 0.02 270deg / 0.12);
+  color: oklch(84% 0.01 270deg);
+}
+
+.tqa-article .pitch-pattern-table th {
+  color: oklch(82% 0.01 270deg);
+  font-family: var(--font-primary, sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.tqa-article .pitch-pattern-table :where(tbody tr:nth-child(even)) {
+  background: oklch(85% 0.02 270deg / 0.025);
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-drop) {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 1.5rem;
+  color: var(--pitch-color, var(--grkd-brand-secondary, oklch(65% 0.25 280deg)));
+  font-family: var(--font-code, monospace);
+  font-weight: 700;
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-drop-atamadaka) {
+  --pitch-color: oklch(68% 0.23 350deg);
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-drop-nakadaka) {
+  --pitch-color: var(--token-gold-base, oklch(85% 0.15 85deg));
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-drop-odaka) {
+  --pitch-color: oklch(72% 0.18 165deg);
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-drop-kifuku) {
+  --pitch-color: oklch(72% 0.2 250deg);
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-reading) {
+  --pitch-color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
+
+  display: inline-flex;
+  align-items: baseline;
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-reading > span) {
+  position: relative;
+  display: inline-block;
+  min-width: 1em;
+  text-align: center;
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-high) {
+  color: inherit;
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-high)::before {
+  position: absolute;
+  top: 0.1em;
+  right: 0;
+  left: 0;
+  display: block;
+  height: 0;
+  border-top: 0.1em solid var(--pitch-color);
+  user-select: none;
+  pointer-events: none;
+  content: '';
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-fall) {
+  margin-right: 0.1em;
+  padding-right: 0.1em;
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-fall)::after {
+  position: absolute;
+  top: 0.1em;
+  right: -0.1em;
+  display: block;
+  width: 0;
+  height: 0.4em;
+  border-right: 0.1em solid var(--pitch-color);
+  user-select: none;
+  pointer-events: none;
+  content: '';
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-reading-atamadaka) {
+  --pitch-color: oklch(68% 0.23 350deg);
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-reading-nakadaka) {
+  --pitch-color: var(--token-gold-base, oklch(85% 0.15 85deg));
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-reading-odaka) {
+  --pitch-color: oklch(72% 0.18 165deg);
+}
+
+.tqa-article .pitch-pattern-table :where(.pitch-reading-kifuku) {
+  --pitch-color: oklch(72% 0.2 250deg);
 }

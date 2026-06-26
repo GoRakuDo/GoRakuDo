@@ -913,6 +913,7 @@
     width: 100%;
     max-width: 42rem;
     height: auto;
+    max-height: none;
   }
 
   .tqa-article :is(video) {
