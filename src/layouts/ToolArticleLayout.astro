@@ -181,9 +181,65 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
 
       <!-- 2-column Quest Codex grid -->
       <div class='tqa-grid'>
-        <!-- Left: Prev/Next nav + TOC (sticky on ≥1280px) -->
+        <!-- Left: Related + TOC (sticky on ≥1280px) -->
         <aside class='tqa-left' aria-label='Article navigation and contents'>
-          <nav class='tqa-aside-nav' aria-label='Navigasi artikel'>
+          {
+            relatedTools.length > 0 && (
+              <section
+                class='tqa-related'
+                aria-labelledby='tqa-related-title'
+              >
+                <h2 class='tqa-related-title' id='tqa-related-title'>
+                  Tools Terkait
+                </h2>
+                <ul class='tqa-related-list'>
+                  {relatedTools.map(rel => (
+                    <li>
+                      <a
+                        class='tqa-related-card'
+                        href={`/tutorial/${rel.slug}`}
+                        aria-label={`Buka halaman detail ${rel.name}`}
+                      >
+                        <img
+                          class='tqa-related-icon'
+                          src={rel.icon}
+                          alt=''
+                          width='32'
+                          height='32'
+                          loading='lazy'
+                          decoding='async'
+                        />
+                        <span class='tqa-related-name'>{rel.name}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          <aside class='tqa-toc' aria-label='Table of contents'>
+            <slot name='toc' />
+          </aside>
+        </aside>
+
+        <!-- Center: Quest Entries -->
+        <main class='tqa-main' role='main'>
+          <article class='tqa-article' id='main-content'>
+            <Prose>
+              <slot />
+            </Prose>
+          </article>
+
+          <!-- End of Chapter marker -->
+          <footer class='tqa-end tqa-end--marker' role='contentinfo'>
+            <p class='tqa-end-marker' aria-hidden='true'>
+              /// ARCHIVE_CLOSE ///
+            </p>
+          </footer>
+
+          <!-- Prev/Next nav -->
+          <nav class='tqa-aside-nav tqa-aside-nav--inline' aria-label='Navigasi artikel'>
             {
               prevArticle ? (
                 <a
@@ -288,60 +344,8 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
             }
           </nav>
 
-          {
-            relatedTools.length > 0 && (
-              <section
-                class='tqa-related'
-                aria-labelledby='tqa-related-title'
-              >
-                <h2 class='tqa-related-title' id='tqa-related-title'>
-                  Tools Terkait
-                </h2>
-                <ul class='tqa-related-list'>
-                  {relatedTools.map(rel => (
-                    <li>
-                      <a
-                        class='tqa-related-card'
-                        href={`/tutorial/${rel.slug}`}
-                        aria-label={`Buka halaman detail ${rel.name}`}
-                      >
-                        <img
-                          class='tqa-related-icon'
-                          src={rel.icon}
-                          alt=''
-                          width='32'
-                          height='32'
-                          loading='lazy'
-                          decoding='async'
-                        />
-                        <span class='tqa-related-name'>{rel.name}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )
-          }
-
-          <aside class='tqa-toc' aria-label='Table of contents'>
-            <slot name='toc' />
-          </aside>
-        </aside>
-
-        <!-- Center: Quest Entries -->
-        <main class='tqa-main' role='main'>
-          <article class='tqa-article' id='main-content'>
-            <Prose>
-              <slot />
-            </Prose>
-          </article>
-
-          <!-- End of Chapter -->
+          <!-- End actions (after Prev/Next) -->
           <footer class='tqa-end' role='contentinfo'>
-            <p class='tqa-end-marker' aria-hidden='true'>
-              /// ARCHIVE_CLOSE ///
-            </p>
-
             <slot name='end-actions' />
           </footer>
         </main>
