@@ -293,23 +293,27 @@
 
 /* ========== INLINE PREV/NEXT NAV (above End of Chapter) ========== */
 
-/* .tqa-main > parent beats the later .tqa-aside-nav rule by specificity */
-.tqa-main > .tqa-aside-nav--inline {
+/* .tqa-aside-nav--inline (outside grid, after ARCHIVE_CLOSE marker) */
+.tqa-aside-nav--inline {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
+  max-width: var(--article-max-width, 60rem);
   margin-top: 0;
   padding: 0.75rem 0;
   border-top: 1px solid oklch(65% 0.18 280deg / 0.15);
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
-  .tqa-main > .tqa-aside-nav--inline {
+  .tqa-page > .tqa-aside-nav--inline {
     flex-direction: row;
     gap: 1rem;
   }
 
-  .tqa-main > .tqa-aside-nav--inline .tqa-nav-card {
+  .tqa-page > .tqa-aside-nav--inline .tqa-nav-card {
     flex: 1;
   }
 }
@@ -987,24 +991,13 @@
 /* ========== CTA SECTION (Asymmetric Artifact) ========== */
 .tqa-cta-section {
   position: relative;
+  max-width: var(--article-max-width, 60rem);
   margin-top: 0.5rem;
   padding: 2.5rem 0;
+  margin-inline: auto;
 }
 
-/* はみ出し（アウトセット）レイアウト：右方向へシフト */
-@media (min-width: 1280px) {
-  .tqa-cta-section {
-    margin-right: -4rem; /* 右の空きスペースへはみ出させる */
-    margin-left: 4rem; /* 左を空けてメイン記事ラインから分離 */
-  }
-}
 
-@media (min-width: 768px) and (max-width: 1279px) {
-  .tqa-cta-section {
-    margin-right: -2rem;
-    margin-left: 2rem;
-  }
-}
 
 .tqa-cta-section::before {
   position: absolute;
@@ -1140,6 +1133,7 @@
 .tqa-cta-trakteer {
   display: inline-flex;
   align-items: center;
+  align-self: center;
   gap: 0.75rem;
   padding: 0.875rem 2rem;
   border: 1px solid color-mix(in oklab, var(--token-gold-base, oklch(85% 0.15 85deg)) 30%, transparent);
