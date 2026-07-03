@@ -14,5 +14,13 @@
     "iconUrl": "/icon/yomitan-icon-240.webp",
     "color": "var(--clr-accent-dark)",
     "link": "/tutorial/yomitan"
+  },
+  {
+    "id": "asbplayer",
+    "name": "asbplayer",
+    "description": "Ekstensi browser untuk language-learning dengan subtitle, memungkinkan kamu menangkap kalimat dari video dan audio Jepang langsung ke Anki.",
+    "iconUrl": "/icon/asbplayer-icon-240.webp",
+    "color": "var(--clr-purple)",
+    "link": "/tutorial/asbplayer"
   }
 ]
