@@ -324,9 +324,9 @@ const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
       }
     }
     
-    // その他の場合はCloudinary fetchで変換
+    // その他の場合は直接URLを返す（Cloudinary fetchを回避）
     const fullUrl = imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
-    return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/${ogTransform}/${fullUrl}`;
+    return fullUrl;
   }
   
   // 通常表示用は完全なURLを返す
