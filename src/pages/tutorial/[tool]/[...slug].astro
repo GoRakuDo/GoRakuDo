@@ -356,19 +356,7 @@ const relatedTools = (post.data.relatedTools || [])
   <TableOfContents slot='toc' headings={tocHeadings} />
 
   <!-- Default slot: Main article content -->
-  {
-    post.data.tags && post.data.tags.length > 0 ? (
-      <Content />
-    ) : (
-      <div class='fallback-content' role='alert'>
-        <p class='text-warning mb-4'>
-          This article is missing proper tag categorization. Content may not
-          appear in tool indexes.
-        </p>
-        <Content />
-      </div>
-    )
-  }
+  <Content />
 
   <!-- End actions: CTA Section (Asymmetric Artifact) -->
   <Fragment slot='end-actions'>
