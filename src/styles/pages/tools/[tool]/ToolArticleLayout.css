@@ -930,9 +930,9 @@
 @media (min-width: 768px) {
   .tqa-article :is(img) {
     width: auto;
-    max-width: 32rem; /* ~512px — larger inline size */
+    max-width: 42rem;
     height: auto;
-    max-height: 40rem; /* ~640px — prevents portrait blowup */
+    max-height: none;
   }
 
   /* GIFs are animation content like videos — give them more width */
@@ -946,6 +946,11 @@
   .tqa-article :is(video) {
     width: 100%;
     max-width: 42rem; /* ~672px — videos are usually landscape */
+  }
+
+  /* Constrain settings-split/account-split images within their grid column */
+  .tqa-article :is(.settings-split, .account-split) > img {
+    max-width: var(--split-sidebar-width, 240px);
   }
 }
 
