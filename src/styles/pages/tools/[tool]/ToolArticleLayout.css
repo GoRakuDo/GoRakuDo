@@ -930,9 +930,9 @@
 @media (min-width: 768px) {
   .tqa-article :is(img) {
     width: auto;
-    max-width: 24rem; /* ~384px — comfortable inline size */
+    max-width: 42rem;
     height: auto;
-    max-height: 32rem; /* ~512px — prevents 9:16 portrait blowup */
+    max-height: none;
   }
 
   /* GIFs are animation content like videos — give them more width */

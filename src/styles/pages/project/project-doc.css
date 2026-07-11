@@ -387,9 +387,9 @@
   /* Cap portrait images */
   .tqa-article :is(img) {
     width: auto;
-    max-width: 24rem;
+    max-width: 42rem;
     height: auto;
-    max-height: 32rem;
+    max-height: none;
   }
 
   /* GIFs are animation content like videos — give them more width */
