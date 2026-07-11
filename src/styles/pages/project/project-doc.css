@@ -405,6 +405,12 @@
     width: 100%;
     max-width: 42rem;
   }
+
+  /* Constrain split layouts within their grid columns */
+  .tqa-article :is(.tqa-split) img,
+  .tqa-article :is(.account-split, .settings-split) > img {
+    max-width: 100%;
+  }
 }
 
 /* Tables — GitHub-flavored markdown output. Horizontal scroll container
