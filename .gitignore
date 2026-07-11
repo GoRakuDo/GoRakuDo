@@ -42,6 +42,9 @@ config/secrets.json
 .cursor/
 .vscode
 .vscode/
+.opencode
+.codesight
+.cortexkit
 
 .bmad-core
 

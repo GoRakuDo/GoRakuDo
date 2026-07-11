@@ -46,5 +46,29 @@
     "lastProcessed": "2025-10-18T14:43:50.931Z",
     "fileHash": "5353642538c64525a51b437a38848423",
     "publishedDate": "2025-10-18T14:41:14.033Z"
+  },
+  "src/content/tool-articles/anki/cara-install-pake-anki-di-android.mdx": {
+    "filePath": "src/content/tool-articles/anki/cara-install-pake-anki-di-android.mdx",
+    "lastProcessed": "2026-07-02T14:43:12.916Z",
+    "fileHash": "3b16ad3a23e41ffc4525930e3d416b92",
+    "publishedDate": "2026-06-05T11:12:19.429Z"
+  },
+  "src/content/tool-articles/anki/setup-sentence-mining-android.mdx": {
+    "filePath": "src/content/tool-articles/anki/setup-sentence-mining-android.mdx",
+    "lastProcessed": "2026-07-02T14:47:57.977Z",
+    "fileHash": "a4ce26b722eba7ef4afd841b3dff16da",
+    "publishedDate": "2026-07-02T13:07:34.137Z"
+  },
+  "src/content/tool-articles/yomitan/setup-yomitan-android.mdx": {
+    "filePath": "src/content/tool-articles/yomitan/setup-yomitan-android.mdx",
+    "lastProcessed": "2026-07-06T13:13:46.355Z",
+    "fileHash": "07915a969840d347f4451e3dba44e0f8",
+    "publishedDate": "2026-07-06T11:46:20.252Z"
+  },
+  "src/content/tool-articles/asbplayer/setup-asbplayer.mdx": {
+    "filePath": "src/content/tool-articles/asbplayer/setup-asbplayer.mdx",
+    "lastProcessed": "2026-07-11T06:02:51.816Z",
+    "fileHash": "41e421b391d5bd7e86e2d05f52fc8612",
+    "publishedDate": "2026-07-09T13:07:29.707Z"
   }
 }
