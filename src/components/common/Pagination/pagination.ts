@@ -1,5 +1,6 @@
 // ========== PAGINATION UTILITIES (2025 Astro Native) ==========
 import type { CollectionEntry } from 'astro:content';
+import { getEntrySlug } from '../../../utils/content/entry';
 
 // ========== TYPES ==========
 export interface PaginationConfig {
@@ -70,12 +71,13 @@ export function transformPostData(
   baseUrl = '/docs'
 ): PostData {
   const primaryCategory = post.data.categories?.[0] || 'general';
+  const slug = getEntrySlug(post);
 
   return {
-    slug: post.slug,
+    slug,
     title: post.data.title,
     description: post.data.description || '',
-    url: `${baseUrl}/${post.slug}`,
+    url: `${baseUrl}/${slug}`,
     publishedDate: post.data.publishedDate,
     emoji: post.data.emoji,
     tags: post.data.tags || [],
@@ -91,7 +93,7 @@ export function transformToolArticleData(
   article: CollectionEntry<'tool-articles'>,
   toolName: string
 ): ToolArticleData {
-  const articleSlug = article.slug?.split('/').slice(1).join('/') || article.id;
+  const articleSlug = getEntrySlug(article).split('/').slice(1).join('/') || article.id;
   const displayTags = article.data.tags?.slice(0, 3) || [];
   const articleImage = article.data.featuredImage;
 

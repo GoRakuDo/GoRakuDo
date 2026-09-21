@@ -1,6 +1,6 @@
 ---
 // ========== IMPORTS ==========
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import FAQ from '../../components/ui/FAQ.astro';
@@ -10,6 +10,7 @@ import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
 import { getContentDates } from '../../utils/git-dates';
 import { toLocalImage } from '../../utils/local-image';
+import { getEntrySlug } from '../../utils/content/entry';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
   const visiblePosts = getVisibleDocs(allPosts);
 
   return visiblePosts.map((post: CollectionEntry<'docs'>) => ({
-    params: { slug: post.slug },
+    params: { slug: getEntrySlug(post) },
     props: { post },
   }));
 }
@@ -36,7 +37,7 @@ if (slug && String(slug).startsWith('page-')) {
 if (!post) return Astro.redirect('/docs?error=post-not-found');
 
 // ========== CONTENT PROCESSING ==========
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
@@ -44,7 +45,8 @@ const tocHeadings = headings.filter(
 // articleContentのheadingsを更新（後で実行）
 
 // ========== PATH & METADATA ==========
-const resolvedPath = { path: resolvePath('docs', post.slug) };
+const postSlug = getEntrySlug(post);
+const resolvedPath = { path: resolvePath('docs', postSlug) };
 const collectionMetadata = getCollectionInfo('docs');
 
 // ========== ARTICLE CONTENT EXTRACTION ==========
@@ -84,7 +86,7 @@ const replaceTemplateVariables = (template, variables) => {
 
 // シンプルなタイトル生成: MDXフロントマターのまま
 const generateTemplateBasedTitle = post => {
-  const articleTitle = post.data.title || post.slug;
+  const articleTitle = post.data.title || postSlug;
   return `${articleTitle} ・ GoRakuDo`;
 };
 

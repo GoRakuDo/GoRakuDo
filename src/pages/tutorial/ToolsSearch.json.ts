@@ -7,6 +7,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { getVisibleToolArticles } from '../../utils/content/PostStatus-Filter';
 import { resolvePath } from '../../utils/collections';
 import { logger } from '../../utils/logging/console-logger';
+import { getEntrySlug } from '../../utils/content/entry';
 
 // ========== TYPE DEFINITIONS ==========
 interface ToolsSearchItem {
@@ -103,6 +104,7 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
     // ========== PROCESS TOOL ARTICLES ==========
     const toolSearchData: ToolsSearchItem[] = toolArticles.map(
       (article: CollectionEntry<'tool-articles'>) => {
+        const slug = getEntrySlug(article);
         const fullContent: string = article.body || '';
         const cleanedContent: string = fullContent
           .replace(/<[^>]*>/g, ' ')
@@ -119,8 +121,8 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
 
         return {
           // Core data
-          id: `tool-${article.slug}`,
-          slug: article.slug,
+          id: `tool-${slug}`,
+          slug,
           title: article.data.title,
           description: article.data.description,
           pubDate: article.data.publishedDate,
@@ -157,7 +159,7 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
           hasImages: fullContent.includes('!['),
 
           // URL
-          url: resolvePath('tool-articles', article.slug),
+          url: resolvePath('tool-articles', slug),
         };
       }
     );

@@ -1,6 +1,7 @@
 ---
 // ========== IMPORTS ==========
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { getEntrySlug } from '../../../utils/content/entry';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
@@ -93,7 +94,7 @@ const toolArticles = allToolArticles
     ) =>
       index ===
       self.findIndex(
-        (a: CollectionEntry<'tool-articles'>) => a.slug === article.slug
+        (a: CollectionEntry<'tool-articles'>) => getEntrySlug(a) === getEntrySlug(article)
       )
   )
   .sort(
@@ -137,8 +138,7 @@ const currentYear = new Date(
 // ========== PROCESSED ARTICLE DATA ==========
 const processedArticles = paginatedToolArticles.map(
   (article: CollectionEntry<'tool-articles'>, index: number) => {
-    const articleSlug =
-      article.slug?.split('/').slice(1).join('/') || article.id;
+    const articleSlug = getEntrySlug(article).split('/').slice(1).join('/') || article.id;
     const isDirectToolArticle =
       article.data.toolName?.toLowerCase() === tool.toLowerCase();
     const isRelatedToolArticle = article.data.relatedTools?.some(
@@ -279,7 +279,7 @@ const collectionPageSchema = {
           name: article.data.title || `Panduan ${formattedToolName}`,
           description:
             article.data.description || `Panduan lengkap ${formattedToolName}`,
-          url: `/tutorial/${tool}/${article.slug}`,
+          url: `/tutorial/${tool}/${getEntrySlug(article)}`,
           datePublished: article.data.publishedDate,
           author: { '@type': 'Organization', name: 'GoRakuDo Team' },
         },

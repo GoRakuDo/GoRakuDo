@@ -84,8 +84,6 @@ const collectionPageSchema = {
       loading="eager"
     />
 
-    </header>
-
     <!-- ナビゲーションボタンセクション -->
     <nav class='rc-navigation-buttons'>
       <div class='rc-nav-buttons-container'>
@@ -140,7 +138,6 @@ const collectionPageSchema = {
                 `section-${sectionIndex}`}
           >
             {section.sectionType === 'podcast' ? (
-              <!-- Podcast専用レイアウト -->
               <div class='rc-section-header'>
                 <div class='rc-section-header-content'>
                   <div class='rc-section-title-section'>
@@ -167,7 +164,6 @@ const collectionPageSchema = {
                 </div>
               </div>
             ) : section.sectionType === 'media' ? (
-              <!-- Media専用レイアウト -->
               <div class='rc-section-header'>
                 <div class='rc-section-header-content'>
                   <div class='rc-section-title-section'>
@@ -194,7 +190,6 @@ const collectionPageSchema = {
                 </div>
               </div>
             ) : (
-              <!-- 通常のセクションタイトル -->
               <h2 
                 class='rc-channels-title'
                 id={section.sectionTitle.includes('Native Level+') ? 'native-title' : 

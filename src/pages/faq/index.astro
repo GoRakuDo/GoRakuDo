@@ -5,9 +5,10 @@ import Breadcrumb from '../../components/common/Breadcrumb.astro';
 // Import content page styles with Tailwind v4 optimization
 import '../../styles/layouts/PostLayout.css';
 
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
+import { getEntrySlug } from '../../utils/content/entry';
 
 // Breadcrumb Schema
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
@@ -20,7 +21,7 @@ import {
 // Get FAQ page from pages collection
 const allPages = await getCollection('pages');
 const faqPage = allPages.find(
-  (page: CollectionEntry<'pages'>) => page.slug === 'faq'
+  (page: CollectionEntry<'pages'>) => getEntrySlug(page) === 'faq'
 );
 
 // Check if FAQ page exists
@@ -29,7 +30,7 @@ if (!faqPage) {
 }
 
 // Render the FAQ page content
-const { Content, headings } = await faqPage.render();
+const { Content, headings } = await render(faqPage);
 
 // Filter headings for TOC (h2-h3 levels work best for navigation)
 const tocHeadings = headings.filter(
@@ -37,7 +38,7 @@ const tocHeadings = headings.filter(
 );
 
 // Dynamic content path resolution for SEO
-const resolvedPath = { path: resolvePath('pages', faqPage.slug) };
+const resolvedPath = { path: resolvePath('pages', getEntrySlug(faqPage)) };
 const collectionMetadata = getCollectionInfo('pages');
 
 // Dynamic SEO data based on document content

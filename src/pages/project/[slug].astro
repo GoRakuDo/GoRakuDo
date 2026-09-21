@@ -3,11 +3,12 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import { buildDocsCategories } from '../../utils/project-docs';
+import { getEntrySlug } from '../../utils/content/entry';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map(p => ({
-    params: { slug: p.slug },
+    params: { slug: getEntrySlug(p) },
     props: { project: p },
   }));
 }
@@ -19,10 +20,10 @@ const seoTitle = `${project.data.title}: Template Kartu Anki・GoRakuDo 語楽�
 
 const allDocs = await getCollection('project-docs');
 const projectDocs: CollectionEntry<'project-docs'>[] = allDocs.filter(
-  (doc) => doc.data.parentProject === project.slug,
+  (doc) => doc.data.parentProject === getEntrySlug(project),
 );
 
-const docsCategories = buildDocsCategories(projectDocs, project.slug);
+const docsCategories = buildDocsCategories(projectDocs, getEntrySlug(project));
 ---
 
 <ProjectLayout project={project} activeDocSlug={activeDocSlug} docsCategories={docsCategories} seoTitle={seoTitle} />

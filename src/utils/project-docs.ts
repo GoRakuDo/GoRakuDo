@@ -1,4 +1,5 @@
-export const getProjectDocSlug = (id: string): string => (id.split('/').pop() ?? id).replace(/\.mdx$/, '');
+export const getProjectDocSlug = (id: string): string =>
+  (id.split('/').pop() ?? id).replace(/\.mdx$/, '');
 
 // DenChou doc categorization (Setup / Features / Resources)
 export const CATEGORY_ORDER = ['setup', 'features', 'resources'] as const;

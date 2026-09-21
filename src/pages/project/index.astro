@@ -1,6 +1,7 @@
 ---
 // src/pages/project/index.astro
 import { getCollection } from 'astro:content';
+import { getEntrySlug } from '../../utils/content/entry';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import '../../styles/pages/project/project-hub.css';
@@ -16,7 +17,7 @@ const projects = await getCollection('projects', ({ data }) => {
 const getBannerImage = (project: any) => {
   if (project.data.heroImage) return project.data.heroImage;
   // Fallback for DenChou
-  if (project.slug === 'denchou') return '/images/homepage/old_rules_statue.webp';
+  if (getEntrySlug(project) === 'denchou') return '/images/homepage/old_rules_statue.webp';
   return '/images/homepage/old_rules_statue.webp'; // generic fallback
 };
 
@@ -61,14 +62,14 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         
         return (
           <a 
-            href={`/project/${project.slug}`} 
+            href={`/project/${getEntrySlug(project)}`}
             class="project-banner"
             style={`--project-accent: ${accentColor};`}
             aria-label={`${project.data.title} project page`}
           >
             <!-- Content Area (Left) -->
             <div class="banner-content">
-              <h2 class="banner-title" transition:name={`project-title-${project.slug}`}>
+              <h2 class="banner-title" transition:name={`project-title-${getEntrySlug(project)}`}>
                 {project.data.title}
               </h2>
               

@@ -5,6 +5,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
+import { getEntrySlug } from '../../utils/content/entry';
 
 // ========== TYPE DEFINITIONS ==========
 export interface BreadcrumbItem {
@@ -162,7 +163,7 @@ function generatePostBreadcrumb(
   }
 
   const collectionMetadata = getCollectionInfo(post.collection);
-  const resolvedPath = resolvePath(post.collection, post.slug);
+  const resolvedPath = resolvePath(post.collection, getEntrySlug(post));
 
   if (post.collection === 'pages') {
     items.push({
