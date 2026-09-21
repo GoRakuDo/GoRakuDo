@@ -157,7 +157,7 @@ const templateVariables = {
   articleUrl: resolvedPath.path, // 相対パス（breadcrumb用）
   toolImage: post.data.featuredImage
     ? post.data.featuredImage
-    : `https://gorakudo.org/icon/${toolName}-icon-240.webp`,
+    : `https://gorakudo.org/icons/${toolName}-icon-240.webp`,
   toolDescription: toolInfo.description,
   operatingSystem: toolInfo.operatingSystem,
   toolAuthor: toolInfo.author,
@@ -262,7 +262,7 @@ const postData = {
 const toolMetadata = toolsData.find(
   (t: { id: string; name: string }) => t.id === toolName.toLowerCase()
 );
-const toolIcon = toolMetadata?.iconUrl || `/icon/${toolName}-icon-240.webp`;
+const toolIcon = toolMetadata?.iconUrl || `/icons/${toolName}-icon-240.webp`;
 const toolDisplayName = toolMetadata?.name || toolName;
 
 // ========== READING TIME ==========
@@ -321,7 +321,7 @@ const relatedTools = (post.data.relatedTools || [])
     return {
       name: meta?.name || name,
       slug,
-      icon: meta?.iconUrl || `/icon/${slug}-icon-240.webp`,
+      icon: meta?.iconUrl || `/icons/${slug}-icon-240.webp`,
     };
   })
   .slice(0, 5);
@@ -370,7 +370,7 @@ const relatedTools = (post.data.relatedTools || [])
             tabindex='-1'
           >
             <img 
-              src='/page_images/nl_asymmetric_artifact.webp' 
+              src='/images/nl_asymmetric_artifact.webp'
               alt='' 
               width='320' 
               height='320' 

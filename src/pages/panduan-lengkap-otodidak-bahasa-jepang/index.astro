@@ -7,7 +7,7 @@ import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import panduanSeoData from '../../data/seo/pages/panduan-lengkap.json';
 // Cloudinary image public IDs → ローカル画像
 const gorakudoImmerisonImage =
-  '/images/cloudinary/gorakudo-immerison_pwog2a.webp';
+  '/images/panduan-lengkap/gorakudo-immerison_pwog2a.webp';
 import '../../styles/pages/panduan-lengkap/panduan-lengkap-index.css';
 
 // ========== CONTENT COMPONENTS ==========
@@ -19,24 +19,24 @@ import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
 // ========== ASSETS ==========
 import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.png';
 // Additional Cloudinary image public IDs → ローカル画像
-const ledgerPencil = '/images/cloudinary/ledger-pencil_mvpdkn.webp';
-const heartOnFire = '/images/cloudinary/heart-on-fire_biuif8.webp';
-const pageMedal = '/images/cloudinary/page-medal_jbkmyo.webp';
-const tiredStudy = '/images/cloudinary/gorakudo-tired-study_zhhh2b.webp';
-const motivationWind = '/images/cloudinary/gorakudo-motivation-wind_buvpbk.webp';
+const ledgerPencil = '/images/panduan-lengkap/ledger-pencil_mvpdkn.webp';
+const heartOnFire = '/images/panduan-lengkap/heart-on-fire_biuif8.webp';
+const pageMedal = '/images/panduan-lengkap/page-medal_jbkmyo.webp';
+const tiredStudy = '/images/docs/gorakudo-tired-study_zhhh2b.webp';
+const motivationWind = '/images/docs/gorakudo-motivation-wind_buvpbk.webp';
 const certificatedNervous =
-  '/images/cloudinary/gorakudo-certificated-nervous_kdmhai.webp';
+  '/images/docs/gorakudo-certificated-nervous_kdmhai.webp';
 const comprehensibleSnowball =
-  '/images/cloudinary/gorakudo-comprehensible-snowball_qslbro.webp';
+  '/images/panduan-lengkap/gorakudo-comprehensible-snowball_qslbro.webp';
 const japaneseNativeVocabulary =
-  '/images/cloudinary/japanese-native-speaker-vocabulary_boqx6t.webp';
-const rumusIntuisi = '/images/cloudinary/rumus-intuisi_lab7fs.webp';
+  '/images/panduan-lengkap/japanese-native-speaker-vocabulary_boqx6t.webp';
+const rumusIntuisi = '/images/docs/rumus-intuisi_lab7fs.webp';
 const membentukPondasiIntuisi =
-  '/images/cloudinary/gorakudo-membentuk-pondasi-intuisi_wgwdt4.webp';
-const KerangkaActive = '/images/cloudinary/gorakudo-kerangka-active_ija47y.webp';
+  '/images/panduan-lengkap/gorakudo-membentuk-pondasi-intuisi_wgwdt4.webp';
+const KerangkaActive = '/images/docs/gorakudo-kerangka-active_ija47y.webp';
 const KonsolidasiIntuisi =
-  '/images/cloudinary/gorakudo-konsolidasi-intuisi_ykkbvk.webp';
-const MenataIntusi = '/images/cloudinary/gorakudo-menata-intusi_nrrl6c.webp';
+  '/images/panduan-lengkap/gorakudo-konsolidasi-intuisi_ykkbvk.webp';
+const MenataIntusi = '/images/panduan-lengkap/gorakudo-menata-intusi_nrrl6c.webp';
 
 import { replaceTemplateVars } from '../../utils/seo-template';
 
@@ -58,15 +58,15 @@ const baseStructuredData = replaceTemplateVars(
 // ステップ画像のマッピング（構造化データ・OG画像は絶対URL必須）
 const stepImages = {
   'gorakudo-membentuk-pondasi-intuisi':
-    'https://gorakudo.org/images/cloudinary/gorakudo-membentuk-pondasi-intuisi_wgwdt4.webp',
+    'https://gorakudo.org/images/panduan-lengkap/gorakudo-membentuk-pondasi-intuisi_wgwdt4.webp',
   'gorakudo-kerangka-active':
-    'https://gorakudo.org/images/cloudinary/gorakudo-kerangka-active_ija47y.webp',
+    'https://gorakudo.org/images/docs/gorakudo-kerangka-active_ija47y.webp',
   'gorakudo-konsolidasi-intuisi':
-    'https://gorakudo.org/images/cloudinary/gorakudo-konsolidasi-intuisi_ykkbvk.webp',
+    'https://gorakudo.org/images/panduan-lengkap/gorakudo-konsolidasi-intuisi_ykkbvk.webp',
   'gorakudo-menata-intusi':
-    'https://gorakudo.org/images/cloudinary/gorakudo-menata-intusi_nrrl6c.webp',
+    'https://gorakudo.org/images/panduan-lengkap/gorakudo-menata-intusi_nrrl6c.webp',
   'gorakudo-immerison':
-    'https://gorakudo.org/images/cloudinary/gorakudo-immerison_pwog2a.webp',
+    'https://gorakudo.org/images/panduan-lengkap/gorakudo-immerison_pwog2a.webp',
 };
 
 // 動的画像URLを使用して構造化データを生成

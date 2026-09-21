@@ -16,8 +16,8 @@ const projects = await getCollection('projects', ({ data }) => {
 const getBannerImage = (project: any) => {
   if (project.data.heroImage) return project.data.heroImage;
   // Fallback for DenChou
-  if (project.slug === 'denchou') return '/page_images/homepage/old_rules_statue.webp';
-  return '/page_images/homepage/old_rules_statue.webp'; // generic fallback
+  if (project.slug === 'denchou') return '/images/homepage/old_rules_statue.webp';
+  return '/images/homepage/old_rules_statue.webp'; // generic fallback
 };
 
 // ==============================
