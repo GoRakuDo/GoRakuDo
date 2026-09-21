@@ -4,7 +4,6 @@
  * Complete stage card with all structural elements.
  * Uses slots for complex unique content (prose, resources) to preserve exact design.
  */
-import { CldImage } from 'astro-cloudinary';
 import StageQuestCard from './StageQuestCard.astro';
 import StageMindsetCard from './StageMindsetCard.astro';
 
@@ -132,10 +131,10 @@ const mindsetPosition = reverseLayout ? 'left' : 'right';
         />
 
         <!-- Stage Image -->
-        <CldImage
+        <img
           src={imageSrc}
-          width={800}
-          height={1000}
+          width="800"
+          height="1000"
           alt={imageAlt}
           class='w-full h-auto object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700'
         />

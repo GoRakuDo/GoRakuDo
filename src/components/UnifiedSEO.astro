@@ -2,6 +2,7 @@
 // ========== IMPORTS ==========
 import seoConfig from '../data/seo/unifiedSeo-config.json';
 import toolsData from '../data/tools.json';
+import { toLocalImage } from '../utils/local-image';
 
 // ========== TYPE DEFINITIONS ==========
 interface ContactAddress {
@@ -282,49 +283,17 @@ const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
     }
   }
   
-  // Cloudinary public_idの場合 (パス区切りなし、拡張子なし)
+  // Cloudinary public_idの場合 (パス区切りなし、拡張子なし) → ローカル画像へ
   const isCloudinaryId = !imagePath.includes('/') && !imagePath.match(/\.(jpg|jpeg|png|webp|svg|gif)$/i);
-  
+
   if (isCloudinaryId) {
-    const baseUrl = 'https://res.cloudinary.com/dbvd1cm7u/image/upload';
-    const ogTransform = forOgImage ? 'c_pad,w_1200,h_630,b_auto,f_auto,q_auto' : '';
-    return ogTransform ? `${baseUrl}/${ogTransform}/${imagePath}` : `${baseUrl}/${imagePath}`;
+    // OG画像は絶対URL必須なのでサイトURLを付与する
+    const localPath = toLocalImage(imagePath);
+    return forOgImage ? joinUrl(getSiteUrl(), localPath) : localPath;
   }
-  
-  // OG Image用の場合は画像をCloudinaryで最適化
+
+  // OG Image用の場合は絶対URLを返す（ローカル画像はサイトURLを付与）
   if (forOgImage) {
-    const cloudinaryBaseUrl = 'https://res.cloudinary.com/dbvd1cm7u/image/upload';
-    const ogTransform = 'c_pad,w_1200,h_630,b_auto,f_auto,q_auto';
-    
-    // 既にCloudinary upload URLの場合は直接トランスフォーメーションを適用
-    if (imagePath.startsWith(cloudinaryBaseUrl)) {
-      // URLを解析: https://res.cloudinary.com/.../upload/[transforms]/public_id
-      const uploadIndex = imagePath.indexOf('/upload/');
-      if (uploadIndex !== -1) {
-        const beforeUpload = imagePath.substring(0, uploadIndex + 8); // '/upload/' を含む
-        const afterUpload = imagePath.substring(uploadIndex + 8);
-        
-        // 既存のトランスフォーメーションを削除してpublic_idのみ抽出
-        // パターン: [transforms]/public_id または public_id
-        const parts = afterUpload.split('/');
-        let publicId = '';
-        
-        // 最後の部分がpublic_id（ファイル名または拡張子なしID）
-        // トランスフォーメーション（f_auto, q_auto等）をスキップ
-        for (let i = parts.length - 1; i >= 0; i--) {
-          const part = parts[i];
-          // トランスフォーメーションパラメータでない場合（_, . を含まない場合）
-          if (!part.includes('_') || part.includes('.') || !part.match(/^[a-z]_/)) {
-            publicId = parts.slice(i).join('/');
-            break;
-          }
-        }
-        
-        return `${beforeUpload}${ogTransform}/${publicId}`;
-      }
-    }
-    
-    // その他の場合は直接URLを返す（Cloudinary fetchを回避）
     const fullUrl = imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
     return fullUrl;
   }
@@ -637,9 +606,6 @@ addOptionalSchemas(structuredDataSchemas);
 <meta property="og:type" content={pageType} />
 <meta property="og:url" content={normalizedCanonical} />
 <meta property="og:image" content={ogImageUrl} />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-
 <meta property="og:image:alt" content={title} />
 
 <meta property="og:site_name" content={defaultConfig.siteName} />

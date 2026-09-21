@@ -1,5 +1,5 @@
 ---
-import { CldImage } from 'astro-cloudinary';
+import { toLocalImage } from '../../utils/local-image';
 
 // Interface for Historical Figure Data
 interface HistoricalFigure {
@@ -60,20 +60,19 @@ const historyData: HistoricalFigure[] = [
   },
 ];
 
-const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_vrbuai';
+const biomeImageId =
+  '/images/cloudinary/Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_vrbuai.webp';
 ---
 
 <div class="history-biome-wrapper w-full max-w-5xl mx-auto">
   <!-- 1. Main Biome Display -->
   <div class="relative w-full h-auto group mb-8 flex justify-center px-4 sm:px-8 md:px-0">
     <!-- Background Image -->
-    <CldImage
+    <img
       src={biomeImageId}
       alt="Historical Biome Landscape"
-      width={1920}
-      height={1080}
-      quality="auto"
-      format="auto"
+      width="1920"
+      height="1080"
       class="block w-full h-auto drop-shadow-2xl"
     />
   </div>
@@ -97,13 +96,11 @@ const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_v
           <!-- Avatar Squarcle -->
           <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl shadow-lg transition-all duration-300 transform group-hover:scale-110 group-focus-visible:ring-2 ring-(--token-purple-base) overflow-hidden z-20 bg-gray-800">
              <div class="absolute inset-0 bg-black/50 group-hover:bg-transparent transition-colors duration-300 overlay-dim"></div>
-             <CldImage
-                src={figure.avatarId}
+             <img
+                src={toLocalImage(figure.avatarId)}
                 alt={figure.name}
-                width={100}
-                height={100}
-                crop="thumb"
-                gravity="face"
+                width="100"
+                height="100"
                 class="w-full h-full object-cover"
              />
              <!-- Active Ring (Hidden by default) -->
@@ -248,7 +245,7 @@ const biomeImageId = 'Immersion_History_Biome_Generated_Image_1rv8oq1rv8oq1rv8_v
       // 2. Activate target button
       const targetBtn = btns[index];
       const data = figuresData[index];
-      const targetImg = targetBtn.querySelector('img'); // Get the CldImage src from the button
+      const targetImg = targetBtn.querySelector('img'); // Get the image src from the button
 
       if (targetBtn) {
         const ring = targetBtn.querySelector('.active-ring');

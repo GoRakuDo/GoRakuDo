@@ -1,6 +1,5 @@
 ---
 // LanguageLearningProblems Component - 言語学習の問題点セクション
-import { CldImage } from 'astro-cloudinary';
 import '../../styles/pages/panduan-lengkap/panduan-lengkap-index.css';
 
 export interface Props {
@@ -48,14 +47,12 @@ const {
     <ol class='problems-list'>
       <li class='problem-item'>
         <div class='problem-image-container'>
-          <CldImage
+          <img
             src={problem1ImageSrc}
             alt={problem1ImageAlt}
-            quality='auto'
-            width={135}
-            height={135}
+            width='135'
+            height='135'
             loading='lazy'
-            decoding='async'
             class='problem-image'
           />
           <div class='problem-icon-overlay'>
@@ -85,14 +82,12 @@ const {
       <!-- Problem 2 -->
       <li class='problem-item'>
         <div class='problem-image-container'>
-          <CldImage
+          <img
             src={problem2ImageSrc}
             alt={problem2ImageAlt}
-            quality='auto'
-            width={135}
-            height={135}
+            width='135'
+            height='135'
             loading='lazy'
-            decoding='async'
             class='problem-image'
           />
           <div class='problem-icon-overlay'>
@@ -122,14 +117,12 @@ const {
       <!-- Problem 3 -->
       <li class='problem-item'>
         <div class='problem-image-container'>
-          <CldImage
+          <img
             src={problem3ImageSrc}
             alt={problem3ImageAlt}
-            quality='auto'
-            width={135}
-            height={135}
+            width='135'
+            height='135'
             loading='lazy'
-            decoding='async'
             class='problem-image'
           />
           <div class='problem-icon-overlay'>

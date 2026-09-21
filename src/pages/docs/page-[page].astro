@@ -15,9 +15,9 @@ import {
 } from '../../components/common/Pagination/pagination';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
-import { buildCloudinaryUrl } from '../../utils/cloudinary';
 import docsSeoData from '../../data/seo/pages/docs.json';
 import '../../styles/pages/docs/docs-index.css';
+import { toLocalImage } from '../../utils/local-image';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -79,7 +79,7 @@ const transformedPosts = paginatedItems.map(post =>
 
 // ========== HEADER IMAGE CONFIG ==========
 const headerImageId = 'gorakudo-docs_nmobpw';
-const headerImageUrl = buildCloudinaryUrl(headerImageId);
+const headerImageUrl = toLocalImage(headerImageId);
 
 // ========== PROCESSED SEO DATA ==========
 const seoData = {
@@ -158,11 +158,10 @@ const collectionPageSchema = {
     slot='articles-header'
     title='Dokumentasi Metodologi Immersion'
     description='Dokumentasi yang kami buat untuk membantu kalian untuk menguasai Bahasa Jepang, secara natural layaknya Penutur Asli Jepang. Yang berdasarkan "Linguistik Modern".'
-    imageSrc={headerImageId}
+    imageSrc={headerImageUrl}
     imageAlt='Asrtikel Metodologi Immersion Belajar Bahasa Jepang - GoRakuDo'
     imageWidth={350}
     loading='eager'
-    fetchpriority='high'
   />
 
   <!-- ブレッドクラム -->

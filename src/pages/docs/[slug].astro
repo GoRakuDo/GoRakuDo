@@ -8,9 +8,8 @@ import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
-import { CldImage } from 'astro-cloudinary';
-import { buildCloudinaryUrl } from '../../utils/cloudinary';
 import { getContentDates } from '../../utils/git-dates';
+import { toLocalImage } from '../../utils/local-image';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -139,7 +138,10 @@ const breadcrumbConfig = {
 articleContent.headings = tocHeadings;
 const articleUrl = resolvedPath.path; // 相対パス（breadcrumb用）
 const articleImage = post.data.featuredImage
-  ? buildCloudinaryUrl(post.data.featuredImage)
+  ? new URL(
+      toLocalImage(post.data.featuredImage),
+      String(Astro.site || 'https://gorakudo.org')
+    ).toString()
   : 'https://gorakudo.org/img/gorakudo-immerison.png';
 
 // テンプレート変数の準備
@@ -265,14 +267,12 @@ const faqSchema =
   {
     post.data.featuredImage && (
       <div slot='featured-image' class='featured-image-container mt-6'>
-        <CldImage
-          src={post.data.featuredImage}
+        <img
+          src={toLocalImage(post.data.featuredImage)}
           alt={post.data.title}
           class='featured-image-thumbnail'
           loading='eager'
-          width={800}
-          quality='auto'
-          format='auto'
+          width='800'
         />
       </div>
     )

@@ -1,5 +1,4 @@
 ---
-import { CldImage } from 'astro-cloudinary';
 import Prose from '../Prose.astro';
 
 interface Props {
@@ -10,10 +9,8 @@ const { empathyBridgeImage } = Astro.props;
 const commonImageProps = {
   src: empathyBridgeImage,
   alt: 'Illustrasi Empathy Bridge: Belajar dari pengalaman pahit',
-  width: 800,
-  height: 800,
-  quality: 'auto',
-  format: 'auto',
+  width: '800',
+  height: '800',
   loading: 'eager' as const,
   class: 'block w-full h-auto object-cover rounded-2xl',
 };
@@ -209,7 +206,7 @@ const currentYear = new Date().getFullYear();
 
           <!-- Mobile-Only Interleaved Image -->
           <div class='w-full my-8 lg:hidden'>
-            <CldImage {...commonImageProps} />
+            <img {...commonImageProps} />
           </div>
 
           <p>
@@ -237,7 +234,7 @@ const currentYear = new Date().getFullYear();
           <div
             class='image-wrapper w-full relative z-10 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] transform group-hover:-translate-y-2 group-hover:scale-105 transition-all duration-700 ease-(--ease-smooth)'
           >
-            <CldImage
+            <img
               {...commonImageProps}
               class='block w-full h-auto object-cover rounded-2xl'
             />

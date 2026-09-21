@@ -1,5 +1,4 @@
 ---
-import { CldImage } from 'astro-cloudinary';
 import StageCard from '../features/StageCard.astro';
 
 interface Props {
@@ -46,10 +45,10 @@ const { bloomImage, seedImage, sproutImage, saplingImage, preBloomImage } =
       >
         <!-- Image Column -->
         <div class='relative rounded-2xl overflow-hidden bg-black/30 group'>
-          <CldImage
+          <img
             src={bloomImage}
-            width={1000}
-            height={1200}
+            width="1000"
+            height="1200"
             alt='The Bloom - Vision of Fluency'
             class='w-full h-auto rounded-2xl'
           />

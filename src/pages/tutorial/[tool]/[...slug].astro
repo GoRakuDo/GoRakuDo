@@ -8,7 +8,6 @@ import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
-import { buildCloudinaryUrl } from '../../../utils/cloudinary';
 import { getContentDates } from '../../../utils/git-dates';
 import toolsData from '../../../data/tools.json';
 
@@ -157,7 +156,7 @@ const templateVariables = {
   articleDescription: post.data.description || '',
   articleUrl: resolvedPath.path, // 相対パス（breadcrumb用）
   toolImage: post.data.featuredImage
-    ? buildCloudinaryUrl(post.data.featuredImage)
+    ? post.data.featuredImage
     : `https://gorakudo.org/icon/${toolName}-icon-240.webp`,
   toolDescription: toolInfo.description,
   operatingSystem: toolInfo.operatingSystem,

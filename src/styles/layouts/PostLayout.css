@@ -109,35 +109,6 @@
   }
 }
 
-/* CldImageの内部スタイルを上書き */
-.featured-image-container .astro-cloudinary-cldimage.featured-image-thumbnail,
-.featured-image-thumbnail.astro-cloudinary-cldimage {
-  width: 100%;
-  max-width: 64rem; /* max-w-4xl */
-  height: auto;
-  border-radius: 0.5rem; /* rounded-lg */
-  box-shadow:
-    0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
-
-  /* スマホ用: 少し大きく表示 */
-  @media (max-width: 767px) {
-    max-width: 100%;
-    margin: 0 -1rem;
-    border-radius: 0;
-  }
-
-  /* @unpic/astroの内部スタイルを上書きするため!importantが必要 */
-  /* stylelint-disable-next-line declaration-no-important */
-  object-fit: contain !important;
-  /* stylelint-disable-next-line declaration-no-important */
-  aspect-ratio: 16/9 !important;
-
-  @media (min-width: 768px) {
-    transition: transform 300ms ease-in-out;
-  }
-}
-
 /* blockquote内のp要素のみに改行を保持 */
 blockquote p {
   margin: 0;
@@ -983,20 +954,9 @@ pre code {
   }
 }
 
-/* ========== ASTRO-CLOUDINARY CLDIMAGE ========== */
+/* ========== CONTENT IMAGES ========== */
 
-/* CldImage component styling - always rounded corners and centered */
-.content-main img[src*='cloudinary'],
-.prose img[src*='cloudinary'],
-.article-content img[src*='cloudinary'],
-img[data-cloudinary] {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  border-radius: 0.5rem;
-}
-
-/* Additional styling for CldImage components */
+/* Content images - centered with rounded corners */
 .content-main img,
 .prose img,
 .article-content img {

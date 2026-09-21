@@ -1,6 +1,5 @@
 // ========== PAGINATION UTILITIES (2025 Astro Native) ==========
 import type { CollectionEntry } from 'astro:content';
-import { buildCloudinaryUrl } from '../../../utils/cloudinary';
 
 // ========== TYPES ==========
 export interface PaginationConfig {
@@ -94,7 +93,7 @@ export function transformToolArticleData(
 ): ToolArticleData {
   const articleSlug = article.slug?.split('/').slice(1).join('/') || article.id;
   const displayTags = article.data.tags?.slice(0, 3) || [];
-  const articleImage = article.data.featuredImage ? buildCloudinaryUrl(article.data.featuredImage) : undefined;
+  const articleImage = article.data.featuredImage;
 
   return {
     slug: articleSlug,

@@ -62,12 +62,10 @@
     },
     "resourceHints": {
       "preconnect": [
-        "https://res.cloudinary.com",
         "https://www.googletagmanager.com",
         "https://tetunori.github.io"
       ],
       "dnsPrefetch": [
-        "https://res.cloudinary.com",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "https://tetunori.github.io"

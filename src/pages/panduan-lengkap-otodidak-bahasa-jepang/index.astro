@@ -5,13 +5,9 @@ import Prose from '../../components/Prose.astro';
 import Button from '../../components/ui/Button.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import panduanSeoData from '../../data/seo/pages/panduan-lengkap.json';
-// Cloudinary image public IDs
-const gorakudoImmerisonImage = 'gorakudo-immerison_pwog2a';
-const gorakudoMembentukPondasiImage =
-  'gorakudo-membentuk-pondasi-intuisi_wgwdt4';
-const gorakudoKerangkaActiveImage = 'gorakudo-kerangka-active_ija47y';
-const gorakudoKonsolidasiImage = 'gorakudo-konsolidasi-intuisi_ykkbvk';
-const gorakudoMenataIntuisiImage = 'gorakudo-menata-intusi_nrrl6c';
+// Cloudinary image public IDs → ローカル画像
+const gorakudoImmerisonImage =
+  '/images/cloudinary/gorakudo-immerison_pwog2a.webp';
 import '../../styles/pages/panduan-lengkap/panduan-lengkap-index.css';
 
 // ========== CONTENT COMPONENTS ==========
@@ -19,25 +15,28 @@ import JapaneseLearningGuide from '../../components/content/JapaneseLearningGuid
 import LanguageLearningProblems from '../../components/content/LanguageLearningProblems.astro';
 import KrashenQuote from '../../components/content/KrashenQuote.astro';
 import TrakteerWidget from '../../components/content/TrakteerWidget.astro';
-import { CldImage } from 'astro-cloudinary';
-import { buildCloudinaryUrl } from '../../utils/cloudinary';
 
 // ========== ASSETS ==========
 import flaticonJapanTorii from '../../assets/images/flaticon-japan-torii.png';
-// Additional Cloudinary image public IDs
-const ledgerPencil = 'ledger-pencil_mvpdkn';
-const heartOnFire = 'heart-on-fire_biuif8';
-const pageMedal = 'page-medal_jbkmyo';
-const tiredStudy = 'gorakudo-tired-study_zhhh2b';
-const motivationWind = 'gorakudo-motivation-wind_buvpbk';
-const certificatedNervous = 'gorakudo-certificated-nervous_kdmhai';
-const comprehensibleSnowball = 'gorakudo-comprehensible-snowball_qslbro';
-const japaneseNativeVocabulary = 'japanese-native-speaker-vocabulary_boqx6t';
-const rumusIntuisi = 'rumus-intuisi_lab7fs';
-const membentukPondasiIntuisi = 'gorakudo-membentuk-pondasi-intuisi_wgwdt4';
-const KerangkaActive = 'gorakudo-kerangka-active_ija47y';
-const KonsolidasiIntuisi = 'gorakudo-konsolidasi-intuisi_ykkbvk';
-const MenataIntusi = 'gorakudo-menata-intusi_nrrl6c';
+// Additional Cloudinary image public IDs → ローカル画像
+const ledgerPencil = '/images/cloudinary/ledger-pencil_mvpdkn.webp';
+const heartOnFire = '/images/cloudinary/heart-on-fire_biuif8.webp';
+const pageMedal = '/images/cloudinary/page-medal_jbkmyo.webp';
+const tiredStudy = '/images/cloudinary/gorakudo-tired-study_zhhh2b.webp';
+const motivationWind = '/images/cloudinary/gorakudo-motivation-wind_buvpbk.webp';
+const certificatedNervous =
+  '/images/cloudinary/gorakudo-certificated-nervous_kdmhai.webp';
+const comprehensibleSnowball =
+  '/images/cloudinary/gorakudo-comprehensible-snowball_qslbro.webp';
+const japaneseNativeVocabulary =
+  '/images/cloudinary/japanese-native-speaker-vocabulary_boqx6t.webp';
+const rumusIntuisi = '/images/cloudinary/rumus-intuisi_lab7fs.webp';
+const membentukPondasiIntuisi =
+  '/images/cloudinary/gorakudo-membentuk-pondasi-intuisi_wgwdt4.webp';
+const KerangkaActive = '/images/cloudinary/gorakudo-kerangka-active_ija47y.webp';
+const KonsolidasiIntuisi =
+  '/images/cloudinary/gorakudo-konsolidasi-intuisi_ykkbvk.webp';
+const MenataIntusi = '/images/cloudinary/gorakudo-menata-intusi_nrrl6c.webp';
 
 import { replaceTemplateVars } from '../../utils/seo-template';
 
@@ -56,15 +55,18 @@ const baseStructuredData = replaceTemplateVars(
 ) as typeof panduanSeoData.structuredData;
 
 // ========== DYNAMIC STRUCTURED DATA ==========
-// ステップ画像のマッピング
+// ステップ画像のマッピング（構造化データ・OG画像は絶対URL必須）
 const stepImages = {
-  'gorakudo-membentuk-pondasi-intuisi': buildCloudinaryUrl(
-    gorakudoMembentukPondasiImage
-  ),
-  'gorakudo-kerangka-active': buildCloudinaryUrl(gorakudoKerangkaActiveImage),
-  'gorakudo-konsolidasi-intuisi': buildCloudinaryUrl(gorakudoKonsolidasiImage),
-  'gorakudo-menata-intusi': buildCloudinaryUrl(gorakudoMenataIntuisiImage),
-  'gorakudo-immerison': buildCloudinaryUrl(gorakudoImmerisonImage),
+  'gorakudo-membentuk-pondasi-intuisi':
+    'https://gorakudo.org/images/cloudinary/gorakudo-membentuk-pondasi-intuisi_wgwdt4.webp',
+  'gorakudo-kerangka-active':
+    'https://gorakudo.org/images/cloudinary/gorakudo-kerangka-active_ija47y.webp',
+  'gorakudo-konsolidasi-intuisi':
+    'https://gorakudo.org/images/cloudinary/gorakudo-konsolidasi-intuisi_ykkbvk.webp',
+  'gorakudo-menata-intusi':
+    'https://gorakudo.org/images/cloudinary/gorakudo-menata-intusi_nrrl6c.webp',
+  'gorakudo-immerison':
+    'https://gorakudo.org/images/cloudinary/gorakudo-immerison_pwog2a.webp',
 };
 
 // 動的画像URLを使用して構造化データを生成
@@ -74,7 +76,7 @@ const structuredData = {
     '@type': 'Article',
     image: {
       '@type': 'ImageObject',
-      url: buildCloudinaryUrl(gorakudoImmerisonImage),
+      url: stepImages['gorakudo-immerison'],
       width: 630,
     },
   },
@@ -82,7 +84,7 @@ const structuredData = {
     ...baseStructuredData.howTo,
     image: {
       '@type': 'ImageObject',
-      url: buildCloudinaryUrl(gorakudoImmerisonImage),
+      url: stepImages['gorakudo-immerison'],
       width: 630,
     },
     step: baseStructuredData.howTo.step.map((step, index) => {
@@ -102,8 +104,7 @@ const structuredData = {
         ...step,
         image: {
           '@type': 'ImageObject',
-          url:
-            stepImages[imageKey] || buildCloudinaryUrl(gorakudoImmerisonImage),
+          url: stepImages[imageKey] || stepImages['gorakudo-immerison'],
           width: 630,
         },
       };
@@ -148,7 +149,7 @@ const howToSchema = {
   author={seoData.author}
   publishedDate={seoData.publishedDate}
   articleKeywords={seoData.articleKeywords}
-  ogImage={buildCloudinaryUrl(gorakudoImmerisonImage)}
+  ogImage={stepImages['gorakudo-immerison']}
   breadcrumbSchema={breadcrumbSchema}
   faqSchema={faqSchema}
   howToSchema={howToSchema}
@@ -211,11 +212,10 @@ const howToSchema = {
             </h2>
 
             <div class='pl-objImages'>
-              <CldImage
+              <img
                 src={tiredStudy}
                 alt='Tired study'
-                quality='auto'
-                width={350}
+                width='350'
                 class='section-image'
               />
             </div>
@@ -265,11 +265,10 @@ const howToSchema = {
             </h2>
 
             <div class='pl-objImages--right'>
-              <CldImage
+              <img
                 src={motivationWind}
                 alt='Motivasi Belajar Bahasa Jepang'
-                quality='auto'
-                width={350}
+                width='350'
                 class='section-image'
               />
             </div>
@@ -315,11 +314,10 @@ const howToSchema = {
             </h2>
 
             <div class='pl-objImages'>
-              <CldImage
+              <img
                 src={certificatedNervous}
                 alt='Lolos Kaiwa JLPT N1'
-                quality='auto'
-                width={350}
+                width='350'
                 class='section-image'
               />
             </div>
@@ -437,11 +435,10 @@ const howToSchema = {
             </h2>
 
             <div class='pl-objImages--right'>
-              <CldImage
+              <img
                 src={comprehensibleSnowball}
                 alt='Comprehensible Input Snowball Effect'
-                quality='auto'
-                width={350}
+                width='350'
                 class='section-image'
               />
             </div>
@@ -475,11 +472,10 @@ const howToSchema = {
               <h4>Formula kemampuan Berbahasa Jepang (Intuisi)</h4>
 
               <div class='formula'>
-                <CldImage
+                <img
                   src={rumusIntuisi}
                   alt='Formula kemampuan Berbahasa Jepang (Intuisi ≈ [Comprehensible INPUT (i+1) × Waktu Paparan Bermakna] ÷ Filter Afektif)'
-                  quality='auto'
-                  width={600}
+                  width='600'
                   loading='eager'
                 />
               </div>
@@ -525,12 +521,11 @@ const howToSchema = {
             </h2>
 
             <div class='pl-objImages--special'>
-              <CldImage
+              <img
                 src={japaneseNativeVocabulary}
                 alt='Data Kosakata Penutur Asli Bahasa Jepang'
-                quality='auto'
                 class='section-image image-zoom-trigger'
-                data-zoom-src={buildCloudinaryUrl(japaneseNativeVocabulary)}
+                data-zoom-src={japaneseNativeVocabulary}
                 data-zoom-alt='Data Kosakata Penutur Asli Bahasa Jepang'
                 tabindex='0'
                 role='button'
@@ -693,11 +688,10 @@ const howToSchema = {
             </div>
 
             <div class='pl-objImages pl-objImages--right'>
-              <CldImage
+              <img
                 src={membentukPondasiIntuisi}
                 alt='Membentuk Pondasi Intuisi Berbahasa Jepang'
-                quality='auto'
-                width={350}
+                width='350'
                 loading='eager'
               />
             </div>
@@ -869,11 +863,10 @@ const howToSchema = {
             </div>
 
             <div class='pl-objImages pl-objImages--left'>
-              <CldImage
+              <img
                 src={KerangkaActive}
                 alt='Phase 2: Kerangka Intuisi Active Immersion'
-                quality='auto'
-                width={350}
+                width='350'
                 loading='eager'
               />
             </div>
@@ -965,11 +958,10 @@ const howToSchema = {
             </div>
 
             <div class='pl-objImages pl-objImages--right'>
-              <CldImage
+              <img
                 src={KonsolidasiIntuisi}
                 alt='Phase 3: Konsolidasi Intuisi dengan double Reading & Listening'
-                quality='auto'
-                width={350}
+                width='350'
                 loading='eager'
               />
             </div>
@@ -1067,11 +1059,10 @@ const howToSchema = {
             </div>
 
             <div class='pl-objImages pl-objImages--left'>
-              <CldImage
+              <img
                 src={MenataIntusi}
                 alt='Phase 4: Menata Intuisi dengan Output'
-                quality='auto'
-                width={350}
+                width='350'
                 loading='eager'
               />
             </div>
@@ -1163,11 +1154,10 @@ const howToSchema = {
             </div>
 
             <div class='pl-objImages pl-objImages--right'>
-              <CldImage
+              <img
                 src={gorakudoImmerisonImage}
                 alt='Phase 5: Optimalisasi dan Memperluas Intuisi - GoRakuDo Immersion'
-                quality='auto'
-                width={350}
+                width='350'
                 loading='eager'
               />
             </div>

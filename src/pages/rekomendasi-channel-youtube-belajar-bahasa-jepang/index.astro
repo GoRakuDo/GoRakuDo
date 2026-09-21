@@ -1,16 +1,14 @@
 ---
 // ========== IMPORTS ==========
-import { CldImage } from 'astro-cloudinary';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import ChannelCard from '../../components/content/ChannelCard.astro';
 import channelsDataRaw from '../../data/youtube-channels.json';
 import youtubeSeoData from '../../data/seo/pages/youtube-rekomendasi.json';
-import { buildCloudinaryUrl } from '../../utils/cloudinary';
-// Cloudinary image public IDs
-const heroImage = 'gorakudo-rekomendasi-youtube_oos0gu';
-const podcastImage = 'gorakudo-radio-podcast_lrlfmn';
-const mediaImage = 'gorakudo-tv-media_maayuy';
+// Cloudinary image public IDs → ローカル画像
+const heroImage = '/images/cloudinary/gorakudo-rekomendasi-youtube_oos0gu.webp';
+const podcastImage = '/images/cloudinary/gorakudo-radio-podcast_lrlfmn.webp';
+const mediaImage = '/images/cloudinary/gorakudo-tv-media_maayuy.webp';
 import '../../styles/pages/youtube-rekomendasi/youtube-rekomendasi-index.css';
 
 // ========== DATA PROCESSING ==========
@@ -29,7 +27,7 @@ const breadcrumbData = youtubeSeoData.breadcrumbData;
 
 // ========== HEADER IMAGE CONFIG ==========
 const headerImageId = heroImage; // PageHeaderで使用されている画像ID
-const headerImageUrl = buildCloudinaryUrl(headerImageId);
+const headerImageUrl = headerImageId;
 
 // ========== STRUCTURED DATA ==========
 const breadcrumbSchema = {
@@ -84,7 +82,6 @@ const collectionPageSchema = {
       imageAlt="Japanese Learning Illustration - Person relaxing on beach with Mount Fuji background"
       imageWidth={350}
       loading="eager"
-      fetchpriority="high"
     />
 
     </header>
@@ -154,13 +151,11 @@ const collectionPageSchema = {
                   </div>
                   <div class='rc-section-content-right'>
                     <div class='rc-section-image-section'>
-                      <CldImage
+                      <img
                         src={podcastImage}
                         alt='Podcast Learning Illustration'
-                        quality='auto'
                         class='rc-section-hero-image'
                         loading='lazy'
-                        decoding='async'
                       />
                     </div>
                   </div>
@@ -183,13 +178,11 @@ const collectionPageSchema = {
                   </div>
                   <div class='rc-section-content-right'>
                     <div class='rc-section-image-section'>
-                      <CldImage
+                      <img
                         src={mediaImage}
                         alt='Media & TV News Learning Illustration'
-                        quality='auto'
                         class='rc-section-hero-image'
                         loading='lazy'
-                        decoding='async'
                       />
                     </div>
                   </div>
