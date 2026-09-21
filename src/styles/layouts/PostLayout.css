@@ -711,7 +711,6 @@ blockquote p {
 
   /* Prose underline styling - アンダーラインスタイル */
   .content-main u,
-  .article-content u,
   .prose u {
     text-decoration: underline;
     text-decoration-thickness: 2px;
@@ -958,8 +957,7 @@ pre code {
 
 /* Content images - centered with rounded corners */
 .content-main img,
-.prose img,
-.article-content img {
+.prose img {
   display: block;
   margin-right: auto;
   margin-left: auto;

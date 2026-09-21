@@ -59,11 +59,6 @@
 
 /* Note: Global styles, animations, and accessibility are handled in global.css */
 
-/* ===== HOMEPAGE LAYOUT OVERRIDES ===== */
-body.modal-open {
-  overflow: hidden;
-}
-
 /* Focus styles removed - following Astro's static-first philosophy */
 
 /* ===== HOMEPAGE TEXT EFFECTS ===== */
@@ -86,12 +81,6 @@ body.modal-open {
 
   /* ===== SECTION LAYOUT COMPONENTS ===== */
 
-.section-container {
-  max-width: 72rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
 /* Responsive title component */
 .section-title {
   margin-bottom: 4rem;
@@ -104,22 +93,6 @@ body.modal-open {
 
   @media (min-width: 1024px) {
     font-size: var(--font-size-title-lg);
-  }
-}
-
-/* Section text component */
-.section-text {
-  margin-bottom: 4rem;
-  text-align: justify;
-}
-
-.section-text p {
-  margin-bottom: 1.5rem;
-  color: var(--clr-text-secondary);
-  line-height: 1.625;
-
-  @media (min-width: 640px) {
-    font-size: 1.125rem;
   }
 }
 
@@ -390,62 +363,6 @@ body.modal-open {
   flex-grow: 1;
 }
 
-.feature-text-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 2rem;
-  flex-grow: 1;
-}
-
-/* Image Background Mode */
-.feature-bg-wrapper {
-  position: absolute;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  inset: 0;
-}
-
-.feature-bg-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  transition: transform 0.6s var(--grkd-ease-out);
-}
-
-.feature-card:hover .feature-bg-image {
-  transform: scale(1.05);
-}
-
-.feature-bg-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 30%,
-    color-mix(in oklch, var(--grkd-surface-2) 90%, transparent) 60%,
-    var(--grkd-surface-2) 100%
-  );
-}
-
-.feature-card.has-image {
-  min-height: 26rem;
-}
-
-.feature-card.has-image .feature-card-content {
-  justify-content: space-between;
-}
-
-.feature-card.has-image .feature-text-content {
-  margin-top: auto;
-  padding-top: 11.5rem;
-}
-
-
-
 .feature-rarity {
   display: flex;
   align-items: center;
@@ -493,13 +410,6 @@ body.modal-open {
 .feature-card:hover .lucide-hero-icon {
   transform: scale(1.15);
   filter: drop-shadow(0 0 22px color-mix(in oklch, var(--grkd-cyan-400) 90%, transparent));
-}
-
-.badge-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--token-gold-base);
 }
 
 .feature-text-body h3 {
@@ -635,17 +545,6 @@ body.modal-open {
 
 /* ===== RESPONSIVE BREAKPOINT UTILITIES ===== */
 
-/* Modal title responsive sizing */
-.modal-japanese-title {
-  @media (max-width: 768px) {
-    font-size: 1.875rem;
-  }
-
-  @media (min-width: 640px) {
-    font-size: var(--font-size-title-sm);
-  }
-}
-
 /* Homepage button styles - Mobile first */
 .primary-button,
 .secondary-button {
@@ -675,82 +574,15 @@ body.modal-open {
   padding-block: 10px;
 }
 
-/* Section padding utilities - already nested in each section class */
-.tools-hero,
-.tools-section {
-  padding-right: 1rem;
-  padding-left: 1rem;
-
-  @media (min-width: 640px) {
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
-  }
-
-  @media (min-width: 768px) {
-    padding-right: 2rem;
-    padding-left: 2rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding-right: 3rem;
-    padding-left: 3rem;
-  }
-
-  @media (min-width: 1280px) {
-    padding-right: 4rem;
-    padding-left: 4rem;
-  }
-}
-
-/* Modal styles */
-.modal-content {
-  @media (min-width: 640px) {
-    max-height: 90%;
-    margin: 2rem auto;
-    padding: 2rem;
-  }
-
-  @media (min-width: 768px) {
-    max-height: 95vh;
-  }
-
-  @media (min-width: 1024px) {
-    overflow-y: visible;
-    max-height: none;
-  }
-}
-
-.modal-body {
-  @media (min-width: 640px) {
-    font-size: 1.1rem;
-  }
-}
-
 .signature-name {
   @media (min-width: 640px) {
     font-size: 1.9rem;
   }
 }
 
-.modal-signature {
-  @media (min-width: 640px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-    text-align: left;
-  }
-}
-
 .signature-text {
   @media (min-width: 640px) {
     text-align: right;
-  }
-}
-
-.modal-overlay {
-  @media (min-width: 768px) {
-    align-items: center;
   }
 }
 

@@ -91,27 +91,6 @@
 
 /* ===== BASE STYLES ===== */
 
-/* Posts/Documentation page styles */
-.posts-page {
-  @apply relative z-10 min-h-screen text-white;
-
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
-
-  @media (min-width: 768px) {
-    padding: clamp(1.5rem, 3vw, 2rem) 0;
-  }
-
-  @media (min-width: 1280px) {
-    padding: 2rem 0;
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
 /* メインコンテンツのパフォーマンス最適化 */
 .main-content {
   contain: layout style; /* paint制約を削除してemoji表示を許可 */
@@ -152,25 +131,6 @@
 }
 
 /* ===== LAYOUT SYSTEM ===== */
-
-/* Posts Container */
-.posts-container {
-  @apply mx-auto;
-
-  overflow: hidden visible; /* emoji表示のためY軸はvisible許可 */
-  max-width: 100%;
-  padding: 0 clamp(1rem, 4vw, 1.5rem);
-
-  @media (min-width: 768px) {
-    max-width: min(80rem, 95vw);
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  @media (min-width: 1280px) {
-    max-width: 80rem;
-  }
-}
 
 /* Posts Grid */
 .posts-grid {

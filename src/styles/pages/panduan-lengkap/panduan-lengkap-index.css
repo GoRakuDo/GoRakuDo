@@ -137,26 +137,6 @@ body {
 }
 
 /* ========================================
-   UNIFIED UNDERLINE STYLES
-   ======================================== */
-.unified-underline {
-  font-weight: normal;
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in oklch,
-    var(--pl-color-text-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: var(--pl-text-decoration-thickness);
-  text-underline-offset: var(--pl-text-underline-offset);
-  transition: var(--pl-transition-text-decoration);
-}
-
-.unified-underline:hover {
-  text-decoration-color: var(--pl-color-text-secondary);
-}
-
-/* ========================================
    PERFORMANCE OPTIMIZATIONS
    ======================================== */
 
@@ -1154,11 +1134,6 @@ a {
       background: oklch(100% 0 0deg / var(--opacity-10));
       backdrop-filter: blur(12px);
     }
-
-    .learning-method-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
   }
 }
 
@@ -1172,10 +1147,6 @@ a {
 
   /* 効率的な色管理システム */
   --strong-color: var(--pl-color-secondary);
-
-  .sla-content {
-    margin-bottom: var(--pl-space-5xl);
-  }
 }
 
 /* ========================================
@@ -1198,10 +1169,6 @@ a {
   margin: var(--pl-space-6xl) 0;
   padding: var(--pl-space-4xl) 0;
   background: transparent;
-
-  .immersion-duration-content {
-    margin-bottom: var(--pl-space-5xl);
-  }
 }
 
 /* ========================================
@@ -1236,10 +1203,6 @@ a {
         min(calc(var(--pl-gap-responsive-mobile) * 2), 6vw);
       background: oklch(100% 0 0deg / var(--opacity-10));
       backdrop-filter: blur(12px);
-    }
-
-    .methodology-summary-content {
-      margin-bottom: var(--pl-space-5xl);
     }
   }
 }
