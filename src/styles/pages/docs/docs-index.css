@@ -16,7 +16,6 @@
 
   /* Base Colors */
   --clr-white: oklch(100% 0 0deg);
-  --clr-black: oklch(0% 0 0deg);
   --clr-primary: oklch(60% 0.3 280deg);
   --clr-text-dark: oklch(20% 0 0deg);
   --clr-text-medium: oklch(30% 0 0deg);
@@ -66,11 +65,7 @@
   --clr-primary-70: oklch(60% 0.3 280deg / var(--opacity-70));
   --clr-primary-darker: oklch(55% 0.3 280deg);
 
-  /* White Color Variations */
-  --clr-white-98: oklch(100% 0 0deg / var(--opacity-98));
-  --clr-white-95: oklch(100% 0 0deg / var(--opacity-95));
-  --clr-white-30: oklch(100% 0 0deg / var(--opacity-30));
-  --clr-white-20: oklch(100% 0 0deg / var(--opacity-20));
+  /* White Color Variations (solid scale lives in global.css) */
 
   /* ===== RESPONSIVE DESIGN TOKENS ===== */
   @media (min-width: 768px) {
@@ -240,8 +235,8 @@
   z-index: var(--z-docs-index-post-card-hover);
   background: linear-gradient(
     135deg,
-    var(--clr-white-98) 0%,
-    var(--clr-white-95) 100%
+    var(--clr-white-solid-98) 0%,
+    var(--clr-white-solid-95) 100%
   );
   box-shadow:
     var(--shadow-card-hover),
@@ -525,7 +520,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--clr-white-20),
+    var(--clr-white-solid-20),
     transparent
   );
   transition: left 0.5s ease;
@@ -592,7 +587,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--clr-white-30),
+    var(--clr-white-solid-30),
     transparent
   );
   transition: left 0.6s ease;

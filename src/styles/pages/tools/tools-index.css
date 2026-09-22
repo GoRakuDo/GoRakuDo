@@ -36,25 +36,10 @@
 
   /* Base Colors */
   --clr-white: oklch(100% 0 0deg);
-  --clr-black: oklch(0% 0 0deg);
 
   /* ===== OPACITY VALUES - グローバルシステムを使用 ===== */
 
   /* 不透明度変数は global.css から継承 */
-
-  /* White Color Variations */
-  --clr-white-98: oklch(98% 0 0deg);
-  --clr-white-95: oklch(95% 0 0deg);
-  --clr-white-90: oklch(90% 0 0deg);
-  --clr-white-88: oklch(88% 0 0deg);
-  --clr-white-85: oklch(85% 0 0deg);
-  --clr-white-80: oklch(80% 0 0deg);
-  --clr-white-75: oklch(75% 0 0deg);
-  --clr-white-70: oklch(70% 0 0deg);
-
-  /* White Color with Opacity */
-  --clr-white-20: oklch(100% 0 0deg / var(--opacity-20));
-  --clr-white-30: oklch(100% 0 0deg / var(--opacity-30));
 
   /* Black Color with Opacity */
   --clr-black-15: oklch(0% 0 0deg / var(--opacity-15));

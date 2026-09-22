@@ -90,11 +90,9 @@
   /* ===== COLOR SYSTEM - OKLCH Color Space ===== */
 
   /* Black Color with Opacity */
-  --clr-black: var(--grkd-black-base);
   --clr-black-05: oklch(from var(--grkd-black-base) l c h / var(--opacity-05));
   --clr-black-1: oklch(from var(--grkd-black-base) l c h / var(--opacity-1));
   --clr-black-15: oklch(from var(--grkd-black-base) l c h / var(--opacity-15));
-  --clr-black-2: oklch(from var(--grkd-black-base) l c h / var(--opacity-2));
   --clr-black-25: oklch(from var(--grkd-black-base) l c h / var(--opacity-25));
   --clr-black-3: oklch(from var(--grkd-black-base) l c h / var(--opacity-3));
   --clr-black-85: oklch(from var(--grkd-black-base) l c h / var(--opacity-85));
@@ -126,14 +124,11 @@
     from var(--grkd-purple-500) l c h / var(--opacity-15)
   );
   --clr-purple-2: oklch(from var(--grkd-purple-500) l c h / var(--opacity-2));
-  --clr-purple-3: oklch(from var(--grkd-purple-500) l c h / var(--opacity-3));
   --clr-purple-4: oklch(from var(--grkd-purple-500) l c h / var(--opacity-4));
-  --clr-purple-6: oklch(from var(--grkd-purple-500) l c h / var(--opacity-6));
 
   /* Gold Color with Opacity */
   --clr-gold: var(--grkd-gold-base);
   --clr-gold-25: oklch(from var(--grkd-gold-base) l c h / var(--opacity-25));
-  --clr-gold-3: oklch(from var(--grkd-gold-base) l c h / var(--opacity-3));
   --clr-gold-light: oklch(95% 0.08 85deg);
   --clr-gold-dark: var(--clr-gold);
 
@@ -141,9 +136,6 @@
   --clr-secondary-gold: var(--grkd-secondary-gold-base);
   --clr-secondary-gold-25: oklch(
     from var(--grkd-secondary-gold-base) l c h / var(--opacity-25)
-  );
-  --clr-secondary-gold-3: oklch(
-    from var(--grkd-secondary-gold-base) l c h / var(--opacity-3)
   );
 
   /* Paper Theme Colors */
@@ -172,11 +164,6 @@
   --global-text-color-secondary: var(--grkd-muted);
   --global-text-color-muted: var(--grkd-text-global-muted);
   --global-text-color-accent: var(--clr-white);
-
-  /* ===== FALLBACK COLORS ===== */
-  --clr-background-fallback: oklch(4% 0.005 270deg);
-  --clr-text-primary-fallback: var(--clr-text-primary);
-  --clr-accent-fallback: var(--clr-purple);
 
   /* ===== GLASSMORPHISM DESIGN TOKENS ===== */
   --grkd-glass-border: oklch(40% 0.015 270deg / 0.20);
@@ -226,14 +213,6 @@
   --shadow-hover: 0 8px 25px oklch(5% 0.01 270deg / 0.30), 0 4px 12px oklch(5% 0.01 270deg / 0.15);
   --shadow-base: 0 2px 8px oklch(5% 0.01 270deg / 0.15);
   --shadow-active: 0 1px 4px oklch(5% 0.01 270deg / 0.20);
-
-  /* ===== LEGACY COMPATIBILITY ===== */
-  --clr-gold-dark-transparent: var(--clr-gold-25);
-  --clr-paper-bg: var(--clr-paper);
-  --clr-paper-text-primary: var(--clr-paper-25);
-  --clr-paper-text-secondary: var(--clr-paper-35);
-  --clr-paper-border: var(--clr-paper-90);
-  --clr-paper-lines: var(--clr-paper-88);
 
   /* ===== TYPOGRAPHY SYSTEM - CENTRALIZED FONT DEFINITIONS ===== */
 
@@ -320,22 +299,32 @@
     --navbar-height: 80px;
   }
 
+  /* ===== FLUID DIMENSION SCALE (search page) ===== */
+  --spacing-xs-fluid: min(0.25rem, 0.5vw);
+  --spacing-sm-fluid: min(0.5rem, 1vw);
+  --spacing-md-fluid: min(0.75rem, 1.5vw);
+  --spacing-lg-fluid: min(1rem, 2vw);
+  --spacing-xl-fluid: min(1.5rem, 3vw);
+  --spacing-2xl-fluid: min(2rem, 4vw);
+  --spacing-3xl-fluid: min(2.5rem, 5vw);
+  --radius-sm-fluid: min(0.25rem, 0.5vw);
+  --radius-lg-fluid: min(1.5rem, 3vw);
+
+  /* ===== SOLID WHITE SCALE (docs & tools pages) ===== */
+  /* NOTE: pure-white hue + alpha. The existing `--clr-white-95` (global)
+     is a slightly-tinted white base — do not confuse the two scales. */
+  --clr-white-solid-98: oklch(100% 0 0deg / var(--opacity-98));
+  --clr-white-solid-95: oklch(100% 0 0deg / var(--opacity-95));
+  --clr-white-solid-30: oklch(100% 0 0deg / var(--opacity-30));
+  --clr-white-solid-20: oklch(100% 0 0deg / var(--opacity-20));
+
   /* ===== OPTIMIZATION FLAGS ===== */
   --localhost-optimization: true;
   --oklch-cache: true;
   --oklch-gpu-acceleration: true;
 
   /* ===== CONTENT PAGE SYSTEM ===== */
-  --clr-content-background: oklch(
-    from var(--grkd-surface) l c h / var(--opacity-95)
-  );
-  --clr-content-background-light: oklch(
-    from var(--grkd-surface) l c h / var(--opacity-5)
-  );
-  --clr-content-title: var(--clr-white-95);
-  --clr-content-text: var(--clr-white-85);
   --clr-content-meta: var(--clr-white-7);
-  --clr-content-accent: var(--clr-purple);
   --clr-content-background-card: oklch(
     from var(--grkd-surface-2) l c h / var(--opacity-10)
   );
@@ -678,30 +667,15 @@
    * CHANGE: All colors now use OKLCH for better perceptual uniformity and future-proofing
    */
 
-  /* Secondary gold - OKLCH optimized */
-  --clr-secondary: var(--clr-secondary-gold);
-  --clr-secondary-foreground: var(--grkd-secondary-foreground);
-
-  /* Muted colors - mapped from legacy text colors */
-  --clr-muted: var(--clr-text-muted);
-  --clr-muted-foreground: var(--clr-text-secondary);
-
   /* Accent colors - now references the primary color system */
   --clr-accent: var(--clr-purple);
-  --clr-accent-foreground: var(--grkd-accent-foreground);
 
   /* Semantic colors - enhanced from legacy */
-  --clr-destructive: oklch(58% 0.15 15deg);
-  --clr-destructive-foreground: var(--grkd-accent-foreground);
-  --clr-info: oklch(54% 0.245 262.881deg);
   --clr-success: oklch(59% 0.145 163.225deg);
   --clr-warning: oklch(66% 0.179 58.318deg);
-  --clr-error: oklch(58% 0.253 17.585deg);
 
   /* Border and input colors */
   --clr-border: var(--clr-text-muted);
-  --clr-input: var(--grkd-bg-input);
-  --clr-ring: var(--clr-purple);
 
   /* ===== DESIGN TOKENS - PRESERVED AND ENHANCED FROM LEGACY ===== */
 

@@ -2,19 +2,12 @@
 
 /* ===== DESIGN TOKENS ===== */
 :root {
-  /* Spacing Tokens */
-  --spacing-xs: min(0.25rem, 0.5vw);
-  --spacing-sm: min(0.5rem, 1vw);
-  --spacing-md: min(0.75rem, 1.5vw);
-  --spacing-lg: min(1rem, 2vw);
-  --spacing-xl: min(1.5rem, 3vw);
-  --spacing-2xl: min(2rem, 4vw);
-  --spacing-3xl: min(2.5rem, 5vw);
+  /* Border Radius Tokens (fluid scale lives in global.css) */
 
-  /* Border Radius Tokens */
-  --radius-sm: min(0.25rem, 0.5vw);
+  /* Exception: --radius-md stays page-local because the global
+     scrollbar-thumb rule (global.css) resolves it per-page.
+     Assumes this file loads AFTER global.css (same :root specificity). */
   --radius-md: min(1rem, 2vw);
-  --radius-lg: min(1.5rem, 3vw);
 
   /* Size Tokens */
   --size-xs: min(0.5rem, 1vw);
@@ -100,9 +93,9 @@ body {
 /* ===== SEARCH PAGE ===== */
 .search-page {
   min-height: 100vh;
-  padding: var(--spacing-md);
-  padding-top: max(var(--spacing-md), env(safe-area-inset-top, 0px));
-  padding-bottom: max(var(--spacing-md), env(safe-area-inset-bottom, 0px));
+  padding: var(--spacing-md-fluid);
+  padding-top: max(var(--spacing-md-fluid), env(safe-area-inset-top, 0px));
+  padding-bottom: max(var(--spacing-md-fluid), env(safe-area-inset-bottom, 0px));
   background: transparent;
   color: var(--clr-text-primary);
 
@@ -123,28 +116,28 @@ body {
   }
 
   @media (min-width: 768px) {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-lg-fluid);
   }
 
   @media (min-width: 1024px) {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-xl-fluid);
   }
 
   @media (min-width: 1280px) {
-    padding: var(--spacing-2xl);
+    padding: var(--spacing-2xl-fluid);
   }
 
   @media (hover: none) and (pointer: coarse) {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-lg-fluid);
   }
 
   @media (max-width: 768px) {
     padding-top: max(
-      var(--spacing-md),
+      var(--spacing-md-fluid),
       calc(env(safe-area-inset-top, 0px) + 1rem)
     );
     padding-bottom: max(
-      var(--spacing-md),
+      var(--spacing-md-fluid),
       calc(env(safe-area-inset-bottom, 0px) + 1rem)
     );
   }
@@ -157,17 +150,17 @@ body {
 
 /* ===== SEARCH INTRO ===== */
 .search-page .search-intro {
-  padding: var(--spacing-2xl) 0;
+  padding: var(--spacing-2xl-fluid) 0;
   text-align: center;
 
   .search-intro-content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 0 var(--spacing-lg);
+    padding: 0 var(--spacing-lg-fluid);
   }
 
   .search-intro-title {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg-fluid);
     color: var(--clr-text-primary);
     font-size: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
     font-weight: 700;
@@ -187,16 +180,16 @@ body {
 /* ===== CATEGORY SECTION ===== */
 .search-page .category-section {
   position: relative;
-  margin-bottom: var(--spacing-xl);
-  padding: var(--spacing-3xl) 0;
+  margin-bottom: var(--spacing-xl-fluid);
+  padding: var(--spacing-3xl-fluid) 0;
   padding-top: max(
-    var(--spacing-3xl),
+    var(--spacing-3xl-fluid),
     calc(env(safe-area-inset-top, 0px) + 1rem)
   );
 
   &::after {
     position: absolute;
-    bottom: calc(-1 * var(--spacing-md));
+    bottom: calc(-1 * var(--spacing-md-fluid));
     left: 50%;
     width: var(--width-sm);
     height: 1px;
@@ -210,7 +203,7 @@ body {
     content: '';
 
     @media (min-width: 768px) {
-      bottom: calc(-1 * var(--spacing-lg));
+      bottom: calc(-1 * var(--spacing-lg-fluid));
       width: var(--width-md);
     }
 
@@ -220,7 +213,7 @@ body {
     }
 
     @media (min-width: 1280px) {
-      bottom: calc(-1 * var(--spacing-xl));
+      bottom: calc(-1 * var(--spacing-xl-fluid));
       width: var(--width-lg);
     }
 
@@ -230,7 +223,7 @@ body {
   }
 
   @media (min-width: 768px) {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl-fluid);
   }
 
   @media (min-width: 1024px) {
@@ -249,15 +242,15 @@ body {
 
 .search-page .category-grid {
   display: grid;
-  gap: var(--spacing-md);
+  gap: var(--spacing-md-fluid);
   grid-template-columns: repeat(2, 1fr);
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--spacing-lg-fluid);
   justify-items: center;
 
   @media (min-width: 768px) {
-    gap: var(--spacing-lg);
+    gap: var(--spacing-lg-fluid);
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
@@ -282,7 +275,7 @@ body {
   width: 100%;
   height: var(--height-5xl);
   min-height: var(--height-5xl);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-lg-fluid);
   border: 1px solid var(--clr-glass-border);
   border-radius: var(--radius-md);
   background: oklch(from var(--clr-glass-background) l c h / var(--opacity-50));
@@ -349,13 +342,13 @@ body {
   @media (min-width: 1024px) {
     height: var(--height-3xl);
     min-height: var(--height-3xl);
-    padding: var(--spacing-md);
+    padding: var(--spacing-md-fluid);
   }
 
   @media (min-width: 1280px) {
     height: var(--height-2xl);
     min-height: var(--height-2xl);
-    padding: var(--spacing-sm);
+    padding: var(--spacing-sm-fluid);
   }
 
   &:focus-visible {
@@ -367,7 +360,7 @@ body {
 .search-page .category-name {
   overflow: hidden;
   max-width: 100%;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs-fluid);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   font-weight: 700;
   line-height: 1.2;
@@ -391,16 +384,16 @@ body {
 /* ===== TAG SECTION ===== */
 .search-page .tag-section {
   position: relative;
-  margin-bottom: var(--spacing-xl);
-  padding: var(--spacing-xl) 0;
+  margin-bottom: var(--spacing-xl-fluid);
+  padding: var(--spacing-xl-fluid) 0;
   padding-top: max(
-    var(--spacing-xl),
+    var(--spacing-xl-fluid),
     calc(env(safe-area-inset-top, 0px) + 0.5rem)
   );
 
   &::after {
     position: absolute;
-    bottom: calc(-1 * var(--spacing-md));
+    bottom: calc(-1 * var(--spacing-md-fluid));
     left: 50%;
     width: var(--width-sm);
     height: 1px;
@@ -414,7 +407,7 @@ body {
     content: '';
 
     @media (min-width: 768px) {
-      bottom: calc(-1 * var(--spacing-lg));
+      bottom: calc(-1 * var(--spacing-lg-fluid));
       width: var(--width-md);
     }
 
@@ -424,7 +417,7 @@ body {
     }
 
     @media (min-width: 1280px) {
-      bottom: calc(-1 * var(--spacing-xl));
+      bottom: calc(-1 * var(--spacing-xl-fluid));
       width: var(--width-lg);
     }
 
@@ -434,7 +427,7 @@ body {
   }
 
   @media (min-width: 768px) {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl-fluid);
   }
 
   @media (min-width: 1024px) {
@@ -447,7 +440,7 @@ body {
 
   @media (max-width: 768px) {
     padding-top: max(
-      var(--spacing-xl),
+      var(--spacing-xl-fluid),
       calc(env(safe-area-inset-top, 0px) + 1.5rem)
     );
   }
@@ -463,12 +456,12 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-lg-fluid);
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-xl) var(--spacing-lg);
+  padding: var(--spacing-xl-fluid) var(--spacing-lg-fluid);
   border: 1px solid var(--clr-glass-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg-fluid);
   background: oklch(from var(--clr-glass-background) l c h / var(--opacity-50));
   backdrop-filter: blur(8px);
   box-shadow:
@@ -476,18 +469,18 @@ body {
     inset 0 1px 0 oklch(from var(--clr-background) l c h / var(--opacity-10));
 
   @media (min-width: 768px) {
-    gap: var(--spacing-md);
-    padding: var(--padding-xl) var(--spacing-lg);
+    gap: var(--spacing-md-fluid);
+    padding: var(--padding-xl) var(--spacing-lg-fluid);
   }
 
   @media (min-width: 1024px) {
     gap: var(--gap-md);
-    padding: var(--spacing-xl) var(--padding-xl);
+    padding: var(--spacing-xl-fluid) var(--padding-xl);
   }
 
   @media (min-width: 1280px) {
-    gap: var(--spacing-lg);
-    padding: var(--spacing-xl) var(--spacing-xl);
+    gap: var(--spacing-lg-fluid);
+    padding: var(--spacing-xl-fluid) var(--spacing-xl-fluid);
   }
 }
 
@@ -499,9 +492,9 @@ body {
   overflow: visible;
   min-width: var(--min-width-xl);
   min-height: var(--min-height-xl);
-  padding: var(--spacing-xl) var(--spacing-2xl);
+  padding: var(--spacing-xl-fluid) var(--spacing-2xl-fluid);
   border: 1px solid var(--clr-glass-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg-fluid);
   background: oklch(from var(--clr-glass-background) l c h / var(--opacity-50));
   color: var(--clr-text-primary);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
@@ -571,14 +564,14 @@ body {
   @media (min-width: 1024px) {
     min-width: var(--min-width-md);
     min-height: var(--min-height-md);
-    padding: var(--padding-xl) var(--spacing-2xl);
+    padding: var(--padding-xl) var(--spacing-2xl-fluid);
     font-size: clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem);
   }
 
   @media (min-width: 1280px) {
     min-width: var(--min-width-sm);
     min-height: var(--min-height-sm);
-    padding: var(--spacing-xl) var(--spacing-2xl);
+    padding: var(--spacing-xl-fluid) var(--spacing-2xl-fluid);
   }
 
   @media (hover: none) and (pointer: coarse) {
@@ -602,15 +595,15 @@ body {
 /* ===== SEARCH SECTION ===== */
 .search-page .search-section {
   position: relative;
-  margin-bottom: var(--spacing-xl);
-  padding: var(--spacing-xl) 0;
+  margin-bottom: var(--spacing-xl-fluid);
+  padding: var(--spacing-xl-fluid) 0;
   padding-top: max(
-    var(--spacing-xl),
+    var(--spacing-xl-fluid),
     calc(env(safe-area-inset-top, 0px) + 0.5rem)
   );
 
   @media (min-width: 768px) {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl-fluid);
   }
 
   @media (min-width: 1024px) {
@@ -623,7 +616,7 @@ body {
 
   @media (max-width: 768px) {
     padding-top: max(
-      var(--spacing-xl),
+      var(--spacing-xl-fluid),
       calc(env(safe-area-inset-top, 0px) + 1.5rem)
     );
   }
@@ -636,8 +629,8 @@ body {
 
 .search-page .search-bar-container {
   max-width: var(--max-width-sm);
-  margin: 0 auto var(--spacing-2xl);
-  padding: 0 var(--spacing-lg);
+  margin: 0 auto var(--spacing-2xl-fluid);
+  padding: 0 var(--spacing-lg-fluid);
 
   @media (min-width: 1024px) {
     max-width: var(--max-width-md);
@@ -686,8 +679,8 @@ body {
   }
 
   @media (min-width: 768px) {
-    padding: var(--spacing-lg) min(3rem, 6vw) var(--spacing-lg)
-      var(--spacing-lg);
+    padding: var(--spacing-lg-fluid) min(3rem, 6vw) var(--spacing-lg-fluid)
+      var(--spacing-lg-fluid);
     font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   }
 
@@ -705,13 +698,13 @@ body {
 
 .search-page .search-button {
   position: absolute;
-  right: var(--spacing-md);
+  right: var(--spacing-md-fluid);
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 44px;
   min-height: 44px;
-  padding: var(--spacing-md);
+  padding: var(--spacing-md-fluid);
   border: none;
   border-radius: 0.5rem;
   background: var(--clr-purple);
@@ -731,10 +724,10 @@ body {
   }
 
   @media (min-width: 768px) {
-    right: var(--spacing-sm);
+    right: var(--spacing-sm-fluid);
     min-width: 40px;
     min-height: 40px;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-sm-fluid);
   }
 
   @media (min-width: 1024px) {
@@ -758,14 +751,14 @@ body {
 .search-page .search-results {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-2xl);
+  padding: 0 var(--spacing-2xl-fluid);
 
   @media (min-width: 768px) {
-    padding: 0 var(--spacing-xl);
+    padding: 0 var(--spacing-xl-fluid);
   }
 
   @media (min-width: 1024px) {
-    padding: 0 var(--spacing-2xl);
+    padding: 0 var(--spacing-2xl-fluid);
   }
 }
 
@@ -773,12 +766,12 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--spacing-sm);
-  margin: 0 0 var(--spacing-md);
+  gap: var(--spacing-sm-fluid);
+  margin: 0 0 var(--spacing-md-fluid);
 }
 
 .search-page .search-results-header {
-  margin: 0 0 var(--spacing-sm);
+  margin: 0 0 var(--spacing-sm-fluid);
   color: var(--clr-text-secondary);
   font-size: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
   font-weight: 500;
@@ -786,10 +779,10 @@ body {
 
 .search-page .search-results-container {
   display: grid;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-lg-fluid);
   content-visibility: auto;
   contain-intrinsic-size: 300px 600px;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--spacing-lg-fluid);
   contain: layout style paint;
 
   @media (min-width: 768px) {
@@ -801,7 +794,7 @@ body {
   }
 
   @media (min-width: 1280px) {
-    gap: var(--spacing-xl);
+    gap: var(--spacing-xl-fluid);
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   }
 }
@@ -810,8 +803,8 @@ body {
 .search-page .filter-chip {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-sm);
+  gap: var(--spacing-xs-fluid);
+  padding: var(--spacing-xs-fluid) var(--spacing-sm-fluid);
   border: 1px solid var(--clr-border);
   border-radius: 9999px;
   background: oklch(20% 0.02 270deg / var(--opacity-50));
@@ -843,14 +836,14 @@ body {
 }
 
 .search-page .chip-close {
-  margin-left: var(--spacing-xs);
+  margin-left: var(--spacing-xs-fluid);
   font-weight: bold;
   opacity: var(--opacity-70);
   transition: opacity 0.2s ease;
 }
 
 .search-page .filter-clear {
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: var(--spacing-xs-fluid) var(--spacing-sm-fluid);
   border: 1px solid var(--clr-border);
   border-radius: 0.375rem;
   background: transparent;
@@ -879,8 +872,8 @@ body {
   overflow: hidden;
   width: 100%;
   min-height: 120px;
-  margin: var(--spacing-md) 0;
-  padding: var(--spacing-xl);
+  margin: var(--spacing-md-fluid) 0;
+  padding: var(--spacing-xl-fluid);
   border: 1px solid
     oklch(from var(--clr-background) l c h / var(--opacity-10) 5);
   border-radius: var(--radius-md);
@@ -950,7 +943,7 @@ body {
 
   @media (min-width: 768px) {
     min-height: 100px;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-lg-fluid);
   }
 
   @media (min-width: 1024px) {
@@ -983,8 +976,8 @@ body {
 .search-page .result-title {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  margin: 0 0 var(--spacing-md);
+  gap: var(--spacing-sm-fluid);
+  margin: 0 0 var(--spacing-md-fluid);
   color: var(--clr-text-primary);
   font-size: clamp(1rem, 0.875rem + 0.5vw, 1.125rem);
   font-weight: 700;
@@ -997,7 +990,7 @@ body {
 .search-page .result-description {
   display: -webkit-box;
   overflow: hidden;
-  margin: 0 0 var(--spacing-lg);
+  margin: 0 0 var(--spacing-lg-fluid);
   color: var(--clr-text-secondary);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   line-height: 1.6;
@@ -1010,7 +1003,7 @@ body {
 }
 
 .search-page .result-snippet {
-  margin: 0 0 var(--spacing-md);
+  margin: 0 0 var(--spacing-md-fluid);
   color: var(--clr-text-secondary);
   font-size: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
   line-height: 1.6;
@@ -1020,9 +1013,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-md-fluid);
   margin-top: auto;
-  padding-top: var(--spacing-md);
+  padding-top: var(--spacing-md-fluid);
   border-top: 1px solid
     oklch(from var(--clr-background) l c h / var(--opacity-10) 5);
 }
@@ -1030,8 +1023,8 @@ body {
 .search-page .result-type {
   display: inline-flex;
   align-items: center;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs-fluid) var(--spacing-sm-fluid);
+  border-radius: var(--radius-sm-fluid);
   font-size: clamp(0.625rem, 0.5rem + 0.5vw, 0.75rem);
   font-weight: 600;
   line-height: 1;
@@ -1096,31 +1089,31 @@ body {
 .search-page .section-header {
   position: relative;
   margin-bottom: var(--margin-2xl);
-  padding: var(--spacing-2xl) var(--spacing-lg);
+  padding: var(--spacing-2xl-fluid) var(--spacing-lg-fluid);
   text-align: center;
 
   @media (min-width: 768px) {
     margin-bottom: var(--margin-3xl);
-    padding: var(--spacing-3xl) var(--spacing-xl);
+    padding: var(--spacing-3xl-fluid) var(--spacing-xl-fluid);
   }
 
   @media (min-width: 1024px) {
     margin-bottom: var(--margin-4xl);
-    padding: var(--margin-3xl) var(--spacing-2xl);
+    padding: var(--margin-3xl) var(--spacing-2xl-fluid);
   }
 
   @media (min-width: 1280px) {
     margin-bottom: var(--margin-5xl);
-    padding: var(--margin-4xl) var(--spacing-3xl);
+    padding: var(--margin-4xl) var(--spacing-3xl-fluid);
   }
 
   @media (max-width: 768px) {
     padding-top: max(
-      var(--spacing-md),
+      var(--spacing-md-fluid),
       calc(env(safe-area-inset-top, 0px) + 0.75rem)
     );
     padding-bottom: max(
-      var(--spacing-md),
+      var(--spacing-md-fluid),
       calc(env(safe-area-inset-bottom, 0px) + 0.75rem)
     );
   }
@@ -1128,7 +1121,7 @@ body {
 
 .search-page .section-title {
   position: relative;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-md-fluid);
   color: var(--clr-text-primary);
   font-size: clamp(1.75rem, 1.25rem + 2.5vw, 2.25rem);
   font-weight: 800;
@@ -1152,7 +1145,7 @@ body {
 /* ===== LOADING & SKELETON ===== */
 .search-page .loading-indicator {
   width: 100%;
-  padding: var(--spacing-2xl);
+  padding: var(--spacing-2xl-fluid);
   color: var(--clr-text-secondary);
   font-size: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
   text-align: center;
