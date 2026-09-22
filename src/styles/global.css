@@ -12,39 +12,33 @@
   /* ===== CORE COLOR TOKENS - FREQUENTLY USED VALUES ===== */
 
   /* Base color values - used 3+ times */
-  --token-white-base: oklch(95% 0.005 285deg);
-  --token-black-base: oklch(20% 0.005 285deg);
+  --grkd-white-base: oklch(95% 0.005 285deg);
+  --grkd-black-base: oklch(20% 0.005 285deg);
   --grkd-purple-400: oklch(65% 0.22 273.85deg); /* Hue aligned to Discord */
   --grkd-purple-500: oklch(57.74% 0.209 273.85deg); /* Discord Blurple Primary */
   --grkd-brand-secondary: var(--grkd-purple-400);
   --grkd-cyan-400: oklch(70% 0.15 195deg);
-  --token-purple-base: var(--grkd-purple-500); /* Legacy alias pointing to new primary */
-  --token-gold-base: oklch(85% 0.15 85deg);
-  --token-gold-dark: oklch(65% 0.15 85deg);
-  --token-secondary-gold-base: oklch(75% 0.12 65deg);
+  --grkd-gold-base: oklch(85% 0.15 85deg);
+  --grkd-gold-dark: oklch(65% 0.15 85deg);
+  --grkd-secondary-gold-base: oklch(75% 0.12 65deg);
 
   /* Background color tokens - used 3+ times */
   --grkd-black-950: oklch(5% 0.005 270deg);
   --grkd-black-200: oklch(75% 0.005 270deg); /* Body text — DESIGN.md */
   --grkd-surface: oklch(17.80% 0.058 275.81deg);   /* Discord Midnight Navy */
   --grkd-surface-2: oklch(30.96% 0.150 271.29deg); /* Discord Indigo Surface */
-  --token-bg-dark: var(--grkd-black-950); /* Legacy alias */
-  --token-bg-content: var(--grkd-surface); /* Migrated to Discord surface */
-  --token-bg-card: var(--grkd-surface-2); /* Migrated to Discord surface-2 */
-  --token-bg-input: oklch(15% 0.008 270deg);
+  --grkd-bg-input: oklch(15% 0.008 270deg);
 
   /* Text color tokens - used 3+ times */
   --grkd-muted: oklch(85.99% 0.071 282.16deg); /* Discord Muted (Lavender) */
-  --token-text-secondary: oklch(80% 0 0deg);
-  --token-text-muted: var(--grkd-muted); /* Migrated to Discord muted */
-  --token-text-global-secondary: var(--grkd-muted);
-  --token-text-global-muted: oklch(70% 0.01 270deg);
-  --token-text-global: oklch(85% 0.01 270deg);
+  --grkd-text-secondary: oklch(80% 0 0deg);
+  --grkd-text-global-muted: oklch(70% 0.01 270deg);
+  --grkd-text-global: oklch(85% 0.01 270deg);
 
   /* Accent color tokens - used 3+ times */
-  --token-accent-dark: oklch(60% 0.25 280deg);
-  --token-accent-foreground: oklch(98% 0.002 270deg);
-  --token-secondary-foreground: oklch(15% 0.005 270deg);
+  --grkd-accent-dark: oklch(60% 0.25 280deg);
+  --grkd-accent-foreground: oklch(98% 0.002 270deg);
+  --grkd-secondary-foreground: oklch(15% 0.005 270deg);
 
   /* ===== OPACITY VALUES - GLOBAL CALCULATION-BASED SYSTEM ===== */
 
@@ -96,60 +90,60 @@
   /* ===== COLOR SYSTEM - OKLCH Color Space ===== */
 
   /* Black Color with Opacity */
-  --clr-black: var(--token-black-base);
-  --clr-black-05: oklch(from var(--token-black-base) l c h / var(--opacity-05));
-  --clr-black-1: oklch(from var(--token-black-base) l c h / var(--opacity-1));
-  --clr-black-15: oklch(from var(--token-black-base) l c h / var(--opacity-15));
-  --clr-black-2: oklch(from var(--token-black-base) l c h / var(--opacity-2));
-  --clr-black-25: oklch(from var(--token-black-base) l c h / var(--opacity-25));
-  --clr-black-3: oklch(from var(--token-black-base) l c h / var(--opacity-3));
-  --clr-black-85: oklch(from var(--token-black-base) l c h / var(--opacity-85));
-  --clr-black-95: oklch(from var(--token-black-base) l c h / var(--opacity-95));
+  --clr-black: var(--grkd-black-base);
+  --clr-black-05: oklch(from var(--grkd-black-base) l c h / var(--opacity-05));
+  --clr-black-1: oklch(from var(--grkd-black-base) l c h / var(--opacity-1));
+  --clr-black-15: oklch(from var(--grkd-black-base) l c h / var(--opacity-15));
+  --clr-black-2: oklch(from var(--grkd-black-base) l c h / var(--opacity-2));
+  --clr-black-25: oklch(from var(--grkd-black-base) l c h / var(--opacity-25));
+  --clr-black-3: oklch(from var(--grkd-black-base) l c h / var(--opacity-3));
+  --clr-black-85: oklch(from var(--grkd-black-base) l c h / var(--opacity-85));
+  --clr-black-95: oklch(from var(--grkd-black-base) l c h / var(--opacity-95));
 
   /* White Color with Opacity */
-  --clr-white: var(--token-white-base);
-  --clr-white-02: oklch(from var(--token-white-base) l c h / var(--opacity-02));
-  --clr-white-04: oklch(from var(--token-white-base) l c h / var(--opacity-04));
-  --clr-white-06: oklch(from var(--token-white-base) l c h / var(--opacity-06));
-  --clr-white-08: oklch(from var(--token-white-base) l c h / var(--opacity-08));
-  --clr-white-1: oklch(from var(--token-white-base) l c h / var(--opacity-1));
-  --clr-white-12: oklch(from var(--token-white-base) l c h / var(--opacity-12));
-  --clr-white-15: oklch(from var(--token-white-base) l c h / var(--opacity-15));
-  --clr-white-2: oklch(from var(--token-white-base) l c h / var(--opacity-2));
-  --clr-white-25: oklch(from var(--token-white-base) l c h / var(--opacity-25));
-  --clr-white-3: oklch(from var(--token-white-base) l c h / var(--opacity-3));
-  --clr-white-7: oklch(from var(--token-white-base) l c h / var(--opacity-7));
-  --clr-white-85: oklch(from var(--token-white-base) l c h / var(--opacity-85));
-  --clr-white-95: oklch(from var(--token-white-base) l c h / var(--opacity-95));
+  --clr-white: var(--grkd-white-base);
+  --clr-white-02: oklch(from var(--grkd-white-base) l c h / var(--opacity-02));
+  --clr-white-04: oklch(from var(--grkd-white-base) l c h / var(--opacity-04));
+  --clr-white-06: oklch(from var(--grkd-white-base) l c h / var(--opacity-06));
+  --clr-white-08: oklch(from var(--grkd-white-base) l c h / var(--opacity-08));
+  --clr-white-1: oklch(from var(--grkd-white-base) l c h / var(--opacity-1));
+  --clr-white-12: oklch(from var(--grkd-white-base) l c h / var(--opacity-12));
+  --clr-white-15: oklch(from var(--grkd-white-base) l c h / var(--opacity-15));
+  --clr-white-2: oklch(from var(--grkd-white-base) l c h / var(--opacity-2));
+  --clr-white-25: oklch(from var(--grkd-white-base) l c h / var(--opacity-25));
+  --clr-white-3: oklch(from var(--grkd-white-base) l c h / var(--opacity-3));
+  --clr-white-7: oklch(from var(--grkd-white-base) l c h / var(--opacity-7));
+  --clr-white-85: oklch(from var(--grkd-white-base) l c h / var(--opacity-85));
+  --clr-white-95: oklch(from var(--grkd-white-base) l c h / var(--opacity-95));
 
   /* Purple Color with Opacity */
-  --clr-purple: var(--token-purple-base);
+  --clr-purple: var(--grkd-purple-500);
   --clr-purple-05: oklch(
-    from var(--token-purple-base) l c h / var(--opacity-05)
+    from var(--grkd-purple-500) l c h / var(--opacity-05)
   );
-  --clr-purple-1: oklch(from var(--token-purple-base) l c h / var(--opacity-1));
+  --clr-purple-1: oklch(from var(--grkd-purple-500) l c h / var(--opacity-1));
   --clr-purple-15: oklch(
-    from var(--token-purple-base) l c h / var(--opacity-15)
+    from var(--grkd-purple-500) l c h / var(--opacity-15)
   );
-  --clr-purple-2: oklch(from var(--token-purple-base) l c h / var(--opacity-2));
-  --clr-purple-3: oklch(from var(--token-purple-base) l c h / var(--opacity-3));
-  --clr-purple-4: oklch(from var(--token-purple-base) l c h / var(--opacity-4));
-  --clr-purple-6: oklch(from var(--token-purple-base) l c h / var(--opacity-6));
+  --clr-purple-2: oklch(from var(--grkd-purple-500) l c h / var(--opacity-2));
+  --clr-purple-3: oklch(from var(--grkd-purple-500) l c h / var(--opacity-3));
+  --clr-purple-4: oklch(from var(--grkd-purple-500) l c h / var(--opacity-4));
+  --clr-purple-6: oklch(from var(--grkd-purple-500) l c h / var(--opacity-6));
 
   /* Gold Color with Opacity */
-  --clr-gold: var(--token-gold-base);
-  --clr-gold-25: oklch(from var(--token-gold-base) l c h / var(--opacity-25));
-  --clr-gold-3: oklch(from var(--token-gold-base) l c h / var(--opacity-3));
+  --clr-gold: var(--grkd-gold-base);
+  --clr-gold-25: oklch(from var(--grkd-gold-base) l c h / var(--opacity-25));
+  --clr-gold-3: oklch(from var(--grkd-gold-base) l c h / var(--opacity-3));
   --clr-gold-light: oklch(95% 0.08 85deg);
   --clr-gold-dark: var(--clr-gold);
 
   /* Secondary Gold Color with Opacity */
-  --clr-secondary-gold: var(--token-secondary-gold-base);
+  --clr-secondary-gold: var(--grkd-secondary-gold-base);
   --clr-secondary-gold-25: oklch(
-    from var(--token-secondary-gold-base) l c h / var(--opacity-25)
+    from var(--grkd-secondary-gold-base) l c h / var(--opacity-25)
   );
   --clr-secondary-gold-3: oklch(
-    from var(--token-secondary-gold-base) l c h / var(--opacity-3)
+    from var(--grkd-secondary-gold-base) l c h / var(--opacity-3)
   );
 
   /* Paper Theme Colors */
@@ -161,12 +155,12 @@
 
   /* ===== PRIMARY COLOR SYSTEM ===== */
 
-  --clr-background: var(--token-bg-dark);
+  --clr-background: var(--grkd-black-950);
   --clr-text-primary: var(--clr-white);
-  --clr-text-secondary: var(--token-text-secondary);
-  --clr-text-muted: var(--token-text-muted);
+  --clr-text-secondary: var(--grkd-text-secondary);
+  --clr-text-muted: var(--grkd-muted);
   --clr-accent: var(--clr-purple);
-  --clr-accent-dark: var(--token-accent-dark);
+  --clr-accent-dark: var(--grkd-accent-dark);
   --clr-accent-glow-faint: var(--clr-purple-05);
   --clr-accent-glow-medium: var(--clr-purple-1);
   --clr-accent-glow-strong: var(--clr-purple-2);
@@ -175,8 +169,8 @@
   /* ===== GLOBAL TEXT COLOR SYSTEM ===== */
   --global-text-color: var(--clr-white);
   --global-text-color-primary: var(--clr-white);
-  --global-text-color-secondary: var(--token-text-global-secondary);
-  --global-text-color-muted: var(--token-text-global-muted);
+  --global-text-color-secondary: var(--grkd-muted);
+  --global-text-color-muted: var(--grkd-text-global-muted);
   --global-text-color-accent: var(--clr-white);
 
   /* ===== FALLBACK COLORS ===== */
@@ -333,20 +327,20 @@
 
   /* ===== CONTENT PAGE SYSTEM ===== */
   --clr-content-background: oklch(
-    from var(--token-bg-content) l c h / var(--opacity-95)
+    from var(--grkd-surface) l c h / var(--opacity-95)
   );
   --clr-content-background-light: oklch(
-    from var(--token-bg-content) l c h / var(--opacity-5)
+    from var(--grkd-surface) l c h / var(--opacity-5)
   );
   --clr-content-title: var(--clr-white-95);
   --clr-content-text: var(--clr-white-85);
   --clr-content-meta: var(--clr-white-7);
   --clr-content-accent: var(--clr-purple);
   --clr-content-background-card: oklch(
-    from var(--token-bg-card) l c h / var(--opacity-10)
+    from var(--grkd-surface-2) l c h / var(--opacity-10)
   );
   --clr-content-background-card-hover: oklch(
-    from var(--token-bg-card) l c h / var(--opacity-20)
+    from var(--grkd-surface-2) l c h / var(--opacity-20)
   );
   --clr-content-border: var(--clr-purple-15);
   --shadow-content-card: 0 4px 20px var(--clr-black-3);
@@ -686,7 +680,7 @@
 
   /* Secondary gold - OKLCH optimized */
   --clr-secondary: var(--clr-secondary-gold);
-  --clr-secondary-foreground: var(--token-secondary-foreground);
+  --clr-secondary-foreground: var(--grkd-secondary-foreground);
 
   /* Muted colors - mapped from legacy text colors */
   --clr-muted: var(--clr-text-muted);
@@ -694,11 +688,11 @@
 
   /* Accent colors - now references the primary color system */
   --clr-accent: var(--clr-purple);
-  --clr-accent-foreground: var(--token-accent-foreground);
+  --clr-accent-foreground: var(--grkd-accent-foreground);
 
   /* Semantic colors - enhanced from legacy */
   --clr-destructive: oklch(58% 0.15 15deg);
-  --clr-destructive-foreground: var(--token-accent-foreground);
+  --clr-destructive-foreground: var(--grkd-accent-foreground);
   --clr-info: oklch(54% 0.245 262.881deg);
   --clr-success: oklch(59% 0.145 163.225deg);
   --clr-warning: oklch(66% 0.179 58.318deg);
@@ -706,7 +700,7 @@
 
   /* Border and input colors */
   --clr-border: var(--clr-text-muted);
-  --clr-input: var(--token-bg-input);
+  --clr-input: var(--grkd-bg-input);
   --clr-ring: var(--clr-purple);
 
   /* ===== DESIGN TOKENS - PRESERVED AND ENHANCED FROM LEGACY ===== */
@@ -783,7 +777,7 @@
     padding: var(--spacing-lg);
     border: 1px solid oklch(100% 0 0deg / var(--opacity-10)); /* Subtle border */
     border-radius: var(--radius-lg); /* 12px Discord shape */
-    background: var(--token-bg-card); /* Discord surface-2 */
+    background: var(--grkd-surface-2); /* Discord surface-2 */
     transition:
       box-shadow var(--duration-normal) var(--grkd-ease-productive),
       transform var(--duration-normal) var(--grkd-ease-spring);

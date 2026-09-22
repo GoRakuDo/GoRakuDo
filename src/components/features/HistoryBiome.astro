@@ -94,7 +94,7 @@ const biomeImageId =
           aria-label={`View message from ${figure.name}`}
         >
           <!-- Avatar Squarcle -->
-          <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl shadow-lg transition-all duration-300 transform group-hover:scale-110 group-focus-visible:ring-2 ring-(--token-purple-base) overflow-hidden z-20 bg-gray-800">
+          <div class="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl shadow-lg transition-all duration-300 transform group-hover:scale-110 group-focus-visible:ring-2 ring-(--grkd-purple-500) overflow-hidden z-20 bg-gray-800">
              <div class="absolute inset-0 bg-black/50 group-hover:bg-transparent transition-colors duration-300 overlay-dim"></div>
              <img
                 src={toLocalImage(figure.avatarId)}
@@ -122,7 +122,7 @@ const biomeImageId =
       <!-- The Message Card -->
       <div 
         id="history-message-card" 
-        class="bg-(--token-bg-light)/10 backdrop-blur-md border border-white/10 p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl w-full md:max-w-4xl min-h-[400px] sm:min-h-[350px] md:min-h-[280px] transform transition-all duration-500 translate-y-4 opacity-0 scale-95 shadow-2xl relative overflow-hidden"
+        class="bg-(--grkd-bg-light)/10 backdrop-blur-md border border-white/10 p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl w-full md:max-w-4xl min-h-[400px] sm:min-h-[350px] md:min-h-[280px] transform transition-all duration-500 translate-y-4 opacity-0 scale-95 shadow-2xl relative overflow-hidden"
       >
         <!-- Background Decor -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-white/5 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
@@ -135,21 +135,21 @@ const biomeImageId =
            </div>
            <div class="text-left">
                            <h4 id="card-name" class="font-bold text-white text-sm sm:text-base md:text-xl uppercase tracking-tight"></h4>
-             <span id="card-year" class="text-sm font-mono text-(--token-text-muted) tracking-wider"></span>
+             <span id="card-year" class="text-sm font-mono text-(--grkd-muted) tracking-wider"></span>
            </div>
         </div>
 
         <!-- Quote Body -->
         <div class="relative z-10">
           <span class="absolute -top-4 -left-2 text-6xl text-white/5 font-serif">“</span>
-          <p id="card-quote" class="text-base md:text-xl text-(--token-text-primary) text-left leading-relaxed italic mb-6 relative pl-2">
+          <p id="card-quote" class="text-base md:text-xl text-(--grkd-text-primary) text-left leading-relaxed italic mb-6 relative pl-2">
              <!-- Quote goes here -->
           </p>
         </div>
 
         <!-- Source Footer -->
         <div class="text-right relative z-10 border-t border-white/5 pt-4">
-           <p id="card-source" class="text-xs text-(--token-text-muted) font-bold uppercase tracking-widest opacity-80"></p>
+           <p id="card-source" class="text-xs text-(--grkd-muted) font-bold uppercase tracking-widest opacity-80"></p>
         </div>
       </div>
   </div>

@@ -776,21 +776,21 @@ const { className = '' } = Astro.props;
     /* ---------- Ruby Text Styling - Japanese Typography with Enhanced Readability ---------- */
     .logo-japanese rt {
       margin-bottom: -15px;
-      color: oklch(from var(--token-white-base) l c h / 0.8);
+      color: oklch(from var(--grkd-white-base) l c h / 0.8);
       font-family: var(--font-primary);
       font-size: 0.4em;
       font-weight: 350;
       -webkit-text-stroke: 0.25px
-        oklch(from var(--token-black-base) l c h / 0.3);
+        oklch(from var(--grkd-black-base) l c h / 0.3);
 
-      /* text-stroke: 0.25px oklch(from var(--token-black-base) l c h / 0.3); Non-standard property removed */
+      /* text-stroke: 0.25px oklch(from var(--grkd-black-base) l c h / 0.3); Non-standard property removed */
       transition:
         color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         text-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-shadow:
-        0 1px 2px oklch(from var(--token-black-base) l c h / 0.5),
-        0 0 4px oklch(from var(--token-black-base) l c h / 0.3),
-        0 0 8px oklch(from var(--token-white-base) l c h / 0.2);
+        0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.5),
+        0 0 4px oklch(from var(--grkd-black-base) l c h / 0.3),
+        0 0 8px oklch(from var(--grkd-white-base) l c h / 0.2);
     }
 
   }

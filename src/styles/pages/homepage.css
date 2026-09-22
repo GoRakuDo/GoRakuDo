@@ -231,7 +231,7 @@
   background: linear-gradient(
     135deg,
     var(--grkd-purple-500) 0%,
-    var(--token-gold-base) 50%,
+    var(--grkd-gold-base) 50%,
     var(--grkd-cyan-400) 100%
   );
   opacity: 0;
@@ -367,7 +367,7 @@
   display: flex;
   align-items: center;
   gap: 0.125rem;
-  color: var(--token-gold-base);
+  color: var(--grkd-gold-base);
 }
 
 .rarity-star {

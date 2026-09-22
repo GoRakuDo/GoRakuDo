@@ -69,18 +69,18 @@
   --pl-z-popover: 550;
   --pl-z-tooltip: 560;
   --pl-color-primary: oklch(65% 0.18 15deg);
-  --pl-color-primary-hover: var(--token-purple-hover);
-  --pl-color-secondary: var(--token-purple-base);
-  --pl-color-secondary-hover: var(--token-purple-hover);
+  --pl-color-primary-hover: var(--grkd-purple-hover);
+  --pl-color-secondary: var(--grkd-purple-500);
+  --pl-color-secondary-hover: var(--grkd-purple-hover);
   --pl-color-text-primary: var(--clr-text-primary);
-  --pl-color-text-secondary: var(--token-text-muted);
+  --pl-color-text-secondary: var(--grkd-muted);
   --pl-color-background: oklch(98% 0.02 15deg);
   --pl-color-background-subtle: oklch(98% 0.02 15deg / var(--opacity-85));
   --pl-color-border-subtle: var(--pl-color-primary);
   --pl-color-warning-orange: oklch(70% 0.15 45deg);
   --pl-color-text-muted: oklch(70% 0.02 250deg);
   --pl-color-brand-primary: var(--pl-color-primary);
-  --pl-color-brand-primary-hover: var(--token-purple-hover);
+  --pl-color-brand-primary-hover: var(--grkd-purple-hover);
   --pl-filter-grayscale: grayscale(0.75);
   --pl-text-decoration-thickness: 2px;
   --pl-text-underline-offset: 0.2em;
@@ -923,7 +923,7 @@ a {
 .image-zoom-close:hover {
   background: color-mix(
     var(--pl-color-mix-oklch),
-    var(--token-purple-base) 80%,
+    var(--grkd-purple-500) 80%,
     black
   );
   transform: scale(var(--pl-scale-zoom));
@@ -1020,7 +1020,7 @@ a {
       margin: 0 auto;
       border: none;
       border-radius: var(--pl-radius-full);
-      background: var(--token-purple-base);
+      background: var(--grkd-purple-500);
       color: white;
       font-size: 1.5rem;
       font-weight: bold;

@@ -124,12 +124,12 @@
   --rc-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* 色変数 - グローバルシステムとの統合 */
-  --rc-color-primary: var(--token-purple-base);
-  --rc-color-primary-hover: var(--token-purple-hover);
-  --rc-color-secondary: var(--token-gold-base);
+  --rc-color-primary: var(--grkd-purple-500);
+  --rc-color-primary-hover: var(--grkd-purple-hover);
+  --rc-color-secondary: var(--grkd-gold-base);
   --rc-color-text-primary: var(--clr-text-primary);
-  --rc-color-text-secondary: var(--token-text-muted);
-  --rc-color-text-muted: var(--token-text-global-muted);
+  --rc-color-text-secondary: var(--grkd-muted);
+  --rc-color-text-muted: var(--grkd-text-global-muted);
   --rc-color-background-subtle: oklch(98% 0.02 15deg / var(--opacity-85));
   --rc-color-border-subtle: var(--rc-color-primary);
   --rc-color-warning-orange: oklch(70% 0.15 45deg);

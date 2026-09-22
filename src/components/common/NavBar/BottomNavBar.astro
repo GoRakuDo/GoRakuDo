@@ -1199,12 +1199,12 @@ const menuItems = [
         /* モバイル: タップ時の縮小効果を無効化 */
         transform: none;
         box-shadow:
-          0 1px 4px oklch(from var(--token-black-base) l c h / 0.08),
-          0 1px 2px oklch(from var(--token-black-base) l c h / 0.06),
+          0 1px 4px oklch(from var(--grkd-black-base) l c h / 0.08),
+          0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.06),
           inset 0 1px 0 oklch(100% 0 0deg / 0.1),
-          inset 0 -1px 0 oklch(from var(--token-black-base) l c h / 0.08);
+          inset 0 -1px 0 oklch(from var(--grkd-black-base) l c h / 0.08);
         filter: drop-shadow(
-          0 1px 4px oklch(from var(--token-black-base) l c h / 0.08)
+          0 1px 4px oklch(from var(--grkd-black-base) l c h / 0.08)
         );
       }
 
@@ -1262,7 +1262,7 @@ const menuItems = [
   .menu-overlay-backdrop {
     position: absolute;
     inset: 0;
-    background: oklch(from var(--token-black-base) l c h / 0.8);
+    background: oklch(from var(--grkd-black-base) l c h / 0.8);
 
     /* モバイル最適化: backdrop-filterを簡略化 */
     @media (max-width: 768px) {
@@ -1297,8 +1297,8 @@ const menuItems = [
       background: oklch(6% 0.008 270deg / 0.5);
       backdrop-filter: blur(8px);
       box-shadow:
-        0 10px 30px oklch(from var(--token-black-base) l c h / 0.3),
-        0 4px 12px oklch(from var(--token-black-base) l c h / 0.15);
+        0 10px 30px oklch(from var(--grkd-black-base) l c h / 0.3),
+        0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15);
       transform: none;
       will-change: transform;
     }
@@ -1319,8 +1319,8 @@ const menuItems = [
         );
       backdrop-filter: blur(12px) saturate(120%);
       box-shadow:
-        0 8px 32px oklch(from var(--token-black-base) l c h / 0.25),
-        0 4px 16px oklch(from var(--token-black-base) l c h / 0.15),
+        0 8px 32px oklch(from var(--grkd-black-base) l c h / 0.25),
+        0 4px 16px oklch(from var(--grkd-black-base) l c h / 0.15),
         inset 0 1px 0 oklch(100% 0 0deg / 0.1);
       transform: scale(0.95) translateY(10px);
     }
@@ -1368,14 +1368,14 @@ const menuItems = [
     border: 1px solid oklch(100% 0 0deg / 0.15);
     border-radius: 1.25rem;
     background: oklch(100% 0 0deg / 0.12);
-    color: oklch(from var(--token-white-base) l c h);
+    color: oklch(from var(--grkd-white-base) l c h);
     cursor: pointer;
     transition:
       background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow:
-      0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
+      0 2px 8px oklch(from var(--grkd-black-base) l c h / 0.1),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
   }
 
@@ -1420,8 +1420,8 @@ const menuItems = [
       border-color: oklch(100% 0 0deg / 0.25);
       transform: translateY(-1px);
       box-shadow:
-        0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
-        0 2px 6px oklch(from var(--token-black-base) l c h / 0.1);
+        0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15),
+        0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.1);
     }
   }
 
@@ -1429,13 +1429,13 @@ const menuItems = [
     background: oklch(100% 0 0deg / 0.22);
     transform: translateY(0);
     box-shadow:
-      0 2px 6px oklch(from var(--token-black-base) l c h / 0.2),
+      0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.2),
       inset 0 1px 2px oklch(100% 0 0deg / 0.1);
   }
 
   .menu-overlay-title {
     margin: 0;
-    color: oklch(from var(--token-white-base) l c h);
+    color: oklch(from var(--grkd-white-base) l c h);
     font-family: var(--font-primary);
     font-size: 1.45rem;
     font-weight: 700;
@@ -1443,9 +1443,9 @@ const menuItems = [
 
     /* UNIFIED text shadow - Navbar.astroと同じ */
     text-shadow:
-      0 2px 4px oklch(from var(--token-black-base) l c h / 0.4),
-      0 1px 2px oklch(from var(--token-black-base) l c h / 0.5),
-      0 0 8px oklch(from var(--token-black-base) l c h / 0.3);
+      0 2px 4px oklch(from var(--grkd-black-base) l c h / 0.4),
+      0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.5),
+      0 0 8px oklch(from var(--grkd-black-base) l c h / 0.3);
   }
 
   .menu-overlay-close {
@@ -1457,7 +1457,7 @@ const menuItems = [
     border: 1px solid oklch(100% 0 0deg / 0.15);
     border-radius: 1.25rem;
     background: oklch(100% 0 0deg / 0.12);
-    color: oklch(from var(--token-white-base) l c h);
+    color: oklch(from var(--grkd-white-base) l c h);
     cursor: pointer;
 
     /* 最適化: 具体的なプロパティのみアニメーション */
@@ -1468,7 +1468,7 @@ const menuItems = [
 
     /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
-      0 2px 8px oklch(from var(--token-black-base) l c h / 0.1),
+      0 2px 8px oklch(from var(--grkd-black-base) l c h / 0.1),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
   }
 
@@ -1479,8 +1479,8 @@ const menuItems = [
       border-color: oklch(100% 0 0deg / 0.25);
       transform: translateY(-1px);
       box-shadow:
-        0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
-        0 2px 6px oklch(from var(--token-black-base) l c h / 0.1);
+        0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15),
+        0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.1);
     }
   }
 
@@ -1488,7 +1488,7 @@ const menuItems = [
     background: oklch(100% 0 0deg / 0.22);
     transform: translateY(0);
     box-shadow:
-      0 2px 6px oklch(from var(--token-black-base) l c h / 0.2),
+      0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.2),
       inset 0 1px 2px oklch(100% 0 0deg / 0.1);
   }
 
@@ -1550,9 +1550,9 @@ const menuItems = [
     background: linear-gradient(
       90deg,
       transparent 0%,
-      oklch(from var(--token-white-base) l c h / 0.2) 20%,
-      oklch(from var(--token-white-base) l c h / 0.4) 50%,
-      oklch(from var(--token-white-base) l c h / 0.2) 80%,
+      oklch(from var(--grkd-white-base) l c h / 0.2) 20%,
+      oklch(from var(--grkd-white-base) l c h / 0.4) 50%,
+      oklch(from var(--grkd-white-base) l c h / 0.2) 80%,
       transparent 100%
     );
   }
@@ -1585,7 +1585,7 @@ const menuItems = [
 
     /* UNIFIED background - Navbar.astroのnav-itemと同じ */
     background: oklch(100% 0 0deg / 0.12);
-    color: oklch(from var(--token-white-base) l c h);
+    color: oklch(from var(--grkd-white-base) l c h);
     text-decoration: none;
     cursor: pointer;
 
@@ -1599,7 +1599,7 @@ const menuItems = [
 
     /* UNIFIED shadow system - Navbar.astroと同じ */
     box-shadow:
-      0 2px 8px oklch(from var(--token-black-base) l c h / 0.08),
+      0 2px 8px oklch(from var(--grkd-black-base) l c h / 0.08),
       inset 0 1px 0 oklch(100% 0 0deg / 0.1);
 
     /* デスクトップのみホバー効果 - nav-itemと同じ */
@@ -1609,8 +1609,8 @@ const menuItems = [
         border-color: oklch(100% 0 0deg / 0.25);
         transform: translateY(-1px);
         box-shadow:
-          0 4px 12px oklch(from var(--token-black-base) l c h / 0.15),
-          0 2px 6px oklch(from var(--token-black-base) l c h / 0.1);
+          0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15),
+          0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.1);
       }
     }
 
@@ -1619,7 +1619,7 @@ const menuItems = [
       transform: translateY(0);
       border-color: oklch(100% 0 0deg / 0.3);
       box-shadow:
-        0 2px 6px oklch(from var(--token-black-base) l c h / 0.2),
+        0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.2),
         inset 0 1px 2px oklch(100% 0 0deg / 0.1);
     }
 
@@ -1662,7 +1662,7 @@ const menuItems = [
     border: none;
     border-radius: 0;
     background: transparent;
-    color: oklch(from var(--token-white-base) l c h);
+    color: oklch(from var(--grkd-white-base) l c h);
     transition:
       background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
       transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1686,7 +1686,7 @@ const menuItems = [
   /* ---------- Menu Overlay Icon SVG Styling - Moved for proper ordering ---------- */
 
   .menu-overlay-label {
-    color: oklch(from var(--token-white-base) l c h);
+    color: oklch(from var(--grkd-white-base) l c h);
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -1698,8 +1698,8 @@ const menuItems = [
 
     /* UNIFIED text shadow - Navbar.astroと同じ */
     text-shadow:
-      0 1px 2px oklch(from var(--token-black-base) l c h / 0.3),
-      0 0 4px oklch(from var(--token-black-base) l c h / 0.2);
+      0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.3),
+      0 0 4px oklch(from var(--grkd-black-base) l c h / 0.2);
 
     /* モバイル最適化: テキストサイズの調整 */
     @media (max-width: 768px) {
@@ -1722,10 +1722,10 @@ const menuItems = [
   /* デスクトップのみホバー効果 */
   @media (hover: hover) and (pointer: fine) {
     .menu-overlay-item:hover .menu-overlay-label {
-      color: oklch(from var(--token-white-base) l c h / 0.95);
+      color: oklch(from var(--grkd-white-base) l c h / 0.95);
       text-shadow:
-        0 2px 4px oklch(from var(--token-black-base) l c h / 0.4),
-        0 1px 2px oklch(from var(--token-black-base) l c h / 0.5);
+        0 2px 4px oklch(from var(--grkd-black-base) l c h / 0.4),
+        0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.5);
     }
   }
 </style>

@@ -19,7 +19,7 @@ const { headings = [] } = Astro.props
             height="20" 
             viewBox="0 0 24 24" 
             fill="none" 
-            stroke="var(--token-purple-base)" 
+            stroke="var(--grkd-purple-500)" 
             stroke-width="2" 
             stroke-linecap="round" 
             stroke-linejoin="round"
@@ -129,7 +129,7 @@ const { headings = [] } = Astro.props
     max-height: calc(100vh - 200px);
     opacity: 1;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    scrollbar-color: color-mix(in oklch, var(--token-purple-base) 30%, transparent) transparent;
+    scrollbar-color: color-mix(in oklch, var(--grkd-purple-500) 30%, transparent) transparent;
     scrollbar-width: thin;
     will-change: max-height, opacity, transform;
 
@@ -143,11 +143,11 @@ const { headings = [] } = Astro.props
 
     &::-webkit-scrollbar-thumb {
       border-radius: 2px;
-      background: color-mix(in oklch, var(--token-purple-base) 30%, transparent);
+      background: color-mix(in oklch, var(--grkd-purple-500) 30%, transparent);
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: color-mix(in oklch, var(--token-purple-base) 50%, transparent);
+      background: color-mix(in oklch, var(--grkd-purple-500) 50%, transparent);
     }
   }
 
@@ -256,7 +256,7 @@ const { headings = [] } = Astro.props
     width: 0%;
     height: 2px;
     border-radius: 1px;
-      background: var(--token-purple-base);
+      background: var(--grkd-purple-500);
     transition: width 0.3s ease;
     content: '';
     }
@@ -267,7 +267,7 @@ const { headings = [] } = Astro.props
     align-items: center;
     gap: 8px;
     margin: 0;
-    color: var(--token-purple-base);
+    color: var(--grkd-purple-500);
     font-size: 16px;
     font-weight: 600;
   }
@@ -283,7 +283,7 @@ const { headings = [] } = Astro.props
     border: none;
     border-radius: 4px;
     background: none;
-    color: var(--token-white-base);
+    color: var(--grkd-white-base);
     opacity: 0.3;
     cursor: default;
 
@@ -300,8 +300,8 @@ const { headings = [] } = Astro.props
     z-index: var(--z-TableOfContents-toc-toggle-after);
     padding: 4px 8px;
     border-radius: 4px;
-      background: color-mix(in oklch, var(--token-white-base) 10%, transparent);
-      color: var(--token-white-base);
+      background: color-mix(in oklch, var(--grkd-white-base) 10%, transparent);
+      color: var(--grkd-white-base);
     font-size: 12px;
     white-space: nowrap;
     opacity: 0;
@@ -313,7 +313,7 @@ const { headings = [] } = Astro.props
 
     &:hover {
       background: none;
-      color: var(--token-white-base);
+      color: var(--grkd-white-base);
 
       &::after {
         opacity: 0;
@@ -435,7 +435,7 @@ const { headings = [] } = Astro.props
     padding: 8px 10px;
     border-left: 3px solid transparent;
     border-radius: 6px;
-    color: var(--token-white-base);
+    color: var(--grkd-white-base);
     font-size: 14px;
     line-height: 1.4;
     text-decoration: none;
@@ -445,20 +445,20 @@ const { headings = [] } = Astro.props
     text-overflow: ellipsis;
 
     &:hover {
-      background: color-mix(in oklch, var(--token-purple-base) 10%, transparent);
-      color: var(--token-purple-base);
+      background: color-mix(in oklch, var(--grkd-purple-500) 10%, transparent);
+      color: var(--grkd-purple-500);
     transform: translateX(4px);
     }
   }
 
   /* Active link highlighting */
   .toc-link.active {
-    border-left: 3px solid var(--token-purple-base);
-    background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
-    color: var(--token-purple-base);
+    border-left: 3px solid var(--grkd-purple-500);
+    background: color-mix(in oklch, var(--grkd-purple-500) 15%, transparent);
+    color: var(--grkd-purple-500);
     font-weight: 600;
     animation: activeGlow 0.3s ease-in-out;
-    box-shadow: 0 2px 8px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+    box-shadow: 0 2px 8px color-mix(in oklch, var(--grkd-purple-500) 20%, transparent);
 
     &::before {
     position: absolute;
@@ -467,7 +467,7 @@ const { headings = [] } = Astro.props
     left: 0;
     width: 3px;
     border-radius: 0 2px 2px 0;
-      background: linear-gradient(180deg, var(--token-purple-base), color-mix(in oklch, var(--token-purple-base) 80%, var(--token-white-base)));
+      background: linear-gradient(180deg, var(--grkd-purple-500), color-mix(in oklch, var(--grkd-purple-500) 80%, var(--grkd-white-base)));
     content: '';
   }
 
@@ -478,31 +478,31 @@ const { headings = [] } = Astro.props
     width: 6px;
     height: 6px;
     border-radius: 50%;
-      background: var(--token-purple-base);
+      background: var(--grkd-purple-500);
     transform: translateY(-50%);
     animation: pulse 2s infinite;
     content: '';
   }
 
     &:hover {
-      background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+      background: color-mix(in oklch, var(--grkd-purple-500) 20%, transparent);
     transform: translateX(2px);
     }
   }
 
   @keyframes activeGlow {
     0% {
-      background: color-mix(in oklch, var(--token-purple-base) 5%, transparent);
+      background: color-mix(in oklch, var(--grkd-purple-500) 5%, transparent);
       transform: translateX(0);
     }
 
     50% {
-      background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+      background: color-mix(in oklch, var(--grkd-purple-500) 20%, transparent);
       transform: translateX(4px);
     }
 
     100% {
-      background: color-mix(in oklch, var(--token-purple-base) 15%, transparent);
+      background: color-mix(in oklch, var(--grkd-purple-500) 15%, transparent);
       transform: translateX(0);
     }
   }
@@ -674,9 +674,9 @@ const { headings = [] } = Astro.props
 
     .mobile-toc .toc-link.active {
       position: relative;
-      border-left: 4px solid var(--token-purple-base);
-      background: color-mix(in oklch, var(--token-purple-base) 20%, transparent);
-      color: var(--token-purple-base);
+      border-left: 4px solid var(--grkd-purple-500);
+      background: color-mix(in oklch, var(--grkd-purple-500) 20%, transparent);
+      color: var(--grkd-purple-500);
       font-weight: 600;
     }
   }

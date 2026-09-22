@@ -100,7 +100,7 @@ button:focus-visible {
 /* Emphasis */
 .prose strong,
 .content-main strong {
-  color: var(--token-purple-base);
+  color: var(--grkd-purple-500);
   font-weight: 600;
 }
 
@@ -112,7 +112,7 @@ button:focus-visible {
   color: var(--clr-text-primary);
   font-style: normal;
   text-decoration: underline;
-  text-decoration-color: oklch(from var(--token-text-muted) l c h / 0.85);
+  text-decoration-color: oklch(from var(--grkd-muted) l c h / 0.85);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
 }
