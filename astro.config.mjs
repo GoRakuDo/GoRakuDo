@@ -18,6 +18,8 @@ export default defineConfig({
 
   // Legacy URL redirects (/tools → /tutorial)
   redirects: {
+    // Old guide page → new immersion guide (meta refresh redirect in static builds)
+    '/panduan-lengkap-otodidak-bahasa-jepang': '/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak',
     '/tools': '/tutorial',
     '/tools/[tool]': '/tutorial/[tool]',
     '/tools/[tool]/[...slug]': '/tutorial/[tool]/[...slug]',
@@ -26,6 +28,12 @@ export default defineConfig({
   // Preserve legacy content collection APIs until Content Layer migration.
   legacy: {
     collectionsBackwardsCompat: true,
+  },
+
+  // Astro 7 experimental: skip unchanged pages on rebuild when the route's
+  // getStaticPaths() returns a stable cacheKey (see src/utils/cache-key.ts).
+  experimental: {
+    incrementalBuild: true,
   },
 
   // Preserve Astro 6 HTML whitespace compression behavior.
@@ -79,10 +87,7 @@ export default defineConfig({
           item.changefreq = 'daily';
         }
         // Major guide pages
-        else if (
-          item.url.includes('/panduan-immersion') ||
-          item.url.includes('/panduan-lengkap')
-        ) {
+        else if (item.url.includes('/panduan-immersion')) {
           item.priority = 0.9;
           item.changefreq = 'weekly';
         }

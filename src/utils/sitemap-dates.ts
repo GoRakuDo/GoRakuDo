@@ -11,8 +11,6 @@ const PAGE_SOURCE_MAP: Record<string, string> = {
  '/': 'src/pages/index.astro',
  '/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak/':
   'src/pages/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak/index.astro',
- '/panduan-lengkap-otodidak-bahasa-jepang/':
-  'src/pages/panduan-lengkap-otodidak-bahasa-jepang/index.astro',
  '/about-us/': 'src/pages/about-us/index.astro',
  '/discord/': 'src/pages/discord/index.astro',
  '/faq/': 'src/pages/faq/index.astro',
