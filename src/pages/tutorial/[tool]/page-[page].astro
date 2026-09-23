@@ -185,6 +185,7 @@ const processedArticles = paginatedItems.map(
 
     return {
       slug: articleSlug,
+      articleTool: article.data.toolName?.toLowerCase() ?? tool,
       title: articleTitle,
       description: articleDescription,
       tags: displayTags,
@@ -297,19 +298,24 @@ const collectionPageSchema = {
   mainEntity: {
     ...collectionPageTemplate.mainEntity,
     itemListElement: paginatedItems.map(
-      (article: CollectionEntry<'tool-articles'>, index: number) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'Article',
-          name: article.data.title || `Panduan ${formattedToolName}`,
-          description:
-            article.data.description || `Panduan lengkap ${formattedToolName}`,
-          url: `/tutorial/${tool}/${getEntrySlug(article)}`,
-          datePublished: article.data.publishedDate,
-          author: { '@type': 'Organization', name: 'GoRakuDo Team' },
-        },
-      })
+      (article: CollectionEntry<'tool-articles'>, index: number) => {
+        const entrySlug = getEntrySlug(article);
+        const articleTool = entrySlug.split('/')[0];
+        const articleSlug = entrySlug.split('/').slice(1).join('/');
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'Article',
+            name: article.data.title || `Panduan ${formattedToolName}`,
+            description:
+              article.data.description || `Panduan lengkap ${formattedToolName}`,
+            url: `/tutorial/${articleTool}/${articleSlug}`,
+            datePublished: article.data.publishedDate,
+            author: { '@type': 'Organization', name: 'GoRakuDo Team' },
+          },
+        };
+      }
     ),
   },
 };

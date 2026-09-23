@@ -309,6 +309,21 @@
   --radius-sm-fluid: min(0.25rem, 0.5vw);
   --radius-lg-fluid: min(1.5rem, 3vw);
 
+  /* ===== NAMED SPACING SCALE (plain :root — intentionally NOT in @theme) =====
+   * Note: Keep these OUT of `@theme`. Defining `--spacing-*` namespace keys
+   * there hijacks Tailwind v4's named max-w-* and min-w-* utility resolution:
+   * `max-w-2xl` resolved to `--spacing-2xl` (3rem/48px) instead of the
+   * container scale (42rem). Plain :root keeps every `var(--spacing-*)`
+   * reference working without feeding Tailwind's utility namespaces. */
+  --spacing-xs: 0.25rem; /* 4px - legacy --spacing-xs */
+  --spacing-sm: 0.5rem; /* 8px - legacy --spacing-sm */
+  --spacing-md: 1rem; /* 16px - legacy --spacing-md */
+  --spacing-lg: 1.5rem; /* 24px - legacy --spacing-lg */
+  --spacing-xl: 2rem; /* 32px - legacy --spacing-xl */
+  --spacing-2xl: 3rem; /* 48px - legacy --spacing-2xl */
+  --spacing-3xl: 4rem; /* 64px - legacy --spacing-3xl */
+  --spacing-hero: 8.125rem; /* 130px - Discord hero spacing */
+
   /* ===== SOLID WHITE SCALE (docs & tools pages) ===== */
 
   /* NOTE: pure-white hue + alpha. The existing `--clr-white-95` (global)
@@ -405,7 +420,7 @@
     overflow-x: hidden;
 
     /* REASONING: Optimized font stack for readability and layout stability */
-    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
+    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for rem calculations */
     font-weight: 400;
     scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
     scroll-padding-top: var(--navbar-height); /* Anchor link offset */
@@ -690,16 +705,6 @@
   --radius-pill: 9999px; /* Legacy --border-radius-pill: 35px enhanced to full pill */
   --radius-card: 1.25rem; /* 20px - legacy --border-radius-card */
 
-  /* Spacing scale - preserving legacy system */
-  --spacing-xs: 0.25rem; /* 4px - legacy --spacing-xs */
-  --spacing-sm: 0.5rem; /* 8px - legacy --spacing-sm */
-  --spacing-md: 1rem; /* 16px - legacy --spacing-md */
-  --spacing-lg: 1.5rem; /* 24px - legacy --spacing-lg */
-  --spacing-xl: 2rem; /* 32px - legacy --spacing-xl */
-  --spacing-2xl: 3rem; /* 48px - legacy --spacing-2xl */
-  --spacing-3xl: 4rem; /* 64px - legacy --spacing-3xl */
-  --spacing-hero: 8.125rem; /* 130px - Discord hero spacing */
-
   /* Typography scale - preserving legacy font sizes */
   --font-size-xs: 0.75rem; /* 12px - legacy --font-size-xs */
   --font-size-sm: 0.875rem; /* 14px - legacy --font-size-sm */
@@ -733,13 +738,9 @@
   --shadow-primary: 0 8px 24px oklch(65% 0.18 280deg / var(--opacity-3));
   --shadow-secondary: 0 4px 16px var(--clr-secondary-gold-25);
 
-  /* Container breakpoints - preserving legacy */
-  --container-xs: 320px; /* Legacy --container-xs */
-  --container-sm: 640px; /* Legacy --container-sm */
-  --container-md: 768px; /* Legacy --container-md */
-  --container-lg: 1024px; /* Legacy --container-lg */
-  --container-xl: 1280px; /* Legacy --container-xl */
-  --container-2xl: 1600px; /* Legacy --container-2xl */
+  /* Note: legacy `--container-xs`..`--container-2xl` overrides were removed.
+   * They had zero users but overrode Tailwind's default container scale
+   * (e.g. `--container-2xl` 1600px instead of 42rem), breaking `max-w-*`. */
 }
 
 /* ========== COMPONENT LAYER - LEGACY AND MODERN BUTTON SYSTEMS ========== */

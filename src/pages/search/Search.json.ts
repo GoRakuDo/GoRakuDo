@@ -132,7 +132,9 @@ function toToolArticleItem(article: CollectionEntry<'tool-articles'>): Comprehen
     hasCodeBlocks: fullContent.includes('```'),
     hasImages: fullContent.includes('!['),
     url: resolvePath('tool-articles', slug),
-    path: `tools/${toolName}/${slug}`,
+    // Display path mirrors the real route (`/tutorial/<tool>/<slug>`);
+    // the old `tools/${toolName}/${slug}` doubled the tool folder.
+    path: `tutorial/${slug}`,
   };
 }
 
