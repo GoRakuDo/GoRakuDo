@@ -1,4 +1,9 @@
-@import 'tailwindcss' layer(base);
+/* ========================================
+   注意：このファイルは「ページ専用 CSS」に見えるが、実質 panduan-lengkap 系
+   コンポーネント（JapaneseLearningGuide.astro / LanguageLearningProblems.astro 等）
+   が import して共有している CSS。ページ固有への分離は影響範囲が大きいため
+   今回はファイル移動を行わず、ここにその旨を明記するに留める。
+   ======================================== */
 
 /* ========================================
    Japanese Learning Guide - 最適化されたスタイル

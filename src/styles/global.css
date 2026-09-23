@@ -2,7 +2,6 @@
 @import './mobile-performance.css';
 @import './fonts.css';
 @import './typography.css';
-@import './components/tutorial-image-grid.css';
 @import 'tailwindcss';
 
 :root {
@@ -311,6 +310,7 @@
   --radius-lg-fluid: min(1.5rem, 3vw);
 
   /* ===== SOLID WHITE SCALE (docs & tools pages) ===== */
+
   /* NOTE: pure-white hue + alpha. The existing `--clr-white-95` (global)
      is a slightly-tinted white base — do not confuse the two scales. */
   --clr-white-solid-98: oklch(100% 0 0deg / var(--opacity-98));
@@ -374,6 +374,9 @@
   --z-index-error-content: 2;
   --z-index-floating-particle: -1;
   --z-ImageSlideshow-long-press-indicator: 10;
+
+  /* ページ固有 z-index トークン（homepage/docs ページ専用。
+   * 将来 pages 側の CSS へ移動候補：今回の責務整理では移動しない） */
   --z-homepage-main-content-section: 20;
   --z-docs-index-post-card-hover: 10;
   --z-docs-index-post-emoji: 15;
