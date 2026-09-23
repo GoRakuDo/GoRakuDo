@@ -34,12 +34,6 @@ body {
   --tool-spacing-xl: var(--spacing-xl);
   --tool-spacing-2xl: var(--spacing-2xl);
 
-  /* Border radius - restored to maintain functionality */
-  --tool-radius-sm: var(--radius-sm);
-  --tool-radius-md: var(--radius-md);
-  --tool-radius-lg: var(--radius-lg);
-  --tool-radius-xl: var(--radius-xl);
-  --tool-radius-2xl: var(--radius-2xl);
 
   /* Layout */
   --tool-container-max-width: 1200px;
