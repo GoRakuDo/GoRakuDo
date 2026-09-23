@@ -2,7 +2,6 @@
 @import './mobile-performance.css';
 @import './fonts.css';
 @import './typography.css';
-@import './components/tutorial-image-grid.css';
 @import 'tailwindcss';
 
 :root {
@@ -12,39 +11,33 @@
   /* ===== CORE COLOR TOKENS - FREQUENTLY USED VALUES ===== */
 
   /* Base color values - used 3+ times */
-  --token-white-base: oklch(95% 0.005 285deg);
-  --token-black-base: oklch(20% 0.005 285deg);
+  --grkd-white-base: oklch(95% 0.005 285deg);
+  --grkd-black-base: oklch(20% 0.005 285deg);
   --grkd-purple-400: oklch(65% 0.22 273.85deg); /* Hue aligned to Discord */
   --grkd-purple-500: oklch(57.74% 0.209 273.85deg); /* Discord Blurple Primary */
   --grkd-brand-secondary: var(--grkd-purple-400);
   --grkd-cyan-400: oklch(70% 0.15 195deg);
-  --token-purple-base: var(--grkd-purple-500); /* Legacy alias pointing to new primary */
-  --token-gold-base: oklch(85% 0.15 85deg);
-  --token-gold-dark: oklch(65% 0.15 85deg);
-  --token-secondary-gold-base: oklch(75% 0.12 65deg);
+  --grkd-gold-base: oklch(85% 0.15 85deg);
+  --grkd-gold-dark: oklch(65% 0.15 85deg);
+  --grkd-secondary-gold-base: oklch(75% 0.12 65deg);
 
   /* Background color tokens - used 3+ times */
   --grkd-black-950: oklch(5% 0.005 270deg);
   --grkd-black-200: oklch(75% 0.005 270deg); /* Body text — DESIGN.md */
   --grkd-surface: oklch(17.80% 0.058 275.81deg);   /* Discord Midnight Navy */
   --grkd-surface-2: oklch(30.96% 0.150 271.29deg); /* Discord Indigo Surface */
-  --token-bg-dark: var(--grkd-black-950); /* Legacy alias */
-  --token-bg-content: var(--grkd-surface); /* Migrated to Discord surface */
-  --token-bg-card: var(--grkd-surface-2); /* Migrated to Discord surface-2 */
-  --token-bg-input: oklch(15% 0.008 270deg);
+  --grkd-bg-input: oklch(15% 0.008 270deg);
 
   /* Text color tokens - used 3+ times */
   --grkd-muted: oklch(85.99% 0.071 282.16deg); /* Discord Muted (Lavender) */
-  --token-text-secondary: oklch(80% 0 0deg);
-  --token-text-muted: var(--grkd-muted); /* Migrated to Discord muted */
-  --token-text-global-secondary: var(--grkd-muted);
-  --token-text-global-muted: oklch(70% 0.01 270deg);
-  --token-text-global: oklch(85% 0.01 270deg);
+  --grkd-text-secondary: oklch(80% 0 0deg);
+  --grkd-text-global-muted: oklch(70% 0.01 270deg);
+  --grkd-text-global: oklch(85% 0.01 270deg);
 
   /* Accent color tokens - used 3+ times */
-  --token-accent-dark: oklch(60% 0.25 280deg);
-  --token-accent-foreground: oklch(98% 0.002 270deg);
-  --token-secondary-foreground: oklch(15% 0.005 270deg);
+  --grkd-accent-dark: oklch(60% 0.25 280deg);
+  --grkd-accent-foreground: oklch(98% 0.002 270deg);
+  --grkd-secondary-foreground: oklch(15% 0.005 270deg);
 
   /* ===== OPACITY VALUES - GLOBAL CALCULATION-BASED SYSTEM ===== */
 
@@ -96,60 +89,52 @@
   /* ===== COLOR SYSTEM - OKLCH Color Space ===== */
 
   /* Black Color with Opacity */
-  --clr-black: var(--token-black-base);
-  --clr-black-05: oklch(from var(--token-black-base) l c h / var(--opacity-05));
-  --clr-black-1: oklch(from var(--token-black-base) l c h / var(--opacity-1));
-  --clr-black-15: oklch(from var(--token-black-base) l c h / var(--opacity-15));
-  --clr-black-2: oklch(from var(--token-black-base) l c h / var(--opacity-2));
-  --clr-black-25: oklch(from var(--token-black-base) l c h / var(--opacity-25));
-  --clr-black-3: oklch(from var(--token-black-base) l c h / var(--opacity-3));
-  --clr-black-85: oklch(from var(--token-black-base) l c h / var(--opacity-85));
-  --clr-black-95: oklch(from var(--token-black-base) l c h / var(--opacity-95));
+  --clr-black-05: oklch(from var(--grkd-black-base) l c h / var(--opacity-05));
+  --clr-black-1: oklch(from var(--grkd-black-base) l c h / var(--opacity-1));
+  --clr-black-15: oklch(from var(--grkd-black-base) l c h / var(--opacity-15));
+  --clr-black-25: oklch(from var(--grkd-black-base) l c h / var(--opacity-25));
+  --clr-black-3: oklch(from var(--grkd-black-base) l c h / var(--opacity-3));
+  --clr-black-85: oklch(from var(--grkd-black-base) l c h / var(--opacity-85));
+  --clr-black-95: oklch(from var(--grkd-black-base) l c h / var(--opacity-95));
 
   /* White Color with Opacity */
-  --clr-white: var(--token-white-base);
-  --clr-white-02: oklch(from var(--token-white-base) l c h / var(--opacity-02));
-  --clr-white-04: oklch(from var(--token-white-base) l c h / var(--opacity-04));
-  --clr-white-06: oklch(from var(--token-white-base) l c h / var(--opacity-06));
-  --clr-white-08: oklch(from var(--token-white-base) l c h / var(--opacity-08));
-  --clr-white-1: oklch(from var(--token-white-base) l c h / var(--opacity-1));
-  --clr-white-12: oklch(from var(--token-white-base) l c h / var(--opacity-12));
-  --clr-white-15: oklch(from var(--token-white-base) l c h / var(--opacity-15));
-  --clr-white-2: oklch(from var(--token-white-base) l c h / var(--opacity-2));
-  --clr-white-25: oklch(from var(--token-white-base) l c h / var(--opacity-25));
-  --clr-white-3: oklch(from var(--token-white-base) l c h / var(--opacity-3));
-  --clr-white-7: oklch(from var(--token-white-base) l c h / var(--opacity-7));
-  --clr-white-85: oklch(from var(--token-white-base) l c h / var(--opacity-85));
-  --clr-white-95: oklch(from var(--token-white-base) l c h / var(--opacity-95));
+  --clr-white: var(--grkd-white-base);
+  --clr-white-02: oklch(from var(--grkd-white-base) l c h / var(--opacity-02));
+  --clr-white-04: oklch(from var(--grkd-white-base) l c h / var(--opacity-04));
+  --clr-white-06: oklch(from var(--grkd-white-base) l c h / var(--opacity-06));
+  --clr-white-08: oklch(from var(--grkd-white-base) l c h / var(--opacity-08));
+  --clr-white-1: oklch(from var(--grkd-white-base) l c h / var(--opacity-1));
+  --clr-white-12: oklch(from var(--grkd-white-base) l c h / var(--opacity-12));
+  --clr-white-15: oklch(from var(--grkd-white-base) l c h / var(--opacity-15));
+  --clr-white-2: oklch(from var(--grkd-white-base) l c h / var(--opacity-2));
+  --clr-white-25: oklch(from var(--grkd-white-base) l c h / var(--opacity-25));
+  --clr-white-3: oklch(from var(--grkd-white-base) l c h / var(--opacity-3));
+  --clr-white-7: oklch(from var(--grkd-white-base) l c h / var(--opacity-7));
+  --clr-white-85: oklch(from var(--grkd-white-base) l c h / var(--opacity-85));
+  --clr-white-95: oklch(from var(--grkd-white-base) l c h / var(--opacity-95));
 
   /* Purple Color with Opacity */
-  --clr-purple: var(--token-purple-base);
+  --clr-purple: var(--grkd-purple-500);
   --clr-purple-05: oklch(
-    from var(--token-purple-base) l c h / var(--opacity-05)
+    from var(--grkd-purple-500) l c h / var(--opacity-05)
   );
-  --clr-purple-1: oklch(from var(--token-purple-base) l c h / var(--opacity-1));
+  --clr-purple-1: oklch(from var(--grkd-purple-500) l c h / var(--opacity-1));
   --clr-purple-15: oklch(
-    from var(--token-purple-base) l c h / var(--opacity-15)
+    from var(--grkd-purple-500) l c h / var(--opacity-15)
   );
-  --clr-purple-2: oklch(from var(--token-purple-base) l c h / var(--opacity-2));
-  --clr-purple-3: oklch(from var(--token-purple-base) l c h / var(--opacity-3));
-  --clr-purple-4: oklch(from var(--token-purple-base) l c h / var(--opacity-4));
-  --clr-purple-6: oklch(from var(--token-purple-base) l c h / var(--opacity-6));
+  --clr-purple-2: oklch(from var(--grkd-purple-500) l c h / var(--opacity-2));
+  --clr-purple-4: oklch(from var(--grkd-purple-500) l c h / var(--opacity-4));
 
   /* Gold Color with Opacity */
-  --clr-gold: var(--token-gold-base);
-  --clr-gold-25: oklch(from var(--token-gold-base) l c h / var(--opacity-25));
-  --clr-gold-3: oklch(from var(--token-gold-base) l c h / var(--opacity-3));
+  --clr-gold: var(--grkd-gold-base);
+  --clr-gold-25: oklch(from var(--grkd-gold-base) l c h / var(--opacity-25));
   --clr-gold-light: oklch(95% 0.08 85deg);
   --clr-gold-dark: var(--clr-gold);
 
   /* Secondary Gold Color with Opacity */
-  --clr-secondary-gold: var(--token-secondary-gold-base);
+  --clr-secondary-gold: var(--grkd-secondary-gold-base);
   --clr-secondary-gold-25: oklch(
-    from var(--token-secondary-gold-base) l c h / var(--opacity-25)
-  );
-  --clr-secondary-gold-3: oklch(
-    from var(--token-secondary-gold-base) l c h / var(--opacity-3)
+    from var(--grkd-secondary-gold-base) l c h / var(--opacity-25)
   );
 
   /* Paper Theme Colors */
@@ -161,12 +146,12 @@
 
   /* ===== PRIMARY COLOR SYSTEM ===== */
 
-  --clr-background: var(--token-bg-dark);
+  --clr-background: var(--grkd-black-950);
   --clr-text-primary: var(--clr-white);
-  --clr-text-secondary: var(--token-text-secondary);
-  --clr-text-muted: var(--token-text-muted);
+  --clr-text-secondary: var(--grkd-text-secondary);
+  --clr-text-muted: var(--grkd-muted);
   --clr-accent: var(--clr-purple);
-  --clr-accent-dark: var(--token-accent-dark);
+  --clr-accent-dark: var(--grkd-accent-dark);
   --clr-accent-glow-faint: var(--clr-purple-05);
   --clr-accent-glow-medium: var(--clr-purple-1);
   --clr-accent-glow-strong: var(--clr-purple-2);
@@ -175,14 +160,9 @@
   /* ===== GLOBAL TEXT COLOR SYSTEM ===== */
   --global-text-color: var(--clr-white);
   --global-text-color-primary: var(--clr-white);
-  --global-text-color-secondary: var(--token-text-global-secondary);
-  --global-text-color-muted: var(--token-text-global-muted);
+  --global-text-color-secondary: var(--grkd-muted);
+  --global-text-color-muted: var(--grkd-text-global-muted);
   --global-text-color-accent: var(--clr-white);
-
-  /* ===== FALLBACK COLORS ===== */
-  --clr-background-fallback: oklch(4% 0.005 270deg);
-  --clr-text-primary-fallback: var(--clr-text-primary);
-  --clr-accent-fallback: var(--clr-purple);
 
   /* ===== GLASSMORPHISM DESIGN TOKENS ===== */
   --grkd-glass-border: oklch(40% 0.015 270deg / 0.20);
@@ -232,14 +212,6 @@
   --shadow-hover: 0 8px 25px oklch(5% 0.01 270deg / 0.30), 0 4px 12px oklch(5% 0.01 270deg / 0.15);
   --shadow-base: 0 2px 8px oklch(5% 0.01 270deg / 0.15);
   --shadow-active: 0 1px 4px oklch(5% 0.01 270deg / 0.20);
-
-  /* ===== LEGACY COMPATIBILITY ===== */
-  --clr-gold-dark-transparent: var(--clr-gold-25);
-  --clr-paper-bg: var(--clr-paper);
-  --clr-paper-text-primary: var(--clr-paper-25);
-  --clr-paper-text-secondary: var(--clr-paper-35);
-  --clr-paper-border: var(--clr-paper-90);
-  --clr-paper-lines: var(--clr-paper-88);
 
   /* ===== TYPOGRAPHY SYSTEM - CENTRALIZED FONT DEFINITIONS ===== */
 
@@ -326,27 +298,53 @@
     --navbar-height: 80px;
   }
 
+  /* ===== FLUID DIMENSION SCALE (search page) ===== */
+  --spacing-xs-fluid: min(0.25rem, 0.5vw);
+  --spacing-sm-fluid: min(0.5rem, 1vw);
+  --spacing-md-fluid: min(0.75rem, 1.5vw);
+  --spacing-lg-fluid: min(1rem, 2vw);
+  --spacing-xl-fluid: min(1.5rem, 3vw);
+  --spacing-2xl-fluid: min(2rem, 4vw);
+  --spacing-3xl-fluid: min(2.5rem, 5vw);
+  --radius-sm-fluid: min(0.25rem, 0.5vw);
+  --radius-lg-fluid: min(1.5rem, 3vw);
+
+  /* ===== NAMED SPACING SCALE (plain :root — intentionally NOT in @theme) =====
+   * Note: Keep these OUT of `@theme`. Defining `--spacing-*` namespace keys
+   * there hijacks Tailwind v4's named max-w-* and min-w-* utility resolution:
+   * `max-w-2xl` resolved to `--spacing-2xl` (3rem/48px) instead of the
+   * container scale (42rem). Plain :root keeps every `var(--spacing-*)`
+   * reference working without feeding Tailwind's utility namespaces. */
+  --spacing-xs: 0.25rem; /* 4px - legacy --spacing-xs */
+  --spacing-sm: 0.5rem; /* 8px - legacy --spacing-sm */
+  --spacing-md: 1rem; /* 16px - legacy --spacing-md */
+  --spacing-lg: 1.5rem; /* 24px - legacy --spacing-lg */
+  --spacing-xl: 2rem; /* 32px - legacy --spacing-xl */
+  --spacing-2xl: 3rem; /* 48px - legacy --spacing-2xl */
+  --spacing-3xl: 4rem; /* 64px - legacy --spacing-3xl */
+  --spacing-hero: 8.125rem; /* 130px - Discord hero spacing */
+
+  /* ===== SOLID WHITE SCALE (docs & tools pages) ===== */
+
+  /* NOTE: pure-white hue + alpha. The existing `--clr-white-95` (global)
+     is a slightly-tinted white base — do not confuse the two scales. */
+  --clr-white-solid-98: oklch(100% 0 0deg / var(--opacity-98));
+  --clr-white-solid-95: oklch(100% 0 0deg / var(--opacity-95));
+  --clr-white-solid-30: oklch(100% 0 0deg / var(--opacity-30));
+  --clr-white-solid-20: oklch(100% 0 0deg / var(--opacity-20));
+
   /* ===== OPTIMIZATION FLAGS ===== */
   --localhost-optimization: true;
   --oklch-cache: true;
   --oklch-gpu-acceleration: true;
 
   /* ===== CONTENT PAGE SYSTEM ===== */
-  --clr-content-background: oklch(
-    from var(--token-bg-content) l c h / var(--opacity-95)
-  );
-  --clr-content-background-light: oklch(
-    from var(--token-bg-content) l c h / var(--opacity-5)
-  );
-  --clr-content-title: var(--clr-white-95);
-  --clr-content-text: var(--clr-white-85);
   --clr-content-meta: var(--clr-white-7);
-  --clr-content-accent: var(--clr-purple);
   --clr-content-background-card: oklch(
-    from var(--token-bg-card) l c h / var(--opacity-10)
+    from var(--grkd-surface-2) l c h / var(--opacity-10)
   );
   --clr-content-background-card-hover: oklch(
-    from var(--token-bg-card) l c h / var(--opacity-20)
+    from var(--grkd-surface-2) l c h / var(--opacity-20)
   );
   --clr-content-border: var(--clr-purple-15);
   --shadow-content-card: 0 4px 20px var(--clr-black-3);
@@ -391,6 +389,9 @@
   --z-index-error-content: 2;
   --z-index-floating-particle: -1;
   --z-ImageSlideshow-long-press-indicator: 10;
+
+  /* ページ固有 z-index トークン（homepage/docs ページ専用。
+   * 将来 pages 側の CSS へ移動候補：今回の責務整理では移動しない） */
   --z-homepage-main-content-section: 20;
   --z-docs-index-post-card-hover: 10;
   --z-docs-index-post-emoji: 15;
@@ -419,7 +420,7 @@
     overflow-x: hidden;
 
     /* REASONING: Optimized font stack for readability and layout stability */
-    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for REM calculations */
+    font-size: 1rem; /* Base font size (Respecting the user's font size preference) for rem calculations */
     font-weight: 400;
     scrollbar-gutter: stable; /* Prevent content shifting when scrollbar appears */
     scroll-padding-top: var(--navbar-height); /* Anchor link offset */
@@ -466,7 +467,6 @@
   /* --- Reusable Components & Transitions --- */
   .primary-button,
   .secondary-button,
-  .docs-button,
   .nav-item,
   .feature-card,
   .discord-link {
@@ -482,7 +482,6 @@
   @media (hover: hover) {
     .primary-button:hover,
     .secondary-button:hover,
-    .docs-button:hover,
     .discord-link:hover {
       transform: translateY(-3px);
     }
@@ -568,8 +567,6 @@
   /* Selection fix for gradient text (background-clip: text) */
   .white-gradient-text::selection,
   .gold-marker::selection,
-  .posts-header h1::selection,
-  .tools-title-main::selection,
   .error-title::selection {
     background-color: var(--clr-purple);
     color: var(--clr-text-primary);
@@ -589,7 +586,6 @@
     word-spacing: var(--orphan-word-spacing);
   }
 
-  .article-content p,
   .prose p {
     /* Enhanced Orphan Prevention for Article Content - Tailwind Typography Integrated */
     orphans: var(--orphan-min-words);
@@ -689,30 +685,15 @@
    * CHANGE: All colors now use OKLCH for better perceptual uniformity and future-proofing
    */
 
-  /* Secondary gold - OKLCH optimized */
-  --clr-secondary: var(--clr-secondary-gold);
-  --clr-secondary-foreground: var(--token-secondary-foreground);
-
-  /* Muted colors - mapped from legacy text colors */
-  --clr-muted: var(--clr-text-muted);
-  --clr-muted-foreground: var(--clr-text-secondary);
-
   /* Accent colors - now references the primary color system */
   --clr-accent: var(--clr-purple);
-  --clr-accent-foreground: var(--token-accent-foreground);
 
   /* Semantic colors - enhanced from legacy */
-  --clr-destructive: oklch(58% 0.15 15deg);
-  --clr-destructive-foreground: var(--token-accent-foreground);
-  --clr-info: oklch(54% 0.245 262.881deg);
   --clr-success: oklch(59% 0.145 163.225deg);
   --clr-warning: oklch(66% 0.179 58.318deg);
-  --clr-error: oklch(58% 0.253 17.585deg);
 
   /* Border and input colors */
   --clr-border: var(--clr-text-muted);
-  --clr-input: var(--token-bg-input);
-  --clr-ring: var(--clr-purple);
 
   /* ===== DESIGN TOKENS - PRESERVED AND ENHANCED FROM LEGACY ===== */
 
@@ -723,16 +704,6 @@
   --radius-xl: 1rem; /* 16px */
   --radius-pill: 9999px; /* Legacy --border-radius-pill: 35px enhanced to full pill */
   --radius-card: 1.25rem; /* 20px - legacy --border-radius-card */
-
-  /* Spacing scale - preserving legacy system */
-  --spacing-xs: 0.25rem; /* 4px - legacy --spacing-xs */
-  --spacing-sm: 0.5rem; /* 8px - legacy --spacing-sm */
-  --spacing-md: 1rem; /* 16px - legacy --spacing-md */
-  --spacing-lg: 1.5rem; /* 24px - legacy --spacing-lg */
-  --spacing-xl: 2rem; /* 32px - legacy --spacing-xl */
-  --spacing-2xl: 3rem; /* 48px - legacy --spacing-2xl */
-  --spacing-3xl: 4rem; /* 64px - legacy --spacing-3xl */
-  --spacing-hero: 8.125rem; /* 130px - Discord hero spacing */
 
   /* Typography scale - preserving legacy font sizes */
   --font-size-xs: 0.75rem; /* 12px - legacy --font-size-xs */
@@ -767,13 +738,9 @@
   --shadow-primary: 0 8px 24px oklch(65% 0.18 280deg / var(--opacity-3));
   --shadow-secondary: 0 4px 16px var(--clr-secondary-gold-25);
 
-  /* Container breakpoints - preserving legacy */
-  --container-xs: 320px; /* Legacy --container-xs */
-  --container-sm: 640px; /* Legacy --container-sm */
-  --container-md: 768px; /* Legacy --container-md */
-  --container-lg: 1024px; /* Legacy --container-lg */
-  --container-xl: 1280px; /* Legacy --container-xl */
-  --container-2xl: 1600px; /* Legacy --container-2xl */
+  /* Note: legacy `--container-xs`..`--container-2xl` overrides were removed.
+   * They had zero users but overrode Tailwind's default container scale
+   * (e.g. `--container-2xl` 1600px instead of 42rem), breaking `max-w-*`. */
 }
 
 /* ========== COMPONENT LAYER - LEGACY AND MODERN BUTTON SYSTEMS ========== */
@@ -788,7 +755,7 @@
     padding: var(--spacing-lg);
     border: 1px solid oklch(100% 0 0deg / var(--opacity-10)); /* Subtle border */
     border-radius: var(--radius-lg); /* 12px Discord shape */
-    background: var(--token-bg-card); /* Discord surface-2 */
+    background: var(--grkd-surface-2); /* Discord surface-2 */
     transition:
       box-shadow var(--duration-normal) var(--grkd-ease-productive),
       transform var(--duration-normal) var(--grkd-ease-spring);
@@ -802,16 +769,6 @@
     }
   }
 
-  .glass-panel {
-    border: 1px solid oklch(25% 0.015 270deg / var(--opacity-2));
-    border-radius: var(--radius-xl);
-    background: oklch(12% 0.008 270deg / var(--opacity-8));
-    box-shadow: var(--shadow-xl);
-
-    @media (max-width: 768px) {
-      background: oklch(12% 0.008 270deg / var(--opacity-12));
-    }
-  }
 }
 
 /* ========== UTILITY LAYER - LEGACY AND MODERN UTILITIES ========== */
@@ -887,31 +844,6 @@
     transition: background-color var(--duration-fast) var(--grkd-ease-productive);
   }
 
-  .chip-accent {
-    background: oklch(45% 0.18 274deg); /* Deep purple */
-    color: var(--clr-white);
-  }
-
-  .chip-outline {
-    border: 1px solid var(--clr-purple);
-    background: transparent;
-    color: var(--clr-purple);
-  }
-
-  /* ===== LEGACY GRID UTILITIES - PRESERVED ===== */
-  .grid-auto-fit {
-    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
-  }
-
-  .grid-auto-fill {
-    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
-  }
-
-  .grid-masonry {
-    grid-template-columns: repeat(auto-fill, minmax(18.5rem, 1fr));
-    grid-auto-rows: 0;
-    grid-auto-flow: dense;
-  }
 
   /* グローバルレベルでデフォルトのテキストカラーを白色に設定 */
 
@@ -997,40 +929,9 @@
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
 .hero-button:focus-visible,
-.docs-button:focus-visible,
 .discord-link:focus-visible {
   outline: 2px solid oklch(from var(--clr-purple) l c h / var(--opacity-50));
   outline-offset: 2px;
-}
-
-/* カード要素の文字色を強制的に白に設定 */
-.card,
-.card-content,
-.card-title,
-.card-description {
-  color: var(--clr-text-primary);
-}
-
-.card *,
-.card-content *,
-.card-title *,
-.card-description * {
-  color: inherit;
-}
-
-/* モーダル要素の文字色を強制的に白に設定 */
-.modal,
-.modal-content,
-.modal-title,
-.modal-description {
-  color: var(--clr-text-primary);
-}
-
-.modal *,
-.modal-content *,
-.modal-title *,
-.modal-description * {
-  color: inherit;
 }
 
 /* ===== NAVBAR SPACING ===== */
@@ -1089,7 +990,6 @@
   .content-page,
   main,
   .content-wrapper,
-  .article-content-wrapper,
   .tqa-page {
     padding-bottom: var(--bottom-nav-spacing);
   }
@@ -1101,7 +1001,6 @@
   .content-page,
   main,
   .content-wrapper,
-  .article-content-wrapper,
   .tqa-page {
     padding-bottom: var(--bottom-nav-spacing-small);
   }

@@ -7,6 +7,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { resolvePath } from '../../utils/collections';
 import { logger } from '../../utils/logging/console-logger';
+import { getEntrySlug } from '../../utils/content/entry';
 
 // ========== TYPE DEFINITIONS ==========
 interface DocsSearchItem {
@@ -59,6 +60,7 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
     // ========== PROCESS DOCS POSTS ==========
     const docsSearchData: DocsSearchItem[] = docsPosts.map(
       (post: CollectionEntry<'docs'>) => {
+        const slug = getEntrySlug(post);
         const fullContent: string = post.body || '';
         const cleanedContent: string = fullContent
           .replace(/<[^>]*>/g, ' ')
@@ -69,8 +71,8 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
 
         return {
           // Core data
-          id: `docs-${post.slug}`,
-          slug: post.slug,
+          id: `docs-${slug}`,
+          slug,
           title: post.data.title,
           description: post.data.description,
           pubDate: post.data.publishedDate,
@@ -107,7 +109,7 @@ export async function GET({ url }: { url: URL }): Promise<Response> {
           hasImages: fullContent.includes('!['),
 
           // URL
-          url: resolvePath('docs', post.slug),
+          url: resolvePath('docs', slug),
         };
       }
     );

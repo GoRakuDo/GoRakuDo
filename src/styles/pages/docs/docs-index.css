@@ -1,5 +1,4 @@
 /*  Docs Page Styles - Mobile-First Approach with Tailwind v4 */
-@import 'tailwindcss';
 
 /* ===== DESIGN TOKENS & CSS VARIABLES ===== */
 :root {
@@ -16,7 +15,6 @@
 
   /* Base Colors */
   --clr-white: oklch(100% 0 0deg);
-  --clr-black: oklch(0% 0 0deg);
   --clr-primary: oklch(60% 0.3 280deg);
   --clr-text-dark: oklch(20% 0 0deg);
   --clr-text-medium: oklch(30% 0 0deg);
@@ -66,11 +64,7 @@
   --clr-primary-70: oklch(60% 0.3 280deg / var(--opacity-70));
   --clr-primary-darker: oklch(55% 0.3 280deg);
 
-  /* White Color Variations */
-  --clr-white-98: oklch(100% 0 0deg / var(--opacity-98));
-  --clr-white-95: oklch(100% 0 0deg / var(--opacity-95));
-  --clr-white-30: oklch(100% 0 0deg / var(--opacity-30));
-  --clr-white-20: oklch(100% 0 0deg / var(--opacity-20));
+  /* White Color Variations (solid scale lives in global.css) */
 
   /* ===== RESPONSIVE DESIGN TOKENS ===== */
   @media (min-width: 768px) {
@@ -90,27 +84,6 @@
 }
 
 /* ===== BASE STYLES ===== */
-
-/* Posts/Documentation page styles */
-.posts-page {
-  @apply relative z-10 min-h-screen text-white;
-
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100vw;
-
-  @media (min-width: 768px) {
-    padding: clamp(1.5rem, 3vw, 2rem) 0;
-  }
-
-  @media (min-width: 1280px) {
-    padding: 2rem 0;
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    -webkit-overflow-scrolling: touch;
-  }
-}
 
 /* メインコンテンツのパフォーマンス最適化 */
 .main-content {
@@ -152,25 +125,6 @@
 }
 
 /* ===== LAYOUT SYSTEM ===== */
-
-/* Posts Container */
-.posts-container {
-  @apply mx-auto;
-
-  overflow: hidden visible; /* emoji表示のためY軸はvisible許可 */
-  max-width: 100%;
-  padding: 0 clamp(1rem, 4vw, 1.5rem);
-
-  @media (min-width: 768px) {
-    max-width: min(80rem, 95vw);
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  @media (min-width: 1280px) {
-    max-width: 80rem;
-  }
-}
 
 /* Posts Grid */
 .posts-grid {
@@ -280,8 +234,8 @@
   z-index: var(--z-docs-index-post-card-hover);
   background: linear-gradient(
     135deg,
-    var(--clr-white-98) 0%,
-    var(--clr-white-95) 100%
+    var(--clr-white-solid-98) 0%,
+    var(--clr-white-solid-95) 100%
   );
   box-shadow:
     var(--shadow-card-hover),
@@ -565,7 +519,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--clr-white-20),
+    var(--clr-white-solid-20),
     transparent
   );
   transition: left 0.5s ease;
@@ -632,7 +586,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--clr-white-30),
+    var(--clr-white-solid-30),
     transparent
   );
   transition: left 0.6s ease;

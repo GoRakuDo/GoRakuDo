@@ -1,6 +1,5 @@
 ---
-import { CldImage } from 'astro-cloudinary';
-import LADExperiment from '../features/LADExperiment.astro';
+import LADExperiment from './LADExperiment.astro';
 ---
 
 <!-- LAD Experiment Section -->
@@ -31,7 +30,7 @@ import LADExperiment from '../features/LADExperiment.astro';
         > yang Kuat Banget.
       </h2>
       <p
-        class='text-base sm:text-lg text-(--token-text-secondary) leading-relaxed text-pretty'
+        class='text-base sm:text-lg text-(--grkd-text-secondary) leading-relaxed text-pretty'
       >
         Jangan cuma percaya omongan kami. Yuk, kita buktiin bareng-bareng
         sekarang juga—cuma butuh 30 detik doang. Kami yakin kamu bakal langsung
@@ -54,7 +53,7 @@ import LADExperiment from '../features/LADExperiment.astro';
         langsung ngerasa kalimat nomor 2 itu aneh banget, kan?
       </p>
       <div class='w-full mx-auto mt-4' style='max-width: 42rem;'>
-        <p class='text-lg text-(--token-text-secondary)'>
+        <p class='text-lg text-(--grkd-text-secondary)'>
           Rasanya "nggak enak" dibaca, kayak ada yang salah, meskipun kamu masih
           bisa nangkep maksudnya secara kasar (lupa dompet pas mau beli
           takoyaki).
@@ -69,12 +68,11 @@ import LADExperiment from '../features/LADExperiment.astro';
           <div
             class='relative rounded-2xl overflow-hidden shadow-inner border border-white/10 group'
           >
-            <CldImage
-              src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
+            <img
+              src='/images/panduan-immersion/LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf.webp'
               alt='Visualisasi Language Acquisition Device (LAD)'
-              width={1000}
-              height={1000}
-              crop='fill'
+              width='1000'
+              height='1000'
               class='w-full h-auto transform group-hover:scale-105 transition-transform duration-700 ease-in-out'
             />
             <div
@@ -106,7 +104,7 @@ import LADExperiment from '../features/LADExperiment.astro';
             Kenapa kamu langsung tahu itu salah dan terasa janggal? 🤔
           </h3>
           <div
-            class='space-y-6 text-lg text-(--token-text-secondary) leading-relaxed'
+            class='space-y-6 text-lg text-(--grkd-text-secondary) leading-relaxed'
           >
             <p>
               Bukan karena kamu hafal rumus grammar Indonesia dari SD. Kamu tahu
@@ -125,12 +123,11 @@ import LADExperiment from '../features/LADExperiment.astro';
                 <div
                   class='relative rounded-xl overflow-hidden shadow-inner border border-white/10'
                 >
-                  <CldImage
-                    src='LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf'
+                  <img
+                    src='/images/panduan-immersion/LAD_Generated_Image_16yr3x16yr3x16yr_ygwtpf.webp'
                     alt='Visualisasi Language Acquisition Device (LAD)'
-                    width={800}
-                    height={800}
-                    crop='fill'
+                    width='800'
+                    height='800'
                     class='w-full h-auto'
                   />
                   <div
@@ -161,7 +158,7 @@ import LADExperiment from '../features/LADExperiment.astro';
               class='skeuo-inset p-6 my-6 shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)]'
             >
               <p
-                class='text-base text-(--token-text-secondary) leading-relaxed italic'
+                class='text-base text-(--grkd-text-secondary) leading-relaxed italic'
               >
                 "Kalimat nomor 2 itu sengaja kami bikin mirip kayak terjemahan
                 mentah-mentah dari orang Jepang yang lagi belajar Bahasa
@@ -203,7 +200,7 @@ import LADExperiment from '../features/LADExperiment.astro';
             >
               Selamat! Kamu baru saja buktiin sendiri.
             </h4>
-            <p class='text-lg text-(--token-text-secondary) leading-relaxed'>
+            <p class='text-lg text-(--grkd-text-secondary) leading-relaxed'>
               LAD di otakmu masih aktif dan super kuat. Perangkat bawaan itu
               udah jalan lancar buat Bahasa Indonesia sejak kamu kecil.
             </p>

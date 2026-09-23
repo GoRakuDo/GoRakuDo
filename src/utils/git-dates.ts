@@ -10,7 +10,7 @@ export function getGitLastModified(filePath: string): string | null {
   const absPath = resolve(filePath);
   const result = execSync(
    `git log -1 --format=%cI -- "${absPath}"`,
-   { encoding: 'utf-8', timeout: 5000 }
+   { encoding: 'utf-8', timeout: 5000, windowsHide: true }
   ).trim();
   return result || null;
  } catch {

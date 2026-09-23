@@ -1,0 +1,261 @@
+---
+import '../../../styles/components/pagination.css';
+
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+  maxVisiblePages?: number;
+  showPageInfo?: boolean;
+  className?: string;
+}
+
+const {
+  currentPage,
+  totalPages,
+  baseUrl,
+  maxVisiblePages = 5,
+  showPageInfo = true,
+  className = '',
+} = Astro.props;
+
+// バリデーション
+if (
+  !Number.isInteger(currentPage) ||
+  !Number.isInteger(totalPages) ||
+  typeof baseUrl !== 'string' ||
+  currentPage > totalPages ||
+  totalPages <= 1
+) {
+  return null;
+}
+
+// 表示するページ番号の計算（3ページ固定）
+function getVisiblePages(
+  current: number,
+  total: number,
+  max: number = 3
+): number[] {
+  if (total <= 3) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  // 常に3ページを表示するロジック
+  let start: number;
+
+  if (current <= 2) {
+    // ページ1-2の場合は1,2,3を表示
+    start = 1;
+  } else if (current >= total - 1) {
+    // 最後の2ページの場合は最後の3ページを表示
+    start = Math.max(1, total - 2);
+  } else {
+    // 中間ページの場合は現在ページを中心に3ページ表示
+    start = current - 1;
+  }
+
+  const end = Math.min(total, start + 2);
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}
+
+// URL生成
+function getPageUrl(page: number): string {
+  return page === 1 ? baseUrl : `${baseUrl}/page-${page}`;
+}
+
+const visiblePages = getVisiblePages(currentPage, totalPages, 3);
+const prevPageUrl = currentPage > 1 ? getPageUrl(currentPage - 1) : null;
+const nextPageUrl =
+  currentPage < totalPages ? getPageUrl(currentPage + 1) : null;
+
+// 構造化データ
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  pagination: {
+    '@type': 'Pagination',
+    currentPage,
+    totalPages,
+    ...(prevPageUrl && { previousPage: prevPageUrl }),
+    ...(nextPageUrl && { nextPage: nextPageUrl }),
+  },
+};
+---
+
+<nav
+  class={`glassmorphism pagination-container ${className}`}
+  role='navigation'
+  aria-label='Paginasi'
+  aria-live='polite'
+>
+  <!-- 構造化データ -->
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(structuredData)}
+  />
+  <div class='pagination-controls' role='group' aria-label='Navigasi halaman'>
+    <div class='pagination-numbers' role='group' aria-label='Nomor halaman'>
+      {
+        visiblePages[0] > 1 && (
+          <>
+            <a
+              href={getPageUrl(1)}
+              class='glassmorphism pagination-number pagination-ellipsis'
+              aria-label='Pindah ke halaman 1'
+            >
+              1
+            </a>
+            {visiblePages[0] > 2 && (
+              <span class='pagination-ellipsis-dots' aria-hidden='true'>
+                ...
+              </span>
+            )}
+          </>
+        )
+      }
+
+      {
+        visiblePages.map(page =>
+          page === currentPage ? (
+            <span
+              class='pagination-number pagination-current'
+              aria-current='page'
+              aria-label={`Halaman ${page} (halaman saat ini)`}
+            >
+              {page}
+            </span>
+          ) : (
+            <a
+              href={getPageUrl(page)}
+              class='glassmorphism pagination-number'
+              aria-label={`Pindah ke halaman ${page}`}
+            >
+              {page}
+            </a>
+          )
+        )
+      }
+
+      {
+        visiblePages[visiblePages.length - 1] < totalPages && (
+          <>
+            {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
+              <span class='pagination-ellipsis-dots' aria-hidden='true'>
+                ...
+              </span>
+            )}
+            <a
+              href={getPageUrl(totalPages)}
+              class='glassmorphism pagination-number pagination-ellipsis'
+              aria-label={`Pindah ke halaman ${totalPages}`}
+            >
+              {totalPages}
+            </a>
+          </>
+        )
+      }
+    </div>
+
+    <div
+      class='pagination-nav-buttons'
+      role='group'
+      aria-label='Tombol navigasi'
+    >
+      {
+        prevPageUrl ? (
+          <a
+            href={prevPageUrl}
+            class='glassmorphism pagination-btn pagination-prev'
+            aria-label='Pindah ke halaman sebelumnya'
+            rel='prev'
+          >
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M15 18l-6-6 6-6' />
+            </svg>
+            <span class='pagination-btn-text'>Sebelumnya</span>
+          </a>
+        ) : (
+          <button
+            class='glassmorphism pagination-btn pagination-prev pagination-disabled'
+            aria-label='Halaman sebelumnya (tidak tersedia)'
+            disabled
+            type='button'
+          >
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M15 18l-6-6 6-6' />
+            </svg>
+            <span class='pagination-btn-text'>Sebelumnya</span>
+          </button>
+        )
+      }
+
+      {
+        nextPageUrl ? (
+          <a
+            href={nextPageUrl}
+            class='glassmorphism pagination-btn pagination-next'
+            aria-label='Pindah ke halaman berikutnya'
+            rel='next'
+          >
+            <span class='pagination-btn-text'>Selanjutnya</span>
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M9 18l6-6-6-6' />
+            </svg>
+          </a>
+        ) : (
+          <button
+            class='glassmorphism pagination-btn pagination-next pagination-disabled'
+            aria-label='Halaman berikutnya (tidak tersedia)'
+            disabled
+            type='button'
+          >
+            <span class='pagination-btn-text'>Selanjutnya</span>
+            <svg
+              class='pagination-icon'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+            >
+              <path d='M9 18l6-6-6-6' />
+            </svg>
+          </button>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    showPageInfo && (
+      <div class='pagination-info'>
+        <div class='pagination-progress'>
+          <div
+            class='pagination-progress-bar'
+            style={`width: ${(currentPage / totalPages) * 100}%`}
+            aria-hidden='true'
+          />
+        </div>
+      </div>
+    )
+  }
+</nav>
+
+

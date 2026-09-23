@@ -395,7 +395,7 @@ const templateVariables = {
 - **基本処理システム**: Node.js fs moduleを使用したMDXファイル処理
 - **効率的処理システム**: キャッシュ、並列処理、ファイルハッシュによる最適化
 - **開発モード監視**: chokidarを使用したリアルタイムファイル監視
-- **スクリプト整理**: `src/scripts/type-scripts/auto-date/`フォルダへの統合
+- **スクリプト整理**: `scripts/type-scripts/auto-date/`フォルダへの統合
 
 **最適化機能**:
 ```typescript

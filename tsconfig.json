@@ -6,6 +6,7 @@
     "src/**/*.tsx",
     "src/**/*.d.ts",
     "src/types/**/*.d.ts",
+    "scripts/**/*.ts",
     "astro.config.mjs",
     "tailwind.config.mjs"
   ],
@@ -32,7 +33,7 @@
         "src/*"
       ],
       "@/types/*": [
-        "src/scripts/type-scripts/*"
+        "scripts/type-scripts/*"
       ]
     },
     "types": [

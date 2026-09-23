@@ -2,15 +2,15 @@
 // ========== IMPORTS ==========
 import UnifiedSEO, {
   type Props as UnifiedSEOProps,
-} from '../components/UnifiedSEO.astro';
-import TableOfContents from '../components/content/TableOfContents.astro';
-import Navbar from '../components/common/NavBar/Navbar.astro';
-import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
-import Prose from '../components/Prose.astro';
+} from '../components/common/UnifiedSEO.astro';
+import TableOfContents from '../components/common/TableOfContents.astro';
+import Navbar from '../components/common/navbar/Navbar.astro';
+import BottomNavBar from '../components/common/navbar/BottomNavBar.astro';
+import Prose from '../components/ui/Prose.astro';
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
-import { CldImage } from 'astro-cloudinary';
 import '../styles/layouts/PostLayout.css';
 import '../styles/global.css';
+import { toLocalImage } from '../utils/local-image';
 
 // ========== TYPE DEFINITIONS ==========
 export interface Props {
@@ -123,14 +123,12 @@ const {
           {
             featuredImage && (
               <div class='featured-image-container mt-6'>
-                <CldImage
-                  src={featuredImage}
+                <img
+                  src={toLocalImage(featuredImage)}
                   alt={title}
                   class='featured-image-thumbnail'
                   loading='eager'
-                  width={800}
-                  quality='auto'
-                  format='auto'
+                  width='800'
                 />
               </div>
             )

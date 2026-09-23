@@ -1,5 +1,4 @@
 /* ========== BEM METHOD - TOOL PAGE DESIGN SYSTEM ========== */
-@import 'tailwindcss';
 
 /* Opt out of the global .layout-content mobile navbar clearance rule
    (see global.css :root --mobile-content-padding). This page manages

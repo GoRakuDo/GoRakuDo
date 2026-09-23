@@ -1,0 +1,335 @@
+---
+import '../../../styles/components/navbar.css';
+
+// Navbar.astro - Astro Native Navigation Component
+// GoRakuDo Engineering Team 2025 - Astro + Tailwind v4.1
+// ARCHITECTURAL DECISION: Astro-native approach with zero JavaScript by default
+// PERFORMANCE: CSS-only scroll animations, minimal JavaScript for interactivity
+
+// ========== ASTRO-NATIVE PROPS INTERFACE ==========
+export interface Props {
+  // KISS Principle: Essential props only
+  className?: string;
+}
+
+// ========== ASTRO-NATIVE DEFAULT PROPS ==========
+const { className = '' } = Astro.props;
+---
+
+<script is:inline>
+  try {
+    document.documentElement.dataset.bottomNav =
+      localStorage.getItem('grkd:bottom-nav-visible') === 'hidden'
+        ? 'hidden'
+        : 'visible';
+  } catch {
+    document.documentElement.dataset.bottomNav = 'visible';
+  }
+</script>
+
+<div class={`navbar-wrapper ${className}`}>
+  <nav class='navbar'>
+    <div class='nav-container'>
+      <!-- Left: Logo -->
+      <div class='nav-left'>
+        <a href='/' class='logo-container' title='GoRakuDo'>
+          <img src="/icons/Logo.svg" alt="GoRakuDo Logo" class="nav-logo-icon" width="28" height="28" />
+          <span class="logo-japanese">語楽道</span>
+        </a>
+      </div>
+
+      <!-- Center: Navigation Links (Desktop) -->
+      <div class='nav-center desktop-only'>
+        <button
+          class='nav-item'
+          data-action='metodologi'
+          type='button'
+          aria-label='Panduan'
+        >
+          <svg
+            class='nav-svg-icon'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'
+          >
+            <path
+              d='M8 2v4'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='M12 2v4'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='M16 2v4'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <rect
+              width='16'
+              height='18'
+              x='4'
+              y='4'
+              rx='2'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='M8 10h6'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='M8 14h8'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='M8 18h5'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+          </svg>
+          Panduan
+        </button>
+        <a
+          href='/tutorial'
+          class='nav-item'
+          data-route='Tutorial'
+          data-path='/tutorial'
+        >
+          <svg
+            class='nav-svg-icon'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+            aria-hidden='true'
+          >
+            <path
+              d='M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m8 6 2-2'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m18 16 2-2'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+            <path
+              d='m15 5 4 4'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+          </svg>
+          Tutorial
+        </a>
+        <button
+          class='nav-item'
+          data-action='menu'
+          type='button'
+          aria-label='Menu'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            class='nav-svg-icon lucide lucide-menu-icon lucide-menu'
+            aria-hidden='true'
+          >
+            <line x1='4' x2='20' y1='12' y2='12'></line>
+            <line x1='4' x2='20' y1='6' y2='6'></line>
+            <line x1='4' x2='20' y1='18' y2='18'></line>
+          </svg>
+          Menu
+        </button>
+      </div>
+
+      <!-- Right: Actions & Mobile Menu -->
+      <div class='nav-right'>
+
+      <!-- Mobile Top Action Button (BottomNavBar visibility toggle) -->
+      <button
+        class='mobile-menu-btn'
+        data-action='toggle-bottom-nav'
+        type='button'
+        aria-label='Sembunyikan navigasi bawah'
+        title='Sembunyikan navigasi bawah'
+        aria-pressed='true'
+      >
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='18'
+          height='18'
+          viewBox='0 0 24 24'
+          class='nav-svg-icon bottom-nav-toggle-icon bottom-nav-toggle-icon--close lucide lucide-panel-bottom-close-icon lucide-panel-bottom-close'
+          aria-hidden='true'
+        >
+          <rect width='18' height='18' x='3' y='3' rx='2'></rect>
+          <path d='M3 15h18'></path>
+          <path
+            d='m15 8-3 3-3-3'
+            stroke-linecap='round'
+            stroke-linejoin='round'></path>
+        </svg>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='18'
+          height='18'
+          viewBox='0 0 24 24'
+          class='nav-svg-icon bottom-nav-toggle-icon bottom-nav-toggle-icon--open lucide lucide-panel-bottom-open-icon lucide-panel-bottom-open'
+          aria-hidden='true'
+        >
+          <rect width='18' height='18' x='3' y='3' rx='2'></rect>
+          <path d='M3 15h18'></path>
+          <path
+            d='m9 10 3-3 3 3'
+            stroke-linecap='round'
+            stroke-linejoin='round'></path>
+        </svg>
+      </button>
+    </div>
+    </div>
+  </nav>
+</div>
+
+
+
+<script>
+  // ========== ASTRO-NATIVE JAVASCRIPT - MINIMAL AND PERFORMANT ==========
+  // REASONING: Following Astro's zero-JavaScript philosophy with minimal interactivity
+  // KISS Principle: Simple, focused functions under 5 lines each
+
+  const BOTTOM_NAV_STORAGE_KEY = 'grkd:bottom-nav-visible';
+
+  function getBottomNavState() {
+    return document.documentElement.dataset.bottomNav === 'hidden'
+      ? 'hidden'
+      : 'visible';
+  }
+
+  function updateBottomNavToggleButton(state = getBottomNavState()) {
+    const button = document.querySelector('[data-action="toggle-bottom-nav"]');
+    if (!button) return;
+
+    const isVisible = state === 'visible';
+    const label = isVisible
+      ? 'Sembunyikan navigasi bawah'
+      : 'Tampilkan navigasi bawah';
+    button.setAttribute('aria-label', label);
+    button.setAttribute('title', label);
+    button.setAttribute('aria-pressed', String(isVisible));
+  }
+
+  function setBottomNavState(state) {
+    document.documentElement.dataset.bottomNav = state;
+    updateBottomNavToggleButton(state);
+    try {
+      localStorage.setItem(BOTTOM_NAV_STORAGE_KEY, state);
+    } catch {
+      // localStorage may be unavailable in private browsing; visual state still works.
+    }
+  }
+
+  function toggleBottomNav() {
+    setBottomNavState(getBottomNavState() === 'hidden' ? 'visible' : 'hidden');
+  }
+
+  /**
+   * Generic navigation function - simplified for single route
+   */
+  function navigateTo(routeKey) {
+    if (routeKey === 'Dokumentasi') {
+      window.location.href = '/docs';
+    }
+  }
+
+  /**
+   * Event delegation for efficient event handling
+   */
+  function handleNavbarClick(event) {
+    const target = event.target.closest('[data-route], [data-action]');
+    if (!target) return;
+
+    const route = target.dataset.route;
+    const action = target.dataset.action;
+
+    if (route) {
+      navigateTo(route);
+    } else if (action === 'toggle-bottom-nav') {
+      toggleBottomNav();
+    } else if (action === 'metodologi') {
+      window.location.href = '/panduan-lengkap-otodidak-bahasa-jepang';
+    } else if (action === 'menu') {
+      // Dispatch custom event to open BottomNavBar menu overlay
+      const menuEvent = new CustomEvent('openMenuOverlay', {
+        detail: { source: 'navbar' },
+      });
+      document.dispatchEvent(menuEvent);
+    }
+  }
+
+  /**
+   * Initialize navbar functionality
+   */
+  function initNavbar() {
+    // Event delegation for efficient event handling
+    document.addEventListener('click', handleNavbarClick);
+    updateBottomNavToggleButton();
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+  } else {
+    initNavbar();
+  }
+</script>

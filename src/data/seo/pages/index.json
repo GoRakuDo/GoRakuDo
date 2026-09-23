@@ -65,7 +65,7 @@
       "@type": "Organization",
       "name": "GoRakuDo",
       "description": "Komunitas belajar bahasa Jepang terdepan di Indonesia, berdasarkan metode Linguistik Modern (Immersion) yang terbukti efektif. Bergabunglah dengan 10,000+ anggota yang telah menguasai bahasa Jepang secara alami. Gratis, komprehensif, dan didukung komunitas aktif.",
-      "logo": "https://gorakudo.org/img/gorakudo-immerison.png",
+      "logo": "https://gorakudo.org/images/og/gorakudo-immerison.png",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",

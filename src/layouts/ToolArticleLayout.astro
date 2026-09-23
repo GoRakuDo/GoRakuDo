@@ -2,13 +2,14 @@
 // ========== IMPORTS ==========
 import UnifiedSEO, {
   type Props as UnifiedSEOProps,
-} from '../components/UnifiedSEO.astro';
-import Navbar from '../components/common/NavBar/Navbar.astro';
-import BottomNavBar from '../components/common/NavBar/BottomNavBar.astro';
+} from '../components/common/UnifiedSEO.astro';
+import Navbar from '../components/common/navbar/Navbar.astro';
+import BottomNavBar from '../components/common/navbar/BottomNavBar.astro';
 import WaveAnimation from '../components/animations/WaveAnimation.astro';
-import Prose from '../components/Prose.astro';
+import Prose from '../components/ui/Prose.astro';
 import '../styles/global.css';
 import '../styles/pages/tools/[tool]/ToolArticleLayout.css';
+import '../styles/components/tutorial-image-grid.css';
 
 // ========== TYPE DEFINITIONS ==========
 export interface RelatedTool {
@@ -355,3 +356,5 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
         <slot name='end-actions' />
       </footer>
     </div>
+  </body>
+</html>

@@ -3,17 +3,18 @@ import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../../layouts/ProjectLayout.astro';
 import { getProjectDocSlug, buildDocsCategories } from '../../../utils/project-docs';
+import { getEntrySlug } from '../../../utils/content/entry';
 import '../../../styles/pages/project/project-doc.css';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   const docs = await getCollection('project-docs');
   return projects.flatMap(p => {
-    const projectDocs = docs.filter(d => d.data.parentProject === p.slug && d.data.status === 'published' && getProjectDocSlug(d.id) !== 'index');
+    const projectDocs = docs.filter(d => d.data.parentProject === getEntrySlug(p) && d.data.status === 'published' && getProjectDocSlug(d.id) !== 'index');
     return projectDocs.map(doc => {
       const docSlug = getProjectDocSlug(doc.id);
       return {
-        params: { project: p.slug, doc_slug: docSlug },
+        params: { project: getEntrySlug(p), doc_slug: docSlug },
         props: { project: p, doc: doc, allDocs: projectDocs },
       };
     });
@@ -27,7 +28,7 @@ const { project, doc, allDocs } = Astro.props as {
 };
 const { Content } = await render(doc);
 
-const docsCategories = buildDocsCategories(allDocs, project.slug);
+const docsCategories = buildDocsCategories(allDocs, getEntrySlug(project));
 const docSlug = getProjectDocSlug(doc.id);
 const seoTitle = `${project.data.title}: ${doc.data.title}・GoRakuDo 語楽道`;
 ---

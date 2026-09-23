@@ -161,7 +161,7 @@
 }
 
 .banner-tagline {
-  color: var(--token-white-base);
+  color: var(--grkd-white-base);
   font-family: var(--font-primary);
   font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   font-weight: 700;

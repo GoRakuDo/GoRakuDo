@@ -1,16 +1,16 @@
 ---
 // ========== IMPORTS ==========
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
-import FAQ from '../../components/ui/FAQ.astro';
+import FAQ from '../../components/docs/FAQ.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json';
-import { CldImage } from 'astro-cloudinary';
-import { buildCloudinaryUrl } from '../../utils/cloudinary';
 import { getContentDates } from '../../utils/git-dates';
+import { toLocalImage } from '../../utils/local-image';
+import { getEntrySlug } from '../../utils/content/entry';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
   const visiblePosts = getVisibleDocs(allPosts);
 
   return visiblePosts.map((post: CollectionEntry<'docs'>) => ({
-    params: { slug: post.slug },
+    params: { slug: getEntrySlug(post) },
     props: { post },
   }));
 }
@@ -37,7 +37,7 @@ if (slug && String(slug).startsWith('page-')) {
 if (!post) return Astro.redirect('/docs?error=post-not-found');
 
 // ========== CONTENT PROCESSING ==========
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
@@ -45,7 +45,8 @@ const tocHeadings = headings.filter(
 // articleContentのheadingsを更新（後で実行）
 
 // ========== PATH & METADATA ==========
-const resolvedPath = { path: resolvePath('docs', post.slug) };
+const postSlug = getEntrySlug(post);
+const resolvedPath = { path: resolvePath('docs', postSlug) };
 const collectionMetadata = getCollectionInfo('docs');
 
 // ========== ARTICLE CONTENT EXTRACTION ==========
@@ -85,7 +86,7 @@ const replaceTemplateVariables = (template, variables) => {
 
 // シンプルなタイトル生成: MDXフロントマターのまま
 const generateTemplateBasedTitle = post => {
-  const articleTitle = post.data.title || post.slug;
+  const articleTitle = post.data.title || postSlug;
   return `${articleTitle} ・ GoRakuDo`;
 };
 
@@ -139,8 +140,11 @@ const breadcrumbConfig = {
 articleContent.headings = tocHeadings;
 const articleUrl = resolvedPath.path; // 相対パス（breadcrumb用）
 const articleImage = post.data.featuredImage
-  ? buildCloudinaryUrl(post.data.featuredImage)
-  : 'https://gorakudo.org/img/gorakudo-immerison.png';
+  ? new URL(
+      toLocalImage(post.data.featuredImage),
+      String(Astro.site || 'https://gorakudo.org')
+    ).toString()
+  : 'https://gorakudo.org/images/og/gorakudo-immerison.png';
 
 // テンプレート変数の準備
 const templateVariables = {
@@ -265,14 +269,12 @@ const faqSchema =
   {
     post.data.featuredImage && (
       <div slot='featured-image' class='featured-image-container mt-6'>
-        <CldImage
-          src={post.data.featuredImage}
+        <img
+          src={toLocalImage(post.data.featuredImage)}
           alt={post.data.title}
           class='featured-image-thumbnail'
           loading='eager'
-          width={800}
-          quality='auto'
-          format='auto'
+          width='800'
         />
       </div>
     )

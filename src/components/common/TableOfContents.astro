@@ -1,0 +1,371 @@
+---
+import '../../styles/components/table-of-contents.css';
+
+export interface Props {
+  headings?: { depth: number; slug: string; text: string }[]
+}
+
+const { headings = [] } = Astro.props
+---
+
+{headings.length > 0 && (
+  <>
+    <aside class="toc-container" aria-label="Table of Contents">
+      <div class="toc-header">
+        <p class="toc-marker" aria-hidden="true">/// TOC_INDEX ///</p>
+        <h2 class="toc-title">{'Daftar Isi'}</h2>
+        <button class="toc-toggle" aria-label="Hide table of contents" aria-expanded="true" data-state="visible">
+          <svg 
+            class="toc-hide-icon"
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="var(--grkd-purple-500)" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <rect width="18" height="18" x="3" y="3" rx="2"/>
+            <path d="M8 12h8"/>
+          </svg>
+          <svg 
+            class="toc-show-icon"
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <nav class="toc-nav" role="navigation" aria-label="Table of contents navigation">
+        <ol class="toc-list">
+          {headings.map((heading) => (
+            <li class={`toc-item toc-level-${heading.depth}`}> 
+              <a 
+                href={`#${heading.slug}`} 
+                class="toc-link"
+                data-heading-id={heading.slug}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      
+      <!-- Mobile TOC Footer - Only visible on mobile -->
+      <div class="toc-footer">
+        <button class="toc-expand-toggle" aria-label="Expand table of contents" aria-expanded="false">
+          <span class="toc-expand-text">Tampilkan Daftar isi</span>
+          <svg 
+            class="toc-expand-icon"
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="m7 6 5 5 5-5"/>
+            <path d="m7 13 5 5 5-5"/>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Floating toggle button for when TOC is hidden -->
+    <button class="toc-floating-toggle" aria-label="Show table of contents" style="display: none;">
+      <svg 
+        width="20" 
+        height="20" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+      >
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+    </button>
+  </>
+)}
+
+
+
+<script>
+  // NOTE: Astro processes <script> as type="module" (deferred).
+  // DOMContentLoaded has already fired by the time this executes,
+  // so no wrapper is needed — the DOM is ready.
+  (() => {
+    const tocContainer = document.querySelector('.toc-container') as HTMLElement;
+    const tocLinks = tocContainer?.querySelectorAll('.toc-link') as NodeListOf<HTMLAnchorElement>;
+
+    if (!tocContainer || !tocLinks) {
+      console.warn('TableOfContents: Missing required elements');
+      return;
+    }
+
+    // toc-toggle機能は無効化されているため、関連スクリプトを削除
+
+    /** ------------------------------
+     * Hitung offset navbar dinamis (Optimized to prevent forced reflow)
+     * ------------------------------ */
+    let cachedOffset: number | null = null;
+    let lastCacheTime = 0;
+    const getNavbarOffset = (): number => {
+      const now = Date.now();
+      if (cachedOffset !== null && now - lastCacheTime < 1000) return cachedOffset;
+      
+      // Use requestAnimationFrame to batch layout reads
+      const navbar = document.querySelector('nav, .navbar, header, [data-navbar], .header, #header, .top-nav, .main-nav') as HTMLElement;
+      if (navbar) {
+        // Batch all layout reads together
+        const rect = navbar.getBoundingClientRect();
+        const style = window.getComputedStyle(navbar);
+        const isFixed = style.position === 'fixed' || style.position === 'sticky';
+        const height = rect.height;
+        
+        // Calculate offset after reads
+        if (isFixed && height > 0) {
+          cachedOffset = height + 30;
+        } else {
+          cachedOffset = height + 20;
+        }
+      } else {
+        cachedOffset = 140; // fallback
+      }
+      lastCacheTime = now;
+      return cachedOffset;
+    };
+
+    /** ------------------------------
+     * Smooth scroll TOC links
+     * ------------------------------ */
+    tocLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetId = link.getAttribute('href')?.slice(1);
+        if (!targetId) return;
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return;
+        
+        // Immediately update highlighting to the clicked link
+        setActiveLinkManual(link);
+        
+        const offset = getNavbarOffset();
+        const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({
+          top: elementPosition,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    /** ------------------------------
+     * Auto-scroll TOC to follow current section with highlighting
+     * ------------------------------ */
+    let currentActiveLink: Element | null = null;
+    const tocNav = tocContainer.querySelector('.toc-nav') as HTMLElement;
+    
+    const setActiveLink = (link: Element | null) => {
+      // Remove active class from previous link (both desktop and mobile)
+      if (currentActiveLink) {
+        currentActiveLink.classList.remove('active');
+        // Also remove from mobile TOC if exists
+        const mobileActiveLink = document.querySelector('.toc-container.mobile-toc .toc-link.active');
+        if (mobileActiveLink) {
+          mobileActiveLink.classList.remove('active');
+        }
+      }
+      
+      // Add active class to new link
+      if (link) {
+        link.classList.add('active');
+        currentActiveLink = link;
+        
+        // Also update mobile TOC if exists
+        const activeId = link.getAttribute('data-heading-id');
+        if (activeId) {
+          const mobileToc = document.querySelector('.toc-container.mobile-toc');
+          if (mobileToc) {
+            const mobileLinkActive = mobileToc.querySelector(`[data-heading-id="${activeId}"]`);
+            if (mobileLinkActive) {
+              mobileLinkActive.classList.add('active');
+            }
+          }
+        }
+        
+        // Auto-scroll TOC to keep current link visible
+        if (tocNav) {
+          const linkRect = link.getBoundingClientRect();
+          const navRect = tocNav.getBoundingClientRect();
+          if (linkRect.top < navRect.top || linkRect.bottom > navRect.bottom) {
+            tocNav.scrollTo({
+              top: (link as HTMLElement).offsetTop - tocNav.offsetTop - navRect.height / 2 + linkRect.height / 2,
+              behavior: 'smooth'
+            });
+          }
+        }
+      }
+    };
+    
+    // Add a flag to prevent intersection observer from interfering with manual clicks
+    let isManualClick = false;
+    let manualClickTimeout: ReturnType<typeof setTimeout> | null = null;
+    
+    // Enhanced setActiveLink function that tracks manual clicks
+    const setActiveLinkManual = (link: Element | null) => {
+      isManualClick = true;
+      if (manualClickTimeout) clearTimeout(manualClickTimeout);
+      manualClickTimeout = setTimeout(() => {
+        isManualClick = false;
+      }, 1500); // Give 1.5 seconds for scroll to complete
+      setActiveLink(link);
+    };
+    
+    const observer = new IntersectionObserver(entries => {
+      // Skip if this is a manual click
+      if (isManualClick) return;
+      
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.getAttribute('id');
+        if (!id) return;
+        const newActiveLink = tocContainer.querySelector(`[data-heading-id="${id}"]`);
+        if (!newActiveLink || newActiveLink === currentActiveLink) return;
+        
+        // Update active link with highlighting
+        setActiveLink(newActiveLink);
+      });
+    }, { rootMargin: '-100px 0px -40% 0px', threshold: [0.1] });
+    document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]').forEach(h => observer.observe(h));
+
+    /** ------------------------------
+     * Initial TOC position with highlighting
+     * ------------------------------ */
+    const initTOCPosition = () => {
+      if (!tocContainer) return;
+      const scrollTop = window.scrollY + getNavbarOffset();
+      let chosenElement: HTMLElement | null = null;
+      const headings = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+      for (const h of Array.from(headings)) {
+        const element = h as HTMLElement;
+        if (element.offsetTop <= scrollTop) {
+          chosenElement = element;
+        }
+      }
+      if (chosenElement) {
+        const id = chosenElement.getAttribute('id');
+        if (id) {
+          const link = tocContainer.querySelector(`[data-heading-id="${id}"]`);
+          if (link) {
+            setActiveLink(link);
+            // Scroll TOC to show current section
+            if (tocNav) {
+              tocNav.scrollTo({
+                top: (link as HTMLElement).offsetTop - tocNav.offsetTop - tocNav.offsetHeight / 2,
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+      }
+    };
+    setTimeout(initTOCPosition, 200);
+
+    /** ------------------------------
+     * Mobile TOC
+     * ------------------------------ */
+    const createMobileTOC = () => {
+      const existing = document.querySelector('.toc-container.mobile-toc');
+      if (window.matchMedia('(max-width: 1200px)').matches) {
+        if (!existing) {
+          // Try multiple possible IDs for the main content element
+          const contentMain = document.getElementById('contentMain') ||
+                             document.getElementById('main-content') ||
+                             document.querySelector('main') ||
+                             document.querySelector('article');
+          if (contentMain && contentMain.parentNode) {
+            const clone = tocContainer.cloneNode(true) as HTMLElement;
+            clone.classList.add('mobile-toc');
+
+            // Re-attach event listeners to mobile TOC.
+            // NOTE: The expand/collapse toggle is no longer used on mobile
+            // (TOC is always expanded by default), so the .toc-expand-toggle
+            // click handler has been removed. The button still exists in the
+            // DOM but is hidden via CSS and is no longer clickable.
+            const mobileLinks = clone.querySelectorAll('.toc-link') as NodeListOf<HTMLAnchorElement>;
+
+            mobileLinks.forEach(link => {
+              link.addEventListener('click', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                const targetId = link.getAttribute('href')?.slice(1);
+                if (!targetId) return;
+                const targetElement = document.getElementById(targetId);
+                if (!targetElement) return;
+                
+                // Find corresponding desktop link and update highlighting
+                const desktopLink = tocContainer.querySelector(`[data-heading-id="${targetId}"]`);
+                if (desktopLink) {
+                  setActiveLinkManual(desktopLink);
+                }
+                
+                const offset = getNavbarOffset();
+                const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({
+                  top: elementPosition,
+                  behavior: 'smooth'
+                });
+              });
+            });
+            
+            // Apply current active state to mobile TOC
+            if (currentActiveLink) {
+              const activeId = currentActiveLink.getAttribute('data-heading-id');
+              if (activeId) {
+                const mobileLinkActive = clone.querySelector(`[data-heading-id="${activeId}"]`);
+                if (mobileLinkActive) {
+                  mobileLinkActive.classList.add('active');
+                }
+              }
+            }
+            
+            contentMain.parentNode.insertBefore(clone, contentMain);
+          }
+        }
+      } else if (existing) {
+        existing.remove();
+      }
+    };
+    
+    createMobileTOC();
+    window.addEventListener('resize', () => {
+      cachedOffset = null;
+      createMobileTOC();
+    });
+  })();
+ </script>
+

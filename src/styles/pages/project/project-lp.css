@@ -56,7 +56,7 @@
 }
 
 .lp-tagline {
-  color: var(--token-white-base);
+  color: var(--grkd-white-base);
   font-family: var(--font-primary);
   font-size: clamp(1.25rem, 3vw, 1.75rem);
   font-weight: 700;
@@ -88,7 +88,7 @@
   padding: 1rem 1.5rem;
   border-radius: 0.75rem;
   background: linear-gradient(135deg, var(--grkd-brand-secondary), oklch(from var(--grkd-brand-secondary) l c h / 0.6));
-  color: var(--token-white-base);
+  color: var(--grkd-white-base);
   font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 700;
@@ -111,7 +111,7 @@
   border: 1px solid oklch(85% 0.05 270deg / 0.15);
   border-radius: 0.75rem;
   background: oklch(85% 0.05 270deg / 0.08);
-  color: var(--token-white-base);
+  color: var(--grkd-white-base);
   text-decoration: none;
   transition: transform 0.2s var(--grkd-ease-out), border-color 0.2s var(--grkd-ease-out), background 0.2s var(--grkd-ease-out);
   flex-shrink: 0;

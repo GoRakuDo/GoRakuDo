@@ -1,5 +1,3 @@
-@import 'tailwindcss';
-
 /* ========== CONTENT PAGE LAYOUT ========== */
 
 .content-page {
@@ -9,7 +7,7 @@
   min-height: 100vh;
   margin: 0;
   padding-bottom: 2rem;
-  background-color: oklch(from var(--token-black-base) l c h / 0.75);
+  background-color: oklch(from var(--grkd-black-base) l c h / 0.75);
   background-size: 30px 30px;
 
   @media (min-width: 768px) {
@@ -109,35 +107,6 @@
   }
 }
 
-/* CldImageの内部スタイルを上書き */
-.featured-image-container .astro-cloudinary-cldimage.featured-image-thumbnail,
-.featured-image-thumbnail.astro-cloudinary-cldimage {
-  width: 100%;
-  max-width: 64rem; /* max-w-4xl */
-  height: auto;
-  border-radius: 0.5rem; /* rounded-lg */
-  box-shadow:
-    0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
-
-  /* スマホ用: 少し大きく表示 */
-  @media (max-width: 767px) {
-    max-width: 100%;
-    margin: 0 -1rem;
-    border-radius: 0;
-  }
-
-  /* @unpic/astroの内部スタイルを上書きするため!importantが必要 */
-  /* stylelint-disable-next-line declaration-no-important */
-  object-fit: contain !important;
-  /* stylelint-disable-next-line declaration-no-important */
-  aspect-ratio: 16/9 !important;
-
-  @media (min-width: 768px) {
-    transition: transform 300ms ease-in-out;
-  }
-}
-
 /* blockquote内のp要素のみに改行を保持 */
 blockquote p {
   margin: 0;
@@ -162,7 +131,7 @@ blockquote p {
     background: oklch(50% 0 0deg / 0.2);
     border-color: color-mix(
       in oklch,
-      var(--token-purple-base) 30%,
+      var(--grkd-purple-500) 30%,
       transparent
     );
     box-shadow:
@@ -415,7 +384,7 @@ blockquote p {
       0 4px 20px oklch(0% 0 0deg / 0.08),
       0 1px 3px oklch(0% 0 0deg / 0.12),
       inset 0 1px 0 oklch(100% 0 0deg / 0.15),
-      0 0 0 1px color-mix(in oklch, var(--token-purple-base) 20%, transparent);
+      0 0 0 1px color-mix(in oklch, var(--grkd-purple-500) 20%, transparent);
   }
 }
 
@@ -580,7 +549,7 @@ blockquote p {
       background: oklch(50% 0 0deg / 0.2);
       border-color: color-mix(
         in oklch,
-        var(--token-purple-base) 30%,
+        var(--grkd-purple-500) 30%,
         transparent
       );
       box-shadow:
@@ -684,7 +653,7 @@ blockquote p {
     background: linear-gradient(
       135deg,
       oklch(65% 0.25 280deg) 5%,
-      var(--token-white-base) 100%
+      var(--grkd-white-base) 100%
     );
 
     /* stylelint-disable-next-line property-no-vendor-prefix */
@@ -718,7 +687,7 @@ blockquote p {
     flex-direction: column;
     padding: 0.625rem 0.75rem;
     border-radius: 0 0.5rem 0.5rem 0;
-    background: oklch(from var(--token-black-base) l c h / 0.5);
+    background: oklch(from var(--grkd-black-base) l c h / 0.5);
     color: var(--clr-text-secondary);
     font-weight: 400;
     font-style: italic;
@@ -733,19 +702,18 @@ blockquote p {
   a {
     color: var(--clr-purple);
     text-decoration: underline;
-    text-decoration-color: oklch(from var(--token-text-muted) l c h / 0.5);
+    text-decoration-color: oklch(from var(--grkd-muted) l c h / 0.5);
     text-decoration-thickness: 2px;
     text-underline-offset: 0.2em;
   }
 
   /* Prose underline styling - アンダーラインスタイル */
   .content-main u,
-  .article-content u,
   .prose u {
     text-decoration: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 0.2em;
-    text-decoration-color: oklch(from var(--token-text-muted) l c h / 0.85);
+    text-decoration-color: oklch(from var(--grkd-muted) l c h / 0.85);
   }
 
   /* Prose list styling */
@@ -983,23 +951,11 @@ pre code {
   }
 }
 
-/* ========== ASTRO-CLOUDINARY CLDIMAGE ========== */
+/* ========== CONTENT IMAGES ========== */
 
-/* CldImage component styling - always rounded corners and centered */
-.content-main img[src*='cloudinary'],
-.prose img[src*='cloudinary'],
-.article-content img[src*='cloudinary'],
-img[data-cloudinary] {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  border-radius: 0.5rem;
-}
-
-/* Additional styling for CldImage components */
+/* Content images - centered with rounded corners */
 .content-main img,
-.prose img,
-.article-content img {
+.prose img {
   display: block;
   margin-right: auto;
   margin-left: auto;

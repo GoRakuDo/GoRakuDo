@@ -1,7 +1,6 @@
 ---
-import { CldImage } from 'astro-cloudinary';
-import Prose from '../Prose.astro';
-import JlptCanDoChart from '../features/JlptCanDoChart.astro';
+import Prose from '../ui/Prose.astro';
+import JlptCanDoChart from './JlptCanDoChart.astro';
 ---
 
 <!-- Stop Learning, Start Absorbing Section -->
@@ -16,12 +15,12 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
         >
           Berhenti "Belajar Keras". <br />
           <span
-            class='text-transparent bg-clip-text bg-linear-to-r from-(--token-purple-base) to-(--token-secondary-gold-base)'
+            class='text-transparent bg-clip-text bg-linear-to-r from-(--grkd-purple-500) to-(--grkd-secondary-gold-base)'
           >
             Mulailah "Menyerap" Aja.
           </span>
         </h2>
-        <p class='text-base md:text-xl text-(--token-text-secondary)'>
+        <p class='text-base md:text-xl text-(--grkd-text-secondary)'>
           Metode tradisional minta kamu jadi robot. Kami minta kamu jadi
           manusia.
         </p>
@@ -89,12 +88,12 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
           class='skeuo-card p-6 md:p-8 relative overflow-hidden group bg-[oklch(0.17_0.03_286)]! border-indigo-500/30!'
         >
           <div
-            class='absolute -top-10 -right-10 w-48 h-48 bg-(--token-purple-base)/20 blur-3xl pointer-events-none'
+            class='absolute -top-10 -right-10 w-48 h-48 bg-(--grkd-purple-500)/20 blur-3xl pointer-events-none'
           >
           </div>
           <div class='relative z-10'>
             <div
-              class='flex items-center gap-3 mb-6 text-(--token-secondary-gold-base) skeuo-text-emboss'
+              class='flex items-center gap-3 mb-6 text-(--grkd-secondary-gold-base) skeuo-text-emboss'
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -119,21 +118,21 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
             <h3 class='text-xl md:text-2xl font-bold mb-4 text-white'>
               Menyerap Alami; Immersion
             </h3>
-            <ul class='space-y-3 text-(--token-text-secondary)'>
+            <ul class='space-y-3 text-(--grkd-text-secondary)'>
               <li class='flex gap-2 items-start'>
-                <span class='text-(--token-secondary-green-base) shrink-0 mt-1'
+                <span class='text-(--grkd-secondary-green-base) shrink-0 mt-1'
                   >✓</span
                 >
                 <span>Nikmati Konten (Anime/Drama/Manga)</span>
               </li>
               <li class='flex gap-2 items-start'>
-                <span class='text-(--token-secondary-green-base) shrink-0 mt-1'
+                <span class='text-(--grkd-secondary-green-base) shrink-0 mt-1'
                   >✓</span
                 >
                 <span>Intuisi Kebentuk Sendiri</span>
               </li>
               <li class='flex gap-2 items-start'>
-                <span class='text-(--token-secondary-green-base) shrink-0 mt-1'
+                <span class='text-(--grkd-secondary-green-base) shrink-0 mt-1'
                   >✓</span
                 >
                 <span>Lagi Capek? Rebahan Aja Boleh</span>
@@ -157,7 +156,7 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
           "belajar"</span
         >, <br class='block sm:hidden' /> mulailah
         <span
-          class='inline-flex items-center px-3 py-1 bg-(--token-purple-base)/20 border border-purple-500/30 text-purple-300 rounded-lg mx-1 skeuo-inset shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)]'
+          class='inline-flex items-center px-3 py-1 bg-(--grkd-purple-500)/20 border border-purple-500/30 text-purple-300 rounded-lg mx-1 skeuo-inset shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)]'
         >
           "menyerap"
         </span>.
@@ -167,7 +166,7 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
     <!-- 3. Scenario Grid Cards -->
     <div>
       <h3
-        class='text-center text-xl font-bold mb-10 text-(--token-text-secondary)'
+        class='text-center text-xl font-bold mb-10 text-(--grkd-text-secondary)'
       >
         Metode ini works bahkan di hari terburukmu:
       </h3>
@@ -269,11 +268,11 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
 
     <!-- 4. Coach's Note -->
     <div
-      class='skeuo-card p-6 md:p-8 border-l-4! border-l-(--token-secondary-gold-base)!'
+      class='skeuo-card p-6 md:p-8 border-l-4! border-l-(--grkd-secondary-gold-base)!'
     >
       <div class='flex gap-3 md:gap-5 items-start'>
         <div
-          class='shrink-0 text-(--token-secondary-gold-base) mt-1 drop-shadow-[0_0_8px_oklch(0.81_0.15_78/0.4)]'
+          class='shrink-0 text-(--grkd-secondary-gold-base) mt-1 drop-shadow-[0_0_8px_oklch(0.81_0.15_78/0.4)]'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -292,7 +291,7 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
         </div>
         <div>
           <h4 class='font-bold text-lg text-white mb-2'>Satu Hal Penting...</h4>
-          <p class='text-(--token-text-secondary) leading-relaxed'>
+          <p class='text-(--grkd-text-secondary) leading-relaxed'>
             Kami nggak janji instan. Immersion tetap butuh waktu investasi—kamu
             harus rutin "menyerap" bahasa itu berbulan-bulan. Tapi bedanya,
             prosesnya <span class='text-white font-medium'
@@ -319,13 +318,11 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
         <div
           class='rounded-2xl overflow-hidden border border-white/10 shadow-2xl skew-y-1 lg:skew-y-2 hover:skew-y-0 transition-transform duration-500 w-full'
         >
-          <CldImage
-            src='Nggak_Bikin_Kamu_Lancar_Image_76q5so76q5so76q5_k7mexu'
+          <img
+            src='/images/panduan-immersion/Nggak_Bikin_Kamu_Lancar_Image_76q5so76q5so76q5_k7mexu.webp'
             alt='Ilustrasi: Hafal grammar tidak bikin lancar'
-            width={1696}
-            height={2528}
-            quality='auto'
-            format='auto'
+            width='1696'
+            height='2528'
             loading='lazy'
             class='block w-full h-auto rounded-2xl bg-[oklch(0.1_0_0)]'
           />
@@ -406,7 +403,7 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
       <!-- Text Body (Mobile Order 3, Desktop Bottom) -->
       <div class='order-3'>
         <div
-          class='p-6 sm:p-8 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 skeuo-inset shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)] text-[15px] sm:text-base text-(--token-text-secondary) leading-relaxed text-pretty space-y-5'
+          class='p-6 sm:p-8 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 skeuo-inset shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)] text-[15px] sm:text-base text-(--grkd-text-secondary) leading-relaxed text-pretty space-y-5'
         >
           <p>
             Hafal bunpou itu kayak hafal rumus fisika: kamu tahu teorinya, bisa
@@ -447,13 +444,11 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
       <div
         class='sticky top-24 lg:top-32 rounded-2xl overflow-hidden border border-white/10 shadow-2xl -skew-y-1 lg:-skew-y-2 hover:skew-y-0 transition-transform duration-500 w-full mx-auto max-w-[420px] lg:max-w-full'
       >
-        <CldImage
-          src='Itu_Bikin_Makin_Gagap_Image_76q5so76q5so76q5_jpipnb'
+        <img
+          src='/images/panduan-immersion/Itu_Bikin_Makin_Gagap_Image_76q5so76q5so76q5_jpipnb.webp'
           alt='Ilustrasi: Menerjemahkan di kepala bikin gagap'
-          width={1696}
-          height={2528}
-          quality='auto'
-          format='auto'
+          width='1696'
+          height='2528'
           loading='lazy'
           class='block w-full h-auto rounded-2xl bg-[oklch(0.1_0_0)]'
         />
@@ -503,7 +498,7 @@ import JlptCanDoChart from '../features/JlptCanDoChart.astro';
       <!-- Text Body (Mobile Order 3, Desktop Bottom) -->
       <div class='order-3'>
         <div
-          class='p-6 sm:p-8 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 skeuo-inset shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)] text-[15px] sm:text-base text-(--token-text-secondary) leading-relaxed text-pretty space-y-5'
+          class='p-6 sm:p-8 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 skeuo-inset shadow-[inset_0_2px_4px_oklch(0_0_0/0.6),0_1px_1px_oklch(1_0_0/0.05)] text-[15px] sm:text-base text-(--grkd-text-secondary) leading-relaxed text-pretty space-y-5'
         >
           <p>
             Setiap kali kamu terjemahin kalimat Jepang ke Indonesia di kepala

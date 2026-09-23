@@ -302,7 +302,7 @@
 
 .tqa-article :is(details[open]) > summary::before {
   content: "[ - ]";
-  color: var(--token-gold-base, oklch(85% 0.15 85deg));
+  color: var(--grkd-gold-base, oklch(85% 0.15 85deg));
 }
 
 .tqa-article :is(details) > summary:hover {
@@ -555,7 +555,7 @@
 }
 
 .tqa-article .pitch-pattern-table :where(.pitch-drop-nakadaka) {
-  --pitch-color: var(--token-gold-base, oklch(85% 0.15 85deg));
+  --pitch-color: var(--grkd-gold-base, oklch(85% 0.15 85deg));
 }
 
 .tqa-article .pitch-pattern-table :where(.pitch-drop-odaka) {
@@ -623,7 +623,7 @@
 }
 
 .tqa-article .pitch-pattern-table :where(.pitch-reading-nakadaka) {
-  --pitch-color: var(--token-gold-base, oklch(85% 0.15 85deg));
+  --pitch-color: var(--grkd-gold-base, oklch(85% 0.15 85deg));
 }
 
 .tqa-article .pitch-pattern-table :where(.pitch-reading-odaka) {

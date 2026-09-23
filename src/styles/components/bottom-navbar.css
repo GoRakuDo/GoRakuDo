@@ -1,0 +1,940 @@
+  /* ========== ASTRO NATIVE CSS OPTIMIZATION - UNIFIED DESIGN SYSTEM ========== */
+
+  /* 
+   * ARCHITECTURAL DECISION: Unified design system with Navbar.astro
+   * This ensures consistent visual language across all navigation components
+   * 
+   * PERFORMANCE CONSIDERATIONS:
+   * - Shared design tokens reduce CSS bundle size
+   * - Consistent animations improve perceived performance
+   * - Unified color system enables better theme management
+   * 
+   * FUTURE EXTENSIBILITY:
+   * - Shared tokens enable easy theme switching
+   * - Consistent patterns improve maintainability
+   * - Unified animations create cohesive user experience
+   */
+
+  /* ===== DESIGN TOKENS - UNIFIED WITH NAVBAR ===== */
+  .bottom-nav {
+    /* Layout properties */
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-BottomNavBar-bottom-nav);
+
+    /* デフォルトは表示（モバイル） */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--bottom-nav-gap);
+
+    /* 下と左右を少し離す（端にくっつかない） */
+    margin: var(--bottom-nav-margin);
+    margin-bottom: calc(var(--bottom-nav-margin) + var(--safe-area-bottom));
+    padding: var(--bottom-nav-padding);
+    border: none;
+    border-radius: var(--bottom-nav-radius-xl);
+
+    /* 最適化: 簡素化された背景効果 */
+    background:
+      linear-gradient(
+        135deg,
+        oklch(6% 0.008 270deg / 0.15) 0%,
+        oklch(8% 0.01 270deg / 0.12) 50%,
+        oklch(6% 0.008 270deg / 0.15) 100%
+      ),
+      radial-gradient(
+        ellipse at 50% 0%,
+        oklch(65% 0.18 280deg / 0.1) 0%,
+        transparent 70%
+      );
+
+    /* UNIFIED backdrop filters - Navbar.astroと同じ */
+    backdrop-filter: blur(12px) saturate(120%);
+
+    /* 最適化: 軽量化されたshadow system */
+    box-shadow:
+      0 4px 16px oklch(0% 0 0deg / 0.12),
+      0 2px 8px oklch(0% 0 0deg / 0.08),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+
+    /* UNIFIED transition system - Navbar.astroと同じ */
+    transition:
+      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      backdrop-filter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+
+    /* GPU acceleration - 最適化: 必要な時のみ */
+    will-change: transform, box-shadow, opacity;
+
+    /* 小さな画面での調整 */
+    @media (max-width: 360px) {
+      gap: var(--bottom-nav-gap-small);
+      margin: var(--bottom-nav-margin-small);
+      margin-bottom: calc(
+        var(--bottom-nav-margin-small) + var(--safe-area-bottom)
+      );
+      padding: var(--bottom-nav-padding-small);
+    }
+
+    /* GPU acceleration - モバイルでは削除 */
+    @media (min-width: 769px) {
+      transform: translateZ(0);
+    }
+
+    /* デスクトップでは非表示 */
+    @media (min-width: 1024px) {
+      display: none;
+    }
+
+    html[data-bottom-nav='hidden'] & {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(calc(100% + var(--safe-area-bottom) + 1rem));
+    }
+
+    /* UNIFIED Color Tokens - Navbar.astroと同じ */
+    --bottom-nav-white: oklch(100% 0 0deg);
+    --bottom-nav-white-05: oklch(100% 0 0deg / 0.05);
+    --bottom-nav-white-08: oklch(100% 0 0deg / 0.08);
+    --bottom-nav-white-10: oklch(100% 0 0deg / 0.1);
+    --bottom-nav-white-15: oklch(100% 0 0deg / 0.15);
+    --bottom-nav-white-20: oklch(100% 0 0deg / 0.2);
+    --bottom-nav-white-25: oklch(100% 0 0deg / 0.25);
+    --bottom-nav-black: oklch(0% 0 0deg);
+    --bottom-nav-black-05: oklch(0% 0 0deg / 0.05);
+    --bottom-nav-black-10: oklch(0% 0 0deg / 0.1);
+    --bottom-nav-black-15: oklch(0% 0 0deg / 0.15);
+    --bottom-nav-black-6: oklch(6% 0.008 270deg);
+    --bottom-nav-black-8: oklch(8% 0.01 270deg);
+    --bottom-nav-black-25: oklch(25% 0.015 270deg);
+
+    /* UNIFIED Primary Colors - Medium to High Contrast Dark Violet */
+    --bottom-nav-primary: oklch(45% 0.25 280deg / 0.65);
+    --bottom-nav-primary-dark: oklch(40% 0.3 280deg / 0.65);
+    --bottom-nav-primary-light: oklch(50% 0.2 280deg / 0.65);
+    --bottom-nav-primary-18: oklch(65% 0.18 280deg);
+    --bottom-nav-primary-25: oklch(65% 0.25 280deg / 0.25);
+    --bottom-nav-primary-30: oklch(65% 0.25 280deg / 0.3);
+    --bottom-nav-primary-70: oklch(70% 0.12 280deg);
+
+    /* UNIFIED Secondary Accent Colors - Navbar.astroと同じ */
+    --bottom-nav-accent-orange: oklch(65% 0.18 15deg);
+    --bottom-nav-accent-blue: oklch(65% 0.25 280deg);
+    --bottom-nav-accent-green: oklch(70% 0.15 45deg);
+
+    /* UNIFIED Text Colors - Navbar.astroと同じ */
+    --bottom-nav-text-primary: oklch(98% 0.002 270deg);
+    --bottom-nav-text-secondary: oklch(85% 0.002 270deg);
+    --bottom-nav-text-muted: oklch(75% 0.002 270deg);
+
+    /* UNIFIED GlassMorphism Tokens - Navbar.astroと同じ */
+    --bottom-nav-glass-bg: oklch(6% 0.008 270deg / 0.12);
+    --bottom-nav-glass-bg-8: oklch(8% 0.01 270deg / 0.08);
+    --bottom-nav-glass-border: oklch(25% 0.015 270deg / 0.15);
+    --bottom-nav-glass-glow: oklch(65% 0.18 280deg / 0.08);
+    --bottom-nav-glass-glow-60: oklch(65% 0.18 280deg / 0.6);
+
+    /* UNIFIED Interactive State Tokens - Navbar.astroと同じ */
+    --bottom-nav-interactive-hover: oklch(98% 0.002 270deg / 0.1);
+    --bottom-nav-interactive-focus: oklch(98% 0.002 270deg / 0.15);
+    --bottom-nav-interactive-active: oklch(98% 0.002 270deg / 0.2);
+
+    /* UNIFIED Brand Tokens - Navbar.astroと同じ */
+    --bottom-nav-brand-glow: oklch(65% 0.18 280deg / 0.6);
+    --bottom-nav-brand-ruby: oklch(65% 0.008 270deg);
+    --bottom-nav-brand-ruby-hover: oklch(70% 0.12 280deg);
+
+    /* Spacing Tokens */
+    --bottom-nav-margin: 0.75rem;
+    --bottom-nav-margin-small: 0.5rem;
+    --bottom-nav-padding: 0.5rem;
+    --bottom-nav-padding-small: 0.375rem;
+    --bottom-nav-gap: 0.25rem;
+    --bottom-nav-gap-small: 0.125rem;
+
+    /* UNIFIED Border Radius Tokens - Navbar.astroと同じ */
+    --bottom-nav-radius-sm: 0.375rem;
+    --bottom-nav-radius-md: 0.75rem;
+    --bottom-nav-radius-lg: 1.25rem;
+    --bottom-nav-radius-xl: var(--radius-xl, 1rem);
+
+    /* UNIFIED Backdrop Filter Tokens */
+    --bottom-nav-blur-base: blur(16px) saturate(125%) brightness(1.05)
+      contrast(1.05);
+    --bottom-nav-blur-transparent: blur(0) saturate(100%) brightness(1)
+      contrast(1);
+
+    /* ---------- Navigation Buttons - UNIFIED WITH MOBILE-MENU-BTN DESIGN ---------- */
+    .nav-btn {
+      position: relative;
+      display: flex;
+      flex: 1 1 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      width: 0; /* 強制的に等しい幅を保証 */
+      min-height: 48px;
+      padding: 0.75rem 0.5rem;
+      border: none;
+      border-radius: var(--bottom-nav-radius-lg);
+
+      /* UNIFIED background - mobile-menu-btnと完全に同じ、グラデーション透明化 */
+      background:
+        linear-gradient(var(--bottom-nav-primary), var(--bottom-nav-primary))
+          padding-box,
+        linear-gradient(
+            135deg,
+            oklch(100% 0 0deg / 0.3) 0%,
+            oklch(98% 0 0deg / 0.3) 50%,
+            oklch(95% 0 0deg / 0.3) 100%
+          )
+          border-box;
+      color: var(--bottom-nav-text-primary);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transform: translateZ(0);
+
+      /* UNIFIED transition system - mobile-menu-btnと同じ */
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      touch-action: manipulation;
+
+      /* UNIFIED shadow system - mobile-menu-btnと同じ、薄い影追加 */
+      box-shadow:
+        0 6px 20px oklch(0% 0 0deg / 0.08),
+        0 4px 16px oklch(65% 0.25 280deg / 0.15),
+        0 2px 8px oklch(0% 0 0deg / 0.06),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      will-change: transform, background, box-shadow, filter;
+      -webkit-tap-highlight-color: transparent;
+      filter: drop-shadow(0 0 8px oklch(65% 0.25 280deg / 0.3));
+
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+        transition-duration: 0.01ms;
+        will-change: auto;
+      }
+    }
+
+    .nav-btn::before {
+      position: absolute;
+      border-radius: inherit;
+      background: linear-gradient(
+        135deg,
+        oklch(100% 0 0deg / 0.1) 0%,
+        transparent 50%,
+        oklch(100% 0 0deg / 0.05) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      content: '';
+      inset: 0;
+
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transition-duration: 0.01ms;
+      }
+    }
+
+    /* Moved hover::before to reduce specificity */
+
+    .nav-btn--hover {
+      background:
+        linear-gradient(
+            var(--bottom-nav-primary-light),
+            var(--bottom-nav-primary-light)
+          )
+          padding-box,
+        linear-gradient(
+            135deg,
+            oklch(100% 0 0deg / 0.4) 0%,
+            oklch(98% 0 0deg / 0.4) 50%,
+            oklch(95% 0 0deg / 0.4) 100%
+          )
+          border-box;
+      box-shadow:
+        0 10px 40px oklch(0% 0 0deg / 0.12),
+        0 8px 32px oklch(65% 0.25 280deg / 0.25),
+        0 4px 16px oklch(0% 0 0deg / 0.1),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.2);
+      filter: drop-shadow(0 0 16px oklch(65% 0.25 280deg / 0.4));
+
+      /* モバイル: transformを完全無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+      }
+
+      /* デスクトップ: transformアニメーション */
+      @media (min-width: 769px) {
+        transform: translateZ(0) translateY(-2px) scale(1.02);
+      }
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    /* ---------- SVG Icon System - UNIFIED WITH NAVBAR ---------- */
+    .nav-btn__icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.375rem;
+      transform: translateZ(0);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform, filter;
+
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+        transition-duration: 0.01ms;
+        will-change: auto;
+      }
+
+      svg {
+        width: 1.25em;
+        max-width: 100%;
+        height: 1.25em;
+        max-height: 100%;
+        color: oklch(98% 0.005 50deg);
+        transform: translateZ(0);
+        transition:
+          color var(--duration-fast) ease,
+          transform var(--duration-fast) ease,
+          opacity var(--duration-fast) ease;
+        flex-shrink: 0;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        vertical-align: middle;
+        will-change: transform;
+
+        /* モバイル: アニメーション無効化 */
+        @media (max-width: 768px) {
+          transform: none;
+          transition-duration: 0.01ms;
+          will-change: auto;
+        }
+      }
+    }
+
+    /* ---------- Menu Overlay Icon SVG Styling - Properly Ordered ---------- */
+    .menu-overlay-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.5;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ---------- Navigation Label - UNIFIED WITH NAVBAR ---------- */
+    .nav-btn__label {
+      overflow: hidden;
+      max-width: 100%;
+      color: oklch(98% 0.005 50deg);
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      letter-spacing: 0.025em;
+
+      /* 長いテキストの対応 */
+      white-space: nowrap;
+      transform: translateZ(0);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: color, transform;
+      text-overflow: ellipsis;
+
+      /* モバイル: アニメーション無効化 */
+      @media (max-width: 768px) {
+        transform: none;
+        transition-duration: 0.01ms;
+        will-change: auto;
+      }
+
+      /* 小さな画面での調整 */
+      @media (max-width: 360px) {
+        font-size: 0.6875rem;
+      }
+
+      /* 非常に小さな画面では2行表示を許可 */
+      @media (max-width: 320px) {
+        display: -webkit-box;
+        overflow: hidden;
+        max-height: 2.2em;
+        line-height: 1.1;
+        white-space: normal;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+
+    /* ---------- Active State Styling - MOVED for correct specificity order ---------- */
+    .nav-btn--active {
+      box-shadow:
+        0 3px 12px oklch(0% 0 0deg / 0.06),
+        0 2px 8px oklch(65% 0.25 280deg / 0.15),
+        0 1px 4px oklch(0% 0 0deg / 0.05),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      filter: drop-shadow(0 0 4px oklch(65% 0.25 280deg / 0.2));
+
+      /* 小さな画面での調整 */
+      @media (max-width: 360px) {
+        min-height: 44px;
+        padding: 0.625rem 0.375rem;
+      }
+
+      /* モバイル: アクティブ状態を簡略化 */
+      @media (max-width: 768px) {
+        transform: none;
+      }
+
+      /* デスクトップ: transformアニメーション */
+      @media (min-width: 769px) {
+        transform: translateZ(0) translateY(0) scale(0.98);
+      }
+
+      /* Touch Device Optimization */
+      @media (hover: none) and (pointer: coarse) {
+        /* モバイル: タップ時の縮小効果を無効化 */
+        transform: none;
+        box-shadow:
+          0 1px 4px oklch(from var(--grkd-black-base) l c h / 0.08),
+          0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.06),
+          inset 0 1px 0 oklch(100% 0 0deg / 0.1),
+          inset 0 -1px 0 oklch(from var(--grkd-black-base) l c h / 0.08);
+        filter: drop-shadow(
+          0 1px 4px oklch(from var(--grkd-black-base) l c h / 0.08)
+        );
+      }
+
+      /* 子要素のスタイリング */
+      .nav-btn__icon {
+        @media (max-width: 768px) {
+          transform: none;
+        }
+
+        @media (min-width: 769px) {
+          transform: scale(0.95);
+        }
+      }
+
+      svg {
+        color: oklch(92% 0.008 55deg);
+        opacity: 0.8;
+
+        @media (max-width: 768px) {
+          transform: none;
+        }
+
+        @media (min-width: 769px) {
+          transform: translateZ(0) scale(0.95);
+        }
+      }
+
+      .nav-btn__label {
+        transform: none;
+        text-shadow: none;
+      }
+    }
+  }
+
+  /* ========== MENU OVERLAY STYLES - UNIFIED WITH NAVBAR DESIGN ========== */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      visibility 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .menu-overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    background: oklch(from var(--grkd-black-base) l c h / 0.8);
+
+    /* モバイル最適化: backdrop-filterを簡略化 */
+    @media (max-width: 768px) {
+      backdrop-filter: blur(8px);
+    }
+
+    /* デスクトップ: 強力な効果 */
+    @media (min-width: 769px) {
+      backdrop-filter: blur(12px) saturate(120%);
+    }
+  }
+
+  .menu-overlay-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 90%;
+    max-width: 420px;
+    max-height: 75vh;
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 1.5rem;
+
+    /* 最適化: 具体的なプロパティのみアニメーション */
+    transition:
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* モバイル最適化 */
+    @media (max-width: 768px) {
+      max-height: 80dvh;
+      background: oklch(6% 0.008 270deg / 0.5);
+      backdrop-filter: blur(8px);
+      box-shadow:
+        0 10px 30px oklch(from var(--grkd-black-base) l c h / 0.3),
+        0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15);
+      transform: none;
+      will-change: transform;
+    }
+
+    /* デスクトップ最適化 */
+    @media (min-width: 769px) {
+      background:
+        linear-gradient(
+          135deg,
+          oklch(6% 0.008 270deg / 0.15) 0%,
+          oklch(8% 0.01 270deg / 0.12) 50%,
+          oklch(6% 0.008 270deg / 0.15) 100%
+        ),
+        radial-gradient(
+          ellipse at 50% 0%,
+          oklch(65% 0.18 280deg / 0.1) 0%,
+          transparent 70%
+        );
+      backdrop-filter: blur(12px) saturate(120%);
+      box-shadow:
+        0 8px 32px oklch(from var(--grkd-black-base) l c h / 0.25),
+        0 4px 16px oklch(from var(--grkd-black-base) l c h / 0.15),
+        inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+      transform: scale(0.95) translateY(10px);
+    }
+  }
+
+  .menu-overlay.active .menu-overlay-content {
+    @media (min-width: 769px) {
+      transform: scale(1) translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      transform: none;
+    }
+  }
+
+  .menu-overlay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid oklch(100% 0 0deg / 0.1);
+    background: linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / 0.05) 0%,
+      oklch(100% 0 0deg / 0.02) 100%
+    );
+
+    /* ヘッダー固定: flex-shrinkで縮小を防止 */
+    flex-shrink: 0;
+  }
+
+  .menu-overlay-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .menu-overlay-view-toggle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 1.25rem;
+    background: oklch(100% 0 0deg / 0.12);
+    color: oklch(from var(--grkd-white-base) l c h);
+    cursor: pointer;
+    transition:
+      background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow:
+      0 2px 8px oklch(from var(--grkd-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+  }
+
+  .view-icon {
+    position: absolute;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  /* デフォルトはグリッドビュー */
+  .view-icon--list {
+    opacity: 0;
+  }
+
+  .view-icon--grid {
+    opacity: 1;
+  }
+
+  /* List view active state */
+  .menu-overlay-content:not(.view-grid) .view-icon--list {
+    opacity: 1;
+  }
+
+  .menu-overlay-content:not(.view-grid) .view-icon--grid {
+    opacity: 0;
+  }
+
+  /* Grid view active state */
+  .menu-overlay-content.view-grid .view-icon--list {
+    opacity: 0;
+  }
+
+  .menu-overlay-content.view-grid .view-icon--grid {
+    opacity: 1;
+  }
+
+  /* Desktop hover effects */
+  @media (hover: hover) and (pointer: fine) {
+    .menu-overlay-view-toggle:hover {
+      background: oklch(100% 0 0deg / 0.18);
+      border-color: oklch(100% 0 0deg / 0.25);
+      transform: translateY(-1px);
+      box-shadow:
+        0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15),
+        0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.1);
+    }
+  }
+
+  .menu-overlay-view-toggle:active {
+    background: oklch(100% 0 0deg / 0.22);
+    transform: translateY(0);
+    box-shadow:
+      0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.2),
+      inset 0 1px 2px oklch(100% 0 0deg / 0.1);
+  }
+
+  .menu-overlay-title {
+    margin: 0;
+    color: oklch(from var(--grkd-white-base) l c h);
+    font-family: var(--font-primary);
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+
+    /* UNIFIED text shadow - Navbar.astroと同じ */
+    text-shadow:
+      0 2px 4px oklch(from var(--grkd-black-base) l c h / 0.4),
+      0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.5),
+      0 0 8px oklch(from var(--grkd-black-base) l c h / 0.3);
+  }
+
+  .menu-overlay-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 1.25rem;
+    background: oklch(100% 0 0deg / 0.12);
+    color: oklch(from var(--grkd-white-base) l c h);
+    cursor: pointer;
+
+    /* 最適化: 具体的なプロパティのみアニメーション */
+    transition:
+      background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* UNIFIED shadow system - Navbar.astroと同じ */
+    box-shadow:
+      0 2px 8px oklch(from var(--grkd-black-base) l c h / 0.1),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+  }
+
+  /* デスクトップのみホバー効果 */
+  @media (hover: hover) and (pointer: fine) {
+    .menu-overlay-close:hover {
+      background: oklch(100% 0 0deg / 0.18);
+      border-color: oklch(100% 0 0deg / 0.25);
+      transform: translateY(-1px);
+      box-shadow:
+        0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15),
+        0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.1);
+    }
+  }
+
+  .menu-overlay-close:active {
+    background: oklch(100% 0 0deg / 0.22);
+    transform: translateY(0);
+    box-shadow:
+      0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.2),
+      inset 0 1px 2px oklch(100% 0 0deg / 0.1);
+  }
+
+  .menu-overlay-items {
+    display: flex;
+
+    /* アイテム部分スクロール可能: 残りのスペースを全て使用 */
+    flex: 1;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    padding: 1rem 1.5rem 1.5rem;
+
+    /* スクロールバーのカスタマイズ */
+    scrollbar-width: thin;
+    scrollbar-color: oklch(100% 0 0deg / 0.3) transparent;
+
+    /* スムーズなトランジション */
+    transition: gap 0.3s ease;
+
+    /* モバイル最適化: ボタンサイズとスペーシングの調整 */
+    @media (max-width: 768px) {
+      gap: 0.5rem; /* ボタン間のスペースを25%削減 */
+      padding: 0.75rem 1rem 1rem; /* パディングも削減 */
+    }
+
+    /* WebKit系ブラウザのスクロールバーカスタマイズ */
+    &::-webkit-scrollbar {
+      @media (max-width: 768px) {
+        width: 4px;
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      @media (max-width: 768px) {
+        background: transparent;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @media (max-width: 768px) {
+        border-radius: 2px;
+        background: oklch(100% 0 0deg / 0.3);
+      }
+
+      &:hover {
+        @media (max-width: 768px) {
+          background: oklch(100% 0 0deg / 0.5);
+        }
+      }
+    }
+  }
+
+  .menu-overlay-divider {
+    width: 100%;
+    height: 1px;
+    margin: 0.5rem 0;
+    border: none;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(from var(--grkd-white-base) l c h / 0.2) 20%,
+      oklch(from var(--grkd-white-base) l c h / 0.4) 50%,
+      oklch(from var(--grkd-white-base) l c h / 0.2) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Grid view mode */
+  .menu-overlay-content.view-grid .menu-overlay-items {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    /* モバイル最適化 */
+    @media (max-width: 768px) {
+      gap: 0.5rem;
+    }
+  }
+
+  /* Grid view時にdividerを2列にまたがせる */
+  .menu-overlay-content.view-grid .menu-overlay-divider {
+    grid-column: 1 / -1;
+    margin: 0.25rem 0;
+  }
+
+  .menu-overlay-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid oklch(100% 0 0deg / 0.15);
+    border-radius: 1.25rem;
+
+    /* UNIFIED background - Navbar.astroのnav-itemと同じ */
+    background: oklch(100% 0 0deg / 0.12);
+    color: oklch(from var(--grkd-white-base) l c h);
+    text-decoration: none;
+    cursor: pointer;
+
+    /* 最適化: 具体的なプロパティのみアニメーション */
+    transition:
+      background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      flex-direction 0.3s ease,
+      padding 0.3s ease;
+
+    /* UNIFIED shadow system - Navbar.astroと同じ */
+    box-shadow:
+      0 2px 8px oklch(from var(--grkd-black-base) l c h / 0.08),
+      inset 0 1px 0 oklch(100% 0 0deg / 0.1);
+
+    /* デスクトップのみホバー効果 - nav-itemと同じ */
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background: oklch(100% 0 0deg / 0.18);
+        border-color: oklch(100% 0 0deg / 0.25);
+        transform: translateY(-1px);
+        box-shadow:
+          0 4px 12px oklch(from var(--grkd-black-base) l c h / 0.15),
+          0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.1);
+      }
+    }
+
+    &:active {
+      background: oklch(100% 0 0deg / 0.22);
+      transform: translateY(0);
+      border-color: oklch(100% 0 0deg / 0.3);
+      box-shadow:
+        0 2px 6px oklch(from var(--grkd-black-base) l c h / 0.2),
+        inset 0 1px 2px oklch(100% 0 0deg / 0.1);
+    }
+
+    /* モバイル最適化: ボタンサイズの調整 */
+    @media (max-width: 768px) {
+      gap: 0.75rem; /* アイコンとテキストの間隔を削減 */
+      padding: 0.75rem; /* パディングを25%削減 */
+    }
+  }
+
+  .menu-overlay-item:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px oklch(6% 0.008 270deg),
+      0 0 0 4px oklch(65% 0.18 280deg);
+  }
+
+  /* Grid view mode - アイコンビュー */
+  .menu-overlay-content.view-grid .menu-overlay-item {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    min-height: 0;
+    aspect-ratio: 1 / 0.82;
+    padding: 0.5rem;
+    text-align: center;
+
+    /* グリッドビュー時のモバイル最適化 */
+    @media (max-width: 768px) {
+      padding: 0.45rem;
+    }
+  }
+
+  .menu-overlay-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: oklch(from var(--grkd-white-base) l c h);
+    transition:
+      background 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: none;
+
+    @media (max-width: 768px) {
+      width: 42px;
+      height: 42px;
+    }
+  }
+
+  /* デスクトップのみホバー効果 */
+  @media (hover: hover) and (pointer: fine) {
+    .menu-overlay-item:hover .menu-overlay-icon {
+      background: transparent;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  /* ---------- Menu Overlay Icon SVG Styling - Moved for proper ordering ---------- */
+
+  .menu-overlay-label {
+    color: oklch(from var(--grkd-white-base) l c h);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+
+    /* 最適化: 具体的なプロパティのみアニメーション */
+    transition:
+      color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      font-size 0.3s ease;
+
+    /* UNIFIED text shadow - Navbar.astroと同じ */
+    text-shadow:
+      0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.3),
+      0 0 4px oklch(from var(--grkd-black-base) l c h / 0.2);
+
+    /* モバイル最適化: テキストサイズの調整 */
+    @media (max-width: 768px) {
+      font-size: 0.9rem; /* フォントサイズを10%削減 */
+    }
+  }
+
+  /* Grid view mode - ラベルサイズ調整 */
+  .menu-overlay-content.view-grid .menu-overlay-label {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* デスクトップのみホバー効果 */
+  @media (hover: hover) and (pointer: fine) {
+    .menu-overlay-item:hover .menu-overlay-label {
+      color: oklch(from var(--grkd-white-base) l c h / 0.95);
+      text-shadow:
+        0 2px 4px oklch(from var(--grkd-black-base) l c h / 0.4),
+        0 1px 2px oklch(from var(--grkd-black-base) l c h / 0.5);
+    }
+  }

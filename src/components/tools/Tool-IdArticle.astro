@@ -18,6 +18,7 @@ interface Props {
     isDirectToolArticle?: boolean;
     isRelatedToolArticle?: boolean;
     articleType?: 'direct' | 'related';
+    articleTool?: string;
   };
   tool: string;
   index: number;
@@ -91,7 +92,7 @@ const osIcon = OS_ICONS[article.devicePlatform];
   
   <div class='tome-cell-title' role='cell'>
     <a
-      href={`/tutorial/${tool}/${article.slug}`}
+      href={`/tutorial/${article.articleTool ?? tool}/${article.slug}`}
       class='tome-article-link'
       aria-label={CARD_ACCESSIBILITY.actionLabels.readArticle(article.title)}
       itemprop='url'

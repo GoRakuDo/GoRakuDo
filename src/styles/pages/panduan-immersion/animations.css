@@ -77,10 +77,6 @@
   perspective: 1000px;
 }
 
-.transform-style-3d {
-  transform-style: preserve-3d;
-}
-
 @media (min-width: 768px) {
   .animate-progress-bar {
     animation: progressLoading 2.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;

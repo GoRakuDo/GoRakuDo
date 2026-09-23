@@ -1,16 +1,17 @@
 ---
 // ========== IMPORTS ==========
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { getEntrySlug } from '../../../utils/content/entry';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
-import Pagination from '../../../components/common/Pagination/Pagination.astro';
+import Pagination from '../../../components/common/pagination/Pagination.astro';
 import {
   calculatePagination,
   validatePageNumber,
   shouldRedirectToFirstPage,
   type PaginationConfig,
-} from '../../../components/common/Pagination/pagination';
+} from '../../../components/common/pagination/pagination';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolsData from '../../../data/tools.json';
 import toolSeoTemplate from '../../../data/seo/pages/tool-template.json';
@@ -72,7 +73,7 @@ export async function getStaticPaths() {
       ) =>
         index ===
         self.findIndex(
-          (a: CollectionEntry<'tool-articles'>) => a.slug === article.slug
+          (a: CollectionEntry<'tool-articles'>) => getEntrySlug(a) === getEntrySlug(article)
         )
     );
 
@@ -129,7 +130,7 @@ const toolArticles = allToolArticles.filter(
   ) =>
     index ===
     self.findIndex(
-      (a: CollectionEntry<'tool-articles'>) => a.slug === article.slug
+      (a: CollectionEntry<'tool-articles'>) => getEntrySlug(a) === getEntrySlug(article)
     )
 );
 
@@ -146,7 +147,7 @@ const { paginatedItems } = paginationResult;
 // ========== TOOL CONFIGURATION ==========
 const toolData = toolsData.find(t => t.id === tool);
 const toolConfig = {
-  iconPath: toolData?.iconUrl || '/icon/yomitan-icon-240.webp',
+  iconPath: toolData?.iconUrl || '/icons/yomitan-icon-240.webp',
   description:
     toolData?.description ||
     `Tutorial Aplikasi ${tool}. Dari dasar pemula hingga teknik lanjutan, semua yang kalian butuhkan untuk belajar bahasa Jepang.`,
@@ -158,8 +159,7 @@ const formattedToolName =
 // ========== PROCESSED ARTICLE DATA ==========
 const processedArticles = paginatedItems.map(
   (article: CollectionEntry<'tool-articles'>, index: number) => {
-    const articleSlug =
-      article.slug?.split('/').slice(1).join('/') || article.id;
+    const articleSlug = getEntrySlug(article).split('/').slice(1).join('/') || article.id;
     const isDirectToolArticle =
       article.data.toolName?.toLowerCase() === tool.toLowerCase();
     const isRelatedToolArticle = article.data.relatedTools?.some(
@@ -185,6 +185,7 @@ const processedArticles = paginatedItems.map(
 
     return {
       slug: articleSlug,
+      articleTool: article.data.toolName?.toLowerCase() ?? tool,
       title: articleTitle,
       description: articleDescription,
       tags: displayTags,
@@ -297,19 +298,24 @@ const collectionPageSchema = {
   mainEntity: {
     ...collectionPageTemplate.mainEntity,
     itemListElement: paginatedItems.map(
-      (article: CollectionEntry<'tool-articles'>, index: number) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'Article',
-          name: article.data.title || `Panduan ${formattedToolName}`,
-          description:
-            article.data.description || `Panduan lengkap ${formattedToolName}`,
-          url: `/tutorial/${tool}/${article.slug}`,
-          datePublished: article.data.publishedDate,
-          author: { '@type': 'Organization', name: 'GoRakuDo Team' },
-        },
-      })
+      (article: CollectionEntry<'tool-articles'>, index: number) => {
+        const entrySlug = getEntrySlug(article);
+        const articleTool = entrySlug.split('/')[0];
+        const articleSlug = entrySlug.split('/').slice(1).join('/');
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'Article',
+            name: article.data.title || `Panduan ${formattedToolName}`,
+            description:
+              article.data.description || `Panduan lengkap ${formattedToolName}`,
+            url: `/tutorial/${articleTool}/${articleSlug}`,
+            datePublished: article.data.publishedDate,
+            author: { '@type': 'Organization', name: 'GoRakuDo Team' },
+          },
+        };
+      }
     ),
   },
 };

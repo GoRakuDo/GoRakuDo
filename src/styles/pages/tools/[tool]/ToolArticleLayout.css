@@ -1,5 +1,4 @@
 /* ========== BEM METHOD - TOOL ARTICLE LAYOUT (QUEST CODEX) ========== */
-@import 'tailwindcss';
 
 /* ========== PAGE CONTAINER ========== */
 .tqa-page {
@@ -835,12 +834,10 @@
       /// NOTE_XX /// top-left (mirrors /// QUEST_XX /// visual language)
    C: large Noto Serif JP decorative quotation mark top-right, low
       opacity, to give the blockquote a "tome fragment" feel.
-   Overrides typography.css .article-content blockquote by chaining
-   .tqa-article on the selector (specificity 0,3,0 vs 0,2,0). */
-.tqa-article :is(blockquote),
-.tqa-article :is(.article-content) :is(blockquote) {
+   Scoped under .tqa-article so it only applies to tool articles. */
+.tqa-article :is(blockquote) {
   position: relative;
-  display: block; /* override flex from typography.css:262 so inner
+  display: block; /* block layout so inner
     <p> flows naturally and the ::after quote can position absolutely
     relative to the blockquote box. */
   margin: 1.75rem 0;
@@ -858,8 +855,7 @@
    <blockquote data-note-type="WARNING"> in the MDX to render
    /// WARNING /// (or TIP / CAUTION / etc.) without needing custom
    CSS. The attr() default keeps existing blockquotes unchanged. */
-.tqa-article :is(blockquote)::before,
-.tqa-article :is(.article-content) :is(blockquote)::before {
+.tqa-article :is(blockquote)::before {
   display: block;
   margin: 0 0 0.75rem;
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));
@@ -872,15 +868,13 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .tqa-article :is(blockquote)::before,
-  .tqa-article :is(.article-content) :is(blockquote)::before {
+  .tqa-article :is(blockquote)::before {
     text-shadow: 0 0 8px oklch(65% 0.25 280deg / 0.3);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tqa-article :is(blockquote)::before,
-  .tqa-article :is(.article-content) :is(blockquote)::before {
+  .tqa-article :is(blockquote)::before {
     text-shadow: none;
   }
 }
@@ -888,8 +882,7 @@
 /* Top-right decorative quotation mark — Noto Serif JP, oversized,
    low opacity. Positioned absolutely so it never competes with the
    inline text. pointer-events: none keeps it from blocking selection. */
-.tqa-article :is(blockquote)::after,
-.tqa-article :is(.article-content) :is(blockquote)::after {
+.tqa-article :is(blockquote)::after {
   position: absolute;
   top: -0.5rem;
   right: 0.75rem;
@@ -906,8 +899,7 @@
 /* Blockquote inner <p> — keep typography clean, no italic (we are
    not using italic for emphasis in Quest Codex; emphasis is done via
    <strong> + Blurple color in the .tqa-article em rule below). */
-.tqa-article :is(blockquote) :is(p),
-.tqa-article :is(.article-content) :is(blockquote) :is(p) {
+.tqa-article :is(blockquote) :is(p) {
   margin: 0;
   font-style: normal;
 }
@@ -1113,8 +1105,8 @@
   margin-bottom: 0.75rem;
   background: linear-gradient(
     to right,
-    var(--token-gold-base, oklch(85% 0.15 85deg)),
-    var(--token-gold-dark, oklch(65% 0.15 85deg))
+    var(--grkd-gold-base, oklch(85% 0.15 85deg)),
+    var(--grkd-gold-dark, oklch(65% 0.15 85deg))
   );
   color: transparent;
   font-family: var(--font-pixel, monospace);
@@ -1141,33 +1133,33 @@
   align-self: center;
   gap: 0.75rem;
   padding: 0.875rem 2rem;
-  border: 1px solid color-mix(in oklab, var(--token-gold-base, oklch(85% 0.15 85deg)) 30%, transparent);
+  border: 1px solid color-mix(in oklab, var(--grkd-gold-base, oklch(85% 0.15 85deg)) 30%, transparent);
   border-radius: 999px;
-  background: color-mix(in oklab, var(--token-gold-base, oklch(85% 0.15 85deg)) 5%, transparent);
-  color: var(--token-gold-base, oklch(85% 0.15 85deg));
+  background: color-mix(in oklab, var(--grkd-gold-base, oklch(85% 0.15 85deg)) 5%, transparent);
+  color: var(--grkd-gold-base, oklch(85% 0.15 85deg));
   font-family: var(--font-primary, sans-serif);
   font-size: 0.95rem;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 20px color-mix(in oklab, var(--token-gold-base, oklch(85% 0.15 85deg)) 10%, transparent);
+  box-shadow: 0 4px 20px color-mix(in oklab, var(--grkd-gold-base, oklch(85% 0.15 85deg)) 10%, transparent);
 }
 
 .tqa-cta-trakteer:hover {
   background: linear-gradient(
     to right,
-    var(--token-gold-base, oklch(85% 0.15 85deg)),
-    var(--token-gold-dark, oklch(65% 0.15 85deg))
+    var(--grkd-gold-base, oklch(85% 0.15 85deg)),
+    var(--grkd-gold-dark, oklch(65% 0.15 85deg))
   );
-  color: var(--token-secondary-foreground, oklch(15% 0.005 270deg));
+  color: var(--grkd-secondary-foreground, oklch(15% 0.005 270deg));
   border-color: transparent;
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px color-mix(in oklab, var(--token-gold-base, oklch(85% 0.15 85deg)) 30%, transparent);
+  box-shadow: 0 8px 30px color-mix(in oklab, var(--grkd-gold-base, oklch(85% 0.15 85deg)) 30%, transparent);
 }
 
 .tqa-cta-trakteer:focus-visible {
-  outline: 2px solid var(--token-gold-base, oklch(85% 0.15 85deg));
+  outline: 2px solid var(--grkd-gold-base, oklch(85% 0.15 85deg));
   outline-offset: 2px;
 }
 
@@ -1438,7 +1430,7 @@
 
 .tqa-article :is(details[open]) > summary::before {
   content: "[ - ]";
-  color: var(--token-gold-base, oklch(85% 0.15 85deg));
+  color: var(--grkd-gold-base, oklch(85% 0.15 85deg));
 }
 
 .tqa-article :is(details) > summary:hover {

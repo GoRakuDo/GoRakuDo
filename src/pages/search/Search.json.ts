@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { resolvePath } from '../../utils/collections';
 import { logger } from '../../utils/logging/console-logger';
+import { getEntrySlug } from '../../utils/content/entry';
 import {
   getVisibleDocs,
   getVisibleToolArticles,
@@ -66,9 +67,10 @@ function sanitizeContent(source: string | undefined): string {
 function toDocsItem(post: CollectionEntry<'docs'>): ComprehensiveSearchItem {
   const fullContent = post.body || '';
   const cleanedContent = sanitizeContent(fullContent);
+  const slug = getEntrySlug(post);
   return {
-    id: `docs-${post.slug}`,
-    slug: post.slug,
+    id: `docs-${slug}`,
+    slug,
     title: post.data.title,
     description: post.data.description,
     pubDate: post.data.publishedDate,
@@ -90,21 +92,22 @@ function toDocsItem(post: CollectionEntry<'docs'>): ComprehensiveSearchItem {
     contentLength: cleanedContent.length,
     hasCodeBlocks: fullContent.includes('```'),
     hasImages: fullContent.includes('!['),
-    url: resolvePath('docs', post.slug),
-    path: `docs/${post.slug}`,
+    url: resolvePath('docs', slug),
+    path: `docs/${slug}`,
   };
 }
 
 function toToolArticleItem(article: CollectionEntry<'tool-articles'>): ComprehensiveSearchItem {
   const fullContent = article.body || '';
   const cleanedContent = sanitizeContent(fullContent);
+  const slug = getEntrySlug(article);
   const toolName = article.data.toolName ||
     article.data.tags?.find((tag) => tag && typeof tag === 'string' && /^[a-z]+$/.test(tag)) ||
     'general';
 
   return {
-    id: `tool-${article.slug}`,
-    slug: article.slug,
+    id: `tool-${slug}`,
+    slug,
     title: article.data.title,
     description: article.data.description,
     pubDate: article.data.publishedDate,
@@ -128,18 +131,21 @@ function toToolArticleItem(article: CollectionEntry<'tool-articles'>): Comprehen
     contentLength: cleanedContent.length,
     hasCodeBlocks: fullContent.includes('```'),
     hasImages: fullContent.includes('!['),
-    url: resolvePath('tool-articles', article.slug),
-    path: `tools/${toolName}/${article.slug}`,
+    url: resolvePath('tool-articles', slug),
+    // Display path mirrors the real route (`/tutorial/<tool>/<slug>`);
+    // the old `tools/${toolName}/${slug}` doubled the tool folder.
+    path: `tutorial/${slug}`,
   };
 }
 
 function toPageItem(page: CollectionEntry<'pages'>): ComprehensiveSearchItem {
   const fullContent = page.body || '';
   const cleanedContent = sanitizeContent(fullContent);
+  const slug = getEntrySlug(page);
   return {
-    id: `page-${page.slug}`,
-    slug: page.slug,
-    title: page.data.title || page.slug,
+    id: `page-${slug}`,
+    slug,
+    title: page.data.title || slug,
     description: page.data.description || '',
     pubDate: page.data.publishedDate || new Date().toISOString(),
     content: cleanedContent,
@@ -148,7 +154,7 @@ function toPageItem(page: CollectionEntry<'pages'>): ComprehensiveSearchItem {
     categories: ['pages'],
     type: 'page',
     searchableText: [
-      page.data.title || page.slug,
+      page.data.title || slug,
       page.data.description || '',
       cleanedContent,
     ]
@@ -158,8 +164,8 @@ function toPageItem(page: CollectionEntry<'pages'>): ComprehensiveSearchItem {
     contentLength: cleanedContent.length,
     hasCodeBlocks: fullContent.includes('```'),
     hasImages: fullContent.includes('!['),
-    url: resolvePath('pages', page.slug),
-    path: page.slug,
+    url: resolvePath('pages', slug),
+    path: slug,
   };
 }
 

@@ -1,25 +1,29 @@
 ---
 // ========== IMPORTS ==========
-import { getEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import { resolvePath, getCollectionInfo } from '../../utils/collections';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import aboutUsSeoConfig from '../../data/seo/pages/about-us.json';
 import FAQSection from '../../components/common/FAQSection.astro';
+import { getEntrySlug } from '../../utils/content/entry';
 
 // ========== CONTENT LOADING ==========
-const post = await getEntry('pages', 'about-us');
+const pages = await getCollection('pages');
+const post = pages.find(
+  (page: CollectionEntry<'pages'>) => getEntrySlug(page) === 'about-us'
+);
 
 if (!post) return Astro.redirect('/pages?error=post-not-found');
 if (post.data.status !== 'published') return Astro.redirect('/404');
 
 // ========== CONTENT PROCESSING ==========
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
-const resolvedPath = { path: resolvePath('pages', post.slug) };
+const resolvedPath = { path: resolvePath('pages', getEntrySlug(post)) };
 const collectionMetadata = getCollectionInfo('pages');
 
 // ========== SEO DATA FROM JSON ==========

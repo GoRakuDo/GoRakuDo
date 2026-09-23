@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import compress from 'vite-plugin-compression';
 
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import rehypeWrapEmoji from './src/plugins/rehype-wrap-emoji.mjs';
 import { getLastModForUrl } from './src/utils/sitemap-dates';
 
@@ -22,8 +23,13 @@ export default defineConfig({
     '/tools/[tool]/[...slug]': '/tutorial/[tool]/[...slug]',
   },
 
-  // View Transitions API - Astro 5.x Native Support
-  viewTransitions: true,
+  // Preserve legacy content collection APIs until Content Layer migration.
+  legacy: {
+    collectionsBackwardsCompat: true,
+  },
+
+  // Preserve Astro 6 HTML whitespace compression behavior.
+  compressHTML: true,
 
   // Build optimization
   build: {
@@ -46,11 +52,15 @@ export default defineConfig({
     domains: ['avatar.vercel.sh'],
   },
 
-  // MDX support and Sitemap generation
-  integrations: [
-    mdx({
+  // Keep the unified Markdown pipeline so the custom rehype plugin remains active.
+  markdown: {
+    processor: unified({
       rehypePlugins: [rehypeWrapEmoji],
     }),
+  },
+
+  // MDX support and Sitemap generation
+  integrations: [mdx(),
     sitemap({
       filter: page =>
         !page.includes('404') &&
@@ -134,16 +144,6 @@ export default defineConfig({
           chunkFileNames: 'assets/[name]-[hash].js',
           entryFileNames: 'assets/[name]-[hash].js',
           assetFileNames: 'assets/[name]-[hash].[ext]',
-          // Islands Architecture optimized chunking
-          manualChunks: {
-            'scripts-ui': ['./src/scripts/ui/docs-pagination.js'],
-            'utils-core': [
-              './src/utils/ai-content/content-analysis.js',
-              './src/utils/ai-content/semantic-relationships.js',
-              './src/utils/error-handling/discord-error-reporter.js',
-            ],
-            components: ['./src/components/ImageSlideshow.astro'],
-          },
         },
       },
       minify: 'esbuild',
@@ -158,7 +158,7 @@ export default defineConfig({
       alias: {
         '@': './src',
       },
-      dedupe: ['astro', 'astro-cloudinary'],
+      dedupe: ['astro'],
     },
     server: {
       fs: {
@@ -173,9 +173,6 @@ export default defineConfig({
     },
     define: {
       __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
-    },
-    optimizeDeps: {
-      include: ['astro-cloudinary'],
     },
   },
 });

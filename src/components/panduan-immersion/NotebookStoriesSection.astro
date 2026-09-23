@@ -1,7 +1,6 @@
 ---
-import { CldImage } from 'astro-cloudinary';
 import Marquee from '../ui/Marquee.astro';
-import DiscordCard from '../ui/DiscordCard.astro';
+import DiscordCard from './DiscordCard.astro';
 import type { Review } from '../../data/reviews';
 
 interface Props {
@@ -165,10 +164,10 @@ const { firstRow, secondRow } = Astro.props;
                       class='absolute inset-0 bg-linear-to-tr from-indigo-500/20 to-transparent mix-blend-overlay z-10'
                     >
                     </div>
-                    <CldImage
-                      src='Sample_Novel_Generated_Image_54tw1q54tw1q54tw_zmhkhw'
-                      width={800}
-                      height={1000}
+                    <img
+                      src='/images/panduan-immersion/Sample_Novel_Generated_Image_54tw1q54tw1q54tw_zmhkhw.webp'
+                      width='800'
+                      height='1000'
                       class='w-full h-auto relative z-0'
                       alt='Bukti Nyata Immersion'
                     />

@@ -3,7 +3,7 @@
     "name": "GoRakuDo",
     "description": "Website Otodidak Bahasa Jepang dengan metode (immersion) linguistik modern - GoRakuDo",
     "url": "https://gorakudo.org",
-    "defaultImage": "/img/gorakudo-immerison.png",
+    "defaultImage": "/images/og/gorakudo-immerison.png",
     "favicon": "/favicon.svg",
     "language": "id",
     "locale": "id_ID"
@@ -12,7 +12,7 @@
     "name": "GoRakuDo",
     "description": "Website Otodidak Bahasa Jepang dengan metode (immersion) linguistik modern - GoRakuDo",
     "url": "https://gorakudo.org",
-    "logo": "/img/gorakudo-immerison.png",
+    "logo": "/images/og/gorakudo-immerison.png",
     "foundedDate": "2024"
   },
   "contact": {
@@ -62,12 +62,10 @@
     },
     "resourceHints": {
       "preconnect": [
-        "https://res.cloudinary.com",
         "https://www.googletagmanager.com",
         "https://tetunori.github.io"
       ],
       "dnsPrefetch": [
-        "https://res.cloudinary.com",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "https://tetunori.github.io"
@@ -99,7 +97,7 @@
       "url": "https://gorakudo.org",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://gorakudo.org/img/gorakudo-immerison.png",
+        "url": "https://gorakudo.org/images/og/gorakudo-immerison.png",
         "width": 1024,
         "height": 1024
       },
@@ -148,7 +146,7 @@
       "name": "GoRakuDo",
       "description": "Platform pembelajaran bahasa Jepang online dengan metode immersion",
       "url": "https://gorakudo.org",
-      "logo": "https://gorakudo.org/img/gorakudo-immerison.png",
+      "logo": "https://gorakudo.org/images/og/gorakudo-immerison.png",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "ID",

@@ -1,16 +1,16 @@
 ---
 // ========== IMPORTS ==========
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import ToolArticleLayout from '../../../layouts/ToolArticleLayout.astro';
-import TableOfContents from '../../../components/content/TableOfContents.astro';
+import TableOfContents from '../../../components/common/TableOfContents.astro';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import { resolvePath, getCollectionInfo } from '../../../utils/collections';
 import { logger } from '../../../utils/logging/console-logger';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.json';
-import { buildCloudinaryUrl } from '../../../utils/cloudinary';
 import { getContentDates } from '../../../utils/git-dates';
 import toolsData from '../../../data/tools.json';
+import { getEntrySlug } from '../../../utils/content/entry';
 
 // ========== UTILITY FUNCTIONS ==========
 export async function getVisibleToolArticlesData() {
@@ -27,7 +27,7 @@ async function getValidTools(
 ): Promise<string[]> {
   const toolNames = new Set<string>();
   posts.forEach((post: CollectionEntry<'tool-articles'>) => {
-    const toolName = extractToolNameFromSlug(post.slug);
+    const toolName = extractToolNameFromSlug(getEntrySlug(post));
     if (toolName) toolNames.add(toolName);
   });
   return Array.from(toolNames).sort();
@@ -37,8 +37,9 @@ async function getValidTools(
 export async function getStaticPaths() {
   const posts = await getVisibleToolArticlesData();
   return posts.map((post: CollectionEntry<'tool-articles'>) => {
-    const toolName = extractToolNameFromSlug(post.slug);
-    const articleSlug = post.slug.split('/').slice(1).join('/');
+    const postSlug = getEntrySlug(post);
+    const toolName = extractToolNameFromSlug(postSlug);
+    const articleSlug = postSlug.split('/').slice(1).join('/');
     return { params: { tool: toolName, slug: articleSlug }, props: { post } };
   });
 }
@@ -88,11 +89,12 @@ if (!post) {
 }
 
 // ========== CONTENT PROCESSING ==========
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 const tocHeadings = headings.filter(
   (heading: { depth: number }) => heading.depth >= 2 && heading.depth <= 3
 );
-const resolvedPath = { path: resolvePath('tool-articles', post.slug) };
+const postSlug = getEntrySlug(post);
+const resolvedPath = { path: resolvePath('tool-articles', postSlug) };
 const collectionMetadata = getCollectionInfo('tool-articles');
 
 // ========== SEO DATA OPTIMIZATION ==========
@@ -157,8 +159,8 @@ const templateVariables = {
   articleDescription: post.data.description || '',
   articleUrl: resolvedPath.path, // 相対パス（breadcrumb用）
   toolImage: post.data.featuredImage
-    ? buildCloudinaryUrl(post.data.featuredImage)
-    : `https://gorakudo.org/icon/${toolName}-icon-240.webp`,
+    ? post.data.featuredImage
+    : `https://gorakudo.org/icons/${toolName}-icon-240.webp`,
   toolDescription: toolInfo.description,
   operatingSystem: toolInfo.operatingSystem,
   toolAuthor: toolInfo.author,
@@ -217,7 +219,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
 // シンプルなタイトル生成: MDXフロントマターのまま
 const generateTemplateBasedTitle = post => {
-  const articleTitle = post.data.title || post.slug;
+  const articleTitle = post.data.title || postSlug;
   return `${articleTitle} ・ GoRakuDo`;
 };
 
@@ -263,7 +265,7 @@ const postData = {
 const toolMetadata = toolsData.find(
   (t: { id: string; name: string }) => t.id === toolName.toLowerCase()
 );
-const toolIcon = toolMetadata?.iconUrl || `/icon/${toolName}-icon-240.webp`;
+const toolIcon = toolMetadata?.iconUrl || `/icons/${toolName}-icon-240.webp`;
 const toolDisplayName = toolMetadata?.name || toolName;
 
 // ========== READING TIME ==========
@@ -282,7 +284,7 @@ const readingTimeMin = Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE));
 const siblingArticles = visibleToolArticles
   .filter(
     (p: CollectionEntry<'tool-articles'>) =>
-      extractToolNameFromSlug(p.slug) === toolName
+      extractToolNameFromSlug(getEntrySlug(p)) === toolName
   )
   .sort(
     (a: CollectionEntry<'tool-articles'>, b: CollectionEntry<'tool-articles'>) =>
@@ -291,7 +293,7 @@ const siblingArticles = visibleToolArticles
   );
 
 const currentIndex = siblingArticles.findIndex(
-  (p: CollectionEntry<'tool-articles'>) => p.slug === post.slug
+  (p: CollectionEntry<'tool-articles'>) => getEntrySlug(p) === postSlug
 );
 const prevEntry = currentIndex > 0 ? siblingArticles[currentIndex - 1] : null;
 const nextEntry =
@@ -301,8 +303,9 @@ const nextEntry =
 
 const buildNavArticle = (entry: CollectionEntry<'tool-articles'> | null) => {
   if (!entry) return null;
-  const tool = extractToolNameFromSlug(entry.slug);
-  const articleSlugPart = entry.slug.split('/').slice(1).join('/');
+  const entrySlug = getEntrySlug(entry);
+  const tool = extractToolNameFromSlug(entrySlug);
+  const articleSlugPart = entrySlug.split('/').slice(1).join('/');
   return {
     title: entry.data.title,
     slug: `/tutorial/${tool}/${articleSlugPart}`,
@@ -322,7 +325,7 @@ const relatedTools = (post.data.relatedTools || [])
     return {
       name: meta?.name || name,
       slug,
-      icon: meta?.iconUrl || `/icon/${slug}-icon-240.webp`,
+      icon: meta?.iconUrl || `/icons/${slug}-icon-240.webp`,
     };
   })
   .slice(0, 5);
@@ -371,7 +374,7 @@ const relatedTools = (post.data.relatedTools || [])
             tabindex='-1'
           >
             <img 
-              src='/page_images/nl_asymmetric_artifact.webp' 
+              src='/images/nl_asymmetric_artifact.webp'
               alt='' 
               width='320' 
               height='320' 

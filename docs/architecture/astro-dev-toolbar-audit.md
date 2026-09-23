@@ -150,7 +150,7 @@ a - Invalid `href` attribute
 
 **修正時間**: 1分
 
-**影響範囲**: `src/components/common/NavBar/BottomNavBar.astro`（実例）
+**影響範囲**: `src/components/common/navbar/BottomNavBar.astro`（実例）
 
 #### 解決策2: 無効化されたナビゲーションには条件分岐
 
@@ -192,7 +192,7 @@ a - Invalid `href` attribute
 
 **修正時間**: 2〜3分
 
-**影響範囲**: `src/components/common/Pagination/Pagination.astro`（実例）
+**影響範囲**: `src/components/common/pagination/Pagination.astro`（実例）
 
 ---
 
@@ -233,7 +233,7 @@ h2 - Missing content
 
 **修正時間**: 30秒
 
-**影響範囲**: `src/components/common/NavBar/BottomNavBar.astro`（実例）
+**影響範囲**: `src/components/common/navbar/BottomNavBar.astro`（実例）
 
 **修正理由**:
 - 非表示の見出し要素は、Auditツールがエラーとして検出
@@ -282,7 +282,7 @@ h2 - Missing content
 ```
 
 **修正時間**: 5分  
-**ファイル**: `src/components/common/NavBar/BottomNavBar.astro`
+**ファイル**: `src/components/common/navbar/BottomNavBar.astro`
 
 ---
 
@@ -332,7 +332,7 @@ h2 - Missing content
 **修正時間**: 10分  
 **ファイル**: 
 - `src/components/tools/Tool-IdArticle.astro`
-- `src/components/common/Pagination/Pagination.astro`
+- `src/components/common/pagination/Pagination.astro`
 
 ---
 

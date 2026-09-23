@@ -1,4 +1,9 @@
-@import 'tailwindcss' layer(base);
+/* ========================================
+   注意：このファイルは「ページ専用 CSS」に見えるが、実質 panduan-lengkap 系
+   コンポーネント（JapaneseLearningGuide.astro / LanguageLearningProblems.astro 等）
+   が import して共有している CSS。ページ固有への分離は影響範囲が大きいため
+   今回はファイル移動を行わず、ここにその旨を明記するに留める。
+   ======================================== */
 
 /* ========================================
    Japanese Learning Guide - 最適化されたスタイル
@@ -69,18 +74,18 @@
   --pl-z-popover: 550;
   --pl-z-tooltip: 560;
   --pl-color-primary: oklch(65% 0.18 15deg);
-  --pl-color-primary-hover: var(--token-purple-hover);
-  --pl-color-secondary: var(--token-purple-base);
-  --pl-color-secondary-hover: var(--token-purple-hover);
+  --pl-color-primary-hover: var(--grkd-purple-hover);
+  --pl-color-secondary: var(--grkd-purple-500);
+  --pl-color-secondary-hover: var(--grkd-purple-hover);
   --pl-color-text-primary: var(--clr-text-primary);
-  --pl-color-text-secondary: var(--token-text-muted);
+  --pl-color-text-secondary: var(--grkd-muted);
   --pl-color-background: oklch(98% 0.02 15deg);
   --pl-color-background-subtle: oklch(98% 0.02 15deg / var(--opacity-85));
   --pl-color-border-subtle: var(--pl-color-primary);
   --pl-color-warning-orange: oklch(70% 0.15 45deg);
   --pl-color-text-muted: oklch(70% 0.02 250deg);
   --pl-color-brand-primary: var(--pl-color-primary);
-  --pl-color-brand-primary-hover: var(--token-purple-hover);
+  --pl-color-brand-primary-hover: var(--grkd-purple-hover);
   --pl-filter-grayscale: grayscale(0.75);
   --pl-text-decoration-thickness: 2px;
   --pl-text-underline-offset: 0.2em;
@@ -134,26 +139,6 @@ body {
 [id='phase4'],
 [id='phase5'] {
   scroll-margin-top: calc(80px + var(--pl-space-2xl));
-}
-
-/* ========================================
-   UNIFIED UNDERLINE STYLES
-   ======================================== */
-.unified-underline {
-  font-weight: normal;
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in oklch,
-    var(--pl-color-text-secondary) 50%,
-    transparent
-  );
-  text-decoration-thickness: var(--pl-text-decoration-thickness);
-  text-underline-offset: var(--pl-text-underline-offset);
-  transition: var(--pl-transition-text-decoration);
-}
-
-.unified-underline:hover {
-  text-decoration-color: var(--pl-color-text-secondary);
 }
 
 /* ========================================
@@ -943,7 +928,7 @@ a {
 .image-zoom-close:hover {
   background: color-mix(
     var(--pl-color-mix-oklch),
-    var(--token-purple-base) 80%,
+    var(--grkd-purple-500) 80%,
     black
   );
   transform: scale(var(--pl-scale-zoom));
@@ -1040,7 +1025,7 @@ a {
       margin: 0 auto;
       border: none;
       border-radius: var(--pl-radius-full);
-      background: var(--token-purple-base);
+      background: var(--grkd-purple-500);
       color: white;
       font-size: 1.5rem;
       font-weight: bold;
@@ -1154,11 +1139,6 @@ a {
       background: oklch(100% 0 0deg / var(--opacity-10));
       backdrop-filter: blur(12px);
     }
-
-    .learning-method-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
   }
 }
 
@@ -1172,10 +1152,6 @@ a {
 
   /* 効率的な色管理システム */
   --strong-color: var(--pl-color-secondary);
-
-  .sla-content {
-    margin-bottom: var(--pl-space-5xl);
-  }
 }
 
 /* ========================================
@@ -1198,10 +1174,6 @@ a {
   margin: var(--pl-space-6xl) 0;
   padding: var(--pl-space-4xl) 0;
   background: transparent;
-
-  .immersion-duration-content {
-    margin-bottom: var(--pl-space-5xl);
-  }
 }
 
 /* ========================================
@@ -1236,10 +1208,6 @@ a {
         min(calc(var(--pl-gap-responsive-mobile) * 2), 6vw);
       background: oklch(100% 0 0deg / var(--opacity-10));
       backdrop-filter: blur(12px);
-    }
-
-    .methodology-summary-content {
-      margin-bottom: var(--pl-space-5xl);
     }
   }
 }

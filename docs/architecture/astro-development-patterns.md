@@ -56,7 +56,7 @@ src/components/
 ├── search/           # 検索機能コンポーネント
 ├── tools/            # ツールページ専用コンポーネント
 ├── ui/               # 汎用UIコンポーネント（Button, PageHeader等）
-└── UnifiedSEO.astro  # SEO/メタデータ管理コンポーネント（全ページ共通）
+└── common/UnifiedSEO.astro  # SEO/メタデータ管理コンポーネント（全ページ共通）
 ```
 
 #### コンポーネント分類ルール
@@ -84,7 +84,7 @@ src/components/ui/Button.astro
 src/components/homepage/hero.astro
 
 // ✅ 全ページで使うナビゲーション → common/
-src/components/common/NavBar/Navbar.astro
+src/components/common/navbar/Navbar.astro
 ```
 
 #### ❌ Bad Example
@@ -266,7 +266,7 @@ import Breadcrumb from '../../components/common/Breadcrumb.astro';
 ```
 src/
 ├── components/
-│   └── UnifiedSEO.astro           # 統一SEOコンポーネント（720行）
+│   └── common/UnifiedSEO.astro    # 統一SEOコンポーネント（720行）
 ├── data/
 │   └── seo/
 │       ├── unifiedSeo-config.json # グローバルSEO設定
@@ -279,7 +279,7 @@ src/
 
 #### UnifiedSEO Component Features
 
-**場所**: `src/components/UnifiedSEO.astro`
+**場所**: `src/components/common/UnifiedSEO.astro`
 
 ```typescript
 interface Props {
@@ -346,7 +346,7 @@ interface Props {
 
 ```astro
 ---
-import UnifiedSEO from '../components/UnifiedSEO.astro';
+import UnifiedSEO from '../components/common/UnifiedSEO.astro';
 import seoConfig from '../data/seo/pages/about-us.json';
 
 const seoData = {
@@ -368,7 +368,7 @@ const seoData = {
 #### Key Features
 
 1. **統一されたメタタグ管理**: OG, Twitter Card, Schema.org JSON-LD
-2. **画像自動最適化**: Cloudinary変換（1200x630px、1.91:1）
+2. **画像ハンドリング**: `public/images/` のローカル画像を絶対URLで配信（旧Cloudinary変換は撤去済み）
 3. **Resource Hints**: preconnect, dns-prefetch, prefetch, preload
 4. **Structured Data**: Organization, Article, FAQ, HowTo, etc.
 5. **Educational Metadata**: learningResourceType, educationalLevel, citation
@@ -381,65 +381,57 @@ const seoData = {
 
 ### Principle: All Images Must Be Optimized for Web Delivery
 
-**Directive:** This project uses **Cloudinary** as the primary image optimization and delivery solution. All images MUST follow the optimization patterns defined below.
+**Directive:** All images are served locally from `public/images/`. Bare public ID（旧Cloudinary）は非対応です。明示的な `/images/...` パスを `toLocalImage()` 経由で使用します。Cloudinaryパイプラインは2026-09-22に撤去済みです（旧仕様: `docs/archive/cloudinary-setup.md`）。
 
 #### Image Handling Patterns
 
 | 画像タイプ | 推奨方法 | 例 | 用途 |
 |---|---|---|---|
-| **Cloudinary Public ID** | `featuredImage: 'public-id'` | `gorakudo-tired-study_zhhh2b` | OG Image, Featured Image |
-| **Cloudinary CldImage** | `<CldImage src="..." />` | コンポーネント内画像 | ページコンテンツ内の画像 |
-| **Static Assets** | `public/` folder | favicon, manifest | 処理不要な静的ファイル |
+| **ローカル画像** | `featuredImage: '/images/...'` | `/images/docs/xxx.webp` | OG Image、Featured Image |
+| **デフォルトOG画像** | `unifiedSeo-config.json` の `defaultImage` | `/images/og/gorakudo-immerison.png` | フォールバック |
+| **コンポーネント内画像** | `src={toLocalImage(path)}` | `public/images/headers/xxx.webp` | ページコンテンツ内の画像 |
+| **外部URL** | `https://...` | 一時的な引用画像 | 例外的にそのまま利用 |
 
-#### OG Image自動変換システム
+#### OG Image URL生成（現行実装）
 
-**実装**: `src/components/UnifiedSEO.astro` (269-302行目)
+**実装**: `src/components/common/UnifiedSEO.astro` の `createFullImageUrl`
 
 ```typescript
 const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
-  // Cloudinary public_idの場合
-  if (isCloudinaryId) {
-    const transform = forOgImage ? 'c_pad,w_1200,h_630,b_auto,f_auto,q_auto' : '';
-    return `https://res.cloudinary.com/dbvd1cm7u/image/upload/${transform}/${imagePath}`;
-  }
-  
-  // ローカル/外部URLの場合（Cloudinary Fetch）
-  if (forOgImage) {
-    const fullUrl = imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
-    return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/c_pad,w_1200,h_630,b_auto,f_auto,q_auto/${fullUrl}`;
-  }
-  
-  return normalizeUrl(imagePath);
+  if (!imagePath) imagePath = seoConfig.site.defaultImage;
+  if (forOgImage) return createFullImageUrl(imagePath);
+  if (imagePath.startsWith('http')) return imagePath;
+  if (imagePath.startsWith('/')) return joinUrl(getSiteUrl(), imagePath);
+  return createFullImageUrl(seoConfig.site.defaultImage);
 };
 ```
 
 #### Key Features
 
-| 機能 | パラメータ | 効果 |
+| 機能 | 内容 | 効果 |
 |---|---|---|
-| **Padding Mode** | `c_pad` | 画像を切らずに余白追加 |
-| **Size Optimization** | `w_1200,h_630` | 1.91:1 (FB/Twitter推奨) |
-| **Background Auto** | `b_auto` | 背景色を画像に合わせて自動選択 |
-| **Format Auto** | `f_auto` | WebP対応ブラウザに自動配信 |
-| **Quality Auto** | `q_auto` | ファイルサイズと品質を自動最適化 |
+| **ローカル配信** | `public/images/` から静的配信 | 外部依存なし |
+| **絶対URL生成** | `/images/...` → `https://gorakudo.org/images/...` | SNS/OGで利用可能 |
+| **toLocalImage** | `src/utils/local-image.ts` | 明示パスを利用し、bare IDはDEVで警告 |
+| **1.91:1は作成時** | OG画像を1200x630pxで用意 | ランタイム変換なし |
 
 #### ✅ Best Practices
 
 ```yaml
 # MDX Frontmatter
 ---
-# ✅ Good - Cloudinary public_id（推奨）
-featuredImage: 'gorakudo-tired-study_zhhh2b'
+# ✅ Good - ローカル画像パス（推奨）
+featuredImage: '/images/docs/gorakudo-tired-study_zhhh2b.webp'
 
-# ⚠️ OK - ローカル画像（Fetch使用、コスト注意）
-featuredImage: '/img/local-image.png'
+# ✅ OK - OG画像（作成時に1200x630pxで用意）
+featuredImage: '/images/content/tools-yomitan/setup-yomitan-android/setup-yomitan-android-OgImage.webp'
 
 # ⚠️ OK - 外部URL（一時的な用途のみ）
 featuredImage: 'https://external-cdn.com/temp-banner.jpg'
 ---
 ```
 
-**詳細**: `docs/architecture/og-image-optimization.md` を参照
+**詳細**: `docs/architecture/og-image-optimization.md` を参照（旧パイプライン: `docs/archive/cloudinary-setup.md`）
 
 ---
 
@@ -736,17 +728,17 @@ After:  ~1 line with clamp()
 ##### 2. **Image Optimization**
 
 ```typescript
-// Cloudinary自動最適化
-- Format: f_auto (WebP自動配信)
-- Quality: q_auto (ファイルサイズ最適化)
-- Responsive: sizes属性による適切なサイズ配信
+// ローカル画像（public/images/）
+- Format: WebP/AVIF はビルド時に Sharp で生成
+- OG画像: 作成時に 1200x630px (1.91:1) で用意し、絶対URLで配信
+- 外部CDN・ランタイム変換は使用しない（旧Cloudinaryは撤去済み）
 ```
 
 ##### 3. **Resource Hints**
 
 ```html
 <!-- DNS Prefetch -->
-<link rel="dns-prefetch" href="https://res.cloudinary.com" />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
 <!-- Preconnect -->
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -771,7 +763,7 @@ After:  ~1 line with clamp()
 
 #### Performance Checklist
 
-- [ ] 画像はCloudinary経由で配信されているか？
+- [ ] 画像は `public/images/` からローカル配信されているか？
 - [ ] CSS は clamp() を活用しているか？
 - [ ] 不要なJavaScriptバンドルはないか？
 - [ ] Resource Hintsは適切に設定されているか？
@@ -834,7 +826,7 @@ about?: string | Array<{
 
 ```typescript
 // ✅ Good - Import and reuse types
-import type { Props as UnifiedSEOProps } from '../components/UnifiedSEO.astro';
+import type { Props as UnifiedSEOProps } from '../components/common/UnifiedSEO.astro';
 
 interface LayoutProps {
   breadcrumbSchema?: UnifiedSEOProps['breadcrumbSchema'];
@@ -872,14 +864,14 @@ keywords: z.array(z.string().max(60)).max(15)
 status: z.enum(['published', 'draft', 'archived'])
 ```
 
-### Pattern 3: Cloudinary Hybrid Approach
+### Pattern 3: Local-First Image Handling
 
 **Problem:** 画像サイズ・形式がバラバラ、OG Imageが最適化されていない
 
-**Solution:** 
-- **頻繁に使う画像**: Cloudinary Upload（public_id）
-- **一時的な画像**: Cloudinary Fetch
-- **OG Image**: 自動で1200x630pxに変換
+**Solution:**
+- **全画像**: `public/images/` に配置し、明示的な `/images/...` パスで参照（`toLocalImage()`使用）
+- **OG Image**: 作成時に1200x630px (1.91:1) で用意
+- **旧Cloudinary**: `docs/archive/cloudinary-setup.md` にarchive済み（2026-09-22撤去）
 
 ### Pattern 4: Slot-Based Layouts
 
@@ -1061,7 +1053,7 @@ http://localhost:4321/your-page
 
 - [ ] Props interfaceが`export`されているか？
 - [ ] スタイルは`<style>`（scoped）を使用しているか？
-- [ ] 画像はCloudinary経由か？
+- [ ] 画像はローカルパス（`/images/...`）か？
 - [ ] Content Collectionsを使用しているか（構造化コンテンツの場合）？
 - [ ] TypeScriptの型エラーがないか？
 - [ ] 不要なJavaScriptバンドルを追加していないか？
@@ -1078,9 +1070,9 @@ http://localhost:4321/your-page
 |---|---|---|
 | `Astro.glob()` | `getCollection()` | 型安全性 |
 | ハードコードSEO | UnifiedSEO + JSON | 一元管理 |
-| `<img>` タグ | `<CldImage>` | 自動最適化 |
+| `<img>` + `toLocalImage()` | 明示的なローカル配信 |
 | 個別media queries | `clamp()` | メンテナンス性 |
-| Inline image paths | Cloudinary public_id | CDN配信 |
+| Bare public_id（旧） | `/images/...` パス | ローカル配信 |
 
 ### Migration Example
 
@@ -1098,8 +1090,8 @@ const posts = await Astro.glob('../content/docs/*.mdx');
 <!-- ✅ After -->
 ---
 import { getCollection } from 'astro:content';
-import UnifiedSEO from '../components/UnifiedSEO.astro';
-import { CldImage } from 'astro-cloudinary';
+import UnifiedSEO from '../components/common/UnifiedSEO.astro';
+import { toLocalImage } from '../utils/local-image';
 import seoConfig from '../data/seo/pages/my-page.json';
 
 const posts = await getCollection('docs');
@@ -1107,7 +1099,7 @@ const posts = await getCollection('docs');
 <head>
   <UnifiedSEO {...seoConfig.seoData} />
 </head>
-<CldImage src="photo-public-id" width={600} />
+<img src={toLocalImage('/images/headers/photo.webp')} width={600} alt="" />
 ```
 
 ---
@@ -1141,7 +1133,7 @@ Performance Score: 95+
 
 1. **Use Content Collections** for all structured content
 2. **Use UnifiedSEO.astro** for all SEO metadata
-3. **Use Cloudinary** for all images (public_id preferred)
+3. **Use `public/images/` + `toLocalImage()`** for all images (explicit paths, no bare IDs)
 4. **Use named slots** in layouts for flexibility
 5. **Use `clamp()`** for responsive CSS values
 6. **Use `is:inline`** for minimal client-side scripts
@@ -1173,17 +1165,21 @@ Performance Score: 95+
 - [Tech Stack](./tech-stack.md) - 技術スタック詳細
 - [Source Tree](./source-tree.md) - プロジェクト構造
 - [Coding Standards](./coding-standards.md) - コーディング規約
+- [Cloudinary Setup (archived)](../archive/cloudinary-setup.md) - 旧パイプラインの記録
 
 ### External Resources
 
 - [Astro Documentation](https://docs.astro.build/)
 - [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/)
-- [Cloudinary Documentation](https://cloudinary.com/documentation)
 - [Schema.org](https://schema.org/)
 
 ---
 
 ## 17. Version History
+
+### v2.2 (2026-09-23)
+- Cloudinary撤去に伴う画像パターンを更新（`public/images/`ローカル配信、`toLocalImage()`、OG画像は作成時1200x630px）
+- 移動済みパスを反映（`common/UnifiedSEO.astro`、`navbar`/`pagination` 小文字化、`scripts/type-scripts/`）
 
 ### v2.1 (2025-10-13)
 - **Astro Dev Toolbar Audit統合**: 開発ワークフローへのAudit組み込み
