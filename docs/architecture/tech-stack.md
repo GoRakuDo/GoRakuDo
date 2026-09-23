@@ -1,6 +1,6 @@
 # Technology Stack - GoRakuDo
 
-**Last Updated:** 2025-10-13  
+**Last Updated:** 2026-09-23  
 **Version:** 2.0  
 **Status:** Active
 
@@ -15,7 +15,7 @@ This document provides a comprehensive overview of the technology stack used in 
 3. [Styling & UI](#styling--ui)
 4. [Content Management](#content-management)
 5. [SEO & Metadata Management](#seo--metadata-management)
-6. [Image Optimization & CDN](#image-optimization--cdn)
+6. [Image Optimization & Delivery](#image-optimization--delivery)
 7. [Development Tools](#development-tools)
 8. [Testing Framework](#testing-framework)
 9. [Build & Deployment](#build--deployment)
@@ -152,7 +152,7 @@ const { Content } = await post.render();
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@/types/*": ["src/scripts/type-scripts/*"]
+      "@/types/*": ["scripts/type-scripts/*"]
     },
     "types": ["node"],
     "esModuleInterop": true,
@@ -196,7 +196,7 @@ const docsCollection = defineCollection({
 - **Use Case**: Auto-date processing, content generation scripts
 - **Example**:
   ```bash
-  npm run process-auto-dates:fast  # tsx src/scripts/type-scripts/auto-date/processor-efficient.ts
+  npm run process-auto-dates:fast  # tsx scripts/type-scripts/auto-date/processor-efficient.ts
   ```
 
 ---
@@ -386,7 +386,7 @@ const docsCollection = defineCollection({
 
 ### UnifiedSEO.astro Component
 - **Purpose**: Centralized SEO and structured data management
-- **Location**: `src/components/UnifiedSEO.astro`
+- **Location**: `src/components/common/UnifiedSEO.astro`
 - **Features**:
   - Automatic Schema.org JSON-LD generation
   - OG/Twitter meta tags
@@ -469,47 +469,31 @@ interface Props {
 
 ---
 
-## Image Optimization & CDN
+## Image Optimization & Delivery
 
-### Cloudinary Integration
-- **astro-cloudinary** (^1.3.5): Cloudinary asset delivery
-- **Purpose**: Image transformation, optimization, and CDN delivery
-- **Features**:
-  - Public ID-based image references
-  - **Cloudinary Fetch**: Transform external/local images on-the-fly
-  - Automatic format conversion (WebP, AVIF)
-  - Responsive image generation
+### Local-First Image Delivery (Cloudinary removed 2026-09-22)
+- **astro-cloudinary / Cloudinary CDN**: Removed (dependency and `src/utils/cloudinary.ts` deleted)
+- **All images**: Served locally from `public/images/` (static assets, no third-party dependency)
+- **OG images**: Referenced as explicit `/images/...` paths and emitted as absolute URLs (`https://gorakudo.org/images/...`) by UnifiedSEO.astro
+- **toLocalImage helper**: `src/utils/local-image.ts` — normalizes explicit image paths; bare IDs (old Cloudinary public_id) are unsupported
+- **Old pipeline**: Archived in `docs/archive/cloudinary-setup.md`
 
-#### OG Image Optimization (1.91:1 Aspect Ratio)
+#### OG Image URL Generation (current)
 ```typescript
-// UnifiedSEO.astro - Cloudinary transformation
+// UnifiedSEO.astro - local absolute-URL generation (no transformation)
 const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
-  // ... detection logic
-  
-  if (forOgImage) {
-    // Cloudinary public ID
-    return `https://res.cloudinary.com/dbvd1cm7u/image/upload/c_pad,w_1200,h_630,b_auto,f_auto,q_auto/${imagePath}`;
-    
-    // External/local image via Fetch
-    return `https://res.cloudinary.com/dbvd1cm7u/image/fetch/c_pad,w_1200,h_630,b_auto,f_auto,q_auto/${fullUrl}`;
-  }
+  if (!imagePath) imagePath = seoConfig.site.defaultImage; // "/images/og/gorakudo-immerison.png"
+  if (forOgImage) return createFullImageUrl(imagePath);
+  if (imagePath.startsWith('http')) return imagePath;
+  if (imagePath.startsWith('/')) return joinUrl(getSiteUrl(), imagePath);
+  return createFullImageUrl(seoConfig.site.defaultImage); // fallback
 };
 ```
 
-**Transformation Parameters:**
-- `c_pad`: Padding to 1.91:1 without cropping
-- `w_1200,h_630`: Optimal OG image dimensions
-- `b_auto`: Auto background color
-- `f_auto`: Format auto-detection (WebP/AVIF)
-- `q_auto`: Quality auto-optimization
-
-#### Cost Analysis
-- **Free Tier**: 25 GB storage, 25 GB bandwidth/month
-- **Fetch Feature**: No extra cost (counts toward bandwidth)
-- **Current Usage**: Well within free tier limits
-- **Pricing**: $0.0008/GB for overages (extremely low)
-
-**Reference**: See `docs/architecture/og-image-optimization.md` for detailed cost analysis
+**Notes:**
+- No runtime transformation: OG images are prepared at 1.91:1 (1200x630px) at authoring time
+- Default OG image: `/images/og/gorakudo-immerison.png`
+- Per-content OG images: e.g. `/images/content/tools-*/.../*-OgImage.webp`
 
 ### Native Astro Image Service
 - **Service**: Sharp (Node.js image processing)
@@ -711,7 +695,7 @@ npm run preview       # Preview production build locally
     "format": "prettier --write src/**/*.{ts,js,json,css,md}",
     "format:check": "prettier --check src/**/*.{ts,js,json,css,md}",
     "quality": "npm run lint && npm run format:check && npm run type-check",
-    "process-auto-dates:fast": "tsx src/scripts/type-scripts/auto-date/processor-efficient.ts"
+    "process-auto-dates:fast": "tsx scripts/type-scripts/auto-date/processor-efficient.ts"
   }
 }
 ```
@@ -741,12 +725,11 @@ npm run preview       # Preview production build locally
 ## Performance & Optimization
 
 ### Image Optimization (Multi-layered)
-**Layer 1: Cloudinary CDN**
-- **astro-cloudinary** (^1.3.5): Primary image delivery
-- **Transformation**: Format conversion (WebP/AVIF), quality optimization
-- **OG Images**: Automatic 1.91:1 aspect ratio via `c_pad`
-- **Fetch API**: Transform external/local images on-the-fly
-- **Cost**: Free tier (25 GB storage + bandwidth)
+**Layer 1: Local Static Delivery**
+- **Source**: `public/images/` (content images + OG images)
+- **Delivery**: Served directly from the site (no third-party CDN dependency)
+- **OG Images**: Pre-authored at 1.91:1 (1200x630px), absolute URLs via UnifiedSEO.astro
+- **Asset Optimization**: Manual WebP conversion at authoring time
 
 **Layer 2: Native Astro/Sharp**
 - **Service**: Sharp (Node.js)
@@ -755,7 +738,7 @@ npm run preview       # Preview production build locally
 - **Quality**: 85
 - **Lazy Loading**: Built-in with blur placeholders
 
-**Rationale**: Cloudinary for content images + OG, Sharp for build-time assets
+**Rationale**: Local static images for content + OG, Sharp for build-time optimization
 
 ### Bundle Optimization
 - **Code Splitting**: Manual chunk configuration for Islands Architecture
@@ -788,15 +771,15 @@ npm run preview       # Preview production build locally
 
 ### Resource Hints
 ```html
-<!-- UnifiedSEO.astro automatic generation -->
-<link rel="preconnect" href="https://res.cloudinary.com" />
-<link rel="dns-prefetch" href="https://www.google-analytics.com" />
+<!-- UnifiedSEO.astro automatic generation (from unifiedSeo-config.json) -->
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 <link rel="preload" href="/fonts/roboto-flex.woff2" as="font" type="font/woff2" crossorigin />
 ```
 
 ### Core Web Vitals Optimizations
 - **LCP (Largest Contentful Paint)**:
-  - Cloudinary CDN for fast image delivery
+  - Local static images (no external fetch dependency)
   - Preload critical fonts
   - Inline critical CSS (when needed)
   - WebP/AVIF for smaller image sizes
@@ -873,12 +856,12 @@ npm run preview       # Preview production build locally
 4. **Astro Support**: Lint `<style>` blocks in .astro files
 5. **Performance**: Enforced best practices (e.g., max nesting depth)
 
-### Why Cloudinary?
-1. **Performance**: Global CDN with automatic format optimization
-2. **Fetch API**: Transform external/local images without re-uploading
-3. **Cost**: Free tier (25 GB storage + bandwidth) sufficient for project
-4. **OG Images**: Automatic 1.91:1 aspect ratio transformation
-5. **Developer Experience**: Simple public ID-based references
+### Why Local-First Images? (Cloudinary removed)
+1. **Self-contained**: No third-party dependency or external fetch on page load
+2. **Simplicity**: Explicit `/images/...` paths — no transformation service to maintain
+3. **Cost**: Zero external bandwidth/storage cost
+4. **OG Images**: Pre-authored at 1.91:1 (1200x630px), served as absolute URLs
+5. **Developer Experience**: `toLocalImage()` helper; bare public_id warnings catch legacy leftovers
 
 ### Why OKLCH Color Space?
 1. **Perceptual Uniformity**: Equal lightness steps look equally different
@@ -1057,7 +1040,7 @@ npm run process-auto-dates:clear     # Clear cache and reprocess
 - **@fontsource/yuji-syuku**: ^5.2.7
 
 ### Image & CDN
-- **astro-cloudinary**: ^1.3.5 - Cloudinary integration
+- **sharp**: ^0.35.4 - Build-time image processing (Astro native image service)
 
 ### Content & Data
 - **fuse.js**: ^7.1.0 - Full-text search
@@ -1194,12 +1177,12 @@ npm run process-auto-dates:clear     # Clear cache and reprocess
 
 ## Conclusion
 
-The GoRakuDo technology stack represents a modern, performance-focused, and SEO-optimized approach to educational web development. By leveraging Astro 5's static generation capabilities, OKLCH color space, Cloudinary CDN, and comprehensive tooling (Stylelint, ESLint, TypeScript), the project achieves:
+The GoRakuDo technology stack represents a modern, performance-focused, and SEO-optimized approach to educational web development. By leveraging Astro 5's static generation capabilities, OKLCH color space, local-first image delivery, and comprehensive tooling (Stylelint, ESLint, TypeScript), the project achieves:
 
 ### Key Strengths
 - **Performance**: 
   - Zero-JS by default
-  - Multi-layered image optimization (Cloudinary + Sharp)
+  - Multi-layered image optimization (Local static + Sharp)
   - Core Web Vitals optimized
   - gzip & brotli compression
   
@@ -1207,7 +1190,7 @@ The GoRakuDo technology stack represents a modern, performance-focused, and SEO-
   - UnifiedSEO.astro with 8+ Schema.org types
   - Educational metadata for learning content
   - Citation system for E-E-A-T enhancement
-  - OG images auto-optimized to 1.91:1 (1200x630px)
+  - OG images authored at 1.91:1 (1200x630px)
   
 - **Developer Experience**:
   - TypeScript strict mode
@@ -1231,14 +1214,14 @@ The GoRakuDo technology stack represents a modern, performance-focused, and SEO-
 | **Colors** | RGB/Hex | OKLCH |
 | **Responsive** | Media queries | clamp() + Mobile-first |
 | **SEO** | Manual meta tags | UnifiedSEO + JSON-LD |
-| **Images** | Local files | Cloudinary CDN + Sharp |
+| **Images** | Local files (unoptimized) | Local-first (public/images/) + Sharp |
 | **Linting** | ESLint only | ESLint + Stylelint |
 
 ### Future Roadmap
 - ✅ Astro 5.x View Transitions (Implemented)
 - ✅ OKLCH Color Space (Implemented)
 - ✅ Educational Metadata (Implemented)
-- ✅ Cloudinary Integration (Implemented)
+- ✅ Local-First Images / Cloudinary Removal (Implemented)
 - 🔄 Chart.js Integration (Partial - ready for data visualization)
 - 📋 Performance monitoring (Planned)
 - 📋 A/B testing for SEO (Planned)

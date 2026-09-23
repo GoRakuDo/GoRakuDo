@@ -1,4 +1,4 @@
-import { processAllContentFiles } from '../../../utils/content/auto-date-hook';
+import { processAllContentFiles } from '../../../src/utils/content/auto-date-hook';
 
 /**
  * 基本的な自動日付処理スクリプト

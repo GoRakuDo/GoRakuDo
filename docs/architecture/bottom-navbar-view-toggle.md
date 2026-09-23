@@ -7,7 +7,7 @@ BottomNavBarコンポーネントのメニューオーバーレイに、リス�
 **実装日**: 2025-10-13  
 **バージョン**: 1.1  
 **最終更新**: 2025-10-13  
-**実装ファイル**: `src/components/common/NavBar/BottomNavBar.astro`  
+**実装ファイル**: `src/components/common/navbar/BottomNavBar.astro`  
 **コード追加**: 約105行（HTML: 20行、CSS: 60行、JavaScript: 25行）
 
 ---
@@ -971,7 +971,7 @@ try {
    ```bash
    npm run stylelint
    # または
-   read_lints(['src/components/common/NavBar/BottomNavBar.astro'])
+   read_lints(['src/components/common/navbar/BottomNavBar.astro'])
    ```
 
 **黄金ルール**: 
@@ -998,9 +998,9 @@ try {
 
 | ファイル | 行数 | 説明 |
 |---|---|---|
-| `src/components/common/NavBar/BottomNavBar.astro` | 237-283 | HTML構造 |
-| `src/components/common/NavBar/BottomNavBar.astro` | 1057-1311 | CSS実装 |
-| `src/components/common/NavBar/BottomNavBar.astro` | 1432-1473 | JavaScript実装 |
+| `src/components/common/navbar/BottomNavBar.astro` | 237-283 | HTML構造 |
+| `src/components/common/navbar/BottomNavBar.astro` | 1057-1311 | CSS実装 |
+| `src/components/common/navbar/BottomNavBar.astro` | 1432-1473 | JavaScript実装 |
 
 ### 外部リソース
 

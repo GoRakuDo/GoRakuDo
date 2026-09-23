@@ -1,7 +1,7 @@
 import { watch } from 'fs';
 import type { FSWatcher } from 'fs';
 import { join } from 'path';
-import { processMdxFilesEfficiently } from '../../../utils/content/auto-date-cache';
+import { processMdxFilesEfficiently } from '../../../src/utils/content/auto-date-cache';
 
 /**
  * 開発モード用のファイル監視機能

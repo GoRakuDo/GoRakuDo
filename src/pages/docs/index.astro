@@ -5,12 +5,12 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import Breadcrumb from '../../components/common/Breadcrumb.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import PostsGrid from '../../components/docs/PostsGrid.astro';
-import Pagination from '../../components/common/Pagination/Pagination.astro';
+import Pagination from '../../components/common/pagination/Pagination.astro';
 import SearchPopover from '../../components/common/SearchPopover.astro';
 import {
   calculatePagination,
   transformPostData,
-} from '../../components/common/Pagination/pagination';
+} from '../../components/common/pagination/pagination';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsSeoData from '../../data/seo/pages/docs.json';

@@ -184,7 +184,7 @@ HTML → CSS, Font, Image (並列)
 **実装内容:**
 
 ```astro
-<!-- src/components/UnifiedSEO.astro -->
+<!-- src/components/common/UnifiedSEO.astro -->
 <head>
   <!-- DNS Prefetch -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -250,7 +250,7 @@ ls -lh public/img/
 
 #### ファイル変更リスト
 
-- `src/components/UnifiedSEO.astro` - リソースヒント追加
+- `src/components/common/UnifiedSEO.astro` - リソースヒント追加
 - `src/components/` - 各画像コンポーネント最適化
 
 ---

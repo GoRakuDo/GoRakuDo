@@ -5,11 +5,11 @@ import { getEntrySlug } from '../../../utils/content/entry';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
-import Pagination from '../../../components/common/Pagination/Pagination.astro';
+import Pagination from '../../../components/common/pagination/Pagination.astro';
 import {
   calculatePagination,
   type PaginationConfig,
-} from '../../../components/common/Pagination/pagination';
+} from '../../../components/common/pagination/pagination';
 import { generateBreadcrumbSchema } from '../../../utils/breadcrumb-schema';
 import toolsData from '../../../data/tools.json';
 import toolSeoTemplate from '../../../data/seo/pages/tool-template.json';

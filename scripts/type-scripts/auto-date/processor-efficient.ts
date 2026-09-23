@@ -1,4 +1,4 @@
-import { processMdxFilesEfficiently, clearCache } from '../../../utils/content/auto-date-cache';
+import { processMdxFilesEfficiently, clearCache } from '../../../src/utils/content/auto-date-cache';
 
 /**
  * 効率化された自動日付処理スクリプト

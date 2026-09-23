@@ -16,6 +16,7 @@ export default {
     /* === Utilities === */
     './src/utils/**/*.ts',
     './src/scripts/**/*.ts',
+    './scripts/**/*.ts',
   ],
 
   /* === 📦 Plugins - GoRakuDo Optimized === */

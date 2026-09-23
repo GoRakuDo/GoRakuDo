@@ -94,8 +94,8 @@
 
 ```typescript
 // ✅ 3行で完結
-const createImageUrl = (id: string, transform: string): string =>
-  `https://res.cloudinary.com/dbvd1cm7u/image/upload/${transform}/${id}`;
+const createImageUrl = (siteUrl: string, path: string): string =>
+  `${siteUrl.replace(/\/+$/, '')}${path.startsWith('/') ? path : `/${path}`}`;
 
 // ✅ 5行以内
 const validateAndFormat = (email: string): string | null => {
@@ -110,15 +110,11 @@ const validateAndFormat = (email: string): string | null => {
 // ⚠️ 8行 - 複雑なロジックのため許容
 const createFullImageUrl = (imagePath?: string, forOgImage = false): string => {
   if (!imagePath) imagePath = seoConfig.site.defaultImage;
-  const isCloudinaryId = !imagePath.includes('/') && !imagePath.match(/\.(jpg|png)$/i);
-  
-  if (isCloudinaryId) {
-    const transform = forOgImage ? 'c_pad,w_1200,h_630,b_auto,f_auto,q_auto' : '';
-    return `https://res.cloudinary.com/.../upload/${transform}/${imagePath}`;
-  }
-  
-  if (forOgImage) return `https://res.cloudinary.com/.../fetch/.../${fullUrl}`;
-  return imagePath.startsWith('http') ? imagePath : joinUrl(getSiteUrl(), imagePath);
+  if (forOgImage) return createFullImageUrl(imagePath);
+  if (imagePath.startsWith('http')) return imagePath;
+  if (imagePath.startsWith('/')) return joinUrl(getSiteUrl(), imagePath);
+  // bare ID（旧Cloudinary public_id）は廃止済み → デフォルト画像にフォールバック
+  return createFullImageUrl(seoConfig.site.defaultImage);
 };
 ```
 
@@ -548,7 +544,7 @@ import type { User } from '../types/user';
 ---
 // ========== IMPORTS ==========
 import Layout from '../layouts/Layout.astro';
-import UnifiedSEO from '../components/UnifiedSEO.astro';
+import UnifiedSEO from '../components/common/UnifiedSEO.astro';
 import { getCollection } from 'astro:content';
 
 // ========== TYPE DEFINITIONS ==========
@@ -626,7 +622,7 @@ export interface Props {
 }
 
 // ✅ Good - Type reuse from other components
-import type { Props as UnifiedSEOProps } from '../components/UnifiedSEO.astro';
+import type { Props as UnifiedSEOProps } from '../components/common/UnifiedSEO.astro';
 
 interface LayoutProps {
   breadcrumbSchema?: UnifiedSEOProps['breadcrumbSchema'];
@@ -1592,7 +1588,7 @@ rel="..."       type="button"  aria-label="..."
 
 ```astro
 ---
-import UnifiedSEO from '../components/UnifiedSEO.astro';
+import UnifiedSEO from '../components/common/UnifiedSEO.astro';
 import seoConfig from '../data/seo/pages/about-us.json';
 
 const seoData = {
@@ -1641,11 +1637,10 @@ const seoData = {
 ```yaml
 # MDX Frontmatter
 ---
-# ✅ Good - Cloudinary public_id（推奨）
-featuredImage: 'gorakudo-tired-study_zhhh2b'
+# ✅ Good - ローカル画像パス（推奨）
+featuredImage: '/images/docs/gorakudo-tired-study_zhhh2b.webp'
 
-# 自動変換: 正方形 → 1200x630px (1.91:1)
-# パラメータ: c_pad,w_1200,h_630,b_auto,f_auto,q_auto
+# OG画像は作成時に 1200x630px (1.91:1) で用意する（自動変換なし）
 ---
 ```
 
@@ -1867,8 +1862,8 @@ const CONTENT_PATH_CONFIG: ContentPathConfig[] = [
 - [ ] **Invalid Links**: `href="#"`禁止、無効化ナビゲーションは`<button disabled>`
 - [ ] **Astro Dev Toolbar Audit**: 開発環境でエラー0確認
 - [ ] **SEO**: OG Image 1200x630px、keywords 60文字以内・15個以内
-- [ ] **Performance**: 画像Cloudinary経由、Resource Hints設定
-- [ ] **Images**: Cloudinary public_id使用（Upload推奨、Fetchは一時的のみ）
+- [ ] **Performance**: 画像は `public/images/` からローカル配信、Resource Hints設定
+- [ ] **Images**: 明示的な `/images/...` パスを使用（bare ID禁止）
 
 #### コード品質
 - [ ] **ES Modules**: すべてのJSファイルでimport/export使用（CommonJS禁止）
@@ -1930,7 +1925,7 @@ npm run build
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@/types/*": ["src/scripts/type-scripts/*"]
+      "@/types/*": ["scripts/type-scripts/*"]
     },
     
     // ===== COMPATIBILITY =====
@@ -2058,8 +2053,8 @@ import { Button } from '../components/ui/Button.astro';
 
 #### 品質基準
 13. **Accessibility** - WCAG 2.1 AA準拠、ARIA属性必須
-14. **Performance** - Core Web Vitals最適化、画像Cloudinary経由
-15. **SEO** - Schema.org Structured Data、OG Image 1200x630px自動変換
+14. **Performance** - Core Web Vitals最適化、画像は `public/images/` からローカル配信
+15. **SEO** - Schema.org Structured Data、OG Image 1200x630px（作成時に整備）
 
 ### 📚 参照ドキュメント
 
@@ -2074,6 +2069,7 @@ import { Button } from '../components/ui/Button.astro';
 
 | Version | Date | Changes |
 |---|---|---|
+| **2.4** | 2026-09-23 | Cloudinary撤去に伴うローカル画像・OG Imageガイドライン更新 |
 | **2.3** | 2025-10-13 | Semantic HTML vs ARIA Roles、Invalid Links & Disabled Navigation、Astro Dev Toolbar Audit統合 |
 | **2.2** | 2025-10-13 | ネストされた子要素を持つ親モディファイアの配置ルール追加、BottomNavBar実例追加 |
 | **2.1** | 2025-10-13 | CSS Selector Specificity & Ordering セクション追加、Code Review Checklist更新 |

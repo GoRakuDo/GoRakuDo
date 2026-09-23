@@ -34,7 +34,7 @@
 - ♿ **Accessibility-First**: WCAG-compliant, semantic HTML
 
 ### 🔧 Teknologi & Optimasi
-- 🖼️ **Cloudinary Integration**: Optimasi gambar otomatis
+- 🖼️ **Local-First Images**: Semua gambar (termasuk OG images) disajikan dari `public/images/`
 - 🔍 **Fuse.js Search**: Fuzzy search dengan stopwords Indonesia & Jepang
 - 📊 **SEO 2025 Optimized**: Structured data, OG images, sitemap
 - 🚀 **Performance**: Brotli/Gzip compression, lazy loading, code splitting
@@ -58,7 +58,6 @@
 - **MDX** `4.3.6` - Markdown + JSX
 
 ### Integrations & Tools
-- **astro-cloudinary** - Image optimization & CDN
 - **@astrojs/sitemap** - Automatic sitemap generation
 - **Fuse.js** - Fuzzy search engine
 - **Chart.js** - Data visualization
@@ -85,14 +84,14 @@ GoRakuDo/
 ├── src/
 │   ├── components/          # Komponen Astro reusable
 │   │   ├── animations/      # WaveAnimation, efek visual
-│   │   ├── common/          # NavBar, Pagination, Breadcrumb, SearchPopover
+│   │   ├── common/          # navbar, pagination, Breadcrumb, SearchPopover
 │   │   ├── content/         # KrashenQuote, TableOfContents, FAQ
 │   │   ├── docs/            # PostsGrid untuk halaman dokumentasi
 │   │   ├── homepage/        # Hero, Features, Mission sections
 │   │   ├── search/          # Search components
 │   │   ├── tools/           # Tool grid, articles
 │   │   ├── ui/              # Button, PageHeader, SearchForm
-│   │   └── UnifiedSEO.astro # SEO management terpusat
+│   │   └── common/UnifiedSEO.astro # SEO management terpusat
 │   ├── content/             # Content Collections (MDX)
 │   │   ├── docs/            # 9 artikel dokumentasi
 │   │   ├── pages/           # About Us, FAQ
@@ -111,20 +110,20 @@ GoRakuDo/
 │   │   ├── tools/           # Dynamic routes untuk tools
 │   │   ├── search/          # Search interface
 │   │   └── index.astro      # Homepage
-│   ├── scripts/             # JavaScript utilities
-│   │   └── type-scripts/    # TypeScript processors
+│   ├── scripts/             # Client-side scripts (viewport-animation, image-zoom)
 │   ├── styles/              # Global & scoped CSS
 │   │   ├── global.css       # CSS variables, base styles
 │   │   ├── layouts/         # Layout-specific styles
 │   │   └── pages/           # Page-specific styles
 │   └── utils/               # Helper functions
-│       ├── cloudinary.ts    # Image optimization
+│       ├── local-image.ts   # toLocalImage (local images)
 │       ├── content/         # Content processing
 │       └── logging/         # Console utilities
 ├── public/                  # Static assets
-│   ├── icon/                # Tool icons (WebP)
-│   ├── img/                 # Images
-│   └── favicon/             # Favicon assets
+│   ├── icons/               # Icons & favicon assets
+│   ├── images/              # Images (per-context subfolders)
+│   └── core/                # Static JS
+├── scripts/                 # Build/dev tooling (auto-date processors, GA verification)
 ├── docs/                    # Project documentation
 │   ├── architecture/        # Technical specs
 │   └── context.md           # Project context
@@ -154,12 +153,10 @@ GoRakuDo/
    npm install
    ```
 
-3. **Setup environment variables (opsional):**
+3. **Setup environment variables:**
    ```bash
-   # Buat file .env.local untuk Cloudinary (opsional)
-   # CLOUDINARY_CLOUD_NAME=your_cloud_name
-   # CLOUDINARY_API_KEY=your_api_key
-   # CLOUDINARY_API_SECRET=your_api_secret
+   # Tidak diperlukan — Cloudinary sudah dihapus (2026-09-22).
+   # Semua gambar didistribusikan lokal dari public/images/
    ```
 
 4. **Jalankan development server:**
@@ -263,15 +260,19 @@ Tiga endpoint search terpisah:
 
 Dengan stopwords filtering untuk bahasa Indonesia dan Jepang.
 
-### 5. Cloudinary Image Optimization
+### 5. Local Image Handling (Cloudinary sudah dihapus)
+
+Semua gambar didistribusikan secara lokal dari `public/images/` (termasuk OG images). Bare public_id tidak lagi didukung — gunakan path eksplisit `/`-prefixed:
 
 ```typescript
-import { buildCloudinaryUrl } from '@/utils/cloudinary';
+import { toLocalImage } from '@/utils/local-image';
 
-// Auto-optimize image dengan transformations
-const imageUrl = buildCloudinaryUrl('my-image-id');
-// Result: https://res.cloudinary.com/.../w_600,q_auto,f_auto/my-image-id
+// Path lokal eksplisit (disajikan langsung dari public/)
+const imageUrl = toLocalImage('/images/og/gorakudo-immerison.png');
+// Result: /images/og/gorakudo-immerison.png
 ```
+
+> 🔒 Detail setup Cloudinary lama (archived): [`docs/archive/cloudinary-setup.md`](docs/archive/cloudinary-setup.md)
 
 ### 6. Performance Optimizations
 
