@@ -14,6 +14,7 @@ import {
   shouldRedirectToFirstPage,
 } from '../../components/common/pagination/pagination';
 import { getVisibleDocs } from '../../utils/content/PostStatus-Filter';
+import { entrySetCacheKey } from '../../utils/cache-key';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import docsSeoData from '../../data/seo/pages/docs.json';
 import '../../styles/pages/docs/docs-index.css';
@@ -31,10 +32,13 @@ export async function getStaticPaths() {
   );
 
   const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  // List pages render these articles' data: one changed article rebuilds all pages.
+  const listCacheKey = entrySetCacheKey(allPosts);
 
   return Array.from({ length: totalPages }, (_, i) => ({
     params: { page: (i + 1).toString() },
     props: { totalPosts: allPosts.length, totalPages },
+    cacheKey: listCacheKey,
   }));
 }
 

@@ -2,6 +2,7 @@
 // ========== IMPORTS ==========
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getEntrySlug } from '../../../utils/content/entry';
+import { entrySetCacheKey } from '../../../utils/cache-key';
 import { getVisibleToolArticles } from '../../../utils/content/PostStatus-Filter';
 import ArticleLayout from '../../../layouts/ArticleLayout.astro';
 import ToolIdContentGrid from '../../../components/tools/Tool-IdContentGrid.astro';
@@ -47,6 +48,9 @@ export async function getStaticPaths() {
   const allTools = await getAllToolsFromCollection();
   const allArticles = await getCollection('tool-articles');
   const visibleArticles = getVisibleToolArticles(allArticles);
+  // Pagination pages render these articles' data: one changed article
+  // rebuilds all pages of this route.
+  const listCacheKey = entrySetCacheKey(allArticles);
 
   const paths: any[] = [];
 
@@ -87,6 +91,7 @@ export async function getStaticPaths() {
           totalArticles: toolArticles.length,
           totalPages,
         },
+        cacheKey: listCacheKey,
       });
     }
   }

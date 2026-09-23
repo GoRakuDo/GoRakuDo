@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../../layouts/ProjectLayout.astro';
 import { getProjectDocSlug, buildDocsCategories } from '../../../utils/project-docs';
 import { getEntrySlug } from '../../../utils/content/entry';
+import { entryCacheKey, entrySetCacheKey, makeCacheKey } from '../../../utils/cache-key';
 import '../../../styles/pages/project/project-doc.css';
 
 export async function getStaticPaths() {
@@ -16,6 +17,12 @@ export async function getStaticPaths() {
       return {
         params: { project: getEntrySlug(p), doc_slug: docSlug },
         props: { project: p, doc: doc, allDocs: projectDocs },
+        // Doc body + project entry + the sidebar's docs set.
+        cacheKey: makeCacheKey(
+          entryCacheKey(p),
+          entryCacheKey(doc),
+          entrySetCacheKey(projectDocs)
+        ),
       };
     });
   });

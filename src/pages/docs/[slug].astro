@@ -11,6 +11,7 @@ import docsArticleTemplate from '../../data/seo/pages/docs-article-template.json
 import { getContentDates } from '../../utils/git-dates';
 import { toLocalImage } from '../../utils/local-image';
 import { getEntrySlug } from '../../utils/content/entry';
+import { entryCacheKey } from '../../utils/cache-key';
 
 // ========== STATIC PATH GENERATION ==========
 export async function getStaticPaths() {
@@ -20,6 +21,8 @@ export async function getStaticPaths() {
   return visiblePosts.map((post: CollectionEntry<'docs'>) => ({
     params: { slug: getEntrySlug(post) },
     props: { post },
+    // Re-render only this article's page when the article itself changes.
+    cacheKey: entryCacheKey(post),
   }));
 }
 

@@ -11,6 +11,7 @@ import toolArticleTemplate from '../../../data/seo/pages/tool-article-template.j
 import { getContentDates } from '../../../utils/git-dates';
 import toolsData from '../../../data/tools.json';
 import { getEntrySlug } from '../../../utils/content/entry';
+import { entryCacheKey, entrySetCacheKey, makeCacheKey } from '../../../utils/cache-key';
 
 // ========== UTILITY FUNCTIONS ==========
 export async function getVisibleToolArticlesData() {
@@ -40,7 +41,18 @@ export async function getStaticPaths() {
     const postSlug = getEntrySlug(post);
     const toolName = extractToolNameFromSlug(postSlug);
     const articleSlug = postSlug.split('/').slice(1).join('/');
-    return { params: { tool: toolName, slug: articleSlug }, props: { post } };
+    // prev/next nav renders same-tool siblings' titles/slugs (filter by
+    // toolName below), so include that sibling set: sibling add/remove/
+    // rename/order changes must invalidate this page too.
+    const siblingSet = posts.filter(
+      (p: CollectionEntry<'tool-articles'>) =>
+        extractToolNameFromSlug(getEntrySlug(p)) === toolName
+    );
+    return {
+      params: { tool: toolName, slug: articleSlug },
+      props: { post },
+      cacheKey: makeCacheKey(entryCacheKey(post), entrySetCacheKey(siblingSet)),
+    };
   });
 }
 

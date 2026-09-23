@@ -4,12 +4,19 @@ import type { CollectionEntry } from 'astro:content';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import { buildDocsCategories } from '../../utils/project-docs';
 import { getEntrySlug } from '../../utils/content/entry';
+import { entryCacheKey, entrySetCacheKey, makeCacheKey } from '../../utils/cache-key';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
+  const docs = await getCollection('project-docs');
   return projects.map(p => ({
     params: { slug: getEntrySlug(p) },
     props: { project: p },
+    // The page renders the project entry plus its own docs sidebar data.
+    cacheKey: makeCacheKey(
+      entryCacheKey(p),
+      entrySetCacheKey(docs.filter(d => d.data.parentProject === getEntrySlug(p)))
+    ),
   }));
 }
 
