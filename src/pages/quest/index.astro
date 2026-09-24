@@ -1,0 +1,225 @@
+---
+// src/pages/quest/index.astro
+// Prologue scene: fullscreen cave (gradient fallback until the WebP is placed),
+// guide sprite slot, DialogueBox-driven scenario, commandments + finale overlays.
+import UnifiedSEO from '../../components/common/UnifiedSEO.astro';
+import DialogueBox from '../../components/quest/DialogueBox.astro';
+import prologue from '../../data/quest/prologue.json';
+import '../../styles/global.css';
+
+const GUIDE_URL = '/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak';
+
+const seoData = {
+  title: 'Prolog: Gua Kegagalan — GoRakuDo Quest',
+  description:
+    'Mulailah petualangan bahasa Jepangmu dari Gua Kegagalan. Ikuti 4 hukum suci immersion dan tinggalkan Jalan Sesat.',
+  keywords: ['quest', 'prologue', 'immersion', 'belajar bahasa jepang', 'otodidak'],
+  pageType: 'website' as const,
+};
+
+const speakerNames: Record<string, string> = Object.fromEntries(
+  Object.entries(prologue.speakers).map(([key, value]) => [
+    key,
+    (value as { name: string }).name,
+  ])
+);
+
+const dialogueLines = prologue.lines.map(line => ({
+  name: speakerNames[line.speaker] ?? '???',
+  text: line.id_text,
+}));
+
+const commandmentItems = prologue.commandments.map(item => item.id_text);
+const bgSrc = prologue.scene.background;
+---
+
+<html lang='id' class='quest-page'>
+  <head>
+    <UnifiedSEO
+      title={seoData.title}
+      description={seoData.description}
+      keywords={seoData.keywords}
+      pageType={seoData.pageType}
+      lang='id'
+      gtag={import.meta.env.PUBLIC_GA_ID}
+    />
+    <style>
+      html.quest-page,
+      html.quest-page body {
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .quest-commandments[hidden],
+      .quest-finale[hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main class='quest-scene' aria-label='Prolog quest: Gua Kegagalan'>
+      <div class='quest-scene-bg-fallback' aria-hidden='true'></div>
+      <img
+        class='quest-scene-bg-image'
+        src={bgSrc}
+        alt=''
+        aria-hidden='true'
+        loading='eager'
+        decoding='async'
+        onload="this.classList.add('is-loaded')"
+        onerror='this.remove()'
+      />
+      <div class='quest-scene-veil' aria-hidden='true'></div>
+
+      <p class='quest-chapter'>序章 — {prologue.title}</p>
+      <a
+        class='quest-skip'
+        href={GUIDE_URL}
+        aria-label='Lewati prolog dan buka panduan immersion'
+      >
+        SKIP →
+      </a>
+
+      <div class='quest-guide' data-quest-guide>
+        <img
+          src='/images/quest/guide.webp'
+          alt=''
+          aria-hidden='true'
+          loading='lazy'
+          decoding='async'
+          onerror="this.closest('.quest-guide').remove()"
+        />
+      </div>
+
+      <div class='quest-dialogue-zone'>
+        <DialogueBox typingSpeedMs={30} />
+      </div>
+
+      <div
+        class='quest-commandments'
+        data-quest-commandments
+        hidden
+        role='dialog'
+        aria-modal='true'
+        aria-label='4 hukum suci immersion'
+      >
+        <div class='quest-commandments-card'>
+          <h2 class='quest-commandments-title'>✦ 4 HUKUM SUCI ✦</h2>
+          <ul class='quest-commandments-list'>
+            {
+              commandmentItems.map((item, i) => (
+                <li
+                  class='quest-commandments-item'
+                  style={`--quest-delay: ${(i * 0.35).toFixed(2)}s`}
+                >
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+          <button
+            class='quest-commandments-close'
+            type='button'
+            data-quest-commandments-close
+          >
+            Aku bersumpah!
+          </button>
+        </div>
+      </div>
+
+      <div class='quest-finale' data-quest-finale hidden>
+        <p class='quest-finale-title'>To be continued…</p>
+        <p class='quest-finale-text'>
+          Prolog selesai! Bab berikutnya masih ditulis. Sambil menunggu,
+          baca panduan immersion dan mulai petualanganmu sekarang.
+        </p>
+        <a class='quest-finale-cta' href={GUIDE_URL}>
+          Lanjut ke Panduan Immersion
+        </a>
+      </div>
+    </main>
+
+    <script
+      is:inline
+      define:vars={{ dialogueLines, totalLines: dialogueLines.length }}
+    >
+      (() => {
+        const dialogue = document.querySelector('[data-quest-dialogue]');
+        const guide = document.querySelector('[data-quest-guide]');
+        const commandments = document.querySelector(
+          '[data-quest-commandments]'
+        );
+        const commandmentsClose = document.querySelector(
+          '[data-quest-commandments-close]'
+        );
+        const finale = document.querySelector('[data-quest-finale]');
+        if (!dialogue || !commandments || !finale) return;
+
+        const api = () => window.__questDialogue;
+        let index = 0;
+        let phase = 'lines';
+
+        const speaking = (on) => {
+          if (guide) guide.classList.toggle('is-speaking', on);
+        };
+
+        const showAt = (i) => {
+          if (api()) api().showLine(dialogueLines[i]);
+        };
+
+        const openCommandments = () => {
+          phase = 'commandments';
+          speaking(false);
+          commandments.hidden = false;
+          commandments.classList.add('is-open');
+          if (commandmentsClose) commandmentsClose.focus();
+        };
+
+        const openFinale = () => {
+          phase = 'finale';
+          commandments.hidden = true;
+          finale.hidden = false;
+          const cta = finale.querySelector('a');
+          if (cta) cta.focus();
+        };
+
+        dialogue.addEventListener('quest:line-start', () => speaking(true));
+        dialogue.addEventListener('quest:line-complete', () => speaking(false));
+
+        dialogue.addEventListener('quest:dialogue-activate', (e) => {
+          if (phase !== 'lines' || !api()) return;
+          if (!e.detail || !e.detail.complete) {
+            api().finish();
+            return;
+          }
+          if (index < totalLines - 1) {
+            index += 1;
+            showAt(index);
+          } else {
+            openCommandments();
+          }
+        });
+
+        if (commandmentsClose) {
+          commandmentsClose.addEventListener('click', openFinale);
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          const tag = (e.target.tagName || '').toLowerCase();
+          if (tag === 'a' || tag === 'button') return;
+          if (phase === 'commandments') {
+            e.preventDefault();
+            openFinale();
+          }
+        });
+
+        if (api()) {
+          showAt(0);
+        } else {
+          document.addEventListener('DOMContentLoaded', () => showAt(0));
+        }
+      })();
+    </script>
+  </body>
+</html>

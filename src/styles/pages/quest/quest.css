@@ -1,0 +1,421 @@
+/* ===== QUEST PAGE STYLES (Prologue) =====
+ * Night Library / Discord Dark Pop (DESIGN.md v2.1.0).
+ * Only existing --grkd-* / --clr-* tokens from global.css are used.
+ * Minimal hardcoded OKLCH values are limited to the cave-placeholder gradient.
+ */
+
+/* ===== SCENE LAYOUT ===== */
+.quest-scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  min-height: 100dvh;
+  background-color: var(--grkd-black-950);
+}
+
+/* Cave placeholder gradient (visible until /images/quest/prologue-cave.webp is placed). */
+.quest-scene-bg-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 50% 115%,
+      oklch(45% 0.12 85deg / 0.35) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 50% -20%,
+      oklch(35% 0.1 275deg / 0.5) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(12% 0.03 275deg) 0%,
+      oklch(9% 0.025 275deg) 55%,
+      oklch(7% 0.02 270deg) 100%
+    );
+}
+
+/* Real background image layer — fades in only when the file loads. */
+.quest-scene-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.quest-scene-bg-image.is-loaded {
+  opacity: 1;
+}
+
+/* Vignette + bottom gradient for readability and immersion. */
+.quest-scene-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 50% 45%,
+      transparent 45%,
+      oklch(from var(--grkd-black-base) l c h / 0.55) 100%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(from var(--grkd-black-base) l c h / 0.35) 0%,
+      transparent 30%,
+      transparent 55%,
+      oklch(from var(--grkd-black-base) l c h / 0.75) 100%
+    );
+  pointer-events: none;
+}
+
+/* ===== SKIP BUTTON ===== */
+.quest-skip {
+  position: absolute;
+  top: calc(1rem + var(--safe-area-top));
+  right: calc(1rem + var(--safe-area-right));
+  z-index: 2;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--clr-white-15);
+  border-radius: var(--border-radius-md);
+  background: oklch(from var(--grkd-black-base) l c h / 0.6);
+  color: var(--grkd-text-global-muted);
+  font-size: 0.8rem;
+  text-decoration: none;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+.quest-skip:hover {
+  border-color: var(--clr-white-3);
+  color: var(--grkd-text-global);
+}
+
+.quest-skip:focus-visible {
+  outline: 2px solid var(--grkd-purple-400);
+  outline-offset: 2px;
+}
+
+/* ===== CHAPTER LABEL ===== */
+.quest-chapter {
+  position: absolute;
+  top: calc(1rem + var(--safe-area-top));
+  left: calc(1rem + var(--safe-area-left));
+  z-index: 2;
+  margin: 0;
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  pointer-events: none;
+}
+
+/* ===== GUIDE SPRITE SLOT =====
+ * Expects a transparent WebP at /images/quest/guide.webp.
+ * Hidden automatically when the file is missing (onerror in page).
+ */
+.quest-guide {
+  position: absolute;
+  bottom: clamp(11rem, 30dvh, 17rem);
+  left: 50%;
+  z-index: 1;
+  width: clamp(140px, 32vw, 220px);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.quest-guide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 24px oklch(from var(--grkd-black-base) l c h / 0.7));
+}
+
+/* Speaking bounce — CSS-only, disabled under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .quest-guide.is-speaking img {
+    animation: questGuideBob 0.6s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes questGuideBob {
+  from {
+    transform: translateY(0) scaleY(1);
+  }
+
+  to {
+    transform: translateY(-4px) scaleY(1.015);
+  }
+}
+
+/* ===== DIALOGUE BOX (Dragon Quest style) ===== */
+.quest-dialogue-zone {
+  position: relative;
+  z-index: 2;
+  padding: 0 1rem calc(1.25rem + var(--safe-area-bottom));
+}
+
+.quest-dialogue {
+  position: relative;
+  max-width: 44rem;
+  min-height: 9.5rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 2.25rem;
+  border: 2px solid var(--clr-white-25);
+  border-radius: var(--border-radius-lg);
+  background: oklch(from var(--grkd-surface) l c h / 0.92);
+  box-shadow:
+    0 0 0 2px oklch(from var(--grkd-black-base) l c h / 0.85),
+    0 12px 40px oklch(from var(--grkd-black-base) l c h / 0.6);
+  color: var(--grkd-text-global);
+  cursor: pointer;
+  user-select: none;
+}
+
+.quest-dialogue:focus-visible {
+  outline: 2px solid var(--grkd-purple-400);
+  outline-offset: 3px;
+}
+
+.quest-dialogue-name {
+  position: absolute;
+  top: -0.9rem;
+  left: 1rem;
+  padding: 0.15rem 0.9rem;
+  border: 2px solid var(--clr-white-25);
+  border-radius: var(--border-radius-md);
+  background: var(--grkd-surface-2);
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+}
+
+.quest-dialogue-text {
+  min-height: 4.5em;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/* Blinking ▼ indicator, shown when the line is fully displayed. */
+.quest-dialogue-next {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.6rem;
+  color: var(--grkd-gold-base);
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quest-dialogue.is-complete .quest-dialogue-next {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .quest-dialogue.is-complete .quest-dialogue-next {
+    animation: questBlink 0.9s steps(2, start) infinite;
+  }
+}
+
+@keyframes questBlink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* ===== COMMANDMENTS (4戒律 overlay card) ===== */
+.quest-commandments {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: oklch(from var(--grkd-black-base) l c h / 0.7);
+}
+
+.quest-commandments-card {
+  width: min(100%, 30rem);
+  padding: 1.5rem 1.5rem 1.75rem;
+  border: 2px solid var(--grkd-gold-dark);
+  border-radius: var(--border-radius-lg);
+  background: oklch(from var(--grkd-surface) l c h / 0.97);
+  box-shadow: 0 16px 48px oklch(from var(--grkd-black-base) l c h / 0.7);
+}
+
+.quest-commandments-title {
+  margin: 0 0 1rem;
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 1.05rem;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.quest-commandments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quest-commandments-item {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--clr-white-12);
+  border-left: 3px solid var(--grkd-gold-dark);
+  border-radius: var(--border-radius-md);
+  background: oklch(from var(--grkd-bg-input) l c h / 0.9);
+  color: var(--grkd-text-global);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* Staggered reveal; under reduced motion everything shows at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .quest-commandments.is-open .quest-commandments-item {
+    animation: questRise 0.45s ease forwards;
+    animation-delay: var(--quest-delay, 0s);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quest-commandments.is-open .quest-commandments-item {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes questRise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.quest-commandments-close {
+  display: block;
+  min-height: var(--touch-target-min);
+  margin: 1.25rem auto 0;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: var(--border-radius-btn-small);
+  background: var(--grkd-purple-500);
+  color: var(--grkd-accent-foreground);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quest-commandments-close:hover {
+  background: var(--grkd-purple-400);
+}
+
+.quest-commandments-close:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 2px;
+}
+
+/* ===== FINALE (To be continued) ===== */
+.quest-finale {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: oklch(from var(--grkd-black-base) l c h / 0.8);
+  text-align: center;
+  inset: 0;
+}
+
+.quest-finale-title {
+  margin: 0;
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
+  letter-spacing: 0.1em;
+}
+
+.quest-finale-text {
+  max-width: 28rem;
+  margin: 0;
+  color: var(--grkd-text-global);
+  line-height: 1.8;
+}
+
+.quest-finale-cta {
+  display: inline-block;
+  min-height: var(--touch-target-min);
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: var(--border-radius-btn-small);
+  background: var(--grkd-purple-500);
+  color: var(--grkd-accent-foreground);
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.quest-finale-cta:hover {
+  background: var(--grkd-purple-400);
+}
+
+.quest-finale-cta:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 2px;
+}
+
+/* Visually hidden but screen-reader accessible. */
+.quest-sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 768px) {
+  .quest-dialogue-zone {
+    padding-bottom: calc(2rem + var(--safe-area-bottom));
+  }
+
+  .quest-dialogue {
+    padding: 2.25rem 1.75rem 2.5rem;
+  }
+
+  .quest-dialogue-text {
+    font-size: 1.15rem;
+  }
+
+  .quest-guide {
+    bottom: clamp(12rem, 32dvh, 19rem);
+  }
+}
+
+/* Reduced motion: kill transitions too. */
+@media (prefers-reduced-motion: reduce) {
+  .quest-scene-bg-image,
+  .quest-skip,
+  .quest-dialogue {
+    transition: none;
+  }
+}

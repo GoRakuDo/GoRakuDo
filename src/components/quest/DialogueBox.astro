@@ -1,0 +1,112 @@
+---
+// src/components/quest/DialogueBox.astro
+// Dragon Quest-style dialogue window with typewriter animation.
+// Typing mechanics live in the inline script below and expose a tiny
+// imperative API (window.__questDialogue). The parent page drives the
+// scenario: it calls showLine() and listens for 'quest:dialogue-activate'
+// (click / Enter / Space) to decide complete-vs-advance.
+import '../../styles/pages/quest/quest.css';
+
+interface Props {
+  speakerName?: string;
+  typingSpeedMs?: number;
+}
+
+const { speakerName = '???', typingSpeedMs = 30 } = Astro.props;
+---
+
+<div
+  class='quest-dialogue'
+  data-quest-dialogue
+  data-typing-speed={String(typingSpeedMs)}
+  tabindex='0'
+  role='button'
+  aria-label='Dialog: tekan Enter atau ketuk untuk lanjut'
+>
+  <span class='quest-dialogue-name' data-quest-dialogue-name
+    >{speakerName}</span
+  >
+  <p
+    class='quest-dialogue-text'
+    data-quest-dialogue-text
+    aria-live='polite'
+    aria-atomic='true'
+  ></p>
+  <span class='quest-dialogue-next' aria-hidden='true'>▼</span>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-quest-dialogue]');
+    if (!root) return;
+    const nameEl = root.querySelector('[data-quest-dialogue-name]');
+    const textEl = root.querySelector('[data-quest-dialogue-text]');
+    if (!nameEl || !textEl) return;
+
+    const speed =
+      Number.parseInt(root.getAttribute('data-typing-speed') || '30', 10) ||
+      30;
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    let fullText = '';
+    let timer = null;
+    let complete = true;
+
+    const finish = () => {
+      if (timer !== null) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+      textEl.textContent = fullText;
+      complete = true;
+      root.classList.add('is-complete');
+      root.dispatchEvent(
+        new CustomEvent('quest:line-complete', { bubbles: true })
+      );
+    };
+
+    const showLine = (line) => {
+      if (timer !== null) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+      nameEl.textContent = line.name || '???';
+      fullText = line.text || '';
+      textEl.textContent = '';
+      complete = false;
+      root.classList.remove('is-complete');
+      root.dispatchEvent(new CustomEvent('quest:line-start', { bubbles: true }));
+      if (reduceMotion || fullText.length === 0) {
+        finish();
+        return;
+      }
+      let i = 0;
+      timer = window.setInterval(() => {
+        i += 1;
+        textEl.textContent = fullText.slice(0, i);
+        if (i >= fullText.length) finish();
+      }, speed);
+    };
+
+    const activate = () => {
+      root.dispatchEvent(
+        new CustomEvent('quest:dialogue-activate', {
+          bubbles: true,
+          detail: { complete },
+        })
+      );
+    };
+
+    root.addEventListener('click', activate);
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activate();
+      }
+    });
+
+    window.__questDialogue = { showLine, finish, isComplete: () => complete };
+  })();
+</script>
