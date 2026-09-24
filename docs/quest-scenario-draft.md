@@ -7,52 +7,60 @@
 
 ## 序章: 「失敗の洞窟」
 
-**シーン描写**: 暗く重たい石壁に囲まれた洞窟。床には古びた教科書や文法単語帳が散乱している。
+**シーン描写**: 埃っぽい石壁に囲まれた洞窟。床にはボロボロになった文法書が山積みで、中には「石化」した人々の姿が…。
 
-### ダイアログボックス（共通）
-
-**案内役**:
-"Selamat datang di 'GoRakuDo'. Tempat di mana petualangan bahasa Jepangmu dimulai."
-（語楽道へようこそ。ここからあなたの日本語冒険が始まる。）
+### ダイアログボックス
 
 **案内役**:
-"Tapi tunggu... kamu masih membawa 'beban' lama di punggungmu, ya?"
-（でも待って...まだ背中に昔の「重荷」を背負ったままかい？）
+"Selamat datang di 'GoRakuDo'! Petualangan bahasa Jepangmu dimulai di sini!"
+（語楽道へようこそ！ここから冒険が始まるよ！）
 
 **案内役**:
-"Ayo, lepaskan beban itu sekarang. Ikuti 4 hukum suci ini agar kamu bisa mencapai impianmu."
-（さあ、その荷物を下ろそう。夢にたどり着くための4つの聖なる掟を刻むんだ。）
+"Tapi tunggu... auramu beda, ya? Jangan-jangan, kamu baru saja pulang dari 'Jalan Sesat'?"
+（でも待って...なんかオーラが違う？もしかして「邪道」から帰ってきた？）
+
+**案内役**:
+"Pernah lihat orang asing bicara bahasamu dengan kaku sekali? Padahal sudah belajar bertahun-tahun."
+（外国人があなたの母国語を堅苦しく話すの見たことある？何年も勉強してるのに。）
+
+**案内役**:
+"Itu karena mereka terjebak di 'Jalan Sesat'. Menghafal rumus dan menerjemahkan terus."
+（それは彼らが「邪道」にハマってるからさ。公式暗記と翻訳の繰り返し。）
+
+**案内役**:
+"Hasilnya? Meskipun sudah lulus N1, baca novel saja susah. Ngomong pun tetap kaku."
+（結果は？N1合格してもラノベは読めず、話し方は堅い。）
+
+**案内役**:
+"Kalau terus di sana, kamu bakal membatu jadi fosil bahasa. Sayang banget, kan?"
+（そこに居続けると、言葉の化石として石化しちゃうよ。もったいないでしょ？）
 
 ---
 
-### ヒーロー別バリエーション（選択時）
+### ヒーロー選択
 
 #### 🥚 完全初心者（ひらがなも読めない）
 **プレイヤー**:
-"Aku ingin bisa bicara bahasa Jepang, tapi hurufnya saja tidak tahu... Apa aku bisa?"
-（日本語を話したいけど、ひらがなすらわからない...私にできるかな？）
+"Aku cuma ingin bicara, tapi aku tak tahu apa-apa... Apa aku bisa belajar dengan cara alami?"
+（話したいけど何も知らない...私でも自然な方法で学べるかな？）
 
 #### 📖 教科書で停滞中（文法は知ってる、話せない）
 **プレイヤー**:
-"Rumus tata bahasa sudah kuhafal semua. Tapi kenapa saat bicara, mulutku membeku?"
-（文法ルールは全部暗記した。でも、なぜ話すときは口が凍りつくんだろう？）
+"Aku sudah hapal rumus, tapi mulutku kaku. Aku tidak mau jadi 'fosil'! Ajari aku!"
+（文法は暗記したのに口が固まる。化石になりたくない！教えて！）
 
 #### 📺 アニメ勢（聞き取りは多少できる）
 **プレイヤー**:
-"Aku dengar anime setiap hari. Tapi kenapa aku tetap tidak bisa bicara dengan lancar?"
-（毎日アニメを聞いている。なのに、なぜ流暢に話せないんだろう？）
+"Aku dengar anime, tapi bicaranya tetap aneh. Aku mau bicara natural seperti mereka!"
+（アニメは聴いてるけど話すのは変。自然に話したい！）
 
 ---
 
-### 序章後半（共通）
+### 序章後半
 
 **案内役**:
-"Jangan khawatir. Musuh sebenarnya bukanlah bahasa Jepang, melainkan cara belajarmu."
-（心配するな。本当の敵は日本語じゃない。あなたの学習方法だ。）
-
-**案内役**:
-"Ini 4 hukum yang harus kamu tanamkan dalam jiwamu:"
-（これら4つの掟を魂に刻め：）
+"Bagus! Sekarang, mari kita buang beban itu. Ikuti 4 hukum suci ini!"
+（よし！じゃあその荷物を捨てて、4つの聖なる掟に従おう！）
 
 1. **"Abaikan semua rumus Bunpou."** (文法公式をすべて無視せよ。)
 2. **"Jangan terjemahkan Bahasa Jepang ke Indonesia."** (日本語をインドネシア語に訳すな。)
@@ -104,8 +112,9 @@
 ---
 
 ## 執筆メモ
-- **意図**: RPGとしての没入感を最優先し、冗長な説明をカット。
+- **意図**: RPGとしての没入感を最優先し、ユーザーのビートを反映して「邪道＝堅い話し方・石化」のメタファーを導入。
 - **省略した内容**: 学習の具体的なツールやテクニックは2章以降に回した。
+- **更新内容**: 序章をユーザーの要望に基づき、より親しみやすく、かつ学習の目的を明確にした構成へ書き換え。
 - **確認事項**: 
     - 4つの戒律のインドネシア語訳は、初心者にも通じる自然な表現か？
     - キャラクター（案内役）の口調は、「優しくも熱い」バランスになっているか？
