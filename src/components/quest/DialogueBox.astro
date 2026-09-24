@@ -5,14 +5,26 @@
 // imperative API (window.__questDialogue). The parent page drives the
 // scenario: it calls showLine() and listens for 'quest:dialogue-activate'
 // (click / Enter / Space) to decide complete-vs-advance.
+//
+// Accessibility: the visual text <p> is NOT a live region (typing would
+// spam screen readers). A separate visually-hidden sibling <p> receives
+// the full line text once per line via finish(), and the button references
+// it with aria-describedby.
 import '../../styles/pages/quest/quest.css';
 
 interface Props {
   speakerName?: string;
   typingSpeedMs?: number;
+  initialName?: string;
+  initialText?: string;
 }
 
-const { speakerName = '???', typingSpeedMs = 30 } = Astro.props;
+const {
+  speakerName = '???',
+  typingSpeedMs = 30,
+  initialName = speakerName,
+  initialText = '',
+} = Astro.props;
 ---
 
 <div
@@ -22,18 +34,21 @@ const { speakerName = '???', typingSpeedMs = 30 } = Astro.props;
   tabindex='0'
   role='button'
   aria-label='Dialog: tekan Enter atau ketuk untuk lanjut'
+  aria-describedby='quest-dialogue-live'
 >
   <span class='quest-dialogue-name' data-quest-dialogue-name
-    >{speakerName}</span
+    >{initialName}</span
   >
-  <p
-    class='quest-dialogue-text'
-    data-quest-dialogue-text
-    aria-live='polite'
-    aria-atomic='true'
-  ></p>
+  <p class='quest-dialogue-text' data-quest-dialogue-text>{initialText}</p>
   <span class='quest-dialogue-next' aria-hidden='true'>▼</span>
 </div>
+<p
+  class='quest-sr-only'
+  id='quest-dialogue-live'
+  data-quest-dialogue-live
+  aria-live='polite'
+  aria-atomic='true'
+></p>
 
 <script is:inline>
   (() => {
@@ -41,25 +56,32 @@ const { speakerName = '???', typingSpeedMs = 30 } = Astro.props;
     if (!root) return;
     const nameEl = root.querySelector('[data-quest-dialogue-name]');
     const textEl = root.querySelector('[data-quest-dialogue-text]');
+    const liveEl = document.querySelector('[data-quest-dialogue-live]');
     if (!nameEl || !textEl) return;
 
     const speed =
       Number.parseInt(root.getAttribute('data-typing-speed') || '30', 10) ||
       30;
-    const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reduceMotion = motionQuery.matches;
+    if (typeof motionQuery.addEventListener === 'function') {
+      motionQuery.addEventListener('change', (e) => {
+        reduceMotion = e.matches;
+      });
+    }
 
     let fullText = '';
     let timer = null;
     let complete = true;
 
     const finish = () => {
+      if (complete) return;
       if (timer !== null) {
         window.clearInterval(timer);
         timer = null;
       }
       textEl.textContent = fullText;
+      if (liveEl) liveEl.textContent = fullText;
       complete = true;
       root.classList.add('is-complete');
       root.dispatchEvent(
@@ -101,6 +123,7 @@ const { speakerName = '???', typingSpeedMs = 30 } = Astro.props;
 
     root.addEventListener('click', activate);
     root.addEventListener('keydown', (e) => {
+      if (e.repeat) return;
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         activate();

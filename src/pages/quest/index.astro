@@ -26,11 +26,12 @@ const speakerNames: Record<string, string> = Object.fromEntries(
 
 const dialogueLines = prologue.lines.map(line => ({
   name: speakerNames[line.speaker] ?? '???',
-  text: line.id_text,
+  text: line.idText,
 }));
 
-const commandmentItems = prologue.commandments.map(item => item.id_text);
+const commandmentItems = prologue.commandments.map(item => item.idText);
 const bgSrc = prologue.scene.background;
+const firstLine = dialogueLines[0] ?? { name: '???', text: '' };
 ---
 
 <html lang='id' class='quest-page'>
@@ -71,9 +72,10 @@ const bgSrc = prologue.scene.background;
       />
       <div class='quest-scene-veil' aria-hidden='true'></div>
 
-      <p class='quest-chapter'>序章 — {prologue.title}</p>
+      <p class='quest-chapter'><span lang='ja'>序章</span> — {prologue.title}</p>
       <a
         class='quest-skip'
+        data-quest-skip
         href={GUIDE_URL}
         aria-label='Lewati prolog dan buka panduan immersion'
       >
@@ -92,13 +94,18 @@ const bgSrc = prologue.scene.background;
       </div>
 
       <div class='quest-dialogue-zone'>
-        <DialogueBox typingSpeedMs={30} />
+        <DialogueBox
+          typingSpeedMs={30}
+          initialName={firstLine.name}
+          initialText={firstLine.text}
+        />
       </div>
 
       <div
         class='quest-commandments'
         data-quest-commandments
         hidden
+        inert
         role='dialog'
         aria-modal='true'
         aria-label='4 hukum suci immersion'
@@ -127,15 +134,17 @@ const bgSrc = prologue.scene.background;
         </div>
       </div>
 
-      <div class='quest-finale' data-quest-finale hidden>
-        <p class='quest-finale-title'>To be continued…</p>
-        <p class='quest-finale-text'>
-          Prolog selesai! Bab berikutnya masih ditulis. Sambil menunggu,
-          baca panduan immersion dan mulai petualanganmu sekarang.
-        </p>
-        <a class='quest-finale-cta' href={GUIDE_URL}>
-          Lanjut ke Panduan Immersion
-        </a>
+      <div class='quest-finale' data-quest-finale hidden inert>
+        <div class='quest-finale-inner'>
+          <p class='quest-finale-title'>To be continued…</p>
+          <p class='quest-finale-text'>
+            Prolog selesai! Bab berikutnya masih ditulis. Sambil menunggu,
+            baca panduan immersion dan mulai petualanganmu sekarang.
+          </p>
+          <a class='quest-finale-cta' href={GUIDE_URL}>
+            Lanjut ke Panduan Immersion
+          </a>
+        </div>
       </div>
     </main>
 
@@ -145,6 +154,7 @@ const bgSrc = prologue.scene.background;
     >
       (() => {
         const dialogue = document.querySelector('[data-quest-dialogue]');
+        const skip = document.querySelector('[data-quest-skip]');
         const guide = document.querySelector('[data-quest-guide]');
         const commandments = document.querySelector(
           '[data-quest-commandments]'
@@ -167,18 +177,46 @@ const bgSrc = prologue.scene.background;
           if (api()) api().showLine(dialogueLines[i]);
         };
 
+        // Keep background controls out of the tab order / AT tree while a
+        // modal overlay is open (same inert-based approach as image-zoom.js).
+        const setBackgroundInert = (on) => {
+          if (dialogue) {
+            if (on) dialogue.setAttribute('inert', '');
+            else dialogue.removeAttribute('inert');
+          }
+          if (skip) {
+            if (on) skip.setAttribute('inert', '');
+            else skip.removeAttribute('inert');
+          }
+        };
+
         const openCommandments = () => {
           phase = 'commandments';
           speaking(false);
           commandments.hidden = false;
+          commandments.removeAttribute('inert');
           commandments.classList.add('is-open');
+          setBackgroundInert(true);
           if (commandmentsClose) commandmentsClose.focus();
         };
 
+        const closeCommandments = () => {
+          if (phase !== 'commandments') return;
+          phase = 'lines';
+          commandments.hidden = true;
+          commandments.setAttribute('inert', '');
+          setBackgroundInert(false);
+          dialogue.focus({ preventScroll: true });
+        };
+
         const openFinale = () => {
+          if (phase === 'finale') return;
           phase = 'finale';
           commandments.hidden = true;
+          commandments.setAttribute('inert', '');
           finale.hidden = false;
+          finale.removeAttribute('inert');
+          setBackgroundInert(true);
           const cta = finale.querySelector('a');
           if (cta) cta.focus();
         };
@@ -205,6 +243,11 @@ const bgSrc = prologue.scene.background;
         }
 
         document.addEventListener('keydown', (e) => {
+          if (e.repeat) return;
+          if (e.key === 'Escape') {
+            closeCommandments();
+            return;
+          }
           if (e.key !== 'Enter' && e.key !== ' ') return;
           const tag = (e.target.tagName || '').toLowerCase();
           if (tag === 'a' || tag === 'button') return;
@@ -219,6 +262,7 @@ const bgSrc = prologue.scene.background;
         } else {
           document.addEventListener('DOMContentLoaded', () => showAt(0));
         }
+        dialogue.focus({ preventScroll: true });
       })();
     </script>
   </body>

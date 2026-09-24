@@ -2,75 +2,85 @@
   "id": "prologue",
   "title": "Gua Kegagalan",
   "titleJp": "失敗の洞窟",
-  "scene": { "background": "/images/quest/prologue-cave.webp" },
+  "scene": {
+    "background": "/images/quest/prologue-cave.webp"
+  },
   "speakers": {
-    "guide": { "name": "???", "nameJp": "案内役（仮）", "voice": null },
-    "player": { "name": "Kamu", "nameJp": "あなた", "voice": null }
+    "guide": {
+      "name": "???",
+      "nameJp": "案内役（仮）",
+      "voice": null
+    },
+    "player": {
+      "name": "Kamu",
+      "nameJp": "あなた",
+      "voice": null
+    }
   },
   "lines": [
     {
       "speaker": "guide",
       "id": "p01",
-      "id_text": "Selamat datang di 'GoRakuDo'! Petualangan bahasa Jepangmu dimulai di sini!",
-      "jp_voice": "語楽道へようこそ！ここから冒険が始まるよ！"
+      "idText": "Selamat datang di 'GoRakuDo'! Petualangan bahasa Jepangmu dimulai di sini!",
+      "jpVoice": "語楽道へようこそ！ここから冒険が始まるよ！"
     },
     {
       "speaker": "guide",
       "id": "p02",
-      "id_text": "Tapi tunggu... auramu beda, ya? Jangan-jangan, kamu baru saja pulang dari 'Jalan Sesat'?",
-      "jp_voice": "でも待って……なんかオーラが違う？もしかして「邪道」から帰ってきた？"
+      "idText": "Tapi tunggu... auramu beda, ya? Jangan-jangan, kamu baru saja pulang dari 'Jalan Sesat'?",
+      "jpVoice": "でも待って……なんかオーラが違う？もしかして「邪道」から帰ってきた？"
     },
     {
       "speaker": "guide",
       "id": "p03",
-      "id_text": "Pernah lihat orang asing bicara bahasamu dengan kaku sekali? Padahal sudah belajar bertahun-tahun.",
-      "jp_voice": "外国人があなたの母国語を堅苦しく話すの見たことある？何年も勉強してるのに。"
+      "idText": "Pernah lihat orang asing bicara bahasamu dengan kaku sekali? Padahal sudah belajar bertahun-tahun.",
+      "jpVoice": "外国人があなたの母国語を堅苦しく話すの見たことある？何年も勉強してるのに。"
     },
     {
       "speaker": "guide",
       "id": "p04",
-      "id_text": "Itu karena mereka terjebak di 'Jalan Sesat'. Menghafal rumus dan menerjemahkan terus.",
-      "jp_voice": "それは彼らが「邪道」にハマってるからさ。公式暗記と翻訳の繰り返し。"
+      "idText": "Itu karena mereka terjebak di 'Jalan Sesat'. Menghafal rumus dan menerjemahkan terus.",
+      "jpVoice": "それは彼らが「邪道」にハマってるからさ。公式暗記と翻訳の繰り返し。"
     },
     {
       "speaker": "guide",
       "id": "p05",
-      "id_text": "Hasilnya? Meskipun sudah lulus N1, baca novel saja susah. Ngomong pun tetap kaku.",
-      "jp_voice": "結果は？N1合格してもラノベは読めず、話し方は堅い。"
+      "idText": "Hasilnya? Meskipun sudah lulus N1, baca novel saja susah. Ngomong pun tetap kaku.",
+      "jpVoice": "結果は？N1合格してもラノベは読めず、話し方は堅い。"
     },
     {
       "speaker": "guide",
       "id": "p06",
-      "id_text": "Kalau terus di sana, kamu bakal membatu jadi fosil bahasa. Sayang banget, kan?",
-      "jp_voice": "そこに居続けると、言葉の化石として石化しちゃうよ。もったいないでしょ？"
+      "idText": "Kalau terus di sana, kamu bakal membatu jadi fosil bahasa. Sayang banget, kan?",
+      "jpVoice": "そこに居続けると、言葉の化石として石化しちゃうよ。もったいないでしょ？"
     },
     {
       "speaker": "guide",
       "id": "p07",
-      "id_text": "Bagus! Sekarang, mari kita buang beban itu. Ikuti 4 hukum suci ini!",
-      "jp_voice": "よし！じゃあその荷物を捨てて、4つの聖なる掟に従おう！"
+      "idText": "Bagus! Sekarang, mari kita buang beban itu. Ikuti 4 hukum suci ini!",
+      "jpVoice": "よし！じゃあその荷物を捨てて、4つの聖なる掟に従おう！"
     }
   ],
   "commandments": [
     {
       "id": "c1",
-      "id_text": "Abaikan semua rumus Bunpou.",
-      "jp_voice": "文法公式をすべて無視せよ。"
+      "idText": "Abaikan semua rumus Bunpou.",
+      "jpVoice": "文法公式をすべて無視せよ。"
     },
     {
       "id": "c2",
-      "id_text": "Jangan terjemahkan Bahasa Jepang ke Indonesia.",
-      "jp_voice": "日本語をインドネシア語に訳すな。"
+      "idText": "Jangan terjemahkan Bahasa Jepang ke Indonesia.",
+      "jpVoice": "日本語をインドネシア語に訳すな。"
     },
     {
       "id": "c3",
-      "id_text": "Pahami Bahasa Jepang melalui konteks.",
-      "jp_voice": "文脈で日本語を理解せよ。"
+      "idText": "Pahami Bahasa Jepang melalui konteks.",
+      "jpVoice": "文脈で日本語を理解せよ。"
     },
     {
       "id": "c4",
-      "id_text": "Input bahasa Jepang Non-stop 24x365 hari.",
-      "jp_voice": "24時間365日、日本語を入力し続けよ。"
+      "idText": "Input bahasa Jepang Non-stop 24x365 hari.",
+      "jpVoice": "24時間365日、日本語を入力し続けよ。"
     }
   ],
   "heroVariants": {
@@ -78,24 +88,24 @@
       {
         "speaker": "player",
         "id": "h-beginner-01",
-        "id_text": "Aku cuma ingin bicara, tapi aku tak tahu apa-apa... Apa aku bisa belajar dengan cara alami?",
-        "jp_voice": "話したいけど何も知らない……私でも自然な方法で学べるかな？"
+        "idText": "Aku cuma ingin bicara, tapi aku tak tahu apa-apa... Apa aku bisa belajar dengan cara alami?",
+        "jpVoice": "話したいけど何も知らない……私でも自然な方法で学べるかな？"
       }
     ],
     "textbook": [
       {
         "speaker": "player",
         "id": "h-textbook-01",
-        "id_text": "Aku sudah hapal rumus, tapi mulutku kaku. Aku tidak mau jadi 'fosil'! Ajari aku!",
-        "jp_voice": "文法は暗記したのに口が固まる。化石になりたくない！教えて！"
+        "idText": "Aku sudah hapal rumus, tapi mulutku kaku. Aku tidak mau jadi 'fosil'! Ajari aku!",
+        "jpVoice": "文法は暗記したのに口が固まる。化石になりたくない！教えて！"
       }
     ],
     "anime": [
       {
         "speaker": "player",
         "id": "h-anime-01",
-        "id_text": "Aku dengar anime, tapi bicaranya tetap aneh. Aku mau bicara natural seperti mereka!",
-        "jp_voice": "アニメは聴いてるけど話すのは変。自然に話したい！"
+        "idText": "Aku dengar anime, tapi bicaranya tetap aneh. Aku mau bicara natural seperti mereka!",
+        "jpVoice": "アニメは聴いてるけど話すのは変。自然に話したい！"
       }
     ]
   }
