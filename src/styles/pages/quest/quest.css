@@ -168,9 +168,7 @@
   border: 2px solid var(--grkd-purple-400);
   border-radius: var(--border-radius-lg);
   background: oklch(from var(--grkd-surface) l c h / 0.92);
-  box-shadow:
-    0 0 0 2px oklch(from var(--grkd-black-base) l c h / 0.85),
-    0 12px 40px oklch(from var(--grkd-black-base) l c h / 0.6);
+  box-shadow: 0 12px 40px oklch(from var(--grkd-black-base) l c h / 0.6);
   color: var(--grkd-text-global);
   cursor: pointer;
 }
@@ -212,7 +210,7 @@
 .quest-dialogue-next {
   position: absolute;
   right: 1rem;
-  bottom: 0.6rem;
+  bottom: 1rem;
   display: inline-flex;
   color: var(--grkd-gold-base);
   line-height: 1;
