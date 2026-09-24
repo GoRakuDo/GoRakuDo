@@ -1,9 +1,9 @@
 {
   "id": "prologue",
-  "title": "Gua Kegagalan",
-  "titleJp": "失敗の洞窟",
+  "title": "Kelas yang Terhenti",
+  "titleJp": "停滞の教室",
   "scene": {
-    "background": "/images/quest/prologue-cave.webp"
+    "background": "/images/quest/prologue-classroom.webp"
   },
   "speakers": {
     "guide": {
@@ -21,44 +21,50 @@
     {
       "speaker": "guide",
       "id": "p01",
-      "idText": "Selamat datang di 'GoRakuDo'! Petualangan bahasa Jepangmu dimulai di sini!",
-      "jpVoice": "語楽道へようこそ！ここから冒険が始まるよ！"
+      "idText": "Selamat datang di 'GoRakuDo'! Yuk, sini ikut aku!",
+      "jpVoice": "語楽道へようこそ！こっちへおいで、僕についてきて！"
     },
     {
       "speaker": "guide",
       "id": "p02",
-      "idText": "Tapi tunggu... auramu beda, ya? Jangan-jangan, kamu baru saja pulang dari 'Jalan Sesat'?",
-      "jpVoice": "でも待って……なんかオーラが違う？もしかして「邪道」から帰ってきた？"
+      "idText": "Tapi tunggu... auramu beda, ya?",
+      "jpVoice": "でも待って……君のオーラ、少し違うかな？"
     },
     {
       "speaker": "guide",
       "id": "p03",
-      "idText": "Pernah lihat orang asing bicara bahasamu dengan kaku sekali? Padahal sudah belajar bertahun-tahun.",
-      "jpVoice": "外国人があなたの母国語を堅苦しく話すの見たことある？何年も勉強してるのに。"
+      "idText": "Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?",
+      "jpVoice": "なんだか、ちょっと遠回りな道を歩いてきたのかな？"
     },
     {
       "speaker": "guide",
       "id": "p04",
-      "idText": "Itu karena mereka terjebak di 'Jalan Sesat'. Menghafal rumus dan menerjemahkan terus.",
-      "jpVoice": "それは彼らが「邪道」にハマってるからさ。公式暗記と翻訳の繰り返し。"
+      "idText": "Itu dia! Orang Jepang itu!",
+      "jpVoice": "ほら！あの日本人がいるよ！"
     },
     {
       "speaker": "guide",
       "id": "p05",
-      "idText": "Hasilnya? Meskipun sudah lulus N1, baca novel saja susah. Ngomong pun tetap kaku.",
-      "jpVoice": "結果は？N1合格してもラノベは読めず、話し方は堅い。"
+      "idText": "Dia sudah puluhan tahun belajar bahasa Indonesia, tapi tetap begini.",
+      "jpVoice": "彼はもう何十年もインドネシア語を勉強してきたのに、ずっとこのままだ。"
     },
     {
       "speaker": "guide",
       "id": "p06",
-      "idText": "Kalau terus di sana, kamu bakal membatu jadi fosil bahasa. Sayang banget, kan?",
-      "jpVoice": "そこに居続けると、言葉の化石として石化しちゃうよ。もったいないでしょ？"
+      "idText": "Dia sendiri bingung, kenapa Indonesianya tidak makin lancar.",
+      "jpVoice": "彼自身、なぜインドネシア語がうまくならないのか葛藤してる。"
     },
     {
       "speaker": "guide",
       "id": "p07",
-      "idText": "Bagus! Sekarang, mari kita buang beban itu. Ikuti 4 hukum suci ini!",
-      "jpVoice": "よし！じゃあその荷物を捨てて、4つの聖なる掟に従おう！"
+      "idText": "Menurutmu, kenapa?",
+      "jpVoice": "なぜだと思う？"
+    },
+    {
+      "speaker": "guide",
+      "id": "p08",
+      "idText": "Ayo, kita lihat sekolah bahasa Indonesianya.",
+      "jpVoice": "彼が通うインドネシア語学校、覗いてみようか。"
     }
   ],
   "commandments": [

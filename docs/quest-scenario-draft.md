@@ -5,35 +5,43 @@
 
 ---
 
-## 序章: 「失敗の洞窟」
+## 序章: 「停滞の教室」
 
-**シーン描写**: 埃っぽい石壁に囲まれた洞窟。床にはボロボロになった文法書が山積みで、中には「石化」した人々の姿が…。
+**シーン描写**: 午後の陽射しが差し込むインドネシア語学校の教室。窓際の席で、ボロボロの文法書を山積みにした日本人が頭を抱えている。
 
 ### ダイアログボックス
 
 **案内役**:
-"Selamat datang di 'GoRakuDo'! Petualangan bahasa Jepangmu dimulai di sini!"
-（語楽道へようこそ！ここから冒険が始まるよ！）
+"Selamat datang di 'GoRakuDo'! Yuk, sini ikut aku!"
+（語楽道へようこそ！こっちへおいで、僕についてきて！）
 
 **案内役**:
-"Tapi tunggu... auramu beda, ya? Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?"
-（でも待って……オーラが少し違うかな？なんだか、ちょっと遠回りな道を歩いてきたのかも？）
+"Tapi tunggu... auramu beda, ya?"
+（でも待って……君のオーラ、少し違うかな？）
 
 **案内役**:
-"Pernah lihat orang asing bicara bahasamu dengan gigih, tapi kok terasa kaku terus?"
-（外国語を一生懸命話す人を見たことある？頑張ってるのに、なぜか喋り方が堅いんだ。）
+"Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?"
+（なんだか、ちょっと遠回りな道を歩いてきたのかな？）
 
 **案内役**:
-"Itu ciri khas jalan itu. Banyak menghafal rumus dan menerjemahkan, tapi... arahnya bukan ke sana."
-（それはあの道のクセさ。公式暗記と翻訳を繰り返すけど……目的地がちょっと違うのさ。）
+"Itu dia! Orang Jepang itu!"
+（ほら！あの日本人がいるよ！）
 
 **案内役**:
-"Hasilnya? Meskipun sudah lulus N1, baca novel saja susah. Ngomong pun tetap kaku."
-（結果は？N1合格してもラノベは読めず、話し方は堅い。）
+"Dia sudah puluhan tahun belajar bahasa Indonesia, tapi tetap begini."
+（彼はもう何十年もインドネシア語を勉強してきたのに、ずっとこのままだ。）
 
 **案内役**:
-"Jalan itu bisa bikin langkahmu terasa berat, seperti membatu. Sayang banget, kan?"
-（あの道をずっと歩くと、歩みが重くなって石みたいになっちゃう。もったいないでしょ？）
+"Dia sendiri bingung, kenapa Indonesianya tidak makin lancar."
+（彼自身、なぜインドネシア語がうまくならないのか葛藤してる。）
+
+**案内役**:
+"Menurutmu, kenapa?"
+（なぜだと思う？）
+
+**案内役**:
+"Ayo, kita lihat sekolah bahasa Indonesianya."
+（彼が通うインドネシア語学校、覗いてみようか。）
 
 ---
 

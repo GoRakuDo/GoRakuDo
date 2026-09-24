@@ -15,7 +15,7 @@
   background-color: var(--grkd-black-950);
 }
 
-/* Cave placeholder gradient (visible until /images/quest/prologue-cave.webp is placed). */
+/* Classroom placeholder gradient (visible until /images/quest/prologue-classroom.webp is placed). */
 .quest-scene-bg-fallback {
   position: absolute;
   inset: 0;

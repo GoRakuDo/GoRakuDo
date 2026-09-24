@@ -81,10 +81,12 @@ characters, 3D rendering, photorealism, heavy gradients.
 
 ---
 
-## シーン0: 失敗の洞窟（序章）
+## シーン0: インドネシア語学校（序章）— 2026-09-25 変更
 
-シナリオ: `docs/quest-scenario-draft.md` 序章。石化した人々と散乱する文法書が転がる薄暗い洞窟。
-保存先: `public/images/quest/prologue-cave.webp`
+⚠️ **当初は「失敗の洞窟」だったが、舞台が「インドネシア語学校」に変更された**（視点の逆転: 何十年もインドネシア語を勉強しているのに話せない日本人を見せ、読者が自分を重ねる構成）。
+
+シナリオ: `docs/quest-scenario-draft.md` 序章。
+保存先: `public/images/quest/prologue-classroom.webp`（※旧 `prologue-cave.webp` から差し替え。コード側の参照パスも更新が必要）
 
 ### 日本語版
 ```
@@ -96,15 +98,16 @@ characters, 3D rendering, photorealism, heavy gradients.
 参考画風：サムライジャックの背景美術、Alto's Odyssey、海外絵本のフラットイラスト。
 
 【構図】16:9の横長
-・薄暗い洞窟の内部。天井からは僅かな光が差し込む
-・床には古びた文法書・単語帳・過去問が散乱
-・壁際に「石化した人々」の彫像が数体（動きを止めた人型のシルエット、怖すぎないように）
-・奥に続く道がほのかに光っている（希望の示唆）
-・人物は描かない（石化した彫像以外）
+・インドネシアの小さな語学学校（sekolah bahasa）。教室の外観または教室内部
+・窓から南国の光が差し込む。扇風機、白い壁、テーブルと椅子
+・教室の机に、教科書とノートを広げて俯いている日本人男性の後ろ姿（中年・シルエット中心）
+・壁にインドネシア語の勉強ポスター、時計、黒板
+・人物は上記1人のみ（顔は描かない・後ろ姿）
+・文字・看板は描かない（後で合成する）
 
 【禁止事項】
 輪郭線、ペン入れ線、絵画的な筆致、リアルな描き込み、文字・数字、過度なグラデーション、
-ホラー・グロテスク表現（怖い化石ではなく、物語的な哀愁のある表現にする）
+人物の顔（後ろ姿のみ）、ホラー表現、暗すぎる雰囲気（哀愁はあるが、温かみを残す）
 ```
 
 ### 英語版
@@ -118,15 +121,16 @@ Style reference: Samurai Jack background art, Alto's Odyssey,
 modern children's book flat illustration.
 
 Composition (16:9 wide):
-Interior of a dim cave. A faint shaft of light falls from the ceiling.
-Old grammar books, vocabulary notebooks and test papers scattered on the floor.
-A few stone-petrified human figures stand along the walls as statues
-(still human silhouettes — melancholic, not scary).
-A path in the back glows faintly, hinting at hope.
-No living characters.
+A small Indonesian language school (sekolah bahasa) — classroom interior or exterior.
+Tropical light comes through the windows. Ceiling fan, white walls, tables and chairs.
+A middle-aged Japanese man sits hunched at a desk, back to the viewer,
+notebooks and textbooks open in front of him.
+Language-learning posters on the wall, a clock, a blackboard.
+Only this one figure; no faces (back view), no other people.
+No text, no signboards.
 
 Avoid: outlines, inked lines, painterly brushwork, realistic detail, text/letters,
-heavy gradients, horror or grotesque imagery.
+heavy gradients, faces, horror imagery, overly dark mood (melancholic but warm).
 ```
 
 ---
