@@ -25,13 +25,13 @@ const speakerNames: Record<string, string> = Object.fromEntries(
 );
 
 const dialogueLines = prologue.lines.map(line => ({
-  name: speakerNames[line.speaker] ?? '???',
+  name: speakerNames[line.speaker] ?? 'AI Kasou Yoshia',
   text: line.idText,
 }));
 
 const commandmentItems = prologue.commandments.map(item => item.idText);
 const bgSrc = prologue.scene.background;
-const firstLine = dialogueLines[0] ?? { name: '???', text: '' };
+const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 ---
 
 <html lang='id' class='quest-page'>

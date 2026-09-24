@@ -20,7 +20,7 @@ interface Props {
 }
 
 const {
-  speakerName = '???',
+  speakerName = 'AI Kasou Yoshia',
   typingSpeedMs = 30,
   initialName = speakerName,
   initialText = '',
@@ -41,7 +41,24 @@ const {
     >{initialName}</span
   >
   <p class='quest-dialogue-text' data-quest-dialogue-text>{initialText}</p>
-  <span class='quest-dialogue-next' aria-hidden='true'>▼</span>
+  <span class='quest-dialogue-next' aria-hidden='true'>
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='16'
+      height='16'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      stroke-width='2'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+      class='quest-next-icon lucide lucide-step-forward'
+      aria-hidden='true'
+    >
+      <line x1='6' x2='6' y1='4' y2='20'></line>
+      <polygon points='10 4 20 12 10 20'></polygon>
+    </svg>
+  </span>
 </div>
 <p
   class='quest-sr-only'
@@ -98,7 +115,7 @@ const {
         window.clearInterval(timer);
         timer = null;
       }
-      nameEl.textContent = line.name || '???';
+      nameEl.textContent = line.name || 'AI Kasou Yoshia';
       fullText = line.text || '';
       textEl.textContent = '';
       if (liveEl) liveEl.textContent = '';
