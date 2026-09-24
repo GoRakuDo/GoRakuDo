@@ -35,6 +35,7 @@ const {
   role='button'
   aria-label='Dialog: tekan Enter atau ketuk untuk lanjut'
   aria-describedby='quest-dialogue-live'
+  aria-keyshortcuts='Enter Space'
 >
   <span class='quest-dialogue-name' data-quest-dialogue-name
     >{initialName}</span
@@ -67,6 +68,9 @@ const {
     if (typeof motionQuery.addEventListener === 'function') {
       motionQuery.addEventListener('change', (e) => {
         reduceMotion = e.matches;
+        // Keep JS behavior in sync with CSS: if reduced motion is enabled
+        // mid-typing, complete the line immediately.
+        if (reduceMotion && !complete) finish();
       });
     }
 
@@ -97,6 +101,7 @@ const {
       nameEl.textContent = line.name || '???';
       fullText = line.text || '';
       textEl.textContent = '';
+      if (liveEl) liveEl.textContent = '';
       complete = false;
       root.classList.remove('is-complete');
       root.dispatchEvent(new CustomEvent('quest:line-start', { bubbles: true }));

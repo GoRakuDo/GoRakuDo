@@ -134,7 +134,15 @@ const firstLine = dialogueLines[0] ?? { name: '???', text: '' };
         </div>
       </div>
 
-      <div class='quest-finale' data-quest-finale hidden inert>
+      <div
+        class='quest-finale'
+        data-quest-finale
+        hidden
+        inert
+        role='dialog'
+        aria-modal='true'
+        aria-label='Prolog selesai'
+      >
         <div class='quest-finale-inner'>
           <p class='quest-finale-title'>To be continued…</p>
           <p class='quest-finale-text'>
@@ -154,7 +162,6 @@ const firstLine = dialogueLines[0] ?? { name: '???', text: '' };
     >
       (() => {
         const dialogue = document.querySelector('[data-quest-dialogue]');
-        const skip = document.querySelector('[data-quest-skip]');
         const guide = document.querySelector('[data-quest-guide]');
         const commandments = document.querySelector(
           '[data-quest-commandments]'
@@ -179,15 +186,14 @@ const firstLine = dialogueLines[0] ?? { name: '???', text: '' };
 
         // Keep background controls out of the tab order / AT tree while a
         // modal overlay is open (same inert-based approach as image-zoom.js).
+        // Selector-based so future focusables are covered without code change.
         const setBackgroundInert = (on) => {
-          if (dialogue) {
-            if (on) dialogue.setAttribute('inert', '');
-            else dialogue.removeAttribute('inert');
-          }
-          if (skip) {
-            if (on) skip.setAttribute('inert', '');
-            else skip.removeAttribute('inert');
-          }
+          document
+            .querySelectorAll('[data-quest-skip], [data-quest-dialogue]')
+            .forEach((el) => {
+              if (on) el.setAttribute('inert', '');
+              else el.removeAttribute('inert');
+            });
         };
 
         const openCommandments = () => {
@@ -204,6 +210,7 @@ const firstLine = dialogueLines[0] ?? { name: '???', text: '' };
           if (phase !== 'commandments') return;
           phase = 'lines';
           commandments.hidden = true;
+          commandments.classList.remove('is-open');
           commandments.setAttribute('inert', '');
           setBackgroundInert(false);
           dialogue.focus({ preventScroll: true });
@@ -244,6 +251,9 @@ const firstLine = dialogueLines[0] ?? { name: '???', text: '' };
 
         document.addEventListener('keydown', (e) => {
           if (e.repeat) return;
+          // Escape only closes the commandments overlay. The finale is a
+          // terminal screen by design (no going back), so Escape does
+          // nothing there.
           if (e.key === 'Escape') {
             closeCommandments();
             return;
