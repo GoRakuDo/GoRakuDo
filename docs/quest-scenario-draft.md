@@ -16,24 +16,24 @@
 （語楽道へようこそ！ここから冒険が始まるよ！）
 
 **案内役**:
-"Tapi tunggu... auramu beda, ya? Jangan-jangan, kamu baru saja pulang dari 'Jalan Sesat'?"
-（でも待って...なんかオーラが違う？もしかして「邪道」から帰ってきた？）
+"Tapi tunggu... auramu beda, ya? Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?"
+（でも待って……オーラが少し違うかな？なんだか、ちょっと遠回りな道を歩いてきたのかも？）
 
 **案内役**:
-"Pernah lihat orang asing bicara bahasamu dengan kaku sekali? Padahal sudah belajar bertahun-tahun."
-（外国人があなたの母国語を堅苦しく話すの見たことある？何年も勉強してるのに。）
+"Pernah lihat orang asing bicara bahasamu dengan gigih, tapi kok terasa kaku terus?"
+（外国語を一生懸命話す人を見たことある？頑張ってるのに、なぜか喋り方が堅いんだ。）
 
 **案内役**:
-"Itu karena mereka terjebak di 'Jalan Sesat'. Menghafal rumus dan menerjemahkan terus."
-（それは彼らが「邪道」にハマってるからさ。公式暗記と翻訳の繰り返し。）
+"Itu ciri khas jalan itu. Banyak menghafal rumus dan menerjemahkan, tapi... arahnya bukan ke sana."
+（それはあの道のクセさ。公式暗記と翻訳を繰り返すけど……目的地がちょっと違うのさ。）
 
 **案内役**:
 "Hasilnya? Meskipun sudah lulus N1, baca novel saja susah. Ngomong pun tetap kaku."
 （結果は？N1合格してもラノベは読めず、話し方は堅い。）
 
 **案内役**:
-"Kalau terus di sana, kamu bakal membatu jadi fosil bahasa. Sayang banget, kan?"
-（そこに居続けると、言葉の化石として石化しちゃうよ。もったいないでしょ？）
+"Jalan itu bisa bikin langkahmu terasa berat, seperti membatu. Sayang banget, kan?"
+（あの道をずっと歩くと、歩みが重くなって石みたいになっちゃう。もったいないでしょ？）
 
 ---
 
@@ -78,8 +78,8 @@
 （見ろ。目の前には二つの道が続いている。）
 
 **案内役**:
-"Jalan kiri: 'Metode Sekolah'. Menghafal rumus, menerjemahkan, dan ujian terus-menerus."
-（左の道：「学校式」。文法暗記、翻訳、テストの繰り返し。）
+"Jalan kiri: 'Metode Tradisional'. Menghafal rumus, menerjemahkan, dan ujian terus-menerus."
+（左の道：「従来の勉強方法」。文法暗記、翻訳、テストの繰り返し。）
 
 **案内役**:
 "Banyak orang terjebak di sini, lelah, lalu menyerah di tengah jalan. Apakah kamu ingin lewat sana?"
