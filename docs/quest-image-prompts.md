@@ -2,6 +2,29 @@
 
 AI画像生成用の雛形。各シーンの背景・キャラのプロンプトをここに蓄積する。
 
+## 生成ツール（実測済み・2026-09-25）
+
+Gemini の interactions API（`gemini-3.1-flash-image`、通称 Nano Banana）で生成する。
+
+```bash
+# 1. APIキーを .env.local に置く（gitignore済み）: GEMINI_API_KEY=...
+# 2. 生成
+cd /d/GoRakudo_Projects/GoRakuDo
+export $(grep -v '^#' .env.local | xargs)
+python scripts/generate-quest-image.py <prompt_file> <out.jpg> <aspect_ratio> <image_size> [ref1 ref2 ...]
+# 例: python scripts/generate-quest-image.py prompt.txt out.jpg 16:9 2K ref.webp
+```
+
+**APIの制約（実測）**
+- `mime_type` は **image/jpeg のみ**（`image/png` は 400 エラー）。透過も不可
+  → 透過が必要なキャラ素材は「無地の明るい背景で生成 → rembg等で切り抜き → WebP保存」の手順を取る
+- `aspect_ratio`: `16:9` / `1:1` など、`image_size`: `1K` / `2K` / `4K`
+- 出力サイズ実測: 16:9×2K = 2752×1536、1:1×1K = 1024×1024
+- 参考画像は複数渡せる（`input` 配列に image パートを並べる）
+- 生成物は**リサイズせず生のまま保存**する方針（必要に応じて ffmpeg で変換）
+
+---
+
 ## 共通ルール（全プロンプトに適用）
 
 - 構造: **画風（冒頭）→ 構図 → 禁止事項（末尾）**
