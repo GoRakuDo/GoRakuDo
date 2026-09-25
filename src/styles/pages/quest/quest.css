@@ -15,7 +15,7 @@
   background-color: var(--grkd-black-950);
 }
 
-/* Classroom placeholder gradient (visible until /images/quest/prologue-classroom.webp is placed). */
+/* Room placeholder gradient (visible until /images/quest/prologue-room.webp is placed). */
 .quest-scene-bg-fallback {
   position: absolute;
   inset: 0;

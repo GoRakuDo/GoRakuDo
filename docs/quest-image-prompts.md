@@ -81,12 +81,29 @@ characters, 3D rendering, photorealism, heavy gradients.
 
 ---
 
-## シーン0: インドネシア語学校（序章）— 2026-09-25 変更
+## シーン0: 深夜の勉強部屋（序章・**採用済み** 2026-09-25）
 
-⚠️ **当初は「失敗の洞窟」だったが、舞台が「インドネシア語学校」に変更された**（視点の逆転: 何十年もインドネシア語を勉強しているのに話せない日本人を見せ、読者が自分を重ねる構成）。
+✅ 生成完了・配置済み: `public/images/quest/prologue-room.webp`（2752×1536, 187KB WebP）
+API: Gemini `gemini-3.1-flash-image`（interactions API, JPEGのみ対応→ローカルでWebP変換）
+参照画像: `grkd_mainsite_hero_v2.webp`（モニター・デスク上の小物・配色の参照として）
+
+**採用プロンプト（v2・自然な空間統合版）**: `A:\Temp\quest-room-prompt-v2.txt`
+ポイント（ハリボテ対策の学習）:
+- 斜め45度の3/4ビュー、少し見下ろす（正面から貼られた構図の排除）
+- 机は床に接地：脚・接地影・ラグとの重なり・配線・ゴミ箱・リュック
+- **手前に椅子の背もたれを大きくボケさせて**前景→中景→後景の奥行きを作る
+- 光源をモニターの青紫＋右奥ランプのアンバーの2つに限定し、空間全体で陰影を連続させる
+- 禁止: コラージュ／切り貼り、浮遊物、遠近の不一致
+
+---
+
+## シーン0b: インドネシア語学校（序章後半・将来）
+
+⚠️ セリフ末尾（p08「Ayo, kita lihat sekolah bahasa Indonesianya」）で行く先として言及。
+実装は背景切替機能（マルチシーン）が必要になった時点で。
 
 シナリオ: `docs/quest-scenario-draft.md` 序章。
-保存先: `public/images/quest/prologue-classroom.webp`（※旧 `prologue-cave.webp` から差し替え。コード側の参照パスも更新が必要）
+保存先: `public/images/quest/prologue-classroom.webp`
 
 ### 日本語版
 ```

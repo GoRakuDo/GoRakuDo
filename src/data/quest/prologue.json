@@ -3,7 +3,7 @@
   "title": "Siswa di Dalam Cermin",
   "titleJp": "鏡の中の学生",
   "scene": {
-    "background": "/images/quest/prologue-classroom.webp"
+    "background": "/images/quest/prologue-room.webp"
   },
   "speakers": {
     "guide": {
