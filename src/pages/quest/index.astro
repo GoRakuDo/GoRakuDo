@@ -27,10 +27,13 @@ const speakerNames: Record<string, string> = Object.fromEntries(
 const dialogueLines = prologue.lines.map(line => ({
   name: speakerNames[line.speaker] ?? 'AI Kasou Yoshia',
   text: line.idText,
+  // VN staging flag: 'sharp' (default) or 'blur'. Omitted => 'sharp'.
+  bg: (line as { bg?: string }).bg ?? 'sharp',
 }));
 
 const commandmentItems = prologue.commandments.map(item => item.idText);
 const bgSrc = prologue.scene.background;
+const bgBlurSrc = (prologue.scene as { backgroundBlur?: string }).backgroundBlur;
 const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 ---
 
@@ -70,6 +73,19 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         onload="this.classList.add('is-loaded')"
         onerror='this.remove()'
       />
+      {bgBlurSrc && (
+        <img
+          class='quest-scene-bg-blur'
+          data-quest-bg-blur
+          src={bgBlurSrc}
+          alt=''
+          aria-hidden='true'
+          loading='eager'
+          decoding='async'
+          onload="this.classList.add('is-loaded')"
+          onerror='this.remove()'
+        />
+      )}
       <div class='quest-scene-veil' aria-hidden='true'></div>
 
       <p class='quest-chapter'><span lang='ja'>序章</span> — {prologue.title}</p>
@@ -82,7 +98,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         SKIP →
       </a>
 
-      <div class='quest-guide' data-quest-guide>
+      <div class='quest-guide is-hidden' data-quest-guide>
         <img
           src='/images/quest/guide.webp'
           alt=''
@@ -180,7 +196,20 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           if (guide) guide.classList.toggle('is-speaking', on);
         };
 
+        const scene = document.querySelector('.quest-scene');
+
+        // VN staging: background crossfade follows the line's `bg` flag
+        // ('blur' => blurred layer on), guide appears from the 2nd line
+        // on (index >= 1). Forward-only: no going back to earlier lines.
+        const applyStage = (i) => {
+          const line = dialogueLines[i];
+          const blurred = !!line && line.bg === 'blur';
+          if (scene) scene.classList.toggle('is-blurred', blurred);
+          if (guide) guide.classList.toggle('is-hidden', i < 1);
+        };
+
         const showAt = (i) => {
+          applyStage(i);
           if (api()) api().showLine(dialogueLines[i]);
         };
 

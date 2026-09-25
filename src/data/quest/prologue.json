@@ -3,7 +3,8 @@
   "title": "Siswa di Dalam Cermin",
   "titleJp": "鏡の中の学生",
   "scene": {
-    "background": "/images/quest/prologue-room.webp"
+    "background": "/images/quest/prologue-room.webp",
+    "backgroundBlur": "/images/quest/prologue-room-blur.webp"
   },
   "speakers": {
     "guide": {
@@ -21,48 +22,56 @@
     {
       "speaker": "guide",
       "id": "p01",
+      "bg": "sharp",
       "idText": "Selamat datang di 'GoRakuDo'! Yuk, sini ikut aku!",
       "jpVoice": "語楽道へようこそ！こっちへおいで、僕についてきて！"
     },
     {
       "speaker": "guide",
       "id": "p02",
+      "bg": "blur",
       "idText": "Tapi tunggu... auramu beda, ya?",
       "jpVoice": "でも待って……君のオーラ、少し違うかな？"
     },
     {
       "speaker": "guide",
       "id": "p03",
+      "bg": "blur",
       "idText": "Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?",
       "jpVoice": "なんだか、ちょっと遠回りな道を歩いてきたのかな？"
     },
     {
       "speaker": "guide",
       "id": "p04",
+      "bg": "blur",
       "idText": "Itu dia! Orang Jepang itu!",
       "jpVoice": "ほら！あの日本人がいるよ！"
     },
     {
       "speaker": "guide",
       "id": "p05",
+      "bg": "blur",
       "idText": "Dia sudah puluhan tahun belajar bahasa Indonesia, tapi tetap begini.",
       "jpVoice": "彼はもう何十年もインドネシア語を勉強してきたのに、ずっとこのままだ。"
     },
     {
       "speaker": "guide",
       "id": "p06",
+      "bg": "blur",
       "idText": "Dia sendiri bingung, kenapa Indonesianya tidak makin lancar.",
       "jpVoice": "彼自身、なぜインドネシア語がうまくならないのか葛藤してる。"
     },
     {
       "speaker": "guide",
       "id": "p07",
+      "bg": "blur",
       "idText": "Menurutmu, kenapa?",
       "jpVoice": "なぜだと思う？"
     },
     {
       "speaker": "guide",
       "id": "p08",
+      "bg": "blur",
       "idText": "Ayo, kita lihat sekolah bahasa Indonesianya.",
       "jpVoice": "彼が通うインドネシア語学校、覗いてみようか。"
     }
