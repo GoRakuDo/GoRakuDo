@@ -139,10 +139,10 @@
  */
 .quest-guide {
   position: absolute;
-  bottom: clamp(11rem, 30dvh, 17rem);
+  bottom: 0;
   left: 50%;
   z-index: 1;
-  width: clamp(140px, 32vw, 220px);
+  width: clamp(260px, min(46vw, 92dvh), 900px);
   opacity: 1;
   pointer-events: none;
   transform: translateX(-50%);
@@ -460,7 +460,7 @@
   }
 
   .quest-guide {
-    bottom: clamp(12rem, 32dvh, 19rem);
+    bottom: 0;
   }
 }
 
