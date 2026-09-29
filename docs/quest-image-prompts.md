@@ -188,3 +188,143 @@ heavy gradients, faces, horror imagery, overly dark mood (melancholic but warm).
 ```
 ※キャラは「単色背景で生成 → 背景除去（rembg等）→ 透過WebP」が最も安定
 ※保存先: `public/images/quest/guide.webp`
+
+---
+
+# 案内役「AI Kasou Yoshia」の表情差分（序章 p02〜p08）
+
+**確定アンカー**（同一性・構図・スケールの基準／これ以上ぶれると差し替え時にガタつく）:
+`output/gorakudo/Kasou_Yoshia/Female/fm_kasou_yoshia_smiletocamera.webp`
+
+- 生成: `workflows/edit_pruna_int8_api.json`（int8 + Pruna 8step、I2I）
+- `--image` に上のアンカーを渡す（＝顔・構図・大きさを固定）
+- 1024×1024・白背景・**バストアップ**を維持（CSSの枠がそのまま使える）
+- プロンプトは **booruタグ＋自然言語** の合わせ技（タグで構図/表情を、自然言語でニュアンスを指定）
+
+## 共通ベース（全プロンプトの土台）
+```
+same character as the reference image, exact same face,
+1girl, solo, upper body, bust portrait, long black hair, vivid royal blue inner streaks, blue tips,
+sharp narrow slanted blue eyes, hood down resting behind the neck, standing collar visible,
+plain black hooded jacket, no emblem, no logo, black turtleneck, thin silver cross necklace,
+plain pure white background, 2D anime style, crisp line art, flat matte cel shading,
+no text, no letters, no watermark, centered composition, evenly lit
+```
+
+## 7つの表情（台詞と対応）
+
+### p02 「Tapi tunggu... auramu beda, ya?」（気づき・首をかしげる）
+booru: `head tilt, raised eyebrow, closed mouth, sweatdrop, looking at viewer`
+```
+she tilts her head slightly to one side with a curious, slightly puzzled look,
+one eyebrow raised, a small sweatdrop near her temple, lips closed in a small unsure smile
+```
+
+### p03 「Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?」（優しい見抜き笑み）
+booru: `light smile, closed mouth, half-closed eyes, gentle expression, head tilt`
+```
+a warm, gentle knowing smile, eyes softly half-closed, sympathetic and reassuring,
+subtle head tilt, calm and kind
+```
+
+### p04 「Itu dia! Orang Jepang itu!」（驚き・指さし）
+booru: `surprised, wide eyes, open mouth, pointing, outstretched arm, looking away, excited`
+```
+she suddenly looks to the side and points with one hand, eyes wide with excitement,
+mouth open mid-shout, eyebrows raised, energetic pose
+```
+
+### p05 「Dia sudah puluhan tahun belajar bahasa Indonesia, tapi tetap begini.」（真剣・困り顔）
+booru: `serious, furrowed brow, frown, closed mouth, looking down, narrowed eyes`
+```
+a serious, troubled expression with a slight frown, eyebrows drawn together,
+eyes narrowed and looking slightly down, lips pressed closed, conveying concern
+```
+
+### p06 「Dia sendiri bingung, kenapa Indonesianya tidak makin lancar.」（同情・悲しみ）
+booru: `worried, sad, downturned mouth, sweatdrop, looking down, half-closed eyes`
+```
+a sympathetic, slightly sad expression, eyes half-closed and looking down,
+small frown, a faint sweatdrop, shoulders slightly lowered
+```
+
+### p07 「Menurutmu, kenapa?」（問いかけ・視線を合わせる）
+booru: `head tilt, raised eyebrow, closed mouth, looking at viewer, faint smile`
+```
+she tilts her head and looks straight at the viewer with a questioning, inviting expression,
+one eyebrow slightly raised, small closed-mouth smile
+```
+
+### p08 「Ayo, kita lihat sekolah bahasa Indonesianya.」（誘い・ウインク）
+booru: `wink, one eye closed, smile, open mouth, cheerful, looking at viewer`
+```
+a playful wink with one eye closed, bright cheerful smile with the mouth slightly open,
+mischievous inviting mood
+```
+
+## 実行例（表情を1つ作る）
+```bash
+cd /d/OSS_ProgramFiles/ComfyUI
+.venv/Scripts/python.exe tools/comfy-gen.py --workflow workflows/edit_pruna_int8_api.json \
+  --image "output/gorakudo/Kasou_Yoshia/Female/fm_kasou_yoshia_smiletocamera.webp" \
+  --prompt "<共通ベース> + <表情のbooruタグ> + <自然言語>" \
+  --seed 777 --out "output/gorakudo/Kasou_Yoshia/Female/expr_p02_tilt.png"
+```
+
+---
+
+# 上半身ポーズ集（booru ＋ 自然言語）
+
+表情と同じく **共通ベース＋アンカー** を使う。ファイル名は `pose_*.png`。
+
+### ① 手を差し伸べる（誘う）※p01「こっちへおいで」向け
+booru: `outstretched arm, reaching towards viewer, open hand, inviting, light smile, looking at viewer`
+```
+she holds out one hand toward the viewer with an open palm, inviting them to follow,
+warm smile, the other arm relaxed at her side
+```
+
+### ② 指さし（横を指す）※p04向け
+booru: `pointing, outstretched arm, looking away, open mouth, surprised eyes`
+```
+she points to her right with an extended arm, body slightly turned, excited surprised expression
+```
+
+### ③ 腕組み（自信・説明）
+booru: `crossed arms, closed mouth, smirk, looking at viewer, confident`
+```
+both arms crossed under the chest, confident knowing smirk, chin slightly raised
+```
+
+### ④ 考え中（顎に手）※p07向け
+booru: `hand on own chin, thinking, closed mouth, head tilt, looking up`
+```
+one hand raised to her chin, eyes looking up and away in thought, pensive thoughtful mood
+```
+
+### ⑤ 手を振る（挨拶）
+booru: `waving, hand up, open mouth, smile, looking at viewer, cheerful`
+```
+she raises one hand and waves hello, cheerful open smile, friendly greeting
+```
+
+### ⑥ 手のひらで示す（説明）※p08向け
+booru: `outstretched arm, open palm, gesturing, closed mouth, explaining, looking at viewer`
+```
+she gestures with an open palm as if presenting something beside her, calm explaining expression
+```
+
+### ⑦ サムズアップ（励まし）
+booru: `thumbs up, smile, open mouth, looking at viewer, energetic`
+```
+she gives a thumbs up with a bright energetic smile, encouraging mood
+```
+
+### ⑧ 腰に手（リラックス）
+booru: `hand on hip, closed mouth, slight smile, looking at viewer`
+```
+one hand resting on her hip, relaxed confident stance, slight smile
+```
+
+**注意**：③⑦⑧ は腕が広がるので、**「upper body」の枠を維持**しつつ手が切れないか確認（切れたら `--width 1024 --height 1280` で縦長に）。
+
