@@ -31,7 +31,7 @@ const dialogueLines = prologue.lines.map(line => ({
   bg: (line as { bg?: string }).bg ?? 'sharp',
 }));
 
-const commandmentItems = prologue.commandments.map(item => item.idText);
+const commandmentItems = ((prologue as { commandments?: Array<{ idText: string }> }).commandments ?? []).map(item => item.idText);
 const bgSrc = prologue.scene.background;
 const bgBlurSrc = (prologue.scene as { backgroundBlur?: string }).backgroundBlur;
 const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };

@@ -1,7 +1,7 @@
 {
   "id": "prologue",
-  "title": "Siswa di Dalam Cermin",
-  "titleJp": "鏡の中の学生",
+  "title": "Pertemuan dan Tanda Tanya",
+  "titleJp": "出会いと疑問",
   "scene": {
     "background": "/images/quest/prologue-room.webp",
     "backgroundBlur": "/images/quest/prologue-room-blur.webp"
@@ -9,7 +9,7 @@
   "speakers": {
     "guide": {
       "name": "AI Kasou Yoshia",
-      "nameJp": "案内役（仮）",
+      "nameJp": "AI カソウ・ヨシア",
       "voice": null
     },
     "player": {
@@ -20,108 +20,106 @@
   },
   "lines": [
     {
-      "speaker": "guide",
       "id": "p01",
+      "speaker": "guide",
       "bg": "sharp",
-      "idText": "Selamat datang di 'GoRakuDo'! Yuk, sini ikut aku!",
-      "jpVoice": "語楽道へようこそ！こっちへおいで、僕についてきて！"
+      "idText": "Tunggu sebentar ya...",
+      "jpVoice": "ちょっと待っててね...",
+      "audio": "/assets/voice/quest/p01.mp3"
     },
     {
-      "speaker": "guide",
       "id": "p02",
+      "speaker": "guide",
       "bg": "blur",
-      "idText": "Tapi tunggu... auramu beda, ya?",
-      "jpVoice": "でも待って……君のオーラ、少し違うかな？"
+      "idText": "Halo! Selamat datang! (*´∀`)/ Kamu mau mulai belajar bahasa Jepang, atau emang lagi belajar sekarang?",
+      "jpVoice": "(*´∀`)/いらっしゃーい！日本語を勉強したい方ですか？それと今お勉強されています？",
+      "audio": "/assets/voice/quest/p02.mp3",
+      "choices": [
+        {
+          "id": "c1_yes",
+          "idText": "Iya!",
+          "jpText": "はい！",
+          "nextLine": "p03_yes"
+        },
+        {
+          "id": "c1_no",
+          "idText": "Nggak juga",
+          "jpText": "いいえ",
+          "nextLine": "p03_no"
+        }
+      ]
     },
     {
+      "id": "p03_yes",
       "speaker": "guide",
-      "id": "p03",
       "bg": "blur",
-      "idText": "Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?",
-      "jpVoice": "なんだか、ちょっと遠回りな道を歩いてきたのかな？"
+      "idText": "Wah, pas banget kalau gitu! Di GoRakuDo, kita pakai metode pemerolehan bahasa alami. Namanya 'Immersion'.",
+      "jpVoice": "じゃあ、話が早いです！うち（語楽道）は自然言語習得っていう方式で教えてます。それはイマージョンって言うんです。",
+      "audio": "/assets/voice/quest/p03_yes.mp3",
+      "nextLine": "p04"
     },
     {
+      "id": "p03_no",
       "speaker": "guide",
+      "bg": "blur",
+      "idText": "Eh, gitu ya? Tapi kalau kamu suka anime atau budaya Jepang, pas banget lho! Dengerin bentar yuk, siapa tahu seru!",
+      "jpVoice": "えっ、そうなの？でもアニメとか日本の文化に少しでも興味があるなら大歓迎だよ！ちょっと話聞いていかない？",
+      "audio": "/assets/voice/quest/p03_no.mp3",
+      "nextLine": "p04"
+    },
+    {
       "id": "p04",
+      "speaker": "guide",
       "bg": "blur",
-      "idText": "Itu dia! Orang Jepang itu!",
-      "jpVoice": "ほら！あの日本人がいるよ！"
+      "idText": "Ngomong-ngomong, kamu pernah liat orang Jepang yang ngomong bahasa Indonesia tapi masih kaku atau terbata-bata?",
+      "jpVoice": "インドネシア語を片言で話してる日本人はみたことあります？",
+      "audio": "/assets/voice/quest/p04.mp3",
+      "choices": [
+        {
+          "id": "c2_yes",
+          "idText": "Pernah sih...",
+          "jpText": "あったことありますね...",
+          "nextLine": "p05"
+        },
+        {
+          "id": "c2_no",
+          "idText": "Belum pernah, deh.",
+          "jpText": "まだあったことないです。",
+          "nextLine": "p05"
+        }
+      ]
     },
     {
-      "speaker": "guide",
       "id": "p05",
+      "speaker": "guide",
       "bg": "blur",
-      "idText": "Dia sudah puluhan tahun belajar bahasa Indonesia, tapi tetap begini.",
-      "jpVoice": "彼はもう何十年もインドネシア語を勉強してきたのに、ずっとこのままだ。"
+      "idText": "Kenalanku tuh udah 8 tahun belajar bahasa Indonesia, tapi sampai sekarang ngomongnya masih belum lancar sama sekali, lho.",
+      "jpVoice": "僕の知り合いは、8年もインドネシア語を勉強してきたのにまだ全然上手く話せてないね。",
+      "audio": "/assets/voice/quest/p05.mp3"
     },
     {
-      "speaker": "guide",
       "id": "p06",
+      "speaker": "player",
       "bg": "blur",
-      "idText": "Dia sendiri bingung, kenapa Indonesianya tidak makin lancar.",
-      "jpVoice": "彼自身、なぜインドネシア語がうまくならないのか葛藤してる。"
+      "idText": "Emang belajar bahasa asing itu sesusah itu, ya?",
+      "jpVoice": "外国語を勉強するのが難しいんですね。",
+      "audio": "/assets/voice/quest/p06.mp3"
     },
     {
-      "speaker": "guide",
       "id": "p07",
-      "bg": "blur",
-      "idText": "Menurutmu, kenapa?",
-      "jpVoice": "なぜだと思う？"
-    },
-    {
       "speaker": "guide",
-      "id": "p08",
       "bg": "blur",
-      "idText": "Ayo, kita lihat sekolah bahasa Indonesianya.",
-      "jpVoice": "彼が通うインドネシア語学校、覗いてみようか。"
+      "idText": "Sebenernya gampang kok! Cuma caranya aja yang bikin hasilnya beda jauh. Mau liat gimana cara kenalanku itu belajar?",
+      "jpVoice": "実は簡単だけど、どうやって勉強するによって結果が違うんですよ。僕の知り合いはどうやって勉強か、みて行こうか？",
+      "audio": "/assets/voice/quest/p07.mp3",
+      "action": {
+        "type": "chapter_advance",
+        "idText": "Siap, tolong bimbingannya!",
+        "jpText": "よろしくお願いします。",
+        "target": "/quest/chapter-1"
+      }
     }
   ],
-  "commandments": [
-    {
-      "id": "c1",
-      "idText": "Abaikan semua rumus Bunpou.",
-      "jpVoice": "文法公式をすべて無視せよ。"
-    },
-    {
-      "id": "c2",
-      "idText": "Jangan terjemahkan Bahasa Jepang ke Indonesia.",
-      "jpVoice": "日本語をインドネシア語に訳すな。"
-    },
-    {
-      "id": "c3",
-      "idText": "Pahami Bahasa Jepang melalui konteks.",
-      "jpVoice": "文脈で日本語を理解せよ。"
-    },
-    {
-      "id": "c4",
-      "idText": "Input bahasa Jepang Non-stop 24x365 hari.",
-      "jpVoice": "24時間365日、日本語を入力し続けよ。"
-    }
-  ],
-  "heroVariants": {
-    "beginner": [
-      {
-        "speaker": "player",
-        "id": "h-beginner-01",
-        "idText": "Aku cuma ingin bicara, tapi aku tak tahu apa-apa... Apa aku bisa belajar dengan cara alami?",
-        "jpVoice": "話したいけど何も知らない……私でも自然な方法で学べるかな？"
-      }
-    ],
-    "textbook": [
-      {
-        "speaker": "player",
-        "id": "h-textbook-01",
-        "idText": "Aku sudah hapal rumus, tapi mulutku kaku. Aku tidak mau jadi 'fosil'! Ajari aku!",
-        "jpVoice": "文法は暗記したのに口が固まる。化石になりたくない！教えて！"
-      }
-    ],
-    "anime": [
-      {
-        "speaker": "player",
-        "id": "h-anime-01",
-        "idText": "Aku dengar anime, tapi bicaranya tetap aneh. Aku mau bicara natural seperti mereka!",
-        "jpVoice": "アニメは聴いてるけど話すのは変。自然に話したい！"
-      }
-    ]
-  }
+  "commandments": [],
+  "heroVariants": {}
 }
