@@ -5,75 +5,62 @@
 
 ---
 
-## 序章: 「鏡の中の学生」（Siswa di Dalam Cermin）
+## 序章: 「出会いと疑問」（Pertemuan dan Tanda Tanya）
 
-**シーン描写**: 午後の陽射しが差し込むインドネシア語学校の教室。窓際の席で、ボロボロの文法書を山積みにした日本人が頭を抱えている。
+**シーン描写**: 部屋（または夜のデスク）。案内役（AI Kasou Yoshia）がプレイヤーを迎える。
 
-### ダイアログボックス
-
-**案内役**:
-"Selamat datang di 'GoRakuDo'! Yuk, sini ikut aku!"
-（語楽道へようこそ！こっちへおいで、僕についてきて！）
+### ダイアログフロー
 
 **案内役**:
-"Tapi tunggu... auramu beda, ya?"
-（でも待って……君のオーラ、少し違うかな？）
+JP:「ちょっと待っててね...」
+ID: `"Tunggu sebentar ya..."`
 
 **案内役**:
-"Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?"
-（なんだか、ちょっと遠回りな道を歩いてきたのかな？）
+JP:「(*´∀`)/いらっしゃーい！日本語を勉強したい方ですか？それと今お勉強されています？」
+ID: `"Halo! Selamat datang! (*´∀`)/ Kamu mau mulai belajar bahasa Jepang, atau emang lagi belajar sekarang?"`
 
-**案内役**:
-"Itu dia! Orang Jepang itu!"
-（ほら！あの日本人がいるよ！）
-
-**案内役**:
-"Dia sudah puluhan tahun belajar bahasa Indonesia, tapi tetap begini."
-（彼はもう何十年もインドネシア語を勉強してきたのに、ずっとこのままだ。）
-
-**案内役**:
-"Dia sendiri bingung, kenapa Indonesianya tidak makin lancar."
-（彼自身、なぜインドネシア語がうまくならないのか葛藤してる。）
-
-**案内役**:
-"Menurutmu, kenapa?"
-（なぜだと思う？）
-
-**案内役**:
-"Ayo, kita lihat sekolah bahasa Indonesianya."
-（彼が通うインドネシア語学校、覗いてみようか。）
+#### 選択肢 1
+- **[はい！]** → ID: `[Iya!]`
+  - **案内役**:
+    JP:「じゃあ、話が早いです！うち（語楽道）は自然言語習得っていう方式で教えてます。それはイマージョンって言うんです。」
+    ID: `"Wah, pas banget kalau gitu! Di GoRakuDo, kita pakai metode pemerolehan bahasa alami. Namanya 'Immersion'."`
+- **[いいえ]** → ID: `[Nggak juga]`
+  - **案内役（回収ルート）**:
+    JP:「えっ、そうなの？でもアニメとか日本の文化に少しでも興味があるなら大歓迎だよ！ちょっと話聞いていかない？」
+    ID: `"Eh, gitu ya? Tapi kalau kamu suka anime atau budaya Jepang, pas banget lho! Dengerin bentar yuk, siapa tahu seru!"`
+    （合流）
 
 ---
 
-### ヒーロー選択
+**案内役**:
+JP:「インドネシア語を片言で話してる日本人はみたことあります？」
+ID: `"Ngomong-ngomong, kamu pernah liat orang Jepang yang ngomong bahasa Indonesia tapi masih kaku atau terbata-bata?"`
 
-#### 🥚 完全初心者（ひらがなも読めない）
-**プレイヤー**:
-"Aku cuma ingin bicara, tapi aku tak tahu apa-apa... Apa aku bisa belajar dengan cara alami?"
-（話したいけど何も知らない...私でも自然な方法で学べるかな？）
-
-#### 📖 教科書で停滞中（文法は知ってる、話せない）
-**プレイヤー**:
-"Aku sudah hapal rumus, tapi mulutku kaku. Aku tidak mau jadi 'fosil'! Ajari aku!"
-（文法は暗記したのに口が固まる。化石になりたくない！教えて！）
-
-#### 📺 アニメ勢（聞き取りは多少できる）
-**プレイヤー**:
-"Aku dengar anime, tapi bicaranya tetap aneh. Aku mau bicara natural seperti mereka!"
-（アニメは聴いてるけど話すのは変。自然に話したい！）
+#### 選択肢 2
+- **[あったことありますね...]** → ID: `[Pernah sih...]`
+- **[まだあったことないです。]** → ID: `[Belum pernah, deh.]`
 
 ---
 
-### 序章後半
+**案内役**:
+JP:「僕の知り合いは、8年もインドネシア語を勉強してきたのにまだ全然上手く話せてないね」
+ID: `"Kenalanku tuh udah 8 tahun belajar bahasa Indonesia, tapi sampai sekarang ngomongnya masih belum lancar sama sekali, lho."`
+
+**プレイヤー（心の声 / 合いの手）**:
+JP:「外国語を勉強するのが難しいんですね」
+ID: `"Emang belajar bahasa asing itu sesusah itu, ya?"`
 
 **案内役**:
-"Bagus! Sekarang, mari kita buang beban itu. Ikuti 4 hukum suci ini!"
-（よし！じゃあその荷物を捨てて、4つの聖なる掟に従おう！）
+JP:「実は簡単だけど、どうやって勉強するによって結果が違うんですよ。僕の知り合いはどうやって勉強か、みて行こうか？」
+ID: `"Sebenernya gampang kok! Cuma caranya aja yang bikin hasilnya beda jauh. Mau liat gimana cara kenalanku itu belajar?"`
 
-1. **"Abaikan semua rumus Bunpou."** (文法公式をすべて無視せよ。)
-2. **"Jangan terjemahkan Bahasa Jepang ke Indonesia."** (日本語をインドネシア語に訳すな。)
-3. **"Pahami Bahasa Jepang melalui konteks."** (文脈で日本語を理解せよ。)
-4. **"Input bahasa Jepang Non-stop 24x365 hari."** (24時間365日、日本語を入力し続けよ。)
+---
+
+### アクションボタン（第1話への誘導）
+ダイアログ内に次の決定ボタンを表示：
+- **ボタン**: **「よろしくお願いします。」**
+  - ID表記: `[Siap, mohon bimbingannya!]`（または `[Oke, ayo kita lihat!]`）
+  - 挙動: クリックで画面が暗転し、第1話（教室の日本人シーン）へ遷移。
 
 ---
 
