@@ -95,7 +95,7 @@
       "speaker": "guide",
       "bg": "blur",
       "idText": "Ngomong-ngomong, kamu pernah liat orang Jepang yang ngomong bahasa Indonesia tapi masih kaku atau terbata-bata?",
-      "jpVoice": "インドネシア語を片言で話してる日本人はみたことあります？",
+      "jpVoice": "[curious]インドネシア語を片言で話してる日本人はみたことあります？",
       "audio": "/assets/voice/quest/p04.mp3",
       "choices": [
         {
@@ -117,7 +117,7 @@
       "speaker": "guide",
       "bg": "blur",
       "idText": "Kenalanku tuh udah 8 tahun belajar bahasa Indonesia, tapi sampai sekarang ngomongnya masih belum lancar sama sekali, lho.",
-      "jpVoice": "僕の知り合いは、8年もインドネシア語を勉強してきたのにまだ全然上手く話せてないね。",
+      "jpVoice": "[worried][sympathetic][nostalgic]僕の知り合いは、[break][nostalgic]8年もインドネシア語を勉強してきたのに、[long-break][uncertain]まだ全然上手く話せてないね...",
       "audio": "/assets/voice/quest/p05.mp3"
     },
     {
@@ -133,7 +133,7 @@
       "speaker": "guide",
       "bg": "blur",
       "idText": "Sebenernya gampang kok! Cuma caranya aja yang bikin hasilnya beda jauh. Mau liat gimana cara kenalanku itu belajar?",
-      "jpVoice": "実は簡単だけど、どうやって勉強するによって結果が違うんですよ。僕の知り合いはどうやって勉強か、みて行こうか？",
+      "jpVoice": "[cheerful][hopeful]実は簡単だけど、[break][compassionate]どうやって勉強するかによって結果が違うんですよ。[long-break]僕の知り合いはどうやって勉強したか、[break][calm]みて行こうか？",
       "audio": "/assets/voice/quest/p07.mp3",
       "action": {
         "type": "chapter_advance",
