@@ -32,7 +32,7 @@
       "speaker": "guide",
       "bg": "blur",
       "idText": "Halo! Selamat datang! (*´∀`)/ Kamu mau mulai belajar bahasa Jepang, atau emang lagi belajar sekarang?",
-      "jpVoice": "(*´∀`)/いらっしゃーい！日本語を勉強したい方ですか？それと今お勉強されています？",
+      "jpVoice": "[delighted]いらっしゃーい！[break][curious][calm]日本語を勉強したい方ですか？[break]それと、[break]今お勉強されています？",
       "audio": "/assets/voice/quest/p02.mp3",
       "choices": [
         {
