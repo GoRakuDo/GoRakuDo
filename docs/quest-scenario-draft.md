@@ -24,11 +24,18 @@ ID: `"Halo! Selamat datang! (*´∀`)/ Kamu mau mulai belajar bahasa Jepang, ata
   - **案内役**:
     JP:「じゃあ、話が早いです！うち（語楽道）は自然言語習得っていう方式で教えてます。それはイマージョンって言うんです。」
     ID: `"Wah, pas banget kalau gitu! Di GoRakuDo, kita pakai metode pemerolehan bahasa alami. Namanya 'Immersion'."`
+  - **案内役（イマージョン解説）**:
+    JP:「イマージョンは文法と翻訳なしで、ゼロから赤ちゃんみたいに自然習得するんです。」
+    ID: `"Immersion itu belajar tanpa ngafal tata bahasa atau nerjemahin, persis kayak bayi yang menyerap bahasa pertamanya secara alami dari nol."`
 - **[いいえ]** → ID: `[Nggak juga]`
-  - **案内役（回収ルート）**:
-    JP:「えっ、そうなの？でもアニメとか日本の文化に少しでも興味があるなら大歓迎だよ！ちょっと話聞いていかない？」
-    ID: `"Eh, gitu ya? Tapi kalau kamu suka anime atau budaya Jepang, pas banget lho! Dengerin bentar yuk, siapa tahu seru!"`
-    （合流）
+  - **案内役（見送りルート → ホーム戻り）**:
+    JP:「そうっすか？また今度で興味があればぜひ、大歓迎です！」
+    ID: `"Oh gitu ya? Santai aja! Kalau kapan-kapan tertarik, pintu GoRakuDo selalu terbuka buat kamu!"`
+    - ボタン: `[Sampai jumpa!]`（またね！） → 押すと `localStorage` にフラグ保存して `/` へ戻る。
+  - **再訪時（フラグ保持者）**:
+    JP:「おかえり！始めようか？」
+    ID: `"Wah, kamu balik lagi! Gimana, mau mulai sekarang?"`
+    （「はい！」で上記イマージョン解説へ合流）
 
 ---
 

@@ -45,9 +45,18 @@
           "id": "c1_no",
           "idText": "Nggak juga",
           "jpText": "いいえ",
-          "nextLine": "p03_no"
+          "nextLine": "p03_no_exit"
         }
       ]
+    },
+    {
+      "id": "p01_return",
+      "speaker": "guide",
+      "bg": "blur",
+      "idText": "Wah, kamu balik lagi! Gimana, mau mulai sekarang?",
+      "jpVoice": "[happy][excited]おかえり！[break]始めようか？",
+      "audio": "/assets/voice/quest/p01_return.mp3",
+      "nextLine": "p03_yes"
     },
     {
       "id": "p03_yes",
@@ -56,16 +65,30 @@
       "idText": "Wah, pas banget kalau gitu! Di GoRakuDo, kita pakai metode pemerolehan bahasa alami. Namanya 'Immersion'.",
       "jpVoice": "[confident][emphasis]じゃあ、話が早いです！[long-break]うち、<|phoneme_start|>go0ra1ku1do1u1<|phoneme_end|>は自然言語習得っていう方式で教えてます。[break][confident]それはイマージョンって言うんです。",
       "audio": "/assets/voice/quest/p03_yes.mp3",
+      "nextLine": "p03_yes_desc"
+    },
+    {
+      "id": "p03_yes_desc",
+      "speaker": "guide",
+      "bg": "blur",
+      "idText": "Immersion itu belajar tanpa ngafal tata bahasa atau nerjemahin, persis kayak bayi yang menyerap bahasa pertamanya secara alami dari nol.",
+      "jpVoice": "[confident]イマージョンは文法と翻訳なしで、[break][soft tone]ゼロから赤ちゃんみたいに自然習得するんです。",
+      "audio": "/assets/voice/quest/p03_yes_desc.mp3",
       "nextLine": "p04"
     },
     {
-      "id": "p03_no",
+      "id": "p03_no_exit",
       "speaker": "guide",
       "bg": "blur",
-      "idText": "Eh, gitu ya? Tapi kalau kamu suka anime atau budaya Jepang, pas banget lho! Dengerin bentar yuk, siapa tahu seru!",
-      "jpVoice": "えっ、そうなの？でもアニメとか日本の文化に少しでも興味があるなら大歓迎だよ！ちょっと話聞いていかない？",
-      "audio": "/assets/voice/quest/p03_no.mp3",
-      "nextLine": "p04"
+      "idText": "Oh gitu ya? Santai aja! Kalau kapan-kapan tertarik, pintu GoRakuDo selalu terbuka buat kamu!",
+      "jpVoice": "[relaxed]そうっすか？[break][delighted]また今度で興味があればぜひ、[break]大歓迎です！",
+      "audio": "/assets/voice/quest/p03_no_exit.mp3",
+      "action": {
+        "type": "exit_to_home",
+        "idText": "Sampai jumpa!",
+        "jpText": "またね！",
+        "target": "/"
+      }
     },
     {
       "id": "p04",
