@@ -191,140 +191,160 @@ heavy gradients, faces, horror imagery, overly dark mood (melancholic but warm).
 
 ---
 
-# 案内役「AI Kasou Yoshia」の表情差分（序章 p02〜p08）
+# 案内役「AI Kasou Yoshia」最新シナリオ表情・ポーズ集（全9セリフ対応）
 
-**確定アンカー**（同一性・構図・スケールの基準／これ以上ぶれると差し替え時にガタつく）:
+確定アンカー（同一性・構図・配色の絶対基準）:
 `output/gorakudo/Kasou_Yoshia/Female/fm_kasou_yoshia_smiletocamera.webp`
 
-- 生成: `workflows/edit_pruna_int8_api.json`（int8 + Pruna 8step、I2I）
-- `--image` に上のアンカーを渡す（＝顔・構図・大きさを固定）
-- 1024×1024・白背景・**バストアップ**を維持（CSSの枠がそのまま使える）
-- プロンプトは **booruタグ＋自然言語** の合わせ技（タグで構図/表情を、自然言語でニュアンスを指定）
+- モデル: Qwen-Image-2.1（bf16 または int8 + Pruna 8step、I2I / Edit）
+- `--image` に上記のアンカーを渡す（顔の造形・髪型・衣装を固定）
+- 解像度: 1024×1024（または縦長 1024×1280、手のポーズで切れる場合）
+- スタイル: 白背景、2Dセル画調、マット塗装、クッキリした線画
 
-## 共通ベース（全プロンプトの土台）
+---
+
+## 共通ベースプロンプト（全セリフ共通の土台）
 ```
 same character as the reference image, exact same face,
 1girl, solo, upper body, bust portrait, long black hair, vivid royal blue inner streaks, blue tips,
 sharp narrow slanted blue eyes, hood down resting behind the neck, standing collar visible,
 plain black hooded jacket, no emblem, no logo, black turtleneck, thin silver cross necklace,
-plain pure white background, 2D anime style, crisp line art, flat matte cel shading,
+plain pure white background, 2D anime style, crisp clean line art, flat matte cel shading,
 no text, no letters, no watermark, centered composition, evenly lit
-```
-
-## 7つの表情（台詞と対応）
-
-### p02 「Tapi tunggu... auramu beda, ya?」（気づき・首をかしげる）
-booru: `head tilt, raised eyebrow, closed mouth, sweatdrop, looking at viewer`
-```
-she tilts her head slightly to one side with a curious, slightly puzzled look,
-one eyebrow raised, a small sweatdrop near her temple, lips closed in a small unsure smile
-```
-
-### p03 「Kayaknya kamu habis berjalan di jalan yang agak berliku, ya?」（優しい見抜き笑み）
-booru: `light smile, closed mouth, half-closed eyes, gentle expression, head tilt`
-```
-a warm, gentle knowing smile, eyes softly half-closed, sympathetic and reassuring,
-subtle head tilt, calm and kind
-```
-
-### p04 「Itu dia! Orang Jepang itu!」（驚き・指さし）
-booru: `surprised, wide eyes, open mouth, pointing, outstretched arm, looking away, excited`
-```
-she suddenly looks to the side and points with one hand, eyes wide with excitement,
-mouth open mid-shout, eyebrows raised, energetic pose
-```
-
-### p05 「Dia sudah puluhan tahun belajar bahasa Indonesia, tapi tetap begini.」（真剣・困り顔）
-booru: `serious, furrowed brow, frown, closed mouth, looking down, narrowed eyes`
-```
-a serious, troubled expression with a slight frown, eyebrows drawn together,
-eyes narrowed and looking slightly down, lips pressed closed, conveying concern
-```
-
-### p06 「Dia sendiri bingung, kenapa Indonesianya tidak makin lancar.」（同情・悲しみ）
-booru: `worried, sad, downturned mouth, sweatdrop, looking down, half-closed eyes`
-```
-a sympathetic, slightly sad expression, eyes half-closed and looking down,
-small frown, a faint sweatdrop, shoulders slightly lowered
-```
-
-### p07 「Menurutmu, kenapa?」（問いかけ・視線を合わせる）
-booru: `head tilt, raised eyebrow, closed mouth, looking at viewer, faint smile`
-```
-she tilts her head and looks straight at the viewer with a questioning, inviting expression,
-one eyebrow slightly raised, small closed-mouth smile
-```
-
-### p08 「Ayo, kita lihat sekolah bahasa Indonesianya.」（誘い・ウインク）
-booru: `wink, one eye closed, smile, open mouth, cheerful, looking at viewer`
-```
-a playful wink with one eye closed, bright cheerful smile with the mouth slightly open,
-mischievous inviting mood
-```
-
-## 実行例（表情を1つ作る）
-```bash
-cd /d/OSS_ProgramFiles/ComfyUI
-.venv/Scripts/python.exe tools/comfy-gen.py --workflow workflows/edit_pruna_int8_api.json \
-  --image "output/gorakudo/Kasou_Yoshia/Female/fm_kasou_yoshia_smiletocamera.webp" \
-  --prompt "<共通ベース> + <表情のbooruタグ> + <自然言語>" \
-  --seed 777 --out "output/gorakudo/Kasou_Yoshia/Female/expr_p02_tilt.png"
 ```
 
 ---
 
-# 上半身ポーズ集（booru ＋ 自然言語）
+## 各セリフと完全連動するポーズ・表情プロンプト（自然言語 ＋ booruタグ）
 
-表情と同じく **共通ベース＋アンカー** を使う。ファイル名は `pose_*.png`。
-
-### ① 手を差し伸べる（誘う）※p01「こっちへおいで」向け
-booru: `outstretched arm, reaching towards viewer, open hand, inviting, light smile, looking at viewer`
+### 1. `p01` 「ちょっと待っててね...」
+- **声のトーン**: リラックスした吐息混じりの親しい囁き（「ふっ、ちょっと待っててね」）。
+- **表情・ポーズ**: 親しい友人に向けた柔らかな微笑み。片手を胸のあたりで軽く立てて「少しだけ待ってて」の仕草。
+- **booruタグ**: `soft smile, gentle eyes, closed mouth, relaxed, one hand slightly raised, looking at viewer`
+- **自然言語プロンプト**:
 ```
-she holds out one hand toward the viewer with an open palm, inviting them to follow,
-warm smile, the other arm relaxed at her side
-```
-
-### ② 指さし（横を指す）※p04向け
-booru: `pointing, outstretched arm, looking away, open mouth, surprised eyes`
-```
-she points to her right with an extended arm, body slightly turned, excited surprised expression
+a soft relaxed smile with gentle half-lidded eyes, looking warmly at the viewer,
+she lightly raises one open hand in a casual "wait just a second" gesture,
+relaxed and intimate mood, calm breath
 ```
 
-### ③ 腕組み（自信・説明）
-booru: `crossed arms, closed mouth, smirk, looking at viewer, confident`
+---
+
+### 2. `p02` 「いらっしゃーい！日本語を勉強したい方ですか？それと、今お勉強されています？」
+- **声のトーン**: `[delighted]` ウェルカム感あふれる明るい挨拶 → `[curious][calm]` 優しい首かしげの問いかけ。
+- **表情・ポーズ**: 満面の笑顔で片手を高く上げて振る（ウェルカム）、少し首をかしげて興味深そうにこちらを覗き込む。
+- **booruタグ**: `cheerful smile, open mouth, wide bright eyes, waving, hand raised, head tilt, welcoming, energetic, looking at viewer`
+- **自然言語プロンプト**:
 ```
-both arms crossed under the chest, confident knowing smirk, chin slightly raised
+a bright cheerful welcoming smile with mouth slightly open, happy sparkling eyes,
+she tilts her head curiously while raising one hand to wave a warm hello,
+inviting and hospitable host stance, friendly greeting
 ```
 
-### ④ 考え中（顎に手）※p07向け
-booru: `hand on own chin, thinking, closed mouth, head tilt, looking up`
+---
+
+### 3. `p03_yes` 「じゃあ、話が早いです！うち、語楽道は自然言語習得っていう方式で教えてます。それはイマージョンって言うんです。」
+- **声のトーン**: `[confident][emphasis]` 落ち着きと説得力に満ちたプロの風格。確固たる自信。
+- **表情・ポーズ**: 自信に満ちた笑み（不敵な笑み・smirk）。胸の下で軽く腕組み、または片手を胸に当てて誇らしげ。
+- **booruタグ**: `confident, smirk, knowing smile, crossed arms, raised chin, sharp gaze, looking at viewer`
+- **自然言語プロンプト**:
 ```
-one hand raised to her chin, eyes looking up and away in thought, pensive thoughtful mood
+a confident and proud smirk, sharp intelligent eyes looking directly at the viewer with quiet authority,
+chin slightly raised, arms crossed beneath her chest in a poised and knowledgeable posture,
+trustworthy professional mentor look
 ```
 
-### ⑤ 手を振る（挨拶）
-booru: `waving, hand up, open mouth, smile, looking at viewer, cheerful`
+---
+
+### 4. `p03_yes_desc` 「イマージョンは文法と翻訳なしで、ゼロから赤ちゃんみたいに自然習得するんです。」
+- **声のトーン**: `[confident][soft tone]` 知的で親切な解説。優しく語りかける先生のトーン。
+- **表情・ポーズ**: 優しい知的な笑顔。片手のひらを上に向けて差し出し、何かを紹介・解説するプレゼンジェスチャー。
+- **booruタグ**: `gentle smile, calm eyes, open palm gesture, outstretched arm, explaining, presenting, looking at viewer`
+- **自然言語プロンプト**:
 ```
-she raises one hand and waves hello, cheerful open smile, friendly greeting
+a calm intellectual smile with kind reassuring eyes,
+she extends one arm forward with an open palm facing upward in a gentle explaining gesture,
+as if showing a clear concept, articulate and welcoming teacher stance
 ```
 
-### ⑥ 手のひらで示す（説明）※p08向け
-booru: `outstretched arm, open palm, gesturing, closed mouth, explaining, looking at viewer`
+---
+
+### 5. `p03_no_exit` 「そうっすか？また今度で興味があればぜひ、大歓迎です！」
+- **声のトーン**: `[relaxed]` 肩の力が抜けたフランクな返答 → `[delighted]` 押し付けがましくない爽やかな見送り。
+- **表情・ポーズ**: 片手を軽く挙げて「じゃあね！」と爽やかに手を振る。片手を腰に当ててリラックスした立ち姿。
+- **booruタグ**: `relaxed smile, one eye closed or gentle squint, casual wave, hand on hip, friendly parting, looking at viewer`
+- **自然言語プロンプト**:
 ```
-she gestures with an open palm as if presenting something beside her, calm explaining expression
+a casual and easygoing smile with relaxed eyes, no pressure at all,
+one hand resting loosely on her hip while her other hand gives a small cheerful farewell wave,
+breezy and friendly parting posture
 ```
 
-### ⑦ サムズアップ（励まし）
-booru: `thumbs up, smile, open mouth, looking at viewer, energetic`
+---
+
+### 6. `p01_return` 「おかえり！始めようか？」
+- **声のトーン**: `[happy][excited]` 親密で包容力のある、耳元で語りかけるようなウィスパーボイス。
+- **表情・ポーズ**: 少し身を乗り出して、温かい眼差しで微笑む。両手または片手を差し伸べて「おいで」の仕草。
+- **booruタグ**: `tender smile, blushing slightly, reaching towards viewer, leaning forward, welcoming back, intimate, looking at viewer`
+- **自然言語プロンプト**:
 ```
-she gives a thumbs up with a bright energetic smile, encouraging mood
+a sweet and tender affectionate smile, softly leaning slightly closer toward the viewer,
+gentle loving eyes, holding out a hand to welcome the viewer back in an intimate reunion mood,
+comforting and cozy presence
 ```
 
-### ⑧ 腰に手（リラックス）
-booru: `hand on hip, closed mouth, slight smile, looking at viewer`
+---
+
+### 7. `p04` 「インドネシア語を片言で話してる日本人はみたことあります？」
+- **声のトーン**: `[curious]` 好奇心と興味を引く自然な問いかけ。「ねぇ、ある？」のノリ。
+- **表情・ポーズ**: 顎に指先を当てて「うーん？」と考える、または人差し指を1本立てて興味深そうに眉を上げる。
+- **booruタグ**: `curious, raised eyebrow, finger on own chin or cheek, thinking, head tilt, inquisitive gaze, looking at viewer`
+- **自然言語プロンプト**:
 ```
-one hand resting on her hip, relaxed confident stance, slight smile
+an intrigued and curious expression with one eyebrow slightly arched, head tilted,
+one index finger lightly touching her cheek or chin in a pensive questioning pose,
+leaning in with an inquisitive sparkle in her eyes
 ```
 
-**注意**：③⑦⑧ は腕が広がるので、**「upper body」の枠を維持**しつつ手が切れないか確認（切れたら `--width 1024 --height 1280` で縦長に）。
+---
+
+### 8. `p05` 「僕の知り合いは、8年もインドネシア語を勉強してきたのに、まだ全然上手く話せてないね...」
+- **声のトーン**: `[worried][sympathetic][nostalgic]` 呆れと残念さ、肩を落として世間話をするような語尾の抜け感。
+- **表情・ポーズ**: 眉を八の字に寄せた困り顔・同情の表情。小さく肩をすくめる、または片手を後頭部に当てて困惑。
+- **booruタグ**: `worried, sympathetic, furrowed brow, troubled smile, sweatdrop, shrugging or hand behind head, looking down slightly`
+- **自然言語プロンプト**:
+```
+a sympathetic, slightly troubled expression with gently knitted eyebrows and a wry bittersweet smile,
+small sweatdrop near temple, shoulders slightly slumped or shrugging in mild disbelief,
+looking with compassionate understanding
+```
+
+---
+
+### 9. `p07` 「実は簡単だけど、どうやって勉強するかによって結果が違うんですよ。僕の知り合いはどうやって勉強したか、みて行こうか？」
+- **声のトーン**: `[cheerful][hopeful][compassionate][calm]` 前向きな説得力から、次の冒険へ手を取るワクワク感。
+- **表情・ポーズ**: 茶目っ気のあるウインク、または輝く笑顔。こちらに手をしっかり差し伸べて「さあ、一緒に行こう！」と誘う。
+- **booruタグ**: `wink or bright confident smile, outstretched hand towards viewer, inviting, dynamic pose, hopeful, leading the way`
+- **自然言語プロンプト**:
+```
+a bright hopeful smile with a charming wink in one eye, radiant and inspiring energy,
+she firmly extends her open hand toward the viewer inviting them to take it and follow her forward,
+heroic and encouraging guide leading into the journey
+```
+
+---
+
+## 🎨 生成コマンドの書き方例（ComfyUI / Colab）
+
+```bash
+cd D:\OSS_ProgramFiles\ComfyUI
+.venv\Scripts\python.exe tools\comfy-gen.py \
+  --workflow workflows/edit_pruna_int8_api.json \
+  --image "output/gorakudo/Kasou_Yoshia/Female/fm_kasou_yoshia_smiletocamera.webp" \
+  --prompt "<共通ベース> + <各セリフのbooruタグ> + <各セリフの自然言語プロンプト>" \
+  --seed 777 \
+  --out "output/gorakudo/Kasou_Yoshia/Female/p02_welcoming.png"
+```
+（※ Colab の G4 GPU ハイブリッドUI環境で生成する場合は、ブラウザ `http://127.0.0.1:8188` からアンカー画像をドラッグ＆ドロップして、上記プロンプトを貼るだけでOK！）
+
 
