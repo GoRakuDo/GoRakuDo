@@ -24,7 +24,7 @@
       "speaker": "guide",
       "bg": "sharp",
       "idText": "Tunggu sebentar ya...",
-      "jpVoice": "ちょっと待っててね...",
+      "jpVoice": "[standard Japanese accent][gasping][excited]ちょっと待っててね...",
       "audio": "/assets/voice/quest/p01.mp3"
     },
     {
@@ -54,7 +54,7 @@
       "speaker": "guide",
       "bg": "blur",
       "idText": "Wah, pas banget kalau gitu! Di GoRakuDo, kita pakai metode pemerolehan bahasa alami. Namanya 'Immersion'.",
-      "jpVoice": "じゃあ、話が早いです！うち（語楽道）は自然言語習得っていう方式で教えてます。それはイマージョンって言うんです。",
+      "jpVoice": "[confident][emphasis]じゃあ、話が早いです！[long-break]うち、<|phoneme_start|>go0ra1ku1do1u1<|phoneme_end|>は自然言語習得っていう方式で教えてます。[break][confident]それはイマージョンって言うんです。",
       "audio": "/assets/voice/quest/p03_yes.mp3",
       "nextLine": "p04"
     },
