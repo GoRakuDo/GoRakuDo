@@ -40,7 +40,7 @@ const dialogueLines = prologue.lines.map(line => ({
     jpText: c.jpText,
     nextLine: c.nextLine,
   })),
-  action: (line as { action?: { type: string; idText: string; jpText: string; target: string } | null }).action ?? null,
+  action: (line as { action?: { type: string; idText: string; jpText: string; target?: string } | null }).action ?? null,
 }));
 
 // Line IDs that own a guide expression image at /images/quest/guide-<id>.webp.
@@ -48,7 +48,7 @@ const dialogueLines = prologue.lines.map(line => ({
 // player's inner voice and keeps the previous expression.
 const expressionIds = [
   'p02',
-  'p01_return',
+  'p03_return',
   'p03_yes',
   'p03_yes_desc',
   'p03_no_exit',
@@ -221,19 +221,43 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const lineById = new Map(dialogueLines.map((l) => [l.id, l]));
         const expressions = new Set(expressionIds);
 
-        // Preload expression sprites so the swap doesn't flicker
-        // (each ~140-190KB). Missing files simply fail silently here;
-        // the onerror fallback on the live <img> covers display time.
-        expressions.forEach((id) => {
-          const pre = new Image();
-          pre.src = `/images/quest/guide-${id}.webp`;
-        });
+        // Key for "left via p03_no_exit": set when the exit link fires,
+        // read on load so returnees resume at p03_return.
+        const RETURN_FLAG = 'grkd:quest-left-via-no';
 
         // Navigation state is line-ID based (not an array index) so
-        // nextLine jumps resolve correctly (p01_return => p03_yes,
+        // nextLine jumps resolve correctly (p03_return => p03_yes,
         // never back to p02). history supports future back navigation.
-        let currentId = dialogueLines[0] ? dialogueLines[0].id : null;
+        // Returnees resume at p03_return; the seeded entry keeps the p01
+        // empty-stage direction (guide visible from the 2nd line on).
+        let startId = dialogueLines[0] ? dialogueLines[0].id : null;
+        try {
+          if (
+            window.localStorage.getItem(RETURN_FLAG) === '1' &&
+            lineById.has('p03_return')
+          ) {
+            startId = 'p03_return';
+          }
+        } catch {
+          // Storage unavailable (private mode etc.) => start at p01.
+        }
+        let currentId = startId;
         const history = currentId ? [currentId] : [];
+        if (currentId === 'p03_return') {
+          const firstId = dialogueLines[0] ? dialogueLines[0].id : null;
+          if (firstId && firstId !== currentId) history.unshift(firstId);
+        }
+
+        // Preload only the first needed sprite (fresh visit: p02, returnee:
+        // p03_return) so the swap doesn't flicker. A missing file fails
+        // silently here; the onerror fallback covers display time.
+        // (Preloading every expression upfront cost ~1MB+.)
+        const preloadId =
+          currentId === 'p03_return' ? 'p03_return' : 'p02';
+        if (expressions.has(preloadId)) {
+          const pre = new Image();
+          pre.src = `/images/quest/guide-${preloadId}.webp`;
+        }
         let phase = 'lines';
         // True while choice/action buttons for the current line await input.
         let awaitingInput = false;
@@ -247,11 +271,15 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         // Swap the guide sprite when the line owns an expression image.
         // Lines without one (p01 by direction, p06 player voice) keep
         // the previous sprite; a broken file falls back to guide.webp
-        // without removing the guide frame.
+        // without removing the guide frame. dataset.fbk is reset per swap
+        // so the onerror fallback works for every line, not just once.
         const applyExpression = (lineId) => {
           if (!guideImg || !expressions.has(lineId)) return;
           const next = `/images/quest/guide-${lineId}.webp`;
-          if (guideImg.getAttribute('src') !== next) guideImg.src = next;
+          if (guideImg.getAttribute('src') !== next) {
+            delete guideImg.dataset.fbk;
+            guideImg.src = next;
+          }
         };
 
         // VN staging: background crossfade follows the line's `bg` flag
@@ -290,8 +318,9 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         };
 
         // Rendered on typing completion: choice buttons jump via nextLine,
-        // action buttons navigate away (exit_to_home => /, chapter_advance
-        // => /quest/chapter-1, linked as-is even if the target 404s).
+        // the exit action links home (flagging the returnee resume), and
+        // the p07 action opens the commandments overlay instead of
+        // navigating away (no chapter-1 page exists).
         const renderPending = (line) => {
           clearChoices();
           if (!line) return;
@@ -306,18 +335,39 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             focusFirstChoice();
           } else if (line.action) {
             awaitingInput = true;
-            const link = document.createElement('a');
-            link.className = 'quest-choice';
-            link.href = line.action.target;
-            const primary = document.createElement('span');
-            primary.className = 'quest-choice-id';
-            primary.textContent = line.action.idText;
-            const sub = document.createElement('span');
-            sub.className = 'quest-choice-jp';
-            sub.textContent = line.action.jpText;
-            sub.lang = 'ja';
-            link.append(primary, sub);
-            choiceBox.append(link);
+            if (line.action.type === 'open_commandments') {
+              const btn = makeButton(line.action.idText, line.action.jpText);
+              btn.addEventListener('click', () => {
+                // Drop the button first so it can't stay focusable
+                // behind the modal overlay, then open it.
+                clearChoices();
+                openCommandments();
+              });
+              choiceBox.append(btn);
+            } else {
+              const link = document.createElement('a');
+              link.className = 'quest-choice';
+              link.href = line.action.target;
+              const primary = document.createElement('span');
+              primary.className = 'quest-choice-id';
+              primary.textContent = line.action.idText;
+              const sub = document.createElement('span');
+              sub.className = 'quest-choice-jp';
+              sub.textContent = line.action.jpText;
+              sub.lang = 'ja';
+              link.append(primary, sub);
+              if (line.action.type === 'exit_to_home') {
+                // Flag the returnee resume before leaving for /.
+                link.addEventListener('click', () => {
+                  try {
+                    window.localStorage.setItem(RETURN_FLAG, '1');
+                  } catch {
+                    // Storage unavailable: resume just starts at p01.
+                  }
+                });
+              }
+              choiceBox.append(link);
+            }
             choiceBox.hidden = false;
             focusFirstChoice();
           }
@@ -336,7 +386,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const advanceLinear = () => {
           const line = lineById.get(currentId);
           if (!line) return;
-          // Explicit nextLine wins (p01_return => p03_yes); otherwise
+          // Explicit nextLine wins (p03_return => p03_yes); otherwise
           // fall through to the next array entry.
           if (line.nextLine && lineById.has(line.nextLine)) {
             goTo(line.nextLine);
@@ -354,6 +404,9 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           if (!lineId || !lineById.has(lineId)) return;
           history.push(lineId);
           showId(lineId);
+          // The tapped button is removed by showId => clearChoices, so
+          // focus would fall to <body>; keep it on the dialogue.
+          dialogue.focus({ preventScroll: true });
         };
 
         // Keep background controls out of the tab order / AT tree while a

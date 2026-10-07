@@ -50,15 +50,6 @@
       ]
     },
     {
-      "id": "p01_return",
-      "speaker": "guide",
-      "bg": "blur",
-      "idText": "Wah, kamu balik lagi! Gimana, mau mulai sekarang?",
-      "jpVoice": "[happy][excited]おかえり！[break]始めようか？",
-      "audio": "/assets/voice/quest/p01_return.mp3",
-      "nextLine": "p03_yes"
-    },
-    {
       "id": "p03_yes",
       "speaker": "guide",
       "bg": "blur",
@@ -89,6 +80,15 @@
         "jpText": "またね！",
         "target": "/"
       }
+    },
+    {
+      "id": "p03_return",
+      "speaker": "guide",
+      "bg": "blur",
+      "idText": "Wah, kamu balik lagi! Gimana, mau mulai sekarang?",
+      "jpVoice": "[happy][excited]おかえり！[break]始めようか？",
+      "audio": "/assets/voice/quest/p01_return.mp3",
+      "nextLine": "p03_yes"
     },
     {
       "id": "p04",
@@ -136,10 +136,9 @@
       "jpVoice": "[cheerful][hopeful]実は簡単だけど、[break][compassionate]どうやって勉強するかによって結果が違うんですよ。[long-break]僕の知り合いはどうやって勉強したか、[break][calm]みて行こうか？",
       "audio": "/assets/voice/quest/p07.mp3",
       "action": {
-        "type": "chapter_advance",
+        "type": "open_commandments",
         "idText": "Siap, tolong bimbingannya!",
-        "jpText": "よろしくお願いします。",
-        "target": "/quest/chapter-1"
+        "jpText": "よろしくお願いします。"
       }
     }
   ],
