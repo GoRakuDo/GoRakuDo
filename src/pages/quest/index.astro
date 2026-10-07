@@ -25,11 +25,37 @@ const speakerNames: Record<string, string> = Object.fromEntries(
 );
 
 const dialogueLines = prologue.lines.map(line => ({
+  id: line.id,
+  speaker: line.speaker,
   name: speakerNames[line.speaker] ?? 'AI Kasou Yoshia',
   text: line.idText,
   // VN staging flag: 'sharp' (default) or 'blur'. Omitted => 'sharp'.
   bg: (line as { bg?: string }).bg ?? 'sharp',
+  // Branching: choices jump via nextLine, action navigates away.
+  // Omitted => linear advance to the next array entry.
+  nextLine: (line as { nextLine?: string }).nextLine ?? null,
+  choices: ((line as { choices?: Array<{ id: string; idText: string; jpText: string; nextLine: string }> }).choices ?? []).map(c => ({
+    id: c.id,
+    idText: c.idText,
+    jpText: c.jpText,
+    nextLine: c.nextLine,
+  })),
+  action: (line as { action?: { type: string; idText: string; jpText: string; target: string } | null }).action ?? null,
 }));
+
+// Line IDs that own a guide expression image at /images/quest/guide-<id>.webp.
+// p01 has none by direction (empty stage on the 1st line); p06 is the
+// player's inner voice and keeps the previous expression.
+const expressionIds = [
+  'p02',
+  'p01_return',
+  'p03_yes',
+  'p03_yes_desc',
+  'p03_no_exit',
+  'p04',
+  'p05',
+  'p07',
+];
 
 const commandmentItems = ((prologue as { commandments?: Array<{ idText: string }> }).commandments ?? []).map(item => item.idText);
 const bgSrc = prologue.scene.background;
@@ -105,7 +131,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           aria-hidden='true'
           loading='lazy'
           decoding='async'
-          onerror="this.closest('.quest-guide').remove()"
+          onerror="if(!this.dataset.fbk){this.dataset.fbk='1';this.src='/images/quest/guide.webp';}"
         />
       </div>
 
@@ -115,6 +141,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           initialName={firstLine.name}
           initialText={firstLine.text}
         />
+        <div class='quest-choices' data-quest-choices hidden></div>
       </div>
 
       <div
@@ -174,11 +201,13 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
     <script
       is:inline
-      define:vars={{ dialogueLines, totalLines: dialogueLines.length }}
+      define:vars={{ dialogueLines, expressionIds }}
     >
       (() => {
         const dialogue = document.querySelector('[data-quest-dialogue]');
         const guide = document.querySelector('[data-quest-guide]');
+        const guideImg = guide ? guide.querySelector('img') : null;
+        const choiceBox = document.querySelector('[data-quest-choices]');
         const commandments = document.querySelector(
           '[data-quest-commandments]'
         );
@@ -186,11 +215,28 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           '[data-quest-commandments-close]'
         );
         const finale = document.querySelector('[data-quest-finale]');
-        if (!dialogue || !commandments || !finale) return;
+        if (!dialogue || !commandments || !finale || !choiceBox) return;
 
         const api = () => window.__questDialogue;
-        let index = 0;
+        const lineById = new Map(dialogueLines.map((l) => [l.id, l]));
+        const expressions = new Set(expressionIds);
+
+        // Preload expression sprites so the swap doesn't flicker
+        // (each ~140-190KB). Missing files simply fail silently here;
+        // the onerror fallback on the live <img> covers display time.
+        expressions.forEach((id) => {
+          const pre = new Image();
+          pre.src = `/images/quest/guide-${id}.webp`;
+        });
+
+        // Navigation state is line-ID based (not an array index) so
+        // nextLine jumps resolve correctly (p01_return => p03_yes,
+        // never back to p02). history supports future back navigation.
+        let currentId = dialogueLines[0] ? dialogueLines[0].id : null;
+        const history = currentId ? [currentId] : [];
         let phase = 'lines';
+        // True while choice/action buttons for the current line await input.
+        let awaitingInput = false;
 
         const speaking = (on) => {
           if (guide) guide.classList.toggle('is-speaking', on);
@@ -198,19 +244,116 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         const scene = document.querySelector('.quest-scene');
 
-        // VN staging: background crossfade follows the line's `bg` flag
-        // ('blur' => blurred layer on), guide appears from the 2nd line
-        // on (index >= 1). Forward-only: no going back to earlier lines.
-        const applyStage = (i) => {
-          const line = dialogueLines[i];
-          const blurred = !!line && line.bg === 'blur';
-          if (scene) scene.classList.toggle('is-blurred', blurred);
-          if (guide) guide.classList.toggle('is-hidden', i < 1);
+        // Swap the guide sprite when the line owns an expression image.
+        // Lines without one (p01 by direction, p06 player voice) keep
+        // the previous sprite; a broken file falls back to guide.webp
+        // without removing the guide frame.
+        const applyExpression = (lineId) => {
+          if (!guideImg || !expressions.has(lineId)) return;
+          const next = `/images/quest/guide-${lineId}.webp`;
+          if (guideImg.getAttribute('src') !== next) guideImg.src = next;
         };
 
-        const showAt = (i) => {
-          applyStage(i);
-          if (api()) api().showLine(dialogueLines[i]);
+        // VN staging: background crossfade follows the line's `bg` flag
+        // ('blur' => blurred layer on), guide appears from the 2nd line
+        // on (history position >= 1, i.e. the p01 empty-stage direction).
+        const applyStage = (line, pos) => {
+          const blurred = !!line && line.bg === 'blur';
+          if (scene) scene.classList.toggle('is-blurred', blurred);
+          if (guide) guide.classList.toggle('is-hidden', pos < 1);
+        };
+
+        const clearChoices = () => {
+          awaitingInput = false;
+          choiceBox.hidden = true;
+          choiceBox.textContent = '';
+        };
+
+        const focusFirstChoice = () => {
+          const btn = choiceBox.querySelector('button, a');
+          if (btn) btn.focus({ preventScroll: true });
+        };
+
+        const makeButton = (idText, jpText) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'quest-choice';
+          const primary = document.createElement('span');
+          primary.className = 'quest-choice-id';
+          primary.textContent = idText;
+          const sub = document.createElement('span');
+          sub.className = 'quest-choice-jp';
+          sub.textContent = jpText;
+          sub.lang = 'ja';
+          btn.append(primary, sub);
+          return btn;
+        };
+
+        // Rendered on typing completion: choice buttons jump via nextLine,
+        // action buttons navigate away (exit_to_home => /, chapter_advance
+        // => /quest/chapter-1, linked as-is even if the target 404s).
+        const renderPending = (line) => {
+          clearChoices();
+          if (!line) return;
+          if (line.choices && line.choices.length > 0) {
+            awaitingInput = true;
+            line.choices.forEach((c) => {
+              const btn = makeButton(c.idText, c.jpText);
+              btn.addEventListener('click', () => goTo(c.nextLine));
+              choiceBox.append(btn);
+            });
+            choiceBox.hidden = false;
+            focusFirstChoice();
+          } else if (line.action) {
+            awaitingInput = true;
+            const link = document.createElement('a');
+            link.className = 'quest-choice';
+            link.href = line.action.target;
+            const primary = document.createElement('span');
+            primary.className = 'quest-choice-id';
+            primary.textContent = line.action.idText;
+            const sub = document.createElement('span');
+            sub.className = 'quest-choice-jp';
+            sub.textContent = line.action.jpText;
+            sub.lang = 'ja';
+            link.append(primary, sub);
+            choiceBox.append(link);
+            choiceBox.hidden = false;
+            focusFirstChoice();
+          }
+        };
+
+        const showId = (lineId) => {
+          const line = lineById.get(lineId);
+          if (!line) return;
+          currentId = lineId;
+          clearChoices();
+          applyStage(line, history.length - 1);
+          applyExpression(lineId);
+          if (api()) api().showLine(line);
+        };
+
+        const advanceLinear = () => {
+          const line = lineById.get(currentId);
+          if (!line) return;
+          // Explicit nextLine wins (p01_return => p03_yes); otherwise
+          // fall through to the next array entry.
+          if (line.nextLine && lineById.has(line.nextLine)) {
+            goTo(line.nextLine);
+            return;
+          }
+          const idx = dialogueLines.findIndex((l) => l.id === currentId);
+          if (idx >= 0 && idx < dialogueLines.length - 1) {
+            goTo(dialogueLines[idx + 1].id);
+          } else {
+            openCommandments();
+          }
+        };
+
+        const goTo = (lineId) => {
+          if (!lineId || !lineById.has(lineId)) return;
+          history.push(lineId);
+          showId(lineId);
         };
 
         // Keep background controls out of the tab order / AT tree while a
@@ -258,7 +401,11 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         };
 
         dialogue.addEventListener('quest:line-start', () => speaking(true));
-        dialogue.addEventListener('quest:line-complete', () => speaking(false));
+        dialogue.addEventListener('quest:line-complete', () => {
+          speaking(false);
+          // Typing done => offer this line's choices/action, if any.
+          if (phase === 'lines') renderPending(lineById.get(currentId));
+        });
 
         dialogue.addEventListener('quest:dialogue-activate', (e) => {
           if (phase !== 'lines' || !api()) return;
@@ -266,12 +413,13 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             api().finish();
             return;
           }
-          if (index < totalLines - 1) {
-            index += 1;
-            showAt(index);
-          } else {
-            openCommandments();
+          // Choice/action input pending => the advance tap/click only
+          // moves focus to the buttons; the route is chosen by tapping one.
+          if (awaitingInput) {
+            focusFirstChoice();
+            return;
           }
+          advanceLinear();
         });
 
         if (commandmentsClose) {
@@ -297,9 +445,9 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         });
 
         if (api()) {
-          showAt(0);
+          showId(currentId);
         } else {
-          document.addEventListener('DOMContentLoaded', () => showAt(0));
+          document.addEventListener('DOMContentLoaded', () => showId(currentId));
         }
         dialogue.focus({ preventScroll: true });
       })();

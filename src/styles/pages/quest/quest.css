@@ -276,6 +276,58 @@
   }
 }
 
+/* ===== CHOICE / ACTION BUTTONS =====
+ * Rendered by the page script when the current line carries `choices`
+ * (branch jump via nextLine) or `action` (exit_to_home / chapter_advance).
+ * Reuses the DialogueBox token set: purple fill, gold focus ring.
+ */
+.quest-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 44rem;
+  margin: 0.75rem auto 0;
+}
+
+.quest-choices[hidden] {
+  display: none;
+}
+
+.quest-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-height: var(--touch-target-min);
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--clr-white-12);
+  border-radius: var(--border-radius-btn-small);
+  background: var(--grkd-purple-500);
+  color: var(--grkd-accent-foreground);
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.quest-choice:hover {
+  background: var(--grkd-purple-400);
+}
+
+.quest-choice:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 2px;
+}
+
+.quest-choice-id {
+  font-weight: 700;
+}
+
+.quest-choice-jp {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
 /* ===== COMMANDMENTS (4戒律 overlay card) ===== */
 .quest-commandments {
   position: absolute;
