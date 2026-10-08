@@ -324,19 +324,17 @@
 }
 
 /* ===== CHOICE / ACTION BUTTONS =====
- * Rendered by the page script when the current line carries `choices`
- * (branch jump via nextLine) or `action` (exit_to_home / open_finale).
- * Visually one panel with .quest-dialogue: same max-width, translucent
- * surface, purple-tinted border, and matching shadow. Compact on desktop;
- * mobile (<=640px) keeps the roomier touch-friendly sizing.
+ * Rendered ABOVE the dialogue box (user wireframe): 2-column grid on
+ * wide screens, stacked on narrow ones. Same max-width / translucent
+ * surface / purple-tinted border / shadow as .quest-dialogue.
+ * 3+ choices wrap to the next row; a lone choice sits in column 1.
  */
 .quest-choices {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   max-width: 44rem;
-  margin: 0 auto;
-  margin-top: 0.4rem;
+  margin: 0 auto 0.85rem;
   padding: 0 1.25rem;
 }
 
@@ -383,6 +381,7 @@
 @media (max-width: 640px) {
   .quest-choices {
     gap: 0.6rem;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .quest-choice {

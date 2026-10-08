@@ -182,12 +182,12 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
       </div>
 
       <div class='quest-dialogue-zone'>
+        <div class='quest-choices' data-quest-choices hidden></div>
         <DialogueBox
           typingSpeedMs={30}
           initialName={firstLine.name}
           initialText={firstLine.text}
         />
-        <div class='quest-choices' data-quest-choices hidden></div>
       </div>
 
       <div
