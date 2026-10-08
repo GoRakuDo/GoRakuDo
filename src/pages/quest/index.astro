@@ -34,6 +34,7 @@ const dialogueLines = prologue.lines.map(line => ({
   // Branching: choices jump via nextLine, action navigates away.
   // Omitted => linear advance to the next array entry.
   nextLine: (line as { nextLine?: string }).nextLine ?? null,
+  audio: (line as { audio?: string }).audio ?? null,
   choices: ((line as { choices?: Array<{ id: string; idText: string; jpText: string; nextLine: string }> }).choices ?? []).map(c => ({
     id: c.id,
     idText: c.idText,
@@ -113,14 +114,61 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
       <div class='quest-scene-veil' aria-hidden='true'></div>
 
       <p class='quest-chapter'><span lang='ja'>序章</span> — {prologue.title}</p>
-      <a
-        class='quest-skip'
-        data-quest-skip
-        href={GUIDE_URL}
-        aria-label='Lewati prolog dan buka panduan immersion'
-      >
-        SKIP →
-      </a>
+      <div class='quest-top-actions'>
+        <button
+          class='quest-mute'
+          data-quest-mute
+          type='button'
+          aria-pressed='false'
+          aria-label='Bisukan suara'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='quest-mute-icon lucide lucide-volume-2'
+            data-quest-mute-icon-on
+            aria-hidden='true'
+          >
+            <path d='M11 5 6 9H2v6h4l5 4V5Z'></path>
+            <path d='M15.54 8.46a5 5 0 0 1 0 7.07'></path>
+            <path d='M19.07 4.93a10 10 0 0 1 0 14.14'></path>
+          </svg>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='quest-mute-icon lucide lucide-volume-x'
+            data-quest-mute-icon-off
+            aria-hidden='true'
+            hidden
+          >
+            <path d='M11 5 6 9H2v6h4l5 4V5Z'></path>
+            <line x1='22' x2='16' y1='9' y2='15'></line>
+            <line x1='16' x2='22' y1='9' y2='15'></line>
+          </svg>
+        </button>
+        <a
+          class='quest-skip'
+          data-quest-skip
+          href={GUIDE_URL}
+          aria-label='Lewati prolog dan buka panduan immersion'
+        >
+          SKIP →
+        </a>
+      </div>
 
       <div class='quest-guide is-hidden' data-quest-guide>
         <img
@@ -175,6 +223,83 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const choiceBox = document.querySelector('[data-quest-choices]');
         const finale = document.querySelector('[data-quest-finale]');
         if (!dialogue || !finale || !choiceBox) return;
+
+        // --- Voice playback: one <audio> element, swapped per line. ---
+        // Lines without `audio` (none today, possible later) do nothing.
+        // Mute persists in localStorage; autoplay blocks are recovered
+        // on the first user gesture (quest:dialogue-activate).
+        const MUTE_FLAG = 'grkd:quest-muted';
+        // Detached (never appended): no UI, still plays programmatically.
+        // Exposed for tests as window.__questVoice.
+        const voice = document.createElement('audio');
+        voice.preload = 'auto';
+        voice.setAttribute('data-quest-voice', '');
+        window.__questVoice = voice;
+        let autoplayBlocked = false;
+        const muteBtn = document.querySelector('[data-quest-mute]');
+        const muteIconOn = muteBtn
+          ? muteBtn.querySelector('[data-quest-mute-icon-on]')
+          : null;
+        const muteIconOff = muteBtn
+          ? muteBtn.querySelector('[data-quest-mute-icon-off]')
+          : null;
+
+        const applyMuteUI = () => {
+          const muted = voice.muted;
+          if (muteBtn) {
+            muteBtn.setAttribute('aria-pressed', String(muted));
+            muteBtn.setAttribute(
+              'aria-label',
+              muted ? 'Nyalakan suara' : 'Bisukan suara'
+            );
+          }
+          if (muteIconOn) muteIconOn.hidden = muted;
+          if (muteIconOff) muteIconOff.hidden = !muted;
+        };
+
+        try {
+          voice.muted = window.localStorage.getItem(MUTE_FLAG) === 'true';
+        } catch {
+          // Storage unavailable => default to unmuted.
+        }
+        applyMuteUI();
+
+        if (muteBtn) {
+          muteBtn.addEventListener('click', () => {
+            voice.muted = !voice.muted;
+            try {
+              window.localStorage.setItem(MUTE_FLAG, String(voice.muted));
+            } catch {
+              // Storage unavailable: mute applies to this visit only.
+            }
+            applyMuteUI();
+          });
+        }
+
+        const playVoice = (line) => {
+          if (!line || !line.audio) return;
+          // Stop the previous line's audio before swapping.
+          try {
+            voice.pause();
+          } catch {
+            // pause() on a fresh element is a no-op in practice.
+          }
+          if (voice.getAttribute('src') !== line.audio) {
+            voice.setAttribute('src', line.audio);
+          }
+          try {
+            voice.currentTime = 0;
+          } catch {
+            // Not yet seekable => play from wherever it loads.
+          }
+          const pending = voice.play();
+          if (pending && typeof pending.catch === 'function') {
+            pending.catch(() => {
+              // Autoplay policy: retry on the first user gesture.
+              autoplayBlocked = true;
+            });
+          }
+        };
 
         const api = () => window.__questDialogue;
         const lineById = new Map(dialogueLines.map((l) => [l.id, l]));
@@ -339,6 +464,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           clearChoices();
           applyStage(line, history.length - 1);
           applyExpression(lineId);
+          playVoice(line);
           if (api()) api().showLine(line);
         };
 
@@ -399,6 +525,12 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         dialogue.addEventListener('quest:dialogue-activate', (e) => {
           if (phase !== 'lines' || !api()) return;
+          // Recover from an autoplay block: the first gesture replays
+          // the current line's voice (once).
+          if (autoplayBlocked) {
+            autoplayBlocked = false;
+            playVoice(lineById.get(currentId));
+          }
           if (!e.detail || !e.detail.complete) {
             api().finish();
             return;
