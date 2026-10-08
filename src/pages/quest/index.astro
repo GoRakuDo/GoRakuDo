@@ -306,7 +306,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             } else {
               const link = document.createElement('a');
               link.className = 'quest-choice';
-              link.href = line.action.target ?? '/';
+              link.href = line.action.target || '/';
               const primary = document.createElement('span');
               primary.className = 'quest-choice-id';
               primary.textContent = line.action.idText;
@@ -410,16 +410,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             return;
           }
           advanceLinear();
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.repeat) return;
-          // The finale is a terminal screen by design (no going back),
-          // so Escape does nothing there.
-          if (e.key === 'Escape') return;
-          if (e.key !== 'Enter' && e.key !== ' ') return;
-          const tag = (e.target.tagName || '').toLowerCase();
-          if (tag === 'a' || tag === 'button') return;
         });
 
         if (api()) {
