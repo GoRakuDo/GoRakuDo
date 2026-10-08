@@ -136,12 +136,10 @@
       "jpVoice": "[cheerful][hopeful]実は簡単だけど、[break][compassionate]どうやって勉強するかによって結果が違うんですよ。[long-break]僕の知り合いはどうやって勉強したか、[break][calm]みて行こうか？",
       "audio": "/assets/voice/quest/p07.mp3",
       "action": {
-        "type": "open_commandments",
+        "type": "open_finale",
         "idText": "Siap, tolong bimbingannya!",
         "jpText": "よろしくお願いします。"
       }
     }
-  ],
-  "commandments": [],
-  "heroVariants": {}
+  ]
 }

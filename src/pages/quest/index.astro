@@ -1,7 +1,7 @@
 ---
 // src/pages/quest/index.astro
 // Prologue scene: fullscreen cave (gradient fallback until the WebP is placed),
-// guide sprite slot, DialogueBox-driven scenario, commandments + finale overlays.
+// guide sprite slot, DialogueBox-driven scenario, finale overlay.
 import UnifiedSEO from '../../components/common/UnifiedSEO.astro';
 import DialogueBox from '../../components/quest/DialogueBox.astro';
 import prologue from '../../data/quest/prologue.json';
@@ -12,7 +12,7 @@ const GUIDE_URL = '/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak';
 const seoData = {
   title: 'Prolog: Siswa di Dalam Cermin — GoRakuDo Quest',
   description:
-    'Mulailah petualangan bahasa Jepangmu dari kelas bahasa Indonesia. Ikuti 4 hukum suci immersion dan tinggalkan Metode Tradisional.',
+    'Mulailah petualangan bahasa Jepangmu dari kelas bahasa Indonesia dan tinggalkan Metode Tradisional.',
   keywords: ['quest', 'prologue', 'immersion', 'belajar bahasa jepang', 'otodidak'],
   pageType: 'website' as const,
 };
@@ -57,7 +57,6 @@ const expressionIds = [
   'p07',
 ];
 
-const commandmentItems = ((prologue as { commandments?: Array<{ idText: string }> }).commandments ?? []).map(item => item.idText);
 const bgSrc = prologue.scene.background;
 const bgBlurSrc = (prologue.scene as { backgroundBlur?: string }).backgroundBlur;
 const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
@@ -80,7 +79,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         height: 100%;
       }
 
-      .quest-commandments[hidden],
       .quest-finale[hidden] {
         display: none;
       }
@@ -145,39 +143,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
       </div>
 
       <div
-        class='quest-commandments'
-        data-quest-commandments
-        hidden
-        inert
-        role='dialog'
-        aria-modal='true'
-        aria-label='4 hukum suci immersion'
-      >
-        <div class='quest-commandments-card'>
-          <h2 class='quest-commandments-title'>✦ 4 HUKUM SUCI ✦</h2>
-          <ul class='quest-commandments-list'>
-            {
-              commandmentItems.map((item, i) => (
-                <li
-                  class='quest-commandments-item'
-                  style={`--quest-delay: ${(i * 0.35).toFixed(2)}s`}
-                >
-                  {item}
-                </li>
-              ))
-            }
-          </ul>
-          <button
-            class='quest-commandments-close'
-            type='button'
-            data-quest-commandments-close
-          >
-            Aku bersumpah!
-          </button>
-        </div>
-      </div>
-
-      <div
         class='quest-finale'
         data-quest-finale
         hidden
@@ -208,21 +173,15 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const guide = document.querySelector('[data-quest-guide]');
         const guideImg = guide ? guide.querySelector('img') : null;
         const choiceBox = document.querySelector('[data-quest-choices]');
-        const commandments = document.querySelector(
-          '[data-quest-commandments]'
-        );
-        const commandmentsClose = document.querySelector(
-          '[data-quest-commandments-close]'
-        );
         const finale = document.querySelector('[data-quest-finale]');
-        if (!dialogue || !commandments || !finale || !choiceBox) return;
+        if (!dialogue || !finale || !choiceBox) return;
 
         const api = () => window.__questDialogue;
         const lineById = new Map(dialogueLines.map((l) => [l.id, l]));
         const expressions = new Set(expressionIds);
 
-        // Key for "left via p03_no_exit": set when the exit link fires,
-        // read on load so returnees resume at p03_return.
+        // Read once: returnees resume at p03_return, then the flag is
+        // consumed so the next visit starts at p01 again.
         const RETURN_FLAG = 'grkd:quest-left-via-no';
 
         // Navigation state is line-ID based (not an array index) so
@@ -237,6 +196,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             lineById.has('p03_return')
           ) {
             startId = 'p03_return';
+            window.localStorage.removeItem(RETURN_FLAG);
           }
         } catch {
           // Storage unavailable (private mode etc.) => start at p01.
@@ -319,8 +279,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         // Rendered on typing completion: choice buttons jump via nextLine,
         // the exit action links home (flagging the returnee resume), and
-        // the p07 action opens the commandments overlay instead of
-        // navigating away (no chapter-1 page exists).
+        // the p07 action opens the finale overlay directly.
         const renderPending = (line) => {
           clearChoices();
           if (!line) return;
@@ -335,19 +294,19 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             focusFirstChoice();
           } else if (line.action) {
             awaitingInput = true;
-            if (line.action.type === 'open_commandments') {
+            if (line.action.type === 'open_finale') {
               const btn = makeButton(line.action.idText, line.action.jpText);
               btn.addEventListener('click', () => {
                 // Drop the button first so it can't stay focusable
                 // behind the modal overlay, then open it.
                 clearChoices();
-                openCommandments();
+                openFinale();
               });
               choiceBox.append(btn);
             } else {
               const link = document.createElement('a');
               link.className = 'quest-choice';
-              link.href = line.action.target;
+              link.href = line.action.target ?? '/';
               const primary = document.createElement('span');
               primary.className = 'quest-choice-id';
               primary.textContent = line.action.idText;
@@ -396,7 +355,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           if (idx >= 0 && idx < dialogueLines.length - 1) {
             goTo(dialogueLines[idx + 1].id);
           } else {
-            openCommandments();
+            openFinale();
           }
         };
 
@@ -421,31 +380,9 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             });
         };
 
-        const openCommandments = () => {
-          phase = 'commandments';
-          speaking(false);
-          commandments.hidden = false;
-          commandments.removeAttribute('inert');
-          commandments.classList.add('is-open');
-          setBackgroundInert(true);
-          if (commandmentsClose) commandmentsClose.focus();
-        };
-
-        const closeCommandments = () => {
-          if (phase !== 'commandments') return;
-          phase = 'lines';
-          commandments.hidden = true;
-          commandments.classList.remove('is-open');
-          commandments.setAttribute('inert', '');
-          setBackgroundInert(false);
-          dialogue.focus({ preventScroll: true });
-        };
-
         const openFinale = () => {
           if (phase === 'finale') return;
           phase = 'finale';
-          commandments.hidden = true;
-          commandments.setAttribute('inert', '');
           finale.hidden = false;
           finale.removeAttribute('inert');
           setBackgroundInert(true);
@@ -475,26 +412,14 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           advanceLinear();
         });
 
-        if (commandmentsClose) {
-          commandmentsClose.addEventListener('click', openFinale);
-        }
-
         document.addEventListener('keydown', (e) => {
           if (e.repeat) return;
-          // Escape only closes the commandments overlay. The finale is a
-          // terminal screen by design (no going back), so Escape does
-          // nothing there.
-          if (e.key === 'Escape') {
-            closeCommandments();
-            return;
-          }
+          // The finale is a terminal screen by design (no going back),
+          // so Escape does nothing there.
+          if (e.key === 'Escape') return;
           if (e.key !== 'Enter' && e.key !== ' ') return;
           const tag = (e.target.tagName || '').toLowerCase();
           if (tag === 'a' || tag === 'button') return;
-          if (phase === 'commandments') {
-            e.preventDefault();
-            openFinale();
-          }
         });
 
         if (api()) {
