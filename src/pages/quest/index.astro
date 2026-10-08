@@ -494,12 +494,15 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           dialogue.focus({ preventScroll: true });
         };
 
-        // Keep background controls out of the tab order / AT tree while a
-        // modal overlay is open (same inert-based approach as image-zoom.js).
-        // Selector-based so future focusables are covered without code change.
+        // Keep background controls out of the tab order / AT tree while the
+        // finale overlay is open (same inert-based approach as
+        // image-zoom.js). Listed explicitly: skip link, mute button,
+        // and the dialogue box.
         const setBackgroundInert = (on) => {
           document
-            .querySelectorAll('[data-quest-skip], [data-quest-dialogue]')
+            .querySelectorAll(
+              '[data-quest-skip], [data-quest-mute], [data-quest-dialogue]'
+            )
             .forEach((el) => {
               if (on) el.setAttribute('inert', '');
               else el.removeAttribute('inert');

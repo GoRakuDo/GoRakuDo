@@ -327,7 +327,7 @@
  * Rendered ABOVE the dialogue box (user wireframe): 2-column grid on
  * wide screens, stacked on narrow ones. Same max-width / translucent
  * surface / purple-tinted border / shadow as .quest-dialogue.
- * 3+ choices wrap to the next row; a lone choice sits in column 1.
+ * 3+ choices wrap to the next row; a lone choice spans both columns.
  */
 .quest-choices {
   display: grid;
@@ -340,6 +340,11 @@
 
 .quest-choices[hidden] {
   display: none;
+}
+
+/* Single action (p03_no_exit link, p07 button) spans full width. */
+.quest-choices > :only-child {
+  grid-column: 1 / -1;
 }
 
 .quest-choice {
@@ -380,7 +385,6 @@
 
 @media (max-width: 640px) {
   .quest-choices {
-    gap: 0.6rem;
     grid-template-columns: minmax(0, 1fr);
   }
 
