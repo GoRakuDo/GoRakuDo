@@ -12,6 +12,7 @@
   justify-content: flex-end;
   overflow: hidden;
   min-height: 100dvh;
+  padding-bottom: 0;
   background-color: var(--grkd-black-950);
 }
 
@@ -160,9 +161,9 @@
   left: 50%;
   z-index: 1;
 
-  /* Single tuning knob: sprite is ~square with a near-full-height
-   * character bbox, so width ~= character height on screen. */
-  --quest-sprite-width: clamp(260px, min(58vw, 96dvh), 1180px);
+  /* On mobile portrait, character overflows horizontally (clipped by scene)
+   * so height dominates (78dvh), ensuring face and eyes sit clearly above choices. */
+  --quest-sprite-width: clamp(480px, 78dvh, 800px);
 
   width: var(--quest-sprite-width);
   opacity: 1;
@@ -215,7 +216,7 @@
 .quest-dialogue-zone {
   position: relative;
   z-index: 2;
-  padding: 0 1rem calc(1.25rem + var(--safe-area-bottom));
+  padding: 0 0.75rem calc(0.75rem + var(--safe-area-bottom));
 }
 
 .quest-dialogue {
@@ -446,7 +447,7 @@
 /* ===== RESPONSIVE ===== */
 @media (min-width: 768px) {
   .quest-dialogue-zone {
-    padding-bottom: calc(2rem + var(--safe-area-bottom));
+    padding: 0 1rem calc(2rem + var(--safe-area-bottom));
   }
 
   .quest-dialogue {
@@ -458,6 +459,8 @@
   }
 
   .quest-guide {
+    --quest-sprite-width: clamp(260px, min(58vw, 96dvh), 1180px);
+
     bottom: 0;
   }
 }
