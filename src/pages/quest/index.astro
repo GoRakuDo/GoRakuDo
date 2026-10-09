@@ -160,14 +160,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             <line x1='16' x2='22' y1='9' y2='15'></line>
           </svg>
         </button>
-        <a
-          class='quest-skip'
-          data-quest-skip
-          href={GUIDE_URL}
-          aria-label='Lewati prolog dan buka panduan immersion'
-        >
-          SKIP →
-        </a>
       </div>
 
       <div class='quest-guide is-hidden' data-quest-guide>
@@ -498,18 +490,17 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           showId(lineId);
           // The tapped button is removed by showId => clearChoices, so
           // focus would fall to <body>; keep it on the dialogue.
-          dialogue.focus({ preventScroll: true });
+          // A textless row renders its choice synchronously, which already
+          // focuses the first button — don't steal it back (p06).
+          if (!awaitingInput) dialogue.focus({ preventScroll: true });
         };
 
         // Keep background controls out of the tab order / AT tree while the
         // finale overlay is open (same inert-based approach as
-        // image-zoom.js). Listed explicitly: skip link, mute button,
-        // and the dialogue box.
+        // image-zoom.js). Listed explicitly: mute button and dialogue box.
         const setBackgroundInert = (on) => {
           document
-            .querySelectorAll(
-              '[data-quest-skip], [data-quest-mute], [data-quest-dialogue]'
-            )
+            .querySelectorAll('[data-quest-mute], [data-quest-dialogue]')
             .forEach((el) => {
               if (on) el.setAttribute('inert', '');
               else el.removeAttribute('inert');

@@ -92,7 +92,7 @@
   pointer-events: none;
 }
 
-/* ===== SKIP + MUTE (top-right actions) ===== */
+/* ===== TOP ACTIONS (mute button) ===== */
 .quest-top-actions {
   position: absolute;
   top: calc(1rem + var(--safe-area-top));
@@ -134,31 +134,6 @@
 
 .quest-mute-icon[hidden] {
   display: none;
-}
-
-.quest-skip {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--touch-target-min);
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--clr-white-15);
-  border-radius: var(--border-radius-md);
-  background: oklch(from var(--grkd-black-base) l c h / 0.6);
-  color: var(--grkd-text-global-muted);
-  font-size: 0.8rem;
-  text-decoration: none;
-  letter-spacing: 0.12em;
-  cursor: pointer;
-}
-
-.quest-skip:hover {
-  border-color: var(--clr-white-3);
-  color: var(--grkd-text-global);
-}
-
-.quest-skip:focus-visible {
-  outline: 2px solid var(--grkd-purple-400);
-  outline-offset: 2px;
 }
 
 /* ===== CHAPTER LABEL ===== */
@@ -492,7 +467,6 @@
   .quest-scene-bg-image,
   .quest-scene-bg-blur,
   .quest-guide,
-  .quest-skip,
   .quest-dialogue {
     transition: none;
   }
