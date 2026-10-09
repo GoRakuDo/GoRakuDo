@@ -122,11 +122,15 @@
     },
     {
       "id": "p06",
-      "speaker": "player",
       "bg": "blur",
-      "idText": "Emang belajar bahasa asing itu sesusah itu, ya?",
-      "jpVoice": "外国語を勉強するのが難しいんですね。",
-      "audio": "/assets/voice/quest/p06.mp3"
+      "choices": [
+        {
+          "id": "c06_inner_voice",
+          "idText": "Emang belajar bahasa asing itu sesusah itu, ya?",
+          "jpText": "外国語を勉強するのが難しいんですね。",
+          "nextLine": "p07"
+        }
+      ]
     },
     {
       "id": "p07",

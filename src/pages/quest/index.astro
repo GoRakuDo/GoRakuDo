@@ -465,6 +465,13 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           applyStage(line, history.length - 1);
           applyExpression(lineId);
           playVoice(line);
+          // Textless rows (p06 inner voice) keep the previous dialogue
+          // box: skip showLine, then render the choice button directly
+          // (no quest:line-complete will fire without a typing run).
+          if (!line.text) {
+            renderPending(line);
+            return;
+          }
           if (api()) api().showLine(line);
         };
 
