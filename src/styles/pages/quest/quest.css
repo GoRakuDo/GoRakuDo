@@ -178,7 +178,7 @@
   pointer-events: none;
 }
 
-/* Digital CRT / Hologram Glitch apparition when AI Kasou Yoshia appears (2s).
+/* Digital CRT / Hologram Glitch apparition when AI Kasou Yoshia appears or speaks (0.7s).
  * Uses discrete stepped frames (steps(1, end)) and chromatic aberration RGB shadow
  * split (cyan/magenta) so the glitch feels like high-frequency signal interference
  * rather than rubbery continuous interpolation. */
@@ -345,8 +345,8 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .quest-guide:not(.is-hidden) {
-    animation: questGlitchIn 2s steps(1, end) forwards;
+  .quest-guide.is-glitching {
+    animation: questGlitchIn 0.7s steps(1, end) forwards;
   }
 }
 

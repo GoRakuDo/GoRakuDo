@@ -363,6 +363,23 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         // VN staging: background crossfade follows the line's `bg` flag
         // ('blur' => blurred layer on), guide appears from the 2nd line
         // on (history position >= 1, i.e. the p01 empty-stage direction).
+        // Re-trigger the 1s digital glitch animation whenever the guide speaks
+        // (both on initial apparition and on subsequent line/expression changes).
+        const triggerGlitch = () => {
+          if (!guide || guide.classList.contains('is-hidden')) return;
+          guide.classList.remove('is-glitching');
+          void guide.offsetWidth;
+          guide.classList.add('is-glitching');
+        };
+
+        if (guide) {
+          guide.addEventListener('animationend', (e) => {
+            if (e.animationName === 'questGlitchIn') {
+              guide.classList.remove('is-glitching');
+            }
+          });
+        }
+
         const applyStage = (line, pos) => {
           const blurred = !!line && line.bg === 'blur';
           if (scene) scene.classList.toggle('is-blurred', blurred);
@@ -458,6 +475,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           applyStage(line, history.length - 1);
           applyExpression(lineId);
           playVoice(line);
+          if (line.text) triggerGlitch();
           // Textless rows (p06 inner voice) keep the previous dialogue
           // box: skip showLine, then render the choice button directly
           // (no quest:line-complete will fire without a typing run).
