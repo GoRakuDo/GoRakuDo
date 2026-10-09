@@ -363,7 +363,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         // VN staging: background crossfade follows the line's `bg` flag
         // ('blur' => blurred layer on), guide appears from the 2nd line
         // on (history position >= 1, i.e. the p01 empty-stage direction).
-        // Re-trigger the 1s digital glitch animation whenever the guide speaks
+        // Re-trigger the 0.7s digital glitch animation whenever the guide speaks
         // (both on initial apparition and on subsequent line/expression changes).
         const triggerGlitch = () => {
           if (!guide || guide.classList.contains('is-hidden')) return;
