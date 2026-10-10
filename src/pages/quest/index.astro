@@ -574,7 +574,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           cleanupFirstGestureListeners();
           autoplayBlocked = false;
           recoveryAttemptedForLine = currentId;
-          suppressNextAdvance = true;
 
           const line = lineById.get(currentId);
           if (line) {
@@ -586,8 +585,18 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           return true;
         };
 
-        const onFirstGesture = () => {
-          recoverAutoplay();
+        const onFirstGesture = (e) => {
+          if (recoverAutoplay()) {
+            // Only suppress the subsequent dialogue-activate if this gesture
+            // actually targeted the dialogue box (avoiding a stale flag on background clicks).
+            const inDialogue =
+              e && e.target instanceof Node && dialogue.contains(e.target);
+            const isActivateKey =
+              e && (e.key === 'Enter' || e.key === ' ') && inDialogue;
+            if (e.type === 'pointerdown' ? inDialogue : isActivateKey) {
+              suppressNextAdvance = true;
+            }
+          }
         };
         window.addEventListener('pointerdown', onFirstGesture, { capture: true });
         window.addEventListener('keydown', onFirstGesture, { capture: true });
@@ -608,7 +617,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             return;
           }
           if (recoverAutoplay()) {
-            suppressNextAdvance = false;
             return;
           }
           if (!e.detail || !e.detail.complete) {
