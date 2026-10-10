@@ -544,6 +544,38 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           if (cta) cta.focus();
         };
 
+        // Autoplay recovery: browsers block unmuted audio prior to the first
+        // user gesture. When blocked, the very first user interaction anywhere
+        // on the page replays the current line's voice and re-triggers its
+        // typewriter animation from the start, without advancing to the next line.
+        let autoplayRecoveredJustNow = false;
+
+        const recoverAutoplay = () => {
+          const isBlocked =
+            autoplayBlocked ||
+            (currentId === 'p01' && voice.paused && !voice.ended);
+          if (!isBlocked) return false;
+          autoplayBlocked = false;
+          autoplayRecoveredJustNow = true;
+          setTimeout(() => {
+            autoplayRecoveredJustNow = false;
+          }, 150);
+          const line = lineById.get(currentId);
+          if (line) {
+            playVoice(line);
+            if (api() && line.text) {
+              api().showLine(line);
+            }
+          }
+          return true;
+        };
+
+        const onFirstGesture = () => {
+          recoverAutoplay();
+        };
+        window.addEventListener('pointerdown', onFirstGesture, { capture: true, once: true });
+        window.addEventListener('keydown', onFirstGesture, { capture: true, once: true });
+
         dialogue.addEventListener('quest:line-start', () => speaking(true));
         dialogue.addEventListener('quest:line-complete', () => {
           speaking(false);
@@ -553,11 +585,10 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         dialogue.addEventListener('quest:dialogue-activate', (e) => {
           if (phase !== 'lines' || !api()) return;
-          // Recover from an autoplay block: the first gesture replays
-          // the current line's voice (once).
-          if (autoplayBlocked) {
-            autoplayBlocked = false;
-            playVoice(lineById.get(currentId));
+          // Recover from an autoplay block: replay the current line's voice
+          // and typewriter from the beginning, without advancing to the next line.
+          if (autoplayRecoveredJustNow || recoverAutoplay()) {
+            return;
           }
           if (!e.detail || !e.detail.complete) {
             api().finish();
