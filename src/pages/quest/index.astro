@@ -221,7 +221,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         // --- Voice playback: one <audio> element, swapped per line. ---
         // Lines without `audio` (none today, possible later) do nothing.
         // Mute persists in localStorage; autoplay blocks are recovered
-        // on the first user gesture (quest:dialogue-activate).
+        // on the first user gesture (window pointerdown/keydown or dialogue-activate).
         const MUTE_FLAG = 'grkd:quest-muted';
         // Detached (never appended): no UI, still plays programmatically.
         // Exposed for tests as window.__questVoice.
@@ -288,9 +288,12 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           }
           const pending = voice.play();
           if (pending && typeof pending.catch === 'function') {
-            pending.catch(() => {
-              // Autoplay policy: retry on the first user gesture.
-              autoplayBlocked = true;
+            pending.catch((err) => {
+              // Only flag autoplayBlocked on browser permission rejections,
+              // not on network 404 or decoding failures.
+              if (!err || err.name === 'NotAllowedError') {
+                autoplayBlocked = true;
+              }
             });
           }
         };
@@ -548,18 +551,31 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         // user gesture. When blocked, the very first user interaction anywhere
         // on the page replays the current line's voice and re-triggers its
         // typewriter animation from the start, without advancing to the next line.
-        let autoplayRecoveredJustNow = false;
+        let suppressNextAdvance = false;
+        let recoveryAttemptedForLine = null;
+
+        const cleanupFirstGestureListeners = () => {
+          window.removeEventListener('pointerdown', onFirstGesture, {
+            capture: true,
+          });
+          window.removeEventListener('keydown', onFirstGesture, {
+            capture: true,
+          });
+        };
 
         const recoverAutoplay = () => {
+          // Prevent infinite recovery lock if audio fails or is unplayable on this line.
+          if (recoveryAttemptedForLine === currentId) return false;
           const isBlocked =
             autoplayBlocked ||
-            (currentId === 'p01' && voice.paused && !voice.ended);
+            (currentId === 'p01' && voice.paused && !voice.ended && !voice.error);
           if (!isBlocked) return false;
+
+          cleanupFirstGestureListeners();
           autoplayBlocked = false;
-          autoplayRecoveredJustNow = true;
-          setTimeout(() => {
-            autoplayRecoveredJustNow = false;
-          }, 150);
+          recoveryAttemptedForLine = currentId;
+          suppressNextAdvance = true;
+
           const line = lineById.get(currentId);
           if (line) {
             playVoice(line);
@@ -573,8 +589,8 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const onFirstGesture = () => {
           recoverAutoplay();
         };
-        window.addEventListener('pointerdown', onFirstGesture, { capture: true, once: true });
-        window.addEventListener('keydown', onFirstGesture, { capture: true, once: true });
+        window.addEventListener('pointerdown', onFirstGesture, { capture: true });
+        window.addEventListener('keydown', onFirstGesture, { capture: true });
 
         dialogue.addEventListener('quest:line-start', () => speaking(true));
         dialogue.addEventListener('quest:line-complete', () => {
@@ -585,9 +601,14 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         dialogue.addEventListener('quest:dialogue-activate', (e) => {
           if (phase !== 'lines' || !api()) return;
-          // Recover from an autoplay block: replay the current line's voice
-          // and typewriter from the beginning, without advancing to the next line.
-          if (autoplayRecoveredJustNow || recoverAutoplay()) {
+          // If this gesture recovered the blocked voice, consume the flag
+          // and DO NOT advance to the next line yet so the user gets to hear it.
+          if (suppressNextAdvance) {
+            suppressNextAdvance = false;
+            return;
+          }
+          if (recoverAutoplay()) {
+            suppressNextAdvance = false;
             return;
           }
           if (!e.detail || !e.detail.complete) {
