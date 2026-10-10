@@ -221,7 +221,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         // --- Voice playback: one <audio> element, swapped per line. ---
         // Lines without `audio` (none today, possible later) do nothing.
         // Mute persists in localStorage; autoplay blocks are recovered
-        // on the first user gesture (window pointerdown/keydown or dialogue-activate).
+        // on the first user gesture (window click/keydown or dialogue-activate).
         const MUTE_FLAG = 'grkd:quest-muted';
         // Detached (never appended): no UI, still plays programmatically.
         // Exposed for tests as window.__questVoice.
@@ -551,16 +551,11 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         // user gesture. When blocked, the very first user interaction anywhere
         // on the page replays the current line's voice and re-triggers its
         // typewriter animation from the start, without advancing to the next line.
-        let suppressNextAdvance = false;
         let recoveryAttemptedForLine = null;
 
         const cleanupFirstGestureListeners = () => {
-          window.removeEventListener('pointerdown', onFirstGesture, {
-            capture: true,
-          });
-          window.removeEventListener('keydown', onFirstGesture, {
-            capture: true,
-          });
+          window.removeEventListener('click', onFirstGesture);
+          window.removeEventListener('keydown', onFirstGesture);
         };
 
         const recoverAutoplay = () => {
@@ -585,21 +580,13 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           return true;
         };
 
-        const onFirstGesture = (e) => {
-          if (recoverAutoplay()) {
-            // Only suppress the subsequent dialogue-activate if this gesture
-            // actually targeted the dialogue box (avoiding a stale flag on background clicks).
-            const inDialogue =
-              e && e.target instanceof Node && dialogue.contains(e.target);
-            const isActivateKey =
-              e && (e.key === 'Enter' || e.key === ' ') && inDialogue;
-            if (e.type === 'pointerdown' ? inDialogue : isActivateKey) {
-              suppressNextAdvance = true;
-            }
-          }
+        const onFirstGesture = () => {
+          recoverAutoplay();
         };
-        window.addEventListener('pointerdown', onFirstGesture, { capture: true });
-        window.addEventListener('keydown', onFirstGesture, { capture: true });
+        // Registered in bubble phase so dialogue's own click/keydown listener
+        // runs first when the user interacts with the dialogue box directly.
+        window.addEventListener('click', onFirstGesture);
+        window.addEventListener('keydown', onFirstGesture);
 
         dialogue.addEventListener('quest:line-start', () => speaking(true));
         dialogue.addEventListener('quest:line-complete', () => {
@@ -610,12 +597,8 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         dialogue.addEventListener('quest:dialogue-activate', (e) => {
           if (phase !== 'lines' || !api()) return;
-          // If this gesture recovered the blocked voice, consume the flag
-          // and DO NOT advance to the next line yet so the user gets to hear it.
-          if (suppressNextAdvance) {
-            suppressNextAdvance = false;
-            return;
-          }
+          // If this gesture recovered the blocked voice, replay from the
+          // beginning and DO NOT advance to the next line yet.
           if (recoverAutoplay()) {
             return;
           }
