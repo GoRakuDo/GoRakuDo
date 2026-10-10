@@ -62,6 +62,7 @@
       "id": "p03_yes_desc",
       "speaker": "guide",
       "bg": "blur",
+      "position": "center",
       "idText": "Immersion itu belajar tanpa ngafal tata bahasa atau nerjemahin, persis kayak bayi yang menyerap bahasa pertamanya secara alami dari nol.",
       "jpVoice": "[confident]イマージョンは文法と翻訳なしで、[break][soft tone]ゼロから赤ちゃんみたいに自然習得するんです。",
       "audio": "/assets/voice/quest/p03_yes_desc.mp3",
@@ -116,6 +117,7 @@
       "id": "p05",
       "speaker": "guide",
       "bg": "blur",
+      "position": "center",
       "idText": "Kenalanku tuh udah 8 tahun belajar bahasa Indonesia, tapi sampai sekarang ngomongnya masih belum lancar sama sekali, lho.",
       "jpVoice": "[worried][sympathetic][nostalgic]僕の知り合いは、[break][nostalgic]8年もインドネシア語を勉強してきたのに、[long-break][uncertain]まだ全然上手く話せてないね...",
       "audio": "/assets/voice/quest/p05.mp3"
@@ -136,6 +138,7 @@
       "id": "p07",
       "speaker": "guide",
       "bg": "blur",
+      "position": "left",
       "idText": "Sebenernya gampang kok! Cuma caranya aja yang bikin hasilnya beda jauh. Mau liat gimana cara kenalanku itu belajar?",
       "jpVoice": "[cheerful][hopeful]実は簡単だけど、[break][compassionate]どうやって勉強するかによって結果が違うんですよ。[long-break]僕の知り合いはどうやって勉強したか、[break][calm]みて行こうか？",
       "audio": "/assets/voice/quest/p07.mp3",

@@ -605,8 +605,23 @@
 
   .quest-guide {
     --quest-sprite-width: clamp(260px, min(52vw, 88dvh), 1100px);
+    --quest-sprite-left: 66%;
 
     bottom: 0;
+    left: var(--quest-sprite-left);
+    transition: left 0.3s ease;
+  }
+
+  .quest-guide[data-position='center'] {
+    --quest-sprite-left: 50%;
+  }
+
+  .quest-guide[data-position='left'] {
+    --quest-sprite-left: 34%;
+  }
+
+  .quest-guide[data-position='right'] {
+    --quest-sprite-left: 66%;
   }
 }
 

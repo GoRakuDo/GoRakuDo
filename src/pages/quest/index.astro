@@ -34,6 +34,7 @@ const dialogueLines = prologue.lines.map(line => ({
   // Branching: choices jump via nextLine, action navigates away.
   // Omitted => linear advance to the next array entry.
   nextLine: (line as { nextLine?: string }).nextLine ?? null,
+  position: (line as { position?: string }).position ?? null,
   audio: (line as { audio?: string }).audio ?? null,
   choices: ((line as { choices?: Array<{ id: string; idText: string; jpText: string; nextLine: string }> }).choices ?? []).map(c => ({
     id: c.id,
@@ -383,7 +384,14 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const applyStage = (line, pos) => {
           const blurred = !!line && line.bg === 'blur';
           if (scene) scene.classList.toggle('is-blurred', blurred);
-          if (guide) guide.classList.toggle('is-hidden', pos < 1);
+          if (guide) {
+            guide.classList.toggle('is-hidden', pos < 1);
+            if (line && line.position) {
+              guide.dataset.position = line.position;
+            } else if (line && line.text) {
+              guide.dataset.position = 'right';
+            }
+          }
         };
 
         const clearChoices = () => {
