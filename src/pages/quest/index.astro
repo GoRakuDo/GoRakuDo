@@ -166,6 +166,60 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             <line x1='16' x2='22' y1='9' y2='15'></line>
           </svg>
         </button>
+        <button
+          class='quest-mute'
+          data-quest-bgm-mute
+          type='button'
+          aria-pressed='false'
+          aria-label='Matikan musik latar'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='quest-mute-icon lucide lucide-audio-lines'
+            data-quest-bgm-icon-on
+            aria-hidden='true'
+          >
+            <path d='M2 10v3'></path>
+            <path d='M6 6v11'></path>
+            <path d='M10 3v18'></path>
+            <path d='M14 8v7'></path>
+            <path d='M18 5v13'></path>
+            <path d='M22 10v3'></path>
+          </svg>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='quest-mute-icon lucide lucide-audio-lines-off'
+            data-quest-bgm-icon-off
+            aria-hidden='true'
+            hidden
+          >
+            <path d='M10 10v11'></path>
+            <path d='M10 3v1.35'></path>
+            <path d='M14 14v1'></path>
+            <path d='M14 8v.35'></path>
+            <path d='M18 5v7.35'></path>
+            <path d='M2 10v3'></path>
+            <path d='m2 2 20 20'></path>
+            <path d='M22 10v3'></path>
+            <path d='M6 6v11'></path>
+          </svg>
+        </button>
       </div>
 
       <div class='quest-guide is-hidden' data-quest-guide>
@@ -290,8 +344,8 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
               muted ? 'Nyalakan suara' : 'Bisukan suara'
             );
           }
-          if (muteIconOn) muteIconOn.hidden = muted;
-          if (muteIconOff) muteIconOff.hidden = !muted;
+          if (muteIconOn) muteIconOn.toggleAttribute('hidden', muted);
+          if (muteIconOff) muteIconOff.toggleAttribute('hidden', !muted);
         };
 
         try {
@@ -310,6 +364,86 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
               // Storage unavailable: mute applies to this visit only.
             }
             applyMuteUI();
+          });
+        }
+
+        // --- Background music: one looping <audio>, on by default. ---
+        // Mute persists in localStorage; while muted the track stays
+        // paused instead of playing silently, so it costs nothing and
+        // starts the moment it is switched back on during the lines.
+        // Volume sits well below the line voice so dialogue stays clear.
+        const BGM_MUTE_FLAG = 'grkd:quest-bgm-muted';
+        const BGM_SRC = '/assets/bgm/quest/prologue.mp3';
+        // Detached (never appended): no UI, still plays programmatically.
+        // Exposed for tests as window.__questBgm.
+        const bgm = document.createElement('audio');
+        bgm.src = BGM_SRC;
+        bgm.loop = true;
+        bgm.preload = 'auto';
+        bgm.volume = 0.22;
+        bgm.setAttribute('data-quest-bgm', '');
+        window.__questBgm = bgm;
+        const bgmMuteBtn = document.querySelector('[data-quest-bgm-mute]');
+        const bgmIconOn = bgmMuteBtn
+          ? bgmMuteBtn.querySelector('[data-quest-bgm-icon-on]')
+          : null;
+        const bgmIconOff = bgmMuteBtn
+          ? bgmMuteBtn.querySelector('[data-quest-bgm-icon-off]')
+          : null;
+
+        const applyBgmMuteUI = () => {
+          const muted = bgm.muted;
+          if (bgmMuteBtn) {
+            bgmMuteBtn.setAttribute('aria-pressed', String(muted));
+            bgmMuteBtn.setAttribute(
+              'aria-label',
+              muted ? 'Nyalakan musik latar' : 'Matikan musik latar'
+            );
+          }
+          if (bgmIconOn) bgmIconOn.toggleAttribute('hidden', muted);
+          if (bgmIconOff) bgmIconOff.toggleAttribute('hidden', !muted);
+        };
+
+        const playBgm = () => {
+          if (bgm.muted) return;
+          const pending = bgm.play();
+          if (pending && typeof pending.catch === 'function') {
+            pending.catch(() => {
+              // Autoplay blocked or the track failed to load: the
+              // Chapter List keeps working, BGM just stays silent.
+            });
+          }
+        };
+
+        const pauseBgm = () => {
+          try {
+            bgm.pause();
+          } catch {
+            // pause() on a fresh element is a no-op in practice.
+          }
+        };
+
+        try {
+          bgm.muted = window.localStorage.getItem(BGM_MUTE_FLAG) === 'true';
+        } catch {
+          // Storage unavailable => default to unmuted.
+        }
+        applyBgmMuteUI();
+
+        if (bgmMuteBtn) {
+          bgmMuteBtn.addEventListener('click', () => {
+            bgm.muted = !bgm.muted;
+            try {
+              window.localStorage.setItem(BGM_MUTE_FLAG, String(bgm.muted));
+            } catch {
+              // Storage unavailable: mute applies to this visit only.
+            }
+            if (bgm.muted) {
+              pauseBgm();
+            } else if (phase !== 'chapters') {
+              playBgm();
+            }
+            applyBgmMuteUI();
           });
         }
 
@@ -592,12 +726,12 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         // Keep background controls out of the tab order / AT tree while the
         // finale overlay is open (same inert-based approach as
-        // image-zoom.js). Listed explicitly: mute button, dialogue box,
+        // image-zoom.js). Listed explicitly: mute buttons, dialogue box,
         // and choices.
         const setBackgroundInert = (on) => {
           document
             .querySelectorAll(
-              '[data-quest-mute], [data-quest-dialogue], [data-quest-choices]'
+              '[data-quest-mute], [data-quest-bgm-mute], [data-quest-dialogue], [data-quest-choices]'
             )
             .forEach((el) => {
               if (on) el.setAttribute('inert', '');
@@ -623,6 +757,10 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           chapters.hidden = false;
           chapters.removeAttribute('inert');
           setBackgroundInert(true);
+          // Leaving the lines (direct visit, reload, or the fallback when
+          // the first-line voice autoplay is blocked) must not leave the
+          // BGM running behind the overlay.
+          pauseBgm();
           // Preload the first line's voice without playing it.
           const first = lineById.get(currentId);
           if (
@@ -647,6 +785,7 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           setBackgroundInert(false);
           phase = 'lines';
           showId(currentId);
+          playBgm();
           if (!awaitingInput) dialogue.focus({ preventScroll: true });
         }
 
