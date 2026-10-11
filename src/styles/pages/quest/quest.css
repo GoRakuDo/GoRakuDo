@@ -364,6 +364,11 @@
   padding: 0 0.75rem calc(0.75rem + var(--safe-area-bottom));
 }
 
+/* Hide the dialogue box while the Chapter List overlay is open before the prologue starts. */
+.quest-dialogue-zone:has(~ .quest-chapters:not([hidden])) {
+  visibility: hidden;
+}
+
 .quest-dialogue {
   position: relative;
   max-width: 44rem;
