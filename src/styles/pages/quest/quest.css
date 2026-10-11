@@ -519,6 +519,113 @@
   }
 }
 
+/* ===== CHAPTER LIST (Quest select) ===== */
+.quest-chapters {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: oklch(from var(--grkd-black-base) l c h / 0.85);
+  text-align: center;
+  inset: 0;
+}
+
+.quest-chapters-inner {
+  width: 100%;
+  max-width: 32rem;
+  margin: auto;
+}
+
+.quest-chapters-kicker {
+  margin: 0;
+  color: var(--grkd-purple-400);
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+}
+
+.quest-chapters-title {
+  margin: 0.5rem 0 1.5rem;
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
+  letter-spacing: 0.1em;
+}
+
+.quest-chapters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quest-chapter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.5);
+  border-radius: var(--border-radius-md);
+  background: oklch(from var(--grkd-surface) l c h / 0.92);
+  box-shadow: 0 12px 40px oklch(from var(--grkd-black-base) l c h / 0.6);
+  color: var(--grkd-text-global);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.quest-chapter-item.is-active {
+  cursor: pointer;
+}
+
+.quest-chapter-item.is-locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.quest-chapter-item.is-active:hover {
+  border-color: oklch(from var(--grkd-purple-400) l c h / 0.85);
+}
+
+.quest-chapter-item.is-active:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 2px;
+}
+
+.quest-chapter-badge {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.5);
+  border-radius: var(--border-radius-md);
+  background: var(--grkd-surface-2);
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.quest-chapter-name {
+  flex: 1;
+  font-weight: 700;
+}
+
+.quest-chapter-cta {
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.quest-chapter-status {
+  color: var(--grkd-text-global-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
 /* ===== FINALE (To be continued) ===== */
 .quest-finale {
   position: absolute;

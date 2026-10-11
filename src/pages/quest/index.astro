@@ -85,6 +85,10 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
       .quest-finale[hidden] {
         display: none;
       }
+
+      .quest-chapters[hidden] {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -185,6 +189,41 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
       </div>
 
       <div
+        class='quest-chapters'
+        data-quest-chapters
+        hidden
+        inert
+        role='dialog'
+        aria-modal='true'
+        aria-label='Pilih Chapter'
+      >
+        <div class='quest-chapters-inner'>
+          <p class='quest-chapters-kicker'>/// QUEST SELECT ///</p>
+          <h1 class='quest-chapters-title'>Pilih Chapter</h1>
+          <div class='quest-chapters-list'>
+            <button
+              type='button'
+              class='quest-chapter-item is-active'
+              data-quest-start-prologue
+            >
+              <span class='quest-chapter-badge'>PROLOG</span>
+              <span class='quest-chapter-name'>{prologue.title}</span>
+              <span class='quest-chapter-cta'>Mulai ▶</span>
+            </button>
+            <div class='quest-chapter-item is-locked' aria-disabled='true'>
+              <span class='quest-chapter-badge'>CHAPTER I</span>
+              <span class='quest-chapter-name'>Metode Tradisional</span>
+              <span class='quest-chapter-status'>Segera Hadir</span>
+            </div>
+            <div class='quest-chapter-item is-locked' aria-disabled='true'>
+              <span class='quest-chapter-badge'>CHAPTER II</span>
+              <span class='quest-chapter-name'>Jalan Alami Immersion</span>
+              <span class='quest-chapter-status'>Segera Hadir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
         class='quest-finale'
         data-quest-finale
         hidden
@@ -216,20 +255,24 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const guideImg = guide ? guide.querySelector('img') : null;
         const choiceBox = document.querySelector('[data-quest-choices]');
         const finale = document.querySelector('[data-quest-finale]');
+        const chapters = document.querySelector('[data-quest-chapters]');
+        const startPrologueBtn = document.querySelector(
+          '[data-quest-start-prologue]'
+        );
         if (!dialogue || !finale || !choiceBox) return;
 
         // --- Voice playback: one <audio> element, swapped per line. ---
         // Lines without `audio` (none today, possible later) do nothing.
-        // Mute persists in localStorage; autoplay blocks are recovered
-        // on the first user gesture (window click/keydown or dialogue-activate).
+        // Mute persists in localStorage. A blocked first-line autoplay
+        // falls back to the Chapter List overlay (see playVoice).
         const MUTE_FLAG = 'grkd:quest-muted';
+        const DIRECT_FLAG = 'grkd:quest-direct-prologue';
         // Detached (never appended): no UI, still plays programmatically.
         // Exposed for tests as window.__questVoice.
         const voice = document.createElement('audio');
         voice.preload = 'auto';
         voice.setAttribute('data-quest-voice', '');
         window.__questVoice = voice;
-        let autoplayBlocked = false;
         const muteBtn = document.querySelector('[data-quest-mute]');
         const muteIconOn = muteBtn
           ? muteBtn.querySelector('[data-quest-mute-icon-on]')
@@ -289,10 +332,15 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           const pending = voice.play();
           if (pending && typeof pending.catch === 'function') {
             pending.catch((err) => {
-              // Only flag autoplayBlocked on browser permission rejections,
-              // not on network 404 or decoding failures.
-              if (!err || err.name === 'NotAllowedError') {
-                autoplayBlocked = true;
+              // Browser permission rejection on the very first line =>
+              // fall back to the Chapter List so the typewriter never
+              // advances silently. Network/decoding errors are ignored.
+              if (
+                (!err || err.name === 'NotAllowedError') &&
+                currentId === startId &&
+                phase === 'lines'
+              ) {
+                openChapters();
               }
             });
           }
@@ -302,8 +350,8 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         const lineById = new Map(dialogueLines.map((l) => [l.id, l]));
         const expressions = new Set(expressionIds);
 
-        // Read once: returnees resume at p03_return, then the flag is
-        // consumed so the next visit starts at p01 again.
+        // Returnees resume at p03_return; the flag is consumed in
+        // startPrologue() so the next visit starts at p01 again.
         const RETURN_FLAG = 'grkd:quest-left-via-no';
 
         // Navigation state is line-ID based (not an array index) so
@@ -318,7 +366,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
             lineById.has('p03_return')
           ) {
             startId = 'p03_return';
-            window.localStorage.removeItem(RETURN_FLAG);
           }
         } catch {
           // Storage unavailable (private mode etc.) => start at p01.
@@ -328,6 +375,24 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         if (currentId === 'p03_return') {
           const firstId = dialogueLines[0] ? dialogueLines[0].id : null;
           if (firstId && firstId !== currentId) history.unshift(firstId);
+        }
+
+        // Hero CTA sets DIRECT_FLAG in sessionStorage before navigating
+        // here; direct visits and F5 reloads have no flag and land on the
+        // Chapter List instead. The flag is consumed on read (one-shot).
+        let fromHero = false;
+        try {
+          const navEntries =
+            typeof performance !== 'undefined' && performance.getEntriesByType
+              ? performance.getEntriesByType('navigation')
+              : [];
+          const isReload = navEntries[0] && navEntries[0].type === 'reload';
+          if (window.sessionStorage.getItem(DIRECT_FLAG) === '1') {
+            window.sessionStorage.removeItem(DIRECT_FLAG);
+            if (!isReload) fromHero = true;
+          }
+        } catch {
+          // Storage unavailable => treat as direct access.
         }
 
         // Preload only the first needed sprite (fresh visit: p02, returnee:
@@ -527,10 +592,13 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         // Keep background controls out of the tab order / AT tree while the
         // finale overlay is open (same inert-based approach as
-        // image-zoom.js). Listed explicitly: mute button and dialogue box.
+        // image-zoom.js). Listed explicitly: mute button, dialogue box,
+        // and choices.
         const setBackgroundInert = (on) => {
           document
-            .querySelectorAll('[data-quest-mute], [data-quest-dialogue]')
+            .querySelectorAll(
+              '[data-quest-mute], [data-quest-dialogue], [data-quest-choices]'
+            )
             .forEach((el) => {
               if (on) el.setAttribute('inert', '');
               else el.removeAttribute('inert');
@@ -547,46 +615,44 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           if (cta) cta.focus();
         };
 
-        // Autoplay recovery: browsers block unmuted audio prior to the first
-        // user gesture. When blocked, the very first user interaction anywhere
-        // on the page replays the current line's voice and re-triggers its
-        // typewriter animation from the start, without advancing to the next line.
-        let recoveryAttemptedForLine = null;
-
-        const cleanupFirstGestureListeners = () => {
-          window.removeEventListener('click', onFirstGesture);
-          window.removeEventListener('keydown', onFirstGesture);
-        };
-
-        const recoverAutoplay = () => {
-          // Prevent infinite recovery lock if audio fails or is unplayable on this line.
-          if (recoveryAttemptedForLine === currentId) return false;
-          const isBlocked =
-            autoplayBlocked ||
-            (currentId === 'p01' && voice.paused && !voice.ended && !voice.error);
-          if (!isBlocked) return false;
-
-          cleanupFirstGestureListeners();
-          autoplayBlocked = false;
-          recoveryAttemptedForLine = currentId;
-
-          const line = lineById.get(currentId);
-          if (line) {
-            playVoice(line);
-            if (api() && line.text) {
-              api().showLine(line);
-            }
+        // Chapter List overlay: direct visits (and F5 reloads) land here;
+        // the homepage hero CTA jumps straight into the prologue instead.
+        function openChapters() {
+          if (!chapters) return;
+          phase = 'chapters';
+          chapters.hidden = false;
+          chapters.removeAttribute('inert');
+          setBackgroundInert(true);
+          // Preload the first line's voice without playing it.
+          const first = lineById.get(currentId);
+          if (
+            first &&
+            first.audio &&
+            voice.getAttribute('src') !== first.audio
+          ) {
+            voice.setAttribute('src', first.audio);
+            voice.load();
           }
-          return true;
-        };
+          if (startPrologueBtn) startPrologueBtn.focus({ preventScroll: true });
+        }
 
-        const onFirstGesture = () => {
-          recoverAutoplay();
-        };
-        // Registered in bubble phase so dialogue's own click/keydown listener
-        // runs first when the user interacts with the dialogue box directly.
-        window.addEventListener('click', onFirstGesture);
-        window.addEventListener('keydown', onFirstGesture);
+        function startPrologue() {
+          // Deferred consumption: closing the tab after only seeing the
+          // Chapter List keeps the return flag for the next visit.
+          try { window.localStorage.removeItem(RETURN_FLAG); } catch {}
+          if (chapters) {
+            chapters.hidden = true;
+            chapters.setAttribute('inert', '');
+          }
+          setBackgroundInert(false);
+          phase = 'lines';
+          showId(currentId);
+          if (!awaitingInput) dialogue.focus({ preventScroll: true });
+        }
+
+        if (startPrologueBtn) {
+          startPrologueBtn.addEventListener('click', () => startPrologue());
+        }
 
         dialogue.addEventListener('quest:line-start', () => speaking(true));
         dialogue.addEventListener('quest:line-complete', () => {
@@ -597,11 +663,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         dialogue.addEventListener('quest:dialogue-activate', (e) => {
           if (phase !== 'lines' || !api()) return;
-          // If this gesture recovered the blocked voice, replay from the
-          // beginning and DO NOT advance to the next line yet.
-          if (recoverAutoplay()) {
-            return;
-          }
           if (!e.detail || !e.detail.complete) {
             api().finish();
             return;
@@ -615,12 +676,17 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
           advanceLinear();
         });
 
-        if (api()) {
-          showId(currentId);
+        if (fromHero) {
+          if (api()) {
+            startPrologue();
+          } else {
+            document.addEventListener('DOMContentLoaded', () => startPrologue());
+          }
+        } else if (api()) {
+          openChapters();
         } else {
-          document.addEventListener('DOMContentLoaded', () => showId(currentId));
+          document.addEventListener('DOMContentLoaded', () => openChapters());
         }
-        dialogue.focus({ preventScroll: true });
       })();
     </script>
   </body>

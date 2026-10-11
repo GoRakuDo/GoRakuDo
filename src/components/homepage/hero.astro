@@ -135,7 +135,12 @@ const {
       const actions = {
         'open-discord': () =>
           window.open('https://discord.gg/j8qmYPAGQh', '_blank'),
-        'start-quest': () => (window.location.href = '/quest'),
+        'start-quest': () => {
+          try {
+            window.sessionStorage.setItem('grkd:quest-direct-prologue', '1');
+          } catch {}
+          window.location.href = '/quest';
+        },
       };
       actions[btn.dataset.action]?.();
     });
