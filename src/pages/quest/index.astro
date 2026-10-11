@@ -123,51 +123,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
       <div class='quest-top-actions'>
         <button
           class='quest-mute'
-          data-quest-mute
-          type='button'
-          aria-pressed='false'
-          aria-label='Bisukan suara'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='16'
-            height='16'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            class='quest-mute-icon lucide lucide-volume-2'
-            data-quest-mute-icon-on
-            aria-hidden='true'
-          >
-            <path d='M11 5 6 9H2v6h4l5 4V5Z'></path>
-            <path d='M15.54 8.46a5 5 0 0 1 0 7.07'></path>
-            <path d='M19.07 4.93a10 10 0 0 1 0 14.14'></path>
-          </svg>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='16'
-            height='16'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            class='quest-mute-icon lucide lucide-volume-x'
-            data-quest-mute-icon-off
-            aria-hidden='true'
-            hidden
-          >
-            <path d='M11 5 6 9H2v6h4l5 4V5Z'></path>
-            <line x1='22' x2='16' y1='9' y2='15'></line>
-            <line x1='16' x2='22' y1='9' y2='15'></line>
-          </svg>
-        </button>
-        <button
-          class='quest-mute'
           data-quest-bgm-mute
           type='button'
           aria-pressed='false'
@@ -317,9 +272,8 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         // --- Voice playback: one <audio> element, swapped per line. ---
         // Lines without `audio` (none today, possible later) do nothing.
-        // Mute persists in localStorage. A blocked first-line autoplay
-        // falls back to the Chapter List overlay (see playVoice).
-        const MUTE_FLAG = 'grkd:quest-muted';
+        // Voice is always unmuted. A blocked first-line autoplay falls back
+        // to the Chapter List overlay (see playVoice).
         const DIRECT_FLAG = 'grkd:quest-direct-prologue';
         // Detached (never appended): no UI, still plays programmatically.
         // Exposed for tests as window.__questVoice.
@@ -327,46 +281,6 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
         voice.preload = 'auto';
         voice.setAttribute('data-quest-voice', '');
         window.__questVoice = voice;
-        const muteBtn = document.querySelector('[data-quest-mute]');
-        const muteIconOn = muteBtn
-          ? muteBtn.querySelector('[data-quest-mute-icon-on]')
-          : null;
-        const muteIconOff = muteBtn
-          ? muteBtn.querySelector('[data-quest-mute-icon-off]')
-          : null;
-
-        const applyMuteUI = () => {
-          const muted = voice.muted;
-          if (muteBtn) {
-            muteBtn.setAttribute('aria-pressed', String(muted));
-            muteBtn.setAttribute(
-              'aria-label',
-              muted ? 'Nyalakan suara' : 'Bisukan suara'
-            );
-          }
-          if (muteIconOn) muteIconOn.toggleAttribute('hidden', muted);
-          if (muteIconOff) muteIconOff.toggleAttribute('hidden', !muted);
-        };
-
-        try {
-          voice.muted = window.localStorage.getItem(MUTE_FLAG) === 'true';
-        } catch {
-          // Storage unavailable => default to unmuted.
-        }
-        applyMuteUI();
-
-        if (muteBtn) {
-          muteBtn.addEventListener('click', () => {
-            voice.muted = !voice.muted;
-            try {
-              window.localStorage.setItem(MUTE_FLAG, String(voice.muted));
-            } catch {
-              // Storage unavailable: mute applies to this visit only.
-            }
-            applyMuteUI();
-          });
-        }
-
         // --- Background music: one looping <audio>, on by default. ---
         // Mute persists in localStorage; while muted the track stays
         // paused instead of playing silently, so it costs nothing and
@@ -726,12 +640,12 @@ const firstLine = dialogueLines[0] ?? { name: 'AI Kasou Yoshia', text: '' };
 
         // Keep background controls out of the tab order / AT tree while the
         // finale overlay is open (same inert-based approach as
-        // image-zoom.js). Listed explicitly: mute buttons, dialogue box,
+        // image-zoom.js). Listed explicitly: BGM mute button, dialogue box,
         // and choices.
         const setBackgroundInert = (on) => {
           document
             .querySelectorAll(
-              '[data-quest-mute], [data-quest-bgm-mute], [data-quest-dialogue], [data-quest-choices]'
+              '[data-quest-bgm-mute], [data-quest-dialogue], [data-quest-choices]'
             )
             .forEach((el) => {
               if (on) el.setAttribute('inert', '');
