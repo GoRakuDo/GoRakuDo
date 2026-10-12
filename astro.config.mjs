@@ -13,12 +13,12 @@ import { getLastModForUrl } from './src/utils/sitemap-dates';
 export default defineConfig({
   site: 'https://gorakudo.org',
 
-  // Dev server — fixed port so every session opens on localhost:5600
+  // Dev server — fixed port so every session opens on localhost:5600 (and LAN via host: true)
   server: {
     port: 5600,
     // Fail loudly instead of silently drifting to another port when busy.
     strictPort: true,
-    host: false,
+    host: true,
   },
 
   // Static Site Generation (SSG) - Astro Native Best Practice
