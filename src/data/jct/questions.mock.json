@@ -1,0 +1,92 @@
+[
+  {
+    "id": "L3-L-001",
+    "type": "listening",
+    "level": 3,
+    "media": {
+      "kind": "youtube",
+      "label": "Percakapan santai di kafe",
+      "start": 124,
+      "end": 139
+    },
+    "prompt": {
+      "idText": "Apa yang membuat pembicara terkejut?",
+      "jpText": "話し手は何に驚いていましたか？"
+    },
+    "options": [
+      "新発売のスイーツが思ったより安かったこと",
+      "電車が予定より早く着いたこと",
+      "店員の日本語がとても速かったこと",
+      "雨なのに傘が売り切れていたこと"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "L5-L-002",
+    "type": "listening",
+    "level": 5,
+    "media": {
+      "kind": "youtube",
+      "label": "Podcast belajar bahasa",
+      "start": 742,
+      "end": 776
+    },
+    "prompt": {
+      "idText": "Apa pesan utama yang ingin disampaikan pembicara?",
+      "jpText": "話し手が最も伝えたいことは何ですか？"
+    },
+    "options": [
+      "文法を完璧にしてから実践に入るべきだ",
+      "意味が分かる範囲のコンテンツに大量に触れ続けるべきだ",
+      "毎日単語帳を開くのが最も効率的だ",
+      "翻訳で完全に理解してから次へ進むべきだ"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "L4-R-003",
+    "type": "reading",
+    "level": 4,
+    "media": {
+      "kind": "x-post",
+      "label": "Postingan X",
+      "name": "Yuki",
+      "handle": "@yuki_daily",
+      "text": "今日も残業。帰り道のコンビニで新作のいちご大福が最後の一個だけ残ってた。迷わず買って、家で食べたら涙が出るほどおいしかった。小さな幸せ、大事にしたい。"
+    },
+    "prompt": {
+      "idText": "Apa yang dirasakan penulis setelah memakan kudapan itu?",
+      "jpText": "筆者はそれを食べた後、どんな気持ちになりましたか？"
+    },
+    "options": [
+      "味が普通で少しがっかりした",
+      "残業になって怒っている",
+      "おいしくて涙が出るほど嬉しかった",
+      "二個買わなかったことを後悔している"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "L6-R-004",
+    "type": "reading",
+    "level": 6,
+    "media": {
+      "kind": "aozora",
+      "label": "Kesusastraan klasik",
+      "work": "Makura no Sōshi",
+      "author": "Sei Shōnagon",
+      "text": "春はあけぼの。やうやう白くなりゆく山ぎは、すこしあかりて、紫だちたる雲のほそくたなびきたる。"
+    },
+    "prompt": {
+      "idText": "Apa yang dipuji penulis dalam kutipan ini?",
+      "jpText": "この引用で筆者が美しいと述べているのは何ですか？"
+    },
+    "options": [
+      "春の夜明けの空の色",
+      "夏の山の緑",
+      "朝の鳥の声",
+      "貴族の紫の衣装"
+    ],
+    "answer": 0
+  }
+]

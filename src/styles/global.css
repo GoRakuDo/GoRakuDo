@@ -15,6 +15,8 @@
   --grkd-black-base: oklch(20% 0.005 285deg);
   --grkd-purple-400: oklch(65% 0.22 273.85deg); /* Hue aligned to Discord */
   --grkd-purple-500: oklch(57.74% 0.209 273.85deg); /* Discord Blurple Primary */
+  --grkd-purple-600: oklch(50% 0.20 274deg); /* DESIGN.md 2.3 — hover state */
+  --grkd-purple-700: oklch(40% 0.18 274deg); /* DESIGN.md 2.3 — border accent, button bg */
   --grkd-brand-secondary: var(--grkd-purple-400);
   --grkd-cyan-400: oklch(70% 0.15 195deg);
   --grkd-gold-base: oklch(85% 0.15 85deg);
