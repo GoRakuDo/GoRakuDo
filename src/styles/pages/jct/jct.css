@@ -1557,12 +1557,16 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .jct-page:has(.jct-vn-panel:not([hidden])) {
+    padding-bottom: 1.5rem;
+  }
+
   .jct-vn-guide {
-    padding: 1.5rem 1.5rem 0;
+    padding: 1rem 1.5rem 0;
   }
 
   .jct-vn-img {
-    height: clamp(16rem, 46vh, 28rem);
+    height: clamp(14rem, 36vh, 23rem);
   }
 
   .jct-vn-box {
@@ -1588,6 +1592,11 @@ body {
 }
 
 @media (max-width: 480px) {
+  /* On mobile after starting, hide the header so the VN scene fits on screen without scroll */
+  :has(> .jct-gate[hidden]) > .jct-header {
+    display: none;
+  }
+
   .jct-br-desktop {
     display: none;
   }
