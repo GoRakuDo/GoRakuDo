@@ -1582,17 +1582,71 @@ body {
   }
 }
 
+.jct-br-mobile {
+  display: none;
+}
+
 @media (max-width: 480px) {
-  /* Keep the step names readable instead of dropping them: the three chips
-     still fit on a 320px viewport at this size. */
+  .jct-br-desktop {
+    display: none;
+  }
+
+  .jct-br-mobile {
+    display: inline;
+  }
+
+  /* Mobile title: fit cleanly on 1 line or proportionate width without awkward orphan words */
+  .jct-title {
+    font-size: clamp(1.2rem, 5.8vw, 1.6rem);
+    white-space: nowrap;
+  }
+
+  /* On small mobile, stack the JCT badge and subtitle cleanly instead of squishing */
+  .jct-subtitle-group {
+    flex-direction: column;
+    gap: 0.65rem;
+    width: 100%;
+  }
+
+  /* Make JCT badge bigger and prominent on mobile */
+  .jct-title-abbr {
+    padding: 0.55rem 1.1rem;
+    border-width: 2px;
+    font-size: 1.65rem;
+  }
+
+  .jct-subtitle-texts {
+    width: 100%;
+    text-align: center;
+  }
+
+  .jct-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .jct-subtitle-jp {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-align: center;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  /* Flexible equal-width step pills so 3 items always fit on 1 row without wrapping */
   .jct-step {
-    gap: 0.3rem;
-    padding: 0.35rem 0.55rem;
-    font-size: 0.7rem;
+    flex: 1 1 0;
+    gap: 0.25rem;
+    width: auto;
+    min-width: 0;
+    padding: 0.35rem 0.4rem;
+    font-size: 0.68rem;
   }
 
   .jct-step-num {
-    font-size: 0.66rem;
+    font-size: 0.64rem;
   }
 
   .jct-stat-row {
