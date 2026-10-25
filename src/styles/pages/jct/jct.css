@@ -4,9 +4,50 @@
  * Layout: mobile-first single column, two-column grids from 768px.
  */
 
-/* ===== PAGE SHELL ===== */
+/* ===== JCT-OWNED BACKDROP =====
+ * The shared WaveAnimation is gone: its blurred photograph was made for the
+ * homepage hero and read as noise behind a test that is mostly cards and a
+ * dialogue box. This is the page's own quiet Night Library backdrop — a deep
+ * base with two soft light pools (Blurple top, gold bottom-right), painted
+ * once on the body so nothing site-wide leaks in and no extra DOM is needed.
+ *
+ * Deliberately no `background-attachment: fixed`: it janks on iOS and the
+ * gradients are static anyway. `min-height: 100dvh` on body already makes the
+ * backdrop cover the whole viewport on the screens that matter here. */
+.jct-body {
+  /* The 4rem body tail in global.css exists to clear the fixed BottomNavBar.
+     This page has no bottom bar, so that padding is pure dead space — and on a
+     phone it is the difference between "fits" and "scrolls" for the VN stage. */
+  padding-bottom: 0;
+  background-color: var(--grkd-black-950);
+  background-image:
+    radial-gradient(
+      ellipse 90% 60% at 50% -10%,
+      oklch(from var(--grkd-purple-500) l c h / 0.22) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 100% 100%,
+      oklch(from var(--grkd-gold-base) l c h / 0.08) 0%,
+      transparent 70%
+    );
+  background-repeat: no-repeat;
+}
+
+/* ===== STANDALONE DOCUMENT SHELL =====
+ * This page owns its whole document (same approach as /quest) instead of
+ * riding on BaseLayout. Reason: BaseLayout's Navbar (76px) + BottomNavBar
+ * (fixed, 88px) + the `.layout-content` mobile clearance
+ * (`calc(var(--navbar-height) + 2rem)` = 102px) all fought this page's own
+ * VN stage on phones. With the layout gone there is no clearance to opt out
+ * of, no fixed bottom bar stealing 88px, and the top bar below sits in
+ * normal flow so it can never overlap the header.
+ *
+ * `body` is already `display: flex; flex-direction: column; min-height:
+ * 100dvh` in global.css, so `main` only needs to grow into the remainder. */
 .jct-page {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
@@ -17,29 +58,58 @@
   font-family: var(--font-primary);
 }
 
-/* .jct-page IS the <main> element, so this class selector (0,1,0) beats
-   the global `main { padding-bottom: var(--bottom-nav-spacing) }` type
-   selector (0,0,1) in global.css. The bottom-nav clearance therefore has
-   to be re-declared here, or the last CTA sits under the 88px fixed bar.
-   max() keeps a sensible tail gap when the bar is hidden
-   (--bottom-nav-spacing collapses to 0px). */
-@media (max-width: 1024px) {
-  .jct-page {
-    padding-bottom: max(1.5rem, var(--bottom-nav-spacing));
-  }
+/* ===== JCT TOP BAR =====
+ * Standalone replacement for the site Navbar: back-home link on the left,
+ * the JCT online marker on the right. Normal flow (not fixed) is the whole
+ * point — no overlap is possible, so no clearance maths are needed either. */
+.jct-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: calc(var(--safe-area-top) + 0.85rem) clamp(1rem, 4vw, 2rem) 0.5rem;
 }
 
-/* While on the initial start gate panel, vertically center the content in the viewport.
-   When the visitor clicks "Mulai Tes", the gate hides and the page returns to normal flow. */
-.jct-page:has(.jct-gate:not([hidden])) {
-  justify-content: center;
-  min-height: calc(100dvh - 112px);
+.jct-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: var(--touch-target-min);
+  color: var(--grkd-white-base);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
 }
 
-/* Opt out of the global mobile navbar clearance: the header below owns its
-   own top padding (same pattern as /tools and /search). */
-body {
-  --mobile-content-padding: 0;
+.jct-home:hover {
+  opacity: 0.78;
+}
+
+.jct-home:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 3px;
+  border-radius: var(--border-radius-md);
+}
+
+/* The brand mark is a black SVG; invert it so it reads on the dark scene
+   (same treatment as the site navbar's .nav-logo-icon). */
+.jct-home-logo {
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: invert(1) brightness(1.2);
+}
+
+.jct-home-name {
+  color: var(--grkd-white-base);
+  font-family: var(--font-jp-logo);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .jct-header {
@@ -50,13 +120,12 @@ body {
   text-align: center;
 }
 
-/* Mobile/tablet: clear the absolute-positioned transparent navbar.
-   Desktop is unaffected — .layout-content already pads for the fixed
-   floating pill navbar (same split as /tools and /search). */
-@media (max-width: 1023px) {
-  .jct-header {
-    padding-top: calc(var(--navbar-height) + 2rem);
-  }
+/* Start gate: centre the single start button in the space the page owns.
+   `main` is `flex: 1 1 auto` inside the body's 100dvh column, so it already
+   spans from below the top bar to the bottom of the viewport — no viewport
+   arithmetic (the old `calc(100dvh - 112px)`) is needed any more. */
+.jct-page:has(.jct-gate:not([hidden])) {
+  justify-content: center;
 }
 
 .jct-marker {
@@ -190,6 +259,16 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+}
+
+/* Panels are focus *containers*, not controls: the script moves focus to
+   them (`tabindex='-1'`) so keyboard and screen-reader users land on the new
+   step instead of a hidden button. The browser's default `:focus-visible`
+   ring then draws a white box around the whole panel, which reads as a broken
+   border. Suppressing it is safe here because every interactive descendant
+   keeps its own focus style — the panel itself is never a tab stop. */
+.jct-panel:focus {
+  outline: none;
 }
 
 .jct-panel[hidden] {
@@ -1592,11 +1671,6 @@ body {
 }
 
 @media (max-width: 480px) {
-  /* On mobile after starting, hide the header so the VN scene fits on screen without scroll */
-  :has(> .jct-gate[hidden]) > .jct-header {
-    display: none;
-  }
-
   .jct-br-desktop {
     display: none;
   }
@@ -1668,6 +1742,84 @@ body {
 
   .jct-scale-group {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ===== MOBILE: HIDE THE HEADER ONCE THE TEST HAS STARTED =====
+ * On a phone the header (marker + title + JCT badge + two subtitle lines)
+ * costs ~200px of vertical space. Once `Mulai Tes` is tapped the start gate
+ * is hidden for the rest of the run, so the header has done its job — the VN
+ * stage and the dialogue box need that space to fit without scrolling.
+ *
+ * `.jct-gate` IS the intro panel, so `[hidden]` here means "the visitor has
+ * started", not "the gate was closed by some unrelated toggle".
+ *
+ * `:where()` keeps the gate lookup at zero specificity so the whole rule
+ * stays at 0,2,0 and the project's selector-max-specificity budget holds.
+ *
+ * Note: `display: none` also drops the `<h1>` from the a11y tree. Accepted
+ * because every panel carries its own heading (several visually hidden, some
+ * visible), so the document never loses its structure — it just no longer
+ * repeats the page title above every step. Desktop keeps the header: it has
+ * the room, and the title anchors the page there.
+ *
+ * The second query covers phones held in landscape (e.g. 844x390): their
+ * width is desktop-sized but their height is not, and measured on that exact
+ * viewport the page overflows by 325px unless the same treatment applies.
+ * It is capped at 1024px wide so a short desktop window is never affected. */
+@media (max-width: 767px), (max-width: 1024px) and (max-height: 520px) {
+  .jct-page:has(:where(.jct-gate[hidden])) .jct-header {
+    display: none;
+  }
+
+  /* ===== MOBILE VN STAGE: FILL THE SCREEN, NO SCROLL =====
+   * Body becomes exactly one viewport tall while the dialogue runs. With the
+   * header gone and no fixed bottom bar, the top bar takes its natural height
+   * and `main` receives the remainder — no manual viewport arithmetic, so the
+   * result holds on every phone aspect ratio instead of one tuned value. */
+  .jct-body:has(:where(.jct-vn-panel:not([hidden]))) {
+    overflow: hidden;
+    height: 100dvh;
+  }
+
+  /* min-height: 0 is what lets the chain below actually shrink: flex items
+     default to min-height: auto, which would pin the sprite at its natural
+     size and push the dialogue box past the fold. `overflow-y: auto` is only
+     a safety valve — it stays scrollbar-free unless the copy is pathological. */
+  .jct-page:has(:where(.jct-vn-panel:not([hidden]))) {
+    gap: 0.75rem;
+    overflow-y: auto;
+    min-height: 0;
+    padding-bottom: 0.75rem;
+  }
+
+  .jct-page:has(:where(.jct-vn-panel:not([hidden]))) .jct-vn-panel,
+  .jct-page:has(:where(.jct-vn-panel:not([hidden]))) .jct-vn-stage {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+
+  /* The sprite absorbs whatever the dialogue box does not need. The guide is
+     the flex grower, and the image fills the guide's content box — with
+     `object-fit: contain` from the base rule plus `object-position: center
+     bottom`, every expression stays proportional and bottom-aligned without
+     any percentage-height resolution against an auto-sized ancestor. */
+  .jct-page:has(:where(.jct-vn-panel:not([hidden]))) .jct-vn-guide {
+    flex: 1 1 0;
+    min-height: 0;
+    padding: 0.5rem 0.75rem 0;
+  }
+
+  .jct-page:has(:where(.jct-vn-panel:not([hidden]))) .jct-vn-img {
+    height: 100%;
+  }
+
+  /* The dialogue box keeps its natural height (never clipped); the sprite
+     above is the only thing that flexes. If the copy is ever taller than the
+     screen, the page-level `overflow-y: auto` above becomes a scroll instead
+     of silently cutting the text off. */
+  .jct-page:has(:where(.jct-vn-panel:not([hidden]))) .jct-vn-box {
+    flex: 0 0 auto;
   }
 }
 

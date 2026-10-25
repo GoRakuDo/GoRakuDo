@@ -4,11 +4,20 @@
 // Steps: self-assessment (Lv1-7) -> media questions (quiz + 1-10 scale) -> result.
 // Copy is bilingual: Indonesian (site language) primary, Japanese as the
 // second line — same two-tier pattern as the quest dialogue (idText/jpText).
-import BaseLayout from '../../layouts/BaseLayout.astro';
+//
+// Layout: this page owns its whole document, exactly like /quest. BaseLayout
+// is deliberately NOT used: its Navbar (76px) + BottomNavBar (88px) + the
+// `.layout-content` mobile clearance (navbar-height + 2rem = 102px) fought
+// this page's own VN stage on phones. A JCT-only top bar replaces the site
+// navbar and sits in normal flow, so it can never overlap the header.
+// The shared WaveAnimation background is also gone: this page paints its own
+// quiet Night Library backdrop in jct.css, so nothing site-wide leaks in.
+import UnifiedSEO from '../../components/common/UnifiedSEO.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import levelsData from '../../data/jct/levels.json';
 import scaleData from '../../data/jct/comprehension-scale.json';
 import questionsData from '../../data/jct/questions.mock.json';
+import '../../styles/global.css';
 import '../../styles/pages/jct/jct.css';
 
 // ========== TYPE DEFINITIONS ==========
@@ -64,1486 +73,1515 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 });
 ---
 
-<BaseLayout
-  title={seoTitle}
-  description={seoDescription}
-  pageType='website'
-  lang='id'
-  breadcrumbSchema={breadcrumbSchema}
->
-  <main
-    class='jct-page'
-    role='main'
-    aria-label='Japanese Comprehension Test'
-    data-jct
-  >
-    <!-- ========== HEADER ========== -->
-    <header class='jct-header'>
-      <p class='jct-marker' aria-hidden='true'>/// JCT_ONLINE ///</p>
-      <h1 class='jct-title'>Japanese Comprehension Test</h1>
-      <div class='jct-subtitle-group'>
-        <span class='jct-title-abbr' aria-hidden='true'>JCT</span>
-        <div class='jct-subtitle-texts'>
-          <p class='jct-subtitle'>
-            Ukur <strong>pemahaman bahasa Jepang aslimu</strong><br class='jct-br-desktop' />
-            lewat media asli — bukan hafalan tata bahasa.
-          </p>
-          <p class='jct-subtitle-jp' lang='ja'>
-            生メディアからあなたの<br class='jct-br-mobile' />「本当の日本語把握力」を測定します
-          </p>
-        </div>
-      </div>
-    </header>
-
-    <!-- ========== STEP INDICATOR ========== -->
-    <ol class='jct-steps' aria-label='Tahapan tes'>
-      <li class='jct-step is-active' data-jct-step='start' aria-current='step'>
-        <span class='jct-step-num'>01</span>
-        <span class='jct-step-name'>Penilaian Diri</span>
-      </li>
-      <li class='jct-step' data-jct-step='test'>
-        <span class='jct-step-num'>02</span>
-        <span class='jct-step-name'>Tes Media</span>
-      </li>
-      <li class='jct-step' data-jct-step='result'>
-        <span class='jct-step-num'>03</span>
-        <span class='jct-step-name'>Hasil</span>
-      </li>
-    </ol>
-
-    <p class='jct-visually-hidden' aria-live='polite' data-jct-live></p>
-
-    <!-- ========== STEP 0a: START GATE ========== -->
-    <!-- The page keeps its header and opens on a single start button instead
-         of talking by itself. That click is the audio unlock: the first VN
-         line starts inside the gesture, so the browser autoplay policy never
-         blocks it and the visitor always hears jct_01_intro. -->
-    <section
-      class='jct-panel jct-gate'
-      data-jct-panel='intro'
-      aria-labelledby='jct-intro-title'
-      tabindex='-1'
-    >
-      <h2 class='jct-visually-hidden' id='jct-intro-title'>
-        Mulai Japanese Comprehension Test
-      </h2>
-
-      <button
-        class='jct-btn jct-btn-primary jct-gate-btn'
-        type='button'
-        data-jct-begin
-      >
-        <span>Mulai Tes</span>
-        <span class='jct-btn-jp' lang='ja'>テスト開始</span>
-        <span aria-hidden='true'>▶</span>
-      </button>
-    </section>
-
-    <!-- ========== STEP 0b: VN DIALOGUE (Yosia) ========== -->
-    <!-- Visual-novel stage: one line per tap, each line owning a character
-         sprite and a voice clip. The whole stage is the tap target (pointer
-         or Enter/Space), mirroring the quest prologue's dialogue window.
-         The line data lives in the inline script (`vnScripts`). -->
-    <section
-      class='jct-panel jct-vn-panel'
-      data-jct-panel='vn'
-      aria-labelledby='jct-vn-title'
-      tabindex='-1'
-      hidden
-    >
-      <h2 class='jct-visually-hidden' id='jct-vn-title'>
-        Percakapan dengan Yosia
-      </h2>
-
-      <div class='jct-vn-stage' data-jct-vn-stage>
-        <div class='jct-vn-guide'>
-          <img
-            class='jct-vn-img'
-            src='/images/quest/guide-p02.webp'
-            alt=''
-            aria-hidden='true'
-            decoding='async'
-            data-jct-vn-img
-            onerror="if(!this.dataset.fbk){this.dataset.fbk='1';this.src='/images/quest/guide.webp';}"
-          />
-        </div>
-
-        <div
-          class='jct-vn-box'
-          data-jct-vn-box
-          role='button'
-          tabindex='0'
-          aria-label='Lanjut ke kalimat berikutnya'
-          aria-describedby='jct-vn-live'
-          aria-keyshortcuts='Enter Space'
-        >
-          <p class='jct-vn-who'>
-            <span class='jct-vn-name'>Yosia</span>
-            <span class='jct-vn-role' lang='ja'>案内役</span>
-          </p>
-          <p class='jct-vn-id' data-jct-vn-id></p>
-          <p class='jct-vn-jp' lang='ja' data-jct-vn-jp></p>
-          <span class='jct-vn-next' aria-hidden='true'>▶</span>
-        </div>
-      </div>
-
-      <p
-        class='jct-visually-hidden'
-        id='jct-vn-live'
-        aria-live='polite'
-        data-jct-vn-live
-      >
-      </p>
-    </section>
-
-    <!-- ========== STEP 0c: CHOICE (greeting fork) ========== -->
-    <!-- The fork itself carries no sprite and no voice: after the greeting
-         line the stage empties and only the two answers remain, so the
-         choice reads as the visitor's turn. `start` = already learning
-         (Lv 1-7 self-assessment), `kana` = from zero (kana slider route). -->
-    <section
-      class='jct-panel'
-      data-jct-panel='choice'
-      aria-labelledby='jct-choice-title'
-      tabindex='-1'
-      hidden
-    >
-      <h2 class='jct-visually-hidden' id='jct-choice-title'>
-        Pilih jawabanmu
-      </h2>
-
-      <div class='jct-choice-row'>
-        <button class='jct-choice-btn' type='button' data-jct-choice='start'>
-          <span class='jct-choice-id'>Iya!</span>
-          <span class='jct-choice-jp' lang='ja'>やってる！</span>
-        </button>
-        <button class='jct-choice-btn' type='button' data-jct-choice='kana'>
-          <span class='jct-choice-id'>Baru mau mulai</span>
-          <span class='jct-choice-jp' lang='ja'>これから！</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ========== STEP 1: SELF-ASSESSMENT ========== -->
-    <section
-      class='jct-panel'
-      data-jct-panel='start'
-      aria-labelledby='jct-start-title'
-      tabindex='-1'
-      hidden
-    >
-      <div class='jct-card jct-intro-card'>
-        <h2 class='jct-card-title' id='jct-start-title'>
-          Seberapa jauh kamu paham bahasa Jepang saat ini?
-        </h2>
-        <p class='jct-card-lead'>
-          Pilih satu level yang paling mendekati perasaanmu. Jawaban ini tidak
-          dinilai benar atau salah — kami hanya memakainya untuk membandingkan
-          perkiraanmu dengan hasil tes nanti.
-        </p>
-      </div>
-
-      <fieldset class='jct-level-group'>
-        <legend class='jct-legend'>
-          Perkiraan levelmu sekarang
-          <span class='jct-legend-jp' lang='ja'>自己申告レベル</span>
-        </legend>
-
-        {levels.map(level => (
-          <label class='jct-level'>
-            <input
-              class='jct-visually-hidden'
-              type='radio'
-              name='jct-self-level'
-              value={level.level}
-              data-jct-self-level
-            />
-            <span class='jct-level-badge'>Lv {level.level}</span>
-            <span class='jct-level-body'>
-              <span class='jct-level-id'>{level.idText}</span>
-              <span class='jct-level-jp' lang='ja'>{level.jpText}</span>
-            </span>
-            <span class='jct-level-check' aria-hidden='true'>
-              <svg
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                stroke-width='3'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              >
-                <path d='M4 12.5l5 5L20 6.5'></path>
-              </svg>
-            </span>
-          </label>
-        ))}
-      </fieldset>
-
-      <div class='jct-actions'>
-        <p class='jct-hint' data-jct-start-hint>
-          Pilih satu level dulu untuk memulai.
-        </p>
-        <button
-          class='jct-btn jct-btn-primary'
-          type='button'
-          data-jct-start
-          disabled
-        >
-          <span>Lanjut ke Soal</span>
-          <span class='jct-btn-jp' lang='ja'>問題へ</span>
-          <span aria-hidden='true'>▶</span>
-        </button>
-      </div>
-
-      <button class='jct-back' type='button' data-jct-back>
-        <span aria-hidden='true'>←</span>
-        <span>Kembali ke pilihan</span>
-      </button>
-    </section>
-
-    <!-- ========== STEP 1b: KANA SLIDER (from zero route) ========== -->
-    <section
-      class='jct-panel'
-      data-jct-panel='kana'
-      aria-labelledby='jct-kana-title'
-      tabindex='-1'
-      hidden
-    >
-      <h2 class='jct-visually-hidden' id='jct-kana-title'>
-        Seberapa lancar membaca Hiragana dan Katakana
-      </h2>
-
-      <!-- No sprite, no voice, no dialogue box on this panel: the question
-           was already asked in the VN scene, so this screen is the answer
-           surface only. -->
-      <div class='jct-card jct-kana-card'>
-        <div class='jct-kana-readout'>
-          <p class='jct-kana-value' data-jct-kana-value>0%</p>
-          <p class='jct-kana-label' data-jct-kana-label></p>
-          <p class='jct-kana-label-jp' lang='ja' data-jct-kana-label-jp></p>
-        </div>
-
-        <input
-          class='jct-range'
-          type='range'
-          min='0'
-          max='100'
-          step='5'
-          value='0'
-          aria-label='Kemampuan membaca Hiragana dan Katakana (persen)'
-          data-jct-kana-range
+<html lang='id'>
+  <head>
+    <UnifiedSEO
+      title={seoTitle}
+      description={seoDescription}
+      pageType='website'
+      lang='id'
+      breadcrumbSchema={breadcrumbSchema}
+    />
+  </head>
+  <body class='jct-body'>
+    <!-- ========== JCT TOP BAR ==========
+         Standalone replacement for the site Navbar. It sits in normal flow
+         (not position:fixed) so it can never overlap the header below it, and
+         it owns the only chrome this page needs: a way back home on the left
+         and the JCT online marker on the right. -->
+    <div class='jct-topbar'>
+      <a class='jct-home' href='/' title='GoRakuDo'>
+        <img
+          class='jct-home-logo'
+          src='/icons/Logo.svg'
+          alt=''
+          aria-hidden='true'
+          width='24'
+          height='24'
         />
+        <span class='jct-home-name' lang='ja'>語楽道</span>
+      </a>
+      <p class='jct-marker' aria-hidden='true'>/// JCT_ONLINE ///</p>
+    </div>
 
-        <div class='jct-kana-ends' aria-hidden='true'>
-          <span>0%</span>
-          <span>100%</span>
+    <main
+      class='jct-page'
+      role='main'
+      aria-label='Japanese Comprehension Test'
+      data-jct
+    >
+      <!-- ========== HEADER ========== -->
+      <header class='jct-header'>
+        <h1 class='jct-title'>Japanese Comprehension Test</h1>
+        <div class='jct-subtitle-group'>
+          <span class='jct-title-abbr' aria-hidden='true'>JCT</span>
+          <div class='jct-subtitle-texts'>
+            <p class='jct-subtitle'>
+              Ukur <strong>pemahaman bahasa Jepang aslimu</strong><br
+                class='jct-br-desktop'
+              />
+              lewat media asli — bukan hafalan tata bahasa.
+            </p>
+            <p class='jct-subtitle-jp' lang='ja'>
+              生メディアからあなたの<br class='jct-br-mobile' />「本当の日本語把握力」を測定します
+            </p>
+          </div>
         </div>
-      </div>
+      </header>
 
-      <div class='jct-actions'>
-        <button class='jct-btn jct-btn-primary' type='button' data-jct-kana-next>
-          <span>Lanjut</span>
-          <span class='jct-btn-jp' lang='ja'>次へ</span>
-          <span aria-hidden='true'>▶</span>
-        </button>
-      </div>
-    </section>
+      <!-- ========== STEP INDICATOR ========== -->
+      <ol class='jct-steps' aria-label='Tahapan tes'>
+        <li class='jct-step is-active' data-jct-step='start' aria-current='step'>
+          <span class='jct-step-num'>01</span>
+          <span class='jct-step-name'>Penilaian Diri</span>
+        </li>
+        <li class='jct-step' data-jct-step='test'>
+          <span class='jct-step-num'>02</span>
+          <span class='jct-step-name'>Tes Media</span>
+        </li>
+        <li class='jct-step' data-jct-step='result'>
+          <span class='jct-step-num'>03</span>
+          <span class='jct-step-name'>Hasil</span>
+        </li>
+      </ol>
 
-    <!-- ========== STEP 1c: KANA RESULT (50% split) ========== -->
-    <section
-      class='jct-panel'
-      data-jct-panel='kana-result'
-      aria-labelledby='jct-kana-result-title'
-      tabindex='-1'
-      hidden
-    >
-      <h2 class='jct-visually-hidden' id='jct-kana-result-title'>
-        Rekomendasi panduan dari Yosia
-      </h2>
+      <p class='jct-visually-hidden' aria-live='polite' data-jct-live></p>
 
-      <!-- Button-only closing screen: the two VN lines that led here already
-           carried the sprite, the voice and the reasoning, so this panel
-           stays a plain destination. -->
-      <p class='jct-kana-echo'>
-        Jawabanmu <strong data-jct-kana-echo>0%</strong>
-        <span class='jct-kana-echo-sub'>untuk Hiragana &amp; Katakana</span>
-      </p>
-
-      <div class='jct-result-actions'>
-        <a
-          class='jct-btn jct-btn-primary'
-          href='/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak'
-        >
-          <span data-jct-kana-cta-label>Buka Panduan Immersion</span>
-          <span aria-hidden='true'>▶</span>
-        </a>
-        <button class='jct-btn jct-btn-ghost' type='button' data-jct-kana-retry>
-          <span>Ulangi</span>
-          <span aria-hidden='true'>↺</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ========== STEP 2: MEDIA TEST ========== -->
-    <section
-      class='jct-panel'
-      data-jct-panel='test'
-      aria-labelledby='jct-test-title'
-      tabindex='-1'
-      hidden
-    >
-      <h2 class='jct-visually-hidden' id='jct-test-title'>
-        Tes media
-      </h2>
-
-      <div class='jct-testbar'>
-        <span class='jct-counter' data-jct-counter>Pertanyaan 1 / 4</span>
-        <span class='jct-type-tag' data-jct-type>Listening</span>
-      </div>
-      <div
-        class='jct-progress'
-        role='progressbar'
-        aria-valuemin='0'
-        aria-valuemax='100'
-        aria-valuenow='0'
-        aria-label='Kemajuan tes'
-        data-jct-progressbar
+      <!-- ========== STEP 0a: START GATE ========== -->
+      <!-- The page keeps its header and opens on a single start button instead
+           of talking by itself. That click is the audio unlock: the first VN
+           line starts inside the gesture, so the browser autoplay policy never
+           blocks it and the visitor always hears jct_01_intro. -->
+      <section
+        class='jct-panel jct-gate'
+        data-jct-panel='intro'
+        aria-labelledby='jct-intro-title'
+        tabindex='-1'
       >
-        <span class='jct-progress-fill' data-jct-progress></span>
-      </div>
+        <h2 class='jct-visually-hidden' id='jct-intro-title'>
+          Mulai Japanese Comprehension Test
+        </h2>
 
-      <article class='jct-card jct-media-card'>
-        <div class='jct-media-slot' data-jct-media></div>
-        <p class='jct-media-note'>
-          Media contoh untuk fase mock. Sumber asli (YouTube / X / Aozora)
-          dipasang pada fase berikutnya.
+        <button
+          class='jct-btn jct-btn-primary jct-gate-btn'
+          type='button'
+          data-jct-begin
+        >
+          <span>Mulai Tes</span>
+          <span class='jct-btn-jp' lang='ja'>テスト開始</span>
+          <span aria-hidden='true'>▶</span>
+        </button>
+      </section>
+
+      <!-- ========== STEP 0b: VN DIALOGUE (Yosia) ========== -->
+      <!-- Visual-novel stage: one line per tap, each line owning a character
+           sprite and a voice clip. The whole stage is the tap target (pointer
+           or Enter/Space), mirroring the quest prologue's dialogue window.
+           The line data lives in the inline script (`vnScripts`). -->
+      <section
+        class='jct-panel jct-vn-panel'
+        data-jct-panel='vn'
+        aria-labelledby='jct-vn-title'
+        tabindex='-1'
+        hidden
+      >
+        <h2 class='jct-visually-hidden' id='jct-vn-title'>
+          Percakapan dengan Yosia
+        </h2>
+
+        <div class='jct-vn-stage' data-jct-vn-stage>
+          <div class='jct-vn-guide'>
+            <img
+              class='jct-vn-img'
+              src='/images/quest/guide-p02.webp'
+              alt=''
+              aria-hidden='true'
+              decoding='async'
+              data-jct-vn-img
+              onerror="if(!this.dataset.fbk){this.dataset.fbk='1';this.src='/images/quest/guide.webp';}"
+            />
+          </div>
+
+          <div
+            class='jct-vn-box'
+            data-jct-vn-box
+            role='button'
+            tabindex='0'
+            aria-label='Lanjut ke kalimat berikutnya'
+            aria-describedby='jct-vn-live'
+            aria-keyshortcuts='Enter Space'
+          >
+            <p class='jct-vn-who'>
+              <span class='jct-vn-name'>Yosia</span>
+              <span class='jct-vn-role' lang='ja'>案内役</span>
+            </p>
+            <p class='jct-vn-id' data-jct-vn-id></p>
+            <p class='jct-vn-jp' lang='ja' data-jct-vn-jp></p>
+            <span class='jct-vn-next' aria-hidden='true'>▶</span>
+          </div>
+        </div>
+
+        <p
+          class='jct-visually-hidden'
+          id='jct-vn-live'
+          aria-live='polite'
+          data-jct-vn-live
+        >
         </p>
-      </article>
+      </section>
 
-      <article class='jct-card jct-question-card'>
-        <p class='jct-q-index' data-jct-q-index>Pertanyaan 01</p>
-        <h3 class='jct-q-prompt' data-jct-prompt></h3>
-        <p class='jct-q-prompt-jp' lang='ja' data-jct-prompt-jp></p>
+      <!-- ========== STEP 0c: CHOICE (greeting fork) ========== -->
+      <!-- The fork itself carries no sprite and no voice: after the greeting
+           line the stage empties and only the two answers remain, so the
+           choice reads as the visitor's turn. `start` = already learning
+           (Lv 1-7 self-assessment), `kana` = from zero (kana slider route). -->
+      <section
+        class='jct-panel'
+        data-jct-panel='choice'
+        aria-labelledby='jct-choice-title'
+        tabindex='-1'
+        hidden
+      >
+        <h2 class='jct-visually-hidden' id='jct-choice-title'>
+          Pilih jawabanmu
+        </h2>
 
-        <fieldset class='jct-option-group'>
+        <div class='jct-choice-row'>
+          <button class='jct-choice-btn' type='button' data-jct-choice='start'>
+            <span class='jct-choice-id'>Iya!</span>
+            <span class='jct-choice-jp' lang='ja'>やってる！</span>
+          </button>
+          <button class='jct-choice-btn' type='button' data-jct-choice='kana'>
+            <span class='jct-choice-id'>Baru mau mulai</span>
+            <span class='jct-choice-jp' lang='ja'>これから！</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== STEP 1: SELF-ASSESSMENT ========== -->
+      <section
+        class='jct-panel'
+        data-jct-panel='start'
+        aria-labelledby='jct-start-title'
+        tabindex='-1'
+        hidden
+      >
+        <div class='jct-card jct-intro-card'>
+          <h2 class='jct-card-title' id='jct-start-title'>
+            Seberapa jauh kamu paham bahasa Jepang saat ini?
+          </h2>
+          <p class='jct-card-lead'>
+            Pilih satu level yang paling mendekati perasaanmu. Jawaban ini tidak
+            dinilai benar atau salah — kami hanya memakainya untuk membandingkan
+            perkiraanmu dengan hasil tes nanti.
+          </p>
+        </div>
+
+        <fieldset class='jct-level-group'>
           <legend class='jct-legend'>
-            Pilih satu jawaban
-            <span class='jct-legend-jp' lang='ja'>内容理解クイズ</span>
-          </legend>
-          <div class='jct-options' data-jct-options></div>
-        </fieldset>
-      </article>
-
-      <article class='jct-card jct-scale-card'>
-        <h3 class='jct-scale-title'>
-          Seberapa besar porsi yang kamu pahami?
-        </h3>
-        <p class='jct-scale-lead'>
-          Skala <em>Comprehension Amount</em> (Refold). Nilai 1–10 untuk
-          perasaanmu sendiri setelah menyimak media di atas.
-        </p>
-
-        <fieldset class='jct-scale-group'>
-          <legend class='jct-legend'>
-            Skala pemahaman
-            <span class='jct-legend-jp' lang='ja'>体感理解度</span>
+            Perkiraan levelmu sekarang
+            <span class='jct-legend-jp' lang='ja'>自己申告レベル</span>
           </legend>
 
-          {scale.map(item => (
-            <label class='jct-scale-option'>
+          {levels.map(level => (
+            <label class='jct-level'>
               <input
                 class='jct-visually-hidden'
                 type='radio'
-                name='jct-scale'
-                value={item.value}
-                data-jct-scale
+                name='jct-self-level'
+                value={level.level}
+                data-jct-self-level
               />
-              <span class='jct-scale-num'>{item.value}</span>
-              <span class='jct-scale-body'>
-                <span class='jct-scale-short'>{item.short}</span>
-                <span class='jct-scale-jp' lang='ja'>{item.jpText}</span>
+              <span class='jct-level-badge'>Lv {level.level}</span>
+              <span class='jct-level-body'>
+                <span class='jct-level-id'>{level.idText}</span>
+                <span class='jct-level-jp' lang='ja'>{level.jpText}</span>
+              </span>
+              <span class='jct-level-check' aria-hidden='true'>
+                <svg
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='3'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                >
+                  <path d='M4 12.5l5 5L20 6.5'></path>
+                </svg>
               </span>
             </label>
           ))}
         </fieldset>
-      </article>
 
-      <div class='jct-actions'>
-        <p class='jct-hint' data-jct-next-hint>
-          Pilih jawaban dan skala pemahaman untuk melanjutkan.
-        </p>
-        <button
-          class='jct-btn jct-btn-primary'
-          type='button'
-          data-jct-next
-          disabled
-        >
-          <span data-jct-next-label>Lanjut</span>
-          <span aria-hidden='true'>▶</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ========== STEP 3: RESULT ========== -->
-    <section
-      class='jct-panel'
-      data-jct-panel='result'
-      aria-labelledby='jct-result-title'
-      tabindex='-1'
-      hidden
-    >
-      <div class='jct-card jct-result-head'>
-        <p class='jct-marker jct-marker-small' aria-hidden='true'>
-          /// HASIL_ANALISIS ///
-        </p>
-        <h2 class='jct-result-title' id='jct-result-title'>Hasil Tesmu</h2>
-        <p class='jct-result-lead' data-jct-result-lead></p>
-      </div>
-
-      <div class='jct-level-cards'>
-        <div class='jct-card jct-level-card' data-jct-level-card='listening'>
-          <p class='jct-level-card-label'>
-            Listening
-            <span class='jct-level-card-jp' lang='ja'>リスニング</span>
+        <div class='jct-actions'>
+          <p class='jct-hint' data-jct-start-hint>
+            Pilih satu level dulu untuk memulai.
           </p>
-          <p class='jct-level-card-value'>
-            <span class='jct-level-card-lv'>Lv</span>
-            <span class='jct-level-card-num' data-jct-level-listening>–</span>
-          </p>
-          <p class='jct-level-card-note' data-jct-note-listening></p>
-        </div>
-
-        <div class='jct-card jct-level-card' data-jct-level-card='reading'>
-          <p class='jct-level-card-label'>
-            Reading
-            <span class='jct-level-card-jp' lang='ja'>リーディング</span>
-          </p>
-          <p class='jct-level-card-value'>
-            <span class='jct-level-card-lv'>Lv</span>
-            <span class='jct-level-card-num' data-jct-level-reading>–</span>
-          </p>
-          <p class='jct-level-card-note' data-jct-note-reading></p>
-        </div>
-      </div>
-
-      <div class='jct-card jct-gap-card'>
-        <h3 class='jct-gap-title'>Analisis selisih</h3>
-        <p class='jct-gap-headline' data-jct-gap-headline></p>
-        <ul class='jct-gap-list' data-jct-gap-list></ul>
-        <div class='jct-stat-row'>
-          <span class='jct-stat'>
-            <span class='jct-stat-label'>Jawaban benar</span>
-            <span class='jct-stat-value' data-jct-stat-correct>–</span>
-          </span>
-          <span class='jct-stat'>
-            <span class='jct-stat-label'>Rata-rata skala</span>
-            <span class='jct-stat-value' data-jct-stat-scale>–</span>
-          </span>
-          <span class='jct-stat'>
-            <span class='jct-stat-label'>Penilaian dirimu</span>
-            <span class='jct-stat-value' data-jct-stat-self>–</span>
-          </span>
-        </div>
-      </div>
-
-      <div class='jct-result-actions'>
-        <a
-          class='jct-btn jct-btn-primary'
-          href='/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak'
-        >
-          <span>Rute Belajar yang Cocok untukmu</span>
-          <span aria-hidden='true'>▶</span>
-        </a>
-        <button class='jct-btn jct-btn-ghost' type='button' data-jct-retry>
-          <span>Ulangi Tes</span>
-          <span aria-hidden='true'>↺</span>
-        </button>
-        <p class='jct-hint jct-hint-center'>
-          Panduan immersion umum dulu — rute khusus per level menyusul bersama
-          halaman Wiki.
-        </p>
-      </div>
-    </section>
-
-    <!-- ========== MEDIA TEMPLATES (cloned per question) ========== -->
-    <template data-jct-template='youtube'>
-      <div class='jct-yt'>
-        <div class='jct-yt-screen'>
-          <span class='jct-yt-platform'>YouTube</span>
-          <span class='jct-yt-clip' data-field='clip'></span>
           <button
-            class='jct-yt-play'
+            class='jct-btn jct-btn-primary'
             type='button'
-            data-jct-play
-            aria-label='Putar sampel audio (mock)'
+            data-jct-start
+            disabled
           >
-            <svg
-              class='jct-yt-icon jct-yt-icon-play'
-              viewBox='0 0 24 24'
-              fill='currentColor'
-              aria-hidden='true'
-            >
-              <path d='M8 5.5v13l11-6.5z'></path>
-            </svg>
-            <svg
-              class='jct-yt-icon jct-yt-icon-pause'
-              viewBox='0 0 24 24'
-              fill='currentColor'
-              aria-hidden='true'
-            >
-              <path d='M7 5h4v14H7zM13 5h4v14h-4z'></path>
-            </svg>
+            <span>Lanjut ke Soal</span>
+            <span class='jct-btn-jp' lang='ja'>問題へ</span>
+            <span aria-hidden='true'>▶</span>
           </button>
-          <p class='jct-yt-caption' data-field='caption'></p>
         </div>
-        <div class='jct-yt-bar'>
-          <span class='jct-yt-time' data-jct-time>0:00</span>
-          <span class='jct-yt-track'>
-            <span class='jct-yt-fill' data-jct-fill></span>
-          </span>
-          <span class='jct-yt-time' data-jct-total>0:00</span>
-        </div>
-      </div>
-    </template>
 
-    <template data-jct-template='x-post'>
-      <div class='jct-xpost'>
-        <div class='jct-xpost-head'>
-          <span class='jct-xpost-avatar' data-field='initial' aria-hidden='true'
-          ></span>
-          <span class='jct-xpost-user'>
-            <span class='jct-xpost-name' data-field='name'></span>
-            <span class='jct-xpost-handle' data-field='handle'></span>
-          </span>
-          <span class='jct-xpost-platform'>X</span>
-        </div>
-        <p class='jct-xpost-text' lang='ja' data-field='text'></p>
-      </div>
-    </template>
+        <button class='jct-back' type='button' data-jct-back>
+          <span aria-hidden='true'>←</span>
+          <span>Kembali ke pilihan</span>
+        </button>
+      </section>
 
-    <template data-jct-template='aozora'>
-      <div class='jct-aozora'>
-        <div class='jct-aozora-head'>
-          <span class='jct-aozora-work' data-field='work'></span>
-          <span class='jct-aozora-author' data-field='author'></span>
+      <!-- ========== STEP 1b: KANA SLIDER (from zero route) ========== -->
+      <section
+        class='jct-panel'
+        data-jct-panel='kana'
+        aria-labelledby='jct-kana-title'
+        tabindex='-1'
+        hidden
+      >
+        <h2 class='jct-visually-hidden' id='jct-kana-title'>
+          Seberapa lancar membaca Hiragana dan Katakana
+        </h2>
+
+        <!-- No sprite, no voice, no dialogue box on this panel: the question
+             was already asked in the VN scene, so this screen is the answer
+             surface only. -->
+        <div class='jct-card jct-kana-card'>
+          <div class='jct-kana-readout'>
+            <p class='jct-kana-value' data-jct-kana-value>0%</p>
+            <p class='jct-kana-label' data-jct-kana-label></p>
+            <p class='jct-kana-label-jp' lang='ja' data-jct-kana-label-jp></p>
+          </div>
+
+          <input
+            class='jct-range'
+            type='range'
+            min='0'
+            max='100'
+            step='5'
+            value='0'
+            aria-label='Kemampuan membaca Hiragana dan Katakana (persen)'
+            data-jct-kana-range
+          />
+
+          <div class='jct-kana-ends' aria-hidden='true'>
+            <span>0%</span>
+            <span>100%</span>
+          </div>
         </div>
-        <div class='jct-aozora-frame'>
-          <p class='jct-aozora-text' lang='ja' data-field='text'></p>
+
+        <div class='jct-actions'>
+          <button class='jct-btn jct-btn-primary' type='button' data-jct-kana-next>
+            <span>Lanjut</span>
+            <span class='jct-btn-jp' lang='ja'>次へ</span>
+            <span aria-hidden='true'>▶</span>
+          </button>
         </div>
-        <p class='jct-aozora-note'>
-          Kutipan domain publik — ejaan kana mengikuti teks asli.
+      </section>
+
+      <!-- ========== STEP 1c: KANA RESULT (50% split) ========== -->
+      <section
+        class='jct-panel'
+        data-jct-panel='kana-result'
+        aria-labelledby='jct-kana-result-title'
+        tabindex='-1'
+        hidden
+      >
+        <h2 class='jct-visually-hidden' id='jct-kana-result-title'>
+          Rekomendasi panduan dari Yosia
+        </h2>
+
+        <!-- Button-only closing screen: the two VN lines that led here already
+             carried the sprite, the voice and the reasoning, so this panel
+             stays a plain destination. -->
+        <p class='jct-kana-echo'>
+          Jawabanmu <strong data-jct-kana-echo>0%</strong>
+          <span class='jct-kana-echo-sub'>untuk Hiragana &amp; Katakana</span>
         </p>
-      </div>
-    </template>
-  </main>
-</BaseLayout>
 
-<!-- ========== SCRIPTS ========== -->
-<script is:inline define:vars={{ questions, totalQuestions }}>
-  (() => {
-    const root = document.querySelector('[data-jct]');
-    if (!root) return;
+        <div class='jct-result-actions'>
+          <a
+            class='jct-btn jct-btn-primary'
+            href='/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak'
+          >
+            <span data-jct-kana-cta-label>Buka Panduan Immersion</span>
+            <span aria-hidden='true'>▶</span>
+          </a>
+          <button class='jct-btn jct-btn-ghost' type='button' data-jct-kana-retry>
+            <span>Ulangi</span>
+            <span aria-hidden='true'>↺</span>
+          </button>
+        </div>
+      </section>
 
-    const panels = {
-      intro: root.querySelector('[data-jct-panel="intro"]'),
-      vn: root.querySelector('[data-jct-panel="vn"]'),
-      choice: root.querySelector('[data-jct-panel="choice"]'),
-      start: root.querySelector('[data-jct-panel="start"]'),
-      kana: root.querySelector('[data-jct-panel="kana"]'),
-      kanaResult: root.querySelector('[data-jct-panel="kana-result"]'),
-      test: root.querySelector('[data-jct-panel="test"]'),
-      result: root.querySelector('[data-jct-panel="result"]'),
-    };
+      <!-- ========== STEP 2: MEDIA TEST ========== -->
+      <section
+        class='jct-panel'
+        data-jct-panel='test'
+        aria-labelledby='jct-test-title'
+        tabindex='-1'
+        hidden
+      >
+        <h2 class='jct-visually-hidden' id='jct-test-title'>
+          Tes media
+        </h2>
 
-    // Panels that belong to the same stage chip. The greeting, the VN scene,
-    // the fork and the kana route are all "Penilaian Diri" (step 01) — none
-    // of them reaches the media test.
-    const stepOfPanel = {
-      intro: 'start',
-      vn: 'start',
-      choice: 'start',
-      start: 'start',
-      kana: 'start',
-      kanaResult: 'start',
-      test: 'test',
-      result: 'result',
-    };
+        <div class='jct-testbar'>
+          <span class='jct-counter' data-jct-counter>Pertanyaan 1 / 4</span>
+          <span class='jct-type-tag' data-jct-type>Listening</span>
+        </div>
+        <div
+          class='jct-progress'
+          role='progressbar'
+          aria-valuemin='0'
+          aria-valuemax='100'
+          aria-valuenow='0'
+          aria-label='Kemajuan tes'
+          data-jct-progressbar
+        >
+          <span class='jct-progress-fill' data-jct-progress></span>
+        </div>
 
-    const stepItems = root.querySelectorAll('[data-jct-step]');
-    const live = root.querySelector('[data-jct-live]');
+        <article class='jct-card jct-media-card'>
+          <div class='jct-media-slot' data-jct-media></div>
+          <p class='jct-media-note'>
+            Media contoh untuk fase mock. Sumber asli (YouTube / X / Aozora)
+            dipasang pada fase berikutnya.
+          </p>
+        </article>
 
-    const choiceButtons = root.querySelectorAll('[data-jct-choice]');
-    const backButtons = root.querySelectorAll('[data-jct-back]');
-    const beginBtn = root.querySelector('[data-jct-begin]');
+        <article class='jct-card jct-question-card'>
+          <p class='jct-q-index' data-jct-q-index>Pertanyaan 01</p>
+          <h3 class='jct-q-prompt' data-jct-prompt></h3>
+          <p class='jct-q-prompt-jp' lang='ja' data-jct-prompt-jp></p>
 
-    const vnStage = root.querySelector('[data-jct-vn-stage]');
-    const vnBox = root.querySelector('[data-jct-vn-box]');
-    const vnImg = root.querySelector('[data-jct-vn-img]');
-    const vnId = root.querySelector('[data-jct-vn-id]');
-    const vnJp = root.querySelector('[data-jct-vn-jp]');
-    const vnLive = root.querySelector('[data-jct-vn-live]');
+          <fieldset class='jct-option-group'>
+            <legend class='jct-legend'>
+              Pilih satu jawaban
+              <span class='jct-legend-jp' lang='ja'>内容理解クイズ</span>
+            </legend>
+            <div class='jct-options' data-jct-options></div>
+          </fieldset>
+        </article>
 
-    const kanaRange = root.querySelector('[data-jct-kana-range]');
-    const kanaValue = root.querySelector('[data-jct-kana-value]');
-    const kanaLabel = root.querySelector('[data-jct-kana-label]');
-    const kanaLabelJp = root.querySelector('[data-jct-kana-label-jp]');
-    const kanaNext = root.querySelector('[data-jct-kana-next]');
-    const kanaRetry = root.querySelector('[data-jct-kana-retry]');
-    const kanaEcho = root.querySelector('[data-jct-kana-echo]');
-    const kanaCtaLabel = root.querySelector('[data-jct-kana-cta-label]');
+        <article class='jct-card jct-scale-card'>
+          <h3 class='jct-scale-title'>
+            Seberapa besar porsi yang kamu pahami?
+          </h3>
+          <p class='jct-scale-lead'>
+            Skala <em>Comprehension Amount</em> (Refold). Nilai 1–10 untuk
+            perasaanmu sendiri setelah menyimak media di atas.
+          </p>
 
-    const selfLevelInputs = root.querySelectorAll('[data-jct-self-level]');
-    const startBtn = root.querySelector('[data-jct-start]');
-    const startHint = root.querySelector('[data-jct-start-hint]');
+          <fieldset class='jct-scale-group'>
+            <legend class='jct-legend'>
+              Skala pemahaman
+              <span class='jct-legend-jp' lang='ja'>体感理解度</span>
+            </legend>
 
-    const counter = root.querySelector('[data-jct-counter]');
-    const typeTag = root.querySelector('[data-jct-type]');
-    const progressBar = root.querySelector('[data-jct-progressbar]');
-    const progressFill = root.querySelector('[data-jct-progress]');
-    const mediaSlot = root.querySelector('[data-jct-media]');
-    const qIndex = root.querySelector('[data-jct-q-index]');
-    const promptId = root.querySelector('[data-jct-prompt]');
-    const promptJp = root.querySelector('[data-jct-prompt-jp]');
-    const optionsBox = root.querySelector('[data-jct-options]');
-    const scaleInputs = root.querySelectorAll('[data-jct-scale]');
-    const nextBtn = root.querySelector('[data-jct-next]');
-    const nextHint = root.querySelector('[data-jct-next-hint]');
-    const nextLabel = root.querySelector('[data-jct-next-label]');
+            {scale.map(item => (
+              <label class='jct-scale-option'>
+                <input
+                  class='jct-visually-hidden'
+                  type='radio'
+                  name='jct-scale'
+                  value={item.value}
+                  data-jct-scale
+                />
+                <span class='jct-scale-num'>{item.value}</span>
+                <span class='jct-scale-body'>
+                  <span class='jct-scale-short'>{item.short}</span>
+                  <span class='jct-scale-jp' lang='ja'>{item.jpText}</span>
+                </span>
+              </label>
+            ))}
+          </fieldset>
+        </article>
 
-    const resultLead = root.querySelector('[data-jct-result-lead]');
-    const levelListening = root.querySelector('[data-jct-level-listening]');
-    const levelReading = root.querySelector('[data-jct-level-reading]');
-    const noteListening = root.querySelector('[data-jct-note-listening]');
-    const noteReading = root.querySelector('[data-jct-note-reading]');
-    const gapHeadline = root.querySelector('[data-jct-gap-headline]');
-    const gapList = root.querySelector('[data-jct-gap-list]');
-    const statCorrect = root.querySelector('[data-jct-stat-correct]');
-    const statScale = root.querySelector('[data-jct-stat-scale]');
-    const statSelf = root.querySelector('[data-jct-stat-self]');
-    const retryBtn = root.querySelector('[data-jct-retry]');
+        <div class='jct-actions'>
+          <p class='jct-hint' data-jct-next-hint>
+            Pilih jawaban dan skala pemahaman untuk melanjutkan.
+          </p>
+          <button
+            class='jct-btn jct-btn-primary'
+            type='button'
+            data-jct-next
+            disabled
+          >
+            <span data-jct-next-label>Lanjut</span>
+            <span aria-hidden='true'>▶</span>
+          </button>
+        </div>
+      </section>
 
-    // ========== STATE ==========
-    const state = {
-      selfLevel: 0,
-      kanaPercent: 0,
-      index: 0,
-      optionIndex: -1,
-      scaleValue: 0,
-      answers: [],
-    };
+      <!-- ========== STEP 3: RESULT ========== -->
+      <section
+        class='jct-panel'
+        data-jct-panel='result'
+        aria-labelledby='jct-result-title'
+        tabindex='-1'
+        hidden
+      >
+        <div class='jct-card jct-result-head'>
+          <p class='jct-marker jct-marker-small' aria-hidden='true'>
+            /// HASIL_ANALISIS ///
+          </p>
+          <h2 class='jct-result-title' id='jct-result-title'>Hasil Tesmu</h2>
+          <p class='jct-result-lead' data-jct-result-lead></p>
+        </div>
 
-    // ========== HELPERS ==========
-    const formatClock = seconds => {
-      const total = Math.max(0, Math.round(seconds));
-      const m = Math.floor(total / 60);
-      const s = total % 60;
-      return m + ':' + String(s).padStart(2, '0');
-    };
+        <div class='jct-level-cards'>
+          <div class='jct-card jct-level-card' data-jct-level-card='listening'>
+            <p class='jct-level-card-label'>
+              Listening
+              <span class='jct-level-card-jp' lang='ja'>リスニング</span>
+            </p>
+            <p class='jct-level-card-value'>
+              <span class='jct-level-card-lv'>Lv</span>
+              <span class='jct-level-card-num' data-jct-level-listening>–</span>
+            </p>
+            <p class='jct-level-card-note' data-jct-note-listening></p>
+          </div>
 
-    const clampLevel = value => Math.min(7, Math.max(1, Math.round(value)));
+          <div class='jct-card jct-level-card' data-jct-level-card='reading'>
+            <p class='jct-level-card-label'>
+              Reading
+              <span class='jct-level-card-jp' lang='ja'>リーディング</span>
+            </p>
+            <p class='jct-level-card-value'>
+              <span class='jct-level-card-lv'>Lv</span>
+              <span class='jct-level-card-num' data-jct-level-reading>–</span>
+            </p>
+            <p class='jct-level-card-note' data-jct-note-reading></p>
+          </div>
+        </div>
 
-    const announce = message => {
-      if (live) live.textContent = message;
-    };
+        <div class='jct-card jct-gap-card'>
+          <h3 class='jct-gap-title'>Analisis selisih</h3>
+          <p class='jct-gap-headline' data-jct-gap-headline></p>
+          <ul class='jct-gap-list' data-jct-gap-list></ul>
+          <div class='jct-stat-row'>
+            <span class='jct-stat'>
+              <span class='jct-stat-label'>Jawaban benar</span>
+              <span class='jct-stat-value' data-jct-stat-correct>–</span>
+            </span>
+            <span class='jct-stat'>
+              <span class='jct-stat-label'>Rata-rata skala</span>
+              <span class='jct-stat-value' data-jct-stat-scale>–</span>
+            </span>
+            <span class='jct-stat'>
+              <span class='jct-stat-label'>Penilaian dirimu</span>
+              <span class='jct-stat-value' data-jct-stat-self>–</span>
+            </span>
+          </div>
+        </div>
 
-    // scrollIntoView is missing in some embedded/legacy engines — never let
-    // a scroll nicety break the step transition.
-    const scrollToTop = () => {
-      if (typeof root.scrollIntoView === 'function') {
-        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
+        <div class='jct-result-actions'>
+          <a
+            class='jct-btn jct-btn-primary'
+            href='/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak'
+          >
+            <span>Rute Belajar yang Cocok untukmu</span>
+            <span aria-hidden='true'>▶</span>
+          </a>
+          <button class='jct-btn jct-btn-ghost' type='button' data-jct-retry>
+            <span>Ulangi Tes</span>
+            <span aria-hidden='true'>↺</span>
+          </button>
+          <p class='jct-hint jct-hint-center'>
+            Panduan immersion umum dulu — rute khusus per level menyusul bersama
+            halaman Wiki.
+          </p>
+        </div>
+      </section>
 
-    const showPanel = name => {
-      Object.keys(panels).forEach(key => {
-        const panel = panels[key];
-        if (panel) panel.hidden = key !== name;
-      });
-      const stage = stepOfPanel[name] || name;
-      stepItems.forEach(item => {
-        const active = item.dataset.jctStep === stage;
-        item.classList.toggle('is-active', active);
-        if (active) {
-          item.setAttribute('aria-current', 'step');
-        } else {
-          item.removeAttribute('aria-current');
+      <!-- ========== MEDIA TEMPLATES (cloned per question) ========== -->
+      <template data-jct-template='youtube'>
+        <div class='jct-yt'>
+          <div class='jct-yt-screen'>
+            <span class='jct-yt-platform'>YouTube</span>
+            <span class='jct-yt-clip' data-field='clip'></span>
+            <button
+              class='jct-yt-play'
+              type='button'
+              data-jct-play
+              aria-label='Putar sampel audio (mock)'
+            >
+              <svg
+                class='jct-yt-icon jct-yt-icon-play'
+                viewBox='0 0 24 24'
+                fill='currentColor'
+                aria-hidden='true'
+              >
+                <path d='M8 5.5v13l11-6.5z'></path>
+              </svg>
+              <svg
+                class='jct-yt-icon jct-yt-icon-pause'
+                viewBox='0 0 24 24'
+                fill='currentColor'
+                aria-hidden='true'
+              >
+                <path d='M7 5h4v14H7zM13 5h4v14h-4z'></path>
+              </svg>
+            </button>
+            <p class='jct-yt-caption' data-field='caption'></p>
+          </div>
+          <div class='jct-yt-bar'>
+            <span class='jct-yt-time' data-jct-time>0:00</span>
+            <span class='jct-yt-track'>
+              <span class='jct-yt-fill' data-jct-fill></span>
+            </span>
+            <span class='jct-yt-time' data-jct-total>0:00</span>
+          </div>
+        </div>
+      </template>
+
+      <template data-jct-template='x-post'>
+        <div class='jct-xpost'>
+          <div class='jct-xpost-head'>
+            <span
+              class='jct-xpost-avatar'
+              data-field='initial'
+              aria-hidden='true'
+            ></span>
+            <span class='jct-xpost-user'>
+              <span class='jct-xpost-name' data-field='name'></span>
+              <span class='jct-xpost-handle' data-field='handle'></span>
+            </span>
+            <span class='jct-xpost-platform'>X</span>
+          </div>
+          <p class='jct-xpost-text' lang='ja' data-field='text'></p>
+        </div>
+      </template>
+
+      <template data-jct-template='aozora'>
+        <div class='jct-aozora'>
+          <div class='jct-aozora-head'>
+            <span class='jct-aozora-work' data-field='work'></span>
+            <span class='jct-aozora-author' data-field='author'></span>
+          </div>
+          <div class='jct-aozora-frame'>
+            <p class='jct-aozora-text' lang='ja' data-field='text'></p>
+          </div>
+          <p class='jct-aozora-note'>
+            Kutipan domain publik — ejaan kana mengikuti teks asli.
+          </p>
+        </div>
+      </template>
+    </main>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script is:inline define:vars={{ questions, totalQuestions }}>
+    (() => {
+      const root = document.querySelector('[data-jct]');
+      if (!root) return;
+
+      const panels = {
+        intro: root.querySelector('[data-jct-panel="intro"]'),
+        vn: root.querySelector('[data-jct-panel="vn"]'),
+        choice: root.querySelector('[data-jct-panel="choice"]'),
+        start: root.querySelector('[data-jct-panel="start"]'),
+        kana: root.querySelector('[data-jct-panel="kana"]'),
+        kanaResult: root.querySelector('[data-jct-panel="kana-result"]'),
+        test: root.querySelector('[data-jct-panel="test"]'),
+        result: root.querySelector('[data-jct-panel="result"]'),
+      };
+
+      // Panels that belong to the same stage chip. The greeting, the VN scene,
+      // the fork and the kana route are all "Penilaian Diri" (step 01) — none
+      // of them reaches the media test.
+      const stepOfPanel = {
+        intro: 'start',
+        vn: 'start',
+        choice: 'start',
+        start: 'start',
+        kana: 'start',
+        kanaResult: 'start',
+        test: 'test',
+        result: 'result',
+      };
+
+      const stepItems = root.querySelectorAll('[data-jct-step]');
+      const live = root.querySelector('[data-jct-live]');
+
+      const choiceButtons = root.querySelectorAll('[data-jct-choice]');
+      const backButtons = root.querySelectorAll('[data-jct-back]');
+      const beginBtn = root.querySelector('[data-jct-begin]');
+
+      const vnStage = root.querySelector('[data-jct-vn-stage]');
+      const vnBox = root.querySelector('[data-jct-vn-box]');
+      const vnImg = root.querySelector('[data-jct-vn-img]');
+      const vnId = root.querySelector('[data-jct-vn-id]');
+      const vnJp = root.querySelector('[data-jct-vn-jp]');
+      const vnLive = root.querySelector('[data-jct-vn-live]');
+
+      const kanaRange = root.querySelector('[data-jct-kana-range]');
+      const kanaValue = root.querySelector('[data-jct-kana-value]');
+      const kanaLabel = root.querySelector('[data-jct-kana-label]');
+      const kanaLabelJp = root.querySelector('[data-jct-kana-label-jp]');
+      const kanaNext = root.querySelector('[data-jct-kana-next]');
+      const kanaRetry = root.querySelector('[data-jct-kana-retry]');
+      const kanaEcho = root.querySelector('[data-jct-kana-echo]');
+      const kanaCtaLabel = root.querySelector('[data-jct-kana-cta-label]');
+
+      const selfLevelInputs = root.querySelectorAll('[data-jct-self-level]');
+      const startBtn = root.querySelector('[data-jct-start]');
+      const startHint = root.querySelector('[data-jct-start-hint]');
+
+      const counter = root.querySelector('[data-jct-counter]');
+      const typeTag = root.querySelector('[data-jct-type]');
+      const progressBar = root.querySelector('[data-jct-progressbar]');
+      const progressFill = root.querySelector('[data-jct-progress]');
+      const mediaSlot = root.querySelector('[data-jct-media]');
+      const qIndex = root.querySelector('[data-jct-q-index]');
+      const promptId = root.querySelector('[data-jct-prompt]');
+      const promptJp = root.querySelector('[data-jct-prompt-jp]');
+      const optionsBox = root.querySelector('[data-jct-options]');
+      const scaleInputs = root.querySelectorAll('[data-jct-scale]');
+      const nextBtn = root.querySelector('[data-jct-next]');
+      const nextHint = root.querySelector('[data-jct-next-hint]');
+      const nextLabel = root.querySelector('[data-jct-next-label]');
+
+      const resultLead = root.querySelector('[data-jct-result-lead]');
+      const levelListening = root.querySelector('[data-jct-level-listening]');
+      const levelReading = root.querySelector('[data-jct-level-reading]');
+      const noteListening = root.querySelector('[data-jct-note-listening]');
+      const noteReading = root.querySelector('[data-jct-note-reading]');
+      const gapHeadline = root.querySelector('[data-jct-gap-headline]');
+      const gapList = root.querySelector('[data-jct-gap-list]');
+      const statCorrect = root.querySelector('[data-jct-stat-correct]');
+      const statScale = root.querySelector('[data-jct-stat-scale]');
+      const statSelf = root.querySelector('[data-jct-stat-self]');
+      const retryBtn = root.querySelector('[data-jct-retry]');
+
+      // ========== STATE ==========
+      const state = {
+        selfLevel: 0,
+        kanaPercent: 0,
+        index: 0,
+        optionIndex: -1,
+        scaleValue: 0,
+        answers: [],
+      };
+
+      // ========== HELPERS ==========
+      const formatClock = seconds => {
+        const total = Math.max(0, Math.round(seconds));
+        const m = Math.floor(total / 60);
+        const s = total % 60;
+        return m + ':' + String(s).padStart(2, '0');
+      };
+
+      const clampLevel = value => Math.min(7, Math.max(1, Math.round(value)));
+
+      const announce = message => {
+        if (live) live.textContent = message;
+      };
+
+      // scrollIntoView is missing in some embedded/legacy engines — never let
+      // a scroll nicety break the step transition.
+      const scrollToTop = () => {
+        if (typeof root.scrollIntoView === 'function') {
+          root.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+      };
+
+      const showPanel = name => {
+        Object.keys(panels).forEach(key => {
+          const panel = panels[key];
+          if (panel) panel.hidden = key !== name;
+        });
+        const stage = stepOfPanel[name] || name;
+        stepItems.forEach(item => {
+          const active = item.dataset.jctStep === stage;
+          item.classList.toggle('is-active', active);
+          if (active) {
+            item.setAttribute('aria-current', 'step');
+          } else {
+            item.removeAttribute('aria-current');
+          }
+        });
+      };
+
+      // The clicked button disappears with its panel, so move focus to the
+      // panel that replaced it — otherwise focus stays on a hidden node and
+      // keyboard/screen-reader users lose their place.
+      const focusPanel = name => {
+        const panel = panels[name];
+        if (panel) panel.focus({ preventScroll: true });
+      };
+
+      // ========== STEP 1: SELF-ASSESSMENT ==========
+      const syncStartButton = () => {
+        const ready = state.selfLevel > 0;
+        startBtn.disabled = !ready;
+        startHint.hidden = ready;
+      };
+
+      selfLevelInputs.forEach(input => {
+        input.addEventListener('change', () => {
+          state.selfLevel = Number(input.value) || 0;
+          syncStartButton();
+        });
       });
-    };
 
-    // The clicked button disappears with its panel, so move focus to the
-    // panel that replaced it — otherwise focus stays on a hidden node and
-    // keyboard/screen-reader users lose their place.
-    const focusPanel = name => {
-      const panel = panels[name];
-      if (panel) panel.focus({ preventScroll: true });
-    };
+      // ========== STEP 1b: KANA SLIDER ==========
+      // Banded feedback so the number has a felt meaning: every label is a
+      // real reading experience, not a score. Index = floor(percent / 20),
+      // clamped to 0-5 so 100% stays in the top band.
+      const kanaBands = [
+        {
+          max: 0,
+          idText: 'Belum kenal sama sekali — masih terlihat seperti sandi.',
+          jpText: 'まだ記号にしか見えない',
+        },
+        {
+          max: 20,
+          idText: 'Baru beberapa huruf. Sisanya masih seperti sandi.',
+          jpText: 'まだほんの数文字',
+        },
+        {
+          max: 40,
+          idText: 'Hiragana sudah setengah jalan, Katakana masih asing.',
+          jpText: 'ひらがなは半分くらい',
+        },
+        {
+          max: 60,
+          idText: 'Hiragana lumayan lancar, Katakana masih sering tersendat.',
+          jpText: 'ひらがなはまあまあ',
+        },
+        {
+          max: 80,
+          idText: 'Dua-duanya sudah kebaca, cuma sesekali berhenti.',
+          jpText: 'どちらもだいたい読める',
+        },
+        {
+          max: 100,
+          idText: 'Lancar tanpa mikir — sudah tidak terasa seperti huruf asing.',
+          jpText: '余裕でスラスラ読める',
+        },
+      ];
 
-    // ========== STEP 1: SELF-ASSESSMENT ==========
-    const syncStartButton = () => {
-      const ready = state.selfLevel > 0;
-      startBtn.disabled = !ready;
-      startHint.hidden = ready;
-    };
+      const kanaBand = percent => {
+        for (let i = 0; i < kanaBands.length; i += 1) {
+          if (percent <= kanaBands[i].max) return kanaBands[i];
+        }
+        return kanaBands[kanaBands.length - 1];
+      };
 
-    selfLevelInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        state.selfLevel = Number(input.value) || 0;
-        syncStartButton();
-      });
-    });
+      // The filled part of the track follows the thumb, so the control reads
+      // as a progress meter instead of a bare native slider. aria-valuetext
+      // carries the felt meaning too — a screen reader hears "40%: hiragana
+      // setengah jalan" instead of a bare number.
+      const paintKana = percent => {
+        const band = kanaBand(percent);
+        if (kanaRange) {
+          kanaRange.style.setProperty('--jct-kana-fill', percent + '%');
+          kanaRange.setAttribute('aria-valuetext', percent + '%: ' + band.idText);
+        }
+        if (kanaValue) kanaValue.textContent = percent + '%';
+        if (kanaLabel) kanaLabel.textContent = band.idText;
+        if (kanaLabelJp) kanaLabelJp.textContent = band.jpText;
+      };
 
-    // ========== STEP 1b: KANA SLIDER ==========
-    // Banded feedback so the number has a felt meaning: every label is a
-    // real reading experience, not a score. Index = floor(percent / 20),
-    // clamped to 0-5 so 100% stays in the top band.
-    const kanaBands = [
-      {
-        max: 0,
-        idText: 'Belum kenal sama sekali — masih terlihat seperti sandi.',
-        jpText: 'まだ記号にしか見えない',
-      },
-      {
-        max: 20,
-        idText: 'Baru beberapa huruf. Sisanya masih seperti sandi.',
-        jpText: 'まだほんの数文字',
-      },
-      {
-        max: 40,
-        idText: 'Hiragana sudah setengah jalan, Katakana masih asing.',
-        jpText: 'ひらがなは半分くらい',
-      },
-      {
-        max: 60,
-        idText: 'Hiragana lumayan lancar, Katakana masih sering tersendat.',
-        jpText: 'ひらがなはまあまあ',
-      },
-      {
-        max: 80,
-        idText: 'Dua-duanya sudah kebaca, cuma sesekali berhenti.',
-        jpText: 'どちらもだいたい読める',
-      },
-      {
-        max: 100,
-        idText: 'Lancar tanpa mikir — sudah tidak terasa seperti huruf asing.',
-        jpText: '余裕でスラスラ読める',
-      },
-    ];
-
-    const kanaBand = percent => {
-      for (let i = 0; i < kanaBands.length; i += 1) {
-        if (percent <= kanaBands[i].max) return kanaBands[i];
-      }
-      return kanaBands[kanaBands.length - 1];
-    };
-
-    // The filled part of the track follows the thumb, so the control reads
-    // as a progress meter instead of a bare native slider. aria-valuetext
-    // carries the felt meaning too — a screen reader hears "40%: hiragana
-    // setengah jalan" instead of a bare number.
-    const paintKana = percent => {
-      const band = kanaBand(percent);
       if (kanaRange) {
-        kanaRange.style.setProperty('--jct-kana-fill', percent + '%');
-        kanaRange.setAttribute('aria-valuetext', percent + '%: ' + band.idText);
+        kanaRange.addEventListener('input', () => {
+          state.kanaPercent = Number(kanaRange.value) || 0;
+          paintKana(state.kanaPercent);
+        });
       }
-      if (kanaValue) kanaValue.textContent = percent + '%';
-      if (kanaLabel) kanaLabel.textContent = band.idText;
-      if (kanaLabelJp) kanaLabelJp.textContent = band.jpText;
-    };
 
-    if (kanaRange) {
-      kanaRange.addEventListener('input', () => {
-        state.kanaPercent = Number(kanaRange.value) || 0;
+      // ========== STEP 1c: KANA RESULT (50% split) ==========
+      // The verdict itself is not printed here: the two VN scenes below speak it
+      // with a sprite and a voice clip. This panel only echoes the answer and
+      // offers the destination, so the copy lives in exactly one place.
+      const kanaCtas = {
+        high: 'Buka Panduan Immersion',
+        low: 'Buka Panduan Kana',
+      };
+
+      const showKanaResult = () => {
+        const percent = state.kanaPercent;
+        const cta = percent >= 50 ? kanaCtas.high : kanaCtas.low;
+        if (kanaEcho) kanaEcho.textContent = percent + '%';
+        if (kanaCtaLabel) kanaCtaLabel.textContent = cta;
+        showPanel('kanaResult');
+        scrollToTop();
+        focusPanel('kanaResult');
+        announce('Kemampuan kana ' + percent + ' persen. ' + cta + '.');
+      };
+
+      const openKana = () => {
         paintKana(state.kanaPercent);
-      });
-    }
+        showPanel('kana');
+        scrollToTop();
+        focusPanel('kana');
+      };
 
-    // ========== STEP 1c: KANA RESULT (50% split) ==========
-    // The verdict itself is not printed here: the two VN scenes below speak it
-    // with a sprite and a voice clip. This panel only echoes the answer and
-    // offers the destination, so the copy lives in exactly one place.
-    const kanaCtas = {
-      high: 'Buka Panduan Immersion',
-      low: 'Buka Panduan Kana',
-    };
+      // "Ulangi" on the closing screen returns to the slider, not to the
+      // greeting: the usual reason to retry is "my kana number was off", and a
+      // changed guess re-runs the 50% split immediately. Starting the whole
+      // conversation over stays reachable from the header/back links.
+      const retryKana = () => {
+        state.kanaPercent = 0;
+        if (kanaRange) kanaRange.value = '0';
+        paintKana(0);
+        showPanel('kana');
+        scrollToTop();
+        focusPanel('kana');
+        announce('Slider kana diulang dari nol.');
+      };
 
-    const showKanaResult = () => {
-      const percent = state.kanaPercent;
-      const cta = percent >= 50 ? kanaCtas.high : kanaCtas.low;
-      if (kanaEcho) kanaEcho.textContent = percent + '%';
-      if (kanaCtaLabel) kanaCtaLabel.textContent = cta;
-      showPanel('kanaResult');
-      scrollToTop();
-      focusPanel('kanaResult');
-      announce('Kemampuan kana ' + percent + ' persen. ' + cta + '.');
-    };
+      // ========== STEP 0b: VN DIALOGUE ENGINE ==========
+      // One line per tap. Every line owns a sprite and a voice clip; scenes that
+      // exist only to deliver buttons (`choice`, `kana`, `kanaResult`) carry
+      // neither, which is why the stage empties out on those panels instead of
+      // keeping a silent character on screen.
+      //
+      // Sprites are the quest prologue's expression set, so the two pages show
+      // the same character. Each one is a 1024x1024 transparent WebP with a
+      // different visual weight after trimming (p02 832x1012, p07 974x1018), so
+      // the CSS sizes them by height and bottom-aligns them.
+      const GUIDE_DIR = '/images/quest/guide-';
+      const VOICE_DIR = '/assets/voice/jct/';
 
-    const openKana = () => {
-      paintKana(state.kanaPercent);
-      showPanel('kana');
-      scrollToTop();
-      focusPanel('kana');
-    };
+      const vnScenes = {
+        // Scene 1 -> the fork. `next` names the panel to reveal once the last
+        // line has been tapped.
+        greet: {
+          next: 'choice',
+          lines: [
+            {
+              img: 'p02',
+              audio: 'jct_01_intro.mp3',
+              idText: 'Halo! Mau belajar bahasa Jepang?',
+              jpText: 'いらっしゃーい！日本語勉強したい人？',
+            },
+          ],
+        },
+        // Scene 3 -> kana slider. The zero-start reassurance, then the actual
+        // question, so the slider panel can stay a bare answer surface.
+        zero: {
+          next: 'kana',
+          lines: [
+            {
+              img: 'p03_yes',
+              audio: 'jct_02_zero.mp3',
+              idText: 'Oh, dari nol? Mantap!',
+              jpText: 'お、ゼロから？いいね！',
+            },
+            {
+              img: 'p04',
+              audio: 'jct_03_kana_ask.mp3',
+              idText:
+                'Hiragana sama Katakana sekarang udah bisa baca seberapa lancar?',
+              jpText: 'ひらがなとカタカナって今どれくらい読めます？',
+            },
+          ],
+        },
+        // Scene 5A (>= 50%) -> closing buttons.
+        over50: {
+          next: 'kanaResult',
+          lines: [
+            {
+              img: 'p03_yes_desc',
+              audio: 'jct_04_over50_1.mp3',
+              idText: 'Wih, kalau huruf udah bisa mah aman!',
+              jpText: 'おー、文字読めるならもう十分！',
+            },
+            {
+              img: 'p03_yes',
+              audio: 'jct_05_over50_2.mp3',
+              idText:
+                'Asal ada niat sama sekali nggak susah kok, semua udah kita tulis di Wiki kita!',
+              jpText:
+                'やる気あれば全然難しくはないから、うちのWiki書いてありますよ。',
+            },
+          ],
+        },
+        // Scene 5B (< 50%) -> closing buttons.
+        under50: {
+          next: 'kanaResult',
+          lines: [
+            {
+              img: 'p05',
+              audio: 'jct_06_under50_1.mp3',
+              idText: 'Santai aja, nggak masalah kok!',
+              jpText: '全然お気にせず！',
+            },
+            {
+              img: 'p05',
+              audio: 'jct_07_under50_2.mp3',
+              idText: 'Awalnya emang kayak liat sandi rahasia kok.',
+              jpText: '最初はみんな暗号に見えるから。',
+            },
+            {
+              img: 'p03_yes',
+              audio: 'jct_08_under50_3.mp3',
+              idText: 'Tapi asal ada niat pasti bisa!',
+              jpText: 'でも全部あなたのやる気あれば全然できますよ！',
+            },
+            {
+              img: 'p07',
+              audio: 'jct_09_under50_4.mp3',
+              idText: 'Kita udah siapin panduannya, semoga bisa ngebantu ya!',
+              jpText:
+                'そのためにガイドを用意してたので、ぜひ参考になれば嬉しいです。',
+            },
+          ],
+        },
+      };
 
-    // "Ulangi" on the closing screen returns to the slider, not to the
-    // greeting: the usual reason to retry is "my kana number was off", and a
-    // changed guess re-runs the 50% split immediately. Starting the whole
-    // conversation over stays reachable from the header/back links.
-    const retryKana = () => {
-      state.kanaPercent = 0;
-      if (kanaRange) kanaRange.value = '0';
-      paintKana(0);
-      showPanel('kana');
-      scrollToTop();
-      focusPanel('kana');
-      announce('Slider kana diulang dari nol.');
-    };
+      // One detached <audio> swapped per line, same shape as the quest prologue:
+      // no player UI, no extra element in the DOM, one file in flight. Exposed
+      // as window.__jctVoice so the playback state is inspectable in tests.
+      const voice = new Audio();
+      voice.preload = 'auto';
+      window.__jctVoice = voice;
 
-    // ========== STEP 0b: VN DIALOGUE ENGINE ==========
-    // One line per tap. Every line owns a sprite and a voice clip; scenes that
-    // exist only to deliver buttons (`choice`, `kana`, `kanaResult`) carry
-    // neither, which is why the stage empties out on those panels instead of
-    // keeping a silent character on screen.
-    //
-    // Sprites are the quest prologue's expression set, so the two pages show
-    // the same character. Each one is a 1024x1024 transparent WebP with a
-    // different visual weight after trimming (p02 832x1012, p07 974x1018), so
-    // the CSS sizes them by height and bottom-aligns them.
-    const GUIDE_DIR = '/images/quest/guide-';
-    const VOICE_DIR = '/assets/voice/jct/';
-
-    const vnScenes = {
-      // Scene 1 -> the fork. `next` names the panel to reveal once the last
-      // line has been tapped.
-      greet: {
-        next: 'choice',
-        lines: [
-          {
-            img: 'p02',
-            audio: 'jct_01_intro.mp3',
-            idText: 'Halo! Mau belajar bahasa Jepang?',
-            jpText: 'いらっしゃーい！日本語勉強したい人？',
-          },
-        ],
-      },
-      // Scene 3 -> kana slider. The zero-start reassurance, then the actual
-      // question, so the slider panel can stay a bare answer surface.
-      zero: {
-        next: 'kana',
-        lines: [
-          {
-            img: 'p03_yes',
-            audio: 'jct_02_zero.mp3',
-            idText: 'Oh, dari nol? Mantap!',
-            jpText: 'お、ゼロから？いいね！',
-          },
-          {
-            img: 'p04',
-            audio: 'jct_03_kana_ask.mp3',
-            idText:
-              'Hiragana sama Katakana sekarang udah bisa baca seberapa lancar?',
-            jpText: 'ひらがなとカタカナって今どれくらい読めます？',
-          },
-        ],
-      },
-      // Scene 5A (>= 50%) -> closing buttons.
-      over50: {
-        next: 'kanaResult',
-        lines: [
-          {
-            img: 'p03_yes_desc',
-            audio: 'jct_04_over50_1.mp3',
-            idText: 'Wih, kalau huruf udah bisa mah aman!',
-            jpText: 'おー、文字読めるならもう十分！',
-          },
-          {
-            img: 'p03_yes',
-            audio: 'jct_05_over50_2.mp3',
-            idText:
-              'Asal ada niat sama sekali nggak susah kok, semua udah kita tulis di Wiki kita!',
-            jpText:
-              'やる気あれば全然難しくはないから、うちのWiki書いてありますよ。',
-          },
-        ],
-      },
-      // Scene 5B (< 50%) -> closing buttons.
-      under50: {
-        next: 'kanaResult',
-        lines: [
-          {
-            img: 'p05',
-            audio: 'jct_06_under50_1.mp3',
-            idText: 'Santai aja, nggak masalah kok!',
-            jpText: '全然お気にせず！',
-          },
-          {
-            img: 'p05',
-            audio: 'jct_07_under50_2.mp3',
-            idText: 'Awalnya emang kayak liat sandi rahasia kok.',
-            jpText: '最初はみんな暗号に見えるから。',
-          },
-          {
-            img: 'p03_yes',
-            audio: 'jct_08_under50_3.mp3',
-            idText: 'Tapi asal ada niat pasti bisa!',
-            jpText: 'でも全部あなたのやる気あれば全然できますよ！',
-          },
-          {
-            img: 'p07',
-            audio: 'jct_09_under50_4.mp3',
-            idText: 'Kita udah siapin panduannya, semoga bisa ngebantu ya!',
-            jpText:
-              'そのためにガイドを用意してたので、ぜひ参考になれば嬉しいです。',
-          },
-        ],
-      },
-    };
-
-    // One detached <audio> swapped per line, same shape as the quest prologue:
-    // no player UI, no extra element in the DOM, one file in flight. Exposed
-    // as window.__jctVoice so the playback state is inspectable in tests.
-    const voice = new Audio();
-    voice.preload = 'auto';
-    window.__jctVoice = voice;
-
-    const stopVoice = () => {
-      try {
-        voice.pause();
-      } catch {
-        // pause() on a fresh element is a no-op in practice.
-      }
-    };
-
-    // Pause audio when switching tabs or backgrounding to prevent background bleed.
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stopVoice();
-    });
-
-    const playVoice = line => {
-      if (!line || !line.audio) return;
-      stopVoice();
-      const src = VOICE_DIR + line.audio;
-      if (voice.getAttribute('src') !== src) voice.setAttribute('src', src);
-      try {
-        voice.currentTime = 0;
-      } catch {
-        // Not seekable yet => play from wherever it loads.
-      }
-      const pending = voice.play();
-      // A rejection (autoplay policy, decode error) must not stop the line:
-      // the text and sprite still advance, so the flow never dead-ends.
-      if (pending && typeof pending.catch === 'function') pending.catch(() => {});
-    };
-
-    let vnScene = null;
-    let vnIndex = 0;
-
-    const paintVnLine = () => {
-      const scene = vnScenes[vnScene];
-      if (!scene) return;
-      const line = scene.lines[vnIndex];
-      if (!line) return;
-
-      if (vnImg && line.img) {
-        const src = GUIDE_DIR + line.img + '.webp';
-        if (vnImg.getAttribute('src') !== src) {
-          // A previous swap may have fallen back to guide.webp; the new
-          // expression deserves its own attempt at the real file.
-          delete vnImg.dataset.fbk;
-          vnImg.src = src;
+      const stopVoice = () => {
+        try {
+          voice.pause();
+        } catch {
+          // pause() on a fresh element is a no-op in practice.
         }
-      }
-      if (vnId) vnId.textContent = line.idText;
-      if (vnJp) vnJp.textContent = line.jpText;
-      // The visible text is not a live region (two lines, two languages, and
-      // it changes on every tap). This hidden sibling is announced once.
-      if (vnLive) vnLive.textContent = line.jpText + ' ' + line.idText;
+      };
 
-      playVoice(line);
-    };
+      // Pause audio when switching tabs or backgrounding to prevent background bleed.
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stopVoice();
+      });
 
-    const startVn = name => {
-      if (!vnScenes[name]) return;
-      vnScene = name;
-      vnIndex = 0;
-      showPanel('vn');
-      paintVnLine();
-      scrollToTop();
-      if (vnBox) vnBox.focus({ preventScroll: true });
-    };
+      const playVoice = line => {
+        if (!line || !line.audio) return;
+        stopVoice();
+        const src = VOICE_DIR + line.audio;
+        if (voice.getAttribute('src') !== src) voice.setAttribute('src', src);
+        try {
+          voice.currentTime = 0;
+        } catch {
+          // Not seekable yet => play from wherever it loads.
+        }
+        const pending = voice.play();
+        // A rejection (autoplay policy, decode error) must not stop the line:
+        // the text and sprite still advance, so the flow never dead-ends.
+        if (pending && typeof pending.catch === 'function') pending.catch(() => {});
+      };
 
-    const advanceVn = () => {
-      const scene = vnScenes[vnScene];
-      if (!scene) return;
+      let vnScene = null;
+      let vnIndex = 0;
 
-      if (vnIndex + 1 < scene.lines.length) {
-        vnIndex += 1;
+      const paintVnLine = () => {
+        const scene = vnScenes[vnScene];
+        if (!scene) return;
+        const line = scene.lines[vnIndex];
+        if (!line) return;
+
+        if (vnImg && line.img) {
+          const src = GUIDE_DIR + line.img + '.webp';
+          if (vnImg.getAttribute('src') !== src) {
+            // A previous swap may have fallen back to guide.webp; the new
+            // expression deserves its own attempt at the real file.
+            delete vnImg.dataset.fbk;
+            vnImg.src = src;
+          }
+        }
+        if (vnId) vnId.textContent = line.idText;
+        if (vnJp) vnJp.textContent = line.jpText;
+        // The visible text is not a live region (two lines, two languages, and
+        // it changes on every tap). This hidden sibling is announced once.
+        if (vnLive) vnLive.textContent = line.jpText + ' ' + line.idText;
+
+        playVoice(line);
+      };
+
+      const startVn = name => {
+        if (!vnScenes[name]) return;
+        vnScene = name;
+        vnIndex = 0;
+        showPanel('vn');
         paintVnLine();
-        return;
-      }
+        scrollToTop();
+        if (vnBox) vnBox.focus({ preventScroll: true });
+      };
 
-      stopVoice();
-      vnScene = null;
-      vnIndex = 0;
+      const advanceVn = () => {
+        const scene = vnScenes[vnScene];
+        if (!scene) return;
 
-      if (scene.next === 'kana') {
-        openKana();
-        return;
-      }
-      if (scene.next === 'kanaResult') {
-        showKanaResult();
-        return;
-      }
-      showPanel('choice');
-      scrollToTop();
-      focusPanel('choice');
-    };
-
-    // The stage is the tap surface (whole-scene clicks, like the prologue);
-    // the dialogue box additionally owns keyboard activation, so Enter/Space
-    // work without turning the sprite into a tab stop.
-    if (vnStage) vnStage.addEventListener('click', advanceVn);
-    if (vnBox) {
-      vnBox.addEventListener('keydown', event => {
-        if (event.repeat) return;
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          advanceVn();
-        }
-      });
-    }
-
-    if (beginBtn) {
-      beginBtn.addEventListener('click', () => startVn('greet'));
-    }
-
-    // Fetch the opening clip during idle time so the first line is not silent
-    // while the request flies. Setting src alone does not play anything, so
-    // the autoplay policy is untouched.
-    if (vnScenes.greet.lines[0]) {
-      voice.setAttribute(
-        'src',
-        VOICE_DIR + vnScenes.greet.lines[0].audio
-      );
-      voice.load();
-    }
-
-    const openChoice = () => {
-      stopVoice();
-      showPanel('choice');
-      scrollToTop();
-      focusPanel('choice');
-    };
-
-    choiceButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const route = button.dataset.jctChoice;
-        if (route === 'kana') {
-          // "Baru mau mulai" still gets its two spoken lines before the
-          // slider: the question belongs to the character, not to a card.
-          startVn('zero');
+        if (vnIndex + 1 < scene.lines.length) {
+          vnIndex += 1;
+          paintVnLine();
           return;
         }
+
+        stopVoice();
+        vnScene = null;
+        vnIndex = 0;
+
+        if (scene.next === 'kana') {
+          openKana();
+          return;
+        }
+        if (scene.next === 'kanaResult') {
+          showKanaResult();
+          return;
+        }
+        showPanel('choice');
+        scrollToTop();
+        focusPanel('choice');
+      };
+
+      // The stage is the tap surface (whole-scene clicks, like the prologue);
+      // the dialogue box additionally owns keyboard activation, so Enter/Space
+      // work without turning the sprite into a tab stop.
+      if (vnStage) vnStage.addEventListener('click', advanceVn);
+      if (vnBox) {
+        vnBox.addEventListener('keydown', event => {
+          if (event.repeat) return;
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            advanceVn();
+          }
+        });
+      }
+
+      if (beginBtn) {
+        beginBtn.addEventListener('click', () => startVn('greet'));
+      }
+
+      // Fetch the opening clip during idle time so the first line is not silent
+      // while the request flies. Setting src alone does not play anything, so
+      // the autoplay policy is untouched.
+      if (vnScenes.greet.lines[0]) {
+        voice.setAttribute(
+          'src',
+          VOICE_DIR + vnScenes.greet.lines[0].audio
+        );
+        voice.load();
+      }
+
+      const openChoice = () => {
+        stopVoice();
+        showPanel('choice');
+        scrollToTop();
+        focusPanel('choice');
+      };
+
+      choiceButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const route = button.dataset.jctChoice;
+          if (route === 'kana') {
+            // "Baru mau mulai" still gets its two spoken lines before the
+            // slider: the question belongs to the character, not to a card.
+            startVn('zero');
+            return;
+          }
+          showPanel('start');
+          scrollToTop();
+          focusPanel('start');
+        });
+      });
+
+      backButtons.forEach(button => {
+        button.addEventListener('click', openChoice);
+      });
+
+      if (kanaNext) {
+        kanaNext.addEventListener('click', () => {
+          startVn(state.kanaPercent >= 50 ? 'over50' : 'under50');
+        });
+      }
+      if (kanaRetry) kanaRetry.addEventListener('click', retryKana);
+
+      // ========== STEP 2: MEDIA ==========
+      // The mock player only animates a timeline; no audio is loaded in phase 1.
+      let playerTimer = null;
+      let playerElapsed = 0;
+      let playerDuration = 15;
+      let playerEls = null;
+
+      const stopPlayer = () => {
+        if (playerTimer !== null) {
+          window.clearInterval(playerTimer);
+          playerTimer = null;
+        }
+        if (playerEls) {
+          playerEls.frame.classList.remove('is-playing');
+          playerEls.playBtn.setAttribute('aria-label', 'Putar sampel audio (mock)');
+        }
+      };
+
+      const paintPlayer = () => {
+        if (!playerEls) return;
+        const ratio = playerDuration > 0 ? playerElapsed / playerDuration : 0;
+        playerEls.fill.style.width = Math.min(100, ratio * 100) + '%';
+        playerEls.time.textContent = formatClock(playerElapsed);
+      };
+
+      const startPlayer = () => {
+        if (!playerEls) return;
+        if (playerElapsed >= playerDuration) playerElapsed = 0;
+        playerEls.frame.classList.add('is-playing');
+        playerEls.playBtn.setAttribute('aria-label', 'Jeda sampel audio (mock)');
+        playerTimer = window.setInterval(() => {
+          playerElapsed += 0.25;
+          if (playerElapsed >= playerDuration) {
+            playerElapsed = playerDuration;
+            paintPlayer();
+            stopPlayer();
+            return;
+          }
+          paintPlayer();
+        }, 250);
+      };
+
+      const buildMedia = question => {
+        stopPlayer();
+        playerEls = null;
+        playerElapsed = 0;
+        mediaSlot.textContent = '';
+
+        const media = question.media || {};
+        const template = root.querySelector(
+          '[data-jct-template="' + media.kind + '"]'
+        );
+        if (!template) return;
+
+        const fragment = template.content.cloneNode(true);
+        const fields = {
+          caption: media.label || '',
+          clip: '',
+          initial: '',
+          name: media.name || '',
+          handle: media.handle || '',
+          text: media.text || '',
+          work: media.work || '',
+          author: media.author || '',
+        };
+
+        if (media.kind === 'youtube') {
+          const start = Number(media.start) || 0;
+          const end = Number(media.end) || 0;
+          playerDuration = Math.max(1, end - start);
+          fields.clip = formatClock(start) + ' – ' + formatClock(end);
+        }
+        if (media.kind === 'x-post') {
+          fields.initial = (media.name || '?').slice(0, 1).toUpperCase();
+        }
+
+        fragment.querySelectorAll('[data-field]').forEach(node => {
+          const key = node.dataset.field;
+          node.textContent = fields[key] || '';
+        });
+
+        mediaSlot.append(fragment);
+
+        if (media.kind !== 'youtube') return;
+
+        const frame = mediaSlot.querySelector('.jct-yt');
+        const playBtn = mediaSlot.querySelector('[data-jct-play]');
+        const fill = mediaSlot.querySelector('[data-jct-fill]');
+        const time = mediaSlot.querySelector('[data-jct-time]');
+        const total = mediaSlot.querySelector('[data-jct-total]');
+        if (!frame || !playBtn || !fill || !time || !total) return;
+
+        total.textContent = formatClock(playerDuration);
+        playerEls = { frame, playBtn, fill, time };
+        paintPlayer();
+
+        playBtn.addEventListener('click', () => {
+          if (playerTimer !== null) {
+            stopPlayer();
+            return;
+          }
+          startPlayer();
+        });
+      };
+
+      // ========== STEP 2: OPTIONS ==========
+      const buildOptions = question => {
+        optionsBox.textContent = '';
+        (question.options || []).forEach((text, index) => {
+          const label = document.createElement('label');
+          label.className = 'jct-option';
+
+          const input = document.createElement('input');
+          input.className = 'jct-visually-hidden';
+          input.type = 'radio';
+          input.name = 'jct-option';
+          input.value = String(index);
+
+          const badge = document.createElement('span');
+          badge.className = 'jct-option-badge';
+          badge.setAttribute('aria-hidden', 'true');
+          badge.textContent = String.fromCharCode(65 + index);
+
+          const body = document.createElement('span');
+          body.className = 'jct-option-text';
+          body.lang = 'ja';
+          body.textContent = text;
+
+          label.append(input, badge, body);
+          input.addEventListener('change', () => {
+            state.optionIndex = index;
+            syncNextButton();
+          });
+          optionsBox.append(label);
+        });
+      };
+
+      // ========== STEP 2: QUESTION RENDER ==========
+      const syncNextButton = () => {
+        const ready = state.optionIndex >= 0 && state.scaleValue > 0;
+        nextBtn.disabled = !ready;
+        nextHint.hidden = ready;
+      };
+
+      const renderQuestion = () => {
+        const question = questions[state.index];
+        if (!question) return;
+
+        state.optionIndex = -1;
+        state.scaleValue = 0;
+        scaleInputs.forEach(input => {
+          input.checked = false;
+        });
+
+        const number = state.index + 1;
+        counter.textContent = 'Pertanyaan ' + number + ' / ' + totalQuestions;
+        typeTag.textContent =
+          question.type === 'listening' ? 'Listening' : 'Reading';
+        qIndex.textContent = 'Pertanyaan ' + String(number).padStart(2, '0');
+        promptId.textContent = question.prompt.idText;
+        promptJp.textContent = question.prompt.jpText;
+        nextLabel.textContent =
+          number === totalQuestions ? 'Lihat Hasil' : 'Lanjut';
+
+        const ratio = state.index / totalQuestions;
+        progressFill.style.width = ratio * 100 + '%';
+        progressBar.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+
+        buildMedia(question);
+        buildOptions(question);
+        syncNextButton();
+        announce(
+          'Pertanyaan ' + number + ' dari ' + totalQuestions + ', ' +
+            (question.type === 'listening' ? 'listening' : 'reading')
+        );
+      };
+
+      // ========== STEP 2: SCALE ==========
+      scaleInputs.forEach(input => {
+        input.addEventListener('change', () => {
+          state.scaleValue = Number(input.value) || 0;
+          syncNextButton();
+        });
+      });
+
+      // ========== RESULT CALCULATION (phase-1 placeholder formula) ==========
+      // Note: this is a mock heuristic for the handoff flow. Phase 2 replaces it
+      // with the weighted quiz-accuracy x comprehension-scale model.
+      const summarizeType = type => {
+        const items = state.answers.filter(answer => answer.type === type);
+        if (items.length === 0) return null;
+        const scores = items.map(item => {
+          const quizShift = item.correct ? 0.5 : -0.75;
+          const scaleShift = (item.scale - 5) * 0.2;
+          return item.level + quizShift + scaleShift;
+        });
+        const mean = scores.reduce((sum, value) => sum + value, 0) / scores.length;
+        return clampLevel(mean);
+      };
+
+      const levelNote = level => {
+        const notes = {
+          1: 'Konten level ini masih terasa seperti bunyi saja. Mulai dari input yang sangat mudah.',
+          2: 'Kata-kata lepas mulai muncul. Perbanyak materi dengan visual pendukung.',
+          3: 'Frasa pendek mulai masuk. Waktunya menambah jam menonton setiap hari.',
+          4: 'Topik umum sudah bisa ditebak. Coba konten tanpa subtitle sama sekali.',
+          5: 'Inti cerita dan emosi sudah tertangkap. Tingkatkan kesulitan materinya.',
+          6: 'Alur cerita bisa diikuti. Tantang dirimu dengan konten native penuh.',
+          7: 'Hampir semua hal dipahami. Fokus ke nuansa, dialek, dan kecepatan asli.',
+        };
+        return notes[level] || '';
+      };
+
+      const renderResult = () => {
+        const listening = summarizeType('listening');
+        const reading = summarizeType('reading');
+        const correctCount = state.answers.filter(a => a.correct).length;
+        const scaleMean =
+          state.answers.reduce((sum, a) => sum + a.scale, 0) /
+          (state.answers.length || 1);
+
+        levelListening.textContent = listening === null ? '–' : String(listening);
+        levelReading.textContent = reading === null ? '–' : String(reading);
+        noteListening.textContent = listening === null ? '' : levelNote(listening);
+        noteReading.textContent = reading === null ? '' : levelNote(reading);
+
+        statCorrect.textContent = correctCount + ' / ' + state.answers.length;
+        statScale.textContent = scaleMean.toFixed(1) + ' / 10';
+        statSelf.textContent = 'Lv ' + state.selfLevel;
+
+        const measured =
+          listening === null || reading === null
+            ? listening === null
+              ? reading
+              : listening
+            : (listening + reading) / 2;
+        const safeMeasured = measured === null ? state.selfLevel : measured;
+        const diff = safeMeasured - state.selfLevel;
+
+        let headline;
+        if (diff >= 1) {
+          headline =
+            'Pemahaman medianya lebih tinggi dari perkiraanmu — kamu lebih jauh dari yang kamu sangka.';
+        } else if (diff <= -1) {
+          headline =
+            'Kamu cenderung menaksir berlebih. Ini normal: kenali dulu batas nyatamu, lalu bangun dari sana.';
+        } else {
+          headline =
+            'Penilaian dirimu sudah akurat. Kamu tahu persis di mana posisimu sekarang.';
+        }
+        gapHeadline.textContent = headline;
+
+        const insights = [];
+        if (listening !== null && reading !== null) {
+          if (reading - listening >= 1) {
+            insights.push(
+              'Kekuatanmu ada di membaca. Menonton tanpa subtitle masih terasa berat — tambah porsi listening secara bertahap.'
+            );
+          } else if (listening - reading >= 1) {
+            insights.push(
+              'Kekuatanmu ada di mendengar. Menambah jam membaca akan mempercepat kosakata dan kanji-mu.'
+            );
+          } else {
+            insights.push(
+              'Kemampuan listening dan reading-mu seimbang. Ini tanda input yang sehat di kedua sisi.'
+            );
+          }
+        }
+        if (correctCount < state.answers.length) {
+          insights.push(
+            'Ada jawaban yang meleset. Itu bukan kegagalan — justru menandai bagian yang perlu didengar ulang.'
+          );
+        } else {
+          insights.push(
+            'Semua jawaban tepat. Naikkan level materi sedikit agar tetap ada tantangan.'
+          );
+        }
+        if (scaleMean < 4) {
+          insights.push(
+            'Skala pemahamanmu rendah. Turunkan kesulitan materi dulu sampai kamu bisa menikmatinya tanpa jeda.'
+          );
+        } else if (scaleMean >= 7) {
+          insights.push(
+            'Skala pemahamanmu tinggi. Konten ini sudah nyaman — pindah ke materi yang lebih menantang.'
+          );
+        }
+
+        gapList.textContent = '';
+        insights.forEach(text => {
+          const li = document.createElement('li');
+          li.className = 'jct-gap-item';
+          li.textContent = text;
+          gapList.append(li);
+        });
+
+        resultLead.textContent =
+          'Berdasarkan ' +
+          state.answers.length +
+          ' soal media asli dan penilaian dirimu (Lv ' +
+          state.selfLevel +
+          '), ini gambaran pemahamanmu saat ini.';
+
+        announce('Hasil tes ditampilkan.');
+      };
+
+      // ========== FLOW ==========
+      const goToTest = () => {
+        // Leaving the self-assessment route also silences any VN clip that is
+        // still talking, so the media step never overlaps with Yosia's voice.
+        stopVoice();
+        state.index = 0;
+        state.answers = [];
+        showPanel('test');
+        renderQuestion();
+        focusPanel('test');
+      };
+
+      const advance = () => {
+        const question = questions[state.index];
+        if (!question) return;
+
+        state.answers.push({
+          id: question.id,
+          type: question.type,
+          level: question.level,
+          correct: state.optionIndex === question.answer,
+          scale: state.scaleValue,
+        });
+
+        if (state.index + 1 < totalQuestions) {
+          state.index += 1;
+          renderQuestion();
+          return;
+        }
+
+        stopPlayer();
+        progressFill.style.width = '100%';
+        progressBar.setAttribute('aria-valuenow', '100');
+        renderResult();
+        showPanel('result');
+        scrollToTop();
+        focusPanel('result');
+      };
+
+      const resetAll = () => {
+        stopPlayer();
+        stopVoice();
+        vnScene = null;
+        vnIndex = 0;
+        state.selfLevel = 0;
+        state.index = 0;
+        state.optionIndex = -1;
+        state.scaleValue = 0;
+        state.answers = [];
+        // The kana step belongs to the same run: "Ulangi Tes" restarts it too,
+        // otherwise a repeat visitor would carry the old slider answer along.
+        state.kanaPercent = 0;
+        if (kanaRange) kanaRange.value = '0';
+        paintKana(0);
+        selfLevelInputs.forEach(input => {
+          input.checked = false;
+        });
+        scaleInputs.forEach(input => {
+          input.checked = false;
+        });
+        progressFill.style.width = '0%';
+        progressBar.setAttribute('aria-valuenow', '0');
+        syncStartButton();
         showPanel('start');
         scrollToTop();
         focusPanel('start');
-      });
-    });
-
-    backButtons.forEach(button => {
-      button.addEventListener('click', openChoice);
-    });
-
-    if (kanaNext) {
-      kanaNext.addEventListener('click', () => {
-        startVn(state.kanaPercent >= 50 ? 'over50' : 'under50');
-      });
-    }
-    if (kanaRetry) kanaRetry.addEventListener('click', retryKana);
-
-    // ========== STEP 2: MEDIA ==========
-    // The mock player only animates a timeline; no audio is loaded in phase 1.
-    let playerTimer = null;
-    let playerElapsed = 0;
-    let playerDuration = 15;
-    let playerEls = null;
-
-    const stopPlayer = () => {
-      if (playerTimer !== null) {
-        window.clearInterval(playerTimer);
-        playerTimer = null;
-      }
-      if (playerEls) {
-        playerEls.frame.classList.remove('is-playing');
-        playerEls.playBtn.setAttribute('aria-label', 'Putar sampel audio (mock)');
-      }
-    };
-
-    const paintPlayer = () => {
-      if (!playerEls) return;
-      const ratio = playerDuration > 0 ? playerElapsed / playerDuration : 0;
-      playerEls.fill.style.width = Math.min(100, ratio * 100) + '%';
-      playerEls.time.textContent = formatClock(playerElapsed);
-    };
-
-    const startPlayer = () => {
-      if (!playerEls) return;
-      if (playerElapsed >= playerDuration) playerElapsed = 0;
-      playerEls.frame.classList.add('is-playing');
-      playerEls.playBtn.setAttribute('aria-label', 'Jeda sampel audio (mock)');
-      playerTimer = window.setInterval(() => {
-        playerElapsed += 0.25;
-        if (playerElapsed >= playerDuration) {
-          playerElapsed = playerDuration;
-          paintPlayer();
-          stopPlayer();
-          return;
-        }
-        paintPlayer();
-      }, 250);
-    };
-
-    const buildMedia = question => {
-      stopPlayer();
-      playerEls = null;
-      playerElapsed = 0;
-      mediaSlot.textContent = '';
-
-      const media = question.media || {};
-      const template = root.querySelector(
-        '[data-jct-template="' + media.kind + '"]'
-      );
-      if (!template) return;
-
-      const fragment = template.content.cloneNode(true);
-      const fields = {
-        caption: media.label || '',
-        clip: '',
-        initial: '',
-        name: media.name || '',
-        handle: media.handle || '',
-        text: media.text || '',
-        work: media.work || '',
-        author: media.author || '',
+        announce('Tes diulang dari awal.');
       };
 
-      if (media.kind === 'youtube') {
-        const start = Number(media.start) || 0;
-        const end = Number(media.end) || 0;
-        playerDuration = Math.max(1, end - start);
-        fields.clip = formatClock(start) + ' – ' + formatClock(end);
-      }
-      if (media.kind === 'x-post') {
-        fields.initial = (media.name || '?').slice(0, 1).toUpperCase();
-      }
+      // ========== WIRING ==========
+      startBtn.addEventListener('click', goToTest);
+      nextBtn.addEventListener('click', advance);
+      retryBtn.addEventListener('click', resetAll);
 
-      fragment.querySelectorAll('[data-field]').forEach(node => {
-        const key = node.dataset.field;
-        node.textContent = fields[key] || '';
-      });
-
-      mediaSlot.append(fragment);
-
-      if (media.kind !== 'youtube') return;
-
-      const frame = mediaSlot.querySelector('.jct-yt');
-      const playBtn = mediaSlot.querySelector('[data-jct-play]');
-      const fill = mediaSlot.querySelector('[data-jct-fill]');
-      const time = mediaSlot.querySelector('[data-jct-time]');
-      const total = mediaSlot.querySelector('[data-jct-total]');
-      if (!frame || !playBtn || !fill || !time || !total) return;
-
-      total.textContent = formatClock(playerDuration);
-      playerEls = { frame, playBtn, fill, time };
-      paintPlayer();
-
-      playBtn.addEventListener('click', () => {
-        if (playerTimer !== null) {
-          stopPlayer();
-          return;
-        }
-        startPlayer();
-      });
-    };
-
-    // ========== STEP 2: OPTIONS ==========
-    const buildOptions = question => {
-      optionsBox.textContent = '';
-      (question.options || []).forEach((text, index) => {
-        const label = document.createElement('label');
-        label.className = 'jct-option';
-
-        const input = document.createElement('input');
-        input.className = 'jct-visually-hidden';
-        input.type = 'radio';
-        input.name = 'jct-option';
-        input.value = String(index);
-
-        const badge = document.createElement('span');
-        badge.className = 'jct-option-badge';
-        badge.setAttribute('aria-hidden', 'true');
-        badge.textContent = String.fromCharCode(65 + index);
-
-        const body = document.createElement('span');
-        body.className = 'jct-option-text';
-        body.lang = 'ja';
-        body.textContent = text;
-
-        label.append(input, badge, body);
-        input.addEventListener('change', () => {
-          state.optionIndex = index;
-          syncNextButton();
-        });
-        optionsBox.append(label);
-      });
-    };
-
-    // ========== STEP 2: QUESTION RENDER ==========
-    const syncNextButton = () => {
-      const ready = state.optionIndex >= 0 && state.scaleValue > 0;
-      nextBtn.disabled = !ready;
-      nextHint.hidden = ready;
-    };
-
-    const renderQuestion = () => {
-      const question = questions[state.index];
-      if (!question) return;
-
-      state.optionIndex = -1;
-      state.scaleValue = 0;
-      scaleInputs.forEach(input => {
-        input.checked = false;
-      });
-
-      const number = state.index + 1;
-      counter.textContent = 'Pertanyaan ' + number + ' / ' + totalQuestions;
-      typeTag.textContent =
-        question.type === 'listening' ? 'Listening' : 'Reading';
-      qIndex.textContent = 'Pertanyaan ' + String(number).padStart(2, '0');
-      promptId.textContent = question.prompt.idText;
-      promptJp.textContent = question.prompt.jpText;
-      nextLabel.textContent =
-        number === totalQuestions ? 'Lihat Hasil' : 'Lanjut';
-
-      const ratio = state.index / totalQuestions;
-      progressFill.style.width = ratio * 100 + '%';
-      progressBar.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
-
-      buildMedia(question);
-      buildOptions(question);
-      syncNextButton();
-      announce(
-        'Pertanyaan ' + number + ' dari ' + totalQuestions + ', ' +
-          (question.type === 'listening' ? 'listening' : 'reading')
-      );
-    };
-
-    // ========== STEP 2: SCALE ==========
-    scaleInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        state.scaleValue = Number(input.value) || 0;
-        syncNextButton();
-      });
-    });
-
-    // ========== RESULT CALCULATION (phase-1 placeholder formula) ==========
-    // Note: this is a mock heuristic for the handoff flow. Phase 2 replaces it
-    // with the weighted quiz-accuracy x comprehension-scale model.
-    const summarizeType = type => {
-      const items = state.answers.filter(answer => answer.type === type);
-      if (items.length === 0) return null;
-      const scores = items.map(item => {
-        const quizShift = item.correct ? 0.5 : -0.75;
-        const scaleShift = (item.scale - 5) * 0.2;
-        return item.level + quizShift + scaleShift;
-      });
-      const mean = scores.reduce((sum, value) => sum + value, 0) / scores.length;
-      return clampLevel(mean);
-    };
-
-    const levelNote = level => {
-      const notes = {
-        1: 'Konten level ini masih terasa seperti bunyi saja. Mulai dari input yang sangat mudah.',
-        2: 'Kata-kata lepas mulai muncul. Perbanyak materi dengan visual pendukung.',
-        3: 'Frasa pendek mulai masuk. Waktunya menambah jam menonton setiap hari.',
-        4: 'Topik umum sudah bisa ditebak. Coba konten tanpa subtitle sama sekali.',
-        5: 'Inti cerita dan emosi sudah tertangkap. Tingkatkan kesulitan materinya.',
-        6: 'Alur cerita bisa diikuti. Tantang dirimu dengan konten native penuh.',
-        7: 'Hampir semua hal dipahami. Fokus ke nuansa, dialek, dan kecepatan asli.',
-      };
-      return notes[level] || '';
-    };
-
-    const renderResult = () => {
-      const listening = summarizeType('listening');
-      const reading = summarizeType('reading');
-      const correctCount = state.answers.filter(a => a.correct).length;
-      const scaleMean =
-        state.answers.reduce((sum, a) => sum + a.scale, 0) /
-        (state.answers.length || 1);
-
-      levelListening.textContent = listening === null ? '–' : String(listening);
-      levelReading.textContent = reading === null ? '–' : String(reading);
-      noteListening.textContent = listening === null ? '' : levelNote(listening);
-      noteReading.textContent = reading === null ? '' : levelNote(reading);
-
-      statCorrect.textContent = correctCount + ' / ' + state.answers.length;
-      statScale.textContent = scaleMean.toFixed(1) + ' / 10';
-      statSelf.textContent = 'Lv ' + state.selfLevel;
-
-      const measured =
-        listening === null || reading === null
-          ? listening === null
-            ? reading
-            : listening
-          : (listening + reading) / 2;
-      const safeMeasured = measured === null ? state.selfLevel : measured;
-      const diff = safeMeasured - state.selfLevel;
-
-      let headline;
-      if (diff >= 1) {
-        headline =
-          'Pemahaman medianya lebih tinggi dari perkiraanmu — kamu lebih jauh dari yang kamu sangka.';
-      } else if (diff <= -1) {
-        headline =
-          'Kamu cenderung menaksir berlebih. Ini normal: kenali dulu batas nyatamu, lalu bangun dari sana.';
-      } else {
-        headline =
-          'Penilaian dirimu sudah akurat. Kamu tahu persis di mana posisimu sekarang.';
-      }
-      gapHeadline.textContent = headline;
-
-      const insights = [];
-      if (listening !== null && reading !== null) {
-        if (reading - listening >= 1) {
-          insights.push(
-            'Kekuatanmu ada di membaca. Menonton tanpa subtitle masih terasa berat — tambah porsi listening secara bertahap.'
-          );
-        } else if (listening - reading >= 1) {
-          insights.push(
-            'Kekuatanmu ada di mendengar. Menambah jam membaca akan mempercepat kosakata dan kanji-mu.'
-          );
-        } else {
-          insights.push(
-            'Kemampuan listening dan reading-mu seimbang. Ini tanda input yang sehat di kedua sisi.'
-          );
-        }
-      }
-      if (correctCount < state.answers.length) {
-        insights.push(
-          'Ada jawaban yang meleset. Itu bukan kegagalan — justru menandai bagian yang perlu didengar ulang.'
-        );
-      } else {
-        insights.push(
-          'Semua jawaban tepat. Naikkan level materi sedikit agar tetap ada tantangan.'
-        );
-      }
-      if (scaleMean < 4) {
-        insights.push(
-          'Skala pemahamanmu rendah. Turunkan kesulitan materi dulu sampai kamu bisa menikmatinya tanpa jeda.'
-        );
-      } else if (scaleMean >= 7) {
-        insights.push(
-          'Skala pemahamanmu tinggi. Konten ini sudah nyaman — pindah ke materi yang lebih menantang.'
-        );
-      }
-
-      gapList.textContent = '';
-      insights.forEach(text => {
-        const li = document.createElement('li');
-        li.className = 'jct-gap-item';
-        li.textContent = text;
-        gapList.append(li);
-      });
-
-      resultLead.textContent =
-        'Berdasarkan ' +
-        state.answers.length +
-        ' soal media asli dan penilaian dirimu (Lv ' +
-        state.selfLevel +
-        '), ini gambaran pemahamanmu saat ini.';
-
-      announce('Hasil tes ditampilkan.');
-    };
-
-    // ========== FLOW ==========
-    const goToTest = () => {
-      // Leaving the self-assessment route also silences any VN clip that is
-      // still talking, so the media step never overlaps with Yosia's voice.
-      stopVoice();
-      state.index = 0;
-      state.answers = [];
-      showPanel('test');
-      renderQuestion();
-      focusPanel('test');
-    };
-
-    const advance = () => {
-      const question = questions[state.index];
-      if (!question) return;
-
-      state.answers.push({
-        id: question.id,
-        type: question.type,
-        level: question.level,
-        correct: state.optionIndex === question.answer,
-        scale: state.scaleValue,
-      });
-
-      if (state.index + 1 < totalQuestions) {
-        state.index += 1;
-        renderQuestion();
-        return;
-      }
-
-      stopPlayer();
-      progressFill.style.width = '100%';
-      progressBar.setAttribute('aria-valuenow', '100');
-      renderResult();
-      showPanel('result');
-      scrollToTop();
-      focusPanel('result');
-    };
-
-    const resetAll = () => {
-      stopPlayer();
-      stopVoice();
-      vnScene = null;
-      vnIndex = 0;
-      state.selfLevel = 0;
-      state.index = 0;
-      state.optionIndex = -1;
-      state.scaleValue = 0;
-      state.answers = [];
-      // The kana step belongs to the same run: "Ulangi Tes" restarts it too,
-      // otherwise a repeat visitor would carry the old slider answer along.
-      state.kanaPercent = 0;
-      if (kanaRange) kanaRange.value = '0';
-      paintKana(0);
-      selfLevelInputs.forEach(input => {
-        input.checked = false;
-      });
-      scaleInputs.forEach(input => {
-        input.checked = false;
-      });
-      progressFill.style.width = '0%';
-      progressBar.setAttribute('aria-valuenow', '0');
       syncStartButton();
-      showPanel('start');
-      scrollToTop();
-      focusPanel('start');
-      announce('Tes diulang dari awal.');
-    };
-
-    // ========== WIRING ==========
-    startBtn.addEventListener('click', goToTest);
-    nextBtn.addEventListener('click', advance);
-    retryBtn.addEventListener('click', resetAll);
-
-    syncStartButton();
-    syncNextButton();
-    paintKana(state.kanaPercent);
-    showPanel('intro');
-  })();
-</script>
+      syncNextButton();
+      paintKana(state.kanaPercent);
+      showPanel('intro');
+    })();
+  </script>
+  </body>
+</html>

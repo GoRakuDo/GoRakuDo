@@ -211,3 +211,61 @@
    - 50%未満: 4行タップ送り（`jct_06` ➔ `jct_07` ➔ `jct_08` ➔ `jct_09`）➔ 立ち絵・音声なしで `Buka Panduan Kana ▶` ＋ `Ulangi ↺`（スライダーやり直し）。
 7. **バックグラウンド制御**: `visibilitychange` イベントで、タブ切り替えや非表示時に音声を自動一時停止。
 
+
+---
+
+### フェーズ 1.5c 実装ログ（BaseLayout 撤廃 → /quest 型スタンドアロン化）
+
+**背景**: BaseLayout 由来のグローバル要素が JCT の VN シーンと衝突していた。
+
+| 衝突元 | 実測値 | 症状 |
+|---|---|---|
+| `.nav-container`（Navbar） | 76px | スマホで JCT ヘッダーと重なる |
+| `.layout-content` mobile clearance | `navbar-height + 2rem` = 102px | 上部に過大パディング |
+| `BottomNavBar`（fixed） | 88px | VN シーンの下部が常に食われる |
+| `main { padding-bottom: var(--bottom-nav-spacing) }` | 88px | 上と二重に確保 |
+
+**方針**: `/quest/index.astro` と同じ「ページが `<!doctype html>` から文書全体を所有する」構造へ移行。`BaseLayout` は使わない。
+
+**変更ファイル**
+
+| パス | 役割 |
+|---|---|
+| `src/pages/japanese-comprehension-test/index.astro` | `BaseLayout` → 自前の `<html>` / `<head>` / `<body>`。`UnifiedSEO` を直接使い、`global.css` を明示 import。JCT 専用トップバー（`語楽道` 戻りリンク ＋ `/// JCT_ONLINE ///`）を追加 |
+| `src/styles/pages/jct/jct.css` | ページシェル・トップバー・自前背景・モバイル VN フィル・フォーカスリング抑制 |
+| `docs/japanese-comprehension-test-plan.md` | 本ログ |
+
+**実装した挙動**
+
+1. **スタンドアロン化**: site Navbar / BottomNavBar / WaveAnimation / `.layout-content` を完全撤廃。`--mobile-content-padding: 0` の opt-out ハックも不要になり削除（もう対象セレクタが存在しない）。
+2. **JCT 専用トップバー**（`.jct-topbar`）: `position: fixed` ではなく通常フロー。左に `語楽道` ロゴ（`/` への戻りリンク、`Logo.svg` を `invert` で白抜き）、右に `/// JCT_ONLINE ///`。**重なりは構造的に発生しない**ため、クリアランス計算そのものが不要。
+3. **JCT 専用背景**: WaveAnimation（homepage hero 用のぼかし写真）を廃止し、`body` に Night Library の静かな背景を自前描画（深い base ＋ Blurple 上部グロー ＋ 右下 Gold グロー、OKLCH トークンのみ）。`background-attachment: fixed` は iOS でジャンクするため不使用。
+4. **スタートゲートの中央寄せ**: `body` が `min-height: 100dvh` の flex column、`main` が `flex: 1 1 auto` なので、`calc(100dvh - 112px)` のようなビューポート計算なしで残り領域に伸びる。
+5. **スタート後モバイルでヘッダーを隠す**: `.jct-page:has(:where(.jct-gate[hidden])) .jct-header { display: none }`。`:where()` でゲート参照を特異度ゼロにし、ルール全体を 0,2,0 に保つ（`selector-max-specificity` 予算内）。
+6. **モバイル VN のスクロールなし収容**: `body` を `100dvh` + `overflow: hidden` にし、`main → .jct-vn-panel → .jct-vn-stage → .jct-vn-guide` を `flex: 1 1 0; min-height: 0` で鎖状に縮め、立ち絵が残り領域を吸収。会話ボックスは `flex: 0 0 auto` で自然高さを維持（テキストを絶対に切らない）。ページ側 `overflow-y: auto` は安全弁。
+7. **横向きスマホ対応**: `@media (max-width: 767px), (max-width: 1024px) and (max-height: 520px)`。844×390 は「幅はデスクトップ並・高さはスマホ」で、実測 325px オーバーフローしていたため同じ処理を適用。
+8. **パネルのフォーカスリング抑制**: `.jct-panel:focus { outline: none }`。パネルは `tabindex='-1'` のフォーカス受け皿であって操作対象ではなく、既定の `:focus-visible` リングがパネル全体を白枠で囲み「壊れたボーダー」に見えていた。各操作要素のフォーカススタイルは維持。
+
+**検証結果（Chrome CDP 実測）**
+
+| viewport | ヘッダー | スクロール | 会話ボックス下端 |
+|---|---|---|---|
+| 320×568 | 非表示 | なし | 556 / 568 |
+| 375×667 | 非表示 | なし | 655 / 667 |
+| 390×844 | 非表示 | なし | 832 / 844 |
+| 412×915 | 非表示 | なし | 903 / 915 |
+| 844×390（横向き） | 非表示 | なし | 366 / 390 |
+| 768×1024 | 表示 | なし | 全画面内 |
+| 1023×768 | 表示 | なし | 743 / 768 |
+| 1280×900 | 表示 | なし | 791 / 900 |
+| 1440×900 | 表示 | なし | 791 / 900 |
+
+- 全 viewport で横スクロールなし（`scrollWidth == innerWidth`）
+- ビルド済み `dist/japanese-comprehension-test/index.html` に `navbar` / `bottom-nav` / `layout-content` / `wave-canvas` / `static-background-container` が **1 件も含まれない**ことを確認
+- 全フロー回帰（gate → VN → choice → start/kana → test 4問 → result → retry）を CDP で実行し、各パネルでヘッダー非表示・横溢れなしを確認
+- `bun run stylelint:all` — 0 errors
+- `astro check` — 0 errors / 0 warnings
+- `bun run build` — 53 pages built
+
+**既知の制限**
+- デスクトップの「高さ 520px 未満」ウィンドウ（例 1280×600）はメディアクエリ対象外のためスクロールが出る。意図的（PC の極端な横長ウィンドウはスマホ横向きではないと判断）。
