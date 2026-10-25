@@ -259,20 +259,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   width: 100%;
-  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.45);
-  border-radius: var(--border-radius-card);
-  background:
-    radial-gradient(
-      ellipse at 50% 0%,
-      oklch(from var(--grkd-purple-500) l c h / 0.3) 0%,
-      transparent 62%
-    ),
-    oklch(from var(--grkd-surface) l c h / 0.85);
-  box-shadow:
-    0 10px 24px oklch(from var(--grkd-black-base) l c h / 0.55),
-    inset 0 1px 1px oklch(from var(--grkd-white-base) l c h / 0.1);
   cursor: pointer;
 }
 
@@ -303,8 +290,18 @@ body {
   gap: 0.5rem;
   width: 100%;
   padding: 1rem 1rem 2.1rem;
-  border-top: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.45);
-  background: oklch(from var(--grkd-black-base) l c h / 0.55);
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.45);
+  border-radius: var(--border-radius-card);
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      oklch(from var(--grkd-purple-500) l c h / 0.25) 0%,
+      transparent 65%
+    ),
+    oklch(from var(--grkd-surface) l c h / 0.85);
+  box-shadow:
+    0 10px 24px oklch(from var(--grkd-black-base) l c h / 0.55),
+    inset 0 1px 1px oklch(from var(--grkd-white-base) l c h / 0.1);
   color: var(--grkd-text-global);
   cursor: pointer;
 }
