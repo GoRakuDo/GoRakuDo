@@ -1612,11 +1612,15 @@ body {
     width: 100%;
   }
 
-  /* Make JCT badge bigger and prominent on mobile */
+  /* Make JCT badge full-width with comfortable vertical spacing on mobile */
   .jct-title-abbr {
+    width: 100%;
+    max-width: 22rem;
+    margin-block: 0.45rem 0.65rem;
     padding: 0.55rem 1.1rem;
     border-width: 2px;
     font-size: 1.65rem;
+    text-align: center;
   }
 
   .jct-subtitle-texts {
