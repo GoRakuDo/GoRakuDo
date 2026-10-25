@@ -111,12 +111,53 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     <p class='jct-visually-hidden' aria-live='polite' data-jct-live></p>
 
+    <!-- ========== STEP 0: GREETING (Yosia) ========== -->
+    <!-- The page opens with a greeting instead of the test itself, so a
+         complete beginner never lands on a self-assessment they cannot
+         answer. Two routes leave this panel: `start` (already learning ->
+         Lv 1-7 self-assessment) and `kana` (from zero -> kana slider). -->
+    <section
+      class='jct-panel'
+      data-jct-panel='intro'
+      aria-labelledby='jct-intro-title'
+      tabindex='-1'
+    >
+      <h2 class='jct-visually-hidden' id='jct-intro-title'>
+        Sapaan pembuka dari Yosia
+      </h2>
+
+      <div class='jct-card jct-talk-card'>
+        <p class='jct-talk-who'>
+          <span class='jct-talk-name'>Yosia</span>
+          <span class='jct-talk-role' lang='ja'>案内役</span>
+        </p>
+        <p class='jct-talk-id'>
+          Halo! Mau belajar bahasa Jepang? Atau udah mulai?
+        </p>
+        <p class='jct-talk-jp' lang='ja'>
+          いらっしゃーい！日本語勉強したい人？それとも、もうやってる？
+        </p>
+      </div>
+
+      <div class='jct-choice-row'>
+        <button class='jct-choice-btn' type='button' data-jct-choice='start'>
+          <span class='jct-choice-id'>Iya!</span>
+          <span class='jct-choice-jp' lang='ja'>やってる！</span>
+        </button>
+        <button class='jct-choice-btn' type='button' data-jct-choice='kana'>
+          <span class='jct-choice-id'>Baru mau mulai</span>
+          <span class='jct-choice-jp' lang='ja'>これから！</span>
+        </button>
+      </div>
+    </section>
+
     <!-- ========== STEP 1: SELF-ASSESSMENT ========== -->
     <section
       class='jct-panel'
       data-jct-panel='start'
       aria-labelledby='jct-start-title'
       tabindex='-1'
+      hidden
     >
       <div class='jct-card jct-intro-card'>
         <h2 class='jct-card-title' id='jct-start-title'>
@@ -180,6 +221,121 @@ const breadcrumbSchema = generateBreadcrumbSchema({
           <span aria-hidden='true'>▶</span>
         </button>
       </div>
+
+      <button class='jct-back' type='button' data-jct-back>
+        <span aria-hidden='true'>←</span>
+        <span>Kembali ke sapaan</span>
+      </button>
+    </section>
+
+    <!-- ========== STEP 1b: KANA SLIDER (from zero route) ========== -->
+    <section
+      class='jct-panel'
+      data-jct-panel='kana'
+      aria-labelledby='jct-kana-title'
+      tabindex='-1'
+      hidden
+    >
+      <h2 class='jct-visually-hidden' id='jct-kana-title'>
+        Seberapa lancar membaca Hiragana dan Katakana
+      </h2>
+
+      <div class='jct-card jct-talk-card'>
+        <p class='jct-talk-who'>
+          <span class='jct-talk-name'>Yosia</span>
+          <span class='jct-talk-role' lang='ja'>案内役</span>
+        </p>
+        <p class='jct-talk-id'>
+          Oh, dari nol? Mantap! Hiragana sama Katakana sekarang udah bisa baca
+          seberapa lancar?
+        </p>
+        <p class='jct-talk-jp' lang='ja'>
+          お、ゼロから？いいね！ひらがなとカタカナって今どれくらい読めます？
+        </p>
+      </div>
+
+      <div class='jct-card jct-kana-card'>
+        <div class='jct-kana-readout'>
+          <p class='jct-kana-value' data-jct-kana-value>0%</p>
+          <p class='jct-kana-label' data-jct-kana-label></p>
+          <p class='jct-kana-label-jp' lang='ja' data-jct-kana-label-jp></p>
+        </div>
+
+        <input
+          class='jct-range'
+          type='range'
+          min='0'
+          max='100'
+          step='5'
+          value='0'
+          aria-label='Kemampuan membaca Hiragana dan Katakana (persen)'
+          data-jct-kana-range
+        />
+
+        <div class='jct-kana-ends' aria-hidden='true'>
+          <span>0%</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <div class='jct-actions'>
+        <button class='jct-btn jct-btn-primary' type='button' data-jct-kana-next>
+          <span>Lanjut</span>
+          <span class='jct-btn-jp' lang='ja'>次へ</span>
+          <span aria-hidden='true'>▶</span>
+        </button>
+      </div>
+
+      <button class='jct-back' type='button' data-jct-back>
+        <span aria-hidden='true'>←</span>
+        <span>Kembali ke sapaan</span>
+      </button>
+    </section>
+
+    <!-- ========== STEP 1c: KANA RESULT (50% split) ========== -->
+    <section
+      class='jct-panel'
+      data-jct-panel='kana-result'
+      aria-labelledby='jct-kana-result-title'
+      tabindex='-1'
+      hidden
+    >
+      <h2 class='jct-visually-hidden' id='jct-kana-result-title'>
+        Rekomendasi panduan dari Yosia
+      </h2>
+
+      <div class='jct-card jct-talk-card'>
+        <p class='jct-talk-who'>
+          <span class='jct-talk-name'>Yosia</span>
+          <span class='jct-talk-role' lang='ja'>案内役</span>
+        </p>
+        <p class='jct-talk-id' data-jct-kana-result-id></p>
+        <p class='jct-talk-jp' lang='ja' data-jct-kana-result-jp></p>
+      </div>
+
+      <p class='jct-kana-echo'>
+        Jawabanmu <strong data-jct-kana-echo>0%</strong>
+        <span class='jct-kana-echo-sub'>untuk Hiragana &amp; Katakana</span>
+      </p>
+
+      <div class='jct-result-actions'>
+        <a
+          class='jct-btn jct-btn-primary'
+          href='/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak'
+        >
+          <span data-jct-kana-cta-label>Buka Panduan Immersion</span>
+          <span aria-hidden='true'>▶</span>
+        </a>
+        <button class='jct-btn jct-btn-ghost' type='button' data-jct-kana-retry>
+          <span>Ulangi</span>
+          <span aria-hidden='true'>↺</span>
+        </button>
+      </div>
+
+      <p class='jct-hint jct-hint-center'>
+        Panduan khusus per tingkat kana menyusul bersama halaman Wiki —
+        sementara diarahkan ke panduan immersion.
+      </p>
     </section>
 
     <!-- ========== STEP 2: MEDIA TEST ========== -->
@@ -443,12 +599,41 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     if (!root) return;
 
     const panels = {
+      intro: root.querySelector('[data-jct-panel="intro"]'),
       start: root.querySelector('[data-jct-panel="start"]'),
+      kana: root.querySelector('[data-jct-panel="kana"]'),
+      kanaResult: root.querySelector('[data-jct-panel="kana-result"]'),
       test: root.querySelector('[data-jct-panel="test"]'),
       result: root.querySelector('[data-jct-panel="result"]'),
     };
+
+    // Panels that belong to the same stage chip. The kana route is still
+    // part of "Penilaian Diri" (step 01) — it never reaches the media test.
+    const stepOfPanel = {
+      intro: 'start',
+      start: 'start',
+      kana: 'start',
+      kanaResult: 'start',
+      test: 'test',
+      result: 'result',
+    };
+
     const stepItems = root.querySelectorAll('[data-jct-step]');
     const live = root.querySelector('[data-jct-live]');
+
+    const choiceButtons = root.querySelectorAll('[data-jct-choice]');
+    const backButtons = root.querySelectorAll('[data-jct-back]');
+
+    const kanaRange = root.querySelector('[data-jct-kana-range]');
+    const kanaValue = root.querySelector('[data-jct-kana-value]');
+    const kanaLabel = root.querySelector('[data-jct-kana-label]');
+    const kanaLabelJp = root.querySelector('[data-jct-kana-label-jp]');
+    const kanaNext = root.querySelector('[data-jct-kana-next]');
+    const kanaRetry = root.querySelector('[data-jct-kana-retry]');
+    const kanaResultId = root.querySelector('[data-jct-kana-result-id]');
+    const kanaResultJp = root.querySelector('[data-jct-kana-result-jp]');
+    const kanaEcho = root.querySelector('[data-jct-kana-echo]');
+    const kanaCtaLabel = root.querySelector('[data-jct-kana-cta-label]');
 
     const selfLevelInputs = root.querySelectorAll('[data-jct-self-level]');
     const startBtn = root.querySelector('[data-jct-start]');
@@ -483,6 +668,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     // ========== STATE ==========
     const state = {
       selfLevel: 0,
+      kanaPercent: 0,
       index: 0,
       optionIndex: -1,
       scaleValue: 0,
@@ -516,8 +702,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         const panel = panels[key];
         if (panel) panel.hidden = key !== name;
       });
+      const stage = stepOfPanel[name] || name;
       stepItems.forEach(item => {
-        const active = item.dataset.jctStep === name;
+        const active = item.dataset.jctStep === stage;
         item.classList.toggle('is-active', active);
         if (active) {
           item.setAttribute('aria-current', 'step');
@@ -535,7 +722,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       if (panel) panel.focus({ preventScroll: true });
     };
 
-    // ========== STEP 1 ==========
+    // ========== STEP 1: SELF-ASSESSMENT ==========
     const syncStartButton = () => {
       const ready = state.selfLevel > 0;
       startBtn.disabled = !ready;
@@ -548,6 +735,151 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         syncStartButton();
       });
     });
+
+    // ========== STEP 1b: KANA SLIDER ==========
+    // Banded feedback so the number has a felt meaning: every label is a
+    // real reading experience, not a score. Index = floor(percent / 20),
+    // clamped to 0-5 so 100% stays in the top band.
+    const kanaBands = [
+      {
+        max: 0,
+        idText: 'Belum kenal sama sekali — masih terlihat seperti sandi.',
+        jpText: 'まだ記号にしか見えない',
+      },
+      {
+        max: 20,
+        idText: 'Baru beberapa huruf. Sisanya masih seperti sandi.',
+        jpText: 'まだほんの数文字',
+      },
+      {
+        max: 40,
+        idText: 'Hiragana sudah setengah jalan, Katakana masih asing.',
+        jpText: 'ひらがなは半分くらい',
+      },
+      {
+        max: 60,
+        idText: 'Hiragana lumayan lancar, Katakana masih sering tersendat.',
+        jpText: 'ひらがなはまあまあ',
+      },
+      {
+        max: 80,
+        idText: 'Dua-duanya sudah kebaca, cuma sesekali berhenti.',
+        jpText: 'どちらもだいたい読める',
+      },
+      {
+        max: 100,
+        idText: 'Lancar tanpa mikir — sudah tidak terasa seperti huruf asing.',
+        jpText: '余裕でスラスラ読める',
+      },
+    ];
+
+    const kanaBand = percent => {
+      for (let i = 0; i < kanaBands.length; i += 1) {
+        if (percent <= kanaBands[i].max) return kanaBands[i];
+      }
+      return kanaBands[kanaBands.length - 1];
+    };
+
+    // The filled part of the track follows the thumb, so the control reads
+    // as a progress meter instead of a bare native slider. aria-valuetext
+    // carries the felt meaning too — a screen reader hears "40%: hiragana
+    // setengah jalan" instead of a bare number.
+    const paintKana = percent => {
+      const band = kanaBand(percent);
+      if (kanaRange) {
+        kanaRange.style.setProperty('--jct-kana-fill', percent + '%');
+        kanaRange.setAttribute('aria-valuetext', percent + '%: ' + band.idText);
+      }
+      if (kanaValue) kanaValue.textContent = percent + '%';
+      if (kanaLabel) kanaLabel.textContent = band.idText;
+      if (kanaLabelJp) kanaLabelJp.textContent = band.jpText;
+    };
+
+    if (kanaRange) {
+      kanaRange.addEventListener('input', () => {
+        state.kanaPercent = Number(kanaRange.value) || 0;
+        paintKana(state.kanaPercent);
+      });
+    }
+
+    // ========== STEP 1c: KANA RESULT (50% split) ==========
+    const kanaVerdicts = {
+      high: {
+        idText:
+          'Wih, kalau huruf udah bisa mah aman! Asal ada niat sama sekali nggak susah kok, semua udah kita tulis di Wiki kita!',
+        jpText:
+          'おー、文字読めるならもう十分！やる気あれば全然難しくはないから、うちのWiki書いてありますよ。',
+        cta: 'Buka Panduan Immersion',
+      },
+      low: {
+        idText:
+          'Santai aja, nggak masalah kok! Awalnya emang kayak liat cacing/sandi rahasia. Tapi asal ada niat pasti bisa! Kita udah siapin panduannya, semoga bisa ngebantu ya!',
+        jpText:
+          '全然お気にせず！最初はみんな暗号に見えるから。でも全部あなたのやる気あれば全然できますよ！そのためにガイドを用意してたので、ぜひ参考になれば嬉しいです。',
+        cta: 'Buka Panduan Kana',
+      },
+    };
+
+    const showKanaResult = () => {
+      const percent = state.kanaPercent;
+      const verdict = percent >= 50 ? kanaVerdicts.high : kanaVerdicts.low;
+      if (kanaResultId) kanaResultId.textContent = verdict.idText;
+      if (kanaResultJp) kanaResultJp.textContent = verdict.jpText;
+      if (kanaEcho) kanaEcho.textContent = percent + '%';
+      if (kanaCtaLabel) kanaCtaLabel.textContent = verdict.cta;
+      showPanel('kanaResult');
+      scrollToTop();
+      focusPanel('kanaResult');
+      announce(
+        'Kemampuan kana ' + percent + ' persen. ' + verdict.idText
+      );
+    };
+
+    const openKana = () => {
+      paintKana(state.kanaPercent);
+      showPanel('kana');
+      scrollToTop();
+      focusPanel('kana');
+    };
+
+    // "Ulangi" follows the same convention as the test's "Ulangi Tes":
+    // it restarts the step it belongs to, so the slider goes back to 0 and
+    // the visitor answers again from scratch.
+    const retryKana = () => {
+      state.kanaPercent = 0;
+      if (kanaRange) kanaRange.value = '0';
+      paintKana(0);
+      showPanel('kana');
+      scrollToTop();
+      focusPanel('kana');
+      announce('Slider kana diulang dari nol.');
+    };
+
+    const openIntro = () => {
+      showPanel('intro');
+      scrollToTop();
+      focusPanel('intro');
+    };
+
+    choiceButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const route = button.dataset.jctChoice;
+        if (route === 'kana') {
+          openKana();
+          return;
+        }
+        showPanel('start');
+        scrollToTop();
+        focusPanel('start');
+      });
+    });
+
+    backButtons.forEach(button => {
+      button.addEventListener('click', openIntro);
+    });
+
+    if (kanaNext) kanaNext.addEventListener('click', showKanaResult);
+    if (kanaRetry) kanaRetry.addEventListener('click', retryKana);
 
     // ========== STEP 2: MEDIA ==========
     // The mock player only animates a timeline; no audio is loaded in phase 1.
@@ -897,6 +1229,11 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       state.optionIndex = -1;
       state.scaleValue = 0;
       state.answers = [];
+      // The kana step belongs to the same run: "Ulangi Tes" restarts it too,
+      // otherwise a repeat visitor would carry the old slider answer along.
+      state.kanaPercent = 0;
+      if (kanaRange) kanaRange.value = '0';
+      paintKana(0);
       selfLevelInputs.forEach(input => {
         input.checked = false;
       });
@@ -919,6 +1256,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     syncStartButton();
     syncNextButton();
-    showPanel('start');
+    paintKana(state.kanaPercent);
+    showPanel('intro');
   })();
 </script>

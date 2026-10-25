@@ -196,6 +196,297 @@ body {
   border-color: oklch(from var(--grkd-purple-400) l c h / 0.35);
 }
 
+/* ===== YOSIA TALK CARD (greeting + kana route) =====
+ * Same two-tier copy pattern as the quest dialogue: Indonesian primary
+ * (site language), Japanese as the second line.
+ */
+.jct-talk-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border-color: oklch(from var(--grkd-purple-400) l c h / 0.55);
+}
+
+.jct-talk-who {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.jct-talk-name {
+  padding: 0.1rem 0.6rem;
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.6);
+  border-radius: var(--border-radius-md);
+  background: oklch(from var(--grkd-purple-500) l c h / 0.2);
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+.jct-talk-role {
+  color: var(--grkd-text-global-muted);
+  font-family: var(--font-jp);
+  font-size: 0.72rem;
+}
+
+.jct-talk-id {
+  margin: 0;
+  color: var(--grkd-text-global);
+  font-size: clamp(0.98rem, 2.4vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.jct-talk-jp {
+  margin: 0;
+  padding-top: 0.15rem;
+  border-top: 1px solid oklch(from var(--grkd-surface-2) l c h / 0.7);
+  color: var(--grkd-text-global-muted);
+  font-family: var(--font-jp);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+/* ===== CHOICE BUTTONS (greeting fork) ===== */
+.jct-choice-row {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.jct-choice-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1rem;
+  min-height: var(--touch-target-min);
+  padding: 0.9rem 1.2rem;
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.55);
+  border-radius: var(--border-radius-lg);
+  background: oklch(from var(--grkd-surface) l c h / 0.9);
+  box-shadow:
+    0 4px 0 oklch(from var(--grkd-black-base) l c h / 0.7),
+    0 10px 22px oklch(from var(--grkd-black-base) l c h / 0.45);
+  color: var(--grkd-text-global);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.jct-choice-btn:hover {
+  border-color: oklch(from var(--grkd-gold-base) l c h / 0.7);
+  transform: translateY(-1px);
+}
+
+.jct-choice-btn:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 3px;
+}
+
+.jct-choice-id {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.jct-choice-jp {
+  color: var(--grkd-text-global-muted);
+  font-family: var(--font-jp);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* ===== BACK LINK (secondary, keeps the fork reversible) ===== */
+.jct-back {
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: var(--touch-target-min);
+  padding: 0.4rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: var(--grkd-text-global-muted);
+  font-family: var(--font-primary);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.jct-back:hover {
+  color: var(--grkd-gold-base);
+}
+
+.jct-back:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 2px;
+}
+
+/* ===== KANA SLIDER (0-100%) ===== */
+.jct-kana-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.jct-kana-readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-align: center;
+}
+
+.jct-kana-value {
+  margin: 0;
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: clamp(2.2rem, 8vw, 3rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.jct-kana-label {
+  margin: 0;
+  color: var(--grkd-text-global);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.jct-kana-label-jp {
+  margin: 0;
+  color: var(--grkd-text-global-muted);
+  font-family: var(--font-jp);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* Track: a full-width gradient sits underneath, and a dark overlay whose
+   width is `100% - --jct-kana-fill` (set from the inline script) covers the
+   unfilled part. Keeping the gradient at full width means the hue stays
+   stable as the value grows, instead of being squeezed into the filled
+   slice. Both track pseudo-elements are styled explicitly so Chrome and
+   Firefox paint the same thing. */
+.jct-range {
+  appearance: none;
+  width: 100%;
+  height: 2.5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.jct-range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: var(--border-radius-pill);
+  background-image:
+    linear-gradient(
+      90deg,
+      oklch(from var(--grkd-black-base) l c h / 0.85) 0%,
+      oklch(from var(--grkd-black-base) l c h / 0.85) 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--grkd-purple-500) 0%,
+      var(--grkd-gold-base) 100%
+    );
+  background-position:
+    right center,
+    left center;
+  background-size:
+    calc(100% - var(--jct-kana-fill, 0%)) 100%,
+    100% 100%;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.jct-range::-moz-range-track {
+  height: 8px;
+  border-radius: var(--border-radius-pill);
+  background-image:
+    linear-gradient(
+      90deg,
+      oklch(from var(--grkd-black-base) l c h / 0.85) 0%,
+      oklch(from var(--grkd-black-base) l c h / 0.85) 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--grkd-purple-500) 0%,
+      var(--grkd-gold-base) 100%
+    );
+  background-position:
+    right center,
+    left center;
+  background-size:
+    calc(100% - var(--jct-kana-fill, 0%)) 100%,
+    100% 100%;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.jct-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.5rem;
+  border: 2px solid var(--grkd-gold-base);
+  border-radius: 50%;
+  background: var(--grkd-surface-2);
+  box-shadow: 0 2px 10px oklch(from var(--grkd-black-base) l c h / 0.75);
+  cursor: pointer;
+}
+
+.jct-range::-moz-range-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--grkd-gold-base);
+  border-radius: 50%;
+  background: var(--grkd-surface-2);
+  box-shadow: 0 2px 10px oklch(from var(--grkd-black-base) l c h / 0.75);
+  cursor: pointer;
+}
+
+.jct-range:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 4px;
+  border-radius: var(--border-radius-pill);
+}
+
+.jct-kana-ends {
+  display: flex;
+  justify-content: space-between;
+  color: var(--grkd-text-global-muted);
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+}
+
+.jct-kana-echo {
+  margin: 0;
+  color: var(--grkd-text-global-muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.jct-kana-echo strong {
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+}
+
+.jct-kana-echo-sub {
+  display: block;
+  color: var(--grkd-text-global-muted);
+  font-size: 0.76rem;
+}
+
 /* ===== LEGEND / FIELDSET ===== */
 .jct-level-group,
 .jct-option-group {
@@ -703,12 +994,11 @@ body {
   padding: 1.1rem 1rem;
   border: 1px solid oklch(from var(--grkd-gold-base) l c h / 0.28);
   border-radius: var(--border-radius-lg);
-  background:
-    linear-gradient(
-      180deg,
-      oklch(from var(--clr-paper) l c h / 0.94) 0%,
-      oklch(from var(--clr-paper-88) l c h / 0.92) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    oklch(from var(--clr-paper) l c h / 0.94) 0%,
+    oklch(from var(--clr-paper-88) l c h / 0.92) 100%
+  );
 }
 
 .jct-aozora-text {
@@ -1137,6 +1427,10 @@ body {
     font-size: 0.85rem;
   }
 
+  .jct-choice-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .jct-scale-group {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
@@ -1167,7 +1461,6 @@ body {
   .jct-scale-group {
     grid-template-columns: minmax(0, 1fr);
   }
-
 }
 
 /* ===== REDUCED MOTION ===== */
@@ -1178,7 +1471,9 @@ body {
   .jct-scale-option,
   .jct-progress-fill,
   .jct-yt-play,
-  .jct-step {
+  .jct-step,
+  .jct-choice-btn,
+  .jct-back {
     transition: none;
   }
 }

@@ -1,0 +1,37 @@
+[
+  {
+    "level": 1,
+    "idText": "Pemula total — hampir terdengar seperti bunyi saja",
+    "jpText": "完全な初心者（ほぼ雑音）"
+  },
+  {
+    "level": 2,
+    "idText": "Dasar — kadang bisa menangkap satu-dua kata",
+    "jpText": "初級（単語がたまに拾える）"
+  },
+  {
+    "level": 3,
+    "idText": "Dasar lanjut — frasa pendek mulai bisa dipahami",
+    "jpText": "初中級（短いフレーズがわかる）"
+  },
+  {
+    "level": 4,
+    "idText": "Menengah — topik umum bisa ditebak",
+    "jpText": "中級（大体のトピックが推測できる）"
+  },
+  {
+    "level": 5,
+    "idText": "Menengah atas — inti cerita dan emosi bisa ditangkap",
+    "jpText": "中上級（大意・感情が掴める）"
+  },
+  {
+    "level": 6,
+    "idText": "Mahir — alur cerita bisa diikuti, tapi butuh fokus penuh",
+    "jpText": "上級（話の筋が追えるが集中が必要）"
+  },
+  {
+    "level": 7,
+    "idText": "Sangat mahir — plot dan sebagian besar kata dipahami",
+    "jpText": "最上級（プロットや大半の言葉がわかる）"
+  }
+]

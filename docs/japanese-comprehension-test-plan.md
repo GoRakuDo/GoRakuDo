@@ -127,3 +127,71 @@
 - `/wiki/level-N` の実ページ。現状の結果画面 CTA は既存の学習法ガイド
   `/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak` を指す（404 回避）。
 - 案内役キャラクター演出と音声
+
+---
+
+### フェーズ 1.5 実装完了（ヨシア出迎え会話 & かなスライダールート）
+
+**背景**: これまでページを開くといきなり自己申告（Lv1〜7）が出ていた。
+完全なゼロ初心者は Lv を選べず離脱するため、まず案内役ヨシアの問いかけで
+「もうやってる／これから」を分岐させ、ゼロ勢をかな習熟度スライダー経由で
+適切なガイドへ導く。
+
+**変更ファイル**
+
+| パス | 役割 |
+|---|---|
+| `src/pages/japanese-comprehension-test/index.astro` | パネル `intro` / `kana` / `kana-result` を追加。分岐・スライダー描画・50% 判定の JS |
+| `src/styles/pages/jct/jct.css` | `.jct-talk-*` / `.jct-choice-*` / `.jct-back` / `.jct-kana-*` / `.jct-range` |
+| `docs/japanese-comprehension-test-plan.md` | 本ログ |
+
+**フロー（新）**
+
+```
+[intro] ヨシア「いらっしゃーい！日本語勉強したい人？それとも、もうやってる？」
+  ├─ [Iya!]           → [start]  自己申告 Lv1〜7（既存フローそのまま）
+  │                       → 4問テスト → 結果
+  └─ [Baru mau mulai] → [kana]   かなスライダー（0〜100%, step 5）
+                          → [kana-result] 50% で分岐
+                               ├─ 50%以上 → Buka Panduan Immersion ▶ / Ulangi ↺
+                               └─ 50%未満 → Buka Panduan Kana ▶     / Ulangi ↺
+```
+
+**実装した挙動**
+1. 初期表示は `intro`。ステップチップは「01 Penilaian Diri」が点灯したまま
+   （`stepOfPanel` マップで intro/kana/kana-result をすべて step 01 に束ねる）。
+2. `[Iya!]` → 既存の自己申告パネル。自己申告パネルには「← Kembali ke sapaan」を
+   追加し、分岐を後戻りできるようにした（誤タップ対策）。
+3. `[Baru mau mulai]` → かなスライダー。数値は大きな `NN%`、その下に体感ラベル
+   （ID + JP 二段）。0/20/40/60/80/100 の 6 バンドで文言が切り替わる。
+4. スライダーのトラックは `--jct-kana-fill`（JS が `NN%` を注入）で塗り分け。
+   グラデーションは常に全幅で描き、暗いオーバーレイの幅だけを縮めるので
+   値が増えても色相がずれない。
+5. `[Lanjut ▶]` で 50% 判定。50% 以上 =「文字読めるならもう十分」＋
+   `Buka Panduan Immersion`、50% 未満 =「最初はみんな暗号に見える」＋
+   `Buka Panduan Kana`。両方とも現状の遷移先は
+   `/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak`（Wiki 未整備のため）。
+6. `[Ulangi ↺]` はスライダーを 0 に戻して `kana` へ。テスト側の「Ulangi Tes」と
+   同じ「そのステップをやり直す」規約に揃えた。
+7. 既存の `[Iya!]` → Lv1〜7 → 4問 → 結果フローは挙動変更なし。
+
+**アクセシビリティ**
+- スライダーは `aria-label` + `aria-valuetext`（`"40%: Hiragana sudah setengah jalan"`）
+  で数値だけでなく体感ラベルも読み上げる。
+- パネル遷移ごとに `tabindex='-1'` のパネルへフォーカス移動、`aria-live` で
+  判定結果を通知（既存の仕組みをそのまま利用）。
+- 体感ラベル・数値は `<p>` のテキスト更新のみ（レイアウトシフトなし）。
+- タッチターゲットは `--touch-target-min` (44px) 以上。
+
+**検証結果**
+- `bun run stylelint:all` — 0 errors
+- `astro check` — 0 errors / 0 warnings
+- `bun run build` — 53 pages built
+- ビルド済み `dist/japanese-comprehension-test/index.html` を jsdom に読み込み、
+  34 項目のフロー検証（intro 初期表示 / 分岐 / スライダー描画 / 50% 以上・未満の
+  文言と CTA / Ulangi / 既存テストフローの回帰）をすべて PASS。
+- 実機（Chrome, 1280×900 と 390×844）で intro・kana・kana-result の 3 画面と
+  両分岐を目視確認。モバイルではボトムナビ（88px）に CTA が被らないことも確認。
+
+**既知の未実装**
+- `Buka Panduan Kana` の遷移先がまだ immersion ガイド（専用かなガイドは未作成）。

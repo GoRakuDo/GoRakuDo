@@ -1,0 +1,62 @@
+[
+  {
+    "value": 1,
+    "short": "Tidak paham",
+    "idText": "Tidak paham sama sekali (0%)",
+    "jpText": "全く分からない"
+  },
+  {
+    "value": 2,
+    "short": "Hanya bunyi",
+    "idText": "Hanya menangkap bunyi, tanpa makna",
+    "jpText": "音だけ聞こえる"
+  },
+  {
+    "value": 3,
+    "short": "Kata lepas",
+    "idText": "Beberapa kata lepas bisa dikenali",
+    "jpText": "単語がいくつか拾える"
+  },
+  {
+    "value": 4,
+    "short": "Frasa pendek",
+    "idText": "Frasa pendek mulai masuk",
+    "jpText": "短いフレーズが分かる"
+  },
+  {
+    "value": 5,
+    "short": "Inti kalimat",
+    "idText": "Inti kalimat sederhana bisa dipahami",
+    "jpText": "簡単な文の要点が分かる"
+  },
+  {
+    "value": 6,
+    "short": "Sebagian topik",
+    "idText": "Sebagian besar topik bisa diikuti",
+    "jpText": "話題の大半が追える"
+  },
+  {
+    "value": 7,
+    "short": "Alur cerita",
+    "idText": "Alur pembicaraan bisa diikuti",
+    "jpText": "話の流れが追える"
+  },
+  {
+    "value": 8,
+    "short": "Hampir semua",
+    "idText": "Hampir semua detail dipahami",
+    "jpText": "ほぼ全ての詳細が分かる"
+  },
+  {
+    "value": 9,
+    "short": "Detail + nuansa",
+    "idText": "Detail plus nuansa kecil ikut tertangkap",
+    "jpText": "詳細＋小さなニュアンスまで分かる"
+  },
+  {
+    "value": 10,
+    "short": "100% paham",
+    "idText": "Paham 100%, termasuk nuansa paling halus",
+    "jpText": "細かいニュアンスまで完璧に分かる"
+  }
+]
