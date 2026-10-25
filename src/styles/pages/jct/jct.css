@@ -129,8 +129,10 @@ body {
 
 .jct-step {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.45rem;
+  width: clamp(7.5rem, 28vw, 9.5rem);
   padding: 0.45rem 0.85rem;
   border: 1px solid oklch(from var(--grkd-surface-2) l c h / 0.55);
   border-radius: var(--border-radius-pill);
