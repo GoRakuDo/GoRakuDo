@@ -101,11 +101,10 @@ body {
   align-items: center;
   flex-shrink: 0;
   padding: 0.45rem 0.75rem;
-  border: 1.5px solid oklch(from var(--grkd-purple-400) l c h / 0.6);
+  border: 1.5px solid oklch(from var(--grkd-gold-base) l c h / 0.6);
   border-radius: var(--border-radius-md);
-  background: oklch(from var(--grkd-purple-500) l c h / 0.15);
   box-shadow: 0 4px 14px oklch(from var(--grkd-black-base) l c h / 0.4);
-  color: var(--grkd-gold-base);
+  color: var(--grkd-white-base);
   font-family: var(--font-pixel);
   font-size: 1.35rem;
   line-height: 1;
