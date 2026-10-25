@@ -111,33 +111,104 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     <p class='jct-visually-hidden' aria-live='polite' data-jct-live></p>
 
-    <!-- ========== STEP 0: GREETING (Yosia) ========== -->
-    <!-- The page opens with a greeting instead of the test itself, so a
-         complete beginner never lands on a self-assessment they cannot
-         answer. Two routes leave this panel: `start` (already learning ->
-         Lv 1-7 self-assessment) and `kana` (from zero -> kana slider). -->
+    <!-- ========== STEP 0a: START GATE ========== -->
+    <!-- The page keeps its header and opens on a single start button instead
+         of talking by itself. That click is the audio unlock: the first VN
+         line starts inside the gesture, so the browser autoplay policy never
+         blocks it and the visitor always hears jct_01_intro. -->
     <section
-      class='jct-panel'
+      class='jct-panel jct-gate'
       data-jct-panel='intro'
       aria-labelledby='jct-intro-title'
       tabindex='-1'
     >
       <h2 class='jct-visually-hidden' id='jct-intro-title'>
-        Sapaan pembuka dari Yosia
+        Mulai Japanese Comprehension Test
       </h2>
 
-      <div class='jct-card jct-talk-card'>
-        <p class='jct-talk-who'>
-          <span class='jct-talk-name'>Yosia</span>
-          <span class='jct-talk-role' lang='ja'>案内役</span>
-        </p>
-        <p class='jct-talk-id'>
-          Halo! Mau belajar bahasa Jepang? Atau udah mulai?
-        </p>
-        <p class='jct-talk-jp' lang='ja'>
-          いらっしゃーい！日本語勉強したい人？それとも、もうやってる？
-        </p>
+      <button
+        class='jct-btn jct-btn-primary jct-gate-btn'
+        type='button'
+        data-jct-begin
+      >
+        <span>Mulai Tes</span>
+        <span class='jct-btn-jp' lang='ja'>テスト開始</span>
+        <span aria-hidden='true'>▶</span>
+      </button>
+    </section>
+
+    <!-- ========== STEP 0b: VN DIALOGUE (Yosia) ========== -->
+    <!-- Visual-novel stage: one line per tap, each line owning a character
+         sprite and a voice clip. The whole stage is the tap target (pointer
+         or Enter/Space), mirroring the quest prologue's dialogue window.
+         The line data lives in the inline script (`vnScripts`). -->
+    <section
+      class='jct-panel jct-vn-panel'
+      data-jct-panel='vn'
+      aria-labelledby='jct-vn-title'
+      tabindex='-1'
+      hidden
+    >
+      <h2 class='jct-visually-hidden' id='jct-vn-title'>
+        Percakapan dengan Yosia
+      </h2>
+
+      <div class='jct-vn-stage' data-jct-vn-stage>
+        <div class='jct-vn-guide'>
+          <img
+            class='jct-vn-img'
+            src='/images/quest/guide-p02.webp'
+            alt=''
+            aria-hidden='true'
+            decoding='async'
+            data-jct-vn-img
+            onerror="if(!this.dataset.fbk){this.dataset.fbk='1';this.src='/images/quest/guide.webp';}"
+          />
+        </div>
+
+        <div
+          class='jct-vn-box'
+          data-jct-vn-box
+          role='button'
+          tabindex='0'
+          aria-label='Lanjut ke kalimat berikutnya'
+          aria-describedby='jct-vn-live'
+          aria-keyshortcuts='Enter Space'
+        >
+          <p class='jct-vn-who'>
+            <span class='jct-vn-name'>Yosia</span>
+            <span class='jct-vn-role' lang='ja'>案内役</span>
+          </p>
+          <p class='jct-vn-id' data-jct-vn-id></p>
+          <p class='jct-vn-jp' lang='ja' data-jct-vn-jp></p>
+          <span class='jct-vn-next' aria-hidden='true'>▶</span>
+        </div>
       </div>
+
+      <p
+        class='jct-visually-hidden'
+        id='jct-vn-live'
+        aria-live='polite'
+        data-jct-vn-live
+      >
+      </p>
+    </section>
+
+    <!-- ========== STEP 0c: CHOICE (greeting fork) ========== -->
+    <!-- The fork itself carries no sprite and no voice: after the greeting
+         line the stage empties and only the two answers remain, so the
+         choice reads as the visitor's turn. `start` = already learning
+         (Lv 1-7 self-assessment), `kana` = from zero (kana slider route). -->
+    <section
+      class='jct-panel'
+      data-jct-panel='choice'
+      aria-labelledby='jct-choice-title'
+      tabindex='-1'
+      hidden
+    >
+      <h2 class='jct-visually-hidden' id='jct-choice-title'>
+        Pilih jawabanmu
+      </h2>
 
       <div class='jct-choice-row'>
         <button class='jct-choice-btn' type='button' data-jct-choice='start'>
@@ -216,15 +287,15 @@ const breadcrumbSchema = generateBreadcrumbSchema({
           data-jct-start
           disabled
         >
-          <span>Mulai Tes</span>
-          <span class='jct-btn-jp' lang='ja'>テスト開始</span>
+          <span>Lanjut ke Soal</span>
+          <span class='jct-btn-jp' lang='ja'>問題へ</span>
           <span aria-hidden='true'>▶</span>
         </button>
       </div>
 
       <button class='jct-back' type='button' data-jct-back>
         <span aria-hidden='true'>←</span>
-        <span>Kembali ke sapaan</span>
+        <span>Kembali ke pilihan</span>
       </button>
     </section>
 
@@ -240,20 +311,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         Seberapa lancar membaca Hiragana dan Katakana
       </h2>
 
-      <div class='jct-card jct-talk-card'>
-        <p class='jct-talk-who'>
-          <span class='jct-talk-name'>Yosia</span>
-          <span class='jct-talk-role' lang='ja'>案内役</span>
-        </p>
-        <p class='jct-talk-id'>
-          Oh, dari nol? Mantap! Hiragana sama Katakana sekarang udah bisa baca
-          seberapa lancar?
-        </p>
-        <p class='jct-talk-jp' lang='ja'>
-          お、ゼロから？いいね！ひらがなとカタカナって今どれくらい読めます？
-        </p>
-      </div>
-
+      <!-- No sprite, no voice, no dialogue box on this panel: the question
+           was already asked in the VN scene, so this screen is the answer
+           surface only. -->
       <div class='jct-card jct-kana-card'>
         <div class='jct-kana-readout'>
           <p class='jct-kana-value' data-jct-kana-value>0%</p>
@@ -285,11 +345,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
           <span aria-hidden='true'>▶</span>
         </button>
       </div>
-
-      <button class='jct-back' type='button' data-jct-back>
-        <span aria-hidden='true'>←</span>
-        <span>Kembali ke sapaan</span>
-      </button>
     </section>
 
     <!-- ========== STEP 1c: KANA RESULT (50% split) ========== -->
@@ -304,15 +359,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         Rekomendasi panduan dari Yosia
       </h2>
 
-      <div class='jct-card jct-talk-card'>
-        <p class='jct-talk-who'>
-          <span class='jct-talk-name'>Yosia</span>
-          <span class='jct-talk-role' lang='ja'>案内役</span>
-        </p>
-        <p class='jct-talk-id' data-jct-kana-result-id></p>
-        <p class='jct-talk-jp' lang='ja' data-jct-kana-result-jp></p>
-      </div>
-
+      <!-- Button-only closing screen: the two VN lines that led here already
+           carried the sprite, the voice and the reasoning, so this panel
+           stays a plain destination. -->
       <p class='jct-kana-echo'>
         Jawabanmu <strong data-jct-kana-echo>0%</strong>
         <span class='jct-kana-echo-sub'>untuk Hiragana &amp; Katakana</span>
@@ -331,11 +380,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
           <span aria-hidden='true'>↺</span>
         </button>
       </div>
-
-      <p class='jct-hint jct-hint-center'>
-        Panduan khusus per tingkat kana menyusul bersama halaman Wiki —
-        sementara diarahkan ke panduan immersion.
-      </p>
     </section>
 
     <!-- ========== STEP 2: MEDIA TEST ========== -->
@@ -600,6 +644,8 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     const panels = {
       intro: root.querySelector('[data-jct-panel="intro"]'),
+      vn: root.querySelector('[data-jct-panel="vn"]'),
+      choice: root.querySelector('[data-jct-panel="choice"]'),
       start: root.querySelector('[data-jct-panel="start"]'),
       kana: root.querySelector('[data-jct-panel="kana"]'),
       kanaResult: root.querySelector('[data-jct-panel="kana-result"]'),
@@ -607,10 +653,13 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       result: root.querySelector('[data-jct-panel="result"]'),
     };
 
-    // Panels that belong to the same stage chip. The kana route is still
-    // part of "Penilaian Diri" (step 01) — it never reaches the media test.
+    // Panels that belong to the same stage chip. The greeting, the VN scene,
+    // the fork and the kana route are all "Penilaian Diri" (step 01) — none
+    // of them reaches the media test.
     const stepOfPanel = {
       intro: 'start',
+      vn: 'start',
+      choice: 'start',
       start: 'start',
       kana: 'start',
       kanaResult: 'start',
@@ -623,6 +672,14 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     const choiceButtons = root.querySelectorAll('[data-jct-choice]');
     const backButtons = root.querySelectorAll('[data-jct-back]');
+    const beginBtn = root.querySelector('[data-jct-begin]');
+
+    const vnStage = root.querySelector('[data-jct-vn-stage]');
+    const vnBox = root.querySelector('[data-jct-vn-box]');
+    const vnImg = root.querySelector('[data-jct-vn-img]');
+    const vnId = root.querySelector('[data-jct-vn-id]');
+    const vnJp = root.querySelector('[data-jct-vn-jp]');
+    const vnLive = root.querySelector('[data-jct-vn-live]');
 
     const kanaRange = root.querySelector('[data-jct-kana-range]');
     const kanaValue = root.querySelector('[data-jct-kana-value]');
@@ -630,8 +687,6 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     const kanaLabelJp = root.querySelector('[data-jct-kana-label-jp]');
     const kanaNext = root.querySelector('[data-jct-kana-next]');
     const kanaRetry = root.querySelector('[data-jct-kana-retry]');
-    const kanaResultId = root.querySelector('[data-jct-kana-result-id]');
-    const kanaResultJp = root.querySelector('[data-jct-kana-result-jp]');
     const kanaEcho = root.querySelector('[data-jct-kana-echo]');
     const kanaCtaLabel = root.querySelector('[data-jct-kana-cta-label]');
 
@@ -803,36 +858,23 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     }
 
     // ========== STEP 1c: KANA RESULT (50% split) ==========
-    const kanaVerdicts = {
-      high: {
-        idText:
-          'Wih, kalau huruf udah bisa mah aman! Asal ada niat sama sekali nggak susah kok, semua udah kita tulis di Wiki kita!',
-        jpText:
-          'おー、文字読めるならもう十分！やる気あれば全然難しくはないから、うちのWiki書いてありますよ。',
-        cta: 'Buka Panduan Immersion',
-      },
-      low: {
-        idText:
-          'Santai aja, nggak masalah kok! Awalnya emang kayak liat cacing/sandi rahasia. Tapi asal ada niat pasti bisa! Kita udah siapin panduannya, semoga bisa ngebantu ya!',
-        jpText:
-          '全然お気にせず！最初はみんな暗号に見えるから。でも全部あなたのやる気あれば全然できますよ！そのためにガイドを用意してたので、ぜひ参考になれば嬉しいです。',
-        cta: 'Buka Panduan Kana',
-      },
+    // The verdict itself is not printed here: the two VN scenes below speak it
+    // with a sprite and a voice clip. This panel only echoes the answer and
+    // offers the destination, so the copy lives in exactly one place.
+    const kanaCtas = {
+      high: 'Buka Panduan Immersion',
+      low: 'Buka Panduan Kana',
     };
 
     const showKanaResult = () => {
       const percent = state.kanaPercent;
-      const verdict = percent >= 50 ? kanaVerdicts.high : kanaVerdicts.low;
-      if (kanaResultId) kanaResultId.textContent = verdict.idText;
-      if (kanaResultJp) kanaResultJp.textContent = verdict.jpText;
+      const cta = percent >= 50 ? kanaCtas.high : kanaCtas.low;
       if (kanaEcho) kanaEcho.textContent = percent + '%';
-      if (kanaCtaLabel) kanaCtaLabel.textContent = verdict.cta;
+      if (kanaCtaLabel) kanaCtaLabel.textContent = cta;
       showPanel('kanaResult');
       scrollToTop();
       focusPanel('kanaResult');
-      announce(
-        'Kemampuan kana ' + percent + ' persen. ' + verdict.idText
-      );
+      announce('Kemampuan kana ' + percent + ' persen. ' + cta + '.');
     };
 
     const openKana = () => {
@@ -842,9 +884,10 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       focusPanel('kana');
     };
 
-    // "Ulangi" follows the same convention as the test's "Ulangi Tes":
-    // it restarts the step it belongs to, so the slider goes back to 0 and
-    // the visitor answers again from scratch.
+    // "Ulangi" on the closing screen returns to the slider, not to the
+    // greeting: the usual reason to retry is "my kana number was off", and a
+    // changed guess re-runs the 50% split immediately. Starting the whole
+    // conversation over stays reachable from the header/back links.
     const retryKana = () => {
       state.kanaPercent = 0;
       if (kanaRange) kanaRange.value = '0';
@@ -855,17 +898,249 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       announce('Slider kana diulang dari nol.');
     };
 
-    const openIntro = () => {
-      showPanel('intro');
+    // ========== STEP 0b: VN DIALOGUE ENGINE ==========
+    // One line per tap. Every line owns a sprite and a voice clip; scenes that
+    // exist only to deliver buttons (`choice`, `kana`, `kanaResult`) carry
+    // neither, which is why the stage empties out on those panels instead of
+    // keeping a silent character on screen.
+    //
+    // Sprites are the quest prologue's expression set, so the two pages show
+    // the same character. Each one is a 1024x1024 transparent WebP with a
+    // different visual weight after trimming (p02 832x1012, p07 974x1018), so
+    // the CSS sizes them by height and bottom-aligns them.
+    const GUIDE_DIR = '/images/quest/guide-';
+    const VOICE_DIR = '/assets/voice/jct/';
+
+    const vnScenes = {
+      // Scene 1 -> the fork. `next` names the panel to reveal once the last
+      // line has been tapped.
+      greet: {
+        next: 'choice',
+        lines: [
+          {
+            img: 'p02',
+            audio: 'jct_01_intro.mp3',
+            idText: 'Halo! Mau belajar bahasa Jepang?',
+            jpText: 'いらっしゃーい！日本語勉強したい人？',
+          },
+        ],
+      },
+      // Scene 3 -> kana slider. The zero-start reassurance, then the actual
+      // question, so the slider panel can stay a bare answer surface.
+      zero: {
+        next: 'kana',
+        lines: [
+          {
+            img: 'p03_yes',
+            audio: 'jct_02_zero.mp3',
+            idText: 'Oh, dari nol? Mantap!',
+            jpText: 'お、ゼロから？いいね！',
+          },
+          {
+            img: 'p04',
+            audio: 'jct_03_kana_ask.mp3',
+            idText:
+              'Hiragana sama Katakana sekarang udah bisa baca seberapa lancar?',
+            jpText: 'ひらがなとカタカナって今どれくらい読めます？',
+          },
+        ],
+      },
+      // Scene 5A (>= 50%) -> closing buttons.
+      over50: {
+        next: 'kanaResult',
+        lines: [
+          {
+            img: 'p03_yes_desc',
+            audio: 'jct_04_over50_1.mp3',
+            idText: 'Wih, kalau huruf udah bisa mah aman!',
+            jpText: 'おー、文字読めるならもう十分！',
+          },
+          {
+            img: 'p03_yes',
+            audio: 'jct_05_over50_2.mp3',
+            idText:
+              'Asal ada niat sama sekali nggak susah kok, semua udah kita tulis di Wiki kita!',
+            jpText:
+              'やる気あれば全然難しくはないから、うちのWiki書いてありますよ。',
+          },
+        ],
+      },
+      // Scene 5B (< 50%) -> closing buttons.
+      under50: {
+        next: 'kanaResult',
+        lines: [
+          {
+            img: 'p05',
+            audio: 'jct_06_under50_1.mp3',
+            idText: 'Santai aja, nggak masalah kok!',
+            jpText: '全然お気にせず！',
+          },
+          {
+            img: 'p05',
+            audio: 'jct_07_under50_2.mp3',
+            idText: 'Awalnya emang kayak liat sandi rahasia kok.',
+            jpText: '最初はみんな暗号に見えるから。',
+          },
+          {
+            img: 'p03_yes',
+            audio: 'jct_08_under50_3.mp3',
+            idText: 'Tapi asal ada niat pasti bisa!',
+            jpText: 'でも全部あなたのやる気あれば全然できますよ！',
+          },
+          {
+            img: 'p07',
+            audio: 'jct_09_under50_4.mp3',
+            idText: 'Kita udah siapin panduannya, semoga bisa ngebantu ya!',
+            jpText:
+              'そのためにガイドを用意してたので、ぜひ参考になれば嬉しいです。',
+          },
+        ],
+      },
+    };
+
+    // One detached <audio> swapped per line, same shape as the quest prologue:
+    // no player UI, no extra element in the DOM, one file in flight. Exposed
+    // as window.__jctVoice so the playback state is inspectable in tests.
+    const voice = new Audio();
+    voice.preload = 'auto';
+    window.__jctVoice = voice;
+
+    const stopVoice = () => {
+      try {
+        voice.pause();
+      } catch {
+        // pause() on a fresh element is a no-op in practice.
+      }
+    };
+
+    // Pause audio when switching tabs or backgrounding to prevent background bleed.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopVoice();
+    });
+
+    const playVoice = line => {
+      if (!line || !line.audio) return;
+      stopVoice();
+      const src = VOICE_DIR + line.audio;
+      if (voice.getAttribute('src') !== src) voice.setAttribute('src', src);
+      try {
+        voice.currentTime = 0;
+      } catch {
+        // Not seekable yet => play from wherever it loads.
+      }
+      const pending = voice.play();
+      // A rejection (autoplay policy, decode error) must not stop the line:
+      // the text and sprite still advance, so the flow never dead-ends.
+      if (pending && typeof pending.catch === 'function') pending.catch(() => {});
+    };
+
+    let vnScene = null;
+    let vnIndex = 0;
+
+    const paintVnLine = () => {
+      const scene = vnScenes[vnScene];
+      if (!scene) return;
+      const line = scene.lines[vnIndex];
+      if (!line) return;
+
+      if (vnImg && line.img) {
+        const src = GUIDE_DIR + line.img + '.webp';
+        if (vnImg.getAttribute('src') !== src) {
+          // A previous swap may have fallen back to guide.webp; the new
+          // expression deserves its own attempt at the real file.
+          delete vnImg.dataset.fbk;
+          vnImg.src = src;
+        }
+      }
+      if (vnId) vnId.textContent = line.idText;
+      if (vnJp) vnJp.textContent = line.jpText;
+      // The visible text is not a live region (two lines, two languages, and
+      // it changes on every tap). This hidden sibling is announced once.
+      if (vnLive) vnLive.textContent = line.jpText + ' ' + line.idText;
+
+      playVoice(line);
+    };
+
+    const startVn = name => {
+      if (!vnScenes[name]) return;
+      vnScene = name;
+      vnIndex = 0;
+      showPanel('vn');
+      paintVnLine();
       scrollToTop();
-      focusPanel('intro');
+      if (vnBox) vnBox.focus({ preventScroll: true });
+    };
+
+    const advanceVn = () => {
+      const scene = vnScenes[vnScene];
+      if (!scene) return;
+
+      if (vnIndex + 1 < scene.lines.length) {
+        vnIndex += 1;
+        paintVnLine();
+        return;
+      }
+
+      stopVoice();
+      vnScene = null;
+      vnIndex = 0;
+
+      if (scene.next === 'kana') {
+        openKana();
+        return;
+      }
+      if (scene.next === 'kanaResult') {
+        showKanaResult();
+        return;
+      }
+      showPanel('choice');
+      scrollToTop();
+      focusPanel('choice');
+    };
+
+    // The stage is the tap surface (whole-scene clicks, like the prologue);
+    // the dialogue box additionally owns keyboard activation, so Enter/Space
+    // work without turning the sprite into a tab stop.
+    if (vnStage) vnStage.addEventListener('click', advanceVn);
+    if (vnBox) {
+      vnBox.addEventListener('keydown', event => {
+        if (event.repeat) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          advanceVn();
+        }
+      });
+    }
+
+    if (beginBtn) {
+      beginBtn.addEventListener('click', () => startVn('greet'));
+    }
+
+    // Fetch the opening clip during idle time so the first line is not silent
+    // while the request flies. Setting src alone does not play anything, so
+    // the autoplay policy is untouched.
+    if (vnScenes.greet.lines[0]) {
+      voice.setAttribute(
+        'src',
+        VOICE_DIR + vnScenes.greet.lines[0].audio
+      );
+      voice.load();
+    }
+
+    const openChoice = () => {
+      stopVoice();
+      showPanel('choice');
+      scrollToTop();
+      focusPanel('choice');
     };
 
     choiceButtons.forEach(button => {
       button.addEventListener('click', () => {
         const route = button.dataset.jctChoice;
         if (route === 'kana') {
-          openKana();
+          // "Baru mau mulai" still gets its two spoken lines before the
+          // slider: the question belongs to the character, not to a card.
+          startVn('zero');
           return;
         }
         showPanel('start');
@@ -875,10 +1150,14 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     });
 
     backButtons.forEach(button => {
-      button.addEventListener('click', openIntro);
+      button.addEventListener('click', openChoice);
     });
 
-    if (kanaNext) kanaNext.addEventListener('click', showKanaResult);
+    if (kanaNext) {
+      kanaNext.addEventListener('click', () => {
+        startVn(state.kanaPercent >= 50 ? 'over50' : 'under50');
+      });
+    }
     if (kanaRetry) kanaRetry.addEventListener('click', retryKana);
 
     // ========== STEP 2: MEDIA ==========
@@ -1188,6 +1467,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     // ========== FLOW ==========
     const goToTest = () => {
+      // Leaving the self-assessment route also silences any VN clip that is
+      // still talking, so the media step never overlaps with Yosia's voice.
+      stopVoice();
       state.index = 0;
       state.answers = [];
       showPanel('test');
@@ -1224,6 +1506,9 @@ const breadcrumbSchema = generateBreadcrumbSchema({
 
     const resetAll = () => {
       stopPlayer();
+      stopVoice();
+      vnScene = null;
+      vnIndex = 0;
       state.selfLevel = 0;
       state.index = 0;
       state.optionIndex = -1;
