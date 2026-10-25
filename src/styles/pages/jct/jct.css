@@ -29,6 +29,13 @@
   }
 }
 
+/* While on the initial start gate panel, vertically center the content in the viewport.
+   When the visitor clicks "Mulai Tes", the gate hides and the page returns to normal flow. */
+.jct-page:has(.jct-gate:not([hidden])) {
+  justify-content: center;
+  min-height: calc(100dvh - 112px);
+}
+
 /* Opt out of the global mobile navbar clearance: the header below owns its
    own top padding (same pattern as /tools and /search). */
 body {
