@@ -91,7 +91,8 @@ body {
   justify-content: center;
   align-items: center;
   gap: 0.85rem;
-  max-width: 44rem;
+  width: fit-content;
+  max-width: 100%;
   margin-inline: auto;
 }
 
@@ -116,15 +117,17 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  width: max-content;
+  max-width: 100%;
   text-align: left;
 }
 
 .jct-subtitle {
-  max-width: 36rem;
   margin: 0;
   color: var(--grkd-muted);
   font-size: clamp(0.92rem, 2vw, 1rem);
   line-height: 1.5;
+  text-align: left;
   text-wrap: balance;
 }
 
@@ -134,6 +137,7 @@ body {
   font-family: var(--font-jp);
   font-size: 0.84rem;
   line-height: 1.45;
+  text-align: left;
 }
 
 /* ===== STEP INDICATOR ===== */
