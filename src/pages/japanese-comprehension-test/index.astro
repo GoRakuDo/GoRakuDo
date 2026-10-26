@@ -404,9 +404,12 @@ const breadcrumbSchema = generateBreadcrumbSchema({
         </p>
 
         <div class='jct-result-actions'>
+          <!-- The href here is the no-JS fallback. showKanaResult() swaps both
+               the label and the destination on the 50% line. -->
           <a
             class='jct-btn jct-btn-primary'
             href='/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak'
+            data-jct-kana-cta
           >
             <span data-jct-kana-cta-label>Buka Panduan Immersion</span>
             <span aria-hidden='true'>▶</span>
@@ -727,6 +730,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       const kanaRetry = root.querySelector('[data-jct-kana-retry]');
       const kanaEcho = root.querySelector('[data-jct-kana-echo]');
       const kanaCtaLabel = root.querySelector('[data-jct-kana-cta-label]');
+      const kanaCta = root.querySelector('[data-jct-kana-cta]');
 
       const selfLevelInputs = root.querySelectorAll('[data-jct-self-level]');
       const startBtn = root.querySelector('[data-jct-start]');
@@ -899,20 +903,37 @@ const breadcrumbSchema = generateBreadcrumbSchema({
       // The verdict itself is not printed here: the two VN scenes below speak it
       // with a sprite and a voice clip. This panel only echoes the answer and
       // offers the destination, so the copy lives in exactly one place.
+      //
+      // Label AND destination switch on the same 50% line — a button that says
+      // "Buka Panduan Kana" but lands on the immersion guide is a broken promise.
+      // The markup's own href is the no-JS fallback, so both branches resolve to
+      // a real page today.
+      //
+      // Note: `low` still points at the immersion guide because the dedicated
+      // kana Wiki article (/wiki/panduan-belajar-hiragana-katakana) is not
+      // published yet. Connecting it later is a one-line change right here —
+      // no markup edit, no JS restructure.
       const kanaCtas = {
-        high: 'Buka Panduan Immersion',
-        low: 'Buka Panduan Kana',
+        high: {
+          label: 'Buka Panduan Immersion',
+          href: '/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak',
+        },
+        low: {
+          label: 'Buka Panduan Kana',
+          href: '/panduan-immersion-belajar-bahasa-jepang-dengan-otodidak',
+        },
       };
 
       const showKanaResult = () => {
         const percent = state.kanaPercent;
         const cta = percent >= 50 ? kanaCtas.high : kanaCtas.low;
         if (kanaEcho) kanaEcho.textContent = percent + '%';
-        if (kanaCtaLabel) kanaCtaLabel.textContent = cta;
+        if (kanaCtaLabel) kanaCtaLabel.textContent = cta.label;
+        if (kanaCta) kanaCta.href = cta.href;
         showPanel('kanaResult');
         scrollToTop();
         focusPanel('kanaResult');
-        announce('Kemampuan kana ' + percent + ' persen. ' + cta + '.');
+        announce('Kemampuan kana ' + percent + ' persen. ' + cta.label + '.');
       };
 
       const openKana = () => {

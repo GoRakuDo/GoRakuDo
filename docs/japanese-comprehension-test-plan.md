@@ -269,3 +269,175 @@
 
 **既知の制限**
 - デスクトップの「高さ 520px 未満」ウィンドウ（例 1280×600）はメディアクエリ対象外のためスクロールが出る。意図的（PC の極端な横長ウィンドウはスマホ横向きではないと判断）。
+
+---
+
+### フェーズ 1.6 実装完了（Wiki専用レイアウト整備 & かなCTA導線の機構化）
+
+**背景**: フェーズ 1.5 で「50% 未満 → Buka Panduan Kana」の文言分岐は入ったが、
+`<a>` の `href` は 1 本固定のままだった。つまりボタンの文言と遷移先が食い違う
+状態で、かな専用 Wiki 記事を作っても差し替えられない。本フェーズは記事本体を
+作らず、**受け皿（レイアウト）と差し替え機構**だけを先に固める。
+
+**変更ファイル**
+
+| パス | 役割 |
+|---|---|
+| `src/layouts/WikiLayout.astro` | Wiki 専用レイアウト（新規・未使用状態で待機） |
+| `src/styles/layouts/WikiLayout.css` | 同レイアウトのスタイル（新規） |
+| `src/pages/japanese-comprehension-test/index.astro` | `data-jct-kana-cta` 追加 + `kanaCtas` を `{label, href}` 化 |
+
+**WikiLayout の設計**
+
+- `BaseLayout` 不使用の自前シェル。理由は JCT / quest と同じ（サイト Navbar の
+  fixed ピル + BottomNavBar 88px + `.layout-content` のモバイルクリアランスが
+  このページのトップバーと衝突する）。
+- トップバーは**通常フロー**（fixed ではない）なので重なりが構造的に起きない。
+  左が語楽道ロゴ戻りリンク、右が `/// WIKI_CODEX ///`（`aria-hidden` の装飾）。
+- 背景は `body::before` の `position: fixed` 疑似要素。`background-attachment:
+  fixed` は iOS Safari がスクロール毎に再描画してジャンクするため不採用。
+  `z-index: -1` で canvas 背景の上・全子要素の下に描画される。
+- `html` は `.wiki-html` クラスでスコープ。`scroll-padding-top` を 1rem に
+  上書きしている（global.css の `--navbar-height` = 70px オフセットは、ナビバーの
+  無いこのページでは TOC アンカーを 70px 下にずらしてしまう）。
+
+**Prose タイポグラフィ**
+
+- flex `gap` をやめ、`.wiki-prose > * + *` のリズム規則に統一。flex gap は
+  見出しの `margin-block-start` と加算されるため h2 前に 3rem 超の穴が空いていた。
+- `Note:` `.wiki-prose p { margin: 0 }` を**入れてはいけない**。(0,1,1) が
+  リズム規則 (0,1,0) を打ち負かし、全段落が前の要素に密着する。実際に一度
+  入れて build 後の CSS で発覚したため、コメントで明示した。
+- `code` / `pre` / `table` / `img` / `figure` / `figcaption` / `hr` を新規対応。
+- テーブルは**ネイティブ table レイアウト維持**。`display: block` +
+  `overflow-x: auto` は一見定石だが、block 化した table ボックスが行を
+  shrink-wrap するため 2 列テーブルが 61px セルまで潰れる（実測）。
+  代わりにセルへ `overflow-wrap: anywhere`。120 文字の非改行セルで
+  `break-word` = 1133px / ページ溢れ、`anywhere` = 316px / 溢れなし（390px 幅で実測）。
+
+**アクセシビリティ**
+
+- 先頭タブストップに `Langsung ke isi` スキップリンク（`#wiki-content`）。
+- TOC の `/// DAFTAR_ISI ///` マーカーは CSS `::before`。スクリーンリーダーには
+  素の「Daftar Isi」だけが渡る。
+- `time[datetime]` で日付をマークアップ。
+- `:focus-visible` を全リンク・ボタンに定義、`prefers-reduced-motion: reduce` で
+  transition と hover の浮きを無効化。
+- タッチターゲットは `--touch-target-min` (44px) 以上。
+
+**JCT 側の差し替え機構**
+
+```js
+const kanaCtas = {
+  high: { label: 'Buka Panduan Immersion', href: '/panduan-immersion-...' },
+  low:  { label: 'Buka Panduan Kana',      href: '/panduan-immersion-...' },
+};
+// showKanaResult():
+if (kanaCtaLabel) kanaCtaLabel.textContent = cta.label;
+if (kanaCta) kanaCta.href = cta.href;
+```
+
+- マークアップ側の `href` は **no-JS フォールバック**。両分岐とも現在は実在ページを
+  指すため、JS 無効でも 404 にならない。
+- `low.href` はかな Wiki 記事が未公開のため暫定で immersion ガイド。公開時は
+  **この 1 行を差し替えるだけ**で導線が切り替わる（マークアップ変更不要）。
+
+**検証結果（Chrome CDP 実測 + ビルド）**
+
+WikiLayout は未使用のため、検証用の一時ページ `src/pages/wiki-check/` を作って
+レンダリングし、**確認後に削除**（`dist/wiki-check` も削除済み）。
+
+| 項目 | 1280px | 390px |
+|---|---|---|
+| 横スクロール | なし | なし |
+| 記事カード幅 | 768px | 358px |
+| タイトル実寸 | 36.8px | 24.8px |
+| h2 実寸 | 24px | 19.2px |
+| テーブルセル幅 | 306px | 140px |
+| CTA ボタン高さ | 44px | 44px |
+
+- TOC アンカークリック → `#solusi` がビューポート上端 +69px に着地
+  （`scroll-padding-top: 16px` + `scroll-margin-top: 16px` が効いている）
+- 長いコード行（200 文字）→ `pre` 内で横スクロール（`scrollWidth 1696 / clientWidth 314`）、
+  ページは溢れない
+- フッター CTA は 390×844 で完全に視野内（`footerBottom 759 <= 844`）
+- JCT 実機フロー（gate → VN → choice → kana → kana-result）を CDP で走査:
+  - `20%` → ラベル `Buka Panduan Kana` / href = immersion（暫定）
+  - `45%` → `Buka Panduan Kana`
+  - `50%` / `55%` / `80%` → `Buka Panduan Immersion`
+  - `step=5` のため `49` は 50 にスナップする（ブラウザ仕様。判定は `>= 50`）
+- `bun run stylelint:all` — 0 errors
+- `bun run build` — **53 pages built**（一時ページ削除後に再実行して確認）
+
+**既知の未実装（次フェーズ）**
+
+- かな Wiki 記事本体（`docs/drafts/panduan-belajar-hiragana-katakana-buku-cerita.md`
+  に原稿あり。ユーザーのドラフト確認後に MDX 化して `/wiki/...` を新設）。
+- `src/content/wiki/` コレクションと `src/pages/wiki/[slug].astro` ルート。
+- `kanaCtas.low.href` の実 URL 差し替え。
+
+---
+
+### フェーズ 1.6b レビュー反映（code-reviewer フィードバック）
+
+**BLOCKER 1: リストマーカー消失**
+
+Tailwind preflight が `ol, ul, menu { list-style: none }` を出力しているため、
+`.wiki-prose` 内の `<ul>` / `<ol>` が**箇条書きの記号も番号も出ない**状態だった
+（ビルド済み `dist/assets/global-*.css` で確認）。親要素の `list-style` 一括指定
+ではなくリスト種別ごとに復元したので、`<ul>` の中に置いた `<ol>` も
+decimal のまま番号を保つ。
+
+```css
+.wiki-prose ul { list-style-type: disc; }
+.wiki-prose ol { list-style-type: decimal; }
+.wiki-prose li::marker { color: var(--grkd-purple-400); font-weight: 700; }
+```
+
+**BLOCKER 2: ボタンのコントラスト AA 不適合**
+
+`.wiki-btn-primary` のグラデーション開始色が `purple-500` で、白文字との
+コントラストが **3.98:1**（AA 4.5:1 未満）。JCT の `.jct-btn-primary` と同じ
+`purple-700 → purple-600` に揃えた。`.wiki-skip` も同様に `purple-700`。
+
+| 組み合わせ | 比 | 判定 |
+|---|---|---|
+| 白文字 / purple-700（新・開始） | **8.49** | AA PASS |
+| 白文字 / purple-600（新・終了） | **5.54** | AA PASS |
+| 白文字 / purple-500（旧・開始） | 3.98 | FAIL |
+| 白文字 / purple-700（skip link） | **8.49** | AA PASS |
+
+**カテゴリバッジの文字色**
+
+`purple-400` on `purple-500/0.2` は **3.27:1** で不合格。`gold-base` に変更して
+**7.33:1**（AA PASS）。バッジは装飾的な小サイズ（0.72rem）なので、AA 通常
+テキスト基準（4.5:1）を余裕で超える値にした。
+
+**その他の指摘**
+
+- **日付の整形**: `publishedDate` をそのまま出していたため `2026-10-26` と
+  生 ISO 文字列が表示されていた。`toLocaleDateString('id-ID', { year: 'numeric',
+  month: 'long', day: 'numeric' })` で **「26 Oktober 2026」** に。
+  `<time datetime="2026-10-26">` で機械可読値は保持。書式は
+  `ToolArticleLayout.astro` と同一に揃えた。
+- **ロゴの a11y**: `aria-label` を `'Kembali ke Beranda GoRakuDo'` から
+  `'語楽道 — Kembali ke Beranda'` に変更。可視テキスト（語楽道）が
+  アクセシブルネームに含まれるようになり、WCAG 2.5.3（Label in Name）を満たす。
+- **`.gitignore`**: 巨大な非ソース資産 5 種を追加。
+  `objinfo.json`（1.9MB）/ `hf_repo.json` / `.tmp-production-sitemap.xml` /
+  `build-manual-import-gif.py` / `__pycache__/` + `*.pyc`。
+  `git check-ignore -v` で 5 件すべてがヒットすることを確認済み。
+
+**検証結果**
+
+- CDP 実測（760px 幅）: `ul` = `disc` / `ol` = `decimal` / ネストした `ol` = `decimal`、
+  `::marker` の色は `oklch(0.65 0.22 273.85)`（= purple-400）、`font-weight: 700`
+- 目視スクリーンショット: 紫の disc、ネストした decimal、`26 Oktober 2026`、
+  ゴールドのバッジ、暗いボタングラデーションをすべて確認
+- コントラストは OKLCH → linear sRGB 変換 + WCAG 相対輝度で数値算出（上表）
+- `bun run stylelint:all` — 0 errors
+- `bun run build` — **53 pages built**（一時検証ページ削除後に再実行）
+
+**注記**: WikiLayout は未だどのページからも import されていないため、
+ビルド済み `dist` にはこの CSS チャンクが含まれない（意図通り。`/wiki/...`
+ルート新設時に初めてバンドルされる）。

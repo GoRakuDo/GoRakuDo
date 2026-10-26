@@ -1,0 +1,600 @@
+/* ===== WIKI LAYOUT STYLES =====
+ * Standalone, BaseLayout-free layout for GoRakuDo Guides & Wiki articles.
+ * Token-only: OKLCH scales, no !important.
+ *
+ * The document shell is deliberately self-owned (same reasoning as /quest and
+ * /japanese-comprehension-test): BaseLayout's Navbar + BottomNavBar + the
+ * `.layout-content` mobile clearance would all fight this page's own top bar.
+ */
+
+/* ===== FIXED NIGHT LIBRARY BACKDROP =====
+ * The canvas keeps the solid base colour; the photograph and the two light
+ * pools live on a `position: fixed` pseudo-element rather than
+ * `background-attachment: fixed`, which Safari on iOS repaints on every scroll
+ * frame. A negative z-index paints the layer above the canvas background and
+ * below every real child, so no extra DOM and no stacking-context workarounds
+ * are needed. Nothing else in the project claims `body::before`.
+ *
+ * Scoped to `.wiki-html` rather than bare `html` so this file can never leak
+ * into another document if the CSS chunk is ever shared. */
+html.wiki-html {
+  background-color: var(--grkd-black-950);
+
+  /* The global rule offsets anchors by --navbar-height for the fixed site
+     navbar. This page has no navbar, so that offset would drop every TOC
+     target 70px below the viewport top. */
+  scroll-padding-top: 1rem;
+}
+
+.wiki-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  background-image: none;
+  color: var(--grkd-text-global);
+  font-family: var(--font-primary);
+}
+
+/* Anchored headings must not hide under the sticky-free top edge. */
+.wiki-prose :is(h2, h3) {
+  scroll-margin-top: 1rem;
+}
+
+.wiki-body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      ellipse 90% 60% at 50% -10%,
+      oklch(from var(--grkd-purple-500) l c h / 0.22) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 100% 100%,
+      oklch(from var(--grkd-gold-base) l c h / 0.08) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      oklch(from var(--grkd-black-950) l c h / 0.72),
+      oklch(from var(--grkd-black-950) l c h / 0.72)
+    ),
+    url('/images/typographic_waves_and_torii_8bit_1080_blurred.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  content: '';
+  pointer-events: none;
+}
+
+/* ===== SKIP LINK =====
+ * First tab stop, off-screen until focused. The top bar only holds a home link
+ * and a decorative marker, so this is cheap insurance rather than a necessity. */
+.wiki-skip {
+  position: absolute;
+  top: 0;
+  left: 0.5rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md)
+    var(--border-radius-md);
+  background: var(--grkd-purple-700);
+  color: var(--grkd-white-base);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transform: translateY(-150%);
+}
+
+.wiki-skip:focus-visible {
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 2px;
+  transform: translateY(0);
+}
+
+/* ===== MINIMAL TOP BAR =====
+ * Shares `max-width` + inline padding with .wiki-main so the brand mark lines
+ * up exactly with the article card's left edge. */
+.wiki-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding: calc(var(--safe-area-top) + 0.9rem) clamp(1rem, 4vw, 2rem) 0.6rem;
+}
+
+.wiki-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: var(--touch-target-min);
+  color: var(--grkd-white-base);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.wiki-home-link:hover {
+  opacity: 0.78;
+}
+
+/* The brand mark is a black SVG; invert it so it reads on the dark scene
+   (same treatment as the site navbar and the JCT top bar). */
+.wiki-logo {
+  display: block;
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: invert(1) brightness(1.2);
+}
+
+.wiki-logo-text {
+  color: var(--grkd-white-base);
+  font-family: var(--font-jp-logo);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.wiki-topbar-marker {
+  margin: 0;
+  color: var(--grkd-brand-secondary);
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+/* ===== MAIN CONTENT ===== */
+.wiki-main {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding: 1.25rem clamp(1rem, 4vw, 2rem) calc(var(--safe-area-bottom) + 4rem);
+}
+
+.wiki-article {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.35);
+  border-radius: var(--border-radius-card);
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      oklch(from var(--grkd-purple-500) l c h / 0.15) 0%,
+      transparent 65%
+    ),
+    oklch(from var(--grkd-surface) l c h / 0.88);
+  box-shadow:
+    0 12px 32px oklch(from var(--grkd-black-base) l c h / 0.6),
+    inset 0 1px 1px oklch(from var(--grkd-white-base) l c h / 0.1);
+}
+
+/* ===== HEADER ===== */
+.wiki-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.wiki-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.75rem;
+}
+
+.wiki-category-badge {
+  display: inline-flex;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.6);
+  border-radius: var(--border-radius-pill);
+  background: oklch(from var(--grkd-purple-500) l c h / 0.2);
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.wiki-date {
+  color: var(--grkd-text-global-muted);
+  font-size: 0.82rem;
+}
+
+.wiki-title {
+  margin: 0;
+  color: var(--grkd-gold-base);
+  font-family: var(--font-noto-serif-jp);
+  font-size: clamp(1.55rem, 4.5vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.wiki-lead {
+  margin: 0;
+  color: var(--grkd-muted);
+  font-size: clamp(0.96rem, 2vw, 1.08rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.wiki-divider {
+  width: 100%;
+  height: 1px;
+  margin-top: 0.35rem;
+  background: linear-gradient(
+    90deg,
+    oklch(from var(--grkd-purple-400) l c h / 0.45) 0%,
+    transparent 100%
+  );
+}
+
+/* ===== TABLE OF CONTENTS ===== */
+.wiki-toc {
+  padding: 1rem 1.15rem;
+  border: 1px solid oklch(from var(--grkd-surface-2) l c h / 0.6);
+  border-radius: var(--border-radius-lg);
+  background: oklch(from var(--grkd-black-base) l c h / 0.45);
+}
+
+/* Marker language matches /// WIKI_CODEX /// and the ToolArticle quest markers.
+ * The marker is a CSS pseudo-element so screen readers announce the plain
+ * "Daftar Isi" label instead of three slashes and a snake_case token. */
+.wiki-toc-title {
+  margin: 0 0 0.65rem;
+  color: var(--grkd-gold-base);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.wiki-toc-title::before {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--grkd-brand-secondary);
+  font-family: var(--font-pixel);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  content: '/// DAFTAR_ISI ///';
+}
+
+.wiki-toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wiki-toc-depth-3 {
+  padding-left: 1.1rem;
+}
+
+.wiki-toc-link {
+  display: inline-block;
+  padding-block: 0.15rem;
+  color: var(--grkd-text-global-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.wiki-toc-link:hover {
+  color: var(--grkd-gold-base);
+}
+
+/* ===== PROSE TYPOGRAPHY =====
+ * Block flow with a single "every block after the first gets air" rhythm rule
+ * instead of a flex `gap`: a flex gap stacks on top of heading margins, which
+ * turned every h2 into a 3rem+ hole.
+ *
+ * Note: do NOT add `margin: 0` to `.wiki-prose p` — that selector is (0,1,1)
+ * and would outrank the (0,1,0) rhythm rule below, collapsing every paragraph
+ * into the previous one. Tailwind preflight already zeroes the default
+ * paragraph margin, so the rhythm rule is the only margin in play. */
+.wiki-prose {
+  font-size: 1rem;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+
+.wiki-prose > * + * {
+  margin-block-start: 1.15rem;
+}
+
+.wiki-prose > h2 {
+  margin-block-start: 2.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.3);
+  color: var(--grkd-gold-base);
+  font-family: var(--font-noto-serif-jp);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.wiki-prose > h3 {
+  margin-block-start: 1.75rem;
+  color: var(--grkd-text-global);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.wiki-prose > h2 + *,
+.wiki-prose > h3 + * {
+  margin-block-start: 0.7rem;
+}
+
+/* A heading as the very first block must not push away from the card edge. */
+.wiki-prose > h2:first-child,
+.wiki-prose > h3:first-child {
+  margin-block-start: 0;
+}
+
+.wiki-prose p {
+  color: var(--grkd-text-global);
+}
+
+.wiki-prose strong {
+  color: var(--grkd-gold-base);
+  font-weight: 700;
+}
+
+.wiki-prose a {
+  color: var(--grkd-purple-400);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+
+.wiki-prose a:hover {
+  color: var(--grkd-gold-base);
+}
+
+.wiki-prose ul,
+.wiki-prose ol {
+  padding-inline-start: 1.5rem;
+}
+
+/* Tailwind preflight ships `ol, ul, menu { list-style: none }`, so a plain
+ * `<ul>` inside the article renders as bare indented text with no bullets.
+ * The markers are restored here per list type rather than relying on the
+ * `list-style` shorthand on the parent, so a nested `<ol>` inside a `<ul>`
+ * keeps its own numbering. */
+.wiki-prose ul {
+  list-style-type: disc;
+}
+
+.wiki-prose ol {
+  list-style-type: decimal;
+}
+
+.wiki-prose li {
+  color: var(--grkd-text-global);
+}
+
+.wiki-prose li::marker {
+  color: var(--grkd-purple-400);
+  font-weight: 700;
+}
+
+.wiki-prose li + li {
+  margin-block-start: 0.45rem;
+}
+
+.wiki-prose li > ul,
+.wiki-prose li > ol {
+  margin-block-start: 0.45rem;
+}
+
+.wiki-prose blockquote {
+  margin-block: 1.5rem;
+  padding: 0.9rem 1.2rem;
+  border-left: 3px solid oklch(from var(--grkd-purple-400) l c h / 0.55);
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  background: oklch(from var(--grkd-purple-500) l c h / 0.12);
+  color: var(--grkd-text-global);
+  font-style: normal;
+}
+
+.wiki-prose blockquote > p + p {
+  margin-block-start: 0.8rem;
+}
+
+.wiki-prose hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 2rem;
+  border: none;
+  background: oklch(from var(--grkd-surface-2) l c h / 0.6);
+}
+
+.wiki-prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid oklch(from var(--grkd-surface-2) l c h / 0.6);
+  border-radius: var(--border-radius-lg);
+}
+
+.wiki-prose figure {
+  margin: 0;
+}
+
+.wiki-prose figcaption {
+  margin-block-start: 0.55rem;
+  color: var(--grkd-text-global-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Inline code — gold on a faint Blurple wash, readable at body size. */
+.wiki-prose code {
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--border-radius-sm);
+  background: oklch(from var(--grkd-purple-500) l c h / 0.18);
+  color: var(--grkd-gold-base);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+/* Code blocks scroll horizontally instead of forcing the card wider. */
+.wiki-prose pre {
+  overflow-x: auto;
+  padding: 0.9rem 1rem;
+  border: 1px solid oklch(from var(--grkd-surface-2) l c h / 0.7);
+  border-radius: var(--border-radius-lg);
+  background: oklch(from var(--grkd-black-base) l c h / 0.72);
+  color: var(--grkd-text-global);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.wiki-prose pre code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Tables keep native table layout so header and body cells stay aligned and
+ * the table fills the card. `display: block` + `overflow-x: auto` was tried and
+ * rejected: a block-level table box shrink-wraps its rows, so a 2-column table
+ * collapsed to content width (~61px cells) instead of the article width.
+ *
+ * `overflow-wrap: anywhere` (not `break-word`) on the cells is load-bearing:
+ * it lowers each cell's min-content width, so a table with one very long
+ * unbroken value shrinks to the card instead of forcing the page wider. Measured
+ * on a 120-char cell at 390px: `break-word` = 1133px table / page overflow,
+ * `anywhere` = 316px table / no overflow. */
+.wiki-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.wiki-prose th,
+.wiki-prose td {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid oklch(from var(--grkd-surface-2) l c h / 0.7);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.wiki-prose th {
+  background: oklch(from var(--grkd-purple-500) l c h / 0.16);
+  color: var(--grkd-gold-base);
+  font-weight: 700;
+}
+
+/* ===== FOOTER CTA ===== */
+.wiki-footer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid oklch(from var(--grkd-purple-400) l c h / 0.45);
+  border-radius: var(--border-radius-lg);
+  background: oklch(from var(--grkd-black-base) l c h / 0.55);
+  text-align: center;
+}
+
+.wiki-footer-title {
+  margin: 0;
+  color: var(--grkd-gold-base);
+  font-family: var(--font-pixel);
+  font-size: 1.05rem;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+}
+
+.wiki-footer-desc {
+  max-width: 32rem;
+  margin: 0;
+  color: var(--grkd-text-global-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.wiki-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--touch-target-min);
+  padding: 0.75rem 1.6rem;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: var(--font-pixel);
+  font-size: 0.92rem;
+  line-height: 1;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.wiki-btn-primary {
+  /* Dark side of the purple scale (DESIGN.md 2.3), same pair as the JCT CTA, so
+   * white text clears WCAG AA: 8.5:1 at purple-700, 5.5:1 at purple-600. The
+   * brighter purple-500 start point measured under the 4.5:1 floor. */
+  background: linear-gradient(
+    135deg,
+    var(--grkd-purple-700) 0%,
+    var(--grkd-purple-600) 100%
+  );
+  box-shadow: 0 4px 14px oklch(from var(--grkd-purple-500) l c h / 0.4);
+  color: var(--grkd-white-base);
+}
+
+.wiki-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px oklch(from var(--grkd-purple-500) l c h / 0.6);
+}
+
+/* ===== FOCUS & MOTION ===== */
+.wiki-home-link:focus-visible,
+.wiki-toc-link:focus-visible,
+.wiki-prose a:focus-visible,
+.wiki-btn:focus-visible {
+  border-radius: var(--border-radius-md);
+  outline: 2px solid var(--grkd-gold-base);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wiki-home-link,
+  .wiki-toc-link,
+  .wiki-prose a,
+  .wiki-btn {
+    transition: none;
+  }
+
+  .wiki-btn-primary:hover {
+    box-shadow: 0 4px 14px oklch(from var(--grkd-purple-500) l c h / 0.4);
+    transform: none;
+  }
+}

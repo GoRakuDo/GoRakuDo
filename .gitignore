@@ -50,3 +50,16 @@ config/secrets.json
 
 bmad-core
 bmad-docs
+
+# ===== LOCAL SCRATCH / NON-SOURCE ARTIFACTS =====
+# Large one-off data dumps and temp files that must never enter a commit.
+objinfo.json
+hf_repo.json
+.tmp-production-sitemap.xml
+
+# One-off local helper (root level). Not part of the build pipeline.
+build-manual-import-gif.py
+
+# Python bytecode from the local generation scripts
+__pycache__/
+*.pyc

@@ -1,0 +1,165 @@
+---
+// src/layouts/WikiLayout.astro
+// Standalone Wiki Layout for GoRakuDo guides & codex.
+//
+// BaseLayout-free by design: the site Navbar (fixed pill), BottomNavBar
+// (fixed, 88px) and the `.layout-content` mobile clearance would all fight
+// this page's own minimal top bar. Same reasoning as /quest and
+// /japanese-comprehension-test, which also own their whole document.
+import UnifiedSEO, {
+  type Props as UnifiedSEOProps,
+} from '../components/common/UnifiedSEO.astro';
+import '../styles/global.css';
+import '../styles/layouts/WikiLayout.css';
+
+export interface Props {
+  /** Article title. The layout appends `・GoRakuDo 語楽道` for SEO. */
+  title: string;
+  description: string;
+  ogImage?: string;
+  lang?: string;
+  publishedDate: string;
+  modifiedDate?: string;
+  author?: string;
+  categoryLabel?: string;
+  marker?: string;
+  /** Destination of the footer CTA (and the default "back" route). */
+  backHref?: string;
+  backLabel?: string;
+  /** Headings from `render(entry)`, already filtered or raw (h2/h3 are kept). */
+  headings?: Array<{ depth: number; slug: string; text: string }>;
+  breadcrumbSchema?: UnifiedSEOProps['breadcrumbSchema'];
+}
+
+const {
+  title,
+  description,
+  ogImage = '/images/og/gorakudo-immerison.png',
+  lang = 'id',
+  publishedDate,
+  modifiedDate,
+  author = 'Kasou Yoshia',
+  categoryLabel = 'PANDUAN DASAR',
+  marker = '/// WIKI_CODEX ///',
+  backHref = '/japanese-comprehension-test',
+  backLabel = 'Kembali ke Tes JCT',
+  headings = [],
+  breadcrumbSchema,
+} = Astro.props;
+
+// h2/h3 only: an h4 inside a codex article is a detail, not a chapter.
+const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+
+// Never print a raw ISO string. Same shape as ToolArticleLayout so every dated
+// article on the site reads the same ("26 Oktober 2026"). The <time datetime>
+// keeps the machine-readable value for SEO.
+const formattedDate = new Date(publishedDate).toLocaleDateString('id-ID', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const isoDate = publishedDate.slice(0, 10);
+---
+
+<!doctype html>
+<html lang={lang} class='wiki-html'>
+  <head>
+    <UnifiedSEO
+      title={`${title}・GoRakuDo 語楽道`}
+      description={description}
+      image={ogImage}
+      pageType='article'
+      author={author}
+      publishedDate={publishedDate}
+      modifiedDate={modifiedDate || publishedDate}
+      lang={lang}
+      breadcrumbSchema={breadcrumbSchema}
+    />
+  </head>
+  <body class='wiki-body'>
+    <a class='wiki-skip' href='#wiki-content'>Langsung ke isi</a>
+
+    <!-- ========== MINIMAL TOP BAR ==========
+         Normal flow (not fixed), so it can never overlap the article and no
+         clearance maths are needed. Left: brand back to home. Right: the
+         codex marker, which is decorative and hidden from screen readers. -->
+    <header class='wiki-topbar'>
+      <a
+        class='wiki-home-link'
+        href='/'
+        aria-label='語楽道 — Kembali ke Beranda'
+      >
+        <img
+          class='wiki-logo'
+          src='/icons/Logo.svg'
+          alt=''
+          width='24'
+          height='24'
+          aria-hidden='true'
+          decoding='async'
+        />
+        <span class='wiki-logo-text' lang='ja'>語楽道</span>
+      </a>
+
+      <p class='wiki-topbar-marker' aria-hidden='true'>{marker}</p>
+    </header>
+
+    <!-- ========== MAIN WIKI ARTICLE ========== -->
+    <main class='wiki-main' id='wiki-content'>
+      <article class='wiki-article'>
+        <!-- Header metadata -->
+        <header class='wiki-header'>
+          <div class='wiki-meta-row'>
+            <span class='wiki-category-badge'>{categoryLabel}</span>
+            <time class='wiki-date' datetime={isoDate}>
+              {formattedDate}
+            </time>
+          </div>
+
+          <h1 class='wiki-title'>{title}</h1>
+          <p class='wiki-lead'>{description}</p>
+
+          <div class='wiki-divider' aria-hidden='true'></div>
+        </header>
+
+        <!-- Table of contents — only rendered when the article has chapters. -->
+        {
+          tocHeadings.length > 0 && (
+            <nav class='wiki-toc' aria-labelledby='wiki-toc-title'>
+              <p class='wiki-toc-title' id='wiki-toc-title'>Daftar Isi</p>
+              <ul class='wiki-toc-list'>
+                {tocHeadings.map(h => (
+                  <li class={`wiki-toc-depth-${h.depth}`}>
+                    <a class='wiki-toc-link' href={`#${h.slug}`}>
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+
+        <!-- Prose content slot -->
+        <div class='wiki-prose'>
+          <slot />
+        </div>
+
+        <!-- Footer CTA back to the test that sent the reader here -->
+        <footer>
+          <div class='wiki-footer-card'>
+            <p class='wiki-footer-title'>Sudah siap mencoba kemampuanmu?</p>
+            <p class='wiki-footer-desc'>
+              Ukur pemahaman bahasa Jepang aslimu lewat media nyata di Japanese
+              Comprehension Test.
+            </p>
+            <a class='wiki-btn wiki-btn-primary' href={backHref}>
+              <span>{backLabel}</span>
+              <span aria-hidden='true'>▶</span>
+            </a>
+          </div>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>
