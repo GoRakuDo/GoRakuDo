@@ -5,7 +5,6 @@ import UnifiedSEO, {
 } from '../components/common/UnifiedSEO.astro';
 import Navbar from '../components/common/navbar/Navbar.astro';
 import BottomNavBar from '../components/common/navbar/BottomNavBar.astro';
-import WaveAnimation from '../components/animations/WaveAnimation.astro';
 import '../styles/global.css';
 
 // ========== TYPE DEFINITIONS ==========
@@ -99,8 +98,7 @@ const processedOgImage = ogImage && ogImage.trim() !== '' ? ogImage : undefined;
   <body>
     <Navbar />
     <BottomNavBar />
-    <WaveAnimation className='wave-canvas' backgroundLayer='normal' />
-    <div class='layout-content'>
+    <div class='layout-content page-shell'>
       <slot />
     </div>
 

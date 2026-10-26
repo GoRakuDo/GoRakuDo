@@ -28,38 +28,40 @@
 r:\GoRakuDo\
 ├── src/
 │   ├── components/
-│   │   ├── animations/
 │   │   ├── common/
-│   │   ├── content/
 │   │   ├── docs/
 │   │   ├── homepage/
+│   │   ├── panduan-immersion/
+│   │   ├── panduan-lengkap/
+│   │   ├── quest/
 │   │   ├── search/
 │   │   ├── tools/
 │   │   ├── ui/
-│   │   └── UnifiedSEO.astro
+│   │   ├── youtube/
+│   │   └── common/UnifiedSEO.astro
 │   ├── content/
 │   │   ├── docs/
 │   │   ├── pages/
+│   │   ├── project-docs/
+│   │   ├── projects/
 │   │   └── tool-articles/
 │   ├── data/
 │   ├── layouts/
 │   ├── pages/
+│   ├── plugins/
 │   ├── scripts/
 │   ├── styles/
 │   │   ├── global.css
 │   │   ├── layouts/
 │   │   └── pages/
-│   ├── templates/
 │   └── utils/
 ├── docs/
+│   ├── api/
 │   ├── architecture/
-│   ├── qa/
+│   ├── archive/
+│   ├── performance/
 │   └── context.md
-├── bmad-core/
-│   ├── agents/
-│   ├── tasks/
-│   ├── templates/
-│   └── data/
+├── scripts/
 ├── public/
 └── dist/
 ```
@@ -110,7 +112,6 @@ r:\GoRakuDo\
   - 3段以内のネスト構造（Stylelint準拠）
   - 外部依存なしの完全独立性
   - 特異性問題の解決済み
-- **WaveAnimation.astro**: アニメーションコンポーネント
 - **NavBar**: ナビゲーションバー（デスクトップ・モバイル対応）
 - **Pagination**: ページネーション機能
 - **SearchPopover**: 検索ポップオーバー

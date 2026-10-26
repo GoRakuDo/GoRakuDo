@@ -81,14 +81,10 @@
   --min-height-5xl: min(120px, 15vw);
 }
 
-body {
-  padding-top: 80px;
-
-  /* Opt out of the global .layout-content mobile navbar clearance rule
-     (see global.css :root --mobile-content-padding). This page manages
-     mobile top spacing via the body padding-top above. */
-  --mobile-content-padding: 0;
-}
+/* Navbar clearance is owned by `.layout-content.page-shell` (global.css
+   PAGE SHELL). Keeping padding-top on `body` instead would push the
+   position:absolute navbar itself down below 1024px, which made the
+   navbar overlap the page title. */
 
 /* ===== SEARCH PAGE ===== */
 .search-page {

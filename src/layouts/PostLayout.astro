@@ -7,7 +7,6 @@ import TableOfContents from '../components/common/TableOfContents.astro';
 import Navbar from '../components/common/navbar/Navbar.astro';
 import BottomNavBar from '../components/common/navbar/BottomNavBar.astro';
 import Prose from '../components/ui/Prose.astro';
-import WaveAnimation from '../components/animations/WaveAnimation.astro';
 import '../styles/layouts/PostLayout.css';
 import '../styles/global.css';
 import { toLocalImage } from '../utils/local-image';
@@ -105,7 +104,7 @@ const {
 
     <!-- Main Content -->
     <main
-      class='content-page items-center justify-center w-full max-w-full flex flex-col'
+      class='content-page page-shell items-center justify-center w-full max-w-full flex flex-col'
       role='main'
     >
       <div class='content-wrapper'>
@@ -169,7 +168,6 @@ const {
         </div>
       </div>
     </main>
-    <WaveAnimation backgroundLayer='normal' />
 
     <!-- ========== SCRIPTS ========== -->
     <script>

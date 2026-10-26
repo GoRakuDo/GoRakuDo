@@ -367,9 +367,6 @@
   --z-overlay: 1300;
   --z-modal: 1400;
   --z-toast: 1500;
-  --z-WaveAnimation-transparent-layer: -45;
-  --z-WaveAnimation-wave-animation-container: -75;
-  --z-WaveAnimation-wave-canvas: -60;
   --z-SearchPopover-search-popover: 1000;
   --z-SearchPopover-search-result-card-Hover: 10;
   --z-SearchPopover-search-result-card-focus-visible: 10;
@@ -441,7 +438,33 @@
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    background-color: var(--color-bg);
+    background-color: var(--grkd-black-950);
+    color: var(--color-text);
+    font-family: var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ===== SITE BACKGROUND — VIEWPORT-FIXED =====
+   * The blurred waves/torii photograph must be painted against the viewport,
+   * not against the body box. `background-size: cover` on `body` stretches
+   * the image to the document height, so on a 3000px+ article the artwork is
+   * blown up until only a few pixels of it are visible — that is exactly what
+   * the removed WaveAnimation's `position: fixed` container used to prevent.
+   *
+   * A fixed pseudo-element restores the viewport frame with zero extra DOM
+   * and zero JS. `z-index: -1` puts it behind all in-flow content but still
+   * in front of the body background-color, which stays as the opaque base for
+   * browsers that skip painting a negative-z-index pseudo-element.
+   *
+   * `pointer-events: none` is required: the element covers the whole viewport
+   * and would otherwise swallow every click. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--grkd-black-950);
     background-image:
       linear-gradient(
         oklch(from var(--grkd-black-950) l c h / 0.65),
@@ -451,14 +474,7 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    color: var(--color-text);
-    font-family: var(--font-primary);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    @media (min-width: 1024px) {
-      padding-bottom: 4rem;
-    }
+    pointer-events: none;
   }
 
   /* REASONING: Preserving legacy layout structure */
@@ -945,82 +961,6 @@
   outline-offset: 2px;
 }
 
-/* ===== NAVBAR SPACING ===== */
-
-/* Mobile + tablet: clear the position:absolute, transparent navbar
-   (--navbar-height: 70px mobile / 75px tablet) so content doesn't overlap
-   the logo when the user is at the top of the page. Applied as a default
-   to all non-homepage pages via these 7 layout wrappers:
-     - .layout-content (BaseLayout)
-     - .article-layout-container + .article-main-container (ArticleLayout)
-     - .content-page + .content-wrapper + .content-container (PostLayout)
-     - .tqa-page (ToolArticleLayout)
-   The homepage uses .layout-content with .hero-section, so the :not(:has())
-   exclusion on that one wrapper keeps the hero full-bleed. The other 6
-   wrappers never host a hero, so they don't need the exclusion.
-   Pages with their own top-padding solution (body padding, wrapper
-   padding, PageHeader, etc.) can opt out by setting
-   --mobile-content-padding: 0 on a parent in the page-specific CSS —
-   see /tools, /panduan, /search, /tools/[tool], /rekomendasi-youtube,
-   and ArticleLayout for opt-out examples. */
-/* stylelint-disable-next-line no-duplicate-selectors */
-:root {
-  --mobile-content-padding: calc(var(--navbar-height) + 2rem);
-}
-
-@media (max-width: 1023px) {
-  .layout-content:not(:has(.hero-section)),
-  .article-layout-container,
-  .article-main-container,
-  .content-page,
-  .content-wrapper,
-  .content-container,
-  .tqa-page {
-    padding-top: var(--mobile-content-padding);
-  }
-}
-
-/* Desktop: floating pill navbar needs clearance too */
-@media (min-width: 1024px) {
-  .layout-content:not(:has(.hero-section)),
-  .article-layout-container,
-  .article-main-container,
-  .content-page,
-  .content-wrapper,
-  .content-container,
-  .tqa-page {
-    padding-top: calc(var(--navbar-height) + 2rem);
-  }
-}
-
-/* ===== BOTTOM NAVIGATION BAR SPACING ===== */
-
-@media (max-width: 1024px) {
-  .layout-content,
-  .article-layout-container,
-  .content-page,
-  main,
-  .content-wrapper,
-  .tqa-page {
-    padding-bottom: var(--bottom-nav-spacing);
-  }
-}
-
-@media (max-width: 360px) {
-  .layout-content,
-  .article-layout-container,
-  .content-page,
-  main,
-  .content-wrapper,
-  .tqa-page {
-    padding-bottom: var(--bottom-nav-spacing-small);
-  }
-}
-
-html[data-bottom-nav='hidden'] {
-  --bottom-nav-spacing: 0px;
-  --bottom-nav-spacing-small: 0px;
-}
 
 /* ===== BLOCKQUOTE QUOTES OVERRIDE ===== */
 
@@ -1037,4 +977,82 @@ body blockquote::after,
   display: none;
   content: none;
 }
+}
+
+/* ===== PAGE SHELL — SITE CHROME CLEARANCE =====
+ *
+ * The navbar is out of flow on every breakpoint (position:absolute below
+ * 1024px, position:fixed pill at 1024px+) and the BottomNavBar is a fixed
+ * overlay below 1024px, so their clearance has to be padding on a real
+ * in-flow element. There must be exactly ONE such element per page.
+ *
+ * The previous version listed 7 wrappers, and several of them are nested
+ * inside each other. Measured on /docs/[slug] before this change:
+ *   desktop  .content-page 112 + .content-wrapper 112 + .content-container 40 = 264px
+ *   mobile   .content-page 102 + .content-wrapper 102 + .content-container 17.5 = 221px
+ * for a navbar whose real footprint is 76px (mobile/tablet) and 86px
+ * (desktop pill). Same story at the bottom (88px twice on /tools) because
+ * the old list also targeted bare `main`.
+ *
+ * So: each layout root that sits under the site chrome carries the single
+ * `.page-shell` marker class and never nests inside another one.
+ *   BaseLayout        -> .layout-content
+ *   ArticleLayout     -> .article-layout-container
+ *   PostLayout        -> .content-page
+ *   ToolArticleLayout -> .tqa-page
+ * ProjectLayout rides on BaseLayout, so .layout-content covers it.
+ * Standalone documents (/quest, /jct, /404, /discord) own their whole
+ * <html> and use no layout, so they never get this class.
+ *
+ * Why padding here instead of on `body`: below 1024px the navbar is
+ * position:absolute inside .navbar-wrapper, which is in body's flow, so
+ * body padding-top drags the navbar itself down. That is exactly the bug
+ * /search had (`body { padding-top: 80px }` pushed the navbar to y=80 and
+ * it overlapped the page title). Padding on the shell below the navbar has
+ * no such coupling.
+ *
+ * One rule, no media query: --navbar-height is already responsive
+ * (70 / 75 / 80px), so `+ 2rem` yields 102 / 107 / 112px, keeping a
+ * consistent ~26px gap under the real chrome at every breakpoint.
+ * The homepage is the only exception — its .hero-section is a full-bleed
+ * 100svh stage that centers itself, so it must not be pushed down.
+ *
+ * This block must stay OUTSIDE `@layer base`: page CSS is unlayered and
+ * unlayered rules beat layered ones regardless of specificity, so a
+ * layered rule here would silently lose to `.tqa-page { padding: 0 1.5rem 4rem }`.
+ */
+.page-shell:not(:has(.hero-section)) {
+  padding-top: calc(var(--navbar-height) + 2rem);
+}
+
+/* ===== BOTTOM NAVIGATION BAR CLEARANCE =====
+ * Applied on `body` rather than the shell: every page also sets its own
+ * bottom breathing room on the shell (e.g. `.tqa-page { padding: 0 1.5rem 4rem }`),
+ * and those unlayered page rules would win a same-specificity fight over
+ * `padding-bottom`. One level up, the two simply add up.
+ * `> .page-shell` keeps standalone documents out — they have no bottom bar
+ * and must keep their full-bleed stage.
+ * 1023px matches where bottom-navbar.css actually hides the bar
+ * (`min-width: 1024px`); the old `max-width: 1024px` left 88px of dead
+ * space at exactly 1024px. */
+@media (max-width: 1023px) {
+  body:has(> .page-shell) {
+    padding-bottom: var(--bottom-nav-spacing);
+  }
+}
+
+@media (max-width: 360px) {
+  body:has(> .page-shell) {
+    padding-bottom: var(--bottom-nav-spacing-small);
+  }
+}
+
+/* Must stay OUTSIDE `@layer base` for the same reason as `.page-shell`:
+   the `:root` declaration of --bottom-nav-spacing is unlayered, and an
+   unlayered rule beats a layered one no matter the specificity — so a
+   layered override here would never win and hiding the bottom bar would
+   leave 88px of dead space behind. */
+html[data-bottom-nav='hidden'] {
+  --bottom-nav-spacing: 0px;
+  --bottom-nav-spacing-small: 0px;
 }

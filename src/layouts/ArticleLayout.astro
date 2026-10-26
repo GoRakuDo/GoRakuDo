@@ -5,7 +5,6 @@ import UnifiedSEO, {
 } from '../components/common/UnifiedSEO.astro';
 import Navbar from '../components/common/navbar/Navbar.astro';
 import BottomNavBar from '../components/common/navbar/BottomNavBar.astro';
-import WaveAnimation from '../components/animations/WaveAnimation.astro';
 import '../styles/global.css';
 import '../styles/layouts/ArticleLayout.css';
 
@@ -88,9 +87,8 @@ const LAYOUT_CONFIG = {
   <body>
     <Navbar />
     <BottomNavBar />
-    <WaveAnimation backgroundLayer='normal' />
 
-    <div class='article-layout-container'>
+    <div class='article-layout-container page-shell'>
       <main
         class='article-main-container'
         role='main'

@@ -48,11 +48,11 @@
 
 ```
 src/components/
-├── animations/        # アニメーション関連コンポーネント
 ├── common/           # 汎用共通コンポーネント（Navbar, Breadcrumb, Pagination等）
-├── content/          # コンテンツ表示コンポーネント（FAQ, TableOfContents等）
 ├── docs/             # ドキュメントページ専用コンポーネント
 ├── homepage/         # ホームページ専用コンポーネント
+├── panduan-immersion/ # パンデュアン（イマージョンガイド）専用セクション
+├── quest/            # /quest 専用コンポーネント
 ├── search/           # 検索機能コンポーネント
 ├── tools/            # ツールページ専用コンポーネント
 ├── ui/               # 汎用UIコンポーネント（Button, PageHeader等）
@@ -69,7 +69,6 @@ src/components/
 | **`homepage/`** | ホームページのみ | ❌ 低 | Hero, MissionSection, FeatureCard |
 | **`docs/`** | ドキュメントページのみ | ❌ 低 | PostsGrid |
 | **`tools/`** | ツールページのみ | ❌ 低 | Tools-GridSection |
-| **`animations/`** | アニメーション | ✅ 中 | WaveAnimation |
 | **`search/`** | 検索機能 | ✅ 中 | SearchSection, CategorySection |
 
 **Rationale:** この分類により、コンポーネントの用途と再利用範囲が明確になり、適切なコンポーネント選択が容易になります。

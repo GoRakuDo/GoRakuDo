@@ -6,12 +6,11 @@
 // second line — same two-tier pattern as the quest dialogue (idText/jpText).
 //
 // Layout: this page owns its whole document, exactly like /quest. BaseLayout
-// is deliberately NOT used: its Navbar (76px) + BottomNavBar (88px) + the
-// `.layout-content` mobile clearance (navbar-height + 2rem = 102px) fought
-// this page's own VN stage on phones. A JCT-only top bar replaces the site
-// navbar and sits in normal flow, so it can never overlap the header.
-// The shared WaveAnimation background is also gone: this page paints its own
-// quiet Night Library backdrop in jct.css, so nothing site-wide leaks in.
+// is deliberately NOT used: the site Navbar (76px) + BottomNavBar (88px) + the
+// `.page-shell` clearance fought this page's own VN stage on phones. A JCT-only
+// top bar replaces the site navbar and sits in normal flow, so it can never
+// overlap the header. The site backdrop is replaced by overriding
+// `body::before` in jct.css, so nothing site-wide leaks in.
 import UnifiedSEO from '../../components/common/UnifiedSEO.astro';
 import { generateBreadcrumbSchema } from '../../utils/breadcrumb-schema';
 import levelsData from '../../data/jct/levels.json';

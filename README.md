@@ -83,19 +83,23 @@
 GoRakuDo/
 ├── src/
 │   ├── components/          # Komponen Astro reusable
-│   │   ├── animations/      # WaveAnimation, efek visual
 │   │   ├── common/          # navbar, pagination, Breadcrumb, SearchPopover
-│   │   ├── content/         # KrashenQuote, TableOfContents, FAQ
 │   │   ├── docs/            # PostsGrid untuk halaman dokumentasi
 │   │   ├── homepage/        # Hero, Features, Mission sections
+│   │   ├── panduan-immersion/ # Section komponen panduan immersion
+│   │   ├── panduan-lengkap/ # Section komponen panduan lengkap (legacy)
+│   │   ├── quest/           # DialogueBox untuk /quest
 │   │   ├── search/          # Search components
 │   │   ├── tools/           # Tool grid, articles
 │   │   ├── ui/              # Button, PageHeader, SearchForm
+│   │   ├── youtube/         # Komponen rekomendasi channel YouTube
 │   │   └── common/UnifiedSEO.astro # SEO management terpusat
 │   ├── content/             # Content Collections (MDX)
 │   │   ├── docs/            # 9 artikel dokumentasi
 │   │   ├── pages/           # About Us, FAQ
-│   │   └── tool-articles/   # Tutorial Anki, Yomitan
+│   │   ├── project-docs/    # Dokumentasi per project (DenChou dll)
+│   │   ├── projects/        # Metadata project LP
+│   │   └── tool-articles/   # Tutorial Anki, Yomitan, asbplayer
 │   ├── data/                # JSON data files
 │   │   ├── seo/pages/       # SEO data per halaman
 │   │   ├── stopwords/       # Stopwords ID & JA
@@ -104,15 +108,21 @@ GoRakuDo/
 │   ├── layouts/             # Layout templates
 │   │   ├── ArticleLayout.astro
 │   │   ├── BaseLayout.astro
-│   │   └── PostLayout.astro
+│   │   ├── PostLayout.astro
+│   │   ├── ProjectLayout.astro
+│   │   └── ToolArticleLayout.astro
 │   ├── pages/               # File-based routing
 │   │   ├── docs/            # Dynamic routes untuk docs
-│   │   ├── tools/           # Dynamic routes untuk tools
+│   │   ├── tutorial/        # Dynamic routes untuk tools
+│   │   ├── project/         # Project hub & dokumentasi
+│   │   ├── quest/           # Prolog interaktif
+│   │   ├── japanese-comprehension-test/ # JCT
 │   │   ├── search/          # Search interface
 │   │   └── index.astro      # Homepage
+│   ├── plugins/             # Rehype plugins (rehype-wrap-emoji)
 │   ├── scripts/             # Client-side scripts (viewport-animation, image-zoom)
 │   ├── styles/              # Global & scoped CSS
-│   │   ├── global.css       # CSS variables, base styles
+│   │   ├── global.css       # CSS variables, base styles, .page-shell clearance
 │   │   ├── layouts/         # Layout-specific styles
 │   │   └── pages/           # Page-specific styles
 │   └── utils/               # Helper functions

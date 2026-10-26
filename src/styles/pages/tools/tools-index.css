@@ -82,27 +82,9 @@
   text-align: center;
 }
 
-/* Mobile + tablet: clear the absolute-positioned transparent navbar
-   (--navbar-height: 70px on mobile, 75px on tablet) so the
-   /// TOOLS_ACTIVATED /// marker and title don't overlap the logo on the
-   /tools page. Desktop is unaffected — the navbar is fixed there and the
-   .layout-content global rule already adds clearance via
-   calc(var(--navbar-height) + 2rem). Per-page (not global) is intentional:
-   /panduan and /tools/[tool] manage mobile top spacing with their own
-   custom padding, so a global rule would double-pad those pages. */
-@media (max-width: 1023px) {
-  .tools-header-wrapper {
-    padding-top: calc(var(--navbar-height) + 2rem);
-  }
-}
-
-/* Opt out of the global .layout-content mobile navbar clearance rule
-   (see global.css :root --mobile-content-padding). /tools manages mobile
-   top spacing locally via the .tools-header-wrapper padding-top override
-   above, so the global .layout-content default is not needed. */
-body {
-  --mobile-content-padding: 0;
-}
+/* The navbar clearance is not handled here — BaseLayout's
+   `.layout-content.page-shell` owns it for every breakpoint (see global.css
+   PAGE SHELL). This wrapper only carries the section's own breathing room. */
 
 .tools-marker {
   color: var(--grkd-brand-secondary, oklch(65% 0.25 280deg));

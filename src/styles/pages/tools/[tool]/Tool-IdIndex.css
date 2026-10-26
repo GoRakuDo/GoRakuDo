@@ -1,12 +1,8 @@
 /* ========== BEM METHOD - TOOL PAGE DESIGN SYSTEM ========== */
 
-/* Opt out of the global .layout-content mobile navbar clearance rule
-   (see global.css :root --mobile-content-padding). This page manages
-   mobile top spacing locally via the .tome-header padding (8rem) below,
-   so the global .layout-content default is not needed. */
-body {
-  --mobile-content-padding: 0;
-}
+/* Navbar clearance is owned by `.article-layout-container.page-shell`
+   (global.css PAGE SHELL), so the tome header only carries its own
+   breathing room below the chrome. */
 
 /* ========== NIGHT LIBRARY TOME HEADER ========== */
 .tome-header {
@@ -14,7 +10,7 @@ body {
   flex-direction: column;
   max-width: 60rem;
   margin: 0 auto;
-  padding: 8rem 1.5rem 2.5rem;
+  padding: 0 1.5rem 2.5rem;
 }
 
 .tome-marker {

@@ -5,21 +5,21 @@
  */
 
 /* ===== JCT-OWNED BACKDROP =====
- * The shared WaveAnimation is gone: its blurred photograph was made for the
- * homepage hero and read as noise behind a test that is mostly cards and a
- * dialogue box. This is the page's own quiet Night Library backdrop — a deep
- * base with two soft light pools (Blurple top, gold bottom-right), painted
- * once on the body so nothing site-wide leaks in and no extra DOM is needed.
+ * The shared site backdrop (global.css `body::before`) is a blurred photograph
+ * made for the homepage hero; it reads as noise behind a test that is mostly
+ * cards and a dialogue box. This page overrides it with its own quiet Night
+ * Library backdrop — a deep base with two soft light pools (Blurple top,
+ * gold bottom-right).
+ *
+ * It lives on the same `body::before` pseudo-element rather than on
+ * `.jct-body` itself: `body::before` is `position: fixed; z-index: -1`, so it
+ * paints on top of any background set directly on the body box. Overriding
+ * `background-image` here is the only way to actually replace it, and it
+ * keeps the viewport-fixed framing for free.
  *
  * Deliberately no `background-attachment: fixed`: it janks on iOS and the
- * gradients are static anyway. `min-height: 100dvh` on body already makes the
- * backdrop cover the whole viewport on the screens that matter here. */
-.jct-body {
-  /* The 4rem body tail in global.css exists to clear the fixed BottomNavBar.
-     This page has no bottom bar, so that padding is pure dead space — and on a
-     phone it is the difference between "fits" and "scrolls" for the VN stage. */
-  padding-bottom: 0;
-  background-color: var(--grkd-black-950);
+ * gradients are static anyway. */
+.jct-body::before {
   background-image:
     radial-gradient(
       ellipse 90% 60% at 50% -10%,
@@ -36,19 +36,17 @@
       oklch(from var(--grkd-black-950) l c h / 0.65)
     ),
     url('/images/typographic_waves_and_torii_8bit_1080_blurred.webp');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 /* ===== STANDALONE DOCUMENT SHELL =====
  * This page owns its whole document (same approach as /quest) instead of
- * riding on BaseLayout. Reason: BaseLayout's Navbar (76px) + BottomNavBar
- * (fixed, 88px) + the `.layout-content` mobile clearance
- * (`calc(var(--navbar-height) + 2rem)` = 102px) all fought this page's own
- * VN stage on phones. With the layout gone there is no clearance to opt out
- * of, no fixed bottom bar stealing 88px, and the top bar below sits in
- * normal flow so it can never overlap the header.
+ * riding on BaseLayout. Reason: the site Navbar + BottomNavBar + the
+ * `.page-shell` clearance all fought this page's own VN stage on phones.
+ * With the layout gone there is no clearance to opt out of, no fixed bottom
+ * bar stealing 88px, and the top bar below sits in normal flow so it can
+ * never overlap the header. `padding-bottom: 0` is not needed either: the
+ * body-level BottomNavBar clearance is scoped to `body:has(> .page-shell)`
+ * (global.css), and this page has no `.page-shell`.
  *
  * `body` is already `display: flex; flex-direction: column; min-height:
  * 100dvh` in global.css, so `main` only needs to grow into the remainder. */

@@ -5,7 +5,6 @@ import UnifiedSEO, {
 } from '../components/common/UnifiedSEO.astro';
 import Navbar from '../components/common/navbar/Navbar.astro';
 import BottomNavBar from '../components/common/navbar/BottomNavBar.astro';
-import WaveAnimation from '../components/animations/WaveAnimation.astro';
 import Prose from '../components/ui/Prose.astro';
 import '../styles/global.css';
 import '../styles/pages/tools/[tool]/ToolArticleLayout.css';
@@ -116,9 +115,8 @@ const osIcon = devicePlatform ? OS_ICONS[devicePlatform] : undefined;
   <body>
     <Navbar />
     <BottomNavBar />
-    <WaveAnimation backgroundLayer='normal' />
 
-    <div class='tqa-page'>
+    <div class='tqa-page page-shell'>
       <!-- Breadcrumb Slot -->
       <div class='tqa-breadcrumb-slot'>
         <slot name='breadcrumb' />
