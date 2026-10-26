@@ -462,8 +462,10 @@
   }
 }
 
-/* ===== CHOICE BUTTONS (greeting fork) ===== */
-.jct-choice-panel {
+/* ===== CHOICE & KANA PANELS (vertically centered in viewport) ===== */
+.jct-choice-panel,
+.jct-kana-panel,
+.jct-kana-result-panel {
   flex: 1 1 auto;
   justify-content: center;
   min-height: 0;
