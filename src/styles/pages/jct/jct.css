@@ -657,20 +657,24 @@
   width: 1.5rem;
   height: 1.5rem;
   margin-top: -0.5rem;
-  border: 2px solid var(--grkd-gold-base);
+  border: none;
   border-radius: 50%;
-  background: var(--grkd-surface-2);
-  box-shadow: 0 2px 10px oklch(from var(--grkd-black-base) l c h / 0.75);
+  background: var(--grkd-purple-400);
+  box-shadow:
+    0 2px 10px oklch(from var(--grkd-black-base) l c h / 0.75),
+    0 0 12px oklch(from var(--grkd-purple-400) l c h / 0.6);
   cursor: pointer;
 }
 
 .jct-range::-moz-range-thumb {
   width: 1.5rem;
   height: 1.5rem;
-  border: 2px solid var(--grkd-gold-base);
+  border: none;
   border-radius: 50%;
-  background: var(--grkd-surface-2);
-  box-shadow: 0 2px 10px oklch(from var(--grkd-black-base) l c h / 0.75);
+  background: var(--grkd-purple-400);
+  box-shadow:
+    0 2px 10px oklch(from var(--grkd-black-base) l c h / 0.75),
+    0 0 12px oklch(from var(--grkd-purple-400) l c h / 0.6);
   cursor: pointer;
 }
 
