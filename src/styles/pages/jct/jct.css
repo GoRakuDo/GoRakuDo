@@ -463,6 +463,12 @@
 }
 
 /* ===== CHOICE BUTTONS (greeting fork) ===== */
+.jct-choice-panel {
+  flex: 1 1 auto;
+  justify-content: center;
+  min-height: 0;
+}
+
 .jct-choice-row {
   display: grid;
   gap: 0.7rem;
